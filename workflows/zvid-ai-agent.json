@@ -1,0 +1,143 @@
+{
+	"name": "Zvid AI Agent - Creator",
+	"nodes": [
+		{
+			"parameters": {
+				"options": {
+					"responseMode": "lastNode"
+				}
+			},
+			"type": "@n8n/n8n-nodes-langchain.chatTrigger",
+			"typeVersion": 1.4,
+			"position": [0, 0],
+			"id": "7cc0a691-40e1-493c-b955-d88d3a788ad2",
+			"name": "When chat message received"
+		},
+		{
+			"parameters": {
+				"options": {
+					"systemMessage": "You are the Zvid AI Agent. Use the connected Zvid tools to help the user create, revise, render, and inspect videos or images.\n\nSAFETY AND ACCURACY\n- Use tools whenever an answer depends on the user's Zvid account. Never invent IDs, balances, render states, URLs, quotes, or tool results.\n- Never reveal credentials, OAuth tokens, API keys, webhook secrets, or hidden tool output.\n- Prefer read-only and reversible steps until the user's intent to spend credits or mutate data is clear.\n- Never ask create_media or revise_media to invent a design from natural language alone. Creator requires exact project JSON.\n\nQUALITY-FIRST CREATOR WORKFLOW\n1. Call plan_creative_video with the brief.\n2. Prefer adapting the strongest matching design with start_from_example. If no design fits, assemble the plan from creative-library and stock-media results. Preserve designed layouts and never invent media URLs.\n3. Produce complete project JSON, call validate_project_json with remote: true, and fix every error and layout warning.\n4. Call create_media with both the original brief and the exact validated payload. Draft creation does not spend credits.\n5. Let the user review the editor link. Revisions require a complete validated replacement payload.\n6. Call render_media only after the user approves the quoted credits. Use the exact draftId and quoteToken.\n7. Use get_media to monitor work, list_media to find recent work, and get_account for credits and usage.\n\nIf the selected profile exposes automation tools, ask for explicit confirmation immediately before direct, bulk, or other credit-spending operations. If a needed tool is unavailable, explain that the workflow owner must select a different Zvid profile; never attempt to change the profile yourself.",
+					"maxIterations": 30,
+					"returnIntermediateSteps": false,
+					"enableStreaming": false
+				}
+			},
+			"type": "@n8n/n8n-nodes-langchain.agent",
+			"typeVersion": 3.1,
+			"position": [280, 0],
+			"id": "f6ded060-7395-4b51-9694-81791f7482cb",
+			"name": "Zvid AI Agent"
+		},
+		{
+			"parameters": {
+				"model": {
+					"__rl": true,
+					"value": "gpt-5-mini",
+					"mode": "list",
+					"cachedResultName": "gpt-5-mini"
+				},
+				"options": {}
+			},
+			"type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+			"typeVersion": 1.3,
+			"position": [80, 260],
+			"id": "9eb58b01-05b4-4a2e-a276-5dc5da5730b4",
+			"name": "OpenAI Chat Model"
+		},
+		{
+			"parameters": {
+				"endpointUrl": "https://mcp.zvid.io/mcp",
+				"profile": "creator",
+				"maxRenderCredits": 120,
+				"include": "all",
+				"options": {
+					"timeout": 120000
+				}
+			},
+			"type": "n8n-nodes-zvid.zvidAgentTools",
+			"typeVersion": 1,
+			"position": [520, 260],
+			"id": "b74713cf-29eb-4465-8269-7d6f862d2b6c",
+			"name": "Zvid Agent Tools"
+		},
+		{
+			"parameters": {
+				"sessionIdType": "fromInput",
+				"contextWindowLength": 10
+			},
+			"type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+			"typeVersion": 1.4,
+			"position": [300, 260],
+			"id": "b5e1ed0b-1a3a-4952-b4d1-1bf4019e3cdd",
+			"name": "Conversation Memory"
+		},
+		{
+			"parameters": {
+				"width": 820,
+				"height": 360,
+				"content": "## Zvid AI Agent - one-click setup\n\nThis packaged workflow stores the safe **creator** profile and a **120-credit maximum per render** locally. A workflow downloaded from the Zvid dashboard captures both dashboard defaults at download time. Later dashboard changes never modify an existing workflow.\n\n1. Open **OpenAI Chat Model** and select an AI-model credential.\n2. Open **Zvid Agent Tools**, create an **MCP OAuth2 API** credential, keep dynamic client registration enabled, and sign in to Zvid.\n3. Keep or change Creator and **Max Render Credits** locally for only this workflow.\n4. Use **Tools to Include** if you want to narrow the selected profile further.\n\nThen open the Chat Trigger's test chat."
+			},
+			"type": "n8n-nodes-base.stickyNote",
+			"typeVersion": 1,
+			"position": [-100, -400],
+			"id": "8c7fa37e-a04f-49d5-ae4a-c8bc4582d533",
+			"name": "Setup"
+		}
+	],
+	"pinData": {},
+	"connections": {
+		"When chat message received": {
+			"main": [
+				[
+					{
+						"node": "Zvid AI Agent",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"OpenAI Chat Model": {
+			"ai_languageModel": [
+				[
+					{
+						"node": "Zvid AI Agent",
+						"type": "ai_languageModel",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Conversation Memory": {
+			"ai_memory": [
+				[
+					{
+						"node": "Zvid AI Agent",
+						"type": "ai_memory",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Zvid Agent Tools": {
+			"ai_tool": [
+				[
+					{
+						"node": "Zvid AI Agent",
+						"type": "ai_tool",
+						"index": 0
+					}
+				]
+			]
+		}
+	},
+	"active": false,
+	"settings": {
+		"executionOrder": "v1"
+	},
+	"versionId": "b40d84c3-8449-41d5-bdb8-bf5acdaf4824",
+	"meta": {
+		"templateCredsSetupCompleted": false
+	},
+	"tags": []
+}

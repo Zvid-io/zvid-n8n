@@ -1,0 +1,70 @@
+{
+    "name": "n8n-nodes-zvid",
+    "version": "0.1.0",
+    "description": "One-click Zvid AI Agent and n8n community nodes for rendering videos and images",
+    "keywords": [
+        "n8n-community-node-package",
+        "zvid",
+        "ai",
+        "agent",
+        "mcp",
+        "video",
+        "rendering"
+    ],
+    "license": "MIT",
+    "homepage": "https://zvid.io",
+    "author": {
+        "name": "Zvid",
+        "email": "support@zvid.io"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zvid/zvid-integrations.git"
+    },
+    "engines": {
+        "node": ">=20.19"
+    },
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc && esbuild nodes/ZvidAgentTools/ZvidAgentTools.node.ts --bundle --platform=node --format=cjs --target=node20 --external:n8n-workflow --sourcemap --outfile=dist/nodes/ZvidAgentTools/ZvidAgentTools.node.js && gulp build:icons",
+        "dev": "tsc --watch",
+        "format": "prettier nodes credentials --write",
+        "lint": "eslint nodes credentials package.json",
+        "lintfix": "eslint nodes credentials package.json --fix",
+        "test": "npm run build && node --test test/nodes.test.js",
+        "prepublishOnly": "npm run build && npm run lint"
+    },
+    "files": [
+        "dist",
+        "workflows"
+    ],
+    "n8n": {
+        "n8nNodesApiVersion": 1,
+        "credentials": [
+            "dist/credentials/ZvidApi.credentials.js"
+        ],
+        "nodes": [
+            "dist/nodes/Zvid/Zvid.node.js",
+            "dist/nodes/ZvidAgentTools/ZvidAgentTools.node.js",
+            "dist/nodes/ZvidTrigger/ZvidTrigger.node.js"
+        ]
+    },
+    "devDependencies": {
+        "@langchain/core": "1.2.0",
+        "@modelcontextprotocol/sdk": "1.26.0",
+        "@types/node": "^18.19.130",
+        "@typescript-eslint/parser": "^7.15.0",
+        "eslint": "^8.57.0",
+        "eslint-plugin-n8n-nodes-base": "^1.16.3",
+        "esbuild": "^0.25.0",
+        "gulp": "^5.0.0",
+        "n8n-workflow": "^1.82.0",
+        "prettier": "^3.3.2",
+        "typescript": "^5.5.3",
+        "zod": "3.25.67"
+    },
+    "peerDependencies": {
+        "n8n-workflow": "*"
+    },
+    "packageManager": "pnpm@10.13.1+sha1.aa8c167c4509c97519542ef77a09e4b8ab59fb6a"
+}

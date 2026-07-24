@@ -1,0 +1,15 @@
+import type { IDataObject, IExecuteSingleFunctions, IHookFunctions, IHttpRequestMethods, IHttpRequestOptions, IN8nHttpFullResponse, INodeExecutionData, IWebhookFunctions } from 'n8n-workflow';
+type ZvidContext = IExecuteSingleFunctions | IHookFunctions | IWebhookFunctions;
+export declare function zvidApiRequest(this: ZvidContext, method: IHttpRequestMethods, endpoint: string, body?: IDataObject, qs?: IDataObject): Promise<IDataObject>;
+export declare function parseJsonParameter(context: IExecuteSingleFunctions, value: unknown, parameterName: string): IDataObject | undefined;
+export declare function buildRenderBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function buildBulkRenderBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function normalizeValidationResponse(this: IExecuteSingleFunctions, items: INodeExecutionData[], response: IN8nHttpFullResponse): Promise<INodeExecutionData[]>;
+export declare function addRenderListQuery(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function buildPreviewBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function buildRepairBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function buildCreativePlanBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function buildTemplateCreateBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function buildTemplateUpdateBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function waitForRenderCompletion(this: IExecuteSingleFunctions, items: INodeExecutionData[], _response: IN8nHttpFullResponse): Promise<INodeExecutionData[]>;
+export {};
