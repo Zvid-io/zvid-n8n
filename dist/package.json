@@ -1,5 +1,5 @@
 {
-    "name": "n8n-nodes-zvid",
+    "name": "@zvid/n8n-nodes-zvid",
     "version": "0.1.0",
     "description": "One-click Zvid AI Agent and n8n community nodes for rendering videos and images",
     "keywords": [
@@ -12,6 +12,9 @@
         "rendering"
     ],
     "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
     "homepage": "https://zvid.io",
     "author": {
         "name": "Zvid",

@@ -113,11 +113,11 @@ Zvid OAuth token to an unrelated server.
 
 ## Installation
 
-On self-hosted n8n: **Settings → Community Nodes → Install** and enter `n8n-nodes-zvid` (once published), or manually:
+On self-hosted n8n: **Settings → Community Nodes → Install** and enter `@zvid/n8n-nodes-zvid` (once published), or manually:
 
 ```bash
 cd ~/.n8n/nodes
-npm install n8n-nodes-zvid
+npm install @zvid/n8n-nodes-zvid
 ```
 
 From this checkout (not yet on npm):

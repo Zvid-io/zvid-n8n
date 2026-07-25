@@ -1,25 +1,46 @@
 {
-	"name": "zvid-n8n",
+	"name": "@zvid/n8n-nodes-zvid",
 	"version": "0.1.0",
-	"description": "One-click Zvid AI Agent and n8n community nodes for rendering videos and images",
+	"description": "n8n community nodes for Zvid — generate videos and images from JSON, templates, or a one-click AI agent, with bulk rendering, stock media, and render-completed webhook triggers.",
 	"keywords": [
 		"n8n-community-node-package",
+		"n8n",
+		"n8n-node",
 		"zvid",
-		"ai",
-		"agent",
-		"mcp",
 		"video",
-		"rendering"
+		"video-generation",
+		"text-to-video",
+		"json-to-video",
+		"json2video",
+		"image-generation",
+		"video-rendering",
+		"video-api",
+		"video-automation",
+		"ai-video",
+		"ai-agent",
+		"mcp",
+		"bulk-video",
+		"subtitles",
+		"stock-media",
+		"webhook"
 	],
 	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
 	"homepage": "https://zvid.io",
 	"author": {
 		"name": "Zvid",
-		"email": "support@zvid.io"
+		"email": "support@zvid.io",
+		"url": "https://zvid.io"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/zvid/zvid-integrations.git"
+		"url": "https://github.com/zvid/zvid-integrations.git",
+		"directory": "n8n"
+	},
+	"bugs": {
+		"url": "https://github.com/zvid/zvid-integrations/issues"
 	},
 	"engines": {
 		"node": ">=20.19"
