@@ -1,6 +1,6 @@
 {
 	"name": "@zvid/n8n-nodes-zvid",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "n8n community nodes for Zvid — generate videos and images from JSON, templates, or a one-click AI agent, with bulk rendering, stock media, and render-completed webhook triggers.",
 	"keywords": [
 		"n8n-community-node-package",
