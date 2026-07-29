@@ -24,19 +24,21 @@ comes with:
 - an n8n Chat Trigger and AI Agent;
 - an OpenAI Chat Model placeholder that can be replaced with any n8n chat model;
 - credential-free conversation memory; and
-- one **Zvid Agent Tools** AI sub-node configured for the hosted MCP endpoint,
-  Zvid OAuth, the safe `creator` profile, and **Tools to Include: All Profile
-  Tools**.
+- n8n's built-in **MCP Client Tool** configured for the hosted Zvid MCP
+  endpoint, Zvid OAuth, the safe `creator` profile, and **Tools to Include:
+  All**.
 
 The MCP connection discovers the tools allowed by the selected profile at runtime,
 so new profile tools become available without adding more nodes. After import, the
 only required setup is selecting an AI-model credential and signing in to Zvid from
-the **Zvid Agent Tools** node.
+the **Zvid MCP Tools** node.
 
-The profile and **Max Render Credits** are concrete values stored in the n8n workflow
-JSON. Changing them affects only that workflow. Changing the Zvid dashboard defaults
-never changes existing n8n workflows. Downloading the workflow from the dashboard
-captures the current defaults; the packaged JSON uses `creator` and 120 credits. The dashboard MCP credit limit, when set, remains a hard server-side ceiling on top of any workflow value.
+The profile and **Max Render Credits** are concrete query parameters on the MCP
+endpoint stored in the n8n workflow JSON. Changing them affects only that workflow.
+Changing the Zvid dashboard defaults never changes existing n8n workflows.
+Downloading the workflow from the dashboard captures the current defaults; the
+packaged JSON uses `creator` and 120 credits. The dashboard MCP credit limit, when
+set, remains a hard server-side ceiling on top of any workflow value.
 
 The checked-in JSON is also the safe `creator` source artifact for publishing the
 Zvid AI Agent to the n8n workflow-template gallery.
@@ -47,21 +49,23 @@ Zvid AI Agent to the n8n workflow-template gallery.
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Authoring        | **Plan Creative Video**, **Get Project Schema**, **List Supported Elements**, **Get Element Documentation**, **Get Example Project**, **Repair Project JSON**; all plan-aware and suitable for AI Agent tool use                                                                 |
 | Creative Library | **Search**, **Get Metadata**, **Get Content** for complete examples, animated design templates, canvas presets, and shapes                                                                                                                                                       |
-| Stock Media      | **List Providers**, **Search** normalized image/video/GIF/audio catalogs with render-ready URLs                                                                                                                                                                                  |
+| Stock Media      | **Get Library Availability**, **Search** Zvid's stock library for normalized image/video/GIF/audio results with render-ready URLs                                                                                                                                                     |
 | Render           | **Create** (video/image, from project JSON or template + variables, optional _Wait for Completion_ polling), **Create Bulk** (one template × up to 500 variable sets), **Get** (status + output URL, optional wait), **Get Many**, **Validate** (pre-flight payload check, free) |
 | Template         | **Create**, **Get**, **Get Many**, **Update**, **Delete (Archive)**, **Duplicate**, **Preview** (free dry run), **Render** (template + variables, optional wait)                                                                                                                 |
 | Credit           | **Get Balance**                                                                                                                                                                                                                                                                  |
 
-The action node remains available for deterministic workflows, but it is deliberately
-not attachable to an AI Agent. Use **Zvid Agent Tools** for agents so MCP profiles,
-credit limits, render quotes, and disabled destructive tools cannot be bypassed.
+The action node is available for deterministic workflows and can also be attached
+directly to an AI Agent. For agent workflows, the recommended integration is n8n's
+built-in **MCP Client Tool** with the hosted Zvid MCP endpoint because it applies
+MCP profiles, credit limits, render quotes, and disabled destructive tools.
 
 #### Validate before rendering
 
-For AI generation, use **Zvid Agent Tools**. For a deterministic workflow, use the
-individual action-node operations in this order: creative plan -> library discovery
--> stock media -> schema/docs -> generate JSON -> repair/validate -> fix every error
-and layout warning -> draft/final render.
+For AI generation, import the ready-made agent workflow or configure n8n's built-in
+**MCP Client Tool**. For a deterministic workflow, use the individual action-node
+operations in this order: creative plan -> library discovery -> stock media ->
+schema/docs -> generate JSON -> repair/validate -> fix every error and layout
+warning -> draft/final render.
 
 The Authoring resource provides this schema/docs/example context directly; connecting a separate MCP server is optional.
 
@@ -98,7 +102,7 @@ For reusable-template creation, use Authoring to compose and validate the projec
 }
 ```
 
-Typical AI workflow: _LLM node generates project JSON → Zvid Validate → IF `valid` → Zvid Create; else feed `errors` back to the LLM to fix._ The `errors` array is field-level (`visuals[2].enterEnd`, `subtitle.captions[0].text`, …), which LLMs handle well. For the JSON Schema and per-element docs, use the [@zvid/mcp](../mcp) server's `get_project_schema` / `get_element_docs` tools or the shared [`zvid-schema`](../schema) package — both are derived from the backend validation, which always wins over any other docs.
+Typical AI workflow: _LLM node generates project JSON → Zvid Validate → IF `valid` → Zvid Create; else feed `errors` back to the LLM to fix._ The `errors` array is field-level (`visuals[2].enterEnd`, `subtitle.captions[0].text`, …), which LLMs handle well. For the JSON Schema and per-element docs, use the hosted MCP server's `get_project_schema` / `get_element_docs` tools or the [Zvid documentation](https://docs.zvid.io) — both are derived from the backend validation, which always wins over any other docs.
 
 When an LLM authors the project JSON, put the schema package's `AUTHORING_GUIDELINES` (or the `authoringGuidelines` from the MCP `get_project_schema` tool) into its prompt — a payload can be valid and still render badly. The short version: use `scenes` for sequential messages; `position` presets OVERWRITE x/y (use `position: "custom"` for offsets); put headline + subline inside ONE TEXT element's `html`; build cards/pills as one flex-centered TEXT element (no CSS padding, no SVG box + separate TEXT); keep text contrast ≥ 4.5:1 (scrim over photos).
 
@@ -110,37 +114,43 @@ Registers a Zvid webhook for `render.completed` / `render.failed` when the workf
 
 ## Credentials
 
-Create a **Zvid API** credential with your API key (`zvid_…`, from the Zvid dashboard under **Settings → API Keys**). The _Base URL_ defaults to `https://api.zvid.io`; change it only for self-hosted/local instances. The credential test calls `GET /api/credits/balance`.
+Create a **Zvid API** credential with your API key (`zvid_…`, from
+[API Keys](https://app.zvid.io/api-keys)). The _Base URL_ defaults to
+`https://api.zvid.io`; change it only for self-hosted/local instances. The
+credential test calls `GET /api/credits/balance`.
 
-**Zvid Agent Tools** uses n8n's built-in **MCP OAuth2 API** credential instead.
-Keep dynamic client registration enabled. The node accepts the hosted Zvid MCP
-endpoint, or `localhost`, `127.0.0.1`, `::1`, and `host.docker.internal` during
-local development; it rejects other hosts so an imported workflow cannot send the
-Zvid OAuth token to an unrelated server.
+The ready-made AI-agent workflow uses n8n's built-in **MCP OAuth2 API** credential
+in the **Zvid MCP Tools** node. Keep dynamic client registration enabled and keep
+the endpoint on `https://mcp.zvid.io/mcp` unless you are intentionally testing a
+local Zvid MCP server.
 
 ## Installation
 
-On self-hosted n8n: **Settings → Community Nodes → Install** and enter `@zvid/n8n-nodes-zvid` (once published), or manually:
+After n8n verifies the package, n8n Cloud workspace owners can search for **Zvid**
+in the node panel and install it from **More from the community**.
+
+On self-hosted n8n: **Settings → Community Nodes → Install** and enter
+`@zvid/n8n-nodes-zvid`, or install it manually:
 
 ```bash
 cd ~/.n8n/nodes
 npm install @zvid/n8n-nodes-zvid
 ```
 
-From this checkout (not yet on npm):
+From this checkout:
 
 ```bash
-npm install && npm run build
-cd ~/.n8n/nodes && npm install /path/to/zvid-integrations/n8n-nodes-zvid
+pnpm install && pnpm run build
+cd ~/.n8n/nodes && npm install /path/to/zvid-n8n
 ```
 
 ## Development
 
 ```bash
-npm install
-npm run build   # tsc + icon copy → dist/
-npm run lint    # eslint-plugin-n8n-nodes-base (nodes, credentials, package.json)
-npm test        # smoke tests incl. webhook HMAC verification
+pnpm install
+pnpm run build  # official n8n-node production build
+pnpm run lint   # n8n Cloud community-node checks
+pnpm run test   # smoke tests incl. webhook HMAC verification
 ```
 
 ### Local Docker test loop
@@ -150,8 +160,8 @@ When this checkout is already bind-mounted into the n8n container as
 environment variables are needed. After changing the node, run only:
 
 ```powershell
-Set-Location D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n-nodes-zvid
-npm run build
+Set-Location D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n
+pnpm run build
 docker restart n8n
 ```
 
@@ -161,9 +171,20 @@ workflow there. In development that download contains
 `http://host.docker.internal:8080/mcp` and concrete copies of the saved profile and
 maximum credits per render.
 Import it into n8n, connect the AI-model credential, and create one **MCP OAuth2
-API** credential in **Zvid Agent Tools**. Later dashboard changes do not alter the
+API** credential in **Zvid MCP Tools**. Later dashboard changes do not alter the
 imported workflow.
 
-## Publishing (manual)
+## Publishing
 
-Bump `version`, then `npm publish` (the `prepublishOnly` hook builds and lints). To get the package [verified by n8n](https://docs.n8n.io/integrations/community-nodes/building-community-nodes/), submit it through the n8n Creator Portal — note verified nodes must be published via GitHub Actions with a provenance statement since May 2026.
+Releases are published by
+[`publish.yml`](.github/workflows/publish.yml) from version tags such as
+`v0.1.2`. The workflow verifies the tag against `package.json`, installs from
+the lockfile, runs lint and tests, and publishes the public npm package with an
+npm provenance statement.
+
+Configure npm Trusted Publishing for the `Zvid-io/zvid-n8n` repository and the
+`publish.yml` workflow before pushing a release tag. Do not publish manually:
+n8n requires verified community nodes to be published from GitHub Actions with
+provenance. After the npm release passes
+`npx @n8n/scan-community-package @zvid/n8n-nodes-zvid`, submit the package
+through the [n8n Creator Portal](https://creators.n8n.io/).

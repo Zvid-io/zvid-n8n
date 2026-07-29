@@ -5,7 +5,11 @@ class ZvidApi {
     constructor() {
         this.name = 'zvidApi';
         this.displayName = 'Zvid API';
-        this.documentationUrl = 'https://zvid.io/docs';
+        this.icon = {
+            light: 'file:../nodes/Zvid/zvid.light.svg',
+            dark: 'file:../nodes/Zvid/zvid.svg',
+        };
+        this.documentationUrl = 'https://docs.zvid.io';
         this.properties = [
             {
                 displayName: 'API Key',
@@ -13,7 +17,7 @@ class ZvidApi {
                 type: 'string',
                 typeOptions: { password: true },
                 default: '',
-                description: 'Zvid API key (zvid_…), created in the Zvid dashboard under Settings → API Keys',
+                description: 'Zvid API key (zvid_…), created at https://app.zvid.io/api-keys',
             },
             {
                 displayName: 'Base URL',

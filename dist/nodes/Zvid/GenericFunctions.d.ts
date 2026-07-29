@@ -11,5 +11,5 @@ export declare function buildRepairBody(this: IExecuteSingleFunctions, requestOp
 export declare function buildCreativePlanBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
 export declare function buildTemplateCreateBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
 export declare function buildTemplateUpdateBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
-export declare function waitForRenderCompletion(this: IExecuteSingleFunctions, items: INodeExecutionData[], _response: IN8nHttpFullResponse): Promise<INodeExecutionData[]>;
+export declare function waitForRenderCompletion(this: IExecuteSingleFunctions, items: INodeExecutionData[]): Promise<INodeExecutionData[]>;
 export {};

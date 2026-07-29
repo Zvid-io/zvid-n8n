@@ -1,91 +1,85 @@
 {
-	"name": "@zvid/n8n-nodes-zvid",
-	"version": "0.1.1",
-	"description": "n8n community nodes for Zvid — generate videos and images from JSON, templates, or a one-click AI agent, with bulk rendering, stock media, and render-completed webhook triggers.",
-	"keywords": [
-		"n8n-community-node-package",
-		"n8n",
-		"n8n-node",
-		"zvid",
-		"video",
-		"video-generation",
-		"text-to-video",
-		"json-to-video",
-		"json2video",
-		"image-generation",
-		"video-rendering",
-		"video-api",
-		"video-automation",
-		"ai-video",
-		"ai-agent",
-		"mcp",
-		"bulk-video",
-		"subtitles",
-		"stock-media",
-		"webhook"
-	],
-	"license": "MIT",
-	"publishConfig": {
-		"access": "public"
-	},
-	"homepage": "https://zvid.io",
-	"author": {
-		"name": "Zvid",
-		"email": "support@zvid.io",
-		"url": "https://zvid.io"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/zvid/zvid-integrations.git",
-		"directory": "n8n"
-	},
-	"bugs": {
-		"url": "https://github.com/zvid/zvid-integrations/issues"
-	},
-	"engines": {
-		"node": ">=20.19"
-	},
-	"main": "index.js",
-	"scripts": {
-		"build": "tsc && esbuild nodes/ZvidAgentTools/ZvidAgentTools.node.ts --bundle --platform=node --format=cjs --target=node20 --external:n8n-workflow --sourcemap --outfile=dist/nodes/ZvidAgentTools/ZvidAgentTools.node.js && gulp build:icons",
-		"dev": "tsc --watch",
-		"format": "prettier nodes credentials --write",
-		"lint": "eslint nodes credentials package.json",
-		"lintfix": "eslint nodes credentials package.json --fix",
-		"test": "npm run build && node --test test/nodes.test.js",
-		"prepublishOnly": "npm run build && npm run lint"
-	},
-	"files": [
-		"dist",
-		"workflows"
-	],
-	"n8n": {
-		"n8nNodesApiVersion": 1,
-		"credentials": [
-			"dist/credentials/ZvidApi.credentials.js"
-		],
-		"nodes": [
-			"dist/nodes/Zvid/Zvid.node.js",
-			"dist/nodes/ZvidAgentTools/ZvidAgentTools.node.js",
-			"dist/nodes/ZvidTrigger/ZvidTrigger.node.js"
-		]
-	},
-	"devDependencies": {
-		"@langchain/core": "1.2.0",
-		"@modelcontextprotocol/sdk": "1.26.0",
-		"@types/node": "^18.19.130",
-		"@typescript-eslint/parser": "^7.15.0",
-		"eslint": "^8.57.0",
-		"eslint-plugin-n8n-nodes-base": "^1.16.3",
-		"esbuild": "^0.25.0",
-		"gulp": "^5.0.0",
-		"n8n-workflow": "^1.82.0",
-		"prettier": "^3.3.2",
-		"typescript": "^5.5.3",
-		"zod": "3.25.67"
-	},
-	"peerDependencies": {
-		"n8n-workflow": "*"
-	},
-	"packageManager": "pnpm@10.13.1+sha1.aa8c167c4509c97519542ef77a09e4b8ab59fb6a"
+  "name": "@zvid/n8n-nodes-zvid",
+  "version": "0.1.2",
+  "description": "n8n community nodes for Zvid — generate videos and images from JSON or templates, with bulk rendering, stock media, render-completed triggers, and an AI-agent workflow.",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "n8n-node",
+    "zvid",
+    "video",
+    "video-generation",
+    "text-to-video",
+    "json-to-video",
+    "json2video",
+    "image-generation",
+    "video-rendering",
+    "video-api",
+    "video-automation",
+    "ai-video",
+    "ai-agent",
+    "mcp",
+    "bulk-video",
+    "subtitles",
+    "stock-media",
+    "webhook"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "homepage": "https://zvid.io",
+  "author": {
+    "name": "Zvid",
+    "email": "support@zvid.io",
+    "url": "https://zvid.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zvid-io/zvid-n8n.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Zvid-io/zvid-n8n/issues"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "format": "prettier nodes credentials --write",
+    "lint": "n8n-node lint",
+    "lintfix": "n8n-node lint --fix",
+    "test": "npm run build && node --test test/nodes.test.js",
+    "prepublishOnly": "npm run build && npm run lint && node --test test/nodes.test.js"
+  },
+  "files": [
+    "dist",
+    "workflows"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/ZvidApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Zvid/Zvid.node.js",
+      "dist/nodes/ZvidTrigger/ZvidTrigger.node.js"
+    ],
+    "strict": true
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.39.3",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.29.0",
+    "n8n-workflow": "^2.16.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "packageManager": "pnpm@10.13.1+sha1.aa8c167c4509c97519542ef77a09e4b8ab59fb6a"
 }

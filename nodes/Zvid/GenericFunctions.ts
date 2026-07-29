@@ -307,7 +307,6 @@ export async function buildTemplateUpdateBody(
 export async function waitForRenderCompletion(
 	this: IExecuteSingleFunctions,
 	items: INodeExecutionData[],
-	_response: IN8nHttpFullResponse,
 ): Promise<INodeExecutionData[]> {
 	const wait = this.getNodeParameter('waitForCompletion', false) as boolean;
 	if (!wait) return items;

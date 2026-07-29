@@ -6,14 +6,6 @@ const { readFileSync } = require('node:fs');
 const { join } = require('node:path');
 
 const { Zvid } = require('../dist/nodes/Zvid/Zvid.node.js');
-const {
-	ZvidAgentTools,
-	buildProfileEndpoint,
-	filterTools,
-	missingRequiredToolArguments,
-	originalChatInput,
-	recoverSafeToolArguments,
-} = require('../dist/nodes/ZvidAgentTools/ZvidAgentTools.node.js');
 const { ZvidTrigger } = require('../dist/nodes/ZvidTrigger/ZvidTrigger.node.js');
 const { ZvidApi } = require('../dist/credentials/ZvidApi.credentials.js');
 const packageJson = require('../package.json');
@@ -39,18 +31,21 @@ test('one-click AI Agent template stores a concrete creator profile', () => {
 	assert.equal(new Set(nodeIds).size, nodeIds.length);
 	assert.ok(agentWorkflow.nodes.every((node) => node.credentials === undefined));
 
-	const mcp = agentWorkflow.nodes.find((node) => node.name === 'Zvid Agent Tools');
-	assert.equal(mcp.type, 'n8n-nodes-zvid.zvidAgentTools');
-	assert.equal(mcp.typeVersion, 1);
-	assert.equal(mcp.parameters.endpointUrl, 'https://mcp.zvid.io/mcp');
-	assert.equal(mcp.parameters.profile, 'creator');
-	assert.equal(mcp.parameters.maxRenderCredits, 120);
+	const mcp = agentWorkflow.nodes.find((node) => node.name === 'Zvid MCP Tools');
+	assert.equal(mcp.type, '@n8n/n8n-nodes-langchain.mcpClientTool');
+	assert.equal(mcp.typeVersion, 1.4);
+	assert.equal(
+		mcp.parameters.endpointUrl,
+		'https://mcp.zvid.io/mcp?profile=creator&maxRenderCredits=120',
+	);
+	assert.equal(mcp.parameters.serverTransport, 'httpStreamable');
+	assert.equal(mcp.parameters.authentication, 'mcpOAuth2Api');
 	assert.equal(mcp.parameters.include, 'all');
 
 	assert.ok(hasConnection('When chat message received', 'main', 'Zvid AI Agent'));
 	assert.ok(hasConnection('OpenAI Chat Model', 'ai_languageModel', 'Zvid AI Agent'));
 	assert.ok(hasConnection('Conversation Memory', 'ai_memory', 'Zvid AI Agent'));
-	assert.ok(hasConnection('Zvid Agent Tools', 'ai_tool', 'Zvid AI Agent'));
+	assert.ok(hasConnection('Zvid MCP Tools', 'ai_tool', 'Zvid AI Agent'));
 });
 
 test('one-click AI Agent prompt follows the quality-first creator workflow', () => {
@@ -63,94 +58,6 @@ test('one-click AI Agent prompt follows the quality-first creator workflow', () 
 	assert.match(prompt, /revise_media/);
 	assert.match(prompt, /render_media only after the user approves/);
 	assert.match(prompt, /never attempt to change the profile yourself/);
-});
-
-test('Zvid Agent Tools recovers a missing create_media brief from the source chat', () => {
-	const item = {
-		json: { tool: 'Zvid_Agent_Tools_create_media' },
-		pairedItem: {
-			item: 0,
-			sourceOverwrite: { previousNode: 'When chat message received' },
-		},
-	};
-	const chatInput = originalChatInput(item, {
-		$node: {
-			'When chat message received': {
-				json: { chatInput: 'Create a premium t-shirt promotion video' },
-			},
-		},
-	});
-	assert.equal(chatInput, 'Create a premium t-shirt promotion video');
-	assert.deepEqual(recoverSafeToolArguments('create_media', {}, chatInput), {
-		brief: 'Create a premium t-shirt promotion video',
-	});
-	assert.deepEqual(
-		recoverSafeToolArguments('render_media', {}, chatInput),
-		{},
-		'credit-spending tools must never infer arguments from chat input',
-	);
-});
-
-test('Zvid Agent Tools reports missing required arguments before calling MCP', () => {
-	const schema = { required: ['brief'], properties: { brief: { type: 'string' } } };
-	assert.deepEqual(missingRequiredToolArguments(schema, {}), ['brief']);
-	assert.deepEqual(missingRequiredToolArguments(schema, { brief: '   ' }), ['brief']);
-	assert.deepEqual(missingRequiredToolArguments(schema, { brief: 'Make a video' }), []);
-});
-
-test('Zvid Agent Tools stores a profile locally and narrows its MCP endpoint', () => {
-	const node = new ZvidAgentTools();
-	assert.equal(node.description.name, 'zvidAgentTools');
-	assert.equal(node.description.credentials[0].name, 'mcpOAuth2Api');
-	assert.equal(node.description.outputs[0].type, 'ai_tool');
-	assert.equal(typeof node.supplyData, 'function');
-	assert.equal(typeof node.execute, 'function');
-
-	const profile = node.description.properties.find((property) => property.name === 'profile');
-	assert.equal(profile.default, 'creator');
-	assert.deepEqual(
-		profile.options.map((option) => option.value),
-		['creator', 'automation', 'developer', 'readonly'],
-	);
-	const maxRenderCredits = node.description.properties.find(
-		(property) => property.name === 'maxRenderCredits',
-	);
-	assert.equal(maxRenderCredits.default, 120);
-	assert.equal(maxRenderCredits.noDataExpression, true);
-
-	assert.equal(
-		buildProfileEndpoint('https://mcp.zvid.io/mcp?keep=yes', 'automation', 250).toString(),
-		'https://mcp.zvid.io/mcp?keep=yes&profile=automation&maxRenderCredits=250',
-	);
-	assert.equal(
-		buildProfileEndpoint('http://host.docker.internal:8080/mcp', 'creator').toString(),
-		'http://host.docker.internal:8080/mcp?profile=creator&maxRenderCredits=120',
-	);
-	assert.throws(
-		() => buildProfileEndpoint('https://malicious.example/mcp', 'creator'),
-		/hosted MCP endpoint|local Zvid MCP host/,
-	);
-	assert.throws(
-		() => buildProfileEndpoint('https://mcp.zvid.io/not-mcp', 'creator'),
-		/path must be \/mcp/,
-	);
-});
-
-test('Zvid Agent Tools can narrow but never expand the profile tool catalog', () => {
-	const tools = [
-		{ name: 'create_media', inputSchema: {} },
-		{ name: 'render_media', inputSchema: {} },
-	];
-	assert.deepEqual(
-		filterTools(tools, 'selected', ['create_media', 'not_returned_by_mcp'], []).map(
-			(tool) => tool.name,
-		),
-		['create_media'],
-	);
-	assert.deepEqual(
-		filterTools(tools, 'except', [], ['render_media']).map((tool) => tool.name),
-		['create_media'],
-	);
 });
 
 test('Zvid node description is wired correctly', () => {
@@ -189,7 +96,7 @@ test('validate operation hits the validation endpoint without failing the workfl
 
 test('authoring resource exposes creative planning, schema, docs, examples, and repair to AI agents', () => {
 	const node = new Zvid();
-	assert.equal(node.description.usableAsTool, undefined);
+	assert.equal(node.description.usableAsTool, true);
 	const authoringOps = node.description.properties.find(
 		(p) => p.name === 'operation' && p.displayOptions.show.resource[0] === 'authoring',
 	);
@@ -466,6 +373,20 @@ test('trigger rejects a tampered delivery with 401', async () => {
 		timestamp,
 		events: ['render.completed'],
 	});
+	const result = await new ZvidTrigger().webhook.call(ctx);
+	assert.deepEqual(statusCalls, [401]);
+	assert.equal(result.noWebhookResponse, true);
+});
+
+test('trigger rejects a malformed signature with 401', async () => {
+	const { ctx, statusCalls } = triggerContext({
+		secret: 'whsec_test',
+		body: { event: 'render.completed', jobId: 'j1' },
+		signature: `sha256=${'z'.repeat(64)}`,
+		timestamp: '1700000000',
+		events: ['render.completed'],
+	});
+
 	const result = await new ZvidTrigger().webhook.call(ctx);
 	assert.deepEqual(statusCalls, [401]);
 	assert.equal(result.noWebhookResponse, true);

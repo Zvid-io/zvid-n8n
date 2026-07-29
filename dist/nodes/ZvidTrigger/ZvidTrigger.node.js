@@ -2,21 +2,27 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZvidTrigger = void 0;
 const crypto_1 = require("crypto");
+const n8n_workflow_1 = require("n8n-workflow");
 const GenericFunctions_1 = require("../Zvid/GenericFunctions");
 class ZvidTrigger {
     constructor() {
         this.description = {
             displayName: 'Zvid Trigger',
             name: 'zvidTrigger',
-            icon: 'file:zvid.svg',
+            icon: {
+                light: 'file:zvid.light.svg',
+                dark: 'file:zvid.svg',
+            },
             group: ['trigger'],
             version: 1,
+            subtitle: '={{$parameter["events"].join(", ")}}',
             description: 'Starts the workflow when a Zvid render completes or fails',
+            usableAsTool: true,
             defaults: {
                 name: 'Zvid Trigger',
             },
             inputs: [],
-            outputs: ['main'],
+            outputs: [n8n_workflow_1.NodeConnectionTypes.Main],
             credentials: [
                 {
                     name: 'zvidApi',
@@ -129,12 +135,12 @@ class ZvidTrigger {
             const rawBody = req.rawBody;
             const signedPayload = `${timestamp}.${rawBody ? rawBody.toString('utf8') : JSON.stringify(body)}`;
             let valid = false;
-            if (secret && signatureHeader.startsWith('sha256=')) {
+            if (secret && /^sha256=[0-9a-f]{64}$/i.test(signatureHeader)) {
                 const expected = (0, crypto_1.createHmac)('sha256', secret).update(signedPayload).digest('hex');
                 const received = signatureHeader.slice('sha256='.length);
-                valid =
-                    expected.length === received.length &&
-                        (0, crypto_1.timingSafeEqual)(Buffer.from(expected, 'hex'), Buffer.from(received, 'hex'));
+                const expectedBytes = Uint8Array.from(Buffer.from(expected, 'hex'));
+                const receivedBytes = Uint8Array.from(Buffer.from(received, 'hex'));
+                valid = (0, crypto_1.timingSafeEqual)(expectedBytes, receivedBytes);
             }
             if (!valid) {
                 res.status(401).send('Invalid signature');

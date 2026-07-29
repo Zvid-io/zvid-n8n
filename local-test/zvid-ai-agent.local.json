@@ -49,19 +49,19 @@
 		},
 		{
 			"parameters": {
-				"endpointUrl": "http://host.docker.internal:8080/mcp",
-				"profile": "creator",
-				"maxRenderCredits": 120,
+				"endpointUrl": "http://host.docker.internal:8080/mcp?profile=creator&maxRenderCredits=120",
+				"serverTransport": "httpStreamable",
+				"authentication": "mcpOAuth2Api",
 				"include": "all",
 				"options": {
 					"timeout": 120000
 				}
 			},
-			"type": "CUSTOM.zvidAgentTools",
-			"typeVersion": 1,
+			"type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+			"typeVersion": 1.4,
 			"position": [520, 260],
 			"id": "b74713cf-29eb-4465-8269-7d6f862d2b6c",
-			"name": "Zvid Agent Tools"
+			"name": "Zvid MCP Tools"
 		},
 		{
 			"parameters": {
@@ -78,7 +78,7 @@
 			"parameters": {
 				"width": 820,
 				"height": 360,
-				"content": "## LOCAL TEST COPY - do not ship\n\nSame as workflows/zvid-ai-agent.json except:\n- Zvid Agent Tools type is CUSTOM.zvidAgentTools (matches the N8N_CUSTOM_EXTENSIONS=/custom bind-mount registration in the docker n8n)\n- Endpoint URL pre-set to http://host.docker.internal:8080/mcp (n8n runs in docker; localhost would point at the container itself)\n\nThis workflow stores a 120-credit maximum per render.\n\n1. Open **OpenAI Chat Model** and select an AI-model credential.\n2. Open **Zvid Agent Tools**, create an **MCP OAuth2 API** credential (server URL also http://host.docker.internal:8080/mcp), keep dynamic client registration enabled, and sign in to Zvid.\n3. Keep or change Creator and **Max Render Credits** locally for only this workflow.\n\nThen open the Chat Trigger's test chat."
+				"content": "## LOCAL TEST COPY - do not ship\n\nSame as workflows/zvid-ai-agent.json except the built-in MCP Client Tool endpoint is pre-set to `http://host.docker.internal:8080/mcp?profile=creator&maxRenderCredits=120` because n8n runs in Docker and localhost would point at the container.\n\n1. Open **OpenAI Chat Model** and select an AI-model credential.\n2. Open **Zvid MCP Tools**, create an **MCP OAuth2 API** credential using the local server URL, keep dynamic client registration enabled, and sign in to Zvid.\n3. Keep or change the profile and maximum-credit query values only for this workflow.\n\nThen open the Chat Trigger's test chat."
 			},
 			"type": "n8n-nodes-base.stickyNote",
 			"typeVersion": 1,
@@ -122,7 +122,7 @@
 				]
 			]
 		},
-		"Zvid Agent Tools": {
+		"Zvid MCP Tools": {
 			"ai_tool": [
 				[
 					{

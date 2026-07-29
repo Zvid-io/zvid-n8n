@@ -1,22 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Zvid = void 0;
+const n8n_workflow_1 = require("n8n-workflow");
 const GenericFunctions_1 = require("./GenericFunctions");
 class Zvid {
     constructor() {
         this.description = {
             displayName: 'Zvid',
             name: 'zvid',
-            icon: 'file:zvid.svg',
+            icon: {
+                light: 'file:zvid.light.svg',
+                dark: 'file:zvid.svg',
+            },
             group: ['transform'],
             version: 1,
             subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
             description: 'Render videos and images from JSON or templates with the Zvid API',
+            usableAsTool: true,
             defaults: {
                 name: 'Zvid',
             },
-            inputs: ['main'],
-            outputs: ['main'],
+            inputs: [n8n_workflow_1.NodeConnectionTypes.Main],
+            outputs: [n8n_workflow_1.NodeConnectionTypes.Main],
             credentials: [
                 {
                     name: 'zvidApi',
@@ -76,16 +81,27 @@ class Zvid {
                     },
                     options: [
                         {
-                            name: 'Plan Creative Video',
-                            value: 'planCreativeVideo',
-                            action: 'Plan a professional creative video',
-                            description: 'Create a plan-aware storyboard, creative direction, library searches, and anti-repetition strategy before authoring project JSON',
+                            name: 'Get Element Documentation',
+                            value: 'getElementDocs',
+                            action: 'Get element documentation',
+                            description: 'Get every field, constraint, gotcha, and a valid example for one project element type',
                             routing: {
                                 request: {
-                                    method: 'POST',
-                                    url: '/api/render/creative-plan/api-key',
+                                    method: 'GET',
+                                    url: '=/api/render/elements/{{$parameter.elementType}}/api-key',
                                 },
-                                send: { preSend: [GenericFunctions_1.buildCreativePlanBody] },
+                            },
+                        },
+                        {
+                            name: 'Get Example Project',
+                            value: 'getExample',
+                            action: 'Get a validated example project',
+                            description: 'Get a validated, layout-clean starting point that demonstrates professional Zvid composition patterns',
+                            routing: {
+                                request: {
+                                    method: 'GET',
+                                    url: '={{$parameter.exampleName === "all" ? "/api/render/examples/api-key" : "/api/render/examples/" + $parameter.exampleName + "/api-key"}}',
+                                },
                             },
                         },
                         {
@@ -116,27 +132,16 @@ class Zvid {
                             },
                         },
                         {
-                            name: 'Get Element Documentation',
-                            value: 'getElementDocs',
-                            action: 'Get element documentation',
-                            description: 'Get every field, constraint, gotcha, and a valid example for one project element type',
+                            name: 'Plan Creative Video',
+                            value: 'planCreativeVideo',
+                            action: 'Plan a professional creative video',
+                            description: 'Create a plan-aware storyboard, creative direction, library searches, and anti-repetition strategy before authoring project JSON',
                             routing: {
                                 request: {
-                                    method: 'GET',
-                                    url: '=/api/render/elements/{{$parameter.elementType}}/api-key',
+                                    method: 'POST',
+                                    url: '/api/render/creative-plan/api-key',
                                 },
-                            },
-                        },
-                        {
-                            name: 'Get Example Project',
-                            value: 'getExample',
-                            action: 'Get a validated example project',
-                            description: 'Get a validated, layout-clean starting point that demonstrates professional Zvid composition patterns',
-                            routing: {
-                                request: {
-                                    method: 'GET',
-                                    url: '={{$parameter.exampleName === "all" ? "/api/render/examples/api-key" : "/api/render/examples/" + $parameter.exampleName + "/api-key"}}',
-                                },
+                                send: { preSend: [GenericFunctions_1.buildCreativePlanBody] },
                             },
                         },
                         {
@@ -165,19 +170,14 @@ class Zvid {
                     displayOptions: { show: { resource: ['creativeLibrary'] } },
                     options: [
                         {
-                            name: 'Search',
-                            value: 'search',
-                            action: 'Search the creative library',
-                            description: 'Search complete project examples, animated design templates, canvas presets, or shapes and inspect their preview metadata',
+                            name: 'Get Content',
+                            value: 'getContent',
+                            action: 'Get creative asset content',
+                            description: 'Get the full JSON content: complete project JSON for examples or a reusable design/canvas/shape module for other kinds',
                             routing: {
                                 request: {
                                     method: 'GET',
-                                    url: '=/api/library/{{$parameter.libraryKind}}',
-                                    qs: {
-                                        q: '={{$parameter.libraryQuery}}',
-                                        limit: '={{$parameter.libraryLimit}}',
-                                        offset: '={{$parameter.libraryOffset}}',
-                                    },
+                                    url: '=/api/library/{{$parameter.libraryKind}}/{{$parameter.librarySlug}}/content',
                                 },
                             },
                         },
@@ -194,14 +194,19 @@ class Zvid {
                             },
                         },
                         {
-                            name: 'Get Content',
-                            value: 'getContent',
-                            action: 'Get creative asset content',
-                            description: 'Get the full JSON content: complete project JSON for examples or a reusable design/canvas/shape module for other kinds',
+                            name: 'Search',
+                            value: 'search',
+                            action: 'Search the creative library',
+                            description: 'Search complete project examples, animated design templates, canvas presets, or shapes and inspect their preview metadata',
                             routing: {
                                 request: {
                                     method: 'GET',
-                                    url: '=/api/library/{{$parameter.libraryKind}}/{{$parameter.librarySlug}}/content',
+                                    url: '=/api/library/{{$parameter.libraryKind}}',
+                                    qs: {
+                                        q: '={{$parameter.libraryQuery}}',
+                                        limit: '={{$parameter.libraryLimit}}',
+                                        offset: '={{$parameter.libraryOffset}}',
+                                    },
                                 },
                             },
                         },
@@ -216,10 +221,10 @@ class Zvid {
                     displayOptions: { show: { resource: ['stockMedia'] } },
                     options: [
                         {
-                            name: 'List Providers',
+                            name: 'Get Library Availability',
                             value: 'listProviders',
-                            action: 'List stock media providers',
-                            description: 'List configured providers for images, videos, GIFs, and audio',
+                            action: 'Get stock library availability',
+                            description: 'List available image, video, GIF, and audio media types',
                             routing: { request: { method: 'GET', url: '/api/stock/providers' } },
                         },
                         {
@@ -233,7 +238,7 @@ class Zvid {
                                     url: '/api/stock/search',
                                     qs: {
                                         type: '={{$parameter.stockType}}',
-                                        provider: '={{$parameter.stockProvider}}',
+                                        provider: 'all',
                                         query: '={{$parameter.stockQuery}}',
                                         page: '={{$parameter.stockPage}}',
                                         perPage: '={{$parameter.stockPerPage}}',
@@ -304,25 +309,6 @@ class Zvid {
                             },
                         },
                         {
-                            name: 'Validate',
-                            value: 'validate',
-                            action: 'Validate a render payload',
-                            description: 'Run the real backend validation (template resolution + your plan limits) without rendering or spending credits — returns valid or field-level errors',
-                            routing: {
-                                request: {
-                                    method: 'POST',
-                                    url: '/api/render/validate/api-key',
-                                    ignoreHttpStatusErrors: true,
-                                },
-                                send: {
-                                    preSend: [GenericFunctions_1.buildRenderBody],
-                                },
-                                output: {
-                                    postReceive: [GenericFunctions_1.normalizeValidationResponse],
-                                },
-                            },
-                        },
-                        {
                             name: 'Get Many',
                             value: 'getAll',
                             action: 'Get many renders',
@@ -344,6 +330,25 @@ class Zvid {
                                             },
                                         },
                                     ],
+                                },
+                            },
+                        },
+                        {
+                            name: 'Validate',
+                            value: 'validate',
+                            action: 'Validate a render payload',
+                            description: 'Run the real backend validation (template resolution + your plan limits) without rendering or spending credits — returns valid or field-level errors',
+                            routing: {
+                                request: {
+                                    method: 'POST',
+                                    url: '/api/render/validate/api-key',
+                                    ignoreHttpStatusErrors: true,
+                                },
+                                send: {
+                                    preSend: [GenericFunctions_1.buildRenderBody],
+                                },
+                                output: {
+                                    postReceive: [GenericFunctions_1.normalizeValidationResponse],
                                 },
                             },
                         },
@@ -369,6 +374,30 @@ class Zvid {
                             routing: {
                                 request: { method: 'POST', url: '/api/templates' },
                                 send: { preSend: [GenericFunctions_1.buildTemplateCreateBody] },
+                            },
+                        },
+                        {
+                            name: 'Delete (Archive)',
+                            value: 'delete',
+                            action: 'Archive a template',
+                            description: 'Archive an owned active template so it can no longer be rendered or updated',
+                            routing: {
+                                request: {
+                                    method: 'DELETE',
+                                    url: '=/api/templates/{{$parameter.templateId}}',
+                                },
+                            },
+                        },
+                        {
+                            name: 'Duplicate',
+                            value: 'duplicate',
+                            action: 'Duplicate a template',
+                            description: 'Create an active editable copy of an owned template, including an archived template',
+                            routing: {
+                                request: {
+                                    method: 'POST',
+                                    url: '=/api/templates/{{$parameter.templateId}}/duplicate',
+                                },
                             },
                         },
                         {
@@ -409,43 +438,6 @@ class Zvid {
                             },
                         },
                         {
-                            name: 'Update',
-                            value: 'update',
-                            action: 'Update a template',
-                            description: 'Update the name, description, and/or validated project JSON of an owned active template',
-                            routing: {
-                                request: {
-                                    method: 'PUT',
-                                    url: '=/api/templates/{{$parameter.templateId}}',
-                                },
-                                send: { preSend: [GenericFunctions_1.buildTemplateUpdateBody] },
-                            },
-                        },
-                        {
-                            name: 'Delete (Archive)',
-                            value: 'delete',
-                            action: 'Archive a template',
-                            description: 'Archive an owned active template so it can no longer be rendered or updated',
-                            routing: {
-                                request: {
-                                    method: 'DELETE',
-                                    url: '=/api/templates/{{$parameter.templateId}}',
-                                },
-                            },
-                        },
-                        {
-                            name: 'Duplicate',
-                            value: 'duplicate',
-                            action: 'Duplicate a template',
-                            description: 'Create an active editable copy of an owned template, including an archived template',
-                            routing: {
-                                request: {
-                                    method: 'POST',
-                                    url: '=/api/templates/{{$parameter.templateId}}/duplicate',
-                                },
-                            },
-                        },
-                        {
                             name: 'Preview',
                             value: 'preview',
                             action: 'Preview a template',
@@ -476,6 +468,19 @@ class Zvid {
                                 output: {
                                     postReceive: [GenericFunctions_1.waitForRenderCompletion],
                                 },
+                            },
+                        },
+                        {
+                            name: 'Update',
+                            value: 'update',
+                            action: 'Update a template',
+                            description: 'Update the name, description, and/or validated project JSON of an owned active template',
+                            routing: {
+                                request: {
+                                    method: 'PUT',
+                                    url: '=/api/templates/{{$parameter.templateId}}',
+                                },
+                                send: { preSend: [GenericFunctions_1.buildTemplateUpdateBody] },
                             },
                         },
                     ],
@@ -523,11 +528,6 @@ class Zvid {
                     type: 'options',
                     options: [
                         {
-                            name: 'Fresh',
-                            value: 'fresh',
-                            description: 'Create a new direction and avoid recent assets',
-                        },
-                        {
                             name: 'Consistent',
                             value: 'consistent',
                             description: 'Use a stable seed for repeatable automation output',
@@ -536,6 +536,11 @@ class Zvid {
                             name: 'Explore',
                             value: 'explore',
                             description: 'Return several materially different directions',
+                        },
+                        {
+                            name: 'Fresh',
+                            value: 'fresh',
+                            description: 'Create a new direction and avoid recent assets',
                         },
                     ],
                     default: 'fresh',
@@ -601,9 +606,9 @@ class Zvid {
                     type: 'options',
                     options: [
                         { name: 'Auto From Style', value: 'auto' },
-                        { name: 'Restrained', value: 'restrained' },
                         { name: 'Balanced', value: 'balanced' },
                         { name: 'Energetic', value: 'energetic' },
+                        { name: 'Restrained', value: 'restrained' },
                     ],
                     default: 'auto',
                     displayOptions: { show: { resource: ['authoring'], operation: ['planCreativeVideo'] } },
@@ -613,9 +618,9 @@ class Zvid {
                     name: 'preferredMedia',
                     type: 'options',
                     options: [
+                        { name: 'Image', value: 'image' },
                         { name: 'Mixed', value: 'mixed' },
                         { name: 'Video', value: 'video' },
-                        { name: 'Image', value: 'image' },
                     ],
                     default: 'mixed',
                     displayOptions: { show: { resource: ['authoring'], operation: ['planCreativeVideo'] } },
@@ -641,9 +646,9 @@ class Zvid {
                     name: 'libraryKind',
                     type: 'options',
                     options: [
+                        { name: 'Canvas Presets', value: 'canvas-presets' },
                         { name: 'Complete Examples', value: 'examples' },
                         { name: 'Design Templates', value: 'design-templates' },
-                        { name: 'Canvas Presets', value: 'canvas-presets' },
                         { name: 'Shapes', value: 'shapes' },
                     ],
                     default: 'examples',
@@ -691,17 +696,6 @@ class Zvid {
                     displayOptions: { show: { resource: ['stockMedia'], operation: ['search'] } },
                 },
                 {
-                    displayName: 'Provider',
-                    name: 'stockProvider',
-                    type: 'options',
-                    options: ['all', 'pexels', 'pixabay', 'unsplash', 'giphy', 'jamendo'].map((value) => ({
-                        name: value,
-                        value,
-                    })),
-                    default: 'all',
-                    displayOptions: { show: { resource: ['stockMedia'], operation: ['search'] } },
-                },
-                {
                     displayName: 'Search Query',
                     name: 'stockQuery',
                     type: 'string',
@@ -729,8 +723,8 @@ class Zvid {
                     name: 'schemaTarget',
                     type: 'options',
                     options: [
-                        { name: 'Project Payload', value: 'project' },
                         { name: 'Full Render Request', value: 'render-request' },
+                        { name: 'Project Payload', value: 'project' },
                     ],
                     default: 'project',
                     description: 'Whether the LLM needs the project payload shape or the complete API request envelope',

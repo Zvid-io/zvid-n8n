@@ -46,19 +46,19 @@
 		},
 		{
 			"parameters": {
-				"endpointUrl": "https://mcp.zvid.io/mcp",
-				"profile": "creator",
-				"maxRenderCredits": 120,
+				"endpointUrl": "https://mcp.zvid.io/mcp?profile=creator&maxRenderCredits=120",
+				"serverTransport": "httpStreamable",
+				"authentication": "mcpOAuth2Api",
 				"include": "all",
 				"options": {
 					"timeout": 120000
 				}
 			},
-			"type": "n8n-nodes-zvid.zvidAgentTools",
-			"typeVersion": 1,
+			"type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+			"typeVersion": 1.4,
 			"position": [520, 260],
 			"id": "b74713cf-29eb-4465-8269-7d6f862d2b6c",
-			"name": "Zvid Agent Tools"
+			"name": "Zvid MCP Tools"
 		},
 		{
 			"parameters": {
@@ -75,7 +75,7 @@
 			"parameters": {
 				"width": 820,
 				"height": 360,
-				"content": "## Zvid AI Agent - one-click setup\n\nThis packaged workflow stores the safe **creator** profile and a **120-credit maximum per render** locally. A workflow downloaded from the Zvid dashboard captures both dashboard defaults at download time. Later dashboard changes never modify an existing workflow.\n\n1. Open **OpenAI Chat Model** and select an AI-model credential.\n2. Open **Zvid Agent Tools**, create an **MCP OAuth2 API** credential, keep dynamic client registration enabled, and sign in to Zvid.\n3. Keep or change Creator and **Max Render Credits** locally for only this workflow.\n4. Use **Tools to Include** if you want to narrow the selected profile further.\n\nThen open the Chat Trigger's test chat."
+				"content": "## Zvid AI Agent - one-click setup\n\nThis workflow uses n8n's built-in **MCP Client Tool** with Zvid's safe **creator** profile and a **120-credit maximum per render** stored in the endpoint query. A workflow downloaded from the Zvid dashboard captures both dashboard defaults at download time. Later dashboard changes never modify an existing workflow.\n\n1. Open **OpenAI Chat Model** and select an AI-model credential.\n2. Open **Zvid MCP Tools**, create an **MCP OAuth2 API** credential, keep dynamic client registration enabled, and sign in to Zvid.\n3. Keep or change `profile=creator` and `maxRenderCredits=120` in the endpoint only for this workflow.\n4. Use **Tools to Include** if you want to narrow the selected profile further.\n\nThen open the Chat Trigger's test chat."
 			},
 			"type": "n8n-nodes-base.stickyNote",
 			"typeVersion": 1,
@@ -119,7 +119,7 @@
 				]
 			]
 		},
-		"Zvid Agent Tools": {
+		"Zvid MCP Tools": {
 			"ai_tool": [
 				[
 					{

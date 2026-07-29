@@ -10,7 +10,12 @@ export class ZvidApi implements ICredentialType {
 
 	displayName = 'Zvid API';
 
-	documentationUrl = 'https://zvid.io/docs';
+	icon = {
+		light: 'file:../nodes/Zvid/zvid.light.svg',
+		dark: 'file:../nodes/Zvid/zvid.svg',
+	} as const;
+
+	documentationUrl = 'https://docs.zvid.io';
 
 	properties: INodeProperties[] = [
 		{
@@ -20,7 +25,7 @@ export class ZvidApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			description:
-				'Zvid API key (zvid_…), created in the Zvid dashboard under Settings → API Keys',
+				'Zvid API key (zvid_…), created at https://app.zvid.io/api-keys',
 		},
 		{
 			displayName: 'Base URL',

@@ -6,12 +6,12 @@
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://zvid.io/docs"
+				"url": "https://docs.zvid.io"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://zvid.io/docs"
+				"url": "https://docs.zvid.io"
 			}
 		]
 	}

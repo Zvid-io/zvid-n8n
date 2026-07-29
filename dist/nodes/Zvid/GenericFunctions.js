@@ -203,7 +203,7 @@ async function buildTemplateUpdateBody(requestOptions) {
     requestOptions.body = body;
     return requestOptions;
 }
-async function waitForRenderCompletion(items, _response) {
+async function waitForRenderCompletion(items) {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     const wait = this.getNodeParameter('waitForCompletion', false);
     if (!wait)
