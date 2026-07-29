@@ -6,6 +6,13 @@
 
 n8n community nodes for [Zvid](https://zvid.io) — render videos and images from JSON or templates, and trigger workflows when renders finish.
 
+## Ready-made workflows
+
+| Workflow | What it does |
+| -------- | ------------ |
+| [Faceless YouTube Shorts on autopilot](workflows/faceless-shorts-autopilot.md) | Daily: topic → script → voiceover → stock b-roll → captioned 1080×1920 render → YouTube. Core nodes only, so it runs on n8n Cloud unmodified. |
+| [Zvid AI Agent](workflows/zvid-ai-agent.json) | Chat agent wired to the hosted MCP endpoint (see below). |
+
 ## Nodes
 
 ### One-click Zvid AI Agent

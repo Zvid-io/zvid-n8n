@@ -1,0 +1,666 @@
+{
+  "name": "Restaurant weekly specials from a Google Sheet (Zvid)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "weeksInterval": 1,
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 9,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        380
+      ],
+      "id": "zvid-rws-0001",
+      "name": "Every Monday at 9am"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        200
+      ],
+      "id": "zvid-rws-0002",
+      "name": "Test manually"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"restaurantName\": \"Bella Cucina\",\n  \"tagline\": \"Handmade pasta · wood-fired everything\",\n  \"weekLabel\": \"\",\n  \"hookTitle\": \"This week's specials\",\n  \"ctaHeadline\": \"Hungry yet?\",\n  \"ctaText\": \"Book a table\",\n  \"handle\": \"@bellacucina\",\n  \"address\": \"214 Juniper Ave, Portland\",\n  \"deliveryNote\": \"DINE IN · TAKEAWAY · DELIVERY\",\n  \"brandBg\": \"#180F0A\",\n  \"brandAccent\": \"#E86A33\",\n  \"brandCream\": \"#FFF4E8\",\n  \"brandMuted\": \"#E4CBB0\",\n  \"headlineFont\": \"Bebas Neue\",\n  \"bodyFont\": \"DM Sans\",\n  \"sizzleVideo\": \"https://videos.pexels.com/video-files/34803863/14756686_1080_1920_30fps.mp4\",\n  \"fallbackDishPhotos\": [\n    \"https://images.pexels.com/photos/17302499/pexels-photo-17302499.jpeg?auto=compress&cs=tinysrgb&w=1620\",\n    \"https://images.pexels.com/photos/34407507/pexels-photo-34407507.jpeg?auto=compress&cs=tinysrgb&w=1620\",\n    \"https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDgwMTZ8MHwxfHNlYXJjaHw0fHxoZWFsdGh5JTIwZm9vZCUyMHNhbGFkJTIwYm93bCUyMGZyZXNofGVufDB8fHx8MTc4MzI2ODU4MHww&ixlib=rb-4.1.0&q=80&w=1080\",\n    \"https://images.unsplash.com/photo-1564759296729-771e78c26df7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDgwMTZ8MHwxfHNlYXJjaHwyfHxnb3VybWV0JTIwZm9vZCUyMHBsYXRlZCUyMHJlc3RhdXJhbnR8ZW58MHx8fHwxNzgzMjY4NTczfDA&ixlib=rb-4.1.0&q=80&w=1080\",\n    \"https://images.pexels.com/photos/10562410/pexels-photo-10562410.jpeg?auto=compress&cs=tinysrgb&w=1620\"\n  ],\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/03/19/audio_56ae1dae5f.mp3\",\n  \"musicVolume\": 0.18,\n  \"hookSeconds\": 3,\n  \"dishSeconds\": 2.8,\n  \"ctaSeconds\": 3.4,\n  \"maxDishes\": 5,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        300
+      ],
+      "id": "zvid-rws-0003",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -20,
+        300
+      ],
+      "id": "zvid-rws-0004",
+      "name": "Read menu sheet",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keeps the sheet rows marked ThisWeek = TRUE and normalises them into dishes.\n// Header matching is case- and space-insensitive, so \"Photo URL\", \"photourl\"\n// and \"PhotoUrl\" all resolve to the same column.\nconst cfg = $('Config').first().json;\nconst rows = $input.all().map((i) => i.json);\n\nconst truthy = (v) => ['true', 'yes', 'y', '1', 'x'].includes(String(v ?? '').trim().toLowerCase());\nconst norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');\nconst field = (row, name) => {\n  const want = norm(name);\n  for (const key of Object.keys(row)) if (norm(key) === want) return row[key];\n  return undefined;\n};\n\nconst marked = rows.filter((r) => truthy(field(r, 'ThisWeek')));\nif (!marked.length) {\n  throw new Error('No rows have ThisWeek = TRUE in the menu sheet. Mark 1-5 dishes and run again. Expected columns: Dish, Description, Price, PhotoUrl, ThisWeek.');\n}\n\nconst maxDishes = Math.max(1, Math.min(5, Number(cfg.maxDishes ?? 5)));\nconst dishes = marked.slice(0, maxDishes).map((r) => ({\n  name: String(field(r, 'Dish') ?? '').trim(),\n  description: String(field(r, 'Description') ?? '').trim(),\n  price: String(field(r, 'Price') ?? '').trim(),\n  photo: String(field(r, 'PhotoUrl') ?? '').trim(),\n}));\n\nconst missing = dishes.findIndex((d) => !d.name);\nif (missing !== -1) throw new Error('Marked row ' + (missing + 1) + ' has an empty Dish cell.');\n\nreturn [{ json: { dishes, totalMarked: marked.length, skipped: Math.max(0, marked.length - maxDishes) } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        300
+      ],
+      "id": "zvid-rws-0005",
+      "name": "Pick weekly dishes"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Builder for the \"Restaurant weekly specials\" Zvid project.\n// Adapted from the local-menu-promo / pro-local-menu-promo / local-top-5-dishes\n// library examples: full-bleed sizzle hook, one photo card per dish, CTA endcard.\n// The EXACT same logic is embedded in the n8n workflow's \"Build project JSON\"\n// code node — keep the two in sync.\n\n// ---------- tiny helpers -------------------------------------------------\nconst escapeHtml = (s) =>\n  String(s ?? '').replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\n\nconst round = (n) => Math.round(n * 100) / 100;\n\nconst hexToRgba = (hex, a) => {\n  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex).trim());\n  if (!m) return `rgba(232,106,51,${a})`;\n  const n = parseInt(m[1], 16);\n  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;\n};\n\nconst lighten = (hex, amt) => {\n  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex).trim());\n  if (!m) return hex;\n  const n = parseInt(m[1], 16);\n  const ch = (v) => Math.max(0, Math.min(255, v + amt)).toString(16).padStart(2, '0');\n  return `#${ch((n >> 16) & 255)}${ch((n >> 8) & 255)}${ch(n & 255)}`;\n};\n\n// Auto week label: \"WEEK OF JUL 27\" for the Monday of the current week.\nconst autoWeekLabel = (now = new Date()) => {\n  const d = new Date(now.getTime());\n  d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); // back to Monday\n  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];\n  return `WEEK OF ${months[d.getMonth()]} ${d.getDate()}`;\n};\n\n// ---------- main ---------------------------------------------------------\nfunction buildProject(cfg, dishesInput) {\n  const bg = cfg.brandBg || '#180F0A';\n  const accent = cfg.brandAccent || '#E86A33';\n  const cream = cfg.brandCream || '#FFF4E8';\n  const muted = cfg.brandMuted || '#E4CBB0';\n  const headFont = cfg.headlineFont || 'Bebas Neue';\n  const bodyFont = cfg.bodyFont || 'DM Sans';\n\n  const maxDishes = Math.max(1, Math.min(5, Number(cfg.maxDishes ?? 5)));\n\n  // -- dishes: validate, trim, fall back ---------------------------------\n  const fallbacks = Array.isArray(cfg.fallbackDishPhotos) ? cfg.fallbackDishPhotos.filter(Boolean) : [];\n  const raw = Array.isArray(dishesInput) ? dishesInput : [];\n  const dishes = raw\n    .map((d) => ({\n      name: String(d.name ?? '').trim(),\n      description: String(d.description ?? '').trim(),\n      price: String(d.price ?? '').trim(),\n      photo: String(d.photo ?? '').trim(),\n    }))\n    .filter((d) => d.name);\n\n  if (!dishes.length) {\n    throw new Error(\n      'No dishes to feature. Mark 1-5 rows with ThisWeek = TRUE in the menu sheet (columns: Dish, Description, Price, PhotoUrl, ThisWeek).'\n    );\n  }\n  const skipped = Math.max(0, dishes.length - maxDishes);\n  const picked = dishes.slice(0, maxDishes);\n\n  picked.forEach((d, i) => {\n    if (!/^https?:\\/\\//i.test(d.photo)) {\n      d.photo = fallbacks.length ? fallbacks[i % fallbacks.length] : '';\n    }\n    if (!d.photo) throw new Error(`Dish \"${d.name}\" has no PhotoUrl and no fallback photo is configured.`);\n    // Keep descriptions to ~3 lines on the card.\n    if (d.description.length > 220) d.description = d.description.slice(0, 217).trimEnd() + '…';\n  });\n\n  const weekLabel = String(cfg.weekLabel || '').trim() || autoWeekLabel();\n\n  // -- timing ------------------------------------------------------------\n  const hookSeconds = Number(cfg.hookSeconds ?? 3);\n  const dishSeconds = Number(cfg.dishSeconds ?? 2.8);\n  const ctaSeconds = Number(cfg.ctaSeconds ?? 3.4);\n\n  // -- adaptive font sizes (long names must not clip) --------------------\n  const nameLen = (cfg.restaurantName || '').length;\n  const brandFs = nameLen <= 20 ? 38 : nameLen <= 32 ? 31 : 26;\n  const brandLs = nameLen <= 20 ? 10 : nameLen <= 32 ? 6 : 4;\n\n  const hookTitle = cfg.hookTitle || \"This week's specials\";\n  const hookFs = hookTitle.length <= 20 ? 132 : hookTitle.length <= 30 ? 106 : 86;\n\n  const ctaHeadline = cfg.ctaHeadline || 'Hungry yet?';\n  const ctaFs = ctaHeadline.length <= 14 ? 96 : ctaHeadline.length <= 24 ? 78 : 62;\n\n  const dishNameFs = (n) => (n.length <= 16 ? 104 : n.length <= 26 ? 88 : n.length <= 40 ? 72 : 58);\n\n  const accentBorder = hexToRgba(accent, 0.4);\n  const accentSoft = hexToRgba(accent, 0.7);\n\n  // -- SVG overlays ------------------------------------------------------\n  const hookSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs><linearGradient id='rwsHook' x1='0' y1='0' x2='0' y2='1'>` +\n    `<stop offset='0' stop-color='${bg}' stop-opacity='0.55'/>` +\n    `<stop offset='0.42' stop-color='${bg}' stop-opacity='0.12'/>` +\n    `<stop offset='0.68' stop-color='${bg}' stop-opacity='0.5'/>` +\n    `<stop offset='1' stop-color='${bg}' stop-opacity='0.92'/>` +\n    `</linearGradient></defs>` +\n    `<rect width='1080' height='1920' fill='url(#rwsHook)'/>` +\n    `<path d='M84 300 L84 116 L268 116' fill='none' stroke='${cream}' stroke-width='9' stroke-opacity='0.9'/>` +\n    `<path d='M996 1624 L996 1808 L812 1808' fill='none' stroke='${accent}' stroke-width='9'/>` +\n    `<circle cx='940' cy='300' r='7' fill='${accent}'/>` +\n    `</svg>`;\n\n  const dishSvg = (idx) =>\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs><linearGradient id='rwsDish${idx}' x1='0' y1='0' x2='0' y2='1'>` +\n    `<stop offset='0' stop-color='${bg}' stop-opacity='0.42'/>` +\n    `<stop offset='0.4' stop-color='${bg}' stop-opacity='0.06'/>` +\n    `<stop offset='0.68' stop-color='${bg}' stop-opacity='0.55'/>` +\n    `<stop offset='1' stop-color='${bg}' stop-opacity='0.96'/>` +\n    `</linearGradient></defs>` +\n    `<rect width='1080' height='1920' fill='url(#rwsDish${idx})'/>` +\n    `<rect x='46' y='46' width='988' height='1828' rx='30' fill='none' stroke='${accentBorder}' stroke-width='1.5'/>` +\n    `</svg>`;\n\n  const ctaSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs><radialGradient id='rwsCta' cx='0.5' cy='0.4' r='0.9'>` +\n    `<stop offset='0' stop-color='${lighten(bg, 22)}'/>` +\n    `<stop offset='1' stop-color='${bg}'/>` +\n    `</radialGradient></defs>` +\n    `<rect width='1080' height='1920' fill='url(#rwsCta)'/>` +\n    `<rect x='46' y='46' width='988' height='1828' rx='34' fill='none' stroke='${accentBorder}' stroke-width='2'/>` +\n    `<path d='M470 560 C470 610 610 610 610 560 M450 560 H630 L610 760 C608 780 472 780 470 760 Z' fill='none' stroke='${accent}' stroke-width='7' stroke-linejoin='round'/>` +\n    `<path d='M505 500 C505 480 520 480 520 460 M545 500 C545 480 560 480 560 460 M585 500 C585 480 600 480 600 460' stroke='${accentSoft}' stroke-width='6' stroke-linecap='round' fill='none'/>` +\n    `</svg>`;\n\n  // -- scene 1: sizzle hook ----------------------------------------------\n  const scenes = [];\n  scenes.push({\n    id: 'hook',\n    duration: hookSeconds,\n    backgroundColor: bg,\n    transition: 'fade',\n    transitionId: 'dish-1',\n    transitionDuration: 0.5,\n    visuals: [\n      {\n        type: 'VIDEO',\n        src: cfg.sizzleVideo,\n        width: 1080,\n        height: 1920,\n        position: 'center-center',\n        resize: 'cover',\n        volume: 0,\n        track: 0,\n        enterBegin: 0,\n        exitEnd: hookSeconds,\n      },\n      { type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: hookSeconds, svg: hookSvg },\n      {\n        type: 'TEXT',\n        x: 540,\n        y: 150,\n        width: 940,\n        anchor: 'top-center',\n        track: 2,\n        enterBegin: 0.2,\n        enterEnd: 0.6,\n        enterAnimation: 'fade',\n        exitEnd: hookSeconds,\n        style: { fontFamily: headFont, color: cream },\n        html: `<div style='text-align:center; color:${cream}; font-size:${brandFs}px; letter-spacing:${brandLs}px;'>${escapeHtml(cfg.restaurantName)}</div>`,\n      },\n      {\n        type: 'TEXT',\n        x: 90,\n        y: 1500,\n        width: 900,\n        anchor: 'bottom-left',\n        track: 3,\n        enterBegin: 0.4,\n        enterEnd: 0.85,\n        enterAnimation: 'smoothup',\n        exitEnd: hookSeconds,\n        style: { fontFamily: headFont, color: cream },\n        html:\n          `<div style='display:inline-block; background:${accent}; color:${cream}; border-radius:999px; padding:14px 34px; font-size:27px; font-weight:800; letter-spacing:4px; font-family:${bodyFont}, sans-serif;'>${escapeHtml(weekLabel)}</div>` +\n          `<div style='margin-top:26px; color:${cream}; font-size:${hookFs}px; line-height:0.98; letter-spacing:2px;'>${escapeHtml(hookTitle)}</div>`,\n      },\n      {\n        type: 'TEXT',\n        x: 90,\n        y: 1560,\n        width: 900,\n        anchor: 'top-left',\n        track: 4,\n        enterBegin: 0.65,\n        enterEnd: 1.1,\n        enterAnimation: 'smoothup',\n        exitEnd: hookSeconds,\n        style: { fontFamily: bodyFont, color: muted },\n        html: `<div style='color:${muted}; font-size:${(cfg.tagline || '').length > 60 ? 26 : 30}px; line-height:1.35; font-weight:600;'>${escapeHtml(cfg.tagline || '')}</div>`,\n      },\n    ],\n  });\n\n  // -- one card per dish --------------------------------------------------\n  picked.forEach((dish, i) => {\n    const idx = i + 1;\n    const isLast = i === picked.length - 1;\n    const counter = picked.length > 1 ? `SPECIAL ${idx} OF ${picked.length}` : \"THIS WEEK'S SPECIAL\";\n    const priceFs = dish.price.length > 7 ? 34 : 40;\n\n    const visuals = [\n      {\n        type: 'IMAGE',\n        src: dish.photo,\n        width: 1080,\n        height: 1920,\n        position: 'center-center',\n        resize: 'cover',\n        zoom: true,\n        track: 0,\n        enterBegin: 0,\n        exitEnd: dishSeconds,\n      },\n      { type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: dishSeconds, svg: dishSvg(idx) },\n      {\n        type: 'TEXT',\n        x: 90,\n        y: 150,\n        anchor: 'top-left',\n        track: 2,\n        enterBegin: 0.15,\n        enterEnd: 0.5,\n        enterAnimation: 'smoothleft',\n        exitEnd: dishSeconds,\n        style: { fontFamily: bodyFont, color: cream },\n        html: `<div style='display:inline-block; background:${accent}; color:${cream}; border-radius:999px; padding:14px 34px; font-size:26px; font-weight:800; letter-spacing:3px;'>${escapeHtml(counter)}</div>`,\n      },\n      {\n        type: 'TEXT',\n        x: 90,\n        y: 1620,\n        width: 900,\n        anchor: 'bottom-left',\n        track: 3,\n        enterBegin: 0.35,\n        enterEnd: 0.8,\n        enterAnimation: 'smoothup',\n        exitEnd: dishSeconds,\n        style: { fontFamily: headFont, color: cream },\n        html:\n          `<div style='color:${cream}; font-size:${dishNameFs(dish.name)}px; line-height:0.98; letter-spacing:2px;'>${escapeHtml(dish.name)}</div>` +\n          (dish.description\n            ? `<div style='margin-top:16px; font-family:${bodyFont}, sans-serif; color:${muted}; font-size:29px; line-height:1.42; font-weight:500;'>${escapeHtml(dish.description)}</div>`\n            : ''),\n      },\n    ];\n\n    if (dish.price) {\n      visuals.push({\n        type: 'TEXT',\n        x: 880,\n        y: 205,\n        anchor: 'center-center',\n        angle: -6,\n        track: 4,\n        enterBegin: 0.55,\n        enterEnd: 0.9,\n        enterAnimation: 'circleopen',\n        exitEnd: dishSeconds,\n        style: { fontFamily: bodyFont, color: cream },\n        html: `<div style='display:inline-block; background:${cream}; color:${bg}; border-radius:18px; padding:14px 36px; font-size:${priceFs}px; font-weight:800;'>${escapeHtml(dish.price)}</div>`,\n      });\n    }\n\n    scenes.push({\n      id: `dish-${idx}`,\n      duration: dishSeconds,\n      backgroundColor: bg,\n      transition: isLast ? 'smoothup' : 'fade',\n      transitionId: isLast ? 'cta' : `dish-${idx + 1}`,\n      transitionDuration: isLast ? 0.5 : 0.45,\n      visuals,\n    });\n  });\n\n  // -- CTA endcard ---------------------------------------------------------\n  const ctaVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: ctaSeconds, svg: ctaSvg },\n    {\n      type: 'TEXT',\n      x: 540,\n      y: 900,\n      width: 940,\n      anchor: 'top-center',\n      track: 1,\n      enterBegin: 0.25,\n      enterEnd: 0.7,\n      enterAnimation: 'smoothup',\n      exitEnd: ctaSeconds,\n      style: { fontFamily: headFont, color: cream },\n      html: `<div style='text-align:center; color:${cream}; font-size:${ctaFs}px; line-height:1; letter-spacing:2px;'>${escapeHtml(ctaHeadline)}</div>`,\n    },\n    {\n      type: 'TEXT',\n      x: 540,\n      y: 1120,\n      anchor: 'top-center',\n      track: 2,\n      enterBegin: 0.65,\n      enterEnd: 1.05,\n      enterAnimation: 'circleopen',\n      exitEnd: ctaSeconds,\n      style: { fontFamily: bodyFont, color: cream },\n      html: `<div style='display:inline-block; background:${accent}; color:${cream}; border-radius:999px; padding:26px 62px; font-size:36px; font-weight:800;'>${escapeHtml(cfg.ctaText || 'Book a table')}</div>`,\n    },\n    {\n      type: 'TEXT',\n      x: 540,\n      y: 1300,\n      width: 900,\n      anchor: 'top-center',\n      track: 3,\n      enterBegin: 0.95,\n      enterEnd: 1.35,\n      enterAnimation: 'fade',\n      exitEnd: ctaSeconds,\n      style: { fontFamily: bodyFont, color: cream },\n      html:\n        `<div style='text-align:center; color:${cream}; font-size:30px; font-weight:700;'>${escapeHtml(cfg.handle || '')}</div>` +\n        `<div style='margin-top:10px; text-align:center; color:${muted}; font-size:26px; font-weight:500;'>${escapeHtml(cfg.address || '')}</div>`,\n    },\n    {\n      type: 'TEXT',\n      x: 540,\n      y: 1460,\n      width: 900,\n      anchor: 'top-center',\n      track: 4,\n      enterBegin: 1.15,\n      enterEnd: 1.55,\n      enterAnimation: 'fade',\n      exitEnd: ctaSeconds,\n      style: { fontFamily: headFont, color: cream },\n      html: `<div style='text-align:center; color:${hexToRgba(cream, 0.55)}; font-size:25px; letter-spacing:6px;'>${escapeHtml(cfg.deliveryNote || '')}</div>`,\n    },\n  ];\n\n  scenes.push({ id: 'cta', duration: ctaSeconds, backgroundColor: bg, visuals: ctaVisuals });\n\n  // -- assemble -----------------------------------------------------------\n  const overlaps = scenes.reduce((s, sc) => s + (sc.transitionDuration || 0), 0);\n  const totalDuration = round(scenes.reduce((s, sc) => s + sc.duration, 0) - overlaps);\n\n  // The API accepts ASCII letters/digits/space/_/- only in project names.\n  const safeName =\n    (String(cfg.restaurantName || 'restaurant')\n      .toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '')\n      .replace(/[^a-z0-9]+/g, '-')\n      .replace(/^-+|-+$/g, '')\n      .slice(0, 44) || 'restaurant') + '-weekly-specials';\n\n  const payload = {\n    name: safeName,\n    resolution: cfg.resolution || 'instagram-reel',\n    frameRate: Number(cfg.frameRate ?? 30),\n    backgroundColor: bg,\n    outputFormat: 'mp4',\n    scenes,\n    // NOTE: no `track` on audios — the public API rejects it.\n    audios: cfg.musicUrl ? [{ src: cfg.musicUrl, volume: Number(cfg.musicVolume ?? 0.18) }] : [],\n  };\n\n  return {\n    payload,\n    meta: {\n      weekLabel,\n      dishCount: picked.length,\n      skippedDishes: skipped,\n      dishNames: picked.map((d) => d.name),\n      totalDuration,\n      sceneBreakdown: scenes.map((s, i) => `${i + 1}. ${s.id} — ${s.duration}s`).join('\\n'),\n    },\n  };\n}\n\nconst cfg = $('Config').first().json;\nconst picked = $('Pick weekly dishes').first().json;\nconst { payload, meta } = buildProject(cfg, picked.dishes);\nreturn [{ json: { payload, meta: { ...meta, skippedRows: picked.skipped ?? 0, totalMarked: picked.totalMarked ?? meta.dishCount } } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        300
+      ],
+      "id": "zvid-rws-0006",
+      "name": "Build project JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/validate/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        640,
+        300
+      ],
+      "id": "zvid-rws-0007",
+      "name": "Validate project (free)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode;\nconst body = res.body || {};\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        860,
+        300
+      ],
+      "id": "zvid-rws-0008",
+      "name": "Check validation"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "rws-dry-run--cond",
+              "leftValue": "={{ $('Config').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1080,
+        300
+      ],
+      "id": "zvid-rws-0009",
+      "name": "Dry run?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: $json.payload.name, payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        140
+      ],
+      "id": "zvid-rws-0010",
+      "name": "Save draft to editor",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dry run: everything except the paid render. Open editorLink to preview the\n// draft, then set dryRun to false in Config to go live.\nconst cfg = $('Config').first().json;\nconst d = $('Check validation').first().json;\n\n// The draft save is best-effort (onError: continue) so a hiccup there never\n// hides the rest of the dry-run report.\nlet editorLink = null;\nlet draftId = null;\ntry {\n  const project = $('Save draft to editor').first().json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '') + '/?project=' + project.id;\n  }\n} catch (e) { /* draft step skipped or failed */ }\n\nconst sceneBreakdown = d.payload.scenes.map((s, i) => (i + 1) + '. ' + s.id + ' — ' + s.duration + 's').join('\\n');\n\nreturn [{\n  json: {\n    dryRun: true,\n    weekLabel: d.meta.weekLabel,\n    dishes: d.meta.dishNames,\n    dishCount: d.meta.dishCount,\n    skippedRows: d.meta.skippedRows,\n    videoSeconds: d.meta.totalDuration,\n    creditsRequired: d.creditsRequired,\n    warnings: d.warnings,\n    editorLink,\n    draftId,\n    sceneBreakdown,\n    nextStep: editorLink\n      ? 'Open editorLink to preview and tweak the draft. Set dryRun to false in Config to render.'\n      : 'Set dryRun to false in Config to render this for real.',\n    payload: d.payload,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        140
+      ],
+      "id": "zvid-rws-0011",
+      "name": "Dry run summary"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        460
+      ],
+      "id": "zvid-rws-0012",
+      "name": "Submit render",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Config').first().json.pollSeconds }}",
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        460
+      ],
+      "id": "zvid-rws-0013",
+      "name": "Wait",
+      "webhookId": "9e4f2c7a-1d3b-4a8e-b6c5-f0a92d7e5b14"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Config').first().json.apiUrl }}/api/jobs/{{ $('Submit render').first().json.jobId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1740,
+        460
+      ],
+      "id": "zvid-rws-0014",
+      "name": "Get render status",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "rws-render-finished--cond",
+              "leftValue": "={{ $json.state === 'completed' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1960,
+        460
+      ],
+      "id": "zvid-rws-0015",
+      "name": "Render finished?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fails fast on a failed render and stops the poll loop from running forever.\nconst cfg = $('Config').first().json;\nconst job = $input.first().json;\n\nif (job.state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('Render did not finish within ' + cfg.timeoutMinutes + ' minutes (job ' + job.id + ', state ' + job.state + ').');\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        680
+      ],
+      "id": "zvid-rws-0016",
+      "name": "Still rendering?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Final report for the run: the finished video URL plus a caption you can\n// paste straight into Instagram or Facebook.\nconst cfg = $('Config').first().json;\nconst build = $('Check validation').first().json;\nconst job = $('Get render status').first().json;\nconst url = typeof job.result === 'string' ? job.result : (job.result && job.result.url) || null;\n\nconst caption =\n  build.meta.weekLabel + ' at ' + cfg.restaurantName + ' — ' +\n  build.meta.dishNames.join(' · ') + '. ' + (cfg.ctaText || 'Book a table') + '! ' + (cfg.handle || '');\n\nreturn [{\n  json: {\n    videoUrl: url,\n    jobId: job.id,\n    creditsCharged: build.creditsRequired,\n    weekLabel: build.meta.weekLabel,\n    dishes: build.meta.dishNames,\n    dishCount: build.meta.dishCount,\n    videoSeconds: build.meta.totalDuration,\n    suggestedCaption: caption.trim(),\n    nextStep: 'Post videoUrl to Instagram Reels / your Facebook Page — see the Publish sticky note for the exact endpoints.',\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2180,
+        360
+      ],
+      "id": "zvid-rws-0017",
+      "name": "Run summary"
+    },
+    {
+      "parameters": {
+        "width": 880,
+        "height": 680,
+        "color": 4,
+        "content": "## Weekly specials video from your menu sheet\n\nEvery Monday at 9am this workflow reads your Google Sheet menu, takes the rows\nmarked `ThisWeek = TRUE`, and renders a 1080x1920 specials reel with Zvid —\na sizzle hook, one photo card per dish with a price chip, and a booking CTA,\nall in your brand colours. Ready for Instagram Reels and Facebook.\n\n### Setup (about five minutes)\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate project (free)*, *Save draft to editor*,\n   *Submit render* and *Get render status*.\n2. **Google Sheets** — attach your Google Sheets credential to *Read menu sheet*\n   and pick your spreadsheet + sheet there. Column layout is in the note beside it.\n3. **Open `Config`** — restaurant name, tagline, handle, address, brand colours,\n   fonts, timings. Every knob lives in this one node.\n4. Run **Test manually**. This workflow renders for real out of the box, so the\n   **first run spends credits** — about **16** for the 4-dish default. When it\n   finishes, click **▶ Watch video** to play the reel inside n8n.\n5. Prefer a free preview first? Set `dryRun: true` in `Config` *before* that\n   run: it validates, quotes the exact credit cost and saves a draft with an\n   **editorLink** — nothing is charged. Set it back to `false` to render.\n6. **Activate** the workflow to pick up the Monday 9am schedule.\n\n### Cost per video\n\nThe 4-dish default quotes **16 Zvid credits** (~15s); expect roughly **13-18**\nfor 3-5 dishes. *Validate project (free)* runs before every render and returns\nthe exact quote for your own menu — with the shipped `dryRun: false` the\nrender then proceeds automatically. Free accounts include credits to test."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -380
+      ],
+      "id": "zvid-rws-0018",
+      "name": "Note main"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 520,
+        "color": 5,
+        "content": "## The menu sheet\n\n*Read menu sheet* expects these columns (row 1 = headers; order, casing and\nspacing do not matter — `Photo URL` works too):\n\n| Column | Example |\n| --- | --- |\n| Dish | Wild Mushroom Pappardelle |\n| Description | Hand-cut pasta, porcini cream, shaved pecorino. |\n| Price | $19 |\n| PhotoUrl | https://…/pasta.jpg |\n| ThisWeek | TRUE |\n\n- **ThisWeek** — `TRUE`, `yes`, `1` or `x` all count. The video features the\n  first **5** marked rows (3-5 reads best); extras are skipped and reported.\n- **Price** — free text, bring your own currency symbol. Leave it empty to\n  hide the price chip for that dish.\n- **Description** — one or two short lines; anything past ~220 characters is\n  trimmed with an ellipsis so the card never overflows.\n- **PhotoUrl** — a direct https image link; portrait shots crop best on the\n  1080x1920 card. If empty, a polished food photo from `fallbackDishPhotos`\n  in Config steps in so the video never breaks."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        560
+      ],
+      "id": "zvid-rws-0019",
+      "name": "Note sheet"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 320,
+        "color": 4,
+        "content": "## Free dry run — opt in from Config\n\n`Config` ships with `dryRun: false`, so a normal run goes straight past this\nbranch and renders for real.\n\nSet `dryRun: true` in **Config** and the workflow stops here instead: it saves\nthe project as a **draft** and reports an **editorLink** like\n`https://editor.zvid.io/?project=prj_...`\n\nOpen it to watch the reel, tweak any card by hand, and see the exact credit\ncost — nothing is charged. Set `dryRun` back to `false` to render."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        -160
+      ],
+      "id": "zvid-rws-0020",
+      "name": "Note dry run"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 340,
+        "color": 6,
+        "content": "## Official Zvid nodes\n\nThese HTTP Request nodes are deliberately core-only so the workflow imports\nuntouched anywhere, including n8n Cloud.\n\nOn self-hosted n8n you can install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and swap them for native nodes:\n\n| HTTP Request node | Native replacement |\n| --- | --- |\n| Validate project (free) | **Zvid** → Render → Validate |\n| Submit render | **Zvid** → Render → Create |\n| Get render status + Wait | **Zvid Trigger** (render webhook) |\n\nThe Zvid Trigger removes the polling loop entirely."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -220
+      ],
+      "id": "zvid-rws-0021",
+      "name": "Note native nodes"
+    },
+    {
+      "parameters": {
+        "width": 660,
+        "height": 440,
+        "color": 7,
+        "content": "## Publish to Instagram & Facebook\n\nThe run ends with `videoUrl` (a ready MP4) and `suggestedCaption`. Wire them\ninto whichever publishing path you already use:\n\n- **Instagram Reels (Graph API)** — HTTP Request: `POST /{ig-user-id}/media`\n  with `media_type=REELS`, `video_url` and `caption`; poll the container\n  `status_code` until `FINISHED`; then `POST /{ig-user-id}/media_publish`.\n  Needs an Instagram professional account linked to a Facebook Page and the\n  `instagram_content_publish` permission.\n- **Facebook Page** — HTTP Request: `POST /{page-id}/videos` with\n  `file_url` = `videoUrl` and `description` = the caption.\n- **Schedulers** — Buffer, Metricool, Later and similar all accept a video\n  URL + caption over HTTP.\n\nPost the first few privately (or to a test page) until you like the output."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2140,
+        -120
+      ],
+      "id": "zvid-rws-0022",
+      "name": "Note publish"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2400,
+        360
+      ],
+      "id": "zvid-rws-0023",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "width": 440,
+        "height": 260,
+        "color": 3,
+        "content": "## ▶ Watch video\n\nClick this node after a run: it downloads the finished MP4 and n8n shows it as\nan inline video player in the output panel — no URL to copy, no tab to open.\n\n*Run summary* before it still carries `videoUrl` (plus `jobId` and\n`suggestedCaption`) if you want to pipe the result onward to a publish node.\n\nIt retries a few times — the CDN can 404 for a moment right after a render\ncompletes — and never fails the run if the download does not work."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2380,
+        540
+      ],
+      "id": "zvid-rws-0024",
+      "name": "Note watch"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every Monday at 9am": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test manually": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Read menu sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read menu sheet": {
+      "main": [
+        [
+          {
+            "node": "Pick weekly dishes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick weekly dishes": {
+      "main": [
+        [
+          {
+            "node": "Build project JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build project JSON": {
+      "main": [
+        [
+          {
+            "node": "Validate project (free)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate project (free)": {
+      "main": [
+        [
+          {
+            "node": "Check validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check validation": {
+      "main": [
+        [
+          {
+            "node": "Dry run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dry run?": {
+      "main": [
+        [
+          {
+            "node": "Save draft to editor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Submit render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save draft to editor": {
+      "main": [
+        [
+          {
+            "node": "Dry run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit render": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get render status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get render status": {
+      "main": [
+        [
+          {
+            "node": "Render finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render finished?": {
+      "main": [
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Still rendering?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still rendering?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run summary": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c7b2e9f4-3a51-4d86-b0e2-9f6c4a8d1e73",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "id": "ZvidRestaurantWeeklySpecials",
+  "tags": []
+}

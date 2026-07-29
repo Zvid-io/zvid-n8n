@@ -1,0 +1,747 @@
+{
+  "name": "Daily quiz Shorts from a Google Sheet (Zvid)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        380
+      ],
+      "id": "zvid-qz-0001",
+      "name": "Every day at 9am"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        200
+      ],
+      "id": "zvid-qz-0002",
+      "name": "Test manually"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"brandName\": \"BRAINWAVE\",\n  \"channelHandle\": \"@brainwavequiz\",\n  \"kicker\": \"🧠 DAILY QUIZ\",\n  \"timerHint\": \"You've got 3 seconds — lock it in!\",\n  \"countdownLabel\": \"TIME'S TICKING\",\n  \"ctaText\": \"Follow for a new quiz every day\",\n  \"accentColor\": \"#7C6BFF\",\n  \"bgColor\": \"#151533\",\n  \"bgDeepColor\": \"#0E0E24\",\n  \"countdownColors\": [\n    \"#7C6BFF\",\n    \"#FFB01F\",\n    \"#FF5C5C\"\n  ],\n  \"questionSeconds\": 6,\n  \"countdownSeconds\": 3.6,\n  \"revealSeconds\": 5.8,\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/03/19/audio_56ae1dae5f.mp3\",\n  \"musicVolume\": 0.16,\n  \"maxMusicBytes\": 5242880,\n  \"resolution\": \"youtube-short\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        300
+      ],
+      "id": "zvid-qz-0003",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -20,
+        300
+      ],
+      "id": "zvid-qz-0004",
+      "name": "Get quiz rows",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Picks the FIRST sheet row whose Status column is empty and validates it.\n// Rows the workflow has already rendered carry Status = \"done\".\nconst rows = $input.all().map((i) => i.json).filter((r) => r && Object.keys(r).length);\nif (!rows.length) {\n  throw new Error('The sheet returned no rows. Pick your spreadsheet and tab in BOTH Google Sheets nodes, and add the header row: Question, OptionA, OptionB, OptionC, CorrectLetter, FunFact, Status, VideoUrl.');\n}\n\nconst isBlank = (v) => v === undefined || v === null || String(v).trim() === '';\nconst next = rows.find((r) => isBlank(r.Status));\nif (!next) {\n  throw new Error('All ' + rows.length + ' quiz rows are used (Status is filled on every row). Add new questions, or clear a Status cell to re-run that row.');\n}\n\nconst rowNumber = next.row_number;\nif (!rowNumber) {\n  throw new Error('The sheet rows have no row_number - keep the Google Sheets node on the standard \"Get Row(s)\" operation.');\n}\n\nconst get = (k) => String(next[k] == null ? '' : next[k]).trim();\nconst question = get('Question');\nconst optionA = get('OptionA');\nconst optionB = get('OptionB');\nconst optionC = get('OptionC');\nconst correctLetter = get('CorrectLetter').toUpperCase();\nconst funFact = get('FunFact');\n\nif (!question) throw new Error('Row ' + rowNumber + ': Question is empty.');\nif (!optionA) throw new Error('Row ' + rowNumber + ': OptionA is empty.');\nif (!optionB) throw new Error('Row ' + rowNumber + ': OptionB is empty.');\nif (!optionC) throw new Error('Row ' + rowNumber + ': OptionC is empty.');\nif (correctLetter !== 'A' && correctLetter !== 'B' && correctLetter !== 'C') {\n  throw new Error('Row ' + rowNumber + ': CorrectLetter must be A, B or C (got \"' + get('CorrectLetter') + '\").');\n}\n\nreturn [{ json: { rowNumber, question, optionA, optionB, optionC, correctLetter, funFact } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        300
+      ],
+      "id": "zvid-qz-0005",
+      "name": "Pick next question"
+    },
+    {
+      "parameters": {
+        "method": "HEAD",
+        "url": "={{ $('Config').first().json.musicUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 15000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        420,
+        300
+      ],
+      "id": "zvid-qz-0006",
+      "name": "Check music",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "function buildProject(config, data) {\n  const cfg = config || {};\n  const round = (n) => Math.round(n * 100) / 100;\n  const esc = (s) =>\n    String(s == null ? '' : s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\n\n  // ---- inputs -------------------------------------------------------------\n  const question = String(data.question || '').trim();\n  const options = [String(data.optionA || '').trim(), String(data.optionB || '').trim(), String(data.optionC || '').trim()];\n  const correctLetter = String(data.correctLetter || '').trim().toUpperCase();\n  // Long fun facts break the card layout; 200 chars is the verified ceiling.\n  let funFact = String(data.funFact || '').trim();\n  if (funFact.length > 200) funFact = funFact.slice(0, 197).replace(/\\s+\\S*$/, '') + '…';\n\n  if (!question) throw new Error('The sheet row has no Question.');\n  options.forEach((o, i) => {\n    if (!o) throw new Error(`The sheet row is missing Option${'ABC'[i]}.`);\n    if (o.length > 40) throw new Error(`Option${'ABC'[i]} is ${o.length} characters — keep options at 40 or fewer so the rows stay readable.`);\n  });\n  if (question.length > 130) throw new Error(`The Question is ${question.length} characters — keep it at 130 or fewer.`);\n  const correctIndex = ['A', 'B', 'C'].indexOf(correctLetter);\n  if (correctIndex === -1) throw new Error(`CorrectLetter must be A, B or C (got \"${data.correctLetter}\").`);\n\n  // ---- brand knobs --------------------------------------------------------\n  const accent = cfg.accentColor || '#7C6BFF';\n  const bg = cfg.bgColor || '#151533';\n  const bgDeep = cfg.bgDeepColor || '#0E0E24';\n  const ink = bgDeep; // dark text used on accent-coloured surfaces\n  const digitColors = Array.isArray(cfg.countdownColors) && cfg.countdownColors.length === 3\n    ? cfg.countdownColors\n    : [accent, '#FFB01F', '#FF5C5C'];\n\n  const hexToRgb = (hex) => {\n    const m = /^#?([0-9a-f]{6})$/i.exec(String(hex).trim());\n    if (!m) return { r: 124, g: 107, b: 255 };\n    const n = parseInt(m[1], 16);\n    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };\n  };\n  const rgba = (hex, a) => { const { r, g, b } = hexToRgb(hex); return `rgba(${r},${g},${b},${a})`; };\n  const lighten = (hex, f) => {\n    const { r, g, b } = hexToRgb(hex);\n    const L = (v) => Math.min(255, Math.round(v + (255 - v) * f));\n    return `#${((1 << 24) + (L(r) << 16) + (L(g) << 8) + L(b)).toString(16).slice(1)}`;\n  };\n\n  // ---- adaptive type ------------------------------------------------------\n  // Conservative width estimate: average glyph ≈ 0.58em for Sora 800,\n  // 0.56em for Inter 600 (0.72em when the text is mostly capitals).\n  const estLines = (text, fontPx, availPx, em) => {\n    const caps = (text.match(/[A-Z]/g) || []).length;\n    const letters = (text.match(/[A-Za-z]/g) || []).length || 1;\n    const factor = caps / letters > 0.6 ? 0.72 : em;\n    return Math.max(1, Math.ceil((text.length * factor * fontPx) / availPx));\n  };\n\n  const qLen = question.length;\n  const qFont = qLen <= 45 ? 64 : qLen <= 85 ? 54 : 46;\n  const qLines = estLines(question, qFont, 900, 0.58);\n  const qHeight = Math.round(qLines * qFont * 1.18);\n\n  const optMax = Math.max(...options.map((o) => o.length));\n  const optFont = optMax <= 20 ? 40 : optMax <= 32 ? 36 : 31;\n  // Row inner width: 900 − 2×34 padding − 56 chip − 22 gap − 3 border ≈ 750.\n  const optRowHeights = options.map((o) => {\n    const lines = estLines(o, optFont, 750, 0.56);\n    return 60 + Math.max(56, Math.round(lines * optFont * 1.35));\n  });\n  const stackRows = (startY, gap) => {\n    const ys = [];\n    let y = startY;\n    for (const h of optRowHeights) { ys.push(y); y += h + gap; }\n    return { ys, end: y - gap };\n  };\n\n  // ---- scene timing -------------------------------------------------------\n  const qSeconds = round(Number(cfg.questionSeconds || 6) + (qLen > 85 ? 1.2 : 0));\n  const cSeconds = round(Number(cfg.countdownSeconds || 3.6));\n  const rSeconds = round(Number(cfg.revealSeconds || 5.8));\n  const slot = round(cSeconds / 3);\n\n  // ---- shared text styles -------------------------------------------------\n  const optionRow = (letter, text, state) => {\n    // state: 'neutral' | 'correct' | 'dim'\n    const isCorrect = state === 'correct';\n    const boxBg = isCorrect ? accent : 'rgba(255,255,255,0.06)';\n    const boxBorder = isCorrect ? accent : 'rgba(255,255,255,0.14)';\n    const textColor = isCorrect ? ink : '#EDECFF';\n    const chipBg = isCorrect ? ink : accent;\n    const chipColor = isCorrect ? '#FFFFFF' : ink;\n    // CSS-drawn check mark: no glyph-fallback risk on the render host.\n    const check = isCorrect\n      ? `<span style='display:inline-block; float:right; width:16px; height:32px; border-right:7px solid ${ink}; border-bottom:7px solid ${ink}; transform:rotate(45deg); margin-top:2px; margin-right:10px;'></span>`\n      : '';\n    return `<div style='background:${boxBg}; border:1.5px solid ${boxBorder}; border-radius:26px; padding:30px 34px; color:${textColor}; font-size:${optFont}px; font-weight:600;'><span style='display:inline-block; width:56px; height:56px; line-height:56px; text-align:center; background:${chipBg}; color:${chipColor}; border-radius:14px; font-weight:800; margin-right:22px;'>${letter}</span>${esc(text)}${check}</div>`;\n  };\n\n  // ---- scene 1 — question -------------------------------------------------\n  const q = stackRows(Math.max(640, 320 + qHeight + 70), 36);\n  const hintY = Math.min(1500, q.end + 90);\n\n  const questionScene = {\n    id: 'question',\n    duration: qSeconds,\n    backgroundColor: bg,\n    transition: 'smoothup',\n    transitionId: 'countdown',\n    transitionDuration: 0.5,\n    visuals: [\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: qSeconds,\n        svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='qzBg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${lighten(bg, 0.09)}'/><stop offset='1' stop-color='${bg}'/></linearGradient></defs><rect width='1080' height='1920' fill='url(#qzBg)'/><circle cx='140' cy='250' r='130' fill='${rgba(accent, 0.14)}'/><circle cx='985' cy='520' r='60' fill='${rgba(accent, 0.1)}'/><circle cx='950' cy='1710' r='180' fill='${rgba(accent, 0.11)}'/><circle cx='90' cy='1500' r='10' fill='${rgba(accent, 0.35)}'/><circle cx='1000' cy='1240' r='8' fill='${rgba(accent, 0.3)}'/></svg>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: 140, anchor: 'top-center', track: 1,\n        enterBegin: 0.2, enterEnd: 0.65, enterAnimation: 'fade', exitEnd: qSeconds,\n        style: { fontFamily: 'Sora', color: '#FFFFFF' },\n        html: `<div style='display:inline-block; background:${accent}; color:${ink}; border-radius:999px; padding:14px 40px; font-size:28px; font-weight:800; letter-spacing:6px;'>${esc(cfg.kicker || 'DAILY QUIZ')}</div>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: 320, width: 900, anchor: 'top-center', track: 2,\n        enterBegin: 0.4, enterEnd: 0.9, enterAnimation: 'smoothup', exitEnd: qSeconds,\n        style: { fontFamily: 'Sora', color: '#FFFFFF' },\n        html: `<div style='text-align:center; color:#FFFFFF; font-size:${qFont}px; line-height:1.18; font-weight:800; letter-spacing:-1px;'>${esc(question)}</div>`,\n      },\n      ...options.map((opt, i) => ({\n        type: 'TEXT', x: 90, y: q.ys[i], width: 900, anchor: 'top-left', track: 3 + i,\n        enterBegin: round(0.7 + i * 0.15), enterEnd: round(1.1 + i * 0.15),\n        enterAnimation: 'smoothleft', exitEnd: qSeconds,\n        // The contrast lint reads style.color (the HTML cascade wins at paint\n        // time, so these declarations never change the render).\n        style: { fontFamily: 'Inter', color: '#EDECFF' },\n        html: optionRow('ABC'[i], opt, 'neutral'),\n      })),\n      {\n        type: 'TEXT', x: 540, y: hintY, anchor: 'top-center', track: 6,\n        enterBegin: 1.5, enterEnd: 1.9, enterAnimation: 'fade', exitEnd: qSeconds,\n        style: { fontFamily: 'Inter', color: '#9C97D6' },\n        html: `<div style='color:#9C97D6; font-size:30px; font-weight:700; letter-spacing:2px;'>${esc(cfg.timerHint || 'You have 3 seconds — lock it in!')}</div>`,\n      },\n      {\n        // Handle watermark. y=1560 keeps its bottom edge near y~1600, above the\n        // Shorts caption strip (bottom ~300px); centred, so it also clears the\n        // right-edge button rail. Content rows never reach past y~1352.\n        type: 'TEXT', x: 540, y: 1560, anchor: 'top-center', track: 7,\n        enterBegin: 0.9, enterEnd: 1.3, enterAnimation: 'fade', exitEnd: qSeconds,\n        style: { fontFamily: 'Inter', color: '#9C97D6' },\n        html: `<div style='color:#7E79B8; font-size:26px; font-weight:700; letter-spacing:5px;'>${esc(cfg.channelHandle || '')}</div>`,\n      },\n    ],\n  };\n\n  // ---- scene 2 — countdown ------------------------------------------------\n  const countdownScene = {\n    id: 'countdown',\n    duration: cSeconds,\n    backgroundColor: bgDeep,\n    transition: 'circleopen',\n    transitionId: 'reveal',\n    transitionDuration: 0.55,\n    visuals: [\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: cSeconds,\n        svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='qzCnt' cx='0.5' cy='0.42' r='0.9'><stop offset='0' stop-color='${lighten(bgDeep, 0.12)}'/><stop offset='1' stop-color='${bgDeep}'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#qzCnt)'/><circle cx='540' cy='860' r='330' fill='none' stroke='${rgba(accent, 0.35)}' stroke-width='3'/><circle cx='540' cy='860' r='260' fill='none' stroke='${rgba(digitColors[1], 0.4)}' stroke-width='3'/><circle cx='540' cy='860' r='395' fill='none' stroke='${rgba(accent, 0.14)}' stroke-width='1.5'/></svg>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: 330, anchor: 'top-center', track: 1,\n        enterBegin: 0, exitEnd: cSeconds,\n        style: { fontFamily: 'Sora', color: digitColors[1] },\n        html: `<div style='text-align:center; color:${digitColors[1]}; font-size:28px; font-weight:800; letter-spacing:6px;'>${esc(cfg.countdownLabel || \"TIME'S TICKING\")}</div>`,\n      },\n      ...[3, 2, 1].map((n, i) => {\n        const isLast = i === 2;\n        // Each digit starts entering while the previous one fades, so no frame\n        // ever shows an empty ring between beats. The FIRST digit waits 0.2s\n        // and finishes entering exactly as the 0.5s scene crossfade ends, so\n        // it never double-exposes over the still-visible option rows.\n        const begin = i === 0 ? 0.2 : round(i * slot - 0.15);\n        return {\n          type: 'TEXT', x: 540, y: 680, anchor: 'top-center', track: 2 + i,\n          enterBegin: begin, enterEnd: round(begin + 0.3), enterAnimation: 'circleopen',\n          ...(isLast\n            ? { exitEnd: cSeconds }\n            : { exitBegin: round((i + 1) * slot - 0.15), exitEnd: round((i + 1) * slot), exitAnimation: 'fade' }),\n          style: { fontFamily: 'Sora', color: digitColors[i] },\n          html: `<div style='text-align:center; color:${digitColors[i]}; font-size:260px; font-weight:800;'>${n}</div>`,\n        };\n      }),\n    ],\n  };\n\n  // ---- scene 3 — reveal ---------------------------------------------------\n  const r = stackRows(330, 36);\n  const cardY = r.end + 80;\n  const factLines = estLines(funFact, 34, 800, 0.53);\n  const cardEnd = cardY + 72 + 40 + Math.round(factLines * 34 * 1.5);\n  const ctaY = Math.max(1240, cardEnd + 130);\n  const handleY = ctaY + 150;\n\n  const revealScene = {\n    id: 'reveal',\n    duration: rSeconds,\n    backgroundColor: bg,\n    visuals: [\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: rSeconds,\n        svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='qzRev' cx='0.5' cy='0.3' r='0.95'><stop offset='0' stop-color='${lighten(bg, 0.1)}'/><stop offset='1' stop-color='${bgDeep}'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#qzRev)'/><circle cx='120' cy='300' r='90' fill='${rgba(accent, 0.12)}'/><circle cx='980' cy='1680' r='150' fill='${rgba(accent, 0.1)}'/><circle cx='1005' cy='420' r='9' fill='${rgba(digitColors[1], 0.5)}'/><circle cx='80' cy='1350' r='8' fill='${rgba(accent, 0.4)}'/></svg>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: 210, anchor: 'top-center', track: 1,\n        enterBegin: 0.2, enterEnd: 0.6, enterAnimation: 'fade', exitEnd: rSeconds,\n        style: { fontFamily: 'Sora', color: '#9C97D6' },\n        html: `<div style='color:#9C97D6; font-size:30px; font-weight:800; letter-spacing:8px;'>CORRECT ANSWER</div>`,\n      },\n      ...options.map((opt, i) => {\n        const isCorrect = i === correctIndex;\n        return {\n          type: 'TEXT', x: 90, y: r.ys[i], width: 900, anchor: 'top-left', track: 2 + i,\n          ...(isCorrect\n            ? { enterBegin: 0.65, enterEnd: 1.05, enterAnimation: 'circleopen' }\n            : { enterBegin: round(0.25 + i * 0.12), enterEnd: round(0.5 + i * 0.12), enterAnimation: 'fade', opacity: 0.35 }),\n          exitEnd: rSeconds,\n          style: { fontFamily: 'Inter', color: isCorrect ? '#FFFFFF' : '#EDECFF' },\n          html: optionRow('ABC'[i], opt, isCorrect ? 'correct' : 'dim'),\n        };\n      }),\n      {\n        type: 'TEXT', x: 540, y: cardY, width: 880, anchor: 'top-center', track: 5,\n        enterBegin: 1.2, enterEnd: 1.65, enterAnimation: 'smoothup', exitEnd: rSeconds,\n        style: { fontFamily: 'Inter', color: '#CFCCF2' },\n        html: `<div style='background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.14); border-radius:28px; padding:34px 40px; text-align:left;'><div style='color:${digitColors[1]}; font-size:26px; font-weight:800; letter-spacing:4px;'>DID YOU KNOW?</div><div style='margin-top:14px; color:#CFCCF2; font-size:34px; line-height:1.5; font-weight:500;'>${esc(funFact)}</div></div>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: ctaY, anchor: 'top-center', track: 6,\n        enterBegin: 1.9, enterEnd: 2.3, enterAnimation: 'circleopen', exitEnd: rSeconds,\n        style: { fontFamily: 'Sora', color: '#FFFFFF' },\n        html: `<div style='display:inline-block; background:${accent}; color:${ink}; border-radius:999px; padding:24px 58px; font-size:32px; font-weight:800;'>${esc(cfg.ctaText || 'Follow for a new quiz every day')}</div>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: handleY, anchor: 'top-center', track: 7,\n        enterBegin: 2.2, enterEnd: 2.6, enterAnimation: 'fade', exitEnd: rSeconds,\n        style: { fontFamily: 'Inter', color: '#9C97D6' },\n        html: `<div style='color:#7E79B8; font-size:26px; font-weight:700; letter-spacing:5px;'>${esc(cfg.brandName || '')} · ${esc(cfg.channelHandle || '')}</div>`,\n      },\n    ],\n  };\n\n  // ---- audio (best-effort music bed) --------------------------------------\n  const music = data.music || {};\n  const audios = [];\n  if (cfg.musicUrl && music.ok !== false) {\n    audios.push({ src: cfg.musicUrl, volume: Number(cfg.musicVolume ?? 0.16) });\n  }\n\n  const totalDuration = round(qSeconds + cSeconds + rSeconds - 0.5 - 0.55);\n\n  const payload = {\n    // Render names only allow letters, digits, spaces, _ and -.\n    name: (`daily-quiz-${question}`).toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 120) || 'daily-quiz',\n    resolution: cfg.resolution || 'youtube-short',\n    frameRate: Number(cfg.frameRate ?? 30),\n    backgroundColor: bg,\n    outputFormat: 'mp4',\n    scenes: [questionScene, countdownScene, revealScene],\n    audios,\n  };\n\n  return {\n    payload,\n    meta: {\n      question,\n      correctLetter,\n      correctAnswer: options[correctIndex],\n      funFact,\n      questionFontPx: qFont,\n      optionFontPx: optFont,\n      sceneSeconds: { question: qSeconds, countdown: cSeconds, reveal: rSeconds },\n      totalDuration,\n      hasMusic: audios.length > 0,\n    },\n  };\n}\n\n// ---- n8n glue -----------------------------------------------------------\nconst cfg = $('Config').first().json;\nconst row = $('Pick next question').first().json;\n\n// Music probe (HEAD request, best-effort). A dead or oversized track just\n// means the video renders without a music bed - it can never fail the run.\nlet music = { ok: false };\ntry {\n  const probe = $input.first().json;\n  const status = Number(probe.statusCode);\n  const headers = probe.headers || {};\n  const bytes = Number(headers['content-length'] || headers['Content-Length'] || 0);\n  const limit = Number(cfg.maxMusicBytes ?? 5242880);\n  music = { ok: status === 200 && (!bytes || bytes <= limit), bytes };\n} catch (e) { /* keep ok:false */ }\n\nconst { payload, meta } = buildProject(cfg, {\n  question: row.question,\n  optionA: row.optionA,\n  optionB: row.optionB,\n  optionC: row.optionC,\n  correctLetter: row.correctLetter,\n  funFact: row.funFact,\n  music,\n});\n\nreturn [{ json: { payload, meta: { ...meta, rowNumber: row.rowNumber } } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ],
+      "id": "zvid-qz-0007",
+      "name": "Build project JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/validate/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        860,
+        300
+      ],
+      "id": "zvid-qz-0008",
+      "name": "Validate project (free)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug - surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode;\nconst body = res.body || {};\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        300
+      ],
+      "id": "zvid-qz-0009",
+      "name": "Check validation"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        460
+      ],
+      "id": "zvid-qz-0013",
+      "name": "Submit render",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Config').first().json.pollSeconds }}",
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1740,
+        460
+      ],
+      "id": "zvid-qz-0014",
+      "name": "Wait",
+      "webhookId": "4f6a2c8e-91d3-4b7a-8c25-6e0d9b3f7a51"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Config').first().json.apiUrl }}/api/jobs/{{ $('Submit render').first().json.jobId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1960,
+        460
+      ],
+      "id": "zvid-qz-0015",
+      "name": "Get render status",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "render-finished--cond",
+              "leftValue": "={{ $json.state === 'completed' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2180,
+        460
+      ],
+      "id": "zvid-qz-0016",
+      "name": "Render finished?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fails fast on a failed render and stops the poll loop from running forever.\nconst cfg = $('Config').first().json;\nconst job = $input.first().json;\n\nif (job.state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('Render did not finish within ' + cfg.timeoutMinutes + ' minutes (job ' + job.id + ', state ' + job.state + ').');\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2180,
+        680
+      ],
+      "id": "zvid-qz-0017",
+      "name": "Still rendering?"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Pick next question').first().json.rowNumber }}",
+            "Status": "done",
+            "VideoUrl": "={{ typeof $json.result === 'string' ? $json.result : ($json.result ? $json.result.url : '') }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2400,
+        360
+      ],
+      "id": "zvid-qz-0018",
+      "name": "Mark row done",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Final report for the run.\nconst build = $('Check validation').first().json;\nconst job = $('Get render status').first().json;\nconst url = typeof job.result === 'string' ? job.result : (job.result && job.result.url) || null;\n\nlet sheetUpdated = false;\ntry {\n  const u = $('Mark row done').first().json;\n  sheetUpdated = Boolean(u) && !u.error;\n} catch (e) { /* sheet write failed - reported below */ }\n\nreturn [{\n  json: {\n    question: build.meta.question,\n    correctAnswer: build.meta.correctLetter + '. ' + build.meta.correctAnswer,\n    videoUrl: url,\n    jobId: job.id,\n    creditsCharged: build.creditsRequired,\n    videoSeconds: build.meta.totalDuration,\n    sheetRow: build.meta.rowNumber,\n    sheetUpdated,\n    nextStep: sheetUpdated\n      ? 'Row marked done with the video URL. Post videoUrl as a Short, or add the YouTube tail from the sticky note.'\n      : 'The render finished but the sheet write-back failed - copy videoUrl manually and check the Mark row done node.',\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2620,
+        360
+      ],
+      "id": "zvid-qz-0019",
+      "name": "Run summary"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2840,
+        360
+      ],
+      "id": "zvid-qz-0025",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "width": 420,
+        "height": 240,
+        "color": 3,
+        "content": "## ▶ Watch video\n\nClick this node after a run: n8n downloads the finished MP4 and renders it as\nan inline video player with a download button — no URL to copy anywhere.\n\n*Run summary* before it still carries `videoUrl` (and `jobId`,\n`creditsCharged`) if you want to pipe the result onward."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2820,
+        560
+      ],
+      "id": "zvid-qz-0026",
+      "name": "Note 6"
+    },
+    {
+      "parameters": {
+        "width": 860,
+        "height": 680,
+        "color": 4,
+        "content": "## Daily quiz Shorts on autopilot\n\nEvery day this workflow reads the next unused question from your Google Sheet and\nrenders a 1080x1920 quiz Short with Zvid: **question + three options → an animated\n3-2-1 countdown → the correct answer highlighted, with a fun fact**. After a real\nrender it writes the video URL back to the sheet so a row is never reused.\n\n### Setup (about five minutes)\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate project (free)*, *Save draft to editor*, *Submit render*\n   and *Get render status*.\n2. **Google Sheets** — attach a Google Sheets OAuth2 credential to *Get quiz rows*\n   and *Mark row done*, then pick your spreadsheet + tab in BOTH nodes.\n   The expected columns are on the yellow note.\n3. **Open `Config`** and set your brand name, handle and colours. Every knob\n   lives there — nothing is buried in the nodes.\n4. Run **Test manually**. With the shipped default (`dryRun: false`) this\n   **renders for real and spends credits** — about **15 credits** per video\n   (free accounts include enough to test).\n   *Want a free look first?* Set `dryRun: true` in **Config** and the run stops\n   at a free validate: exact credit price plus an **editorLink** that opens the\n   draft in the Zvid editor. Nothing is charged and the sheet row stays unused.\n5. Click **▶ Watch video** (the last node on the canvas) to play the finished\n   MP4 right inside n8n.\n\nThe schedule fires daily; fill the sheet once a month and it works through it\nrow by row."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        -320
+      ],
+      "id": "zvid-qz-0020",
+      "name": "Note 1"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 460,
+        "color": 5,
+        "content": "## Your quiz sheet\n\nHeader row (exact spelling, row 1):\n\n`Question | OptionA | OptionB | OptionC | CorrectLetter | FunFact | Status | VideoUrl`\n\n- **Question** — up to 130 characters. Long questions automatically get a\n  smaller font and a little more reading time.\n- **OptionA/B/C** — up to 40 characters each.\n- **CorrectLetter** — `A`, `B` or `C`.\n- **FunFact** — one sentence shown after the reveal (up to 200 characters).\n- Leave **Status** and **VideoUrl** empty. The workflow takes the FIRST row with\n  an empty Status; after a real render it writes `done` + the video URL there.\n  Dry runs never touch the sheet.\n\nRows with anything in Status are skipped, so you can park a row by typing\n`skip` into its Status cell."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        560
+      ],
+      "id": "zvid-qz-0021",
+      "name": "Note 2"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 420,
+        "color": 6,
+        "content": "## The three beats\n\n1. **Question** — brand pill, the question, A/B/C option rows, handle watermark.\n2. **Countdown** — full-screen 3 · 2 · 1 with rotating accent colours. Digits\n   crossfade, so a paused frame never shows an empty ring.\n3. **Reveal** — the correct row lights up with a check mark, wrong answers dim\n   to 35%, and a \"DID YOU KNOW?\" card shows your FunFact.\n\nType sizes adapt to content length, and the layout is computed so nothing ever\noverlaps — a 130-character question and 40-character options still fit. Every\nelement ends above the caption strip the Shorts player draws along the bottom\nof the frame; the only things below the main content are the small handle\nwatermark and the brand line.\n\nThe music bed is HEAD-checked before use; if the URL is dead or over the plan's\naudio size cap the video simply renders without music — a nice-to-have can\nnever fail the run."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        560,
+        560
+      ],
+      "id": "zvid-qz-0022",
+      "name": "Note 3"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 400,
+        "color": 4,
+        "content": "## Dry run — the free preview (opt-in)\n\nThe workflow ships with `dryRun: false`, so a run renders for real and spends\ncredits. Set `dryRun: true` in **Config** to take this branch instead.\n\nA dry run validates the payload against your real plan limits, quotes the exact\ncredit cost, and saves the project as a **draft**, then reports an\n**editorLink** like\n\n`https://editor.zvid.io/?project=prj_...`\n\nOpen it to watch the video, tweak wording or colours by hand, and check the\ntiming before you spend a single credit. The sheet row is NOT marked as used by\na dry run.\n\nWhen the draft looks right, set `dryRun` back to `false` to render it."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        -180
+      ],
+      "id": "zvid-qz-0023",
+      "name": "Note 4"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 460,
+        "color": 7,
+        "content": "## Posting to YouTube Shorts\n\nThe run ends with the MP4 URL written back to your sheet — post it manually or\nbolt on a publish tail after *Run summary*:\n\n1. **HTTP Request** — GET `{{ $json.videoUrl }}`, response format **File**.\n   (This is exactly what *▶ Watch video* already does, so you can also just\n   branch your upload node off that one.)\n2. **YouTube** node (OAuth2) — operation *Upload*: title = the question,\n   add `#Shorts` to the description, keep privacy `private` or `unlisted`\n   until you have watched a few. A 9:16 video under 3 minutes is automatically\n   a Short.\n\nSwap the tail for TikTok, Instagram or Google Drive — everything before it\nstays identical.\n\nOn self-hosted n8n you can also install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and replace *Submit render* + *Wait* + *Get render\nstatus* with the native **Zvid** node and **Zvid Trigger** (render webhook) —\nthat removes the polling loop entirely."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        20
+      ],
+      "id": "zvid-qz-0024",
+      "name": "Note 5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dry-run--cond",
+              "leftValue": "={{ $('Config').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1300,
+        300
+      ],
+      "id": "zvid-qz-0010",
+      "name": "Dry run?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: ($json.payload.name || \"Daily quiz draft\").slice(0, 120), payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1520,
+        140
+      ],
+      "id": "zvid-qz-0011",
+      "name": "Save draft to editor",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dry run: everything except the paid render. Open editorLink to preview,\n// then set dryRun to false in Config to go live.\nconst cfg = $('Config').first().json;\nconst d = $('Check validation').first().json;\n\n// The draft save is best-effort (onError: continue) so a hiccup there never\n// hides the rest of the dry-run report.\nlet editorLink = null;\nlet draftId = null;\ntry {\n  const project = $('Save draft to editor').first().json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '') + '/?project=' + project.id;\n  }\n} catch (e) { /* draft step skipped or failed */ }\n\nreturn [{\n  json: {\n    dryRun: true,\n    question: d.meta.question,\n    correctAnswer: d.meta.correctLetter + '. ' + d.meta.correctAnswer,\n    funFact: d.meta.funFact,\n    sheetRow: d.meta.rowNumber,\n    editorLink,\n    draftId,\n    creditsRequired: d.creditsRequired,\n    videoSeconds: d.meta.totalDuration,\n    sceneSeconds: d.meta.sceneSeconds,\n    hasMusic: d.meta.hasMusic,\n    warnings: d.warnings,\n    sheetNote: 'Dry runs never mark the row as used - the same question renders when you set dryRun to false.',\n    nextStep: editorLink\n      ? 'Open editorLink to preview the draft, then set dryRun to false in Config to render and write back to the sheet.'\n      : 'Set dryRun to false in Config to render this for real.',\n    payload: d.payload,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1740,
+        140
+      ],
+      "id": "zvid-qz-0012",
+      "name": "Dry run summary"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every day at 9am": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test manually": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Get quiz rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get quiz rows": {
+      "main": [
+        [
+          {
+            "node": "Pick next question",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick next question": {
+      "main": [
+        [
+          {
+            "node": "Check music",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check music": {
+      "main": [
+        [
+          {
+            "node": "Build project JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build project JSON": {
+      "main": [
+        [
+          {
+            "node": "Validate project (free)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate project (free)": {
+      "main": [
+        [
+          {
+            "node": "Check validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check validation": {
+      "main": [
+        [
+          {
+            "node": "Dry run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dry run?": {
+      "main": [
+        [
+          {
+            "node": "Save draft to editor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Submit render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save draft to editor": {
+      "main": [
+        [
+          {
+            "node": "Dry run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit render": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get render status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get render status": {
+      "main": [
+        [
+          {
+            "node": "Render finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render finished?": {
+      "main": [
+        [
+          {
+            "node": "Mark row done",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Still rendering?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still rendering?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark row done": {
+      "main": [
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run summary": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b7e2d4f8-3a91-4c56-8d72-1f4e9a6b3c85",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "id": "ZvidQuizShorts",
+  "tags": []
+}

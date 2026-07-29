@@ -1,0 +1,842 @@
+{
+  "name": "We're hiring - a video for every job opening (Zvid)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        400
+      ],
+      "id": "zvid-wh-0001",
+      "name": "Every day at 9am"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        200
+      ],
+      "id": "zvid-wh-0002",
+      "name": "Test manually"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"companyName\": \"Northwind\",\n  \"companyLogoUrl\": \"\",\n  \"kicker\": \"WE'RE HIRING\",\n  \"ctaHeadline\": \"Your next role is right here.\",\n  \"ctaText\": \"Apply now\",\n  \"accentColor\": \"#FF6B57\",\n  \"backgroundColor\": \"#0E0F14\",\n  \"font\": \"Poppins\",\n  \"heroVideoUrl\": \"https://videos.pexels.com/video-files/7844862/7844862-hd_1080_1920_30fps.mp4\",\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2026/02/24/audio_3f375fdf97.mp3\",\n  \"musicVolume\": 0.16,\n  \"maxMusicBytes\": 5242880,\n  \"maxPerRun\": 3,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        300
+      ],
+      "id": "zvid-wh-0003",
+      "name": "Company Config"
+    },
+    {
+      "parameters": {
+        "method": "HEAD",
+        "url": "={{ $json.musicUrl || $json.apiUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 15000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        300
+      ],
+      "id": "zvid-wh-0004",
+      "name": "Check music track",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        200,
+        300
+      ],
+      "id": "zvid-wh-0005",
+      "name": "Read job openings"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Openings that still need a video: Role + ApplyUrl filled, VideoUrl empty.\nconst cfg = $('Company Config').first().json;\nconst rows = $input.all().map((i) => i.json);\nif (!rows.length) return [];\n\n// Sheets omits keys for trailing empty cells, so an all-empty VideoUrl column\n// may be missing from the row objects entirely - treat missing as empty.\nconst val = (r, k) => String(r[k] == null ? '' : r[k]).trim();\nconst keys = new Set();\nrows.forEach((r) => Object.keys(r).forEach((k) => keys.add(k)));\nfor (const required of ['Role', 'ApplyUrl']) {\n  if (!keys.has(required)) {\n    throw new Error('The sheet has no \"' + required + '\" column. Expected header row: Role, Team, Location, SalaryRange, Perk1, Perk2, Perk3, ApplyUrl, VideoUrl');\n  }\n}\n\nconst open = rows.filter((r) => val(r, 'Role') && val(r, 'ApplyUrl') && !val(r, 'VideoUrl'));\n// Cap per run so a freshly pasted backlog cannot burn the whole balance at once.\nconst limit = Math.max(1, Number(cfg.maxPerRun) || 3);\nreturn open.slice(0, limit).map((r) => ({ json: r }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        300
+      ],
+      "id": "zvid-wh-0006",
+      "name": "Rows to render"
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        660,
+        300
+      ],
+      "id": "zvid-wh-0007",
+      "name": "One row at a time"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The loop's done-output delivers every row report produced this run.\nconst cfg = $('Company Config').first().json;\nconst reports = $input.all().map((i) => i.json).filter((r) => r && r.mode);\nconst rendered = reports.filter((r) => r.mode === 'rendered');\nconst drafts = reports.filter((r) => r.mode === 'dry-run');\n\nreturn [{\n  json: {\n    processed: reports.length,\n    rendered: rendered.length,\n    drafts: drafts.length,\n    creditsCharged: rendered.reduce((a, r) => a + (Number(r.creditsCharged) || 0), 0),\n    creditsQuoted: drafts.reduce((a, r) => a + (Number(r.creditsRequired) || 0), 0),\n    rows: reports,\n    nextStep: cfg.dryRun\n      ? 'Open each editorLink to preview the drafts, then set dryRun to false in Company Config to render and write VideoUrl back to the sheet.'\n      : 'Videos are rendered and their URLs are in the sheet. Bolt a publish tail onto \"Rendered row report\" (see the LinkedIn sticky note).',\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        120
+      ],
+      "id": "zvid-wh-0008",
+      "name": "Run summary"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Builds one \"We're hiring\" project JSON from Company Config + one sheet row.\n// Design adapted from the hr-were-hiring / hr-job-opening library examples:\n// hero video + gradient shade + framed border, accent kicker pill + big role\n// title, dark offer scene with numbered perk cards + salary pill, glow CTA\n// scene with a circled check. Type sizes adapt to the text so long roles,\n// salaries and perks never overflow their containers.\n//\n// This exact function is embedded in the workflow's \"Build project JSON\" code\n// node — keep the two logically identical.\n\nfunction buildProject(config, data) {\n  const cfg = config || {};\n  const row = data || {};\n\n  // ---- helpers ------------------------------------------------------------\n  const esc = (s) =>\n    String(s == null ? '' : s).replace(/[&<>\"']/g, (c) =>\n      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' }[c]));\n  const clean = (s) => String(s == null ? '' : s).replace(/\\s+/g, ' ').trim();\n  const hex6 = (v, fb) => {\n    const s = String(v == null ? '' : v).trim();\n    if (/^#[0-9a-fA-F]{6}$/.test(s)) return s;\n    if (/^#[0-9a-fA-F]{3}$/.test(s)) return '#' + s[1] + s[1] + s[2] + s[2] + s[3] + s[3];\n    return fb;\n  };\n  const chan = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];\n  const rgba = (h, a) => { const c = chan(h); return `rgba(${c[0]},${c[1]},${c[2]},${a})`; };\n  const mix = (h1, h2, t) => {\n    const a = chan(h1); const b = chan(h2);\n    const m = a.map((v, i) => Math.round(v + (b[i] - v) * t));\n    return '#' + m.map((v) => v.toString(16).padStart(2, '0')).join('');\n  };\n  const isHttpUrl = (v) => /^https?:\\/\\//i.test(String(v == null ? '' : v).trim());\n\n  // ---- inputs -------------------------------------------------------------\n  const role = clean(row.role);\n  if (!role) throw new Error(`Row ${row.rowNumber || '?'} has an empty Role — nothing to announce.`);\n  const team = clean(row.team);\n  const location = clean(row.location);\n  const salary = clean(row.salaryRange);\n  const perks = (Array.isArray(row.perks) ? row.perks : []).map(clean).filter(Boolean).slice(0, 3);\n  const applyRaw = clean(row.applyUrl);\n  // The URL is DISPLAYED, not clicked — show it short and readable.\n  const applyDisplay = applyRaw.replace(/^https?:\\/\\//i, '').replace(/^www\\./i, '').replace(/\\/+$/, '');\n\n  const companyName = clean(cfg.companyName) || 'YOUR COMPANY';\n  const logoUrl = isHttpUrl(cfg.companyLogoUrl) ? clean(cfg.companyLogoUrl) : '';\n  const kicker = clean(cfg.kicker) || \"WE'RE HIRING\";\n  const ctaHeadline = clean(cfg.ctaHeadline) || 'Your next role is right here.';\n  const ctaText = clean(cfg.ctaText) || 'Apply now';\n  const font = clean(cfg.font) || 'Poppins';\n  const accent = hex6(cfg.accentColor, '#FF6B57');\n  const bg = hex6(cfg.backgroundColor, '#0E0F14');\n  // Text that sits ON the accent (pills) uses the dark background colour.\n  const ink = bg;\n  const white = '#FFFFFF';\n  const mutedOnDark = mix(white, bg, 0.45);\n  const heroVideo = isHttpUrl(cfg.heroVideoUrl) ? clean(cfg.heroVideoUrl) : '';\n  const musicUrl = isHttpUrl(cfg.musicUrl) ? clean(cfg.musicUrl) : '';\n\n  // ---- adaptive type sizes (Poppins ~0.55em avg advance at weight 800) ----\n  const roleSize =\n    role.length <= 14 ? 112 :\n    role.length <= 22 ? 96 :\n    role.length <= 32 ? 82 :\n    role.length <= 46 ? 66 :\n    role.length <= 64 ? 56 : 48;\n  const roleSpacing = roleSize >= 96 ? '-4px' : roleSize >= 66 ? '-2px' : '-1px';\n  const salarySize = salary.length <= 14 ? 44 : salary.length <= 24 ? 38 : 32;\n  const longestPerk = perks.reduce((m, p) => Math.max(m, p.length), 0);\n  const perkSize = longestPerk <= 28 ? 34 : longestPerk <= 60 ? 30 : 26;\n  const headlineSize = ctaHeadline.length <= 34 ? 76 : 62;\n  const urlSize = applyDisplay.length <= 32 ? 28 : 24;\n  const chipSize = 28;\n\n  // ---- durations (source-example convention: transitions overlap) ---------\n  const d1 = 4.0, d2 = 5.0, d3 = 4.0;\n  const tDur = 0.55;\n\n  // ---- shared brand header (logo image or company wordmark) ---------------\n  const brandVisual = (dur, track) => logoUrl\n    ? {\n        type: 'IMAGE', src: logoUrl, x: 540, y: 110, width: 360, height: 110,\n        anchor: 'top-center', resize: 'contain', track,\n        enterBegin: 0.2, enterEnd: 0.6, enterAnimation: 'fade', exitEnd: dur,\n      }\n    : {\n        type: 'TEXT', x: 540, y: 140, anchor: 'top-center', track,\n        enterBegin: 0.2, enterEnd: 0.6, enterAnimation: 'fade', exitEnd: dur,\n        style: { fontFamily: font, color: white },\n        html: `<div style='color:${white}; font-size:28px; font-weight:700; letter-spacing:10px;'>${esc(companyName.toUpperCase())}</div>`,\n      };\n\n  // ---- scene 1: hook ------------------------------------------------------\n  const hookVisuals = [];\n  if (heroVideo) {\n    hookVisuals.push({\n      type: 'VIDEO', src: heroVideo, width: 1080, height: 1920,\n      position: 'center-center', resize: 'cover', volume: 0, track: 0,\n      enterBegin: 0, exitEnd: d1,\n    });\n  }\n  hookVisuals.push({\n    type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: d1,\n    svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='whShade' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${bg}' stop-opacity='0.72'/><stop offset='0.42' stop-color='${bg}' stop-opacity='0.15'/><stop offset='0.74' stop-color='${bg}' stop-opacity='0.4'/><stop offset='1' stop-color='${bg}' stop-opacity='0.94'/></linearGradient></defs><rect width='1080' height='1920' fill='${heroVideo ? `url(#whShade)` : bg}'/><rect x='44' y='44' width='992' height='1832' rx='44' fill='none' stroke='rgba(255,255,255,0.16)' stroke-width='1.5'/></svg>`,\n  });\n  hookVisuals.push(brandVisual(d1, 2));\n  hookVisuals.push({\n    type: 'TEXT', x: 90, y: 1140, width: 900, anchor: 'top-left', track: 3,\n    enterBegin: 0.4, enterEnd: 0.9, enterAnimation: 'smoothup', exitEnd: d1,\n    style: { fontFamily: font, color: white },\n    html: `<div style='display:inline-block; background:${accent}; color:${ink}; border-radius:999px; padding:14px 34px; font-size:28px; font-weight:800; letter-spacing:4px;'>${esc(kicker.toUpperCase())}</div><div style='margin-top:26px; color:${white}; font-size:${roleSize}px; line-height:1.04; font-weight:800; letter-spacing:${roleSpacing};'>${esc(role)}</div>`,\n  });\n  const chips = [];\n  if (team) chips.push(`<span style='display:inline-block; background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.35); color:${white}; border-radius:999px; padding:12px 28px; font-size:${chipSize}px; font-weight:600; margin:0 14px 14px 0;'><span style='color:${accent};'>&#9679;</span>&nbsp; ${esc(team)}</span>`);\n  if (location) chips.push(`<span style='display:inline-block; background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.35); color:${white}; border-radius:999px; padding:12px 28px; font-size:${chipSize}px; font-weight:600; margin:0 14px 14px 0;'>${esc(location)}</span>`);\n  if (chips.length) {\n    hookVisuals.push({\n      type: 'TEXT', x: 90, y: 1660, width: 900, anchor: 'top-left', track: 4,\n      enterBegin: 0.9, enterEnd: 1.35, enterAnimation: 'smoothleft', exitEnd: d1,\n      style: { fontFamily: font, color: white },\n      html: `<div>${chips.join('')}</div>`,\n    });\n  }\n\n  // ---- scene 2: the offer -------------------------------------------------\n  const cardX = 90, cardW = 900, cardH = 200, cardStep = 240, cardBase = 620;\n  const glowTop = mix(bg, accent, 0.1);\n  const cardRects = perks\n    .map((_, i) => `<rect x='${cardX}' y='${cardBase + i * cardStep}' width='${cardW}' height='${cardH}' rx='28' fill='rgba(255,255,255,0.05)' stroke='${rgba(accent, 0.4)}' stroke-width='1.5'/>`)\n    .join('');\n  const offerVisuals = [{\n    type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: d2,\n    svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='whOffer' cx='0.5' cy='0.28' r='0.95'><stop offset='0' stop-color='${glowTop}'/><stop offset='1' stop-color='${bg}'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#whOffer)'/>${cardRects}</svg>`,\n  }];\n  const teamLine = [team ? `Join the ${team} team` : '', location].filter(Boolean).join(' &middot; ');\n  offerVisuals.push({\n    type: 'TEXT', x: 90, y: 280, width: 900, anchor: 'top-left', track: 1,\n    enterBegin: 0.25, enterEnd: 0.7, enterAnimation: 'smoothup', exitEnd: d2,\n    style: { fontFamily: font, color: white },\n    html: `<div style='color:${accent}; font-size:26px; font-weight:800; letter-spacing:5px;'>WHY JOIN ${esc(companyName.toUpperCase())}</div><div style='margin-top:18px; color:${white}; font-size:62px; line-height:1.06; font-weight:800; letter-spacing:-1px;'>Here&#39;s what you get.</div>${teamLine ? `<div style='margin-top:18px; color:${mutedOnDark}; font-size:30px; line-height:1.35; font-weight:500;'>${teamLine.split(' &middot; ').map(esc).join(' &middot; ')}</div>` : ''}`,\n  });\n  perks.forEach((perk, i) => {\n    offerVisuals.push({\n      type: 'TEXT', x: 130, y: cardBase + i * cardStep, width: 820, anchor: 'top-left', track: 2 + i,\n      enterBegin: 0.6 + i * 0.25, enterEnd: 1.05 + i * 0.25, enterAnimation: 'smoothleft', exitEnd: d2,\n      style: { fontFamily: font, color: '#E8EAF0' },\n      html: `<div style='display:flex; align-items:center; height:${cardH}px;'><div style='min-width:66px; color:${accent}; font-size:40px; font-weight:800;'>0${i + 1}</div><div style='margin-left:26px; color:#E8EAF0; font-size:${perkSize}px; line-height:1.25; font-weight:600;'>${esc(perk)}</div></div>`,\n    });\n  });\n  if (salary) {\n    offerVisuals.push({\n      type: 'TEXT', x: 90, y: cardBase + perks.length * cardStep + 40, anchor: 'top-left', track: 2 + perks.length,\n      enterBegin: 0.85 + perks.length * 0.25, enterEnd: 1.3 + perks.length * 0.25, enterAnimation: 'smoothup', exitEnd: d2,\n      // The visible glyphs sit on the accent pill — declare the accent so the\n      // layout contrast lint (which reads `style`, not the inline HTML) sees\n      // the element's real appearance against the dark scene.\n      style: { fontFamily: font, color: accent },\n      html: `<div style='color:${mutedOnDark}; font-size:24px; font-weight:700; letter-spacing:4px;'>COMPENSATION</div><div style='margin-top:16px; display:inline-block; background:${accent}; color:${ink}; border-radius:20px; padding:20px 44px; font-size:${salarySize}px; font-weight:800;'>${esc(salary)}</div>`,\n    });\n  }\n\n  // ---- scene 3: CTA -------------------------------------------------------\n  const ctaVisuals = [{\n    type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: d3,\n    svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='whGlow' cx='0.5' cy='0.4' r='0.9'><stop offset='0' stop-color='${mix(bg, accent, 0.16)}'/><stop offset='1' stop-color='${bg}'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#whGlow)'/><rect x='44' y='44' width='992' height='1832' rx='44' fill='none' stroke='${rgba(accent, 0.35)}' stroke-width='1.5'/><circle cx='540' cy='600' r='150' fill='none' stroke='${rgba(accent, 0.85)}' stroke-width='2.5'/><path d='M492 600 L528 636 L596 560' fill='none' stroke='${accent}' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/></svg>`,\n  }];\n  ctaVisuals.push(brandVisual(d3, 1));\n  ctaVisuals.push({\n    type: 'TEXT', x: 540, y: 850, width: 780, anchor: 'top-center', track: 2,\n    enterBegin: 0.3, enterEnd: 0.8, enterAnimation: 'smoothup', exitEnd: d3,\n    style: { fontFamily: font, color: white },\n    html: `<div style='text-align:center; color:${white}; font-size:${headlineSize}px; line-height:1.06; font-weight:800; letter-spacing:-2px;'>${esc(ctaHeadline)}</div>`,\n  });\n  ctaVisuals.push({\n    type: 'TEXT', x: 540, y: 1180, anchor: 'top-center', track: 3,\n    enterBegin: 0.7, enterEnd: 1.15, enterAnimation: 'smoothup', exitEnd: d3,\n    style: { fontFamily: font, color: accent },\n    html: `<div style='display:inline-block; background:${accent}; color:${ink}; border-radius:999px; padding:28px 70px; font-size:42px; font-weight:800;'>${esc(ctaText)}</div>`,\n  });\n  if (applyDisplay) {\n    ctaVisuals.push({\n      type: 'TEXT', x: 540, y: 1360, width: 920, anchor: 'top-center', track: 4,\n      enterBegin: 1.1, enterEnd: 1.5, enterAnimation: 'fade', exitEnd: d3,\n      style: { fontFamily: font, color: mutedOnDark },\n      html: `<div style='text-align:center; color:${mutedOnDark}; font-size:${urlSize}px; font-weight:600; letter-spacing:2px;'>${esc(applyDisplay)}</div>`,\n    });\n  }\n\n  // ---- assemble -----------------------------------------------------------\n  const slug = role.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')\n    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'role';\n\n  const payload = {\n    name: `were-hiring-${slug}`,\n    resolution: cfg.resolution || 'instagram-reel',\n    frameRate: Number(cfg.frameRate) || 30,\n    backgroundColor: bg,\n    outputFormat: 'mp4',\n    scenes: [\n      { id: 'hook', duration: d1, backgroundColor: bg, transition: 'smoothup', transitionId: 'offer', transitionDuration: tDur, visuals: hookVisuals },\n      { id: 'offer', duration: d2, backgroundColor: bg, transition: 'fade', transitionId: 'cta', transitionDuration: tDur, visuals: offerVisuals },\n      { id: 'cta', duration: d3, backgroundColor: bg, visuals: ctaVisuals },\n    ],\n    // NOTE: no `track` on audios — the production API rejects it.\n    ...(musicUrl ? { audios: [{ src: musicUrl, volume: Number(cfg.musicVolume) || 0.16 }] } : {}),\n  };\n\n  return {\n    payload,\n    meta: {\n      rowNumber: row.rowNumber != null ? row.rowNumber : null,\n      role, team, location, salary,\n      perkCount: perks.length,\n      applyDisplay,\n      projectName: `We're hiring — ${role}`.slice(0, 120),\n      nominalSeconds: d1 + d2 + d3,\n    },\n  };\n}\n\n// ---- n8n glue: one sheet row in, {payload, meta} out ----------------------\nconst cfg = $('Company Config').first().json;\nconst row = $json;\n\n// Music guard: if the configured track is unreachable or over the plan's\n// audio size cap, render WITHOUT music instead of failing the whole job.\nlet musicUrl = cfg.musicUrl;\ntry {\n  const probe = $('Check music track').first().json;\n  const status = Number(probe.statusCode);\n  const headers = probe.headers || {};\n  const bytes = Number(headers['content-length'] || headers['Content-Length'] || 0);\n  if (status !== 200 || (bytes && bytes > Number(cfg.maxMusicBytes || 5242880))) musicUrl = '';\n} catch (e) { /* probe unavailable - keep the configured track */ }\n\nconst { payload, meta } = buildProject({ ...cfg, musicUrl }, {\n  role: row.Role,\n  team: row.Team,\n  location: row.Location,\n  salaryRange: row.SalaryRange,\n  perks: [row.Perk1, row.Perk2, row.Perk3],\n  applyUrl: row.ApplyUrl,\n  rowNumber: row.row_number,\n});\nreturn [{ json: { payload, meta } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        460
+      ],
+      "id": "zvid-wh-0009",
+      "name": "Build project JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Company Config').first().json.apiUrl }}/api/render/validate/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1140,
+        460
+      ],
+      "id": "zvid-wh-0010",
+      "name": "Validate render (free)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug - surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode;\nconst body = res.body || {};\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        460
+      ],
+      "id": "zvid-wh-0011",
+      "name": "Check validation"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dry-run--cond",
+              "leftValue": "={{ $('Company Config').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1580,
+        460
+      ],
+      "id": "zvid-wh-0012",
+      "name": "Dry run?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Company Config').first().json.apiUrl }}/api/projects",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: $json.meta.projectName, payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1820,
+        300
+      ],
+      "id": "zvid-wh-0013",
+      "name": "Save draft to editor",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dry run: validated, quoted and saved as a FREE draft - nothing charged.\n// One report item per row; Run summary collects them when the loop finishes.\nconst cfg = $('Company Config').first().json;\nconst d = $('Check validation').first().json;\n\n// The draft save is best-effort (onError: continue) so a hiccup there never\n// hides the quote.\nlet editorLink = null;\nlet draftId = null;\ntry {\n  const project = $('Save draft to editor').first().json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '') + '/?project=' + project.id;\n  }\n} catch (e) { /* draft save failed; the report still goes out */ }\n\nreturn [{\n  json: {\n    mode: 'dry-run',\n    sheetRow: d.meta.rowNumber,\n    role: d.meta.role,\n    creditsRequired: d.creditsRequired,\n    editorLink,\n    draftId,\n    warnings: d.warnings,\n    videoUrl: null,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2040,
+        300
+      ],
+      "id": "zvid-wh-0014",
+      "name": "Dry-run row report"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Company Config').first().json.apiUrl }}/api/render/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1820,
+        620
+      ],
+      "id": "zvid-wh-0015",
+      "name": "Submit render",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Company Config').first().json.pollSeconds }}",
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2040,
+        620
+      ],
+      "id": "zvid-wh-0016",
+      "name": "Wait",
+      "webhookId": "c7d2e9a1-4b83-4f6e-9d2a-8e5f1c0b7a42"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Company Config').first().json.apiUrl }}/api/jobs/{{ $('Submit render').first().json.jobId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2260,
+        620
+      ],
+      "id": "zvid-wh-0017",
+      "name": "Get render status",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "render-finished--cond",
+              "leftValue": "={{ $json.state === 'completed' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2480,
+        620
+      ],
+      "id": "zvid-wh-0018",
+      "name": "Render finished?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fails fast on a failed render and stops the poll loop from running forever.\nconst cfg = $('Company Config').first().json;\nconst job = $input.first().json;\n\nif (job.state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('Render did not finish within ' + cfg.timeoutMinutes + ' minutes (job ' + job.id + ', state ' + job.state + ').');\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        840
+      ],
+      "id": "zvid-wh-0019",
+      "name": "Still rendering?"
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Build project JSON').first().json.meta.rowNumber }}",
+            "VideoUrl": "={{ typeof $json.result === 'string' ? $json.result : ($json.result ? $json.result.url : '') }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "VideoUrl",
+              "displayName": "VideoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2720,
+        480
+      ],
+      "id": "zvid-wh-0020",
+      "name": "Write VideoUrl to sheet",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// One finished opening: the sheet now holds its video URL.\nconst d = $('Check validation').first().json;\nconst job = $('Get render status').first().json;\nconst url = typeof job.result === 'string' ? job.result : (job.result && job.result.url) || null;\n\nreturn [{\n  json: {\n    mode: 'rendered',\n    sheetRow: d.meta.rowNumber,\n    role: d.meta.role,\n    creditsCharged: d.creditsRequired,\n    jobId: job.id,\n    videoUrl: url,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2940,
+        480
+      ],
+      "id": "zvid-wh-0021",
+      "name": "Rendered row report"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3180,
+        620
+      ],
+      "id": "zvid-wh-0028",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "width": 460,
+        "height": 240,
+        "color": 4,
+        "content": "## ▶ Watch video\n\nClick this node after a run to watch the finished video **inline** — n8n renders\nthe `video/mp4` binary with a player and a download button, so there is no URL\nto copy. One item per rendered opening.\n\n*Rendered row report* before it still carries `videoUrl` for piping onward (see\nthe publish-tail note)."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3160,
+        800
+      ],
+      "id": "zvid-wh-0029",
+      "name": "Note watch video"
+    },
+    {
+      "parameters": {
+        "width": 940,
+        "height": 720,
+        "color": 4,
+        "content": "## We're hiring — a video for every job opening\n\nAdd a row to a Google Sheet, get back a polished 1080x1920 hiring video: hero\nfootage + \"WE'RE HIRING\" + the role title, a dark offer scene with up to three\nperk cards and the salary, and an apply CTA. Vertical, so it works on LinkedIn,\nInstagram, TikTok and Shorts as-is. The finished URL is written back to the\nsheet, so a row is only ever rendered once.\n\n### Setup (about five minutes)\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate render (free)*, *Save draft to editor*, *Submit render*\n   and *Get render status*.\n2. **Google Sheets** — attach your Google credential to *Read job openings* AND\n   *Write VideoUrl to sheet*, then pick your spreadsheet + tab in both nodes\n   (they ship unselected on purpose). Columns are on the sheet note below.\n3. **Open `Company Config`** — company name, brand colours, optional logo URL,\n   hero video, music, CTA copy. Every knob lives here; no magic values are\n   buried in expressions.\n4. Run **Test manually** once. The shipped default is `dryRun: false`, so this\n   **renders for real and spends credits** — about 12 per opening, up to\n   `maxPerRun` (3) openings per run. Click **▶ Watch video** to play the result\n   inside n8n.\n   *Want a free preview first?* Set `dryRun: true` in `Company Config` before you\n   run: every open row is validated and saved as a FREE draft with an editor link\n   + the exact credit quote, and nothing is charged. Set it back to `false` to\n   render.\n5. **Activate the schedule** once you are happy with the look.\n\n### Cost\n\nOne ~12 second 1080x1920 video is about **12 credits**. *Validate render (free)*\nstill returns that exact per-row quote before every render — it is just no longer\na stopping point. Free accounts include enough credits to test."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -420
+      ],
+      "id": "zvid-wh-0022",
+      "name": "Note overview"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 380,
+        "color": 5,
+        "content": "## The job-openings sheet\n\nHeader row (exact names, one opening per row):\n\n`Role | Team | Location | SalaryRange | Perk1 | Perk2 | Perk3 | ApplyUrl | VideoUrl`\n\n- **Role and ApplyUrl are required** — rows missing either are skipped.\n- **VideoUrl stays empty** — the workflow only picks rows where it is blank and\n  writes the finished MP4 URL there. Clear the cell to re-render an opening.\n  At most `maxPerRun` rows are processed per run.\n- Perk2 / Perk3 may be empty — the perk cards adapt (0–3 cards).\n- ApplyUrl is DISPLAYED on the video, so a short address reads best\n  (`acme.com/careers` beats a 70-character tracking link — long ones wrap)."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        140,
+        640
+      ],
+      "id": "zvid-wh-0023",
+      "name": "Note sheet schema"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 420,
+        "color": 3,
+        "content": "## One designed template, adaptive type\n\nThe look is adapted from Zvid's hr-were-hiring / hr-job-opening library\nexamples: hero video under a gradient scrim + hairline frame, accent kicker\npill, numbered perk cards, a salary pill and a glow CTA with a circled check.\n\n**Type sizes adapt to the text.** A 70-character role title steps down through\nfive font sizes instead of overflowing; the salary pill and perk cards do the\nsame, so \"Competitive + meaningful equity\" fits as cleanly as \"€85k–€110k\".\n\nColours (`accentColor`, `backgroundColor`), font, kicker and CTA copy are all\nCompany Config knobs. Set `companyLogoUrl` to swap the wordmark for a logo\nimage. The hero clip and music are stock defaults — replace either with your\nown brand asset by URL. A music track that is unreachable or over ~5 MB (the\nfree plan's audio cap) is dropped automatically instead of failing the render."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        820,
+        780
+      ],
+      "id": "zvid-wh-0024",
+      "name": "Note design"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 380,
+        "color": 4,
+        "content": "## Dry run — the free opt-in, not the default\n\nThe shipped default is `dryRun: false`: rows go straight down the render branch\nand credits are spent.\n\nSet `dryRun: true` in **Company Config** and every open row stops here instead —\nthe payload is validated, saved as a **draft**, and reported with an editor link\nlike `https://editor.zvid.io/?project=prj_...` plus the exact credit cost.\nNothing is charged.\n\nOpen the link, watch the video back, tweak anything by hand. When it looks right,\nset `dryRun` back to `false` — same rows, real renders, URLs written back to the\nsheet."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        -120
+      ],
+      "id": "zvid-wh-0025",
+      "name": "Note dry run"
+    },
+    {
+      "parameters": {
+        "width": 680,
+        "height": 420,
+        "color": 7,
+        "content": "## Publish tail: LinkedIn, Blotato, anywhere\n\nAfter a live run the sheet holds a ready-to-post MP4 URL per opening. Two easy\ntails to bolt onto *Rendered row report*:\n\n- **LinkedIn node** (OAuth2 credential): add an HTTP Request node that downloads\n  `videoUrl` (response format: *File*), then a LinkedIn → Create Post node with\n  the binary + caption. Build the caption from `role` and the apply link, e.g.\n  \"We're hiring: {{role}} — apply at ...\".\n- **Blotato** (or any cross-poster with an HTTP API): skip the download and POST\n  `videoUrl` straight to its post endpoint with one HTTP Request node — it\n  fetches the video itself and can fan out to LinkedIn, X, TikTok and Instagram.\n\nKeep the first runs manual: post one, check how it looks in the feed, then\nautomate. The report item also carries `sheetRow` and `jobId` if you want to\nlog posts back to the sheet."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2900,
+        100
+      ],
+      "id": "zvid-wh-0026",
+      "name": "Note publish tail"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 340,
+        "color": 6,
+        "content": "## Official Zvid nodes\n\nThese HTTP Request nodes are deliberately core-only so the workflow runs\nanywhere, including n8n Cloud with nothing installed.\n\nOn self-hosted n8n you can install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and swap them for native nodes:\n\n| HTTP Request node | Native replacement |\n| --- | --- |\n| Validate render (free) | **Zvid** → Render → Validate |\n| Submit render | **Zvid** → Render → Create |\n| Get render status + Wait | **Zvid Trigger** (render webhook) |\n\nThe Zvid Trigger removes the polling loop entirely."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        60
+      ],
+      "id": "zvid-wh-0027",
+      "name": "Note official nodes"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every day at 9am": {
+      "main": [
+        [
+          {
+            "node": "Company Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test manually": {
+      "main": [
+        [
+          {
+            "node": "Company Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Company Config": {
+      "main": [
+        [
+          {
+            "node": "Check music track",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check music track": {
+      "main": [
+        [
+          {
+            "node": "Read job openings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read job openings": {
+      "main": [
+        [
+          {
+            "node": "Rows to render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rows to render": {
+      "main": [
+        [
+          {
+            "node": "One row at a time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One row at a time": {
+      "main": [
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build project JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build project JSON": {
+      "main": [
+        [
+          {
+            "node": "Validate render (free)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate render (free)": {
+      "main": [
+        [
+          {
+            "node": "Check validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check validation": {
+      "main": [
+        [
+          {
+            "node": "Dry run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dry run?": {
+      "main": [
+        [
+          {
+            "node": "Save draft to editor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Submit render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save draft to editor": {
+      "main": [
+        [
+          {
+            "node": "Dry-run row report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dry-run row report": {
+      "main": [
+        [
+          {
+            "node": "One row at a time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit render": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get render status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get render status": {
+      "main": [
+        [
+          {
+            "node": "Render finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render finished?": {
+      "main": [
+        [
+          {
+            "node": "Write VideoUrl to sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Still rendering?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still rendering?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write VideoUrl to sheet": {
+      "main": [
+        [
+          {
+            "node": "Rendered row report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rendered row report": {
+      "main": [
+        [
+          {
+            "node": "One row at a time",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f3a8b2c1-9d47-4e60-8a25-6c1b0d9e7f34",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "id": "ZvidWereHiring",
+  "tags": []
+}

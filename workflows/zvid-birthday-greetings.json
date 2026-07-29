@@ -1,0 +1,864 @@
+{
+  "name": "Birthday & anniversary greeting videos from your CRM (Zvid)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        380
+      ],
+      "id": "zvid-bg-0001",
+      "name": "Every day at 8am"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        200
+      ],
+      "id": "zvid-bg-0002",
+      "name": "Test manually"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"brandName\": \"Northwind\",\n  \"signoffText\": \"\",\n  \"accent\": \"#FF6F91\",\n  \"accent2\": \"#FFB86B\",\n  \"backgroundColor\": \"#1A0C11\",\n  \"textPrimary\": \"#FBEDE9\",\n  \"textMuted\": \"#C29A97\",\n  \"headingFont\": \"Playfair Display\",\n  \"bodyFont\": \"Space Grotesk\",\n  \"birthdayMessage\": \"Wishing you a fantastic year ahead — from all of us at {brand}.\",\n  \"anniversaryMessage\": \"Thank you for {years} wonderful years together. Here's to the next chapter — from all of us at {brand}.\",\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2026/02/24/audio_3f375fdf97.mp3\",\n  \"musicVolume\": 0.18,\n  \"scene1Seconds\": 5.2,\n  \"scene2Seconds\": 5.6,\n  \"transitionSeconds\": 0.55,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"sendEmail\": false,\n  \"emailFrom\": \"greetings@yourcompany.com\",\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        300
+      ],
+      "id": "zvid-bg-0003",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -20,
+        300
+      ],
+      "id": "zvid-bg-0004",
+      "name": "Read contacts"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keeps only the rows that celebrate today (workflow timezone) and have not\n// been greeted yet this year. One output item per matching contact.\nconst rows = $input.all().map((i) => i.json);\nconst today = { year: $today.year, month: $today.month, day: $today.day };\n\n// Turns one spreadsheet row into a normalized contact and decides whether the\r\n// row celebrates today. Pure function: (row, today:{year,month,day}) -> result.\r\nfunction parseSheetDate(v) {\r\n  if (v === null || v === undefined || v === '') return null;\r\n  // Google Sheets can hand a date over as a serial number (days since 1899-12-30).\r\n  if (typeof v === 'number' && isFinite(v)) {\r\n    const d = new Date(Math.round((v - 25569) * 86400000));\r\n    return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate() };\r\n  }\r\n  const s = String(v).trim();\r\n  let m = /^(\\d{4})-(\\d{1,2})-(\\d{1,2})/.exec(s); // ISO — the documented format\r\n  if (m) return { y: +m[1], m: +m[2], d: +m[3] };\r\n  m = /^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/.exec(s); // M/D/YYYY — Sheets' US default\r\n  if (m) return { y: +m[3], m: +m[1], d: +m[2] };\r\n  const t = Date.parse(s); // last resort: \"March 14, 1992\"\r\n  if (!isNaN(t)) {\r\n    // Non-ISO date-only strings parse at LOCAL midnight — read them back with\r\n    // local getters or every date shifts a day in non-UTC timezones.\r\n    const d = new Date(t);\r\n    return { y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() };\r\n  }\r\n  return null;\r\n}\r\n\r\nfunction isLeapYear(y) {\r\n  return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;\r\n}\r\n\r\nfunction normalizeRow(row, today) {\r\n  const get = (k) => {\r\n    // Column names are matched case-insensitively so \"name\" and \"Name\" both work.\r\n    const key = Object.keys(row).find((rk) => rk.trim().toLowerCase() === k);\r\n    return key === undefined ? undefined : row[key];\r\n  };\r\n  const name = String(get('name') || '').trim();\r\n  if (!name) return { match: false, reason: 'empty Name' };\r\n\r\n  const date = parseSheetDate(get('date'));\r\n  if (!date) return { match: false, reason: `unreadable Date \"${get('date')}\" (use YYYY-MM-DD)`, name };\r\n\r\n  // Month-day match; Feb 29 contacts celebrate on Feb 28 in non-leap years.\r\n  const leapShift =\r\n    date.m === 2 && date.d === 29 && !isLeapYear(today.year) &&\r\n    today.month === 2 && today.day === 28;\r\n  if (!(date.m === today.month && date.d === today.day) && !leapShift) {\r\n    return { match: false, reason: 'not today', name };\r\n  }\r\n\r\n  // Idempotency guard: never greet the same contact twice in one year.\r\n  const lastSent = parseInt(String(get('lastsentyear') || '').trim(), 10);\r\n  if (lastSent === today.year) return { match: false, reason: 'already sent this year', name };\r\n\r\n  const type =\r\n    String(get('type') || 'birthday').trim().toLowerCase() === 'anniversary'\r\n      ? 'anniversary'\r\n      : 'birthday';\r\n\r\n  // Explicit Years column wins. Otherwise anniversaries count from the Date's\r\n  // year; birthdays never auto-compute (revealing an age must be opt-in).\r\n  let years = parseInt(String(get('years') || '').trim(), 10);\r\n  if (!(years > 0)) {\r\n    years =\r\n      type === 'anniversary' && date.y > 1900 && date.y < today.year\r\n        ? today.year - date.y\r\n        : null;\r\n  }\r\n\r\n  return {\r\n    match: true,\r\n    contact: {\r\n      name,\r\n      type,\r\n      years: years > 0 ? years : null,\r\n      message: String(get('message') || '').trim(), // optional per-row override\r\n      email: String(get('email') || '').trim(),\r\n      rowNumber: Number(get('row_number')) || null,\r\n      lastSentYearNew: today.year,\r\n    },\r\n  };\r\n}\n\nconst out = [];\nconst skipped = [];\nrows.forEach((row, i) => {\n  const r = normalizeRow(row, today);\n  if (r.match) {\n    out.push({ json: r.contact, pairedItem: { item: i } });\n  } else if (r.reason && r.reason !== 'not today' && r.reason !== 'already sent this year') {\n    skipped.push('row ' + (row.row_number || i + 2) + ' (' + (r.name || '?') + '): ' + r.reason);\n  }\n});\nif (skipped.length) console.log('Rows skipped with problems:\\n' + skipped.join('\\n'));\n// No matches -> no items -> the rest of the workflow simply does not run today.\nreturn out;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        300
+      ],
+      "id": "zvid-bg-0005",
+      "name": "Find today's celebrations"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Builds one Zvid project per contact. The design logic is identical to the\n// tested builder in the template repo — edit carefully and keep fonts/margins.\nconst cfg = $('Config').first().json;\n\n// Assembles the Zvid project for one contact. Design blended from the library's\r\n// celebration examples: img-app-thank-you (palette, serif headline, heart,\r\n// divider), apppersonal-community-milestone (scene rhythm, pill kicker, entrance\r\n// animations, footer brand) and saas-milestone (badge pill accents).\r\nfunction ordinal(n) {\r\n  const s = ['th', 'st', 'nd', 'rd'];\r\n  const v = n % 100;\r\n  return n + (s[(v - 20) % 10] || s[v] || s[0]);\r\n}\r\n\r\nfunction escapeHtml(s) {\r\n  return String(s).replace(/[&<>\"']/g, (c) => ({\r\n    '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;',\r\n  }[c]));\r\n}\r\n\r\n// The API's project-name pattern is strict ASCII: /^[a-zA-Z0-9_\\- ]+$/.\r\n// Greeting names are routinely non-ASCII, so sanitize hard and keep a fallback.\r\nfunction sanitizeProjectName(s) {\r\n  const clean = String(s).toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '')\r\n    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 120);\r\n  return clean || 'greeting-video';\r\n}\r\n\r\nfunction hexRgb(hex) {\r\n  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex).trim());\r\n  if (!m) return '255,255,255';\r\n  const n = parseInt(m[1], 16);\r\n  return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;\r\n}\r\n\r\n// Conservative greedy word-wrap estimate (avgEm ~ average glyph width in em).\r\n// Used only to pick font sizes and stack elements — real layout is done by the\r\n// renderer; the estimate errs on \"more lines\" so nothing ever overlaps.\r\nfunction estimateLines(text, fontSize, boxWidth, avgEm) {\r\n  const avg = fontSize * avgEm;\r\n  const words = String(text).split(/\\s+/).filter(Boolean);\r\n  let lines = 1;\r\n  let cur = 0;\r\n  for (const w of words) {\r\n    const wpx = w.length * avg;\r\n    if (cur > 0 && cur + avg * 0.5 + wpx > boxWidth) {\r\n      lines += 1;\r\n      cur = wpx;\r\n    } else {\r\n      cur += (cur > 0 ? avg * 0.5 : 0) + wpx;\r\n    }\r\n  }\r\n  return lines;\r\n}\r\n\r\n// Largest size whose longest word still fits the box and whose wrap stays\r\n// within maxLines. Returns { size, lines }.\r\nfunction fitFont(text, sizes, boxWidth, maxLines, avgEm) {\r\n  const longest = Math.max(...String(text).split(/\\s+/).filter(Boolean).map((w) => w.length), 1);\r\n  let last = null;\r\n  for (const size of sizes) {\r\n    last = { size, lines: estimateLines(text, size, boxWidth, avgEm) };\r\n    if (longest * size * avgEm <= boxWidth && last.lines <= maxLines) return last;\r\n  }\r\n  return last;\r\n}\r\n\r\nfunction buildProject(cfg, contact) {\r\n  const accent = cfg.accent || '#FF6F91';\r\n  const accent2 = cfg.accent2 || '#FFB86B';\r\n  const aRgb = hexRgb(accent);\r\n  const a2Rgb = hexRgb(accent2);\r\n  const bg = cfg.backgroundColor || '#1A0C11';\r\n  const textPrimary = cfg.textPrimary || '#FBEDE9';\r\n  const textMuted = cfg.textMuted || '#C29A97';\r\n  const mutedRgb = hexRgb(textMuted);\r\n  const headingFont = cfg.headingFont || 'Playfair Display';\r\n  const bodyFont = cfg.bodyFont || 'Space Grotesk';\r\n  const s1 = Number(cfg.scene1Seconds ?? 5.2);\r\n  const s2 = Number(cfg.scene2Seconds ?? 5.6);\r\n  const tDur = Number(cfg.transitionSeconds ?? 0.55);\r\n\r\n  const name = String(contact.name || '').trim() || 'Friend';\r\n  const type = contact.type === 'anniversary' ? 'anniversary' : 'birthday';\r\n  const years = Number(contact.years) > 0 ? Math.round(Number(contact.years)) : null;\r\n  const brandName = String(cfg.brandName || 'Zvid').trim();\r\n  const signoff = String(cfg.signoffText || '').trim() || `— The ${brandName} Team`;\r\n\r\n  const occasionLine =\r\n    type === 'anniversary'\r\n      ? years ? `Happy ${ordinal(years)} Anniversary` : 'Happy Anniversary'\r\n      : years ? `Happy ${ordinal(years)} Birthday` : 'Happy Birthday';\r\n\r\n  // Message: per-row override > per-occasion config default. {brand}/{name}/{years}\r\n  // tokens personalise the config defaults.\r\n  const rawMessage =\r\n    String(contact.message || '').trim() ||\r\n    String((type === 'anniversary' ? cfg.anniversaryMessage : cfg.birthdayMessage) || '').trim() ||\r\n    'Wishing you a wonderful day and an even better year ahead.';\r\n  const message = rawMessage\r\n    .replace(/\\{brand\\}/g, brandName)\r\n    .replace(/\\{name\\}/g, name.split(/\\s+/)[0])\r\n    .replace(/\\{years\\}/g, years ? String(years) : 'many');\r\n\r\n  // ---- background + ornament SVGs ---------------------------------------\r\n  const frame = `<rect x='40' y='40' width='1000' height='1840' rx='46' fill='none' stroke='#FFFFFF' stroke-opacity='0.08' stroke-width='1.5'/>`;\r\n  const sparkle = (x, y, r, o) =>\r\n    `<circle cx='${x}' cy='${y}' r='${r}' fill='${accent2}' fill-opacity='${o}'/>`;\r\n  const sparkles =\r\n    sparkle(150, 320, 5, 0.35) + sparkle(930, 420, 4, 0.3) + sparkle(210, 1520, 4, 0.25) +\r\n    sparkle(880, 1460, 6, 0.3) + sparkle(540, 210, 3, 0.3) + sparkle(120, 980, 3, 0.22) +\r\n    sparkle(960, 1040, 3, 0.22);\r\n  const bgSvg = (cx, cy) =>\r\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs>` +\r\n    `<radialGradient id='ga' cx='${cx}' cy='${cy}' r='0.75'><stop offset='0' stop-color='${accent}' stop-opacity='0.34'/><stop offset='1' stop-color='${accent}' stop-opacity='0'/></radialGradient>` +\r\n    `<radialGradient id='gb' cx='0.15' cy='0.92' r='0.7'><stop offset='0' stop-color='${accent2}' stop-opacity='0.2'/><stop offset='1' stop-color='${accent2}' stop-opacity='0'/></radialGradient>` +\r\n    `<linearGradient id='gd' x1='0' y1='0' x2='0' y2='1'><stop offset='0.55' stop-color='#000000' stop-opacity='0'/><stop offset='1' stop-color='#000000' stop-opacity='0.4'/></linearGradient>` +\r\n    `</defs><rect width='1080' height='1920' fill='${bg}'/><rect width='1080' height='1920' fill='url(#ga)'/><rect width='1080' height='1920' fill='url(#gb)'/><rect width='1080' height='1920' fill='url(#gd)'/>${sparkles}${frame}</svg>`;\r\n\r\n  // Gradient heart from img-app-thank-you (translated into a 300x280 box);\r\n  // anniversaries get the ring treatment from the community-milestone thanks scene.\r\n  const heartHalo = `<radialGradient id='hh' cx='0.5' cy='0.5' r='0.5'><stop offset='0.6' stop-color='${accent}' stop-opacity='0'/><stop offset='1' stop-color='${accent}' stop-opacity='0.28'/></radialGradient>`;\r\n  const heartGrad = `<linearGradient id='ht' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${accent2}'/><stop offset='1' stop-color='${accent}'/></linearGradient>`;\r\n  const iconSvg =\r\n    type === 'anniversary'\r\n      ? `<svg width='300' height='280' viewBox='0 0 300 280' xmlns='http://www.w3.org/2000/svg'><defs>${heartHalo}${heartGrad}</defs>` +\r\n        `<circle cx='150' cy='140' r='134' fill='url(#hh)'/>` +\r\n        `<circle cx='150' cy='140' r='118' fill='none' stroke='rgba(${a2Rgb},0.7)' stroke-width='3'/>` +\r\n        `<path d='M150 208.8 C70 156 78 87.2 127.6 87.2 C146.8 87.2 150 111.2 150 111.2 C150 111.2 153.2 87.2 172.4 87.2 C222 87.2 230 156 150 208.8 Z' fill='url(#ht)'/></svg>`\r\n      : `<svg width='300' height='280' viewBox='0 0 300 280' xmlns='http://www.w3.org/2000/svg'><defs>${heartHalo}${heartGrad}</defs>` +\r\n        `<circle cx='150' cy='140' r='134' fill='url(#hh)'/>` +\r\n        `<path d='M150 226 C50 160 60 74 122 74 C146 74 150 104 150 104 C150 104 154 74 178 74 C240 74 250 160 150 226 Z' fill='url(#ht)'/></svg>`;\r\n\r\n  const dividerSvg =\r\n    `<svg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'>` +\r\n    `<line x1='0' y1='10' x2='38' y2='10' stroke='${accent}' stroke-opacity='0.6' stroke-width='1.4'/>` +\r\n    `<line x1='62' y1='10' x2='100' y2='10' stroke='${accent}' stroke-opacity='0.6' stroke-width='1.4'/>` +\r\n    `<circle cx='50' cy='10' r='4' fill='${accent}'/></svg>`;\r\n\r\n  // Soft bokeh lights drifting upward — negative delays put every light\r\n  // mid-flight on frame one, so nothing \"pops in\" at the start of a scene.\r\n  const bokeh = (seconds) => ({\r\n    animationDuration: Math.min(15, seconds),\r\n    css:\r\n      `.fx{position:relative;width:1080px;height:1920px;overflow:hidden}` +\r\n      `.fx i{position:absolute;bottom:-220px;display:block;border-radius:50%;animation:rise 9s linear infinite}` +\r\n      `.fx i:nth-child(1){left:6%;width:150px;height:150px;background:radial-gradient(circle,rgba(${aRgb},0.4) 0%,rgba(${aRgb},0) 70%);animation-delay:-1.5s}` +\r\n      `.fx i:nth-child(2){left:78%;width:110px;height:110px;background:radial-gradient(circle,rgba(${a2Rgb},0.38) 0%,rgba(${a2Rgb},0) 70%);animation-delay:-4s;animation-duration:11s}` +\r\n      `.fx i:nth-child(3){left:30%;width:80px;height:80px;background:radial-gradient(circle,rgba(${a2Rgb},0.32) 0%,rgba(${a2Rgb},0) 70%);animation-delay:-7s;animation-duration:8s}` +\r\n      `.fx i:nth-child(4){left:58%;width:180px;height:180px;background:radial-gradient(circle,rgba(${aRgb},0.3) 0%,rgba(${aRgb},0) 70%);animation-delay:-6s;animation-duration:13s}` +\r\n      `.fx i:nth-child(5){left:14%;width:90px;height:90px;background:radial-gradient(circle,rgba(${aRgb},0.34) 0%,rgba(${aRgb},0) 70%);animation-delay:-3s;animation-duration:10s}` +\r\n      `.fx i:nth-child(6){left:88%;width:70px;height:70px;background:radial-gradient(circle,rgba(${a2Rgb},0.3) 0%,rgba(${a2Rgb},0) 70%);animation-delay:-8s;animation-duration:9s}` +\r\n      `@keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.75}75%{opacity:.4}100%{transform:translateY(-2100px);opacity:0}}`,\r\n  });\r\n  const bokehVisual = (seconds) => ({\r\n    type: 'TEXT',\r\n    html: `<div class='fx'><i></i><i></i><i></i><i></i><i></i><i></i></div>`,\r\n    x: 540, y: 960, anchor: 'center-center',\r\n    track: 1, opacity: 0.55,\r\n    enterBegin: 0, exitEnd: seconds,\r\n    style: { fontFamily: bodyFont, color: textPrimary },\r\n    customCode: bokeh(seconds),\r\n  });\r\n\r\n  // ---- scene 1: the reveal ----------------------------------------------\r\n  const nameFit = fitFont(name, [132, 116, 100, 84, 72, 64], 940, 2, 0.56);\r\n  const nameH = Math.ceil(nameFit.lines * nameFit.size * 1.12);\r\n  const dividerY = 860 + nameH + 80;\r\n  const chipY = dividerY + 90;\r\n  const chipLine = type === 'anniversary' && years ? `Celebrating ${years} wonderful years` : null;\r\n\r\n  const scene1 = {\r\n    id: 'reveal',\r\n    duration: s1,\r\n    backgroundColor: bg,\r\n    transition: 'fade',\r\n    transitionId: 'message',\r\n    transitionDuration: tDur,\r\n    visuals: [\r\n      { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: s1, svg: bgSvg(0.5, 0.24) },\r\n      bokehVisual(s1),\r\n      {\r\n        type: 'SVG', x: 390, y: 380, width: 300, height: 280, anchor: 'top-left',\r\n        track: 2, enterBegin: 0.15, enterEnd: 0.6, enterAnimation: 'fade', exitEnd: s1,\r\n        svg: iconSvg,\r\n      },\r\n      {\r\n        type: 'TEXT', x: 540, y: 740, anchor: 'top-center',\r\n        track: 3, enterBegin: 0.3, enterEnd: 0.75, enterAnimation: 'fade', exitEnd: s1,\r\n        style: { fontFamily: bodyFont, color: accent2 },\r\n        html: `<div style='display:inline-block; background:rgba(${a2Rgb},0.1); border:1.5px solid rgba(${a2Rgb},0.55); color:${accent2}; border-radius:999px; padding:14px 40px; font-size:26px; font-weight:800; letter-spacing:6px;'>${escapeHtml(occasionLine.toUpperCase())}</div>`,\r\n      },\r\n      {\r\n        type: 'TEXT', x: 70, y: 860, width: 940, anchor: 'top-left',\r\n        track: 4, enterBegin: 0.55, enterEnd: 1.05, enterAnimation: 'circleopen', exitEnd: s1,\r\n        style: { fontFamily: headingFont, color: textPrimary },\r\n        html: `<div style='text-align:center; color:${textPrimary}; font-size:${nameFit.size}px; line-height:1.12; font-weight:700; letter-spacing:-1px;'>${escapeHtml(name)}</div>`,\r\n      },\r\n      {\r\n        type: 'SVG', x: 490, y: dividerY, width: 100, height: 20, anchor: 'top-left',\r\n        track: 5, enterBegin: 0.95, enterEnd: 1.35, enterAnimation: 'fade', exitEnd: s1,\r\n        svg: dividerSvg,\r\n      },\r\n      ...(chipLine\r\n        ? [{\r\n            type: 'TEXT', x: 540, y: chipY, anchor: 'top-center',\r\n            track: 6, enterBegin: 1.15, enterEnd: 1.6, enterAnimation: 'smoothup', exitEnd: s1,\r\n            style: { fontFamily: bodyFont, color: accent },\r\n            html: `<div style='display:inline-block; background:rgba(${aRgb},0.14); border:1.5px solid rgba(${aRgb},0.5); color:${accent}; border-radius:999px; padding:16px 40px; font-size:32px; font-weight:700;'>${escapeHtml(chipLine)}</div>`,\r\n          }]\r\n        : []),\r\n      {\r\n        type: 'TEXT', x: 540, y: 1700, anchor: 'top-center',\r\n        track: 7, enterBegin: 1.3, enterEnd: 1.7, enterAnimation: 'fade', exitEnd: s1,\r\n        style: { fontFamily: bodyFont, color: textMuted },\r\n        html: `<div style='text-align:center; color:rgba(${mutedRgb},0.7); font-size:26px; font-weight:700; letter-spacing:5px;'>${escapeHtml(brandName.toUpperCase())}</div>`,\r\n      },\r\n    ],\r\n  };\r\n\r\n  // ---- scene 2: the message ---------------------------------------------\r\n  const msgFit = fitFont(message, [42, 38, 34, 30], 800, 8, 0.5);\r\n  const msgH = Math.ceil(msgFit.lines * msgFit.size * 1.55);\r\n  const msgTop = Math.max(620, Math.min(900, Math.round(990 - (msgH + 230) / 2)));\r\n  const divider2Y = msgTop + msgH + 90;\r\n  const signoffY = divider2Y + 100;\r\n  const heart2Y = msgTop - 260; // keeps a fixed beat between the heart and the copy\r\n\r\n  const smallHeart =\r\n    `<svg width='140' height='130' viewBox='0 0 240 220' xmlns='http://www.w3.org/2000/svg'><defs>${heartGrad}</defs>` +\r\n    `<path d='M120 196 C20 130 30 44 92 44 C116 44 120 74 120 74 C120 74 124 44 148 44 C210 44 220 130 120 196 Z' fill='url(#ht)'/></svg>`;\r\n\r\n  const scene2 = {\r\n    id: 'message',\r\n    duration: s2,\r\n    backgroundColor: bg,\r\n    visuals: [\r\n      { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: s2, svg: bgSvg(0.5, 0.4) },\r\n      bokehVisual(s2),\r\n      {\r\n        type: 'SVG', x: 470, y: heart2Y, width: 140, height: 130, anchor: 'top-left',\r\n        track: 2, enterBegin: 0.15, enterEnd: 0.55, enterAnimation: 'fade', exitEnd: s2,\r\n        svg: smallHeart,\r\n      },\r\n      {\r\n        type: 'TEXT', x: 140, y: msgTop, width: 800, anchor: 'top-left',\r\n        track: 3, enterBegin: 0.35, enterEnd: 0.85, enterAnimation: 'smoothup', exitEnd: s2,\r\n        text: message,\r\n        style: { fontFamily: bodyFont, fontSize: `${msgFit.size}px`, fontWeight: '400', lineHeight: '1.55', color: textMuted, textAlign: 'center' },\r\n      },\r\n      {\r\n        type: 'SVG', x: 490, y: divider2Y, width: 100, height: 20, anchor: 'top-left',\r\n        track: 4, enterBegin: 0.75, enterEnd: 1.15, enterAnimation: 'fade', exitEnd: s2,\r\n        svg: dividerSvg,\r\n      },\r\n      {\r\n        type: 'TEXT', x: 90, y: signoffY, width: 900, anchor: 'top-left',\r\n        track: 5, enterBegin: 0.95, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: s2,\r\n        text: signoff,\r\n        style: { fontFamily: headingFont, fontSize: '46px', fontWeight: '500', fontStyle: 'italic', color: textPrimary, textAlign: 'center' },\r\n      },\r\n      {\r\n        type: 'TEXT', x: 540, y: 1700, anchor: 'top-center',\r\n        track: 6, enterBegin: 0.2, enterEnd: 0.6, enterAnimation: 'fade', exitEnd: s2,\r\n        style: { fontFamily: bodyFont, color: textMuted },\r\n        html: `<div style='text-align:center; color:rgba(${mutedRgb},0.7); font-size:26px; font-weight:700; letter-spacing:5px;'>${escapeHtml(brandName.toUpperCase())}</div>`,\r\n      },\r\n    ],\r\n  };\r\n\r\n  const totalSeconds = Math.round((s1 + s2 - tDur) * 100) / 100;\r\n  const projectName = sanitizeProjectName(`${occasionLine} - ${name}`);\r\n  const firstName = name.split(/\\s+/)[0];\r\n\r\n  const payload = {\r\n    name: projectName,\r\n    resolution: cfg.resolution || 'instagram-reel',\r\n    frameRate: Number(cfg.frameRate ?? 30),\r\n    backgroundColor: bg,\r\n    outputFormat: 'mp4',\r\n    scenes: [scene1, scene2],\r\n    ...(cfg.musicUrl\r\n      ? { audios: [{ src: cfg.musicUrl, volume: Number(cfg.musicVolume ?? 0.18) }] }\r\n      : {}),\r\n  };\r\n\r\n  return {\r\n    payload,\r\n    meta: {\r\n      contactName: name,\r\n      firstName,\r\n      type,\r\n      years,\r\n      occasionLine,\r\n      projectName,\r\n      totalSeconds,\r\n      emailSubject: `${occasionLine}, ${firstName}!`,\r\n      email: contact.email || null,\r\n      rowNumber: contact.rowNumber ?? null,\r\n      lastSentYearNew: contact.lastSentYearNew ?? null,\r\n    },\r\n  };\r\n}\n\nreturn $input.all().map((item, i) => {\n  const { payload, meta } = buildProject(cfg, item.json);\n  return { json: { payload, meta }, pairedItem: { item: i } };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        300
+      ],
+      "id": "zvid-bg-0006",
+      "name": "Build project JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/validate/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        640,
+        300
+      ],
+      "id": "zvid-bg-0007",
+      "name": "Validate project (free)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list per contact\n// instead of a generic HTTP error.\nconst built = $('Build project JSON').all();\nreturn $input.all().map((res, i) => {\n  const status = res.json.statusCode;\n  const body = res.json.body || {};\n  const meta = built[i].json.meta;\n  if (status !== 200 || body.valid === false) {\n    const details = Array.isArray(body.details)\n      ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n      : JSON.stringify(body).slice(0, 500);\n    throw new Error('Zvid rejected the greeting for ' + meta.contactName + ' (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n  }\n  return {\n    json: { ...built[i].json, creditsRequired: body.creditsRequired, warnings: body.warnings || [] },\n    pairedItem: { item: i },\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        860,
+        300
+      ],
+      "id": "zvid-bg-0008",
+      "name": "Check validation"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        440
+      ],
+      "id": "zvid-bg-0012",
+      "name": "Submit render",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// The render response replaces the item, so glue the jobId back onto the\n// contact. An index zip is safe here: same items, same order, no loop yet.\nconst checked = $('Check validation').all();\nreturn $input.all().map((res, i) => {\n  const jobId = res.json.jobId || res.json.id;\n  if (!jobId) {\n    throw new Error('Render submission returned no jobId: ' + JSON.stringify(res.json).slice(0, 300));\n  }\n  const { payload, ...rest } = checked[i].json;\n  return { json: { ...rest, jobId }, pairedItem: { item: i } };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        440
+      ],
+      "id": "zvid-bg-0013",
+      "name": "Attach job to contact"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Config').first().json.pollSeconds }}",
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1740,
+        440
+      ],
+      "id": "zvid-bg-0014",
+      "name": "Wait",
+      "webhookId": "7c2d9a41-88f3-4e6a-b1c5-3f9e8d2a6b04"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Config').first().json.apiUrl }}/api/jobs/{{ $json.jobId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1960,
+        440
+      ],
+      "id": "zvid-bg-0015",
+      "name": "Get render status",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// The status response replaces the item again — zip it back with what entered\n// this poll iteration. Wait passes items through unchanged and the status node\n// runs once per item in order, so index i pairs correctly on every lap.\nconst carried = $('Wait').all();\nreturn $input.all().map((res, i) => {\n  const job = res.json;\n  return {\n    json: {\n      ...carried[i].json,\n      state: job.state,\n      failedReason: job.failedReason || null,\n      result: job.result || null,\n    },\n    pairedItem: { item: i },\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2180,
+        440
+      ],
+      "id": "zvid-bg-0016",
+      "name": "Merge job status"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "render-finished--cond",
+              "leftValue": "={{ $json.state === 'completed' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2400,
+        440
+      ],
+      "id": "zvid-bg-0017",
+      "name": "Render finished?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fails fast on a failed render and stops the poll loop at the timeout.\n// Nothing has been written back to the sheet yet, so a failed run retries the\n// same contacts tomorrow — no greeting is ever silently dropped.\nconst cfg = $('Config').first().json;\nfor (const item of $input.all()) {\n  if (item.json.state === 'failed') {\n    throw new Error('Render failed for ' + item.json.meta.contactName + ': ' + (item.json.failedReason || 'no reason given') + '. LastSentYear was not written, so the next run retries this contact.');\n  }\n}\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('Render did not finish within ' + cfg.timeoutMinutes + ' minutes.');\n}\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        660
+      ],
+      "id": "zvid-bg-0018",
+      "name": "Still rendering?"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Composes the per-contact delivery: the finished video URL plus a short,\n// warm HTML email that matches the video's palette.\nconst cfg = $('Config').first().json;\nconst d = $json;\nconst videoUrl = typeof d.result === 'string' ? d.result : (d.result && d.result.url) || null;\nif (!videoUrl) {\n  throw new Error('Completed render returned no video URL for ' + d.meta.contactName);\n}\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst brand = String(cfg.brandName || 'our team');\nconst signoff = String(cfg.signoffText || '').trim() || ('— The ' + brand + ' Team');\nconst emailHtml =\n  '<div style=\"font-family:Georgia,serif; background:' + (cfg.backgroundColor || '#1A0C11') + '; color:' + (cfg.textPrimary || '#FBEDE9') + '; padding:40px 32px; border-radius:16px; max-width:560px; margin:auto; text-align:center;\">' +\n  '<p style=\"letter-spacing:4px; color:' + (cfg.accent2 || '#FFB86B') + '; font-size:13px; margin:0 0 14px; text-transform:uppercase;\">' + esc(d.meta.occasionLine) + '</p>' +\n  '<h1 style=\"font-size:30px; margin:0 0 18px; font-weight:700;\">' + esc(d.meta.contactName) + '</h1>' +\n  '<p style=\"color:' + (cfg.textMuted || '#C29A97') + '; font-size:15px; line-height:1.6; margin:0 0 28px;\">We made you a little something — press play.</p>' +\n  '<a href=\"' + videoUrl + '\" style=\"display:inline-block; background:' + (cfg.accent || '#FF6F91') + '; color:' + (cfg.backgroundColor || '#1A0C11') + '; font-weight:bold; padding:14px 36px; border-radius:999px; text-decoration:none;\">Watch your video</a>' +\n  '<p style=\"color:' + (cfg.textMuted || '#C29A97') + '; font-size:13px; margin:28px 0 0; font-style:italic;\">' + esc(signoff) + '</p>' +\n  '</div>';\nreturn {\n  json: {\n    contact: d.meta.contactName,\n    occasion: d.meta.occasionLine,\n    email: d.meta.email || null,\n    rowNumber: d.meta.rowNumber,\n    lastSentYearNew: d.meta.lastSentYearNew,\n    videoUrl,\n    jobId: d.jobId,\n    creditsCharged: d.creditsRequired,\n    emailSubject: d.meta.emailSubject,\n    emailHtml,\n  },\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2620,
+        340
+      ],
+      "id": "zvid-bg-0019",
+      "name": "Prepare delivery"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "send-email--cond",
+              "leftValue": "={{ Boolean($('Config').first().json.sendEmail) && String($json.email || '').includes('@') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2840,
+        340
+      ],
+      "id": "zvid-bg-0020",
+      "name": "Send email?"
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json.emailFrom }}",
+        "toEmail": "={{ $json.email }}",
+        "subject": "={{ $json.emailSubject }}",
+        "emailFormat": "html",
+        "html": "={{ $json.emailHtml }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        3060,
+        240
+      ],
+      "id": "zvid-bg-0021",
+      "name": "Send greeting email"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Prepare delivery').item.json.rowNumber }}",
+            "LastSentYear": "={{ $('Prepare delivery').item.json.lastSentYearNew }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3280,
+        340
+      ],
+      "id": "zvid-bg-0022",
+      "name": "Mark as sent"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Final per-contact report for the run.\nconst cfg = $('Config').first().json;\nconst d = $('Prepare delivery').item.json;\nreturn {\n  json: {\n    sent: true,\n    contact: d.contact,\n    occasion: d.occasion,\n    videoUrl: d.videoUrl,\n    jobId: d.jobId,\n    creditsCharged: d.creditsCharged,\n    emailSent: Boolean(cfg.sendEmail) && String(d.email || '').includes('@'),\n    emailTo: d.email || null,\n    lastSentYearWritten: d.lastSentYearNew,\n  },\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3500,
+        340
+      ],
+      "id": "zvid-bg-0023",
+      "name": "Run summary"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3720,
+        340
+      ],
+      "id": "zvid-bg-0030",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "width": 900,
+        "height": 560,
+        "color": 4,
+        "content": "## Birthday & anniversary greetings on autopilot\n\nEvery morning at 08:00 this workflow reads your contact sheet, finds everyone\nwhose birthday or anniversary is **today**, renders a personal 1080×1920\ngreeting video for each of them with Zvid, optionally emails it, and writes the\nyear back so nobody is ever greeted twice.\n\nThe design is adapted from Zvid's celebration templates: serif name headline,\noccasion pill, drifting bokeh lights, message card and brand sign-off.\n\n### Setup (about five minutes)\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate project (free)*, *Submit render* and\n   *Get render status*.\n2. **Google Sheets** — attach your Google credential to *Read contacts* and\n   *Mark as sent*, then pick your spreadsheet + sheet in BOTH nodes.\n   The expected columns are in the yellow note below.\n3. **Open `Config`** — set `brandName`, your colours and the two default\n   messages. Everything else has a working default.\n4. **Run it.** *Validate project (free)* is free and runs first — it checks\n   every payload and quotes the credit cost. The render then starts\n   automatically, so **the first run spends credits** (~11 per greeting).\n   Tip: put one test row with today's date in the sheet before you run.\n5. Optional: set `sendEmail: true` and add an SMTP credential to\n   *Send greeting email* (see the delivery note).\n\n### Cost\n\nA ~10 second greeting is about **11 Zvid credits**. Only days when someone\nactually celebrates cost anything."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -320
+      ],
+      "id": "zvid-bg-0024",
+      "name": "Note 24"
+    },
+    {
+      "parameters": {
+        "width": 720,
+        "height": 480,
+        "color": 5,
+        "content": "## Your contact sheet\n\nOne row per contact, with a header row:\n\n| Name | Type | Date | Years | Email | LastSentYear | Message |\n| --- | --- | --- | --- | --- | --- | --- |\n| Maya Chen | birthday | 1994-07-27 | | maya@acme.com | | |\n| Studio Nova | anniversary | 2016-03-02 | | hello@nova.io | 2025 | Ten amazing years! |\n\n- **Type**: `birthday` or `anniversary` (anything else counts as birthday).\n- **Date**: `YYYY-MM-DD` preferred. Only month + day decide the match; Feb 29\n  contacts are greeted on Feb 28 in non-leap years.\n- **Years** *(optional)*: shown as \"Happy 10th …\". Anniversaries auto-count\n  from the Date's year; birthdays never do (never reveal an age uninvited —\n  fill Years explicitly if you want \"Happy 30th Birthday\").\n- **Email** *(optional)*: needed only when `sendEmail` is on.\n- **LastSentYear**: managed by the workflow — leave it empty. Clear it to\n  re-send someone this year.\n- **Message** *(optional)*: overrides the default message for that contact.\n\nMatching uses your **workflow timezone** (n8n Settings → Timezone)."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        560
+      ],
+      "id": "zvid-bg-0025",
+      "name": "Note 25"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 360,
+        "color": 6,
+        "content": "## Make it yours (all in Config)\n\n- `brandName`, `signoffText` — the footer mark and the \"— The … Team\" line.\n- `accent` / `accent2` / `backgroundColor` / `textPrimary` / `textMuted` —\n  the whole palette re-tints from these five values, including the gradients,\n  bokeh lights and the delivery email.\n- `headingFont` / `bodyFont` — any Google Font name.\n- `birthdayMessage` / `anniversaryMessage` — `{name}`, `{years}` and\n  `{brand}` are replaced per contact.\n- `musicUrl` — any hosted mp3 under ~5 MB, or empty for a silent video.\n- Long names and long messages auto-shrink to fit; nothing ever clips."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        480,
+        -160
+      ],
+      "id": "zvid-bg-0026",
+      "name": "Note 26"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 340,
+        "color": 7,
+        "content": "## Delivery & the sent-guard\n\n`sendEmail` is **false** by default. Turn it on and attach any SMTP\ncredential to *Send greeting email* (set `emailFrom` in Config). Contacts\nwithout an email address still get their video rendered — you can grab\n`videoUrl` from the run output and deliver it any way you like (Slack,\nWhatsApp, a CRM webhook…).\n\n**Order matters:** the email is sent first, then `LastSentYear` is written.\nA failed render or failed email stops the run *before* the write-back, so the\nnext run retries that contact — a greeting can be duplicated after a partial\nfailure, but never silently lost."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2900,
+        -40
+      ],
+      "id": "zvid-bg-0028",
+      "name": "Note 28"
+    },
+    {
+      "parameters": {
+        "width": 560,
+        "height": 300,
+        "color": 6,
+        "content": "## Official Zvid nodes\n\nThese HTTP Request nodes are deliberately core-only so the workflow runs\nanywhere, including n8n Cloud with nothing installed.\n\nOn self-hosted n8n you can install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and swap them:\n\n| HTTP Request node | Native replacement |\n| --- | --- |\n| Validate project (free) | **Zvid** → Render → Validate |\n| Submit render | **Zvid** → Render → Create |\n| Get render status + Wait | **Zvid Trigger** (render webhook) |"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        -120
+      ],
+      "id": "zvid-bg-0029",
+      "name": "Note 29"
+    },
+    {
+      "parameters": {
+        "width": 420,
+        "height": 240,
+        "color": 3,
+        "content": "## ▶ Watch video\n\nClick this node after a run: n8n renders the downloaded MP4 as an inline\nvideo player with a download button — one greeting per contact, no URLs to\ncopy.\n\n*Run summary* above still carries `videoUrl` (and `jobId`, `creditsCharged`)\nif you want to pipe the result onward."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3680,
+        20
+      ],
+      "id": "zvid-bg-0031",
+      "name": "Note 31"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dry-run--cond",
+              "leftValue": "={{ $('Config').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1080,
+        300
+      ],
+      "id": "zvid-bg-0009",
+      "name": "Dry run?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: $json.meta.projectName, payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        140
+      ],
+      "id": "zvid-bg-0010",
+      "name": "Save draft to editor",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dry run: everything except the paid render. Open editorLink to preview each\n// greeting, then set dryRun to false in Config to render and deliver for real.\nconst cfg = $('Config').first().json;\nconst checked = $('Check validation').all();\nreturn $input.all().map((res, i) => {\n  const d = checked[i].json;\n  let editorLink = null;\n  let draftId = null;\n  const project = res.json && res.json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '') + '/?project=' + project.id;\n  }\n  return {\n    json: {\n      dryRun: true,\n      contact: d.meta.contactName,\n      occasion: d.meta.occasionLine,\n      email: d.meta.email || null,\n      creditsRequired: d.creditsRequired,\n      videoSeconds: d.meta.totalSeconds,\n      editorLink,\n      draftId,\n      warnings: d.warnings,\n      nextStep: editorLink\n        ? 'Open editorLink to preview this greeting. Set dryRun to false in Config to render and deliver.'\n        : 'Set dryRun to false in Config to render and deliver this greeting.',\n      payload: d.payload,\n    },\n    pairedItem: { item: i },\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        140
+      ],
+      "id": "zvid-bg-0011",
+      "name": "Dry run summary"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every day at 8am": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test manually": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Read contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read contacts": {
+      "main": [
+        [
+          {
+            "node": "Find today's celebrations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find today's celebrations": {
+      "main": [
+        [
+          {
+            "node": "Build project JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build project JSON": {
+      "main": [
+        [
+          {
+            "node": "Validate project (free)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate project (free)": {
+      "main": [
+        [
+          {
+            "node": "Check validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check validation": {
+      "main": [
+        [
+          {
+            "node": "Dry run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit render": {
+      "main": [
+        [
+          {
+            "node": "Attach job to contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach job to contact": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get render status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get render status": {
+      "main": [
+        [
+          {
+            "node": "Merge job status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge job status": {
+      "main": [
+        [
+          {
+            "node": "Render finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render finished?": {
+      "main": [
+        [
+          {
+            "node": "Prepare delivery",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Still rendering?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still rendering?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare delivery": {
+      "main": [
+        [
+          {
+            "node": "Send email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email?": {
+      "main": [
+        [
+          {
+            "node": "Send greeting email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark as sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send greeting email": {
+      "main": [
+        [
+          {
+            "node": "Mark as sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as sent": {
+      "main": [
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run summary": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "▶ Watch video": {
+      "main": [
+        []
+      ]
+    },
+    "Dry run?": {
+      "main": [
+        [
+          {
+            "node": "Save draft to editor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Submit render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save draft to editor": {
+      "main": [
+        [
+          {
+            "node": "Dry run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e4b7a9c2-3d51-4f88-b6a0-9c17e5d2f4a3",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "id": "ZvidBirthdayGreetings",
+  "tags": []
+}

@@ -1,0 +1,660 @@
+{
+  "name": "Workout of the day from your training sheet (Zvid)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        380
+      ],
+      "id": "zvid-wod-0001",
+      "name": "Every day at 6am"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        200
+      ],
+      "id": "zvid-wod-0002",
+      "name": "Test manually"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"gymName\": \"IRONHAUS ATHLETIC\",\n  \"handle\": \"@ironhaus.athletic\",\n  \"accent\": \"#C6FF3D\",\n  \"background\": \"#07080A\",\n  \"font\": \"Archivo\",\n  \"heroVideo\": \"https://videos.pexels.com/video-files/6454274/6454274-uhd_1440_2560_24fps.mp4\",\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/03/19/audio_56ae1dae5f.mp3\",\n  \"musicVolume\": 0.18,\n  \"timezone\": \"\",\n  \"dateLocale\": \"en-US\",\n  \"fallbackToLatest\": false,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        300
+      ],
+      "id": "zvid-wod-0003",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -20,
+        300
+      ],
+      "id": "zvid-wod-0004",
+      "name": "Read workout sheet",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Finds today's row in the sheet and normalises it for the payload builder.\n// The Date column should be YYYY-MM-DD (see the sheet sticky note).\nconst cfg = $('Config').first().json;\nconst rows = $input.all().map((i) => i.json);\nif (!rows.length) {\n  throw new Error('The sheet returned no rows. Pick your spreadsheet + sheet in \"Read workout sheet\" and make sure it has a header row.');\n}\n\nfunction pickTodaysRow(cfg, rows, nowDate) {\n  const tzOpt = cfg.timezone ? { timeZone: cfg.timezone } : {};\n  const todayIso = (nowDate || new Date()).toLocaleDateString('en-CA', tzOpt);\n\n  // Header lookup ignores case, spaces and underscores (\"Workout Name\" works).\n  const getCol = (row, name) => {\n    const want = name.toLowerCase();\n    for (const k of Object.keys(row)) {\n      if (String(k).toLowerCase().replace(/[\\s_]/g, '') === want) return row[k];\n    }\n    return undefined;\n  };\n\n  // Accepts YYYY-MM-DD (recommended), anything Date.parse understands, and\n  // Google Sheets date serials (days since 1899-12-30).\n  const isoOf = (v) => {\n    if (v == null || v === '') return null;\n    if (typeof v === 'number' && v > 20000 && v < 80000) {\n      return new Date(Math.round((v - 25569) * 86400000)).toISOString().slice(0, 10);\n    }\n    const s = String(v).trim();\n    const m = /^(\\d{4})-(\\d{1,2})-(\\d{1,2})/.exec(s);\n    if (m) return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;\n    const d = new Date(s);\n    return Number.isNaN(d.getTime()) ? null : d.toLocaleDateString('en-CA');\n  };\n\n  const dated = rows\n    .map((row) => ({ row, iso: isoOf(getCol(row, 'date')) }))\n    .filter((x) => x.iso);\n  if (!dated.length) {\n    throw new Error('No row has a readable Date. Use YYYY-MM-DD in the Date column (format the column as plain text).');\n  }\n\n  let hit = dated.find((x) => x.iso === todayIso);\n  if (!hit && cfg.fallbackToLatest) {\n    hit = dated.filter((x) => x.iso <= todayIso).sort((a, b) => (a.iso < b.iso ? 1 : -1))[0];\n  }\n  if (!hit) {\n    throw new Error(`No workout row for today (${todayIso}). Add a row with Date = ${todayIso}, or set fallbackToLatest: true in Config to reuse the latest past workout.`);\n  }\n\n  const row = hit.row;\n  const workoutName = String(getCol(row, 'workoutname') ?? '').trim();\n  if (!workoutName) throw new Error(`The row for ${hit.iso} has an empty WorkoutName.`);\n\n  // Ex1..Ex5 hold \"Exercise x Reps\" — split on the LAST \" x \" so exercise\n  // names containing \" x \" and reps like \"5x5\" both survive.\n  const exercises = [];\n  for (let i = 1; i <= 5; i += 1) {\n    const cell = String(getCol(row, 'ex' + i) ?? '').trim();\n    if (!cell) continue;\n    const seps = [...cell.matchAll(/\\s[x×]\\s/gi)];\n    let name = cell;\n    let reps = '';\n    if (seps.length) {\n      const last = seps[seps.length - 1];\n      name = cell.slice(0, last.index).trim();\n      reps = cell.slice(last.index + last[0].length).trim();\n    }\n    if (name) exercises.push({ name, reps });\n  }\n  if (!exercises.length) {\n    throw new Error(`The row for ${hit.iso} has no exercises. Fill Ex1..Ex5 as \"Exercise x Reps\", e.g. \"Bench press x 5x5\".`);\n  }\n\n  // \"MON, JUL 27\" — built from the sheet date, not the server clock, so a\n  // fallbackToLatest row shows ITS date, never a wrong one.\n  const [y, mo, d] = hit.iso.split('-').map(Number);\n  const dateLabel = new Date(Date.UTC(y, mo - 1, d, 12))\n    .toLocaleDateString(cfg.dateLocale || 'en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' })\n    .toUpperCase();\n\n  return {\n    workoutName,\n    focus: String(getCol(row, 'focus') ?? '').trim(),\n    coachNote: String(getCol(row, 'coachnote') ?? '').trim(),\n    dateLabel,\n    dateIso: hit.iso,\n    usedFallback: hit.iso !== todayIso,\n    exercises,\n  };\n}\n\nreturn [{ json: pickTodaysRow(cfg, rows, new Date()) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        300
+      ],
+      "id": "zvid-wod-0005",
+      "name": "Pick today's row"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Assembles the Zvid project JSON: hero-footage hook, the full workout\n// board, and the coach's-note close. Adapted from the fitness-wod library\n// example — layout constants and type tiers are explained inline.\nconst cfg = $('Config').first().json;\nconst data = $input.first().json;\n\nfunction buildProject(config, data) {\n  const escapeHtml = (s) =>\n    String(s == null ? '' : s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\n  const round = (n) => Math.round(n * 100) / 100;\n\n  // SVG decorations need the accent at reduced opacity; accept #RGB / #RRGGBB\n  // and fall back to the raw string (full opacity) for anything else.\n  const accentAlpha = (alpha) => {\n    const m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(String(config.accent || '').trim());\n    if (!m) return config.accent || '#C6FF3D';\n    let h = m[1];\n    if (h.length === 3) h = h.split('').map((c) => c + c).join('');\n    const n = parseInt(h, 16);\n    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;\n  };\n\n  const accent = config.accent || '#C6FF3D';\n  const bg = config.background || '#07080A';\n  const font = config.font || 'Archivo';\n  const handle = String(config.handle || '').trim();\n  const gymName = String(config.gymName || 'THE GYM').trim();\n\n  const workoutName = String(data.workoutName || '').trim();\n  if (!workoutName) throw new Error('workoutName is empty — check the WorkoutName column for today\\'s row.');\n  const focus = String(data.focus || '').trim();\n  const dateLabel = String(data.dateLabel || '').trim();\n  const coachNote = String(data.coachNote || '').trim() || 'Log your lifts. Tag the gym.';\n\n  const exercises = (Array.isArray(data.exercises) ? data.exercises : [])\n    .map((e) => ({ name: String(e && e.name || '').trim(), reps: String(e && e.reps || '').trim() }))\n    .filter((e) => e.name)\n    .slice(0, 5);\n  if (!exercises.length) throw new Error('No exercises for today — fill at least the Ex1 column.');\n\n  // ---- adaptive type sizes (fixed layout, so long strings scale down instead\n  // of colliding with the next block) --------------------------------------\n  const titleSize = workoutName.length <= 12 ? 118 : workoutName.length <= 24 ? 92 : 68;\n  const boardTitleSize = workoutName.length <= 18 ? 58 : workoutName.length <= 30 ? 46 : 38;\n  const longestName = Math.max(...exercises.map((e) => e.name.length));\n  const nameSize = longestName <= 26 ? 46 : longestName <= 44 ? 40 : 34; // one size for every row\n  const noteSize = coachNote.length <= 45 ? 64 : coachNote.length <= 100 ? 52 : 42;\n\n  const HOOK_D = 3.8;\n  const BOARD_D = 5.4;\n  const COACH_D = 4.4;\n\n  // The layout linter reads style.color (not the inline HTML), so every TEXT\n  // declares its dominant on-screen colour there. Chip/pill elements declare\n  // the accent — the chip itself is what carries the contrast on screen.\n  const DIM = '#8C9196'; // muted labels — keeps >4.5:1 on the dark background\n  const FOOT = '#85898D'; // footer lines\n\n  // ---- scene 1: hook ------------------------------------------------------\n  const hook = {\n    id: 'hook',\n    duration: HOOK_D,\n    backgroundColor: bg,\n    transition: 'smoothup',\n    transitionId: 'board',\n    transitionDuration: 0.55,\n    visuals: [\n      {\n        type: 'VIDEO', src: config.heroVideo, width: 1080, height: 1920,\n        position: 'center-center', resize: 'cover', volume: 0, track: 0,\n        enterBegin: 0, exitEnd: HOOK_D,\n      },\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: HOOK_D,\n        svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='wodHook' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${bg}' stop-opacity='0.72'/><stop offset='0.42' stop-color='${bg}' stop-opacity='0.15'/><stop offset='1' stop-color='${bg}' stop-opacity='0.94'/></linearGradient></defs><rect width='1080' height='1920' fill='url(#wodHook)'/><rect x='0' y='1290' width='1080' height='8' fill='${accent}'/><rect x='56' y='56' width='968' height='1808' rx='28' fill='none' stroke='${accentAlpha(0.28)}' stroke-width='1.5'/></svg>`,\n      },\n      {\n        type: 'TEXT', x: 90, y: 120, anchor: 'top-left', track: 2,\n        enterBegin: 0.2, enterEnd: 0.65, enterAnimation: 'smoothright', exitEnd: HOOK_D,\n        style: { fontFamily: font, color: accent },\n        html: `<div style='display:inline-block; background:${accent}; color:${bg}; padding:12px 26px; font-size:24px; font-weight:800; letter-spacing:5px;'>${escapeHtml(gymName)}</div>`,\n      },\n      {\n        type: 'TEXT', x: 90, y: 1360, width: 900, anchor: 'top-left', track: 3,\n        enterBegin: 0.5, enterEnd: 1.05, enterAnimation: 'smoothup', exitEnd: HOOK_D,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: `<div style='color:${accent}; font-size:26px; font-weight:800; letter-spacing:7px;'>WORKOUT OF THE DAY</div>` +\n          `<div style='margin-top:14px; color:#FFFFFF; font-size:${titleSize}px; line-height:0.92; font-weight:900; letter-spacing:-3px; text-transform:uppercase;'>${escapeHtml(workoutName)}</div>` +\n          (focus ? `<div style='margin-top:22px; color:#B7BDC4; font-size:32px; line-height:1.3; font-weight:600;'>${escapeHtml(focus)}</div>` : '') +\n          `<div style='margin-top:18px; color:rgba(255,255,255,0.5); font-size:24px; font-weight:700; letter-spacing:4px; text-transform:uppercase;'>${escapeHtml(dateLabel)}${handle ? ' &#183; ' + escapeHtml(handle) : ''}</div>`,\n      },\n    ],\n  };\n\n  // ---- scene 2: the board -------------------------------------------------\n  const n = exercises.length;\n  const rowStep = 186;\n  const cardY = 470;\n  const cardH = 70 + n * rowStep + 10;\n  const cardBottom = cardY + cardH;\n\n  const rows = exercises.map((ex, i) => ({\n    type: 'TEXT', x: 140, y: cardY + 70 + i * rowStep, width: 800, anchor: 'top-left', track: 3 + i,\n    enterBegin: round(0.25 + i * 0.14), enterEnd: round(0.65 + i * 0.14),\n    enterAnimation: 'smoothright', exitEnd: BOARD_D,\n    style: { fontFamily: font, color: '#FFFFFF' },\n    html: `<div style='display:flex; gap:30px; align-items:flex-start;'>` +\n      `<div style='width:56px; flex:none; color:rgba(255,255,255,0.38); font-size:30px; font-weight:800; padding-top:6px;'>0${i + 1}</div>` +\n      `<div style='flex:1;'><div style='color:#FFFFFF; font-size:${nameSize}px; line-height:1.1; font-weight:800; text-transform:uppercase; letter-spacing:-1px;'>${escapeHtml(ex.name)}</div>` +\n      (ex.reps ? `<div style='margin-top:8px; color:${accent}; font-size:30px; font-weight:800; letter-spacing:1px; text-transform:uppercase;'>${escapeHtml(ex.reps)}</div>` : '') +\n      `</div></div>`,\n  }));\n\n  const board = {\n    id: 'board',\n    duration: BOARD_D,\n    backgroundColor: bg,\n    transition: 'smoothup',\n    transitionId: 'coach',\n    transitionDuration: 0.5,\n    visuals: [\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: BOARD_D,\n        svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='wodItem' cx='0.5' cy='0.32' r='0.95'><stop offset='0' stop-color='#12160D'/><stop offset='1' stop-color='${bg}'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#wodItem)'/><path d='M90 415 H990' stroke='rgba(255,255,255,0.14)' stroke-width='2'/><rect x='80' y='${cardY}' width='920' height='${cardH}' rx='36' fill='${accentAlpha(0.05)}' stroke='${accentAlpha(0.4)}' stroke-width='1.5'/><rect x='80' y='${cardY}' width='920' height='10' rx='5' fill='${accent}'/></svg>`,\n      },\n      {\n        type: 'TEXT', x: 90, y: 210, anchor: 'top-left', track: 1, enterBegin: 0, exitEnd: BOARD_D,\n        style: { fontFamily: font, color: DIM },\n        html: `<div style='color:${DIM}; font-size:24px; font-weight:800; letter-spacing:6px; text-transform:uppercase;'>${escapeHtml(gymName)} &#183; WOD</div>`,\n      },\n      {\n        type: 'TEXT', x: 90, y: 268, width: 900, anchor: 'top-left', track: 2,\n        enterBegin: 0.15, enterEnd: 0.55, enterAnimation: 'smoothright', exitEnd: BOARD_D,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: `<div style='color:#FFFFFF; font-size:${boardTitleSize}px; line-height:1; font-weight:900; letter-spacing:-1px; text-transform:uppercase;'>${escapeHtml(workoutName)}</div>` +\n          (dateLabel ? `<div style='margin-top:12px; color:${accent}; font-size:26px; font-weight:800; letter-spacing:4px;'>${escapeHtml(dateLabel)}</div>` : ''),\n      },\n      ...rows,\n      {\n        type: 'TEXT', x: 540, y: cardBottom + 90, anchor: 'top-center', track: 3 + n,\n        enterBegin: round(0.45 + n * 0.14), enterEnd: round(0.85 + n * 0.14), enterAnimation: 'fade', exitEnd: BOARD_D,\n        style: { fontFamily: font, color: FOOT },\n        html: `<div style='text-align:center; color:${FOOT}; font-size:26px; font-weight:700; letter-spacing:3px;'>${escapeHtml(handle || gymName)}</div>`,\n      },\n    ],\n  };\n\n  // ---- scene 3: coach's note ---------------------------------------------\n  const coach = {\n    id: 'coach',\n    duration: COACH_D,\n    backgroundColor: bg,\n    visuals: [\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: COACH_D,\n        svg: `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='wodEnd' cx='0.5' cy='0.36' r='0.95'><stop offset='0' stop-color='#141A0C'/><stop offset='1' stop-color='${bg}'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#wodEnd)'/><circle cx='540' cy='900' r='430' fill='none' stroke='${accentAlpha(0.12)}' stroke-width='2'/><rect x='56' y='56' width='968' height='1808' rx='28' fill='none' stroke='${accentAlpha(0.25)}' stroke-width='1.5'/></svg>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: 500, width: 600, anchor: 'top-center', track: 1,\n        enterBegin: 0.2, enterEnd: 0.7, enterAnimation: 'circleopen', exitEnd: COACH_D,\n        style: { fontFamily: font, color: accent },\n        html: `<div style='text-align:center; color:${accent}; font-size:130px; line-height:0.6; font-weight:900;'>&#8220;</div>` +\n          `<div style='margin-top:24px; text-align:center; color:${accent}; font-size:26px; font-weight:800; letter-spacing:6px;'>COACH'S NOTE</div>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: 880, width: 880, anchor: 'center-center', track: 2,\n        enterBegin: 0.45, enterEnd: 0.95, enterAnimation: 'smoothup', exitEnd: COACH_D,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: `<div style='text-align:center; color:#FFFFFF; font-size:${noteSize}px; line-height:1.18; font-weight:800;'>${escapeHtml(coachNote)}</div>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: 1230, anchor: 'top-center', track: 3,\n        enterBegin: 0.85, enterEnd: 1.25, enterAnimation: 'smoothup', exitEnd: COACH_D,\n        style: { fontFamily: font, color: accent },\n        html: `<div style='display:inline-block; background:${accent}; color:${bg}; border-radius:999px; padding:24px 58px; font-size:34px; font-weight:900; letter-spacing:1px;'>${escapeHtml(handle || gymName)}</div>`,\n      },\n      {\n        type: 'TEXT', x: 540, y: 1700, anchor: 'top-center', track: 4,\n        enterBegin: 1.15, enterEnd: 1.55, enterAnimation: 'fade', exitEnd: COACH_D,\n        style: { fontFamily: font, color: FOOT },\n        html: `<div style='text-align:center; color:${FOOT}; font-size:24px; font-weight:700; letter-spacing:5px; text-transform:uppercase;'>${escapeHtml(gymName)} &#183; WORKOUT OF THE DAY</div>`,\n      },\n    ],\n  };\n\n  const payload = {\n    name: `workout-of-the-day-${workoutName}`.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'workout-of-the-day',\n    resolution: config.resolution || 'instagram-reel',\n    frameRate: Number(config.frameRate) || 30,\n    backgroundColor: bg,\n    outputFormat: 'mp4',\n    scenes: [hook, board, coach],\n    // NOTE: no `track` on audios — the live API rejects audios[].track today;\n    // with a single bed the array order is all the mixer needs.\n    ...(config.musicUrl ? { audios: [{ src: config.musicUrl, volume: Number(config.musicVolume ?? 0.18) }] } : {}),\n  };\n\n  // Ready-to-paste caption for the socials tail.\n  const caption = [\n    `${workoutName}${focus ? ' — ' + focus : ''}`,\n    dateLabel,\n    '',\n    ...exercises.map((e, i) => `${i + 1}. ${e.name}${e.reps ? ' — ' + e.reps : ''}`),\n    '',\n    `Coach's note: ${coachNote}`,\n    '',\n    `${handle ? handle + ' ' : ''}#wod #workoutoftheday #training`,\n  ].join('\\n');\n\n  const meta = {\n    workoutName,\n    focus,\n    dateLabel,\n    exerciseCount: exercises.length,\n    durationSeconds: round(HOOK_D + BOARD_D + COACH_D - 0.55 - 0.5),\n    caption,\n  };\n\n  return { payload, meta };\n}\n\nconst { payload, meta } = buildProject(cfg, data);\nreturn [{ json: { payload, meta: { ...meta, dateIso: data.dateIso, usedFallback: data.usedFallback === true } } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        300
+      ],
+      "id": "zvid-wod-0006",
+      "name": "Build project JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/validate/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        640,
+        300
+      ],
+      "id": "zvid-wod-0007",
+      "name": "Validate project (free)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode;\nconst body = res.body || {};\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => `  - ${d.field}: ${d.message}`).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error(`Zvid rejected the project (HTTP ${status}): ${body.message || body.error}\\n${details}`);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        860,
+        300
+      ],
+      "id": "zvid-wod-0008",
+      "name": "Check validation"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        440
+      ],
+      "id": "zvid-wod-0012",
+      "name": "Submit render",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Config').first().json.pollSeconds }}",
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        440
+      ],
+      "id": "zvid-wod-0013",
+      "name": "Wait",
+      "webhookId": "9c2e7a41-6b8d-4f3a-8e5c-2d7b9f0a1c63"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Config').first().json.apiUrl }}/api/jobs/{{ $('Submit render').first().json.jobId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1740,
+        440
+      ],
+      "id": "zvid-wod-0014",
+      "name": "Get render status",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "render-finished--cond",
+              "leftValue": "={{ $json.state === 'completed' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1960,
+        440
+      ],
+      "id": "zvid-wod-0015",
+      "name": "Render finished?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fails fast on a failed render and stops the poll loop from running forever.\nconst cfg = $('Config').first().json;\nconst job = $input.first().json;\n\nif (job.state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error(`Render did not finish within ${cfg.timeoutMinutes} minutes (job ${job.id}, state ${job.state}).`);\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        660
+      ],
+      "id": "zvid-wod-0016",
+      "name": "Still rendering?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Final report — plain JSON, so anything downstream can read every field.\n// The MP4 itself is fetched by the `▶ Watch video` node right after this one\n// (binary `data`): attach a platform node (Instagram, TikTok, Drive, email...)\n// there and pull the text with $('Run summary').first().json.caption.\nconst build = $('Check validation').first().json;\nconst job = $('Get render status').first().json;\nconst url = typeof job.result === 'string' ? job.result : job.result && job.result.url;\n\nreturn [{\n  json: {\n    workout: build.meta.workoutName,\n    date: build.meta.dateLabel,\n    dateIso: build.meta.dateIso,\n    usedFallback: build.meta.usedFallback,\n    exercises: build.meta.exerciseCount,\n    videoSeconds: build.meta.durationSeconds,\n    creditsCharged: build.creditsRequired,\n    videoUrl: url,\n    jobId: job.id,\n    caption: build.meta.caption,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        360
+      ],
+      "id": "zvid-wod-0018",
+      "name": "Run summary"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2620,
+        360
+      ],
+      "id": "zvid-wod-0017",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "width": 860,
+        "height": 740,
+        "color": 4,
+        "content": "## Workout of the day, on autopilot\n\nEvery morning at 06:00 this workflow reads today's row from your training\nsheet and renders a 1080x1920 workout-of-the-day video: hero-footage hook,\nthe full board (up to five exercises with reps) and the coach's note —\nready for Stories, Reels, Shorts or the gym's group chat.\n\n### Setup (about three minutes)\n\n**The first run renders for real and spends credits** (~13, see Cost below).\nWant a free preview instead? Set `dryRun: true` in `Config` before step 4.\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate project (free)*, *Save draft to editor*,\n   *Submit render* and *Get render status*.\n2. **Google Sheets** — attach a Google Sheets credential to *Read workout\n   sheet* and pick your spreadsheet + sheet. Columns are on the sheet note.\n3. **Open `Config`** and set `gymName`, `handle` and your `accent` colour.\n   Swap `heroVideo` for your own gym footage (any public MP4 URL) when you\n   have some — portrait clips look best on the 1080x1920 canvas.\n4. Run **Test manually**. *Validate project (free)* runs first and quotes the\n   exact cost, then the render starts automatically — so this run spends\n   about 13 credits. When it finishes, click **▶ Watch video** to play the\n   result inside n8n.\n   With `dryRun: true` it stops after validation instead: a free draft plus\n   an **editorLink** into the Zvid editor, and nothing is charged.\n5. **Activate the workflow** for the daily 06:00 schedule.\n\n### Cost per video\n\nA ~13 second 1080x1920 render is **about 13 Zvid credits**. *Validate project\n(free)* still returns that exact number before every render — it is just no\nlonger a stopping point. Free accounts include enough credits to test."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        -440
+      ],
+      "id": "zvid-wod-0019",
+      "name": "Note 19"
+    },
+    {
+      "parameters": {
+        "width": 700,
+        "height": 480,
+        "color": 5,
+        "content": "## Your training sheet\n\nOne row per day, header row required:\n\n| Column | Example |\n| --- | --- |\n| Date | `2026-07-27` — YYYY-MM-DD, format the column as plain text |\n| WorkoutName | `PUSH DAY 01` |\n| Focus | `Chest / Shoulders / Triceps` |\n| Ex1 … Ex5 | `Bench press x 5x5` — \"Exercise x Reps\", reps come after the **last** \" x \" |\n| CoachNote | `Rest 90s between sets.` |\n\n- Blank Ex cells are skipped; at least **Ex1** is required.\n- An Ex cell without \" x \" renders without a reps line — `400m run` works.\n- No row for today? The run stops with a clear error. Prefer reusing the\n  most recent past workout instead? Set `fallbackToLatest: true` in Config —\n  the video always shows that row's own date, never a wrong one.\n- Dates are matched in your n8n instance's timezone; set `timezone` in\n  Config (e.g. `America/New_York`) if your gym lives elsewhere."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        560
+      ],
+      "id": "zvid-wod-0020",
+      "name": "Note 20"
+    },
+    {
+      "parameters": {
+        "width": 700,
+        "height": 320,
+        "color": 6,
+        "content": "## Official Zvid nodes\n\nThese HTTP Request nodes are deliberately core-only so the workflow runs\nanywhere, including n8n Cloud with nothing installed.\n\nOn self-hosted n8n you can install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and swap them for native nodes:\n\n| HTTP Request node | Native replacement |\n| --- | --- |\n| Validate project (free) | **Zvid** → Render → Validate |\n| Submit render | **Zvid** → Render → Create |\n| Get render status + Wait | **Zvid Trigger** (render webhook) |\n\nThe Zvid Trigger removes the polling loop entirely."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        560,
+        -80
+      ],
+      "id": "zvid-wod-0021",
+      "name": "Note 21"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 380,
+        "color": 4,
+        "content": "## Dry run — the free opt-in\n\n`dryRun` is `false` by default, so a run goes straight down the render\nbranch and spends credits (~13 per video).\n\nSet `dryRun: true` in **Config** and the workflow stops here instead: the\nproject is validated, saved as a **draft**, and reported with an\n**editorLink** like `https://editor.zvid.io/?project=prj_...`\n\nOpen it to watch the video back, adjust anything by hand, and see the exact\ncredit cost — without spending a single credit. Saving a draft is free.\n\nSet `dryRun` back to `false` (the default) when you want the render."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -260
+      ],
+      "id": "zvid-wod-0022",
+      "name": "Note 22"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 340,
+        "color": 7,
+        "content": "## Posting it somewhere\n\n**Run summary** carries `videoUrl` plus a ready-to-paste `caption` built from\nyour sheet row (workout, focus, every exercise with reps, the coach's note\nand hashtags). **▶ Watch video** after it carries the MP4 itself as binary\n`data`.\n\nAttach any platform node after **▶ Watch video** — the file is already on the\nitem, and the text is one expression away:\n`{{ $('Run summary').first().json.caption }}`\n\n- **Instagram / Facebook Reels** — Facebook Graph API node\n- **TikTok / YouTube Shorts** — their upload nodes, or an HTTP Request\n- **Google Drive / Slack / Email** — drop the file wherever the team lives"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        20
+      ],
+      "id": "zvid-wod-0023",
+      "name": "Note 23"
+    },
+    {
+      "parameters": {
+        "width": 440,
+        "height": 260,
+        "color": 3,
+        "content": "## ▶ Watch video\n\nClick this node after a run: n8n renders the downloaded MP4 as an inline\nvideo player with a download button — today's workout, no URL to copy.\n\n*Run summary* before it still carries `videoUrl` (plus `caption`, `jobId`\nand `creditsCharged`) if you want to pipe the result onward."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2600,
+        540
+      ],
+      "id": "zvid-wod-0024",
+      "name": "Note 24"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dry-run--cond",
+              "leftValue": "={{ $('Config').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1080,
+        300
+      ],
+      "id": "zvid-wod-0009",
+      "name": "Dry run?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: (\"WOD - \" + ($json.meta.workoutName || \"draft\") + \" - \" + ($json.meta.dateIso || \"\")).trim().slice(0, 120), payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        140
+      ],
+      "id": "zvid-wod-0010",
+      "name": "Save draft to editor",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dry run: everything except the paid render. Open editorLink to preview the\n// draft, then set dryRun to false in Config to go live.\nconst cfg = $('Config').first().json;\nconst d = $('Check validation').first().json;\n\n// The draft save is best-effort (onError: continue) so a hiccup there never\n// hides the rest of the dry-run report.\nlet editorLink = null;\nlet draftId = null;\ntry {\n  const project = $('Save draft to editor').first().json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = `${String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '')}/?project=${project.id}`;\n  }\n} catch (e) { /* draft step skipped or failed */ }\n\nreturn [{\n  json: {\n    dryRun: true,\n    workout: d.meta.workoutName,\n    date: d.meta.dateLabel,\n    dateIso: d.meta.dateIso,\n    usedFallback: d.meta.usedFallback,\n    exercises: d.meta.exerciseCount,\n    videoSeconds: d.meta.durationSeconds,\n    creditsRequired: d.creditsRequired,\n    warnings: d.warnings,\n    editorLink,\n    draftId,\n    caption: d.meta.caption,\n    nextStep: editorLink\n      ? 'Open editorLink to preview and tweak the draft. Set dryRun to false in Config to render.'\n      : 'Set dryRun to false in Config to render this for real.',\n    payload: d.payload,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        140
+      ],
+      "id": "zvid-wod-0011",
+      "name": "Dry run summary"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every day at 6am": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test manually": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Read workout sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read workout sheet": {
+      "main": [
+        [
+          {
+            "node": "Pick today's row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick today's row": {
+      "main": [
+        [
+          {
+            "node": "Build project JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build project JSON": {
+      "main": [
+        [
+          {
+            "node": "Validate project (free)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate project (free)": {
+      "main": [
+        [
+          {
+            "node": "Check validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check validation": {
+      "main": [
+        [
+          {
+            "node": "Dry run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dry run?": {
+      "main": [
+        [
+          {
+            "node": "Save draft to editor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Submit render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save draft to editor": {
+      "main": [
+        [
+          {
+            "node": "Dry run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit render": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get render status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get render status": {
+      "main": [
+        [
+          {
+            "node": "Render finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render finished?": {
+      "main": [
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Still rendering?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still rendering?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run summary": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e4b7d2a9-1c58-4f36-b0a2-7d9e5c3f8b14",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "id": "ZvidWorkoutOfTheDay",
+  "tags": []
+}

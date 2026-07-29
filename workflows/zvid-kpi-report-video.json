@@ -1,0 +1,1100 @@
+{
+  "name": "Weekly KPI report video to Slack (Zvid)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "weeksInterval": 1,
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 9,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        380
+      ],
+      "id": "zvid-kr-0001",
+      "name": "Every Monday at 9am"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        200
+      ],
+      "id": "zvid-kr-0002",
+      "name": "Test manually"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"metricsUrl\": \"\",\n  \"narrate\": true,\n  \"slackWebhookUrl\": \"\",\n  \"brandName\": \"Acme\",\n  \"reportKicker\": \"WEEKLY KPI REPORT\",\n  \"reportTitle\": \"The week in numbers.\",\n  \"summaryLine\": \"Full breakdown in the dashboard.\",\n  \"brandAccent\": \"#38E1FF\",\n  \"brandBackground\": \"#0B1220\",\n  \"textColor\": \"#FFFFFF\",\n  \"mutedColor\": \"#9DB0CC\",\n  \"goodColor\": \"#34D399\",\n  \"badColor\": \"#FF6B78\",\n  \"font\": \"Space Grotesk\",\n  \"titleVideoUrl\": \"https://videos.pexels.com/video-files/34170258/14485841_1920_1080_25fps.mp4\",\n  \"llmModel\": \"openai/gpt-4.1-mini\",\n  \"voiceId\": \"nPczCjzI2devNBz1zQrb\",\n  \"voiceLabel\": \"Brian (deep narrator)\",\n  \"elevenModel\": \"eleven_multilingual_v2\",\n  \"voiceStability\": 0.4,\n  \"voiceSimilarity\": 0.75,\n  \"captionAnimation\": \"karaoke\",\n  \"captionWordsPerCue\": 4,\n  \"captionSize\": 40,\n  \"captionStrokeWidth\": 6,\n  \"sceneTransition\": \"smoothleft\",\n  \"transitionSeconds\": 0.45,\n  \"tailSeconds\": 0.6,\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/03/19/audio_56ae1dae5f.mp3\",\n  \"musicVolume\": 0.12,\n  \"musicVolumeSolo\": 0.26,\n  \"maxMusicBytes\": 5242880,\n  \"resolution\": \"full-hd\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        300
+      ],
+      "id": "zvid-kr-0003",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "metrics-source--cond",
+              "leftValue": "={{ String($('Config').first().json.metricsUrl || '').trim() !== '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -20,
+        300
+      ],
+      "id": "zvid-kr-0004",
+      "name": "Metrics source?"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Config').first().json.metricsUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        180
+      ],
+      "id": "zvid-kr-0005",
+      "name": "Fetch metrics",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalises the metrics feed to the documented contract, or falls back to\n// the bundled demo dataset so the template renders with zero external data.\n//\n// Contract (also in the sticky note + docs):\n// { \"period\": \"Jul 21-27\", \"company\": \"Acme\",\n//   \"metrics\": [ { \"label\": \"MRR\", \"value\": 48210, \"unit\": \"$\", \"delta\": 4.1, \"lowerIsBetter\": false,\n//                  \"series\": [46311, 48210] } ] }\n// `series` is OPTIONAL past values, oldest first, ending at `value`. Supply it\n// and the metric scene draws a real sparkline of those numbers; leave it out\n// and the scene shows a direction arrow only - the video never draws a trend\n// line for history it does not have.\nconst cfg = $('Config').first().json;\n\n// Every number in here is invented (including the eight-week series) - it is\n// demo data, and every run that uses it is tagged usingDemoData: true.\nconst DEMO = {\n  company: 'Acme',\n  period: 'Jul 21-27',\n  metrics: [\n    { label: 'MRR', value: 48210, unit: '$', delta: 4.1, lowerIsBetter: false, series: [42980, 43610, 44520, 44210, 45380, 45990, 46311, 48210] },\n    { label: 'New signups', value: 1284, unit: '', delta: 9.6, lowerIsBetter: false, series: [980, 1046, 1120, 1088, 1204, 1150, 1172, 1284] },\n    { label: 'Weekly active users', value: 23417, unit: '', delta: 3.2, lowerIsBetter: false, series: [20140, 20890, 21430, 21280, 22050, 22410, 22691, 23417] },\n    { label: 'Churn', value: 2.1, unit: '%', delta: -0.4, lowerIsBetter: true, series: [3.1, 2.9, 2.8, 2.9, 2.7, 2.6, 2.5, 2.1] },\n    { label: 'NPS', value: 52, unit: '', delta: 8.7, lowerIsBetter: false, series: [41, 43, 44, 43, 46, 47, 48, 52] },\n  ],\n};\n\nconst CONTRACT = JSON.stringify({ period: 'Jul 21-27', company: 'Acme', metrics: [{ label: 'MRR', value: 48210, unit: '$', delta: 4.1, lowerIsBetter: false }] }, null, 2)\n  + '\\nOptional per metric: \"series\": [46311, 48210] - past values, oldest first, ending at value.'\n  + '\\nWith it the scene draws a real sparkline of those numbers; without it, a direction arrow only.';\n\nconst demo = (reason) => [{ json: { company: DEMO.company, period: DEMO.period, metrics: DEMO.metrics, usingDemoData: true, demoReason: reason } }];\n\nconst url = String(cfg.metricsUrl || '').trim();\nif (!url) return demo('metricsUrl is empty');\n\nconst res = $input.first().json;\nconst status = Number(res.statusCode);\n// Unreachable endpoint or an HTTP error -> demo data keeps the schedule alive.\nif (!Number.isFinite(status) || status === 0) return demo('the metrics endpoint was unreachable');\nif (status !== 200) return demo('the metrics endpoint answered HTTP ' + status);\n\n// A configured endpoint that answered 200 with junk is a bug in YOUR data\n// pipeline -> fail loudly with the exact contract instead of quietly\n// rendering demo numbers that look real.\nlet body = res.body;\nif (typeof body === 'string') {\n  try { body = JSON.parse(body); } catch (e) {\n    throw new Error('The metrics endpoint returned 200 but not JSON. Expected exactly this shape:\\n' + CONTRACT);\n  }\n}\nif (Array.isArray(body)) body = body[0];\nif (!body || typeof body !== 'object' || !Array.isArray(body.metrics) || !body.metrics.length) {\n  throw new Error('The metrics endpoint returned 200 but no metrics[] array. Expected exactly this shape:\\n' + CONTRACT);\n}\n\nconst problems = [];\nconst metrics = body.metrics.slice(0, 5).map(function (m, i) {\n  const label = String((m && m.label) || '').trim();\n  if (!label) problems.push('metrics[' + i + '].label is missing');\n  const value = m && (typeof m.value === 'number' || typeof m.value === 'string') ? m.value : null;\n  if (value === null || value === '') problems.push('metrics[' + i + '].value must be a number or a string');\n  const delta = m && m.delta != null && m.delta !== '' && Number.isFinite(Number(m.delta)) ? Number(m.delta) : null;\n  // Optional history. A malformed series is a bug in YOUR pipeline, so it\n  // fails loudly rather than quietly drawing a chart of the wrong numbers.\n  let series = null;\n  if (m && m.series != null) {\n    if (!Array.isArray(m.series)) problems.push('metrics[' + i + '].series must be an array of numbers (or omitted)');\n    else if (m.series.some(function (p) { return !Number.isFinite(Number(p)); })) problems.push('metrics[' + i + '].series must contain only numbers');\n    else if (m.series.length < 2) problems.push('metrics[' + i + '].series needs at least 2 points (or omit it for a direction arrow)');\n    else series = m.series.map(Number).slice(-24);\n  }\n  const out = { label: label, value: value, unit: String((m && m.unit) || '').trim(), delta: delta, lowerIsBetter: Boolean(m && m.lowerIsBetter) };\n  if (series) out.series = series;\n  return out;\n});\nif (problems.length) {\n  throw new Error('The metrics JSON does not match the contract:\\n  - ' + problems.join('\\n  - ') + '\\nExpected exactly this shape:\\n' + CONTRACT);\n}\n\nreturn [{ json: {\n  company: String(body.company || '').trim(),\n  period: String(body.period || '').trim(),\n  metrics: metrics,\n  usingDemoData: false,\n  demoReason: null,\n} }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        300
+      ],
+      "id": "zvid-kr-0006",
+      "name": "Prepare metrics"
+    },
+    {
+      "parameters": {
+        "method": "HEAD",
+        "url": "={{ $('Config').first().json.musicUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "redirect": {
+            "redirect": {}
+          },
+          "timeout": 15000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        640,
+        300
+      ],
+      "id": "zvid-kr-0007",
+      "name": "Check music",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Two jobs: (1) the music guard — a render must NEVER fail because a\n// nice-to-have music bed is unreachable or oversized (the renderer rejects\n// audio assets over the plan cap, which would fail the WHOLE render);\n// (2) build the narration prompt so the Write narration HTTP node stays\n// readable.\nconst cfg = $('Config').first().json;\nconst prepared = $('Prepare metrics').first().json;\nconst probe = $input.first().json;\n\nlet music = null;\nlet musicNote = 'no music bed configured';\nconst src = String(cfg.musicUrl || '').trim();\nif (src) {\n  const status = Number(probe.statusCode);\n  const headers = probe.headers || {};\n  const bytes = Number(headers['content-length'] || headers['Content-Length'] || 0);\n  const limit = Number(cfg.maxMusicBytes ?? 5242880);\n  if (status === 200 && (!bytes || bytes <= limit)) {\n    music = { src: src };\n    musicNote = 'ok' + (bytes ? ' (' + bytes + ' bytes)' : '');\n  } else if (status !== 200) {\n    musicNote = 'skipped: HEAD answered ' + (Number.isFinite(status) && status ? 'HTTP ' + status : 'nothing (unreachable)');\n  } else {\n    musicNote = 'skipped: ' + bytes + ' bytes exceeds maxMusicBytes (' + limit + ')';\n  }\n}\n\n// ---- narration prompt ---------------------------------------------------\n// The prompt spells out direction AND goodness per metric (lowerIsBetter is\n// resolved HERE), so the model never has to reason about whether a falling\n// churn number is good news.\nconst fmtValue = function (m) {\n  if (typeof m.value === 'string') return m.value;\n  const n = Number(m.value);\n  const s = Math.abs(n) >= 1000 ? n.toLocaleString('en-US') : String(n);\n  if (m.unit === '$') return s + ' dollars';\n  if (m.unit === '%') return s + ' percent';\n  return m.unit ? s + ' ' + m.unit : s;\n};\nconst lines = prepared.metrics.map(function (m, i) {\n  let move = 'unchanged vs last week';\n  if (m.delta != null && m.delta !== 0) {\n    const dir = m.delta > 0 ? 'up ' : 'down ';\n    const good = m.lowerIsBetter ? m.delta < 0 : m.delta > 0;\n    move = dir + Math.abs(m.delta) + ' percent vs last week - ' + (good ? 'an improvement' : 'a setback') + (m.lowerIsBetter ? ' (lower is better for this metric)' : '');\n  }\n  return (i + 1) + '. ' + m.label + ': ' + fmtValue(m) + ', ' + move + '.';\n});\n\nconst promptText = 'Write the voice-over for a weekly KPI report video.\\n' +\n  'Company: ' + (prepared.company || cfg.brandName || 'the company') + '\\n' +\n  'Period: ' + (prepared.period || 'this week') + '\\n' +\n  'The metrics, in order:\\n' + lines.join('\\n') + '\\n\\n' +\n  'Rules:\\n' +\n  '1. Return STRICT JSON only, exactly this shape: {\"opening\": \"one sentence\", \"perMetric\": [\"one sentence per metric, in order\"], \"closing\": \"one sentence\"}.\\n' +\n  '2. perMetric must contain exactly ' + prepared.metrics.length + ' sentences, one per metric, in the same order as the list above.\\n' +\n  '3. Calm, confident analyst tone. Plain spoken English. No hype, no greetings, no sign-off.\\n' +\n  '4. Spell every number out as words and round conversationally: say about forty eight thousand dollars, never 48210 or a currency symbol. Never use digits, percent signs or abbreviations - captions are aligned word by word to your text.\\n' +\n  '5. Plain ASCII punctuation only. No curly quotes, em dashes, emoji or markdown.\\n' +\n  '6. The opening names the company and the week. The closing sums the week up in one line.\\n' +\n  '7. Each perMetric sentence names the metric, its rounded value and the direction of the move; when a fall is a good thing (churn, backlog, spend) say so naturally.';\n\nreturn [{ json: Object.assign({}, prepared, { music: music, musicNote: musicNote, promptText: promptText }) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        860,
+        300
+      ],
+      "id": "zvid-kr-0008",
+      "name": "Music guard"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "narrate--cond",
+              "leftValue": "={{ $('Config').first().json.narrate }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1080,
+        300
+      ],
+      "id": "zvid-kr-0009",
+      "name": "Narrate?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openRouterApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $('Config').first().json.llmModel, response_format: { type: \"json_object\" }, messages: [ { role: \"system\", content: \"You write voice-over scripts for automated business report videos. You return JSON only.\\n\\nEvery sentence you write is spoken by a text-to-speech voice and shown as word-timed captions, so it must be clean spoken English with no formatting.\" }, { role: \"user\", content: $('Music guard').first().json.promptText } ] }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        180
+      ],
+      "id": "zvid-kr-0010",
+      "name": "Write narration",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parses the writer's JSON, normalises it to ASCII and checks it maps 1:1\n// to the metrics. Everything downstream reads this node.\nconst res = $input.first().json;\nconst prepared = $('Music guard').first().json;\n\nconst content = res && res.choices && res.choices[0] && res.choices[0].message ? res.choices[0].message.content : null;\nif (!content) {\n  throw new Error('The model returned no content: ' + JSON.stringify(res).slice(0, 400));\n}\n\nlet script;\ntry {\n  script = JSON.parse(content);\n} catch (e) {\n  const m = /\\{[\\s\\S]*\\}/.exec(content);\n  if (!m) throw new Error('The model did not return JSON:\\n' + content.slice(0, 400));\n  script = JSON.parse(m[0]);\n}\n\n// Models slip curly quotes and dashes in even when told not to, and unusual\n// characters make the voice stumble. Normalise to ASCII before anything\n// counts words or reaches the synthesiser.\nconst toAscii = function (s) {\n  return String(s)\n    .replace(/[\\u2018\\u2019\\u02BC]/g, \"'\")\n    .replace(/[\\u201C\\u201D]/g, '\"')\n    .replace(/[\\u2013\\u2014]/g, '-')\n    .replace(/\\u2026/g, '...')\n    .replace(/\\s+/g, ' ')\n    .trim();\n};\n\nconst opening = toAscii(script.opening || '');\nconst closing = toAscii(script.closing || '');\nlet perMetric = Array.isArray(script.perMetric) ? script.perMetric.map(toAscii).filter(Boolean) : [];\nconst expected = prepared.metrics.length;\nif (!opening) throw new Error('The narration JSON has no opening sentence.');\nif (!closing) throw new Error('The narration JSON has no closing sentence.');\nif (perMetric.length > expected) perMetric = perMetric.slice(0, expected);\nif (perMetric.length !== expected) {\n  throw new Error('The model wrote ' + perMetric.length + ' metric sentences for ' + expected + ' metrics. Run it again, or set a stronger llmModel in Config.');\n}\n\nconst narration = [opening].concat(perMetric, [closing]).join(' ');\nconst wordCount = narration.split(/\\s+/).filter(Boolean).length;\nif (wordCount < 25) {\n  throw new Error('The narration is only ' + wordCount + ' words - too short to carry the video. Run it again, or set a stronger llmModel.');\n}\n\nreturn [{ json: { opening: opening, perMetric: perMetric, closing: closing, narration: narration, wordCount: wordCount } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        180
+      ],
+      "id": "zvid-kr-0011",
+      "name": "Parse narration"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.elevenlabs.io/v1/text-to-speech/{{ $('Config').first().json.voiceId }}/with-timestamps",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "output_format",
+              "value": "mp3_44100_128"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $('Parse narration').first().json.narration, model_id: $('Config').first().json.elevenModel, voice_settings: { stability: $('Config').first().json.voiceStability, similarity_boost: $('Config').first().json.voiceSimilarity } }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1740,
+        180
+      ],
+      "id": "zvid-kr-0012",
+      "name": "Generate voiceover",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Turns one ElevenLabs \"with-timestamps\" response into (a) an mp3 binary ready\n// for upload and (b) word timings.\n//\n// The alignment comes from the synthesiser itself, so the timings ARE the audio\n// — there is no separate transcription step to disagree with, and nothing that\n// can drift. That is the whole reason this endpoint is used instead of plain\n// text-to-speech.\nconst res = $input.first().json;\n\nif (!res || !res.audio_base64) {\n  throw new Error(\n    'ElevenLabs returned no audio. Check the xi-api-key credential, the voiceId, and your character quota. Response: ' +\n      JSON.stringify(res).slice(0, 300)\n  );\n}\n\nconst a = res.alignment || res.normalized_alignment;\nif (!a || !Array.isArray(a.characters)) {\n  throw new Error('ElevenLabs returned audio but no alignment — make sure the URL ends in /with-timestamps.');\n}\n\nconst chars = a.characters;\nconst starts = a.character_start_times_seconds || [];\nconst ends = a.character_end_times_seconds || [];\n\n// Alignment is per CHARACTER; group runs of non-whitespace into words.\nconst words = [];\nlet cur = null;\nfor (let i = 0; i < chars.length; i += 1) {\n  const ch = chars[i];\n  if (/\\s/.test(ch)) {\n    if (cur) { words.push(cur); cur = null; }\n    continue;\n  }\n  if (!cur) cur = { text: ch, start: Number(starts[i]), end: Number(ends[i]) };\n  else { cur.text += ch; cur.end = Number(ends[i]); }\n}\nif (cur) words.push(cur);\n\nif (!words.length) throw new Error('Alignment contained no words.');\n\nconst duration = Number(ends[ends.length - 1]) || words[words.length - 1].end;\n\nreturn [{\n  json: { words, duration, wordCount: words.length },\n  // n8n binary payloads carry base64 in `data`; naming it matters because Zvid\n  // derives the media kind from the MIME type on upload.\n  binary: {\n    data: {\n      data: res.audio_base64,\n      mimeType: 'audio/mpeg',\n      fileName: 'voiceover.mp3',\n      fileExtension: 'mp3',\n    },\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        180
+      ],
+      "id": "zvid-kr-0013",
+      "name": "Voice + timings"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/uploads",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2180,
+        180
+      ],
+      "id": "zvid-kr-0014",
+      "name": "Upload voiceover",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// === buildProject — identical to the frame-reviewed standalone builder ===\n// Turns one week of KPI data (up to five metrics) into a 1920x1080 report\n// video: branded title card, one scene per metric with a delta pill and a\n// trend panel, then a summary grid. The panel only ever draws data that\n// exists: a real sparkline when the metric carries a `series` array, a plain\n// direction arrow (labelled DIRECTION ONLY) when all we know is the delta sign,\n// and nothing at all when we know neither. Works BOTH with a narrated\n// voiceover (word-timed cuts + karaoke captions) and without one (music only,\n// fixed scene lengths) — `narration` is null on the narrate:false path.\nfunction buildProject(config, source, narration) {\n  const cfg = config || {};\n  const clean = (v) => String(v == null ? '' : v).replace(/\\s+/g, ' ').trim();\n  const esc = (s) => String(s).replace(/[&<>\"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' }[c]));\n  const round = (n) => Math.round(n * 100) / 100;\n  const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));\n\n  // ---- palette ------------------------------------------------------------\n  const safeHex = (v, fallback) => (/^#[0-9a-fA-F]{6}$/.test(clean(v)) ? clean(v) : fallback);\n  const accent = safeHex(cfg.brandAccent, '#38E1FF');\n  const bg = safeHex(cfg.brandBackground, '#0B1220');\n  const ink = safeHex(cfg.textColor, '#FFFFFF');\n  const muted = safeHex(cfg.mutedColor, '#9DB0CC');\n  const good = safeHex(cfg.goodColor, '#34D399');\n  const bad = safeHex(cfg.badColor, '#FF6B78');\n  const font = clean(cfg.font) || 'Space Grotesk';\n  const hexToRgb = (h) => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };\n  const rgba = (h, a) => { const [r, g, b] = hexToRgb(h); return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; };\n  // A slightly lifted card-interior tone derived from the background.\n  const lift = (h, amt) => { const [r, g, b] = hexToRgb(h); const f = (x) => Math.min(255, Math.round(x + amt)); return 'rgb(' + f(r) + ',' + f(g) + ',' + f(b) + ')'; };\n\n  // ---- data ---------------------------------------------------------------\n  const company = clean(source.company) || clean(cfg.brandName) || 'Your company';\n  const period = clean(source.period) || 'This week';\n  const rawMetrics = (Array.isArray(source.metrics) ? source.metrics : []).slice(0, 5);\n  if (!rawMetrics.length) throw new Error('No metrics to render — Prepare metrics produced an empty list.');\n\n  const fmtValue = (m) => {\n    if (typeof m.value === 'string') return clean(m.value);\n    const n = Number(m.value);\n    if (!Number.isFinite(n)) return clean(String(m.value));\n    const s = Math.abs(n) >= 1000 ? n.toLocaleString('en-US') : String(n);\n    const unit = clean(m.unit);\n    if (unit === '$') return '$' + s;\n    if (unit === '%') return s + '%';\n    return unit ? s + ' ' + unit : s;\n  };\n  const fmtDelta = (d) => {\n    const a = Math.round(Math.abs(d) * 10) / 10;\n    return String(a) + '%';\n  };\n\n  const items = rawMetrics.map((m, i) => {\n    const label = clean(m.label) || 'Metric ' + (i + 1);\n    const valueText = fmtValue(m);\n    const deltaNum = m.delta == null || m.delta === '' ? null : Number(m.delta);\n    const hasDelta = deltaNum != null && Number.isFinite(deltaNum);\n    const lowerIsBetter = Boolean(m.lowerIsBetter);\n    const dir = !hasDelta || deltaNum === 0 ? 0 : deltaNum > 0 ? 1 : -1;\n    // churn DOWN is green: goodness respects lowerIsBetter, arrows respect the sign.\n    const improving = dir === 0 ? null : lowerIsBetter ? dir < 0 : dir > 0;\n    const chipColor = dir === 0 || !hasDelta ? muted : improving ? good : bad;\n    const arrow = dir > 0 ? '▲' : dir < 0 ? '▼' : '';\n    const chipText = !hasDelta ? '' : dir === 0 ? 'flat vs last week' : arrow + ' ' + fmtDelta(deltaNum) + ' vs last week';\n    // `series` is OPTIONAL real history. Only a genuine array of at least two\n    // finite numbers becomes a chart; anything else means no chart exists.\n    const nums = Array.isArray(m.series) ? m.series.map(Number).filter((x) => Number.isFinite(x)) : [];\n    const series = nums.length >= 2 && nums.length === (m.series || []).length ? nums.slice(-24) : null;\n    return { label, valueText, deltaNum, hasDelta, lowerIsBetter, dir, improving, chipColor, chipText, series };\n  });\n\n  // ---- trend panel --------------------------------------------------------\n  // NOTHING here is invented. Two states only:\n  //   * `series` supplied (>= 2 real numbers) -> a sparkline of THOSE numbers,\n  //     labelled with how many periods it covers. Gridlines, area fill and the\n  //     end-point dot are earned here because the shape is real data.\n  //   * no `series` -> a direction accent: ONE straight arrow whose slope is\n  //     the sign of the real delta, labelled DIRECTION ONLY. No gridlines, no\n  //     area fill, no end point — nothing that can be read as history.\n  //   * neither series nor delta -> no panel and no divider rule at all; the\n  //     value block centres on the card instead.\n  const PX0 = 1190; const PX1 = 1700; const PYT = 400; const PYB = 720;\n\n  const seriesSvg = (it) => {\n    const s = it.series;\n    const n = s.length;\n    const lo = Math.min.apply(null, s);\n    const hi = Math.max.apply(null, s);\n    const span = hi - lo;\n    const pts = s.map((v, i) => {\n      const t = i / (n - 1);\n      const norm = span === 0 ? 0.5 : clamp(0.08 + ((v - lo) / span) * 0.84, 0.08, 0.92);\n      return [round(PX0 + t * (PX1 - PX0)), round(PYB - norm * (PYB - PYT))];\n    });\n    const line = pts.map((p) => p[0] + ',' + p[1]).join(' ');\n    const area = line + ' ' + PX1 + ',' + PYB + ' ' + PX0 + ',' + PYB;\n    const last = pts[n - 1];\n    const grid = [PYT, Math.round((PYT + PYB) / 2), PYB]\n      .map((y) => \"<line x1='\" + PX0 + \"' y1='\" + y + \"' x2='\" + PX1 + \"' y2='\" + y + \"' stroke='rgba(255,255,255,0.08)' stroke-width='1.5'/>\")\n      .join('');\n    return grid +\n      \"<polygon points='\" + area + \"' fill='\" + rgba(it.chipColor, 0.12) + \"'/>\" +\n      \"<polyline points='\" + line + \"' fill='none' stroke='\" + it.chipColor + \"' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/>\" +\n      \"<circle cx='\" + last[0] + \"' cy='\" + last[1] + \"' r='14' fill='\" + rgba(it.chipColor, 0.25) + \"'/>\" +\n      \"<circle cx='\" + last[0] + \"' cy='\" + last[1] + \"' r='7' fill='\" + it.chipColor + \"'/>\";\n  };\n\n  const directionSvg = (it) => {\n    const midY = (PYT + PYB) / 2;\n    const rise = 116;\n    const y0 = it.dir > 0 ? midY + rise : it.dir < 0 ? midY - rise : midY;\n    const y1 = it.dir > 0 ? midY - rise : it.dir < 0 ? midY + rise : midY;\n    const head = 44;\n    const dx = PX1 - PX0; const dy = y1 - y0;\n    const len = Math.sqrt(dx * dx + dy * dy) || 1;\n    const ux = dx / len; const uy = dy / len;\n    const ex = it.dir === 0 ? PX1 : round(PX1 - ux * head * 0.92);\n    const ey = it.dir === 0 ? y1 : round(y1 - uy * head * 0.92);\n    let arrow = '';\n    if (it.dir !== 0) {\n      const bx = PX1 - ux * head; const by = y1 - uy * head;\n      const px = -uy; const py = ux;\n      arrow = \"<polygon points='\" + PX1 + ',' + y1 + ' ' + round(bx + px * head * 0.5) + ',' + round(by + py * head * 0.5) +\n        ' ' + round(bx - px * head * 0.5) + ',' + round(by - py * head * 0.5) + \"' fill='\" + it.chipColor + \"'/>\";\n    }\n    return \"<line x1='\" + PX0 + \"' y1='\" + y0 + \"' x2='\" + ex + \"' y2='\" + ey + \"' stroke='\" + rgba(it.chipColor, 0.16) + \"' stroke-width='22' stroke-linecap='round'/>\" +\n      \"<line x1='\" + PX0 + \"' y1='\" + y0 + \"' x2='\" + ex + \"' y2='\" + ey + \"' stroke='\" + it.chipColor + \"' stroke-width='7' stroke-linecap='round'/>\" + arrow;\n  };\n\n  const hasPanel = (it) => Boolean(it.series || it.hasDelta);\n  const panelSvg = (it) => \"<svg width='1920' height='1080' viewBox='0 0 1920 1080' xmlns='http://www.w3.org/2000/svg'>\" + (it.series ? seriesSvg(it) : directionSvg(it)) + '</svg>';\n  const panelLabel = (it) => (it.series ? 'TREND &middot; LAST ' + it.series.length + ' PERIODS' : 'DIRECTION ONLY');\n\n  // ---- narration timing ---------------------------------------------------\n  const narrated = Boolean(narration && narration.parsed && narration.timings && narration.voUrl);\n  const tailSeconds = Number(cfg.tailSeconds ?? 0.6);\n  const transition = clean(cfg.sceneTransition) || null;\n  const tDur = transition ? Number(cfg.transitionSeconds ?? 0.45) : 0;\n\n  let spans = null;            // visible [start,end] per scene: title, metrics..., summary\n  let words = [];\n  let cutsAlignedToSpeech = false;\n  let audioDuration = 0;\n\n  if (narrated) {\n    words = (Array.isArray(narration.timings.words) ? narration.timings.words : [])\n      .map((w) => ({ text: String(w.text == null ? '' : w.text).trim(), start: Number(w.start), end: Number(w.end) }))\n      .filter((w) => w.text && Number.isFinite(w.start) && Number.isFinite(w.end));\n    const narrationEnd = words.length ? words[words.length - 1].end : Number(narration.timings.duration) || 30;\n    audioDuration = Math.max(Number(narration.timings.duration) || 0, narrationEnd);\n\n    const countWords = (s) =>\n      String(s || '').replace(/[^\\p{L}\\p{N}'\\u2019]+/gu, ' ').trim().split(/\\s+/).filter(Boolean).length;\n    const segments = [narration.parsed.opening].concat(narration.parsed.perMetric, [narration.parsed.closing]);\n    const segWords = segments.map(countWords);\n    const totalScripted = segWords.reduce((a, b) => a + b, 0);\n\n    // The alignment covers the exact text that was spoken, so walking the word\n    // stream by per-segment word count puts every cut on a sentence boundary.\n    // If the tokenisation drifts, fall back to a proportional split so the\n    // render can never desync.\n    const drift = totalScripted ? Math.abs(words.length - totalScripted) / totalScripted : 1;\n    cutsAlignedToSpeech = words.length > 0 && drift <= 0.2;\n\n    spans = [];\n    if (cutsAlignedToSpeech) {\n      let cursor = 0;\n      for (let i = 0; i < segWords.length; i += 1) {\n        const start = cursor === 0 ? 0 : words[cursor - 1].end;\n        cursor = Math.min(cursor + segWords[i], words.length);\n        const last = words[cursor - 1];\n        spans.push({ start, end: i === segWords.length - 1 ? audioDuration : last ? last.end : audioDuration });\n      }\n    } else {\n      const weightTotal = totalScripted || segWords.length;\n      let t = 0;\n      for (let i = 0; i < segWords.length; i += 1) {\n        const start = t;\n        t = i === segWords.length - 1 ? audioDuration : t + ((segWords[i] || 1) / weightTotal) * audioDuration;\n        spans.push({ start, end: t });\n      }\n    }\n    spans[spans.length - 1].end += tailSeconds;\n  } else {\n    // Music-only pacing: the on-screen numbers carry the video.\n    let t = 0;\n    spans = [];\n    const fixed = [4.2].concat(items.map(() => 3.6), [5.4]);\n    for (const d of fixed) { spans.push({ start: t, end: t + d }); t += d; }\n  }\n\n  const sceneCount = items.length + 2;\n  const minScene = Math.max(1.4, tDur * 3);\n  const visibleFor = (i) => Math.max(minScene, round(spans[i].end - spans[i].start));\n\n  // ---- shared scene chrome ------------------------------------------------\n  const frameStroke = rgba(accent, 0.28);\n  const metaLine = esc(company.toUpperCase()) + ' &middot; ' + esc(period.toUpperCase());\n\n  const scenes = [];\n  const transitionFor = (i) => (i === sceneCount - 2 ? 'smoothup' : transition);\n\n  // ---- scene 1: title card ------------------------------------------------\n  {\n    const i = 0;\n    const visible = visibleFor(i);\n    const dur = round(visible + (sceneCount > 1 ? tDur : 0));\n    const kicker = clean(cfg.reportKicker) || 'WEEKLY KPI REPORT';\n    const title = clean(cfg.reportTitle) || 'The week in numbers.';\n    const titleSize = title.length <= 26 ? 112 : title.length <= 40 ? 88 : 68;\n    const heroVideo = clean(cfg.titleVideoUrl);\n    const visuals = [];\n    if (heroVideo) {\n      visuals.push({ type: 'VIDEO', src: heroVideo, width: 1920, height: 1080, position: 'center-center', resize: 'cover', volume: 0, zoom: { depth: 1.06 }, track: 0, enterBegin: 0, exitEnd: dur });\n    }\n    visuals.push({\n      type: 'SVG', width: 1920, height: 1080, track: 1, enterBegin: 0, exitEnd: dur,\n      svg: \"<svg width='1920' height='1080' viewBox='0 0 1920 1080' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='krIntro' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='\" + bg + \"' stop-opacity='0.97'/><stop offset='0.55' stop-color='\" + bg + \"' stop-opacity='0.78'/><stop offset='1' stop-color='\" + bg + \"' stop-opacity='0.4'/></linearGradient></defs><rect width='1920' height='1080' fill='url(#krIntro)'/><rect x='110' y='150' width='1700' height='780' rx='34' fill='none' stroke='\" + rgba(accent, 0.18) + \"' stroke-width='1.5'/><path d='M130 700 H370' stroke='\" + accent + \"' stroke-width='6' stroke-linecap='round'/></svg>\",\n    });\n    visuals.push({\n      type: 'TEXT', x: 130, y: 250, width: 1250, anchor: 'top-left', track: 2, enterBegin: 0.25, enterEnd: 0.75, enterAnimation: 'smoothup', exitEnd: dur,\n      style: { fontFamily: font, color: ink },\n      html: \"<div style='color:\" + accent + \"; font-size:27px; font-weight:700; letter-spacing:7px;'>\" + esc(kicker) + \"</div><div style='margin-top:26px; color:\" + ink + \"; font-size:\" + titleSize + \"px; line-height:1.02; font-weight:700; letter-spacing:-3px;'>\" + esc(title) + '</div>',\n    });\n    visuals.push({\n      type: 'TEXT', x: 130, y: 770, anchor: 'top-left', track: 3, enterBegin: 0.6, enterEnd: 1.1, enterAnimation: 'fade', exitEnd: dur,\n      style: { fontFamily: font, color: ink },\n      html: \"<div style='color:\" + ink + \"; font-size:31px; font-weight:700; letter-spacing:2px;'>\" + esc(company) + \"<span style='color:\" + rgba(muted, 0.85) + \"; font-weight:500;'>&nbsp;&nbsp;&middot;&nbsp;&nbsp;\" + esc(period) + '</span></div>',\n    });\n    scenes.push({\n      id: 'title', duration: dur, backgroundColor: bg,\n      ...(transitionFor(0) ? { transition: transitionFor(0), transitionDuration: tDur } : {}),\n      visuals,\n    });\n  }\n\n  // ---- one scene per metric ----------------------------------------------\n  items.forEach((it, idx) => {\n    const i = idx + 1;\n    const visible = visibleFor(i);\n    const isLast = i === sceneCount - 1; // never true here (summary follows)\n    const dur = round(visible + (isLast ? 0 : tDur));\n    const vLen = it.valueText.length;\n    const valueSize = vLen <= 6 ? 184 : vLen <= 8 ? 158 : vLen <= 10 ? 134 : vLen <= 13 ? 110 : 88;\n    const panel = hasPanel(it);\n    const align = panel ? 'left' : 'center';\n    const chipHtml = it.hasDelta\n      ? \"<div style='margin-top:32px;'><span style='display:inline-block; background:\" + rgba(it.chipColor, 0.13) + '; border:1.5px solid ' + rgba(it.chipColor, 0.5) + '; color:' + it.chipColor + \"; border-radius:999px; padding:12px 30px; font-size:29px; font-weight:700;'>\" + esc(it.chipText) + '</span></div>'\n      : '';\n    const hintHtml = it.lowerIsBetter && it.hasDelta\n      ? \"<div style='margin-top:22px; color:\" + rgba(muted, 0.8) + \"; font-size:24px; font-weight:500;'>Lower is better for this one.</div>\"\n      : '';\n    const visuals = [\n      {\n        type: 'SVG', width: 1920, height: 1080, track: 0, enterBegin: 0, exitEnd: dur,\n        svg: \"<svg width='1920' height='1080' viewBox='0 0 1920 1080' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='krCard\" + idx + \"' cx='0.3' cy='0.35' r='0.95'><stop offset='0' stop-color='\" + lift(bg, 14) + \"'/><stop offset='1' stop-color='\" + bg + \"'/></radialGradient></defs><rect width='1920' height='1080' fill='url(#krCard\" + idx + \")'/><rect x='120' y='150' width='1680' height='780' rx='40' fill='rgba(255,255,255,0.028)' stroke='\" + frameStroke + \"' stroke-width='1.5'/>\" +\n          (panel ? \"<line x1='1120' y1='250' x2='1120' y2='830' stroke='rgba(255,255,255,0.08)' stroke-width='1.5'/>\" : '') + '</svg>',\n      },\n      {\n        type: 'TEXT', x: 210, y: 208, anchor: 'top-left', track: 2, enterBegin: 0, exitEnd: dur,\n        style: { fontFamily: font, color: ink },\n        html: \"<div style='color:\" + rgba(muted, 0.75) + \"; font-size:22px; font-weight:700; letter-spacing:4px;'>\" + metaLine + '</div>',\n      },\n      {\n        type: 'TEXT', x: 1710, y: 208, anchor: 'top-right', track: 3, enterBegin: 0, exitEnd: dur,\n        style: { fontFamily: font, color: ink },\n        html: \"<div style='color:\" + rgba(muted, 0.6) + \"; font-size:22px; font-weight:700; letter-spacing:4px; text-align:right;'>0\" + (idx + 1) + ' / 0' + items.length + '</div>',\n      },\n      {\n        type: 'TEXT',\n        x: panel ? 210 : 960, y: panel ? 330 : 420, width: panel ? 860 : 1500,\n        anchor: panel ? 'top-left' : 'top-center',\n        track: 4, enterBegin: 0.25, enterEnd: 0.7, enterAnimation: 'smoothup', exitEnd: dur,\n        style: { fontFamily: font, color: ink },\n        html: \"<div style='text-align:\" + align + '; color:' + rgba(muted, 0.95) + \"; font-size:30px; font-weight:700; letter-spacing:5px;'>\" + esc(it.label.toUpperCase()) + \"</div><div style='text-align:\" + align + '; margin-top:22px; color:' + ink + '; font-size:' + valueSize + \"px; line-height:0.95; font-weight:700; letter-spacing:-5px;'>\" + esc(it.valueText) + '</div>' + chipHtml + hintHtml,\n      },\n    ];\n    if (panel) {\n      visuals.push({\n        type: 'SVG', width: 1920, height: 1080, track: 1, enterBegin: 0.45, enterEnd: 0.95, enterAnimation: 'fade', exitEnd: dur,\n        svg: panelSvg(it),\n      });\n      visuals.push({\n        type: 'TEXT', x: PX0, y: 334, anchor: 'top-left', track: 5, enterBegin: 0.45, enterEnd: 0.95, enterAnimation: 'fade', exitEnd: dur,\n        style: { fontFamily: font, color: ink },\n        html: \"<div style='color:\" + rgba(muted, 0.65) + \"; font-size:22px; font-weight:700; letter-spacing:4px;'>\" + panelLabel(it) + '</div>',\n      });\n    }\n    scenes.push({\n      id: 'metric-' + (idx + 1), duration: dur, backgroundColor: bg,\n      ...(transitionFor(i) ? { transition: transitionFor(i), transitionDuration: tDur } : {}),\n      visuals,\n    });\n  });\n\n  // ---- summary grid -------------------------------------------------------\n  let narratedClosingUsed = false;\n  {\n    const i = sceneCount - 1;\n    const visible = visibleFor(i);\n    const dur = round(visible); // last scene: no transition pad\n    const n = items.length;\n    const cardW = 520; const cardH = 240;\n    let slots;\n    // Every row is centred on 960: 3-up spans 120..1800, 2-up spans 410..1510.\n    if (n === 5) slots = [[120, 310], [700, 310], [1280, 310], [410, 590], [990, 590]];\n    else if (n === 4) slots = [[410, 310], [990, 310], [410, 590], [990, 590]];\n    else if (n === 3) slots = [[120, 400], [700, 400], [1280, 400]];\n    else if (n === 2) slots = [[410, 400], [990, 400]];\n    else slots = [[700, 400]];\n    const gridBottom = slots.reduce((m, s) => Math.max(m, s[1] + cardH), 0);\n\n    const cardsSvg = slots.map((s) =>\n      \"<rect x='\" + s[0] + \"' y='\" + s[1] + \"' width='\" + cardW + \"' height='\" + cardH + \"' rx='26' fill='rgba(255,255,255,0.03)' stroke='\" + frameStroke + \"' stroke-width='1.5'/><rect x='\" + s[0] + \"' y='\" + s[1] + \"' width='\" + cardW + \"' height='5' rx='2.5' fill='\" + accent + \"'/>\").join('');\n\n    const visuals = [\n      {\n        type: 'SVG', width: 1920, height: 1080, track: 0, enterBegin: 0, exitEnd: dur,\n        svg: \"<svg width='1920' height='1080' viewBox='0 0 1920 1080' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='krSum' cx='0.5' cy='0.25' r='1'><stop offset='0' stop-color='\" + lift(bg, 12) + \"'/><stop offset='1' stop-color='\" + bg + \"'/></radialGradient></defs><rect width='1920' height='1080' fill='url(#krSum)'/>\" + cardsSvg + '</svg>',\n      },\n      {\n        type: 'TEXT', x: 960, y: 170, anchor: 'top-center', track: 1, enterBegin: 0.2, enterEnd: 0.6, enterAnimation: 'smoothdown', exitEnd: dur,\n        style: { fontFamily: font, color: ink },\n        html: \"<div style='text-align:center; color:\" + rgba(muted, 0.9) + \"; font-size:26px; font-weight:700; letter-spacing:6px;'>THE WEEK AT A GLANCE &middot; \" + esc(period.toUpperCase()) + '</div>',\n      },\n    ];\n\n    items.forEach((it, idx) => {\n      const s = slots[idx];\n      const vLen = it.valueText.length;\n      const vSize = vLen <= 7 ? 64 : vLen <= 10 ? 54 : vLen <= 13 ? 46 : 38;\n      const chip = it.hasDelta\n        ? \"<div style='margin-top:16px; color:\" + it.chipColor + \"; font-size:24px; font-weight:700;'>\" + (it.dir === 0 ? 'flat' : (it.dir > 0 ? '▲ ' : '▼ ') + fmtDelta(it.deltaNum)) + '</div>'\n        : '';\n      visuals.push({\n        type: 'TEXT', x: s[0] + 40, y: s[1] + 44, width: cardW - 80, anchor: 'top-left', track: 2 + idx,\n        enterBegin: round(0.35 + idx * 0.12), enterEnd: round(0.75 + idx * 0.12), enterAnimation: 'smoothup', exitEnd: dur,\n        style: { fontFamily: font, color: ink },\n        html: \"<div style='color:\" + rgba(muted, 0.85) + \"; font-size:20px; font-weight:700; letter-spacing:2px;'>\" + esc(it.label.toUpperCase()) + \"</div><div style='margin-top:14px; color:\" + ink + '; font-size:' + vSize + \"px; line-height:1; font-weight:700; letter-spacing:-2px;'>\" + esc(it.valueText) + '</div>' + chip,\n      });\n    });\n\n    // The analyst's actual take closes the video: on a narrated run this is the\n    // LLM's own `closing` sentence (the one the voice-over just spoke), so the\n    // last frame agrees with the audio instead of a fixed boilerplate line.\n    // Without narration there is no closing to use — Config.summaryLine carries it.\n    const narratedClosing = narrated && narration.parsed ? clean(narration.parsed.closing) : '';\n    narratedClosingUsed = Boolean(narratedClosing);\n    const summaryLine = narratedClosing || clean(cfg.summaryLine) || 'Full breakdown in the dashboard.';\n    const sSize = summaryLine.length <= 70 ? 30 : summaryLine.length <= 110 ? 26 : 23;\n    visuals.push({\n      type: 'TEXT', x: 960, y: Math.max(gridBottom + 40, 690), width: 1400, anchor: 'top-center', track: 7, enterBegin: 0.9, enterEnd: 1.3, enterAnimation: 'fade', exitEnd: dur,\n      style: { fontFamily: font, color: ink },\n      html: \"<div style='text-align:center; color:\" + rgba(muted, 0.95) + '; font-size:' + sSize + \"px; line-height:1.4; font-weight:500;'>\" + esc(summaryLine) + \"</div><div style='margin-top:20px; text-align:center; color:\" + rgba(muted, 0.55) + \"; font-size:22px; font-weight:700; letter-spacing:4px;'>\" + metaLine + '</div>',\n    });\n\n    scenes.push({ id: 'summary', duration: dur, backgroundColor: bg, visuals });\n  }\n\n  const totalDuration = round(scenes.reduce((sum, s) => sum + s.duration, 0) - tDur * Math.max(0, scenes.length - 1));\n\n  // ---- captions (narrated runs only) --------------------------------------\n  let subtitle;\n  let captionCount = 0;\n  if (narrated && words.length) {\n    const perCue = Math.max(1, Number(cfg.captionWordsPerCue ?? 4));\n    const captions = [];\n    for (let w = 0; w < words.length; w += perCue) {\n      const chunk = words.slice(w, w + perCue);\n      captions.push({\n        start: chunk[0].start,\n        end: chunk[chunk.length - 1].end,\n        text: chunk.map((x) => x.text).join(' '),\n        words: chunk.map((x) => ({ start: x.start, end: x.end, text: x.text })),\n      });\n    }\n    captionCount = captions.length;\n    subtitle = {\n      captions,\n      animation: clean(cfg.captionAnimation) || 'karaoke',\n      activeWord: { color: accent },\n      font: { family: font, size: Number(cfg.captionSize ?? 40), color: '#FFFFFF', bold: true },\n      stroke: { color: '#000000', width: Math.max(0, Number(cfg.captionStrokeWidth ?? 6)) },\n      position: 'bottom',\n      margin: { x: 260, y: 48 },\n      maxWordsPerLine: perCue,\n    };\n  }\n\n  // ---- audio --------------------------------------------------------------\n  // NOTE: no `track` on audios — the render API rejects audios[].track.\n  const audios = [];\n  if (narrated) audios.push({ src: narration.voUrl, volume: 1 });\n  const music = source.music && source.music.src ? source.music : null;\n  if (music) audios.push({ src: music.src, volume: Number(narrated ? cfg.musicVolume ?? 0.12 : cfg.musicVolumeSolo ?? 0.26) });\n\n  // The render API only allows letters, digits, spaces, _ and - in `name`.\n  const safeName = ('kpi-report-' + company + '-' + period).toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);\n\n  const payload = {\n    name: safeName || 'kpi-report',\n    resolution: clean(cfg.resolution) || 'full-hd',\n    frameRate: Number(cfg.frameRate ?? 30),\n    backgroundColor: bg,\n    outputFormat: 'mp4',\n    scenes,\n    ...(audios.length ? { audios } : {}),\n    ...(subtitle ? { subtitle } : {}),\n  };\n\n  return {\n    payload,\n    meta: {\n      company,\n      period,\n      metricCount: items.length,\n      usingDemoData: Boolean(source.usingDemoData),\n      narrated,\n      narrationSeconds: narrated ? round(audioDuration) : 0,\n      totalDuration,\n      sceneCount: scenes.length,\n      sceneDurations: scenes.map((s) => s.duration),\n      captionCount,\n      cutsAlignedToSpeech,\n      musicUrl: music ? music.src : null,\n      summaryLineSource: narratedClosingUsed ? 'narration closing' : 'Config.summaryLine',\n      metrics: items.map((it) => ({\n        label: it.label,\n        value: it.valueText,\n        chip: it.chipText || null,\n        improving: it.improving,\n        trendPanel: it.series ? 'series (' + it.series.length + ' points)' : it.hasDelta ? 'direction only' : 'none',\n      })),\n    },\n  };\n}\n\n// === n8n glue ===\nconst config = $('Config').first().json;\nconst source = $('Music guard').first().json;\n\n// The voiceover chain only runs when Config.narrate is true; referencing an\n// unexecuted node throws, so the narrate:false path lands in the catch.\nlet narration = null;\ntry {\n  const parsed = $('Parse narration').first().json;\n  const timings = $('Voice + timings').first().json;\n  const upload = $('Upload voiceover').first().json.upload;\n  if (parsed && timings && upload && upload.url) {\n    narration = { parsed, timings, voUrl: upload.url };\n  }\n} catch (e) { /* narrate: false — music-only video */ }\n\nif (config.narrate && !narration) {\n  throw new Error('narrate is true but the voiceover chain produced no usable audio. Check the OpenRouter and ElevenLabs credentials on Write narration / Generate voiceover, or set narrate: false in Config for a music-only video.');\n}\n\nconst built = buildProject(config, source, narration);\nreturn [{ json: built }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        300
+      ],
+      "id": "zvid-kr-0015",
+      "name": "Build project JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/validate/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2620,
+        300
+      ],
+      "id": "zvid-kr-0016",
+      "name": "Validate project (free)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode;\nconst body = res.body || {};\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2840,
+        300
+      ],
+      "id": "zvid-kr-0017",
+      "name": "Check validation"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dry-run--cond",
+              "leftValue": "={{ $('Config').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3060,
+        300
+      ],
+      "id": "zvid-kr-0018",
+      "name": "Dry run?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: $json.payload.name, payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3280,
+        140
+      ],
+      "id": "zvid-kr-0019",
+      "name": "Save draft to editor",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dry run: everything except the paid render. Open editorLink to preview the\n// exact video, then set dryRun to false in Config to go live. Nothing is\n// posted to Slack on a dry run.\nconst cfg = $('Config').first().json;\nconst d = $('Check validation').first().json;\n\n// The draft save is best-effort (onError: continue) so a hiccup there never\n// hides the rest of the dry-run report.\nlet editorLink = null;\nlet draftId = null;\ntry {\n  const project = $('Save draft to editor').first().json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '') + '/?project=' + project.id;\n  }\n} catch (e) { /* draft step skipped or failed */ }\n\nreturn [{\n  json: {\n    dryRun: true,\n    company: d.meta.company,\n    period: d.meta.period,\n    metrics: d.meta.metrics,\n    usingDemoData: d.meta.usingDemoData,\n    narrated: d.meta.narrated,\n    videoSeconds: d.meta.totalDuration,\n    creditsRequired: d.creditsRequired,\n    editorLink,\n    draftId,\n    warnings: d.warnings,\n    slackPosted: false,\n    nextStep: editorLink\n      ? 'Open editorLink to preview the draft, then set dryRun to false in Config to render and post to Slack.'\n      : 'Set dryRun to false in Config to render this for real.',\n    payload: d.payload,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3500,
+        140
+      ],
+      "id": "zvid-kr-0020",
+      "name": "Dry run summary"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3280,
+        460
+      ],
+      "id": "zvid-kr-0021",
+      "name": "Submit render",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Config').first().json.pollSeconds }}",
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3500,
+        460
+      ],
+      "id": "zvid-kr-0022",
+      "name": "Wait",
+      "webhookId": "d7c3a9f2-1b48-4e6a-9c05-8f2e6b4a1d93"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Config').first().json.apiUrl }}/api/jobs/{{ $('Submit render').first().json.jobId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3720,
+        460
+      ],
+      "id": "zvid-kr-0023",
+      "name": "Get render status",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "render-finished--cond",
+              "leftValue": "={{ $json.state === 'completed' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3940,
+        460
+      ],
+      "id": "zvid-kr-0024",
+      "name": "Render finished?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fails fast on a failed render and stops the poll loop from running forever.\nconst cfg = $('Config').first().json;\nconst job = $input.first().json;\n\nif (job.state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('Render did not finish within ' + cfg.timeoutMinutes + ' minutes (job ' + job.id + ', state ' + job.state + ').');\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3940,
+        680
+      ],
+      "id": "zvid-kr-0025",
+      "name": "Still rendering?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "slack-configured--cond",
+              "leftValue": "={{ String($('Config').first().json.slackWebhookUrl || '').trim() !== '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4160,
+        360
+      ],
+      "id": "zvid-kr-0026",
+      "name": "Slack configured?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.slackWebhookUrl }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: 'Weekly KPI report - ' + $('Check validation').first().json.meta.company + ' (' + $('Check validation').first().json.meta.period + ')' + ($('Check validation').first().json.meta.usingDemoData ? ' [demo data]' : '') + ' -> ' + (typeof $('Get render status').first().json.result === 'string' ? $('Get render status').first().json.result : $('Get render status').first().json.result.url) }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4380,
+        240
+      ],
+      "id": "zvid-kr-0027",
+      "name": "Post to Slack",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Final report for a live run. ONE item carrying videoUrl, so ▶ Watch video\n// downloads exactly one MP4.\nconst cfg = $('Config').first().json;\nconst build = $('Check validation').first().json;\nconst job = $('Get render status').first().json;\nconst url = typeof job.result === 'string' ? job.result : (job.result ? job.result.url : null);\n\nconst slackConfigured = String(cfg.slackWebhookUrl || '').trim() !== '';\nlet slackAttempted = false;\ntry { $('Post to Slack').first(); slackAttempted = true; } catch (e) { /* Slack branch skipped */ }\n\nreturn [{\n  json: {\n    rendered: true,\n    videoUrl: url,\n    jobId: job.id,\n    company: build.meta.company,\n    period: build.meta.period,\n    metricCount: build.meta.metricCount,\n    usingDemoData: build.meta.usingDemoData,\n    narrated: build.meta.narrated,\n    videoSeconds: build.meta.totalDuration,\n    creditsCharged: build.creditsRequired,\n    musicNote: $('Music guard').first().json.musicNote,\n    slackConfigured,\n    slackAttempted,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4600,
+        360
+      ],
+      "id": "zvid-kr-0028",
+      "name": "Run summary"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4820,
+        360
+      ],
+      "id": "zvid-kr-0029",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "width": 900,
+        "height": 620,
+        "color": 4,
+        "content": "## Weekly KPI report video to Slack\n\nEvery Monday morning this workflow turns one week of KPIs (up to five\nmetrics) into a narrated 1920x1080 stats video — title card, one scene per\nmetric with a green/red delta pill and a trend panel, a summary grid — and\ndrops the finished video link into Slack. Dashboards go unopened; a forty\nsecond video gets watched.\n\n**It runs with ZERO external data.** Leave `metricsUrl` empty and a bundled\ndemo dataset (a realistic SaaS week) drives the video, so your first run\nneeds nothing but the credentials below.\n\n### Setup (about three minutes)\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Upload voiceover*, *Validate project (free)*, *Save draft to\n   editor*, *Submit render* and *Get render status*.\n2. **OpenRouter** (or any OpenAI-compatible chat API) — attach it to\n   *Write narration*. Only needed while `narrate` is `true`.\n3. **ElevenLabs** — add a SECOND **Header Auth** credential: name\n   `xi-api-key`, value = your ElevenLabs key. Attach it to *Generate\n   voiceover*. Only needed while `narrate` is `true` — set `narrate: false`\n   in Config for a music-only video that needs neither LLM nor voice keys.\n4. **Run it — the first run renders for real and spends about 40 credits.**\n   Want a free preview first? Set `dryRun: true` in Config: you get the\n   exact credit quote plus an editorLink to watch the draft, nothing spent.\n5. **Activate** — it reports every Monday at 9am. Point `metricsUrl` at your\n   own numbers and set `slackWebhookUrl` when you are ready."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -400
+      ],
+      "id": "zvid-kr-0030",
+      "name": "Note 30"
+    },
+    {
+      "parameters": {
+        "width": 680,
+        "height": 700,
+        "color": 5,
+        "content": "## Your metrics feed: one small JSON\n\n`Fetch metrics` GETs `metricsUrl` and expects exactly this shape:\n\n```\n{ \"period\": \"Jul 21–27\", \"company\": \"Acme\",\n  \"metrics\": [\n    { \"label\": \"MRR\", \"value\": 48210, \"unit\": \"$\",\n      \"delta\": 4.1, \"lowerIsBetter\": false,\n      \"series\": [46311, 48210] }\n  ] }\n```\n\n- Up to **5 metrics**, one scene each. `value` may also be a preformatted\n  string (\"3.2h\"). `unit` is `\"$\"`, `\"%\"`, `\"\"` or a word.\n- `delta` is the percent change vs the previous period; omit it for no pill.\n- **`lowerIsBetter: true` flips the colors** — churn going DOWN renders a\n  green ▼ pill, spend going UP renders a red ▲.\n- **`series` is optional history** — past values, oldest first, ending at\n  `value` (2+ numbers). Supply it and the metric scene draws a **real\n  sparkline of those numbers**. Leave it out and the scene draws a plain\n  **direction arrow**, labelled `DIRECTION ONLY` on screen: the slope is\n  just the sign of `delta`. **No history is ever invented** — with neither\n  `series` nor `delta` the scene shows the number alone, no panel.\n- `metricsUrl` empty → the bundled demo dataset renders (`usingDemoData:\n  true` in the run summary; its numbers AND its eight-week series are\n  invented sample data). Endpoint unreachable / HTTP error → demo data\n  too, so a Monday report never silently skips. A 200 that does NOT match\n  the contract **fails the run loudly** — you get the expected shape back.\n\n### Wiring real sources (documented, not built in)\n- **GA4** — a runReport call via a service account (or the n8n Google\n  Analytics node) reduced to this JSON in a small proxy or Code node.\n- **Stripe** — revenue/MRR from their reporting API, same reduction.\n- Any BI tool that can serve JSON over HTTPS works as-is."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        180,
+        560
+      ],
+      "id": "zvid-kr-0031",
+      "name": "Note 31"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 480,
+        "color": 3,
+        "content": "## The narration is optional\n\n`narrate: true` (default): an LLM writes a calm analyst voice-over of the\nnumbers (digits spelled out so captions align word-by-word), ElevenLabs\nspeaks it **with timestamps**, and every scene cut lands exactly where its\nsentence ends. Karaoke captions ride the real word timings.\n\nThe closing sentence the model writes is also the line printed on the\nfinal summary card, so the last frame says exactly what the voice just\nsaid instead of a fixed slogan.\n\n`narrate: false`: the whole voice branch is skipped — no OpenRouter, no\nElevenLabs, no captions. Fixed scene lengths, the music bed carries the\nvideo and the on-screen numbers do the talking. Same design either way;\nwith no narration the summary card falls back to `summaryLine` in Config.\n\nOn a FREE ElevenLabs plan only default voices work — Voice Library voices\nreturn 402. Brian (the default), George, Roger, Sarah and Bill are\nconfirmed working.\n\nThe music bed is HEAD-checked before every render: unreachable or oversized\n→ the video renders without music instead of failing."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        -180
+      ],
+      "id": "zvid-kr-0032",
+      "name": "Note 32"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 300,
+        "color": 4,
+        "content": "## Free preview: the optional dry run\n\n**`dryRun` is `false` in Config, so a run renders for real.** Set it to\n`true` whenever you want a free pass instead: the workflow validates the\npayload, quotes the exact credit cost and saves the project as a **draft**,\nthen reports an **editorLink** like `https://editor.zvid.io/?project=prj_...`\n\nOpen it to watch the exact video and tweak anything by hand, with nothing\nspent. Nothing is posted to Slack on a dry run.\n\nSet `dryRun` back to `false` to render and deliver."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3240,
+        -160
+      ],
+      "id": "zvid-kr-0033",
+      "name": "Note 33"
+    },
+    {
+      "parameters": {
+        "width": 660,
+        "height": 380,
+        "color": 7,
+        "content": "## Delivery: Slack first, anything next\n\n`slackWebhookUrl` empty (default) → the Slack step is skipped and the run\nends with the video URL in *Run summary*.\n\nTo post into a channel: create an **Incoming Webhook** in your Slack app\n(api.slack.com/messaging/webhooks), paste the URL into Config. The message\ncarries company, period and the video link — and a `[demo data]` tag when\nthe bundled dataset rendered. A Slack hiccup **never kills a finished\nrender**: the step continues on error and the summary still has the URL.\n\nOther delivery tails that slot in after *Run summary*:\n- **Email** — an SMTP / Gmail node sending `videoUrl` to the team list.\n- **YouTube (unlisted)** — HTTP Request (GET `videoUrl`, response format\n  *File*) → native YouTube node, for a permanent internal archive.\n- **Notion / Confluence** — append the link to your weekly review page.\n\nThey stay out of the required path so the import runs with a Zvid key and\nnothing else."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4120,
+        -60
+      ],
+      "id": "zvid-kr-0034",
+      "name": "Note 34"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 260,
+        "color": 6,
+        "content": "## Official Zvid nodes\n\nThese HTTP Request nodes are deliberately core-only so the workflow runs\nanywhere, including n8n Cloud with nothing installed.\n\nOn self-hosted n8n you can install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and swap:\n\n| HTTP Request node | Native replacement |\n| --- | --- |\n| Validate project (free) | **Zvid** → Render → Validate |\n| Submit render | **Zvid** → Render → Create |\n| Get render status + Wait | **Zvid Trigger** (render webhook) |"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3420,
+        700
+      ],
+      "id": "zvid-kr-0035",
+      "name": "Note 35"
+    },
+    {
+      "parameters": {
+        "width": 420,
+        "height": 240,
+        "color": 3,
+        "content": "## ▶ Watch video\n\nClick this node after a run: n8n renders the downloaded MP4 as an inline\nvideo player with a download button — this week's KPI report, no URL to\ncopy.\n\n*Run summary* before it still carries `videoUrl` (and `jobId`,\n`creditsCharged`) if you want to pipe the result onward."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4780,
+        540
+      ],
+      "id": "zvid-kr-0036",
+      "name": "Note 36"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every Monday at 9am": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test manually": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Metrics source?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Metrics source?": {
+      "main": [
+        [
+          {
+            "node": "Fetch metrics",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch metrics": {
+      "main": [
+        [
+          {
+            "node": "Prepare metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare metrics": {
+      "main": [
+        [
+          {
+            "node": "Check music",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check music": {
+      "main": [
+        [
+          {
+            "node": "Music guard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Music guard": {
+      "main": [
+        [
+          {
+            "node": "Narrate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Narrate?": {
+      "main": [
+        [
+          {
+            "node": "Write narration",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build project JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write narration": {
+      "main": [
+        [
+          {
+            "node": "Parse narration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse narration": {
+      "main": [
+        [
+          {
+            "node": "Generate voiceover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate voiceover": {
+      "main": [
+        [
+          {
+            "node": "Voice + timings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Voice + timings": {
+      "main": [
+        [
+          {
+            "node": "Upload voiceover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload voiceover": {
+      "main": [
+        [
+          {
+            "node": "Build project JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build project JSON": {
+      "main": [
+        [
+          {
+            "node": "Validate project (free)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate project (free)": {
+      "main": [
+        [
+          {
+            "node": "Check validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check validation": {
+      "main": [
+        [
+          {
+            "node": "Dry run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dry run?": {
+      "main": [
+        [
+          {
+            "node": "Save draft to editor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Submit render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save draft to editor": {
+      "main": [
+        [
+          {
+            "node": "Dry run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit render": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get render status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get render status": {
+      "main": [
+        [
+          {
+            "node": "Render finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render finished?": {
+      "main": [
+        [
+          {
+            "node": "Slack configured?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Still rendering?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still rendering?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack configured?": {
+      "main": [
+        [
+          {
+            "node": "Post to Slack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to Slack": {
+      "main": [
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run summary": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c4e8a2d6-3f19-4b57-8e42-9a6c1d5f7b28",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "id": "ZvidKpiReportVideo",
+  "tags": []
+}

@@ -1,0 +1,776 @@
+{
+  "name": "Daily local weather video — zero API keys (Zvid)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        380
+      ],
+      "id": "zvid-wx-0001",
+      "name": "Every day at 6:30am"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        200
+      ],
+      "id": "zvid-wx-0002",
+      "name": "Test manually"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"cityName\": \"Lisbon\",\n  \"locale\": \"en-US\",\n  \"units\": \"celsius\",\n  \"windUnit\": \"kmh\",\n  \"brandName\": \"SUNRISE WEATHER\",\n  \"handle\": \"@sunriseweather\",\n  \"heroSeconds\": 6.4,\n  \"outlookSeconds\": 5.8,\n  \"transitionSeconds\": 0.5,\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/04/21/audio_ed6f0ed574.mp3\",\n  \"musicVolume\": 0.14,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        300
+      ],
+      "id": "zvid-wx-0003",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "url": "https://geocoding-api.open-meteo.com/v1/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.cityName }}"
+            },
+            {
+              "name": "count",
+              "value": "1"
+            },
+            {
+              "name": "language",
+              "value": "={{ ($json.locale || 'en').split('-')[0] }}"
+            },
+            {
+              "name": "format",
+              "value": "json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        300
+      ],
+      "id": "zvid-wx-0004",
+      "name": "Find city",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Open-Meteo's geocoder returns an empty object (no `results`) for a miss,\n// which would surface downstream as a confusing expression error — fail here\n// with a message that says what to fix instead.\nconst cfg = $('Config').first().json;\nconst res = $input.first().json;\nconst hit = res && Array.isArray(res.results) && res.results[0];\nif (!hit) {\n  throw new Error(`Open-Meteo could not find \"${cfg.cityName}\". The geocoder matches local spellings too - try \"Lisboa\", \"Ciudad de M\\u00e9xico\", or add more of the name.`);\n}\nreturn [{ json: { place: {\n  name: hit.name,\n  admin1: hit.admin1 || '',\n  country: hit.country || '',\n  latitude: hit.latitude,\n  longitude: hit.longitude,\n  timezone: hit.timezone || 'auto',\n} } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        300
+      ],
+      "id": "zvid-wx-0005",
+      "name": "Check city"
+    },
+    {
+      "parameters": {
+        "url": "https://api.open-meteo.com/v1/forecast",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "latitude",
+              "value": "={{ $json.place.latitude }}"
+            },
+            {
+              "name": "longitude",
+              "value": "={{ $json.place.longitude }}"
+            },
+            {
+              "name": "current",
+              "value": "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m"
+            },
+            {
+              "name": "daily",
+              "value": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
+            },
+            {
+              "name": "forecast_days",
+              "value": "4"
+            },
+            {
+              "name": "timezone",
+              "value": "auto"
+            },
+            {
+              "name": "temperature_unit",
+              "value": "={{ $('Config').first().json.units }}"
+            },
+            {
+              "name": "wind_speed_unit",
+              "value": "={{ $('Config').first().json.windUnit }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        420,
+        300
+      ],
+      "id": "zvid-wx-0006",
+      "name": "Get forecast",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Maps the raw Open-Meteo responses to everything the video needs: WMO\n// weather code -> condition label + icon glyph + palette, localized strings,\n// weekday names. The palette drives the whole design, so a rainy day\n// genuinely looks different from a sunny one.\n\n// One palette per sky. The whole video recolors from this: background gradient,\n// glow, chips, card strokes, icons. A rainy day genuinely looks different from\n// a sunny one.\nconst LOOKS = {\n  sunny: {\n    key: 'sunny',\n    bg1: '#2B1B05', bg2: '#140D03',\n    glow: '#FFB640',\n    accent: '#FFB640',\n    soft: '#EAD9B8', muted: '#A98F63',\n    panel: 'rgba(255,182,64,0.08)', panelStroke: 'rgba(255,182,64,0.38)',\n  },\n  cloudy: {\n    key: 'cloudy',\n    bg1: '#1C242E', bg2: '#0D1218',\n    glow: '#A8C3DE',\n    accent: '#A8C3DE',\n    soft: '#D4DEE9', muted: '#8697A9',\n    panel: 'rgba(168,195,222,0.08)', panelStroke: 'rgba(168,195,222,0.34)',\n  },\n  rain: {\n    key: 'rain',\n    bg1: '#0D2138', bg2: '#070F1A',\n    glow: '#4EA8FF',\n    accent: '#4EA8FF',\n    soft: '#C9DCF2', muted: '#7C93B0',\n    panel: 'rgba(78,168,255,0.09)', panelStroke: 'rgba(78,168,255,0.36)',\n  },\n  snow: {\n    key: 'snow',\n    bg1: '#182734', bg2: '#0C141C',\n    glow: '#BEE3FF',\n    accent: '#BEE3FF',\n    soft: '#E1EEF9', muted: '#8FA6BA',\n    panel: 'rgba(190,227,255,0.08)', panelStroke: 'rgba(190,227,255,0.34)',\n  },\n  storm: {\n    key: 'storm',\n    bg1: '#1E1338', bg2: '#0D081C',\n    glow: '#A98BFF',\n    accent: '#A98BFF',\n    soft: '#DCD2F2', muted: '#8D7FB5',\n    panel: 'rgba(169,139,255,0.09)', panelStroke: 'rgba(169,139,255,0.36)',\n  },\n};\n\n// WMO weather code -> icon glyph, palette, label. Labels ship in English and\n// Spanish; add a language by adding a key to each label object (and to\n// UI_STRINGS below).\nconst WMO = {\n  0:  { icon: 'sun',    look: 'sunny',  label: { en: 'Clear sky',            es: 'Cielo despejado' } },\n  1:  { icon: 'sun',    look: 'sunny',  label: { en: 'Mostly clear',         es: 'Mayormente despejado' } },\n  2:  { icon: 'partly', look: 'cloudy', label: { en: 'Partly cloudy',        es: 'Parcialmente nublado' } },\n  3:  { icon: 'cloud',  look: 'cloudy', label: { en: 'Overcast',             es: 'Nublado' } },\n  45: { icon: 'fog',    look: 'cloudy', label: { en: 'Fog',                  es: 'Niebla' } },\n  48: { icon: 'fog',    look: 'cloudy', label: { en: 'Icy fog',              es: 'Niebla helada' } },\n  51: { icon: 'rain',   look: 'rain',   label: { en: 'Light drizzle',        es: 'Llovizna ligera' } },\n  53: { icon: 'rain',   look: 'rain',   label: { en: 'Drizzle',              es: 'Llovizna' } },\n  55: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy drizzle',        es: 'Llovizna intensa' } },\n  56: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing drizzle',     es: 'Llovizna helada' } },\n  57: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing drizzle',     es: 'Llovizna helada' } },\n  61: { icon: 'rain',   look: 'rain',   label: { en: 'Light rain',           es: 'Lluvia ligera' } },\n  63: { icon: 'rain',   look: 'rain',   label: { en: 'Rain',                 es: 'Lluvia' } },\n  65: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy rain',           es: 'Lluvia intensa' } },\n  66: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing rain',        es: 'Lluvia helada' } },\n  67: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing rain',        es: 'Lluvia helada' } },\n  71: { icon: 'snow',   look: 'snow',   label: { en: 'Light snow',           es: 'Nieve ligera' } },\n  73: { icon: 'snow',   look: 'snow',   label: { en: 'Snow',                 es: 'Nieve' } },\n  75: { icon: 'snow',   look: 'snow',   label: { en: 'Heavy snow',           es: 'Nieve intensa' } },\n  77: { icon: 'snow',   look: 'snow',   label: { en: 'Snow grains',          es: 'Granos de nieve' } },\n  80: { icon: 'rain',   look: 'rain',   label: { en: 'Light showers',        es: 'Chubascos ligeros' } },\n  81: { icon: 'rain',   look: 'rain',   label: { en: 'Rain showers',         es: 'Chubascos' } },\n  82: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy showers',        es: 'Chubascos intensos' } },\n  85: { icon: 'snow',   look: 'snow',   label: { en: 'Snow showers',         es: 'Chubascos de nieve' } },\n  86: { icon: 'snow',   look: 'snow',   label: { en: 'Snow showers',         es: 'Chubascos de nieve' } },\n  95: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm',         es: 'Tormenta eléctrica' } },\n  96: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm w/ hail', es: 'Tormenta con granizo' } },\n  99: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm w/ hail', es: 'Tormenta con granizo' } },\n};\nconst WMO_FALLBACK = { icon: 'cloud', look: 'cloudy', label: { en: 'Mixed skies', es: 'Cielo variable' } };\n\n// Small UI strings, keyed by the language part of `locale`.\nconst UI_STRINGS = {\n  en: { high: 'H', low: 'L', rain: 'RAIN', wind: 'WIND', feelsLike: 'FEELS LIKE', nextDays: 'NEXT 3 DAYS', updated: 'UPDATED', today: 'today' },\n  es: { high: 'MÁX', low: 'MÍN', rain: 'LLUVIA', wind: 'VIENTO', feelsLike: 'SENSACIÓN', nextDays: 'PRÓXIMOS 3 DÍAS', updated: 'ACTUALIZADO', today: 'hoy' },\n};\n\nconst r2 = (n) => Math.round(n * 100) / 100;\nconst r4 = (n) => Math.round(n * 10000) / 10000;\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst cap = (s, locale) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);\nconst deg = (n) => (Number.isFinite(n) ? `${Math.round(n)}°` : '—');\nconst pct = (n) => (Number.isFinite(n) ? `${Math.round(n)}%` : '—');\n\n// Turns the two Open-Meteo responses into everything the video needs:\n// labels, icon keys, palette, localized strings, rounded numbers.\n\nfunction buildWeather(config, place, forecast) {\n  if (!forecast || !forecast.current || !forecast.daily) {\n    throw new Error('Open-Meteo returned no forecast. Response: ' + JSON.stringify(forecast || {}).slice(0, 300));\n  }\n  const locale = String(config.locale || 'en-US');\n  const langKey = locale.split('-')[0].toLowerCase();\n  const strings = UI_STRINGS[langKey] || UI_STRINGS.en;\n  const lang = UI_STRINGS[langKey] ? langKey : 'en';\n\n  const cur = forecast.current;\n  const daily = forecast.daily;\n  const times = daily.time || [];\n  if (times.length < 4) {\n    throw new Error(`Expected 4 daily entries (today + 3), got ${times.length}. Keep forecast_days=4 on the Get forecast node.`);\n  }\n\n  const wmo = (code) => WMO[code] || WMO_FALLBACK;\n  const label = (code) => wmo(code).label[lang] || wmo(code).label.en;\n\n  // Parse ISO dates as plain Y-M-D so the weekday never shifts across timezones.\n  const dayName = (iso) => {\n    const [y, m, d] = String(iso).split('-').map(Number);\n    return cap(new Date(y, m - 1, d).toLocaleDateString(locale, { weekday: 'long' }), locale);\n  };\n  const dateLine = (() => {\n    const [y, m, d] = String(times[0]).split('-').map(Number);\n    return cap(new Date(y, m - 1, d).toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' }), locale);\n  })();\n\n  const currentMeta = wmo(cur.weather_code);\n  const days = [1, 2, 3].map((i) => {\n    const meta = wmo(daily.weather_code[i]);\n    return {\n      date: times[i],\n      dayLabel: dayName(times[i]),\n      hi: daily.temperature_2m_max[i],\n      lo: daily.temperature_2m_min[i],\n      precip: daily.precipitation_probability_max[i],\n      code: daily.weather_code[i],\n      label: label(daily.weather_code[i]),\n      icon: meta.icon,\n      accent: LOOKS[meta.look].accent,\n    };\n  });\n\n  return {\n    place: {\n      name: place.name,\n      country: place.country || '',\n      label: place.country ? `${place.name} · ${place.country}` : place.name,\n    },\n    dateLine,\n    updatedTime: String(cur.time || '').slice(11, 16),\n    units: {\n      temp: (forecast.current_units && forecast.current_units.temperature_2m) || '°C',\n      wind: ((forecast.current_units && forecast.current_units.wind_speed_10m) || 'km/h').toUpperCase(),\n    },\n    current: {\n      temp: cur.temperature_2m,\n      feelsLike: cur.apparent_temperature,\n      humidity: cur.relative_humidity_2m,\n      wind: cur.wind_speed_10m,\n      hi: daily.temperature_2m_max[0],\n      lo: daily.temperature_2m_min[0],\n      precip: daily.precipitation_probability_max[0],\n      code: cur.weather_code,\n      label: label(cur.weather_code),\n      icon: currentMeta.icon,\n    },\n    days,\n    look: LOOKS[currentMeta.look],\n    strings,\n    lang,\n  };\n}\n\nconst cfg = $('Config').first().json;\nconst place = $('Check city').first().json.place;\nconst forecast = $input.first().json;\nreturn [{ json: { weather: buildWeather(cfg, place, forecast) } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ],
+      "id": "zvid-wx-0007",
+      "name": "Weather look"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Assembles the Zvid project: a hero scene (city, date, big current temp,\n// condition, hi/lo + rain + wind chips) and a 3-day outlook scene (cards\n// with icon, weekday, precip, hi/lo). All colours come from the palette\n// chosen by `Weather look`. Design language: news-local-update /\n// dataviz-project-status from the Zvid template library.\n\nconst r2 = (n) => Math.round(n * 100) / 100;\nconst r4 = (n) => Math.round(n * 10000) / 10000;\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst cap = (s, locale) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);\nconst deg = (n) => (Number.isFinite(n) ? `${Math.round(n)}°` : '—');\nconst pct = (n) => (Number.isFinite(n) ? `${Math.round(n)}%` : '—');\n\n// Line-style weather icons drawn in a 24-unit box, scaled into place.\n// Stroke-only (no <text> — SVG text gets no fonts in the renderer).\nconst ICONS = {\n  sun: [\n    \"<circle cx='12' cy='12' r='4.6'/>\",\n    \"<path d='M12 1.6v2.6'/>\", \"<path d='M12 19.8v2.6'/>\",\n    \"<path d='M4.65 4.65l1.85 1.85'/>\", \"<path d='M17.5 17.5l1.85 1.85'/>\",\n    \"<path d='M1.6 12h2.6'/>\", \"<path d='M19.8 12h2.6'/>\",\n    \"<path d='M4.65 19.35l1.85-1.85'/>\", \"<path d='M17.5 6.5l1.85-1.85'/>\",\n  ],\n  cloud: [\n    \"<path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/>\",\n  ],\n  partly: [\n    \"<circle cx='7.4' cy='7.2' r='2.7'/>\",\n    \"<path d='M7.4 2.2v1.6'/>\", \"<path d='M2.4 7.2h1.6'/>\",\n    \"<path d='M3.9 3.7l1.15 1.15'/>\", \"<path d='M10.9 3.7l-1.15 1.15'/>\",\n    \"<path d='M2.9 10.7l1.15-1.15'/>\",\n    \"<g transform='translate(4.9 5.9) scale(0.76)'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z' fill='OCCLUDE'/></g>\",\n  ],\n  fog: [\n    \"<g transform='translate(0 -2.6)'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/></g>\",\n    \"<path d='M5.5 19.6h13'/>\", \"<path d='M8 22.6h8'/>\",\n  ],\n  rain: [\n    \"<path d='M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25'/>\",\n    \"<path d='M8 14.8v4.4'/>\", \"<path d='M12 16.8v4.4'/>\", \"<path d='M16 14.8v4.4'/>\",\n  ],\n  snow: [\n    \"<path d='M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25'/>\",\n    \"<circle cx='8' cy='16' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='8' cy='20' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='12' cy='18' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='12' cy='22' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='16' cy='16' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='16' cy='20' r='1.15' fill='DOT' stroke='none'/>\",\n  ],\n  storm: [\n    \"<path d='M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9'/>\",\n    \"<polyline points='13 11 9 17 15 17 11 23'/>\",\n  ],\n};\n\nfunction iconSvg(kind, cx, cy, size, color, opts) {\n  const o = opts || {};\n  const scale = r4(size / 24);\n  const tx = r2(cx - size / 2);\n  const ty = r2(cy - size / 2);\n  const inner = (ICONS[kind] || ICONS.cloud)\n    .join('')\n    .replace(/OCCLUDE/g, o.occlude || 'none')\n    .replace(/DOT/g, color);\n  return `<g transform='translate(${tx} ${ty}) scale(${scale})' opacity='${o.opacity != null ? o.opacity : 1}' fill='none' stroke='${color}' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'>${inner}</g>`;\n}\n\n// Per-look ambient decoration for the hero, kept in the side bands so it never\n// sits under text.\nfunction heroDecor(look) {\n  const a = look.accent;\n  if (look.key === 'sunny' || look.key === 'storm') {\n    return `<circle cx='540' cy='800' r='310' fill='none' stroke='${a}' stroke-opacity='0.10' stroke-width='1.5'/>` +\n      `<circle cx='540' cy='800' r='400' fill='none' stroke='${a}' stroke-opacity='0.06' stroke-width='1.5'/>` +\n      `<circle cx='540' cy='800' r='490' fill='none' stroke='${a}' stroke-opacity='0.035' stroke-width='1.5'/>`;\n  }\n  if (look.key === 'rain') {\n    const drop = (x, y) => `<path d='M${x} ${y}l-14 42' stroke='${a}' stroke-opacity='0.16' stroke-width='3' stroke-linecap='round'/>`;\n    return drop(140, 560) + drop(215, 750) + drop(120, 980) + drop(195, 1210) +\n      drop(905, 520) + drop(960, 730) + drop(880, 950) + drop(945, 1180);\n  }\n  if (look.key === 'snow') {\n    const dot = (x, y, r) => `<circle cx='${x}' cy='${y}' r='${r}' fill='${a}' fill-opacity='0.18'/>`;\n    return dot(150, 560, 6) + dot(220, 780, 4) + dot(130, 1010, 5) + dot(205, 1230, 4) +\n      dot(910, 540, 5) + dot(950, 760, 6) + dot(880, 990, 4) + dot(935, 1200, 5);\n  }\n  // cloudy / fog: ghost cloud bands\n  return `<rect x='640' y='420' width='330' height='34' rx='17' fill='rgba(255,255,255,0.035)'/>` +\n    `<rect x='110' y='500' width='240' height='30' rx='15' fill='rgba(255,255,255,0.03)'/>` +\n    `<rect x='700' y='1180' width='260' height='30' rx='15' fill='rgba(255,255,255,0.03)'/>`;\n}\n\nfunction buildProject(config, weather) {\n  const W = weather;\n  const look = W.look;\n  const S = W.strings;\n  const heroSec = r2(Number(config.heroSeconds ?? 6.4));\n  const outSec = r2(Number(config.outlookSeconds ?? 5.8));\n  const tSec = r2(Number(config.transitionSeconds ?? 0.5));\n  const font = 'Sora';\n  const subFont = 'Outfit';\n\n  // ---- hero scene backdrop ----\n  const heroSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs>` +\n    `<linearGradient id='wxBg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${look.bg1}'/><stop offset='1' stop-color='${look.bg2}'/></linearGradient>` +\n    `<radialGradient id='wxGlow' cx='0.5' cy='0.5' r='0.5'><stop offset='0' stop-color='${look.glow}' stop-opacity='0.30'/><stop offset='0.55' stop-color='${look.glow}' stop-opacity='0.12'/><stop offset='1' stop-color='${look.glow}' stop-opacity='0'/></radialGradient>` +\n    `</defs>` +\n    `<rect width='1080' height='1920' fill='url(#wxBg)'/>` +\n    `<circle cx='540' cy='800' r='460' fill='url(#wxGlow)'/>` +\n    heroDecor(look) +\n    iconSvg(W.current.icon, 540, 780, 270, look.accent, { occlude: look.bg1 }) +\n    `</svg>`;\n\n  // ---- outlook scene backdrop (cards + per-day icons) ----\n  const cardY = [560, 920, 1280];\n  const cardH = 320;\n  let outlookSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs>` +\n    `<linearGradient id='wxBg2' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${look.bg1}'/><stop offset='1' stop-color='${look.bg2}'/></linearGradient>` +\n    `<radialGradient id='wxGlow2' cx='0.5' cy='0.5' r='0.5'><stop offset='0' stop-color='${look.glow}' stop-opacity='0.22'/><stop offset='1' stop-color='${look.glow}' stop-opacity='0'/></radialGradient>` +\n    `</defs>` +\n    `<rect width='1080' height='1920' fill='url(#wxBg2)'/>` +\n    `<circle cx='540' cy='230' r='420' fill='url(#wxGlow2)'/>`;\n  W.days.forEach((d, i) => {\n    const y = cardY[i];\n    const cy = y + cardH / 2;\n    outlookSvg +=\n      `<rect x='90' y='${y}' width='900' height='${cardH}' rx='40' fill='rgba(255,255,255,0.035)' stroke='${look.panelStroke}' stroke-width='1.5'/>` +\n      `<circle cx='225' cy='${cy}' r='92' fill='rgba(255,255,255,0.045)'/>` +\n      iconSvg(d.icon, 225, cy, 148, d.accent, { occlude: look.bg1 });\n  });\n  outlookSvg += `</svg>`;\n\n  // ---- hero text stack ----\n  const chip = (content) =>\n    `<span style='display:inline-block; background:${look.panel}; border:1.5px solid ${look.panelStroke}; border-radius:999px; padding:16px 28px; margin:0 9px 14px; font-size:28px; font-weight:700; letter-spacing:2px; color:${look.soft}; white-space:nowrap;'>${content}</span>`;\n\n  const heroVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: heroSec, svg: heroSvg },\n    {\n      type: 'TEXT', x: 540, y: 150, anchor: 'top-center', track: 1,\n      enterBegin: 0.1, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.accent },\n      html: `<div style='text-align:center; color:${look.accent}; font-size:30px; font-weight:800; letter-spacing:8px;'>${esc(config.brandName || 'DAILY WEATHER')}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 268, width: 980, anchor: 'top-center', track: 2,\n      enterBegin: 0.2, enterEnd: 0.7, enterAnimation: 'smoothup', exitEnd: heroSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='text-align:center; color:#FFFFFF; font-size:96px; line-height:1.04; font-weight:800; letter-spacing:-2px;'>${esc(W.place.name)}</div>` +\n        `<div style='margin-top:18px; text-align:center; color:${look.muted}; font-size:30px; font-weight:600; letter-spacing:5px;'>${esc(W.dateLine.toUpperCase())}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 940, width: 1000, anchor: 'top-center', track: 3,\n      enterBegin: 0.45, enterEnd: 0.95, enterAnimation: 'smoothup', exitEnd: heroSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='text-align:center; color:#FFFFFF; font-size:290px; line-height:1; font-weight:800; letter-spacing:-8px;'>${deg(W.current.temp)}</div>` +\n        `<div style='margin-top:20px; text-align:center; color:${look.accent}; font-size:46px; font-weight:700; letter-spacing:1px;'>${esc(W.current.label)}</div>` +\n        `<div style='margin-top:18px; text-align:center; color:${look.muted}; font-size:27px; font-weight:600; letter-spacing:3px;'>${esc(S.feelsLike)} ${deg(W.current.feelsLike)}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 1490, width: 1020, anchor: 'top-center', track: 4,\n      enterBegin: 0.75, enterEnd: 1.2, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.soft },\n      html: `<div style='text-align:center;'>` +\n        chip(`${esc(S.high)} ${deg(W.current.hi)} / ${esc(S.low)} ${deg(W.current.lo)}`) +\n        chip(`${esc(S.rain)} ${pct(W.current.precip)}`) +\n        chip(`${esc(S.wind)} ${Math.round(W.current.wind)} ${esc(W.units.wind)}`) +\n        `</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 1795, anchor: 'center-center', track: 5,\n      enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.muted },\n      html: `<div style='color:${look.muted}; font-size:24px; font-weight:700; letter-spacing:4px;'>${esc(config.handle || config.brandName || '')} · ${esc(S.updated)} ${esc(W.updatedTime)}</div>`,\n    },\n  ];\n\n  // ---- outlook text stack ----\n  const outlookVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: outSec, svg: outlookSvg },\n    {\n      type: 'TEXT', x: 100, y: 290, width: 880, anchor: 'top-left', track: 1,\n      enterBegin: 0.12, enterEnd: 0.55, enterAnimation: 'smoothright', exitEnd: outSec,\n      style: { fontFamily: font, color: look.accent },\n      html: `<div style='color:${look.accent}; font-size:32px; font-weight:800; letter-spacing:7px;'>${esc(S.nextDays)}</div>` +\n        `<div style='margin-top:14px; color:${look.muted}; font-size:27px; font-weight:600; letter-spacing:2px;'>${esc(W.place.label)}</div>`,\n    },\n  ];\n  W.days.forEach((d, i) => {\n    outlookVisuals.push({\n      type: 'TEXT', x: 360, y: cardY[i] + cardH / 2, width: 550, anchor: 'center-left', track: 2 + i,\n      enterBegin: r2(0.3 + i * 0.2), enterEnd: r2(0.75 + i * 0.2), enterAnimation: 'smoothleft', exitEnd: outSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='display:flex; align-items:center; justify-content:space-between; width:550px;'>` +\n        `<div>` +\n        `<div style='color:#FFFFFF; font-size:52px; font-weight:700; line-height:1.05;'>${esc(d.dayLabel)}</div>` +\n        `<div style='margin-top:12px; color:${d.accent}; font-size:26px; font-weight:700; letter-spacing:3px;'>${esc(S.rain)} ${pct(d.precip)}</div>` +\n        `</div>` +\n        `<div style='color:#FFFFFF; font-size:60px; font-weight:800; white-space:nowrap;'>${deg(d.hi)}<span style='color:${look.muted}; font-size:42px; font-weight:600;'> / ${deg(d.lo)}</span></div>` +\n        `</div>`,\n    });\n  });\n  outlookVisuals.push({\n    type: 'TEXT', x: 540, y: 1780, anchor: 'center-center', track: 5,\n    enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: outSec,\n    style: { fontFamily: subFont, color: look.muted },\n    html: `<div style='color:${look.muted}; font-size:24px; font-weight:700; letter-spacing:4px;'>${esc(config.brandName || '')} · ${esc(W.dateLine.toUpperCase())}</div>`,\n  });\n\n  const safeName = `daily-weather-${W.place.name}`.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'daily-weather';\n\n  const payload = {\n    name: safeName,\n    resolution: config.resolution || 'instagram-reel',\n    frameRate: Number(config.frameRate ?? 30),\n    backgroundColor: look.bg2,\n    outputFormat: 'mp4',\n    scenes: [\n      {\n        id: 'hero',\n        duration: heroSec,\n        backgroundColor: look.bg2,\n        transition: 'smoothup',\n        transitionId: 'outlook',\n        transitionDuration: tSec,\n        visuals: heroVisuals,\n      },\n      {\n        id: 'outlook',\n        duration: outSec,\n        backgroundColor: look.bg2,\n        visuals: outlookVisuals,\n      },\n    ],\n  };\n\n  if (config.musicUrl) {\n    // NOTE: no track field on audios — the production API rejects audios[].track.\n    payload.audios = [{ src: config.musicUrl, volume: Number(config.musicVolume ?? 0.14) }];\n  }\n\n  const caption =\n    `${W.place.name} ${S.today}: ${W.current.label} · ${deg(W.current.temp)}${W.units.temp.replace('°', '')} · ` +\n    `${S.high} ${deg(W.current.hi)} / ${S.low} ${deg(W.current.lo)} · ${S.rain} ${pct(W.current.precip)}` +\n    ` #${W.place.name.replace(/\\s+/g, '')} #weather`;\n\n  return {\n    payload,\n    meta: {\n      city: W.place.name,\n      country: W.place.country,\n      dateLine: W.dateLine,\n      condition: W.current.label,\n      lookKey: look.key,\n      tempNow: deg(W.current.temp),\n      hiLo: `${deg(W.current.hi)} / ${deg(W.current.lo)}`,\n      precip: pct(W.current.precip),\n      totalSeconds: r2(heroSec + outSec - tSec),\n      sceneCount: payload.scenes.length,\n      caption,\n    },\n  };\n}\n\nconst cfg = $('Config').first().json;\nconst weather = $('Weather look').first().json.weather;\nconst { payload, meta } = buildProject(cfg, weather);\nreturn [{ json: { payload, meta } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        860,
+        300
+      ],
+      "id": "zvid-wx-0008",
+      "name": "Build project JSON"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/validate/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1080,
+        300
+      ],
+      "id": "zvid-wx-0009",
+      "name": "Validate project (free)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission\n// runs, so a failure here is a payload bug - surface the field list instead\n// of a generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode;\nconst body = res.body || {};\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => `  - ${d.field}: ${d.message}`).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error(`Zvid rejected the project (HTTP ${status}): ${body.message || body.error}\\n${details}`);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        300
+      ],
+      "id": "zvid-wx-0010",
+      "name": "Check validation"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dry-run--cond",
+              "leftValue": "={{ $('Config').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        300
+      ],
+      "id": "zvid-wx-0011",
+      "name": "Dry run?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: $json.payload.name, payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1740,
+        140
+      ],
+      "id": "zvid-wx-0012",
+      "name": "Save draft to editor",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dry run: everything except the paid render. Open the editorLink to watch\n// the draft, then set dryRun to false in Config to go live.\nconst cfg = $('Config').first().json;\nconst d = $('Check validation').first().json;\n\n// The draft save is best-effort (onError: continue) so a hiccup there never\n// hides the rest of the dry-run report.\nlet editorLink = null;\nlet draftId = null;\ntry {\n  const project = $('Save draft to editor').first().json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = `${String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '')}/?project=${project.id}`;\n  }\n} catch (e) { /* draft step skipped or failed */ }\n\nreturn [{\n  json: {\n    dryRun: true,\n    city: d.meta.city,\n    condition: d.meta.condition,\n    look: d.meta.lookKey,\n    dateLine: d.meta.dateLine,\n    editorLink,\n    draftId,\n    creditsRequired: d.creditsRequired,\n    videoSeconds: d.meta.totalSeconds,\n    caption: d.meta.caption,\n    warnings: d.warnings,\n    nextStep: editorLink\n      ? 'Open editorLink to preview the draft, then set dryRun to false in Config to render.'\n      : 'Set dryRun to false in Config to render this for real.',\n    payload: d.payload,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        140
+      ],
+      "id": "zvid-wx-0013",
+      "name": "Dry run summary"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/render/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1740,
+        440
+      ],
+      "id": "zvid-wx-0014",
+      "name": "Submit render",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "amount": "={{ $('Config').first().json.pollSeconds }}",
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1960,
+        440
+      ],
+      "id": "zvid-wx-0015",
+      "name": "Wait",
+      "webhookId": "c7d2e9a1-3b58-4f6c-8a2d-5e9f1b0c7a44"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Config').first().json.apiUrl }}/api/jobs/{{ $('Submit render').first().json.jobId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2180,
+        440
+      ],
+      "id": "zvid-wx-0016",
+      "name": "Get render status",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "render-finished--cond",
+              "leftValue": "={{ $json.state === 'completed' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2400,
+        440
+      ],
+      "id": "zvid-wx-0017",
+      "name": "Render finished?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fails fast on a failed render and stops the poll loop from running forever.\nconst cfg = $('Config').first().json;\nconst job = $input.first().json;\n\nif (job.state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error(`Render did not finish within ${cfg.timeoutMinutes} minutes (job ${job.id}, state ${job.state}).`);\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        660
+      ],
+      "id": "zvid-wx-0018",
+      "name": "Still rendering?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Final report. `videoUrl` + `caption` are everything a publishing tail\n// needs - see the sticky note on the right.\nconst build = $('Check validation').first().json;\nconst job = $('Get render status').first().json;\nconst url = typeof job.result === 'string' ? job.result : (job.result && job.result.url);\n\nreturn [{\n  json: {\n    videoUrl: url,\n    jobId: job.id,\n    creditsCharged: build.creditsRequired,\n    city: build.meta.city,\n    country: build.meta.country,\n    condition: build.meta.condition,\n    look: build.meta.lookKey,\n    dateLine: build.meta.dateLine,\n    videoSeconds: build.meta.totalSeconds,\n    caption: build.meta.caption,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2620,
+        360
+      ],
+      "id": "zvid-wx-0019",
+      "name": "Run summary"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2840,
+        360
+      ],
+      "id": "zvid-wx-0026",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "width": 420,
+        "height": 240,
+        "color": 3,
+        "content": "## ▶ Watch video\n\nClick this node after a run: n8n downloads the finished MP4 and renders it as\nan inline video player with a download button — no URL to copy anywhere.\n\n*Run summary* before it still carries `videoUrl` (plus `jobId`, `caption`,\n`creditsCharged`) if you want to pipe the result onward."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2840,
+        560
+      ],
+      "id": "zvid-wx-0027",
+      "name": "Note 27"
+    },
+    {
+      "parameters": {
+        "width": 900,
+        "height": 700,
+        "color": 4,
+        "content": "## Daily local weather video — zero API keys\n\nEvery morning at 06:30 this workflow asks Open-Meteo for your city's forecast\n(no account, no key), designs a 1080x1920 weather bulletin around it — the\ncolours follow the sky — and renders it with Zvid. One credential total: your\nZvid API key.\n\n### Setup (about two minutes)\n\n**The first run renders for real and spends credits** (~12, see Cost below).\nWant a free preview instead? Set `dryRun: true` in `Config` before step 3.\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate project (free)*, *Save draft to editor*,\n   *Submit render* and *Get render status*.\n2. **Open `Config`** — set `cityName`, `brandName`, `handle` and `locale`\n   (dates and weekday names follow it; `en` and `es` UI strings are built in).\n3. **Run \"Test manually\"** — it geocodes, fetches the forecast, validates,\n   then renders for real and spends ~12 credits. When it finishes, click\n   **▶ Watch video** to play the result inside n8n. With `dryRun: true` it\n   stops after validation instead: free quote plus an **editorLink**.\n4. **Activate the workflow** — the 06:30 schedule takes over (it fires in\n   your n8n instance's timezone).\n\n### Cost\n\nA ~12 second 1080x1920 render is about **12 Zvid credits**. The free\n*Validate project (free)* call still runs before every render and returns the\nexact number for your configuration (`creditsCharged` in *Run summary*), but\nthe render then proceeds automatically — set `dryRun: true` if you want the\nquote *instead of* the render. The weather data costs nothing."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -460
+      ],
+      "id": "zvid-wx-0020",
+      "name": "Note 20"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 400,
+        "color": 5,
+        "content": "## Zero keys, really\n\nBoth weather calls are keyless public endpoints — nothing to sign up for:\n\n- `geocoding-api.open-meteo.com/v1/search` turns `cityName` into coordinates\n  (it matches local spellings too — \"Lisboa\" finds Lisbon).\n- `api.open-meteo.com/v1/forecast` returns current conditions plus a 4-day\n  daily forecast in one call.\n\nOpen-Meteo is free for non-commercial use (they appreciate attribution and\nsell commercial plans); one call a day is well inside the free tier.\n\nPrefer Fahrenheit? Set `units: \"fahrenheit\"` and `windUnit: \"mph\"` in\nConfig — the video's unit labels follow the API response automatically."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        560
+      ],
+      "id": "zvid-wx-0021",
+      "name": "Note 21"
+    },
+    {
+      "parameters": {
+        "width": 680,
+        "height": 440,
+        "color": 3,
+        "content": "## The look follows the sky\n\n`Weather look` maps the WMO weather code to a condition label, an icon and a\npalette:\n\n| Sky | Palette |\n| --- | --- |\n| Clear / mostly clear | warm amber |\n| Clouds / fog | slate |\n| Drizzle / rain / showers | deep blue |\n| Snow | ice blue |\n| Thunderstorm | electric violet |\n\nThe whole video recolors from that palette — background gradient, glow, chips,\ncard strokes — so a stormy morning genuinely looks different from a clear one,\nand each outlook card keeps its own day's accent.\n\nCondition labels ship in English and Spanish, picked by `locale` (dates and\nweekday names localize through it too, in any language). To add a language,\nadd a key to `UI_STRINGS` and to each label in the `WMO` table in this node."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        620,
+        560
+      ],
+      "id": "zvid-wx-0022",
+      "name": "Note 22"
+    },
+    {
+      "parameters": {
+        "width": 640,
+        "height": 300,
+        "color": 4,
+        "content": "## Dry run — the free opt-in\n\n`dryRun` is `false` by default, so a run renders for real. Set `dryRun: true`\nin **Config** and the workflow stops after validation instead, saving the\nproject as a **draft** and reporting an **editorLink** like\n`https://editor.zvid.io/?project=prj_...`\n\nOpen it to scrub through the video, tweak anything by hand, and see the exact\ncredit cost — without spending anything. Saving a draft is free.\n\nSet `dryRun` back to `false` (the default) when you want the render."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        -220
+      ],
+      "id": "zvid-wx-0023",
+      "name": "Note 23"
+    },
+    {
+      "parameters": {
+        "width": 700,
+        "height": 320,
+        "color": 6,
+        "content": "## Official Zvid nodes\n\nThese HTTP Request nodes are deliberately core-only so the workflow runs\nanywhere, including n8n Cloud with nothing installed.\n\nOn self-hosted n8n you can install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and swap them for native nodes:\n\n| HTTP Request node | Native replacement |\n| --- | --- |\n| Validate project (free) | **Zvid** → Render → Validate |\n| Submit render | **Zvid** → Render → Create |\n| Get render status + Wait | **Zvid Trigger** (render webhook) |\n\nThe Zvid Trigger removes the polling loop entirely."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        960,
+        -100
+      ],
+      "id": "zvid-wx-0024",
+      "name": "Note 24"
+    },
+    {
+      "parameters": {
+        "width": 620,
+        "height": 340,
+        "color": 7,
+        "content": "## Posting it somewhere\n\n`Run summary` ends the run with everything a publishing node needs:\n\n- `videoUrl` — the finished MP4 on Zvid's CDN\n- `caption` — ready-made (\"Lisbon today: Clear sky · 25°C · H 31° / L 19° ·\n  RAIN 5% #Lisbon #weather\"), already in your configured language\n- `city`, `condition`, `look`, `videoSeconds`\n\nChain your favourite tail after it: a **YouTube** upload, Instagram or TikTok\nthrough your scheduler of choice, a **Slack** / **Discord** message, or an\n**Email Send** with the link. Everything upstream stays identical — this\nworkflow's job ends at a rendered, captioned video."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        20
+      ],
+      "id": "zvid-wx-0025",
+      "name": "Note 25"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every day at 6:30am": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test manually": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Find city",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find city": {
+      "main": [
+        [
+          {
+            "node": "Check city",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check city": {
+      "main": [
+        [
+          {
+            "node": "Get forecast",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get forecast": {
+      "main": [
+        [
+          {
+            "node": "Weather look",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weather look": {
+      "main": [
+        [
+          {
+            "node": "Build project JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build project JSON": {
+      "main": [
+        [
+          {
+            "node": "Validate project (free)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate project (free)": {
+      "main": [
+        [
+          {
+            "node": "Check validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check validation": {
+      "main": [
+        [
+          {
+            "node": "Dry run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dry run?": {
+      "main": [
+        [
+          {
+            "node": "Save draft to editor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Submit render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save draft to editor": {
+      "main": [
+        [
+          {
+            "node": "Dry run summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit render": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get render status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get render status": {
+      "main": [
+        [
+          {
+            "node": "Render finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render finished?": {
+      "main": [
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Still rendering?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Still rendering?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run summary": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f3a8b1c6-9d24-47e5-b06a-8c1d5f2e7b93",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "id": "ZvidDailyWeather",
+  "tags": []
+}
