@@ -26,9 +26,7 @@ jobs:
           package-manager-cache: false
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: '10.13.1'
+        uses: pnpm/action-setup@v6
 
       - name: Update npm for trusted publishing
         run: npm install --global npm@^11.5.1
