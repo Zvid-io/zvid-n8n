@@ -178,7 +178,7 @@ imported workflow.
 
 Releases are published by
 [`publish.yml`](.github/workflows/publish.yml) from version tags such as
-`v0.1.2`. The workflow verifies the tag against `package.json`, installs from
+`v0.1.3`. The workflow verifies the tag against `package.json`, installs from
 the lockfile, runs lint and tests, and publishes the public npm package with an
 npm provenance statement.
 

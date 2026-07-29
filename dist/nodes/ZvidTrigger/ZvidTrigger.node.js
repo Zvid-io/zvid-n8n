@@ -101,12 +101,7 @@ class ZvidTrigger {
                 async delete() {
                     const webhookData = this.getWorkflowStaticData('node');
                     if (webhookData.webhookId) {
-                        try {
-                            await GenericFunctions_1.zvidApiRequest.call(this, 'DELETE', `/api/webhooks/${webhookData.webhookId}`);
-                        }
-                        catch {
-                            return false;
-                        }
+                        await GenericFunctions_1.zvidApiRequest.call(this, 'DELETE', `/api/webhooks/${webhookData.webhookId}`);
                         delete webhookData.webhookId;
                         delete webhookData.webhookSecret;
                     }

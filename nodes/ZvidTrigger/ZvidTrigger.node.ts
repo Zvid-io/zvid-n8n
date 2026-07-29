@@ -114,11 +114,7 @@ export class ZvidTrigger implements INodeType {
 			async delete(this: IHookFunctions): Promise<boolean> {
 				const webhookData = this.getWorkflowStaticData('node');
 				if (webhookData.webhookId) {
-					try {
-						await zvidApiRequest.call(this, 'DELETE', `/api/webhooks/${webhookData.webhookId}`);
-					} catch {
-						return false;
-					}
+					await zvidApiRequest.call(this, 'DELETE', `/api/webhooks/${webhookData.webhookId}`);
 					delete webhookData.webhookId;
 					delete webhookData.webhookSecret;
 				}
