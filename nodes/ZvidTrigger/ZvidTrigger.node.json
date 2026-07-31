@@ -1,8 +1,8 @@
 {
-	"node": "n8n-nodes-zvid.zvidTrigger",
+	"node": "@zvid/n8n-nodes-zvid.zvidTrigger",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
-	"categories": ["Marketing", "Utility"],
+	"categories": ["Marketing & Content", "Utility"],
 	"resources": {
 		"credentialDocumentation": [
 			{
