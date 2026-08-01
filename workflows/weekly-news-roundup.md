@@ -36,11 +36,17 @@ header row still cannot hold both, the dateline is dropped from story scenes (th
 card already carries it). Both extremes were rendered on the production engine and
 reviewed frame by frame.
 
-**A dead feed, a missing clip and a missing track are all survivable.** One unreachable
-feed contributes nothing instead of failing the run; a story with no stock match gets a
-branded gradient panel with a giant ghost numeral instead of a black hole; music that
-404s or exceeds the plan's audio cap is simply left out. The only hard stop is *every*
-feed coming back empty.
+**A dead feed, a missing clip and a missing track are all survivable — and the missing
+clip still looks designed.** One unreachable feed contributes nothing instead of failing
+the run; music that 404s or exceeds the plan's audio cap is simply left out; the only hard
+stop is *every* feed coming back empty. When a story finds no stock match its scene keeps
+the full countdown chrome — brand chip, dateline, giant numeral, source-tagged headline
+card — and fills the space a clip would have occupied with a branded surface: a halftone
+dot field that ramps along the diagonal through the caption band, the slash motif from the
+title cards tucked under the numeral, and a right-aligned "THE WEEK IN &lt;niche&gt;" section
+label. It deliberately carries no corner mark and no second numeral, so it reads as part of
+the title sequence rather than as missing media. A third fixture (`fallback`) renders two
+of those scenes back to back and was reviewed frame by frame.
 
 ## Requirements
 
@@ -51,8 +57,9 @@ feed coming back empty.
 | OpenRouter key (or any OpenAI-compatible chat API) | Picks and scripts the five stories. Default model `openai/gpt-4.1-mini`. |
 | RSS feeds | Any public feeds. Three tech defaults ship in `Config`; no key, no account. |
 
-Everything else — b-roll and music — comes from Zvid's stock library through your Zvid
-key. No stock-media account of your own.
+Everything else — b-roll and music — comes from Zvid's stock library, which the workflow
+reads through Zvid's own search endpoint. No stock-media account of your own, and no extra
+credential on those two nodes.
 
 ## Setup
 
@@ -140,7 +147,7 @@ render.
 | **Generate voiceover** | ElevenLabs `/with-timestamps` — audio and a character-level alignment in one call. |
 | **Voice + timings** | Turns the response into an mp3 binary plus word timings (characters grouped into words). |
 | **Upload voiceover** | Multipart upload to `{apiUrl}/api/uploads`; the render reads the voice track from the returned URL. |
-| **Build project JSON** | The whole design: dateline, adaptive type ramps, headline cards that grow from a fixed baseline, countdown numerals, gradient fallback panels, scene spans walked from the real word timings, transition padding, karaoke caption cues, and the API's `name` character rules. All user and model text is HTML-escaped before it reaches any markup. |
+| **Build project JSON** | The whole design: dateline, adaptive type ramps, headline cards that grow from a fixed baseline, countdown numerals, the designed no-b-roll panel (halftone dot field + slash motif + section label), scene spans walked from the real word timings, transition padding, karaoke caption cues, and the API's `name` character rules. All user and model text is HTML-escaped before it reaches any markup. |
 | **Validate project (free)** | Runs the exact pipeline a render submission runs — schema, plan limits, cost — without spending credits. Failures surface as a field list. |
 | **Dry run?** | Routes on `Config.dryRun`. It is `false` by default, so the normal path goes straight to *Submit render*. |
 | **Save draft to editor** | **Only when `dryRun: true`.** Saves a free draft and returns `editorLink` (`https://editor.zvid.io/?project=…`). Best-effort: a hiccup there never hides the dry-run report. |
@@ -177,7 +184,7 @@ which removes the poll loop.
 | `The model did not return JSON` | The model ignored JSON mode. Use a model that supports `response_format: json_object` — the default `openai/gpt-4.1-mini` does. |
 | `The script is only N words - too short for a roundup` | The model returned stub copy. Retry, or use a stronger `llmModel`. |
 | A story has no source chip | Its `index` did not match any pooled headline, so the tag is omitted rather than guessed. This is the honesty guard working. |
-| A scene shows a gradient panel with a big faded number | No stock clip matched that story's `visualQuery`. The run continues; `missingClips` in the summary counts them. Nudge the prompt or the niche wording for more filmable hints. |
+| A scene shows a dotted brand panel instead of footage | No stock clip matched that story's `visualQuery`, so it rendered the designed no-b-roll panel. The run continues; `missingClips` in the summary counts them. Nudge the prompt or the niche wording for more filmable hints. |
 | No music in the finished video | Every candidate failed the HEAD probe or exceeded `maxMusicBytes` (the plan's audio cap). `rejected` in *Pick music* lists why. A missing bed never fails a render. |
 | `ElevenLabs returned no audio` | Wrong or missing `xi-api-key` credential, a `voiceId` your account cannot use, or an exhausted character quota — the message carries the response. |
 | `ElevenLabs returned audio but no alignment` | The URL was changed and no longer ends in `/with-timestamps`. Word timings come from that endpoint; without them there are no karaoke captions and no sentence-accurate cuts. |
@@ -192,26 +199,43 @@ Read` is core n8n, so this template also runs untouched on n8n Cloud with nothin
 installed). Here is exactly what was verified:
 
 - **Rendered on the production engine** (the same `@zvid-io/zvid` package the render farm
-  runs) from the builder's real output, twice: the default fixture — five stories, typical
-  headlines, one real b-roll clip per story (five video elements, the free-plan maximum) —
-  at **42.57 s**, and a
-  stress fixture at **56.63 s** carrying a 46-character niche that wraps the intro title to
-  three lines, twelve-word headlines, 28-word blurbs, a 61-character hyphenated source
-  domain and one story with no stock match (the gradient-panel fallback).
-  **Every extracted frame was reviewed** — 85 and 113 frames at 2 fps, plus exact-timestamp
-  grabs at all six transition midpoints and the final frame of each render. One real defect
-  was found this way and fixed: with a three-line niche title the intro dateline pill
-  collided with the last line, because the line-count estimate ran under. The estimator is
-  now biased to over-count (over-counting only pushes a block down empty canvas), the
-  source-chip estimate now pays for its letter-spacing, and the stress fixture was
-  re-rendered and re-reviewed frame by frame.
+  runs) from the builder's real output, three times:
+  - `default` — five stories, typical headlines, one real b-roll clip per story (five video
+    elements, the free-plan maximum) — **42.57 s**;
+  - `stress` — a 46-character niche that wraps the intro title to three lines, twelve-word
+    headlines, 28-word blurbs, a 61-character hyphenated source domain and one story with
+    no stock match — **56.63 s**;
+  - `fallback` — the same copy as `default` but with **two** stories missing a stock match,
+    so two no-b-roll panels render back to back — **42.57 s**.
+
+  **Every extracted frame was reviewed** — 85, 113 and 85 frames at 2 fps, plus
+  exact-timestamp grabs at all six transition midpoints and the final frame of each render
+  (**304 images in total**). Real defects found and fixed this way: with a three-line niche
+  title the intro dateline pill collided with the last line (the line-count estimator is now
+  biased to over-count, and the source-chip estimate pays for its letter-spacing); the intro
+  and outro brand mark was moved into the bottom-right quadrant so no length of brand name
+  can push the header chip into it; and the no-b-roll scene was redesigned from an empty
+  gradient with a ghost numeral into the dotted brand panel described above, which also
+  removed a duplicated numeral and a dateline painted over the corner mark.
 - **Remote validation against the live API** (`POST /api/render/validate/api-key` via MCP
-  with `remote: true`) on the default payload: `valid: true`, **0 errors, 0 warnings**,
-  `creditsRequired: 43`, schema **1.0.0**.
+  with `remote: true`), on both distinct payload shapes:
+  - `default` (all five story scenes carry b-roll): `valid: true`, **0 errors, 0 warnings**,
+    `creditsRequired: 43`, schema **1.0.0**;
+  - `stress` (one story scene is the no-b-roll panel): `valid: true`, **0 errors,
+    0 warnings**, `creditsRequired: 57`, schema **1.0.0**.
+
+  The `fallback` fixture was **not** sent to the remote validator separately: every visual
+  element in it matches — position, size, anchor, track and animation — an element already
+  present in one of the two validated payloads, and its two panel SVGs are byte-identical to
+  the validated `stress` panel apart from the brand colour literals. That was checked
+  programmatically, not by eye.
 - **The embedded code node is byte-identical** to the frame-reviewed standalone builder —
-  asserted programmatically by reading both and string-comparing (21 777 characters), not
+  asserted programmatically by reading both and string-comparing (28 194 characters), not
   by eye — and a simulated execution of the node's JS against mocked n8n globals produced
-  the exact reviewed payload.
+  the exact reviewed payload for all three fixtures.
+- **Every media URL in the rendered payloads was probed** with a `HEAD` request at review
+  time: nine stock clips and two audio files, all `200`, the music bed at 1 556 480 bytes
+  (inside the 5 MB plan cap).
 - **Structural checks** on the workflow JSON: parseable, all 39 nodes carry unique names and
   ids, every connection resolves, all 14 code nodes compile, core-only node types, no
   credentials blocks anywhere (you attach your own), and `Config` carries every documented

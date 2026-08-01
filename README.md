@@ -2,7 +2,7 @@
   <img src="https://cdn.zvid.io/assets/logo.svg" alt="Zvid" width="184" />
 </p>
 
-# n8n-nodes-zvid
+# @zvid/n8n-nodes-zvid
 
 n8n community nodes for [Zvid](https://zvid.io) — render videos and images from JSON or templates, and trigger workflows when renders finish.
 
@@ -22,7 +22,7 @@ chat agent instead of wiring the AI nodes and Zvid operations manually. The temp
 comes with:
 
 - an n8n Chat Trigger and AI Agent;
-- an OpenAI Chat Model placeholder that can be replaced with any n8n chat model;
+- an OpenRouter Chat Model placeholder that can be replaced with any n8n chat model;
 - credential-free conversation memory; and
 - n8n's built-in **MCP Client Tool** configured for the hosted Zvid MCP
   endpoint, Zvid OAuth, the safe `creator` profile, and **Tools to Include:
@@ -31,7 +31,8 @@ comes with:
 The MCP connection discovers the tools allowed by the selected profile at runtime,
 so new profile tools become available without adding more nodes. After import, the
 only required setup is selecting an AI-model credential and signing in to Zvid from
-the **Zvid MCP Tools** node.
+the **Zvid MCP Tools** node — OAuth sign-in, no API key; see
+[Credentials](#credentials) for both authentication methods.
 
 The profile and **Max Render Credits** are concrete query parameters on the MCP
 endpoint stored in the n8n workflow JSON. Changing them affects only that workflow.
@@ -114,15 +115,36 @@ Registers a Zvid webhook for `render.completed` / `render.failed` when the workf
 
 ## Credentials
 
-Create a **Zvid API** credential with your API key (`zvid_…`, from
-[API Keys](https://app.zvid.io/api-keys)). The _Base URL_ defaults to
-`https://api.zvid.io`; change it only for self-hosted/local instances. The
-credential test calls `GET /api/credits/balance`.
+There are two ways to authenticate with Zvid from n8n. Which one you need
+depends on the node:
 
-The ready-made AI-agent workflow uses n8n's built-in **MCP OAuth2 API** credential
-in the **Zvid MCP Tools** node. Keep dynamic client registration enabled and keep
-the endpoint on `https://mcp.zvid.io/mcp` unless you are intentionally testing a
-local Zvid MCP server.
+| # | Method | n8n credential | Used by | What you need |
+| --- | --- | --- | --- | --- |
+| 1 | **API key** | **Zvid API** (from this package) | **Zvid** action node, **Zvid Trigger** | A `zvid_…` key from [app.zvid.io/api-keys](https://app.zvid.io/api-keys) |
+| 2 | **OAuth — sign in with Zvid** | **MCP OAuth2 API** (built into n8n) | **Zvid MCP Tools** node in the AI-agent workflow | Your Zvid account — no API key |
+
+The two methods are independent: a workflow that combines the AI agent with
+direct action-node operations needs both credentials.
+
+### Method 1 — API key (Zvid API credential)
+
+Used by the **Zvid** action node and the **Zvid Trigger**. Create a
+**Zvid API** credential and paste an API key (`zvid_…`) from
+[app.zvid.io/api-keys](https://app.zvid.io/api-keys); n8n then sends it in the
+`X-Api-Key` header on every request. The _Base URL_ defaults to
+`https://api.zvid.io`; change it only for self-hosted/local instances. The
+credential test calls `GET /api/credits/balance`, so a wrong or revoked key
+fails as soon as you save the credential.
+
+### Method 2 — OAuth sign-in (MCP OAuth2 API credential)
+
+Used only by the **Zvid MCP Tools** node in the ready-made AI-agent workflow
+(n8n's built-in **MCP Client Tool**). Create n8n's built-in **MCP OAuth2 API**
+credential, keep dynamic client registration enabled, keep the endpoint on
+`https://mcp.zvid.io/mcp`, and connect — you sign in to Zvid in the browser
+and approve access. No API key is created or pasted; the workflow receives
+short-lived, revocable tokens instead. Only change the endpoint when you are
+intentionally testing a local Zvid MCP server.
 
 ## Installation
 

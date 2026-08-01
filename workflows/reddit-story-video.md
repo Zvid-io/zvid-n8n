@@ -42,7 +42,12 @@ story asks for changes.
 first shot of each beat gets moving footage while that budget lasts, and
 continuation shots plus any sixth beat become still photos with a slightly
 deeper Ken Burns push. A shot with no stock match at all falls back to a
-branded gradient panel instead of a black frame. Music candidates are
+branded panel — the brand gradient, an accent streak and a concentric ring
+emblem arriving in two staggered fades — rather than a black frame. It is a
+graceful degradation, not a designed beat: once the emblem has settled (~1.4 s)
+the panel is static under the captions for the rest of the shot, so if a story
+keeps hitting it, widen the writer's `visualQuery` hints rather than living
+with it. Music candidates are
 HEAD-checked for reachability and byte size before use — a dead URL or an
 oversized track downgrades the video to "no music", it never fails the job.
 
@@ -131,6 +136,7 @@ Everything lives in the `Config` node.
 | `captionActiveColor` | `#10141C` | Only used by box modes — text colour inside the accent chip. |
 | `sceneTransition` / `transitionSeconds` | `fade` / `0.35` | Set `sceneTransition` to `null` for hard cuts. |
 | `kenBurnsDepth` | `1.12` | Slow push on every clip (stills get a slightly deeper push). |
+| `maxShotSeconds` | `12` | Ceiling on how long one piece of footage may hold. A story beat whose narration runs longer is split into two or more shots at sentence boundaries, each with its own footage. A *single* sentence longer than this cannot be split without cutting mid-sentence, so it stays whole — the cap is a ceiling on planned shots, not a promise. |
 | `outroSeconds` | `3` | End card length; `0` drops it. |
 | `includeAttribution` | `true` | Keeps `r/<subreddit>` on the cover tag and a `story: r/<subreddit>` line on the end card. Leave it on — these are real people's stories. |
 | `musicVolume` | `0.1` | The bed sits low under the narration. |
@@ -143,33 +149,35 @@ Everything lives in the `Config` node.
 
 ## Cost per video
 
-The live validator quoted **42 credits** for the default fixture (a ~42 s
-story: cover card + five footage beats + end card). Longer stories cost
-proportionally more — the ~71 s stress cut quoted **72**. *Validate project
-(free)* runs before every render and reports the exact figure as
-`creditsCharged` in the run summary; `dryRun: true` gives you the number
-without spending anything. The script costs well under a cent; the voice uses
-roughly 700 ElevenLabs characters per story.
+The live validator quoted **42 credits** for the default fixture (41.73 s:
+cover card + five footage beats + end card). The cost tracks the finished
+video's length almost exactly — the 71.39 s stress cut quoted **72** and a
+28.97 s cut quoted **29** — so budget roughly one credit per second and set
+`targetSeconds` accordingly. *Validate project (free)* runs before every render
+and reports the exact figure as `creditsCharged` in the run summary;
+`dryRun: true` gives you the number without spending anything. The script costs
+well under a cent; the voice uses roughly 700 ElevenLabs characters per story.
 
 ## How it works
 
 | Node | What it does |
 | --- | --- |
-| **Fetch top stories** | GET `https://www.reddit.com/r/<subreddit>/top.json?t=day&limit=25` — keyless listing endpoint, with a descriptive User-Agent. |
-| **Pick story** | Filters to clean text stories (SFW, not pinned, length window, not already used), decodes Reddit's HTML entities, strips URLs/markdown, picks the highest score and builds the writer prompt. Remembers the last 200 used ids in workflow static data (production runs only). |
-| **Write script** | One JSON-mode call: rewrite the post as a first-person narration — a sub-twelve-word hook plus four to six scenes of one to three sentences, each with a concrete stock-footage hint. No usernames, no profanity, digits spelled out, ASCII only. |
-| **Parse script** | Validates the JSON, normalises curly quotes to ASCII, rebuilds scenes from the narration if the model forgot them, merges beat seven-plus into beat six, and joins hook + scenes into the exact string the voice will speak. Hard-fails below 55% of the word target. |
-| **Expand scenes / Search stock clips** | One stock search per beat. Beats 1–5 search footage; a sixth beat searches photos (free plans allow five video elements). |
-| **Pick scene clip** | Scores portrait media highest (the canvas is 1080×1920), preferring clips long enough to cover their beat. A beat with no match renders as a branded gradient; only *all* beats failing kills the run. |
+| **Every day at 9am / Test manually** | Schedule trigger plus a manual trigger, both feeding *Config*. The manual one is what `n8n execute --id` needs. |
+| **Fetch top stories** | GET `https://www.reddit.com/r/<subreddit>/top/.rss?t=day` — the public, keyless **Atom feed**, read as text. Sends a browser-like `User-Agent` (load-bearing — see Requirements) plus an Atom `Accept` header. Three tries a minute apart, then it hands the failure to *Pick story* rather than dying with a bare status code. |
+| **Pick story** | Parses the Atom `<entry>` blocks, double-unescapes the post's rendered HTML, strips tags, links, markdown and the `submitted by /u/…` tail, then keeps the first entry that is a text post, is not a mod/meta post, is between `minChars` and `maxChars`, and has not been used before — the feed already arrives sorted by top-of-day, and Atom carries no score, NSFW or pinned flag to filter on. Remembers the last 200 used ids in workflow static data (production runs only). Explains itself when nothing qualifies or the feed never arrived. |
+| **Write script** | One JSON-mode call: rewrite the post as a first-person narration — a sub-twelve-word hook plus four to six beats of one to three sentences, each with a concrete stock-footage hint that must name an object, a place or a pair of hands, never a person. No usernames, no profanity, digits spelled out, ASCII only. |
+| **Parse script** | Validates the JSON, normalises curly quotes to ASCII, rebuilds beats from the narration if the model forgot them, merges beat seven-plus into beat six, plans the shot list (splitting any beat that would run past `maxShotSeconds` at a sentence boundary), and joins hook + beats into the exact string the voice will speak. Hard-fails below 55% of the word target. |
+| **Expand scenes / Search stock clips** | One stock search per **shot**. The first shot of each beat asks for footage while the five-video budget lasts; continuation shots and anything past the budget ask for photos. |
+| **Pick scene clip** | Scores portrait media highest (the canvas is 1080×1920), prefers clips long enough to cover their shot, never reuses a clip across a split beat, and pushes clips whose description names people down the list. A shot with no match renders as a branded gradient panel; only *all* shots failing kills the run. |
 | **Music queries / Find background music / Shortlist music / Check music asset / Pick music** | Three tags known to return results, candidates ranked shortest-first, then HEAD-checked for reachability and size. No survivor = no music bed, never a failed render. |
 | **Generate voiceover** | ElevenLabs `/with-timestamps` → base64 mp3 **plus** character-level alignment in one call. |
 | **Voice + timings** | Decodes the audio into a named binary and groups the character alignment into word timings. |
 | **Upload voiceover** | Uploads the mp3 to Zvid, returns the CDN URL used as the project's voice track. |
-| **Build project JSON** | The whole design: hook-timed cover card (adaptive headline size, 62→45 px), beat scenes cut on real word timings, caption scrim, transition padding, karaoke captions, watermark, music bed, CTA end card with attribution. |
-| **Validate project (free)** | Runs the exact pipeline a render submission runs — schema, plan limits, cost — without spending credits. Failures surface as a field list. |
+| **Build project JSON** | The whole design: hook-timed cover card (adaptive headline size, 62→45 px), shot scenes cut on real word timings, caption scrim, transition padding, sentence-aware karaoke cues, watermark, music bed, CTA end card with attribution. |
+| **Validate project (free) / Check validation** | Runs the exact pipeline a render submission runs — schema, plan limits, cost — without spending credits. *Check validation* fails the run loudly with the field list when it is rejected, and otherwise carries the payload, `creditsRequired` and the builder's `meta` forward. |
 | **Dry run?** | Routes on `Config.dryRun` (`false` by default, so the normal path goes straight to *Submit render*). |
 | **Save draft to editor / Dry run summary** | Dry-run branch only: free draft + `editorLink` (`https://editor.zvid.io/?project=…`) + the exact credit quote. |
-| **Submit render / Wait / Get render status / Still rendering?** | Paid render plus a poll loop; fails fast on a failed job and stops at `timeoutMinutes`. |
+| **Submit render / Wait / Get render status / Render finished? / Still rendering?** | Paid render plus a poll loop; *Render finished?* routes on `state === 'completed'` and *Still rendering?* fails fast on a failed job and stops at `timeoutMinutes`. |
 | **Run summary** | `videoUrl`, `jobId`, `creditsCharged`, the story's title/source and the stock credits list. |
 | **▶ Watch video** | Downloads the finished MP4 as binary so n8n plays it inline — click the node to watch. Retries a few times and never fails the run. |
 
@@ -195,20 +203,44 @@ Trigger** (render webhook), which removes the poll loop.
 
 ## A word on the source material
 
-These are real people's stories. The writer prompt strips usernames and real
-names, keeps the retelling family friendly, and the picker never takes NSFW
-posts. `includeAttribution: true` keeps a `story: r/<subreddit>` line on the
-cover and end card — leave it on, and check the subreddit's stance on
-republication if you monetise the channel. You are responsible for what your
-channel posts.
+These are real people's stories, and the b-roll shows real people too. Read
+this section before you point the template at a monetised channel.
+
+**There is no NSFW filter, because the feed has nothing to filter on.** The
+Atom feed carries no `over_18` flag, no score and no pinned flag, so *Pick
+story* cannot check any of them — its only filters are: text post, not a
+mod/meta post, inside `minChars`…`maxChars`, not used before. Pick a subreddit
+you are happy to publish from, and read the story in the run summary (or the
+`dryRun: true` draft) before it goes out. If you need a hard content gate, add
+your own IF or moderation step after *Pick story*.
+
+**What the workflow does do:** *Pick story* strips usernames, links and the
+`submitted by /u/…` tail before the model ever sees the post, and the writer
+prompt asks for a family-friendly retelling with no usernames, no real names
+and nothing explicit. That is a prompt, not a guarantee — a model can still
+carry something through.
+
+**B-roll and real faces.** A stock clip of a recognisable stranger running
+under a first-person confession reads as *this is the person it happened to*,
+which is a real person's likeness attached to somebody else's story. So the
+writer prompt is told to describe objects, places and hands rather than people,
+and *Pick scene clip* pushes candidates whose description names people down the
+ranking. Both are biases, not filters: catalogue entries are often untitled, so
+a shot with faces in it can still win. Watch the video before you publish it.
+
+**Attribution.** `includeAttribution: true` keeps `r/<subreddit>` on the cover
+tag and a `story: r/<subreddit>` line on the end card. Leave it on, and check
+the subreddit's stance on republication if you monetise the channel. You are
+responsible for what your channel posts.
 
 ## Troubleshooting
 
 | Symptom | Cause |
 | --- | --- |
-| `Reddit returned no posts` | Wrong `subreddit` value (use `tifu`, not `r/tifu`), a banned/private subreddit, or the listing endpoint temporarily rate-limited you. |
-| `429` from Reddit on manual runs | The keyless listing endpoint is rate-limited per IP. One scheduled run a day never hits it; hammering *Test manually* back-to-back can. Wait a few minutes. |
-| `No story … passed the filters today` | The error lists why each post was skipped (NSFW, pinned, too short, too long, already used). Widen `minChars`/`maxChars`, try another subreddit, or wait a day. |
+| `Reddit returned no feed for r/…` | The feed never arrived. Check `subreddit` has no `r/` prefix (use `tifu`), and that the sub is not private or banned. Otherwise it is the endpoint: see the two rows below. |
+| `403` from Reddit / `Reddit did not return a story feed` | The `.rss` endpoint answers only to a browser-like `User-Agent`. *Fetch top stories* ships one in its header parameters — **do not remove or "tidy" that header**, and do not replace it with a "descriptive" bot UA. Without it every run comes back `403`. |
+| `429` from Reddit, or nothing ever answers | The feed is rate-limited per IP, and **some datacenter IPs are blocked outright**. One scheduled run a day never troubles it; hammering *Test manually* back-to-back earns a temporary `429` — the node already waits a full minute between its three tries. If it never answers at all, run n8n from a home/office IP, raise the schedule interval, or point the trigger at another story source. |
+| `No story … passed the filters today` | The error lists why each of the feed's posts was skipped: mod/meta, no usable text (link or image post), shorter than `minChars`, longer than `maxChars`, already used. Widen `minChars`/`maxChars`, try another subreddit, or wait a day. There is no NSFW/score/pinned filter — Atom carries no such fields. |
 | `The model did not return JSON` | The model ignored JSON mode. Use one that supports `response_format: json_object`. |
 | `The script is only N words` | The writer under-delivered badly (below 55% of target). Retry, or use a stronger model. |
 | `ElevenLabs returned no audio` | Bad or missing `xi-api-key` credential, an unknown `voiceId`, or your monthly character quota is spent. |
@@ -227,32 +259,48 @@ install; the render chain uses the same shapes as the other templates in this
 series). What was verified at authoring time:
 
 - **Rendered on the production engine** (the same `@zvid-io/zvid` package the
-  render farm runs) from the builder's real output, twice: a default fixture
-  (~42 s, 5-beat pancake-disaster story, 47-char headline) and a stress
-  fixture (~71 s, 6 beats — five clips + the automatic still-photo fallback —
-  61-char headline, 197-word narration with a 30-word sentence). **Every
-  extracted frame was reviewed** (2 fps plus exact-timestamp grabs at every
-  cut and the final frame): no clipping, no overflow, captions legible over
-  bright and dark footage, cover card holds through the spoken hook, cuts land
-  on sentence ends, watermark/attribution present.
+  render farm runs) from the builder's real output, three times:
+  - *default* — 41.73 s, 5 footage beats, 46-char headline, music bed,
+    `includeAttribution: true`.
+  - *stress* — 71.39 s, 7 shots (five clips plus the two automatic
+    still-photo fallbacks), 61-char headline, 197-word narration with a
+    30-word sentence, music bed.
+  - *branches* — 28.97 s, the paths the first two never take:
+    `includeAttribution: false` (cover tag reads `STORY TIME · today's story`
+    and the end card drops its source line), one shot with **no** stock match
+    at all (the branded gradient panel), and **no** music survivor (the video
+    renders without a bed).
+- **Every frame of all three renders was reviewed**: 284 frames at 2 fps (83 /
+  143 / 58) plus 21 exact-timestamp grabs at every cut midpoint and every final
+  frame — 305 images in total. No clipping, no overflow, no text touching a
+  frame edge, no unsubstituted variables, no text double-exposed across a cut,
+  captions legible over bright kitchen footage and near-black night footage
+  alike, cover card holding through the spoken hook, watermark leaving before
+  the end card, attribution line present or absent exactly as configured.
 - **Remote validation against the live API** (`POST
-  /api/render/validate/api-key` via MCP with `remote: true`): `valid: true`,
-  **0 errors, 0 warnings**, `creditsRequired: 42` (default) / `72` (stress),
-  schema **1.0.0**. An earlier pass surfaced 6 contrast-lint warnings (colours
-  declared only in inline HTML, not `style`) — fixed, then re-validated clean.
+  /api/render/validate/api-key`, run through MCP with `remote: true`) on all
+  three payload shapes: `valid: true`, **0 errors, 0 warnings**, schema
+  **1.0.0**, `creditsRequired` **42** (default) / **72** (stress) / **29**
+  (branches) — one credit per second of finished video in every case.
+- **Every media URL in the three payloads probed** (`HEAD`, HTTP 200 + expected
+  content-type): 12 stock clips, 2 stock photos, 2 audio files. The music bed
+  used by the default fixture is 3.5 MB, inside the 5 MB audio cap the workflow
+  enforces.
+- **The embedded code nodes are byte-identical** to the reviewed standalone
+  sources (asserted programmatically for all 13 code nodes against the builder
+  directory), every code node compiles, all connections resolve, and the
+  shipped file carries no credential blocks.
 - **Word-timing machinery is the proven Day-1 code** (character→word grouping,
   drift fallback, transition padding) lifted verbatim from the
   faceless-shorts template that ran live end-to-end; fixture timings here are
   synthetic (2.9 words/s over the exact fixture text), so caption cues and
-  scene cuts in the reviewed renders are real cue data.
-- **Every pinned fixture URL probed at authoring time** (HTTP 200 + correct
-  content-type): 10 stock clips, 1 photo, 2 music beds.
-- **The embedded code nodes are byte-identical** to the reviewed standalone
-  sources (asserted programmatically for all 13 code nodes after writing the
-  workflow JSON), every code node compiles, all connections resolve, and the
-  shipped file carries no credential blocks.
+  scene cuts in the reviewed renders are real cue data driving real timings —
+  but the alignment itself did not come from ElevenLabs.
 
-**Not executed at authoring time:** the Reddit listing endpoint inside n8n
-(the fixture stories stand in for it — the endpoint shape is documented from
-its public JSON contract), OpenRouter/ElevenLabs live calls (the shapes are
-verbatim from the live-verified Day-1 template), and any publish tail.
+**Not executed at authoring time:** the workflow has not been run inside n8n,
+so nothing below the trigger has been exercised end-to-end. Specifically: the
+Reddit `.rss` fetch was not called from the workflow (the parser was developed
+against a saved Atom sample of five r/tifu entries, and the fixture stories
+stand in for the feed downstream), the OpenRouter and ElevenLabs calls were not
+made (their node shapes are lifted verbatim from the Day-1 template that did run
+live end-to-end), and no publish tail was built or run.

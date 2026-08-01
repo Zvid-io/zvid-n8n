@@ -12,7 +12,7 @@ marked `done`.
 
 ```
 Schedule ─▶ Config ─▶ Source? ─▶ sheet: read + pick first empty-Status row
-                             └─▶ judgeme: fetch + pick first unseen review
+                             └─▶ judgeme: fetch + pick first usable unseen review
          ─▶ Clean review text ─▶ music guard ─▶ Trim quote (or AI)
          ─▶ Build project ─▶ Validate (free) ─▶ Render ─▶ Mark row done + VideoUrl
          ─▶ ▶ Watch video
@@ -44,6 +44,18 @@ were rendered on the production engine and reviewed frame by frame. The quote
 scene picks its type size from the quote length (84 px down to 48 px) and
 centres the quote + rule + reviewer as one block, so a 60-character review and a
 220-character one both sit balanced.
+
+**The contrast is measured, not assumed.** The hook and CTA cards sit on radial
+gradients, and a platform contrast lint can only compare your type colour with
+the scene's *flat* `backgroundColor` — so a tone that "passes" the lint can still
+land at 2.7:1 on the lit part of the gradient. This builder computes the
+brightest pixel each field can reach (base lift plus every translucent bloom
+stacked on it), then walks each secondary tone away from it until it clears
+WCAG AA 4.5:1. Whatever brand colours you set, the resolved tones and their
+ratios come back in `meta.contrast`; read back out of the rendered frames, every
+secondary line in the two shipped fixtures measures between **5.79:1 and 9.60:1**
+and the lowest-contrast element anywhere in either video is the CTA pill label at
+**5.07:1**.
 
 **It runs with no store and no AI key.** `source` is `sheet` and `useLlm` is
 `false` out of the box, so a Zvid key plus a Google account is the whole
@@ -106,7 +118,17 @@ In Judge.me mode nothing is written back to Judge.me. Review ids that have
 already become a video are remembered in n8n's workflow static data
 (`seenReviewIds`, most recent 200) and **only after a successful render**, so a
 failed render retries the same review on the next run — the same contract the
-sheet's `Status` column gives you.
+sheet's `Status` column gives you. n8n only persists static data for
+production (active/scheduled) executions, so repeated *manual* test runs in
+Judge.me mode can pick the same review again; that is n8n's behaviour, not a
+bug in the template.
+
+Two kinds of review are skipped before anything is rendered: **star-only
+reviews** (a rating with no written body or title — there is nothing to put on
+screen) and reviews that Judge.me marks **hidden, unpublished or spam**. The
+picker moves on to the next candidate rather than stopping on one it cannot
+use, and if a whole page is unusable the run ends with the friendly summary and
+says how many were skipped and why.
 
 ## Configuration
 
@@ -132,8 +154,8 @@ Everything lives in the `Config` node.
 | `quoteFont` / `uiFont` | `Playfair Display` / `Outfit` | Serif carries the quote and the CTA headline; sans carries everything else. One font per text element. |
 | `paperColor` / `inkColor` | `#F5EDE6` / `#1C1512` | Warm paper on deep espresso. |
 | `accentColor` | `#C2553D` | CTA pill, accent rule, monogram, kicker and the soft background blooms. |
-| `starColor` | `#E0A33C` | Filled stars. Empty stars are drawn as outlines in the opposite ink. |
-| `mutedOnInk` / `mutedOnPaper` | `#C3AA9C` / `#7A6154` | Secondary type on the dark and light scenes. |
+| `starColor` | `#D9892B` | Filled stars. Empty stars are drawn as outlines in the opposite ink. |
+| `mutedOnInk` / `mutedOnPaper` | `#CFBAAE` / `#70594D` | Secondary type on the dark and light scenes. These are *starting points*: the builder measures each one against the brightest (or darkest) pixel its scene's gradient can reach and lifts it in 4% steps until it clears WCAG AA 4.5:1. The resolved tones and their ratios are reported in the run's `meta.contrast`. |
 | `musicUrl` | pinned Zvid stock-library track | HEAD-checked before every render. |
 | `musicVolume` | `0.14` | The bed sits low by design. |
 | `maxMusicBytes` | `5242880` | Plan audio cap. Anything larger renders **without** music instead of failing. |
@@ -144,9 +166,10 @@ Everything lives in the `Config` node.
 ## Cost per video
 
 The live validator quoted **16 credits** for the default 15.4 s reel (a
-146-character review with a product photo) and **17** for a 220-character review
-(16.6 s). Length is what moves the number: the quote scene runs 5.4–8.6 s
-depending on how much there is to read, the other two scenes are fixed.
+146-character review with a product photo) and **17** for a review trimmed to a
+218-character quote (16.6 s). Length is what moves the number: the quote scene
+runs 5.4–8.6 s depending on how much there is to read, the other two scenes are
+fixed.
 
 *Validate project (free)* runs before every render and reports the exact figure
 as `creditsCharged` in the run summary — but the render then proceeds on its
@@ -156,12 +179,12 @@ own. Set `dryRun: true` if you want the number *without* the render.
 
 | Node | What it does |
 | --- | --- |
-| **Source?** | Routes on `Config.source`. `sheet` (default) → the Google Sheets path; anything else → the Judge.me path. |
-| **Read reviews sheet** | Reads every row; the sheet node also emits each row's `row_number`. |
-| **Pick next review** | Keeps the first row whose `Status` is empty **and** whose `Rating` clears `minRating`. Nothing matching → the run ends with a friendly "nothing to render" summary instead of an error. A matching row missing `Reviewer`/`ReviewText` fails loudly with the row number. |
+| **Source?** | Routes on `Config.source` (trimmed and lower-cased, so a stray space cannot silently switch modes). `sheet` (default) → the Google Sheets path; anything else → the Judge.me path. |
+| **Read reviews sheet** | Reads every row; the sheet node also emits each row's `row_number`. Runs with *Always Output Data*, so a header-only sheet still hands one (blank) item downstream instead of ending the run silently. |
+| **Pick next review** | Keeps the first row whose `Status` is empty **and** whose `Rating` clears `minRating`. Nothing matching — including a sheet with nothing but a header row — ends the run with a friendly "nothing to render" summary instead of an error. A matching row missing `Reviewer`/`ReviewText` fails loudly with the row number. |
 | **Fetch Judge.me reviews** | `GET https://judge.me/api/v1/reviews` with `api_token`, `shop_domain` and `per_page=10`. Never throws — a bad status is handled in the next node. |
-| **Pick Judge.me review** | Filters by `minRating`, skips ids already rendered (workflow static data) and normalises the review to the same shape the sheet path emits. HTTP 401/403 and unreachable hosts end the run with a fix-it message. |
-| **Clean review text** | The one place untrusted review text is made safe: strips HTML a review platform let through, normalises curly quotes/dashes to ASCII so the trimmer and the wrap estimate count real characters, collapses whitespace, clamps the rating to 1–5 and drops any non-`http(s)` image. |
+| **Pick Judge.me review** | Filters by `minRating`, skips ids already rendered (workflow static data), skips star-only reviews (a rating with no words) and anything hidden, unpublished or spam-flagged, then normalises the review to the same shape the sheet path emits. Reads both the `{statusCode, headers, body}` envelope and a raw body. HTTP 401/403 and unreachable hosts end the run with a fix-it message. |
+| **Clean review text** | The one place untrusted review text is made safe: strips HTML a review platform let through, normalises curly quotes and ellipses to ASCII so the trimmer and the wrap estimate count real characters, collapses whitespace, clamps the rating to 1–5 and drops any non-`http(s)` image. |
 | **Check music** / **Music guard** | HEAD-checks `musicUrl` and its `content-length`. Unreachable, HTTP error or over `maxMusicBytes` → the video renders **without** music and the reason is reported; it never fails the run. |
 | **Use AI?** | Routes on `Config.useLlm`. `false` by default, so the normal path is the rule-based *Trim quote*. |
 | **Trim quote with AI** / **Use AI quote** | **Only when `useLlm: true`.** OpenRouter picks the most quotable span; *Use AI quote* accepts it only if it is contained in the original review (letters/digits fold) and inside the budget, otherwise it falls back to the rule trim and records `llmFallbackReason`. |
@@ -203,13 +226,17 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `Row N is missing Reviewer or ReviewText` | The first eligible row is incomplete. Fill it, or put anything in its `Status` to skip it. |
 | Run says `nothing to render` and names `minRating` | Every pending row is rated below `minRating`. Lower it in `Config` or add a higher-rated review. |
 | Run says `nothing to render` with no rating mention | Every row has a `Status`. Add fresh rows with `Status` empty. |
+| Run says `The sheet has no data rows yet` | The tab holds nothing but the header row (or the wrong tab is selected in *Read reviews sheet*). Add a review row under the header. |
 | Only four stars are filled | Correct — the row's `Rating` is 4. Stars are drawn from the data and rounded to the nearest whole star; nothing can inflate them. |
 | `trimmedBy` says `rule` even though `useLlm` is `true` | The model's answer was rejected. `llmFallbackReason` in the run says why: reworded, over budget, or the call failed. The video still shipped, with the customer's own words. |
 | Quote ends in `…` | The review was longer than `maxQuoteChars`. Raise it (up to 400) if you want more on screen — the type ramp goes down to 48 px. |
 | Judge.me: `rejected the token` | The token is wrong or was rotated. Re-copy it from Judge.me → Settings → Integrations. |
-| Judge.me: same review twice | Static data was cleared (a workflow re-import or an instance reset clears `seenReviewIds`). Nothing breaks; one review is rendered again. |
+| Judge.me: same review twice | `seenReviewIds` was lost — a workflow re-import or an instance reset clears static data, and n8n does not persist it for manual test runs at all (only production/scheduled ones). Nothing breaks; one review is rendered again. |
+| Judge.me: `Skipped N star-only review(s)` | Those customers left a rating with no words, so there is no quote to put on screen. The picker skips them and takes the next written review; if a whole page is star-only the run stops friendly. Nothing to fix. |
+| Judge.me: a review you can see is never picked | It is hidden, unpublished or spam-flagged in Judge.me (those never become a public testimonial), it is below `minRating`, or its id is already in `seenReviewIds`. The run summary's `reason` says which. |
 | Video rendered without music | The HEAD guard dropped it — the run summary's `music` field says why (unreachable, HTTP error, or over `maxMusicBytes`). Free plans cap audio assets at 5 MB. |
 | `Zvid rejected the project` | The message lists the offending fields. If you edited the builder, note the API only allows letters, digits, spaces, `_` and `-` in `name`, and rejects `audios[].track`. |
+| My `mutedOnInk` / `mutedOnPaper` came out lighter/darker than I set | Working as designed. The builder lifts a secondary tone until it clears 4.5:1 against the brightest pixel of the gradient it sits on. `meta.contrast` in the run output shows the tone it actually used and the ratio it holds. Pick a tone that already clears AA if you want it left alone. |
 | Product photo looks cropped | The hook scene deliberately uses the photo full-bleed with `resize: "cover"`. `resize` is resolved against the canvas, not an element box, so an inset photo would be stretched — full-bleed is the only distortion-free option. Use a portrait-friendly image, or leave `ImageUrl` empty for the type-only hook. |
 | Render failed and the row stayed pending | Intentional — the row is only marked `done` after a successful render, so the next run retries it. The error message carries the job's `failedReason`. |
 | Wrong row updated | Do not sort or delete rows while a run is in flight; the update matches on the `row_number` captured at read time. |
@@ -217,56 +244,107 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 
 ## Verified
 
-n8n **2.29.10** node types and versions (every node resolves in a stock install;
-the two Google Sheets nodes use the same shapes as the other templates in this
-series). Here is exactly what was verified:
+Every node in the file is a core `n8n-nodes-base` type at the same version the
+other templates in this series ship (`manualTrigger` 1, `scheduleTrigger` 1.2,
+`set` 3.4, `if` 2.2, `code` 2, `httpRequest` 4.2, `googleSheets` 4.5 / 4.7,
+`wait` 1.1, `stickyNote` 1). Here is exactly what was verified, all of it
+re-run on 2026-07-30 against the files as shipped, and every item below
+independently re-run on 2026-07-31 against the same files:
 
 - **Rendered on the production engine** (the same `@zvid-io/zvid` package the
   render farm runs) from the builder's real output, twice: the default fixture
   (5★, 146-character review, product photo → 15.4 s) and a stress fixture (4★, a
   340-character review trimmed to 218, a 23-character accented reviewer name, a
-  38-character product name and **no** product image → 16.6 s). **Every extracted
-  frame was reviewed** — 2 fps across both videos plus exact-timestamp grabs at
-  each of the four transition midpoints and both final frames, 70 frames in
-  total: no clipping, no overflow, no low-contrast text, no broken animation
-  states, and the star counts match the fixtures (5 filled / 4 filled + 1
-  outlined).
+  38-character product name and **no** product image → 16.6 s). The payload each
+  render consumed was re-generated from the shipped code node and diffed against
+  the rendered one, so the frames below belong to the code that ships.
+- **Every frame of both videos was read, one at a time — 138 in total.** The full
+  2 fps sweep (31 frames of the default reel, 33 of the stress reel = 64), both
+  final frames, and the six whole-frame grabs per fixture that bracket each cut at
+  ±0.25 s (default 3.55 / 3.80 / 4.05 s and 10.95 / 11.20 / 11.45 s; stress
+  3.55 / 3.80 / 4.05 s and 12.15 / 12.40 / 12.65 s = 12). On top of that, the
+  whole 0.05 s sweep across **both** cuts in **both** fixtures (4 × 15 = 60
+  frames — the resolution at which a doubled layer actually shows up) was read
+  twice over: once as whole frames, and once as a full-width, full-resolution
+  band through the wordmark zone (`bands.cjs` stacks the 15 crops of a sweep into
+  one strip), where a second copy of the wordmark would be impossible to miss.
+  Findings: no clipping or overflow, no type touching an edge, every variable
+  substituted (no `{{`, no `undefined`, no `NaN`), **exactly one wordmark on
+  screen at any instant through both cuts** in both fixtures, and the star counts
+  match the data (5 filled / 4 filled + 1 outlined).
+- **Contrast measured out of the rendered frames, not out of the payload.** Each
+  label's rectangle was cropped from the full-resolution frame and decoded as raw
+  RGB. The glyphs are the brightest 2% of a light-type rect (the darkest 2% of a
+  dark-type one) and are scored WCAG-style against the background underneath
+  them, taken as the mean of the other half of the same rect — the half the
+  anti-aliased glyph edges cannot reach. `measure-all.cjs` runs every rect in one
+  command, so the whole table below is reproducible rather than hand-typed.
+  Measured, default / stress: CTA brand line **7.74:1 / 7.76:1**; CTA store
+  domain **12.67:1 / 12.77:1**; CTA pill label **5.07:1 / 5.10:1**; hook brand
+  line **7.93:1** over the photo scrim / **7.90:1** on the no-photo gradient
+  (**7.31:1** over its right half, where the accent bloom is brightest); hook
+  kicker **8.58:1 / 7.51:1**; hook product line **9.60:1** (default only);
+  rating label **14.56:1 / 12.62:1**. On the paper card (dark type, scored
+  against the mean of the lit half): brand line **6.43:1 / 6.59:1**, reviewer
+  meta line **6.08:1 / 6.21:1**, footer domain **5.89:1 / 5.79:1**. Every
+  measured element clears WCAG AA 4.5:1; the tightest is the CTA pill label at
+  5.07:1. Re-scored against a deliberately harsher background estimate — the
+  *median* pixel of the whole rect, which on a gradient is brighter than the
+  type's local background — every element of the two dark scenes still clears AA,
+  the tightest again being the pill label at **5.02:1**; that harsher estimate is
+  meaningless on the paper card (its darkest pixels *are* the type), so only the
+  mean figures are quoted there. A second, stricter pass (`worstbg.cjs`) scores
+  the declared type colour against the **brightest single pixel** of a
+  guaranteed-background band immediately above and below each glyph row: seven
+  measurements across the five text lines that sit on the dark radial fields
+  come back **4.89:1 – 9.23:1**, all still over AA. Ratios are measured per frame off a lossy JPEG grab, and the
+  crop rectangles are derived from the payload rather than hand-picked, so expect
+  ±0.2 if you re-measure.
 - **Remote validation against the live API** (`POST /api/render/validate/api-key`
-  via MCP with `remote: true`): the default payload came back `valid: true`,
-  **0 errors, 0 warnings**, `creditsRequired: 16`, schema **1.0.0**. The
-  no-image hook scene — the one structurally different part of the stress
-  payload — was validated the same way (`valid: true`, 0 errors, 0 warnings),
-  as was the stress payload's full 16.6 s three-scene shape
-  (`creditsRequired: 17`).
-- **Every pinned URL HEAD-checked at authoring time**: the music bed
-  (HTTP 200, `audio/mpeg`, 1,556,480 bytes — comfortably under the 5 MB plan
-  cap) and the fixture product image (HTTP 200, `image/jpeg`).
+  via MCP with `remote: true`), both distinct payload shapes: the with-photo
+  default came back `valid: true`, `errors: []`, `warnings: []`,
+  `creditsRequired: 16`, `schemaVersion: "1.0.0"`, resolved `duration: 15.4`;
+  the no-photo stress payload came back `valid: true`, `errors: []`,
+  `warnings: []`, `creditsRequired: 17`, `schemaVersion: "1.0.0"`, resolved
+  `duration: 16.6`. Zero layout warnings on either.
+- **Both pinned URLs HEAD-checked**: the music bed (HTTP 200, `audio/mpeg`,
+  1,556,480 bytes — comfortably under the 5 MB plan cap) and the fixture product
+  image (HTTP 200, `image/jpeg`, 170,387 bytes).
 - **The embedded code nodes are byte-identical** to the frame-reviewed
-  standalone builders (`Build project JSON` and `Trim quote`, asserted
-  programmatically after the workflow file is written, not by eye), and the
-  shipped `Config` node is asserted equal to the config the fixtures used.
-- **25 simulated-execution checks** run the shipped workflow's own code nodes
+  standalone builders — `Build project JSON` (30,254 characters / 30,291 bytes
+  UTF-8) and `Trim quote` (1,906 characters / 1,922 bytes), compared
+  string-for-string after the workflow file is written, not by eye — and the
+  shipped `Config` node (30 keys) is asserted deep-equal to the config the
+  fixtures used.
+- **34 simulated-execution checks** run the shipped workflow's own code nodes
   against mocked n8n globals: the sheet happy path rebuilds the *exact* payload
   that was rendered and frame-reviewed (and so does the stress path); an
-  all-`done` sheet and a below-`minRating` sheet both stop friendly; an
-  incomplete row throws with its row number; Judge.me picks the 4★ review over
-  the 2★ one, refuses an id it has already rendered, and turns 401 / unreachable
-  into fix-it messages; a 9 MB or 404 music URL drops `audios[]` instead of
-  failing; a genuine LLM span is accepted while an invented one, an over-budget
-  one and a failed call all fall back to the rule trim; the poll loop throws on
-  `failed` and at `timeoutMinutes`; and the Judge.me review id is recorded only
-  after a successful render.
-- **Structural checks** on the workflow JSON: parseable, all 29 connection
-  sources resolve, all code nodes compile, unique names/ids, core-only node
-  types (`manualTrigger`, `scheduleTrigger`, `set`, `if`, `code`, `httpRequest`,
-  `googleSheets`, `wait`, `stickyNote`), no `credentials` blocks anywhere, and
-  every Zvid call on Header Auth.
+  all-`done` sheet, a below-`minRating` sheet and a header-only sheet all stop
+  friendly; an incomplete row throws with its row number; Judge.me picks the 4★
+  review over the 2★ one, refuses an id it has already rendered, skips
+  star-only and hidden/unpublished/spam-flagged reviews and takes the next
+  usable one, reads both the full-response envelope and a raw body, and turns
+  401 / unreachable into fix-it messages; a 9 MB or 404 music URL drops
+  `audios[]` instead of failing; a genuine LLM span is accepted while an
+  invented one, an over-budget one and a failed call all fall back to the rule
+  trim; the poll loop throws on `failed` and at `timeoutMinutes`; and the
+  Judge.me review id is recorded only after a successful render.
+- **Structural checks** on the workflow JSON: parseable, 39 nodes, all 29
+  connection sources resolve, all code nodes compile, unique names/ids,
+  core-only node types (`manualTrigger`, `scheduleTrigger`, `set`, `if`, `code`,
+  `httpRequest`, `googleSheets`, `wait`, `stickyNote`), zero `credentials`
+  blocks anywhere, and every Zvid call on Header Auth.
 
-**Not executed:** the Judge.me path was never called against the live Judge.me
-API — there is no Judge.me token in this environment. Its request shape follows
-Judge.me's public reviews API and its response handling is covered by the
-simulation above, but treat the field mapping as documented, not measured. The
-`useLlm: true` path was likewise never called against a real OpenRouter
-endpoint; only its parsing, honesty guard and fallbacks were exercised. Nothing
-in the publish/delivery tail was executed either — no social platform, no email
-provider. Those nodes are documented, not exercised.
+**Not executed.** This workflow has not been run inside n8n — the node types and
+parameter shapes are copied from templates in this series that were, but no
+execution of *this* file was performed, so read every claim above as "the code
+nodes and the payload were verified", not "the workflow was run". The Judge.me
+path was never called against the live Judge.me API (there is no Judge.me token
+in this environment); its request shape follows Judge.me's public reviews API and
+its response handling is covered by the simulation above, but treat the field
+mapping as documented, not measured. The `useLlm: true` path was likewise never
+called against a real OpenRouter endpoint; only its parsing, honesty guard and
+fallbacks were exercised. Nothing in the publish/delivery tail was executed
+either — no social platform, no email provider. Those nodes are documented, not
+exercised. No paid render was submitted: the credit figures come from the free
+validator, not from a completed job.

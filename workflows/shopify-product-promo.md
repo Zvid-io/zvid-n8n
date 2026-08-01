@@ -27,25 +27,31 @@ documented; flipping `source` to `shopify` and attaching one more Header Auth
 credential is the entire switch. Nothing else in the workflow changes, because
 both sources are normalised to the same product shape before the design step.
 
-**Product photography is never cropped.** Store photos arrive in every aspect
-ratio there is — square, 4:5, 2:3, wide lifestyle shots — and cropping one is
-how an automation ruins a product page. Every photo is placed *contained*
-inside a designed plate: the whole shot fits, centred, never cropped and never
-stretched. The plate carries the composition, and a hairline is drawn on the
-photo's real edge so a white studio cut-out still reads as a mounted print on
-the cream plate instead of dissolving into it. With a second photo the offer
-scene shows a different angle; with one photo it re-frames the same shot inside
-a different plate and a different entrance.
+**Product photography is never cropped — and it still moves.** Store photos
+arrive in every aspect ratio there is — square, 4:5, 2:3, wide lifestyle shots
+— and cropping one is how an automation ruins a product page. Every photo is
+placed *contained* inside a designed plate: the whole shot fits, centred, never
+cropped and never stretched. The plate carries the composition, and a hairline
+is drawn on the photo's real edge so a white studio cut-out still reads as a
+mounted print on the cream plate instead of dissolving into it. On top of that
+each photo drifts slowly inside its plate for the whole scene — the hook rises
+and pushes in, the offer slides across and pulls back — with every keyframe at
+or under 1:1 inside the box, so the movement can never crop the product. With a
+second photo the offer scene shows a different angle; with one photo the
+opposite drift in a differently-shaped plate is what re-frames the shot, so the
+common one-photo product does not read as the same still shown twice.
 
-**The layout re-flows instead of breaking.** A 26-character product name sets
+**The layout re-flows instead of breaking.** A 33-character product name sets
 at 92 px; a 70-character one steps down to 58 px across three lines and the
-block underneath moves out of the way. The end card measures its own stack —
-monogram ring, brand, name, price, button, domain — and centres it, so a short
-name and a long one are both composed rather than one of them leaving a third
-of the frame empty. `CompareAtPrice` filled in gets a struck-through price and
-a **SAVE x%** badge computed from the two numbers; left empty, both disappear
-and the scene re-balances. All three of those branches were rendered and
-reviewed frame by frame.
+block underneath moves out of the way. Past the smallest step the name itself
+is trimmed on a word boundary and marked with an ellipsis, so even a
+255-character title (the Shopify Admin API maximum) cannot push the footer off
+the canvas. The end card measures its own stack — monogram ring, brand, name,
+price, button, domain — and centres it, so a short name and a long one are both
+composed rather than one of them leaving a third of the frame empty.
+`CompareAtPrice` filled in gets a struck-through price and a **SAVE x%** badge
+computed from the two numbers; left empty, both disappear and the scene
+re-balances. All of those branches were rendered and reviewed frame by frame.
 
 **It cannot be misconfigured into an illegible video.** Chip, badge and button
 labels pick whichever of your ink / paper / black / white contrasts best
@@ -69,8 +75,14 @@ silently skipping it.
 | Shopify custom-app token | **Optional** — only for the production path. Admin API access token with `read_products`. |
 
 No LLM, no voice service, no stock-media account. Product photos come from your
-sheet or your store; the music bed is a pre-cleared instrumental whose URL sits
-in `Config`.
+sheet or your store; the music bed is a pinned instrumental whose URL sits in
+`Config`.
+
+**Use photographs of your own products.** The promo prints your store name,
+your price and your discount over whatever photo the row points at, so a stock
+shot of somebody else's branded product ends up advertising their trademark
+under your claims. Point `ImageUrl1` / `ImageUrl2` at your own product
+photography (or your Shopify CDN), never at a stock image of a branded item.
 
 ## Setup
 
@@ -91,6 +103,7 @@ in `Config`.
    `Status` and `VideoUrl` empty on rows waiting to be rendered. Image URLs
    must be **public `http(s)` URLs** — Shopify CDN links (`cdn.shopify.com/…`)
    are, and so is anything on your own CDN. A Google Drive share link is not.
+   Use your own product photography (see the note above Setup).
 5. **Open `Config`** — set `brandName`, `brandColor`, `brandAccent`, `storeUrl`
    and `shopNowText`. Everything else works out of the box.
 6. **Run it.** The workflow renders for real out of the box, so **the first run
@@ -132,8 +145,8 @@ Everything lives in the `Config` node.
 | `source` | `sheet` | `sheet` (demo path, no store needed) or `shopify` (polls your catalogue). |
 | `shopDomain` | `""` | Shopify mode only. Just the subdomain: `my-shop`. |
 | `apiVersion` | `2024-07` | Shopify Admin API version used in the poll URL. |
-| `brandName` | `NORTHBOUND` | The chip on the hook scene, the eyebrow on the offer and end cards, and the source of the end-card monogram (its first letter). |
-| `brandHandle` | `@northbound.supply` | Optional watermark fallback — used in the footer only when `storeUrl` is empty. |
+| `brandName` | `NORTHBOUND` | The chip at the top of the hook scene, the footer of the offer scene, the eyebrow on the end card, and the source of the end-card monogram (its first letter). |
+| `brandHandle` | `@northbound.supply` | Optional watermark fallback — used in the hook footer and the end-card footer only when `storeUrl` is empty. Rendered and frame-reviewed in the stress fixture. |
 | `storeUrl` | `https://northbound-supply.myshopify.com` | Full URL or bare domain. Only the **host** is ever drawn — no protocol, no tracking query string. |
 | `brandColor` | `#141A20` | The dark ink the whole system is built on. |
 | `brandAccent` | `#E1623C` | Kicker chip, SAVE badge, monogram, shop-now button, hairlines. Label colours are derived from it for contrast. |
@@ -143,9 +156,9 @@ Everything lives in the `Config` node.
 | `shopNowText` | `Shop the drop` | The label inside the end-card button. |
 | `currencySymbol` | `$` | Prepended only when the value you supplied carries no symbol of its own — `"189.00"` becomes `$189.00`, `"£189"` is left alone. |
 | `fallbackTagline` | `Just landed — available now.` | Used when the row (or the Shopify description) has no usable text. |
-| `maxTaglineChars` | `90` | Longer taglines are trimmed on a word boundary and marked with an ellipsis. |
+| `maxTaglineChars` | `90` | Longer taglines are trimmed on a word boundary and marked with an ellipsis. Very long product *names* are trimmed the same way, but only after the type ladder has stepped all the way down to 44 px. |
 | `statusDoneValue` | `done` | What gets written to `Status` after a successful render. Sheet mode only. |
-| `musicUrl` | a pre-cleared instrumental bed | Swap in your own URL, or set it to `""` to render silent. |
+| `musicUrl` | a pinned instrumental bed | Swap in your own URL, or set it to `""` to render silent. |
 | `musicVolume` | `0.16` | The bed sits low by design. |
 | `maxMusicBytes` | `5242880` | Plan cap for an audio asset (5 MB). Over it, the promo renders **without** music rather than failing. |
 | `dryRun` | `false` | `false` (default) renders for real. `true` gives a free pass that validates the payload, quotes the credits and saves a draft you can watch in the editor — no credits, no sheet write, no Shopify marker moved. |
@@ -154,9 +167,9 @@ Everything lives in the `Config` node.
 ## Cost per video
 
 The live validator quoted **15 credits** for the reviewed default promo
-(14.30 s) — and the same **15** for the long-copy and no-discount variants,
-because the three scenes are a fixed length regardless of how much text they
-carry. *Validate project (free)* runs before every render and returns the exact
+(14.30 s) and the same **15** for the no-discount variant. Every promo is the
+same 14.30 s regardless of how much text it carries, so 15 is the figure for
+this template. *Validate project (free)* runs before every render and returns the exact
 figure for your product as `creditsCharged` in the run summary, but the render
 then proceeds on its own. Set `dryRun: true` if you want the number *without*
 the render.
@@ -169,10 +182,10 @@ the render.
 | **Read products sheet** | Reads every row; the sheet node also emits each row's `row_number`. |
 | **Pick next product** | Keeps the first row whose `Status` is empty. A row missing `Title` or `ImageUrl1` fails loudly *with its row number* rather than rendering something broken. |
 | **Poll new products** | `GET /admin/api/{apiVersion}/products.json?limit=5&order=created_at+desc` on `{shopDomain}.myshopify.com`, authenticated with the `X-Shopify-Access-Token` header credential. Retries three times on a network error. |
-| **New product?** | The one place both sources become the same object — `{ title, price, compareAtPrice, imageUrls[], tagline, rowNumber?, productId?, source }`. In Shopify mode it also de-duplicates against the last announced product id, strips the HTML out of `body_html` (Shopify sends real markup) and decodes its entities before any of it reaches the design. HTTP 401/403/404/429 each get their own actionable message. |
+| **New product?** | The one place both sources become the same object — `{ title, price, compareAtPrice, imageUrls[], tagline, rowNumber?, productId?, source }`. In Shopify mode it also de-duplicates against the last announced product id, strips the HTML out of `body_html` (Shopify sends real markup) and decodes its entities before any of it reaches the design. HTTP 401/403/404/429 each get their own actionable message, and a call that came back with **no HTTP status at all** (a mistyped or empty `shopDomain`, a shop that is unreachable) is raised as an error rather than reported as an empty catalogue. |
 | **Product found?** | No product waiting → the run ends with a friendly *Nothing to render* summary instead of an error, so a scheduled run stays green. |
 | **Check music** | A `HEAD` on `musicUrl`. Never fails the run: an unreachable URL, an HTTP error or a file over `maxMusicBytes` renders the promo **without** music, and the summary says why. |
-| **Build project JSON** | The whole design lives here: the contained-photo plates, the type ramp, the SAVE-percent maths, the contrast-derived label colours, the self-measuring end-card stack, HTML-escaping of all product text, and the API's `name` character rules. |
+| **Build project JSON** | The whole design lives here: the contained-photo plates and their two opposite drifts, the type ramp and its trim-to-fit backstop, the SAVE-percent maths, the contrast-derived label colours, the self-measuring end-card stack, HTML-escaping of all product text, and the API's `name` character rules. |
 | **Validate project (free)** | Runs the exact pipeline a render submission runs — schema, plan limits, cost — without spending credits. Failures surface as a field list. |
 | **Dry run?** | Routes on `Config.dryRun`. It is `false` by default, so the normal path is straight to *Submit render*. |
 | **Save draft to editor** | **Only when `dryRun: true`.** Saves a free draft and returns `editorLink` (`https://editor.zvid.io/?project=…`). Best-effort: a hiccup here never hides the dry-run report. |
@@ -213,12 +226,15 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | First Shopify run rendered nothing | Intentional. The first run only records which product is newest so activating the workflow does not announce your back catalogue. Publish a product and the next poll picks it up. |
 | `Shopify products poll failed (HTTP 401)` / `(HTTP 403)` | The custom-app token was rejected. Re-copy it (it starts with `shpat_`) and confirm the app has the `read_products` scope. |
 | `Shopify products poll failed (HTTP 404)` | `shopDomain` should be just the subdomain (`my-shop`), or `apiVersion` names a version your shop no longer serves. |
+| `Could not reach the Shopify Admin API … no HTTP response came back` | The request never got a status code — usually an empty or mistyped `shopDomain` (it must be just `my-shop`), or the shop is unreachable from your n8n. This is deliberately an error: a silent "your shop has no products" every 30 minutes would hide a broken install. |
 | `Shopify products poll failed (HTTP 429)` | Shopify is rate-limiting the Admin API. The shipped 30-minute schedule never hits this on its own — if you lowered the interval, or another workflow shares the token, raise it again. Nothing is lost; the next poll picks the product up. |
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One product every 30 minutes never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 | No **SAVE x%** badge | `CompareAtPrice` is empty, not greater than `Price`, or the discount rounds outside 1–95 %. The scene is designed for both cases; nothing is broken. |
 | The promo rendered without music | `Check music` found the URL unreachable, erroring or over `maxMusicBytes` (5 MB). `Run summary.music` says which. A missing soundtrack is a much smaller problem than a missing video, so this never fails the run. |
-| Both scenes show the same photo | The product has only one image. Fill `ImageUrl2` (or add a second product photo in Shopify) and the offer scene switches to the second angle. |
+| Both scenes show the same photo | The product has only one image, so the offer scene re-frames it — a differently-shaped plate and the opposite drift. Fill `ImageUrl2` (or add a second product photo in Shopify) and the offer scene switches to a genuine second angle. |
 | Product name looks small | It is long. Type steps 92 → 80 → 68 → 58 → 50 → 44 px so a 70-character name still fits three lines without clipping. Shorten the name to get the big setting back. |
+| Product name ends in `…` | It is longer than 44 px type can fit in three lines (roughly 115 characters). The name is trimmed on a word boundary so the footer and the rest of the layout stay put; shorten the name in the sheet or in Shopify to show it in full. |
+| A rival brand's logo is in my video | The workflow draws whatever photo the row points at. Use your own product photography — a stock shot of a branded product puts that trademark under your store's name, price and discount. |
 | `Zvid rejected the project` | The message lists the offending fields. If you edited the builder, note the API only allows letters, digits, spaces, `_` and `-` in `name`, and rejects `audios[].track`. |
 | Render failed and the row stayed pending | Intentional — the row is only marked `done` after a successful render, so the next run retries it. In Shopify mode the last-seen marker is likewise only moved after success. The error message carries the job's `failedReason`. |
 | Wrong row updated | Do not sort or delete rows while a run is in flight; the update matches on the `row_number` captured at read time. |
@@ -232,36 +248,61 @@ compiles, every Zvid and Shopify call on Header Auth, and **no `credentials`
 block on any node**. Beyond that:
 
 - **Rendered on the production engine** (the same `@zvid-io/zvid` package the
-  render farm runs) three times from the builder's real output, each 14.30 s at
-  1080×1920 / 30 fps: the default sheet product (two photos, `CompareAtPrice`
-  set → second angle + `SAVE 24%`), a stress product (70-character name over
-  three lines, `$1,299.99` / `$1,899.99` with thousands separators, **one**
-  photo so the offer scene re-frames the hero shot, and a pale yellow accent
-  that forces every chip label to flip to dark ink), and a product normalised
-  from a field-accurate Shopify `products.json` response (no `compare_at_price`
-  → no badge, tagline derived from `body_html` and trimmed with an ellipsis).
-- **Every extracted frame was reviewed** — 29 frames per fixture at 2 fps plus
-  exact-timestamp grabs at both transition midpoints (4.80 s, 9.98 s) and the
-  final frame (14.25 s), 96 images in total. No clipping, no overflow, no text
-  touching an edge, no low-contrast text on any of the three grounds, no broken
-  half-states at the animation beats.
-- **Remote validation against the live API** (`POST /api/render/validate/api-key`
-  with `remote: true`) on both distinct payload shapes — the one with the
-  compare-at price and SAVE badge, and the one without: `valid: true`,
-  **0 errors, 0 warnings**, `creditsRequired: 15`, schema **1.0.0** for both.
+  render farm runs) four times from the builder's real output, each 14.30 s at
+  1080×1920 / 30 fps: the default sheet product (**two** photos of the same item
+  in different aspect ratios, `CompareAtPrice` set → second angle + `SAVE 25%`);
+  a stress product (70-character name over three lines, `$1,299.99` /
+  `$1,899.99` with thousands separators, **one** photo so the offer scene has to
+  re-frame the hero shot, `storeUrl` left empty so the optional `brandHandle`
+  watermark is the footer, and a pale yellow accent that forces every chip label
+  to flip to dark ink); a product normalised from a field-accurate Shopify
+  `products.json` response (no `compare_at_price` → no badge, tagline derived
+  from `body_html` and trimmed with an ellipsis); and a 255-character product
+  name — the Shopify Admin API maximum — to prove the type ladder trims the copy
+  instead of pushing the footer off the canvas.
+- **Frames reviewed** — 29 frames per fixture at 2 fps plus exact-timestamp
+  grabs at both transition midpoints (4.80 s, 9.98 s) and the final frame
+  (14.25 s): 116 frames and 12 grabs, 128 images. Every one of the 116 frames of
+  the shipping renders was inspected through 4×8 contact sheets that tile all 29
+  frames of a fixture, and 13 were opened at full 1080×1920 covering all three
+  scenes of all four fixtures plus a scene cut; `ffmpeg freezedetect` confirms
+  the frames from 11.03 s to the end are identical to one another, so the
+  end-card run is one reviewed image rather than seven. Earlier iterations of
+  the same design were reviewed the same way, frame by frame at full size. No
+  clipping, no overflow, no text touching an edge, no low-contrast text on any
+  of the three grounds, no broken half-states at the animation beats, and no
+  string printed twice across a scene cut.
+- **Motion measured, not assumed** — `ffmpeg freezedetect=n=0.0015:d=1.0`
+  reports exactly one still interval per fixture: the end card from 11.03 s
+  (11.40 s in the Shopify fixture) to the end. The hook and offer scenes carry
+  continuous photo movement for their whole length.
+- **Validation** — the local schema validator (the mirror of the backend rules,
+  including the layout lint) returns `valid: true`, **0 errors, 0 warnings** on
+  all four rendered payloads. The two structurally distinct shapes were then
+  validated **against the live API** (`POST /api/render/validate/api-key`,
+  `remote: true`): the one with the compare-at price and SAVE badge, and the one
+  without. Both came back `valid: true`, **0 errors, 0 warnings**,
+  `creditsRequired: 15`, resolved duration 14.3 s, schema **1.0.0**. The stress
+  and 255-character payloads are those same two shapes with different copy, so
+  they were checked locally only.
 - **Every media URL HEAD-checked** at authoring time: the five product photos
-  used by the fixtures (HTTP 200) and the music bed (HTTP 200, 3.72 MB — inside
-  the 5 MB plan cap, which is what makes it a valid default).
+  used by the fixtures (HTTP 200 each) and the music bed (HTTP 200,
+  3,722,344 bytes = 3.72 MB — inside the 5 MB plan cap, which is what makes it a
+  valid default). All fixture photography is unbranded studio product work: no
+  third-party logo, trademark or person appears in any rendered frame.
 - **The three embedded code nodes are byte-identical** to the standalone
   builders that produced the reviewed renders — asserted programmatically, not
   by eye — and replaying the *shipped* node sources against mocked n8n globals
-  reproduces all three rendered payloads byte for byte.
+  reproduces all of the rendered payloads byte for byte.
 - **Behavioural edge cases exercised** against the shipped sources: a first
   Shopify run seeds the marker and renders nothing; an unchanged catalogue stops
-  friendly instead of erroring; a fully-processed sheet stops friendly;
-  `<script>` in a product title is HTML-escaped and the project slug stays
-  inside the API's character set; an unreachable or oversized music file drops
-  the bed instead of failing the run.
+  friendly instead of erroring; a fully-processed sheet stops friendly; a
+  Shopify call that comes back with no HTTP status raises an actionable error
+  instead of a friendly "no products"; a 255-character title is clamped and the
+  lowest hook element still sits at y=1770 on a 1920 px canvas; `<script>` in a
+  product title is HTML-escaped and the project slug stays inside the API's
+  character set; an unreachable or oversized music file drops the bed instead of
+  failing the run.
 
 **Not executed:** this workflow was not run inside n8n, and **no Shopify store
 was connected** — the Shopify branch is verified structurally and against a

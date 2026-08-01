@@ -1,0 +1,425 @@
+{
+	"name": "Zvid manual review - validate and render",
+	"nodes": [
+		{
+			"parameters": {},
+			"type": "n8n-nodes-base.manualTrigger",
+			"typeVersion": 1,
+			"position": [
+				-720,
+				40
+			],
+			"id": "0e6a58c5-797a-4b5b-9038-7e52126ff5c8",
+			"name": "When clicking Execute workflow"
+		},
+		{
+			"parameters": {
+				"resource": "credit",
+				"operation": "getBalance"
+			},
+			"type": "@zvid/n8n-nodes-zvid.zvid",
+			"typeVersion": 1,
+			"position": [
+				-480,
+				40
+			],
+			"id": "bcf96cb9-717c-4663-a0c2-42c0b3c9d6bf",
+			"name": "Check Zvid balance"
+		},
+		{
+			"parameters": {
+				"resource": "render",
+				"operation": "validate",
+				"source": "json",
+				"projectJson": {
+					"type": "video",
+					"name": "n8n review demo",
+					"width": 1280,
+					"height": 720,
+					"frameRate": 30,
+					"outputFormat": "mp4",
+					"backgroundColor": "#0b1020",
+					"scenes": [
+						{
+							"id": "demo",
+							"duration": 4,
+							"backgroundColor": "#0b1020",
+							"visuals": [
+								{
+									"type": "TEXT",
+									"text": "Zvid × n8n",
+									"position": "custom",
+									"x": 640,
+									"y": 275,
+									"anchor": "center-center",
+									"width": 900,
+									"height": 120,
+									"style": {
+										"fontSize": "72px",
+										"fontWeight": 800,
+										"color": "#ffffff",
+										"fontFamily": "Inter",
+										"textAlign": "center",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center"
+									},
+									"enterAnimation": "smoothup",
+									"enterBegin": 0.2,
+									"enterEnd": 0.9,
+									"track": 0
+								},
+								{
+									"type": "TEXT",
+									"text": "Automated video creation from one workflow",
+									"position": "custom",
+									"x": 640,
+									"y": 415,
+									"anchor": "center-center",
+									"width": 900,
+									"height": 76,
+									"style": {
+										"backgroundColor": "#facc15",
+										"color": "#0f172a",
+										"borderRadius": "38px",
+										"fontSize": "30px",
+										"fontWeight": 700,
+										"fontFamily": "Inter",
+										"textAlign": "center",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center"
+									},
+									"enterAnimation": "circleopen",
+									"enterBegin": 0.8,
+									"enterEnd": 1.5,
+									"track": 1
+								}
+							]
+						}
+					]
+				}
+			},
+			"type": "@zvid/n8n-nodes-zvid.zvid",
+			"typeVersion": 1,
+			"position": [
+				-240,
+				40
+			],
+			"id": "418892e9-5860-414e-99f4-e8ed970e2f4e",
+			"name": "Validate project (free)"
+		},
+		{
+			"parameters": {
+				"conditions": {
+					"options": {
+						"caseSensitive": true,
+						"leftValue": "",
+						"typeValidation": "strict",
+						"version": 2
+					},
+					"conditions": [
+						{
+							"id": "a1227d5e-43ef-4a65-8123-31d39c53d4d9",
+							"leftValue": "={{ $json.valid }}",
+							"rightValue": "",
+							"operator": {
+								"type": "boolean",
+								"operation": "true",
+								"singleValue": true
+							}
+						}
+					],
+					"combinator": "and"
+				},
+				"options": {}
+			},
+			"type": "n8n-nodes-base.if",
+			"typeVersion": 2.2,
+			"position": [
+				0,
+				40
+			],
+			"id": "3246dbd2-43cf-41d1-b1f5-c5586561c272",
+			"name": "Payload valid?"
+		},
+		{
+			"parameters": {
+				"resource": "render",
+				"operation": "create",
+				"renderType": "video",
+				"source": "json",
+				"projectJson": "={{ $json.payload }}",
+				"waitForCompletion": false
+			},
+			"type": "@zvid/n8n-nodes-zvid.zvid",
+			"typeVersion": 1,
+			"position": [
+				260,
+				-60
+			],
+			"id": "9475a6cf-1aa5-4cde-9d30-e1c4ef0a9b7c",
+			"name": "Submit render (4 credits)"
+		},
+		{
+			"parameters": {
+				"amount": 3,
+				"unit": "seconds"
+			},
+			"type": "n8n-nodes-base.wait",
+			"typeVersion": 1.1,
+			"position": [
+				500,
+				-60
+			],
+			"id": "cda13db4-2190-4fc0-a301-e7c94a663332",
+			"name": "Wait 3 seconds",
+			"webhookId": "cdbab1d6-f34a-4f41-9a23-cf61ac2a9d18"
+		},
+		{
+			"parameters": {
+				"resource": "render",
+				"operation": "get",
+				"jobId": "={{ $('Submit render (4 credits)').first().json.jobId || $('Submit render (4 credits)').first().json.id }}",
+				"waitForCompletion": false
+			},
+			"type": "@zvid/n8n-nodes-zvid.zvid",
+			"typeVersion": 1,
+			"position": [
+				740,
+				-60
+			],
+			"id": "dc10d93c-3fe1-4391-a71b-d176850568bf",
+			"name": "Get render status"
+		},
+		{
+			"parameters": {
+				"conditions": {
+					"options": {
+						"caseSensitive": true,
+						"leftValue": "",
+						"typeValidation": "strict",
+						"version": 2
+					},
+					"conditions": [
+						{
+							"id": "728d01d8-666f-445f-b37f-f7cb713d5608",
+							"leftValue": "={{ $json.state === 'completed' || $json.status === 'completed' }}",
+							"rightValue": "",
+							"operator": {
+								"type": "boolean",
+								"operation": "true",
+								"singleValue": true
+							}
+						}
+					],
+					"combinator": "and"
+				},
+				"options": {}
+			},
+			"type": "n8n-nodes-base.if",
+			"typeVersion": 2.2,
+			"position": [
+				980,
+				-60
+			],
+			"id": "696a081a-5d5e-49f7-824b-8556112dbc50",
+			"name": "Render completed?"
+		},
+		{
+			"parameters": {
+				"jsCode": "const job = $input.first().json;\nconst state = String(job.state || job.status || 'unknown');\n\nif (state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = 60;\nif ($runIndex + 1 >= maxPolls) {\n  const jobId = job.id || job.jobId || 'unknown';\n  throw new Error(`Render ${jobId} did not finish within 3 minutes (last state: ${state}).`);\n}\n\nreturn $input.all();"
+			},
+			"type": "n8n-nodes-base.code",
+			"typeVersion": 2,
+			"position": [
+				980,
+				120
+			],
+			"id": "31f47eb7-554e-4d82-9afc-1af8093ebd06",
+			"name": "Still rendering?"
+		},
+		{
+			"parameters": {
+				"jsCode": "const job = $input.first().json;\nconst state = String(job.state || job.status || 'unknown');\nconst result = job.result;\nconst videoUrl = typeof result === 'string'\n  ? result\n  : result && typeof result === 'object'\n    ? result.url || null\n    : job.url || null;\n\nif (state !== 'completed') {\n  throw new Error(`Expected a completed render, received state: ${state}`);\n}\nif (!videoUrl) {\n  throw new Error('Render completed but returned no video URL.');\n}\n\nreturn [{\n  json: {\n    rendered: true,\n    status: state,\n    jobId: job.id || job.jobId || null,\n    videoUrl,\n    creditsExpected: 4,\n    nextStep: 'Open videoUrl to show the completed render during the n8n review recording.',\n  },\n}];"
+			},
+			"type": "n8n-nodes-base.code",
+			"typeVersion": 2,
+			"position": [
+				1220,
+				-60
+			],
+			"id": "312615f7-1e75-4b13-9f87-7fabafc28d08",
+			"name": "Review render result"
+		},
+		{
+			"parameters": {
+				"jsCode": "const validation = $input.first().json;\nreturn [{\n  json: {\n    rendered: false,\n    reason: validation.error || 'Project validation failed',\n    errors: validation.errors || [],\n    warnings: validation.warnings || [],\n    nextStep: 'Fix every validation error and layout warning before rendering.',\n  },\n}];"
+			},
+			"type": "n8n-nodes-base.code",
+			"typeVersion": 2,
+			"position": [
+				260,
+				160
+			],
+			"id": "899311ba-525c-4728-bb90-9006cbd55222",
+			"name": "Show validation problem"
+		},
+		{
+			"parameters": {
+				"width": 1200,
+				"height": 300,
+				"content": "## Zvid n8n manual-review render demo\n\n1. Install `@zvid/n8n-nodes-zvid@0.1.4` from npm.\n2. Create one **Zvid API** credential with a key from https://app.zvid.io/api-keys. Keep the default Base URL: `https://api.zvid.io`.\n3. Select that credential on all four Zvid nodes.\n4. Execute the workflow. **Validate project** is free. **Submit render** spends the quoted 4 credits only after validation succeeds.\n5. The workflow waits 3 seconds, fetches the job, and loops until `state` is `completed`. It fails on a failed job or after 3 minutes.\n6. Open the final `videoUrl` to show the completed result.\n\nThe project JSON has passed live Zvid validation with zero errors and zero layout warnings."
+			},
+			"type": "n8n-nodes-base.stickyNote",
+			"typeVersion": 1,
+			"position": [
+				-760,
+				-360
+			],
+			"id": "7b34c378-25f8-4281-bf74-7063fe3d90f5",
+			"name": "Setup"
+		},
+		{
+			"parameters": {
+				"width": 790,
+				"height": 230,
+				"content": "## Recording note\n\nUse this imported workflow to rehearse and verify the render before recording. For n8n's final manual-review video, create a new workflow and add the essential Zvid nodes live in one continuous take. You may keep this JSON open as prepared material to paste, but do not only present a completed imported workflow."
+			},
+			"type": "n8n-nodes-base.stickyNote",
+			"typeVersion": 1,
+			"position": [
+				160,
+				-360
+			],
+			"id": "7a9d3e5e-0a88-4b22-927c-b0179e8fef86",
+			"name": "Recording note"
+		}
+	],
+	"pinData": {},
+	"connections": {
+		"When clicking Execute workflow": {
+			"main": [
+				[
+					{
+						"node": "Check Zvid balance",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Check Zvid balance": {
+			"main": [
+				[
+					{
+						"node": "Validate project (free)",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Validate project (free)": {
+			"main": [
+				[
+					{
+						"node": "Payload valid?",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Payload valid?": {
+			"main": [
+				[
+					{
+						"node": "Submit render (4 credits)",
+						"type": "main",
+						"index": 0
+					}
+				],
+				[
+					{
+						"node": "Show validation problem",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Submit render (4 credits)": {
+			"main": [
+				[
+					{
+						"node": "Wait 3 seconds",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Wait 3 seconds": {
+			"main": [
+				[
+					{
+						"node": "Get render status",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Get render status": {
+			"main": [
+				[
+					{
+						"node": "Render completed?",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Render completed?": {
+			"main": [
+				[
+					{
+						"node": "Review render result",
+						"type": "main",
+						"index": 0
+					}
+				],
+				[
+					{
+						"node": "Still rendering?",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Still rendering?": {
+			"main": [
+				[
+					{
+						"node": "Wait 3 seconds",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		}
+	},
+	"active": false,
+	"settings": {
+		"executionOrder": "v1"
+	},
+	"versionId": "69c2bf6b-e1ad-40f0-a405-94fd725d2b2d",
+	"meta": {
+		"templateCredsSetupCompleted": false
+	},
+	"id": "ZvidN8nReviewRenderDemo",
+	"tags": []
+}

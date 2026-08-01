@@ -8,8 +8,9 @@ hook, three to five points, a call to action), voices it with word-level
 timings, finds b-roll for each point in Zvid's stock library, and renders a
 branded 1080×1920 summary video: an intro card carrying the real post title, one
 accent-bar "point card" per idea with karaoke captions riding the narration, and
-an outro card carrying your blog's domain. You write the post once; the video
-edition writes itself.
+an outro card carrying your blog's domain (or your `brandName`, when the feed
+entry carries no absolute link). You write the post once; the video edition
+writes itself.
 
 ```
 Schedule ─▶ Config ─▶ Read blog feed ─▶ Pick newest post ─▶ New post?
@@ -63,7 +64,7 @@ music.
 | | |
 | --- | --- |
 | Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to test. |
-| ElevenLabs API key | Generates the voiceover with word timings. One narration runs 600–800 characters, and the free tier is 10,000 characters a month — roughly 12 videos, fewer if your scripts run longer. |
+| ElevenLabs API key | Generates the voiceover with word timings. `eleven_multilingual_v2` bills one credit per character and the free tier is 10,000 credits a month, so budget by narration length: a script that actually fills the default 60 seconds is about 1,000 characters at the fixtures' assumed ~2.9 words per second — **roughly 10 videos a month**. The shorter scripts `gpt-4.1-mini` really writes (600–800 characters) stretch that to 12–16. |
 | OpenRouter API key | Writes the summary script. Any OpenAI-compatible chat endpoint works — swap the URL and credential type. |
 | An RSS or Atom feed | Your blog's feed URL. Most platforms expose one at `/rss`, `/feed` or `/atom.xml`. |
 
@@ -86,8 +87,10 @@ authentication of its own.
    `brandColor` / `brandAccent` and `ctaText`. Everything else has a working
    default.
 6. **Run it.** The workflow renders for real out of the box, so **the first run
-   spends credits — about 38** for a ~38 second video. When it finishes, click
-   **`▶ Watch video`** to play the result inside n8n.
+   spends credits** — roughly one credit per second of finished video, so
+   **about 40–50** for the 40–50 second script `gpt-4.1-mini` typically writes
+   at `targetSeconds: 60` (up to ~60 if your model fills the target). When it
+   finishes, click **`▶ Watch video`** to play the result inside n8n.
 
    Prefer a free preview first? Set `dryRun: true` in `Config` before that first
    run: you get the exact credit quote plus an **`editorLink`** that opens the
@@ -123,7 +126,7 @@ Everything lives in the `Config` node — no expressions to hunt through.
 | `apiUrl` | `https://api.zvid.io` | Zvid API base. Leave it alone. |
 | `editorUrl` | `https://editor.zvid.io` | Used to build the dry-run `editorLink`. |
 | `feedUrl` | `https://blog.google/rss/` | **Set this to your blog.** Any RSS or Atom feed. |
-| `brandName` | `Fieldnotes` | Watermark pill, intro chip and outro sub-line. |
+| `brandName` | `Fieldnotes` | Watermark pill, intro chip and outro sub-line — and the outro pill itself when the post has no link to take a domain from. |
 | `ctaText` | `Read the full post` | The outro headline. |
 | `language` | `English` | Passed to the writer; the voice model is multilingual. |
 | `targetSeconds` | `60` | Target narration length. Treat it as a guide — small models write short (see below). |
@@ -136,7 +139,7 @@ Everything lives in the `Config` node — no expressions to hunt through.
 | `textColor` / `mutedTextColor` | `#FFFFFF` / `#9AA7BD` | Headline and secondary type. |
 | `headlineFont` / `uiFont` | `Archivo` / `Space Grotesk` | Google Fonts names. Headline carries the title and point labels; UI carries the kicker, chip, captions and outro pill. One font per text element. |
 | `captionAnimation` | `karaoke` | Also `fill`, `pop`, `bounce`, `typewriter`, `one-word`, `highlight`, … (see the caption note below). |
-| `captionWordsPerCue` | `3` | Words on screen at once. |
+| `captionWordsPerCue` | `3` | Words on screen at once. The project schema caps this at **20**; anything higher is clamped to 20 (and anything non-numeric falls back to 3) so a typo cannot fail validation on every run. |
 | `captionSize` | `54` | Caption type size. |
 | `captionStrokeWidth` | `6` | Black outline. This is what keeps captions readable over any footage. |
 | `captionActiveColor` | `#0F1626` | Only used by box modes (`highlight`) — the text colour inside the accent chip. |
@@ -188,18 +191,27 @@ render and returns the exact quote for your payload; it is reported as
 *without* the render.
 
 The script costs well under a cent. `eleven_multilingual_v2` bills one
-ElevenLabs character per character of narration, and one narration here is
-600–800 characters (the two verified fixtures came to 608 and 800), so the free
-plan's 10,000 characters a month cover roughly **12 videos**. Raise
-`targetSeconds` and that number drops — divide 10,000 by your own narration
-length.
+ElevenLabs credit per character of narration and the free plan allows 10,000
+credits a month, so the honest unit to budget in is characters, not videos.
+Across the rendered fixtures the voice runs **16.3–17.3 characters per second**
+of speech (608 characters over 37.1 s, 800 over 46.5 s, 497 over 28.7 s) — the
+character counts are the real fixture scripts, but the durations come from the
+fixtures' *assumed* ~2.9 words per second, not from a live text-to-speech call
+(see **Not executed** below). At that assumed rate, a narration that fills the
+default `targetSeconds: 60` is about **1,000 characters — roughly 10 videos a
+month** on the free plan.
+Because `gpt-4.1-mini` writes short (see above), the scripts you will really
+get run 600–800 characters, which stretches the same allowance to **12–16**.
+Divide 10,000 by your own narration length for the exact number: *Run summary*
+does not report it, but the `narration` field on *Parse script* is the exact
+string that gets billed.
 
 ## How it works
 
 | Node | What it does |
 | --- | --- |
-| **Read blog feed** | Core `RSS Read` node on `Config.feedUrl`; one item per feed entry. Works untouched on n8n Cloud. |
-| **Pick newest post** | Sorts newest-first by `isoDate`/`pubDate` (feeds without dates keep feed order, which is newest-first in practice), then compares the newest guid against workflow static data. Already rendered → a friendly "nothing new" summary instead of an error. Also strips the feed body to plain text. |
+| **Read blog feed** | Core `RSS Read` node on `Config.feedUrl`; one item per feed entry. Works untouched on n8n Cloud. `alwaysOutputData` + `onError: continueRegularOutput`, so a feed with zero entries or an unreachable feed still hands an item to the next node instead of silently ending the run with no output. |
+| **Pick newest post** | Sorts newest-first by `isoDate`/`pubDate` (feeds without dates keep feed order, which is newest-first in practice), then compares the newest guid against workflow static data. Already rendered → a friendly "nothing new" summary instead of an error. Empty or failed feed → a plain-English error naming `feedUrl` (and, when the fetch itself failed, the underlying reason). Also strips the feed body to plain text. |
 | **New post? / Nothing new today** | The skip branch. Static data only persists on *production* executions, so manual test runs always see the newest post as new. |
 | **Fetch post page** | GETs the article URL as text, keyless. `onError: continueRegularOutput` — a 403, a timeout or a paywall never kills the run. |
 | **Prepare prompt** | Extracts `<article>`/`<main>`/`<body>`, strips scripts, styles and tags to plain text, and uses it only when it is meaningfully richer than the feed excerpt. Caps at `maxPromptChars` and builds the writer prompt. |
@@ -245,7 +257,8 @@ Trigger** (render webhook), which removes the poll loop.
 
 | Symptom | Cause |
 | --- | --- |
-| `The feed returned no readable posts` | `feedUrl` is not an RSS/Atom feed (a site homepage is the usual mistake), or the feed is empty. Open the URL in a browser: you should see XML. |
+| `The feed returned no readable posts` | `feedUrl` is not an RSS/Atom feed (a site homepage is the usual mistake), or the feed parsed but carries no entries. Open the URL in a browser: you should see XML. |
+| `The feed returned no readable posts … The feed request failed: …` | Same guard, with the transport reason appended (DNS, TLS, 404, timeout). *Read blog feed* retries three times before giving up, so this means the feed was unreachable on all three attempts. |
 | Run says `Newest post already rendered` | Normal. The newest guid matches the last one rendered, so there is nothing to do until you publish again. |
 | The same post renders twice | Workflow static data only persists on **production** executions. Manual test runs never remember the last post — activate the workflow and let the schedule run it. |
 | The wrong post is picked | The feed has no `pubDate`/`isoDate` on its items, so feed order decides. Fix the feed, or point `feedUrl` at a feed that carries dates. |
@@ -271,15 +284,15 @@ exactly what was verified:
   render farm runs) four times from the builder's real output: the default
   fixture (a 48-character post title, 4 points, music bed — 37.6 s, 6 scenes, 36
   caption cues); a stress fixture (a 78-character title wrapping to three lines,
-  5 points with 12-word labels and 24-word spoken sentences, **no** music —
+  5 points with 11-word labels and 22–23-word spoken sentences, **no** music —
   47.0 s, 7 scenes, 48 caption cues); and both again with stock results removed,
   so the no-footage path renders for real — one mixed (points 1 and 3 on the
   brand slide, 2 and 4 on footage) and one with all five points on slides.
-  **Every extracted frame was reviewed** (2 fps — 364 frames — plus
-  exact-timestamp grabs at every transition midpoint and the final frame): no
-  clipping, no overflow, no text touching a canvas edge, no low-contrast text on
-  any background — including a bright office clip and a fully saturated one — and
-  no broken animation states.
+  **Every extracted frame was reviewed** (2 fps — 338 frames — plus 26
+  exact-timestamp grabs at every transition midpoint and the final frame, 364
+  images in all): no clipping, no overflow, no text touching a canvas edge, no
+  low-contrast text on any background — including a bright office clip and a
+  fully saturated one — and no broken animation states.
 - **The no-footage slide was measured, not assumed.** Mean absolute luminance
   change over the top 1400 px across a 4.5-second span: **11.9 and 14.1** on the
   two slide scenes, against **13.1** for a b-roll scene in the stress fixture and
@@ -303,6 +316,16 @@ exactly what was verified:
 - **Free-plan guardrails asserted** on every payload: at most five video
   elements, no `audios[].track`, and no unsubstituted `{{`, `undefined` or `NaN`
   anywhere in the payload.
+- **Edge paths re-checked offline after the last fix pass**, by executing the
+  shipped node JS against mocked n8n globals: a zero-entry feed and an
+  unreachable feed both reach *Pick newest post* and raise the documented error
+  (the unreachable case naming the transport reason); a feed entry with no link
+  renders the outro pill with `brandName` instead of an empty accent lozenge and
+  drops the intro dateline rather than printing a blank line; and
+  `captionWordsPerCue: 30` (or a non-numeric value) is clamped to a schema-legal
+  `maxWordsPerLine`. All five fixture payloads still reproduce **byte-identically**
+  to the ones whose frames were reviewed, and each of the edge payloads passes
+  the project schema offline with 0 errors and 0 warnings.
 
 **Not executed:** the workflow has not been run inside n8n, so the OpenRouter and
 ElevenLabs calls were exercised by contract only — the fixtures carry a real

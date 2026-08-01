@@ -1,0 +1,895 @@
+{
+  "id": "ZvidAvatarOutreach",
+  "name": "AI avatar outreach - lip-synced name greetings (Zvid + WaveSpeed)",
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "nodes": [
+    {
+      "id": "note-overview",
+      "name": "Sticky Note - Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-1780, -620],
+      "parameters": {
+        "width": 700,
+        "height": 560,
+        "content": "## AI avatar outreach - the name is lip-synced, the rest is real\nRecord ONE video. Per prospect, a cloned voice speaks \"Hi Mark! Thanks for connecting.\", a lip-sync model repaints only the mouth on your 3-second intro clip, and Zvid hard-cuts it onto your unchanged body clip. You pay lip-sync prices on ~3 seconds instead of the whole video, and 95% of every video is real footage of you.\n\n**Setup**\n1. Zvid API key: app.zvid.io -> API Keys. Credential: **Header Auth**, name `x-api-key`, value the key. Attach to the 3 Zvid nodes.\n2. WaveSpeed API key: wavespeed.ai (signup gives **$1 free credits, no card**). Credential: **Header Auth**, name `Authorization`, value `Bearer wsk-...`. Attach to the 4 WaveSpeed nodes.\n3. `voiceId` in **Campaign Config**: clone your voice once with WaveSpeed's `minimax/voice-clone` ($0.50, ~10s sample from the SAME recording session), or use any stock minimax voice id for pipeline tests.\n4. Set the 3 clip URLs in **Campaign Config** (see the recording sticky).\n5. Optional Google Sheet source: headers `first_name, company` (+ empty `Status, VideoUrl, IntroSource` for write-back). Set `useTestRows: false` + `sheetUrl`/`sheetTab`.\n\n`useTestRows: true` runs 3 demo rows with no Sheets setup: 2 lip-synced, 1 that fails name hygiene and gets the fallback intro."
+      }
+    },
+    {
+      "id": "note-recording",
+      "name": "Sticky Note - Record once",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-1040, -620],
+      "parameters": {
+        "width": 660,
+        "height": 560,
+        "color": 7,
+        "content": "### Record once - 3 clips (this is 90% of the quality)\n1. **intro-master.mp4** (6-8s) - you saying any throwaway greeting (\"Hi there! Thanks for connecting.\"). Locked camera, mouth CLOSED and a small pause at the end, no hands near your face. The lip-sync model repaints only the mouth region, so lighting, pose and framing stay real - record it longer than your longest greeting so the audio never outruns the video.\n2. **body.mp4** - the rest of the pitch, SAME framing and lighting (ideally the same take, split at a natural beat). Never say the name here - use \"you / your team\".\n3. **intro-generic.mp4** (2-4s) - a real recorded \"Hey there! Thanks for connecting.\" Any row with an unusable name ships this instead. No prospect ever receives a butchered name.\n\nHost all three on any public URL (your CDN, S3, or Zvid uploads - `POST /api/uploads` accepts your x-api-key).\n\n**Why the seam is invisible:** the cloned voice speaks the WHOLE greeting sentence (never a name spliced into real audio - prosody splices are the #1 tell), the body scene punches in 4% so the cut reads as an intentional jump cut, and the optional low music bed spans both scenes to mask the TTS-to-room-tone switch. Ship 1080p - platform compression hides the rest."
+      }
+    },
+    {
+      "id": "note-free",
+      "name": "Sticky Note - Free testing",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-340, -620],
+      "parameters": {
+        "width": 600,
+        "height": 430,
+        "color": 5,
+        "content": "### Test for ~$0, scale for ~$0.15/prospect\nWaveSpeed signup = **$1 free credits, no card**:\n- `minimax/voice-clone` $0.50 (once; skip it and use a stock voice id while testing)\n- `minimax/speech-02-hd` TTS $0.05 / 1k chars (a greeting is ~35 chars)\n- `veed/lipsync` $0.15 per 5s of audio ($0.15 minimum) = ~$0.15 per intro\n\nThat is 3-6 full end-to-end intros on the free credit. At 1,000 prospects: ~$150 of lip-sync + Zvid render credits - versus $3-6k if you lip-synced whole videos.\n\n`lipsyncModel` accepts any WaveSpeed lip-sync model path if you want to A/B quality vs cost. Premium alternative: sync.so's API ($5/mo + ~$0.05/s, ElevenLabs TTS built into the generate call) - same two-call shape, easy swap."
+      }
+    },
+    {
+      "id": "note-lipsync",
+      "name": "Sticky Note - Per-prospect loop",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-120, -120],
+      "parameters": {
+        "width": 1980,
+        "height": 200,
+        "color": 4,
+        "content": "### Per prospect: cloned TTS -> lip-sync -> personalized intro URL\n`minimax/speech-02-hd` speaks the greeting with your `voiceId`, then `veed/lipsync` repaints the mouth on `introMasterUrl` to match. Both are async: submit -> poll `/api/v3/predictions/{id}/result` until `completed`. The guard nodes fail loudly on a `failed` status or on timeout - nothing is silently dropped. Rows that failed name hygiene bypass this lane entirely (bottom path) and use the pre-recorded generic intro. `dryRun: true` also skips this lane, so a dry run spends $0 on WaveSpeed."
+      }
+    },
+    {
+      "id": "note-concat",
+      "name": "Sticky Note - Concat design",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [2060, -60],
+      "parameters": {
+        "width": 700,
+        "height": 330,
+        "color": 3,
+        "content": "### Why the Zvid payload looks like this\n- **Two scenes, hard cut** - no xfade. A dissolve on a talking head screams \"edit\"; a hard cut reads as a normal jump cut.\n- **`duration: -1` on both scenes** - the renderer probes each video and sizes the scene to it, so per-name intro lengths (\"Al\" vs \"Alexandra\") just work. No duration bookkeeping.\n- **Body scene has a slow 1.05x push-in** (`zoom: { depth: 1.05 }`) - a deliberate punch-in that makes the cut look intentional, hides any micro-discontinuity, and adds subtle production motion.\n- **Optional music bed** (`musicUrl`, ~8% volume) spans both scenes and masks the TTS-vs-room-tone seam - the single biggest \"tell\" killer. Keep the audio item to `src` + `volume`.\n- **Name chip** (`{{chipLabel}}`) fades in bottom-left: free visual personalization that sells \"made for you\" harder than audio ever will.\nProject `duration` is omitted on purpose: output length = intro + body exactly; the music is trimmed to fit."
+      }
+    },
+    {
+      "id": "note-render",
+      "name": "Sticky Note - Render + write-back",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [3300, 700],
+      "parameters": {
+        "width": 760,
+        "height": 240,
+        "color": 4,
+        "content": "### Validate free -> bulk render -> poll -> write back\nEvery row is validated by `POST /api/render/validate/api-key` first (free, quotes credits). One `POST /api/render/bulk/api-key` then fans out up to 500 jobs; the loop polls `GET /api/render/bulk/:id` every `pollSeconds` until nothing is pending. Failed jobs auto-refund their credits. Results are joined back to rows **by jobId**, then written to the sheet (`Status`, `VideoUrl`, `IntroSource`) when a sheet is the source.\n\nHTTP 429 `hourly_limit_exceeded` on submit = your plan's hourly render cap; nothing is charged, re-run after the top of the hour."
+      }
+    },
+    {
+      "id": "note-official",
+      "name": "Sticky Note - Official nodes",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [4540, -60],
+      "parameters": {
+        "width": 620,
+        "height": 300,
+        "color": 6,
+        "content": "### Prefer official Zvid nodes?\nThe npm package **`@zvid/n8n-nodes-zvid`** ships native nodes - **Zvid** (Create Bulk Render, Validate Project) and **Zvid Trigger** (render finished webhook).\n\nSelf-hosted: Settings -> Community nodes -> install `@zvid/n8n-nodes-zvid` (or `npm i` it into `~/.n8n/custom`). Then you can replace: *Validate row (free)* + *Submit bulk render* with the native Bulk Render operation, and the whole Wait/Get-status poll cycle with a **Zvid Trigger** node.\n\nThis workflow sticks to core `httpRequest` nodes on purpose - it imports unchanged on n8n Cloud, where community nodes need verification."
+      }
+    },
+    {
+      "id": "n-manual",
+      "name": "When clicking 'Execute workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-1700, 300],
+      "parameters": {}
+    },
+    {
+      "id": "n-config",
+      "name": "Campaign Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-1480, 300],
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"wavespeedUrl\": \"https://api.wavespeed.ai\",\n  \"ttsModel\": \"minimax/speech-02-hd\",\n  \"lipsyncModel\": \"veed/lipsync\",\n  \"voiceId\": \"YOUR_VOICE_ID\",\n  \"ttsSpeed\": 1,\n  \"greetingTemplate\": \"Hi {name}! Thanks for connecting.\",\n  \"maxGreetingChars\": 90,\n  \"introMasterUrl\": \"https://YOUR-CDN/intro-master.mp4\",\n  \"bodyVideoUrl\": \"https://YOUR-CDN/body.mp4\",\n  \"fallbackIntroUrl\": \"https://YOUR-CDN/intro-generic.mp4\",\n  \"videoWidth\": 1920,\n  \"videoHeight\": 1080,\n  \"nameChip\": true,\n  \"brandColor\": \"#C6FF3D\",\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.08,\n  \"useTestRows\": true,\n  \"testRows\": [\n    { \"first_name\": \"Amira\", \"company\": \"Arcadia Labs\" },\n    { \"first_name\": \"mr. MARK\", \"company\": \"Northwind\" },\n    { \"first_name\": \"J\", \"company\": \"Vandelay Industries\" }\n  ],\n  \"sheetUrl\": \"https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit\",\n  \"sheetTab\": \"Sheet1\",\n  \"rowLimit\": 0,\n  \"dryRun\": false,\n  \"batchName\": \"avatar-outreach\",\n  \"pollSeconds\": 6,\n  \"timeoutMinutes\": 30\n}",
+        "options": {}
+      }
+    },
+    {
+      "id": "n-testmode",
+      "name": "Test rows mode?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [-1260, 300],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-testmode",
+              "leftValue": "={{ $json.useTestRows }}",
+              "rightValue": "",
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "n-testrows",
+      "name": "Test prospects",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-1040, 180],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Demo prospects so the workflow runs with zero Google setup.\nconst cfg = $('Campaign Config').first().json;\nconst rows = Array.isArray(cfg.testRows) ? cfg.testRows : [];\nif (!rows.length) throw new Error('useTestRows is true but Campaign Config.testRows is empty');\nreturn rows.map((r) => ({ json: { ...r, row_number: null } }));"
+      }
+    },
+    {
+      "id": "n-sheet-read",
+      "name": "Read prospect rows",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [-1040, 440],
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "={{ $('Campaign Config').first().json.sheetUrl }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Campaign Config').first().json.sheetTab }}"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "n-prospects",
+      "name": "Prospects",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [-820, 300],
+      "parameters": {
+        "mode": "append"
+      }
+    },
+    {
+      "id": "n-clean",
+      "name": "Clean names",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-600, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Name hygiene: normalize what can be trusted, route everything else to the\n// pre-recorded fallback intro. The safe failure mode is a generic greeting -\n// never a mangled name in a cloned voice.\nconst cfg = $('Campaign Config').first().json;\nconst TITLES = /^(mr|mrs|ms|miss|dr|prof|sir|madam|mx)\\.?\\s+/i;\nconst BLOCK = new Set(['test','testing','unknown','n/a','na','none','null','user','admin','info','sales','support','hello','hi','friend','sir','madam','team','contact','lead']);\n\nconst pick = (row, keys) => {\n  for (const k of keys) if (row[k] != null && String(row[k]).trim() !== '') return String(row[k]);\n  return '';\n};\n\nlet rows = $input.all().map((i) => i.json);\nconst limit = Number(cfg.rowLimit) || 0;\nif (limit > 0) rows = rows.slice(0, limit);\nif (!rows.length) throw new Error('No prospect rows found');\n\nreturn rows.map((row) => {\n  const rawName = pick(row, ['first_name', 'firstName', 'FirstName', 'First Name', 'name', 'Name']);\n  const rawCompany = pick(row, ['company', 'Company', 'company_name', 'Company Name', 'org', 'Organization']);\n  const company = rawCompany.replace(/[<>&]/g, '').replace(/\\s+/g, ' ').trim().slice(0, 40);\n\n  let s = rawName.normalize('NFKC').trim().replace(TITLES, '');\n  s = s.replace(/[^\\p{L}\\p{M}\\s'\\u2019-]/gu, ' ');   // drop emoji, digits, punctuation\n  s = s.replace(/\\s+/g, ' ').trim().split(' ')[0];      // first token only\n\n  let valid = /^\\p{L}[\\p{L}\\p{M}'\\u2019-]{1,19}$/u.test(s) && /[aeiouy\\u00e0-\\u00ff]/i.test(s) && !BLOCK.has(s.toLowerCase());\n  if (valid) {\n    s = s[0].toUpperCase() + s.slice(1).toLowerCase();\n    s = s.replace(/(['\\u2019-])(\\p{L})/gu, (m, p, c) => p + c.toUpperCase());\n  }\n\n  const greeting = String(cfg.greetingTemplate || 'Hi {name}!').split('{name}').join(s);\n  let useFallback = !valid;\n  let reason = valid ? '' : `name \"${rawName}\" failed hygiene`;\n  if (valid && greeting.length > (Number(cfg.maxGreetingChars) || 90)) {\n    useFallback = true;\n    reason = 'greeting too long';\n  }\n  if (cfg.dryRun) {\n    useFallback = true;\n    reason = reason || 'dry run (no WaveSpeed spend)';\n  }\n\n  const firstName = valid ? s : 'friend';\n  const chipLabel = useFallback && !valid\n    ? (company ? `Hey there \\u00b7 ${company}` : 'Hey there')\n    : (company ? `${firstName} \\u00b7 ${company}` : firstName);\n\n  return { json: {\n    row_number: row.row_number != null ? row.row_number : null,\n    firstName,\n    company,\n    chipLabel,\n    greeting,\n    useFallback,\n    fallbackReason: reason,\n  } };\n});"
+      }
+    },
+    {
+      "id": "n-needslipsync",
+      "name": "Needs lipsync?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [-380, 300],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-fallback",
+              "leftValue": "={{ $json.useFallback }}",
+              "rightValue": "",
+              "operator": { "type": "boolean", "operation": "false", "singleValue": true }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "n-tts-start",
+      "name": "Start voice line (TTS)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-120, 140],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Campaign Config').first().json.wavespeedUrl }}/api/v3/{{ $('Campaign Config').first().json.ttsModel }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $json.greeting, voice_id: $('Campaign Config').first().json.voiceId, speed: Number($('Campaign Config').first().json.ttsSpeed) || 1, format: 'mp3', sample_rate: 44100, bitrate: 128000, channel: '1' }) }}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WavespeedBearerCred1",
+          "name": "WaveSpeed API key (Bearer)"
+        }
+      }
+    },
+    {
+      "id": "n-tts-wait",
+      "name": "Wait for TTS",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [100, 140],
+      "parameters": {
+        "amount": 3
+      }
+    },
+    {
+      "id": "n-tts-check",
+      "name": "Check TTS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [320, 140],
+      "parameters": {
+        "url": "={{ $('Campaign Config').first().json.wavespeedUrl }}/api/v3/predictions/{{ $json.data.id }}/result",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WavespeedBearerCred1",
+          "name": "WaveSpeed API key (Bearer)"
+        }
+      }
+    },
+    {
+      "id": "n-tts-done",
+      "name": "TTS done?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [540, 140],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-tts-done",
+              "leftValue": "={{ $json.data.status }}",
+              "rightValue": "completed",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "n-tts-guard",
+      "name": "TTS guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [320, -40],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Fail loudly on failed TTS jobs; stop the poll loop at the timeout.\nconst cfg = $('Campaign Config').first().json;\nfor (const item of $input.all()) {\n  const d = item.json.data || {};\n  if (d.status === 'failed') {\n    throw new Error('WaveSpeed TTS failed: ' + (d.error || 'no reason given'));\n  }\n}\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 30) * 60) / 3);\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('TTS did not finish within ' + cfg.timeoutMinutes + ' minutes.');\n}\nreturn $input.all();"
+      }
+    },
+    {
+      "id": "n-lip-start",
+      "name": "Start lipsync",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 140],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Campaign Config').first().json.wavespeedUrl }}/api/v3/{{ $('Campaign Config').first().json.lipsyncModel }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ video: $('Campaign Config').first().json.introMasterUrl, audio: $json.data.outputs[0] }) }}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WavespeedBearerCred1",
+          "name": "WaveSpeed API key (Bearer)"
+        }
+      }
+    },
+    {
+      "id": "n-lip-wait",
+      "name": "Wait for lipsync",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [980, 140],
+      "parameters": {
+        "amount": "={{ $('Campaign Config').first().json.pollSeconds }}"
+      }
+    },
+    {
+      "id": "n-lip-check",
+      "name": "Check lipsync",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 140],
+      "parameters": {
+        "url": "={{ $('Campaign Config').first().json.wavespeedUrl }}/api/v3/predictions/{{ $json.data.id }}/result",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "WavespeedBearerCred1",
+          "name": "WaveSpeed API key (Bearer)"
+        }
+      }
+    },
+    {
+      "id": "n-lip-done",
+      "name": "Lipsync done?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1420, 140],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-lip-done",
+              "leftValue": "={{ $json.data.status }}",
+              "rightValue": "completed",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "n-lip-guard",
+      "name": "Lipsync guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1200, -40],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Fail loudly on failed lip-sync jobs; stop the poll loop at the timeout.\nconst cfg = $('Campaign Config').first().json;\nfor (const item of $input.all()) {\n  const d = item.json.data || {};\n  if (d.status === 'failed') {\n    throw new Error('WaveSpeed lipsync failed: ' + (d.error || 'no reason given'));\n  }\n}\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 30) * 60) / Math.max(2, Number(cfg.pollSeconds || 6)));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('Lip-sync did not finish within ' + cfg.timeoutMinutes + ' minutes.');\n}\nreturn $input.all();"
+      }
+    },
+    {
+      "id": "n-intro-ready",
+      "name": "Personalized intro ready",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1640, 140],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "a-row", "name": "row_number", "value": "={{ $('Clean names').item.json.row_number || 0 }}", "type": "number" },
+            { "id": "a-name", "name": "firstName", "value": "={{ $('Clean names').item.json.firstName }}", "type": "string" },
+            { "id": "a-chip", "name": "chipLabel", "value": "={{ $('Clean names').item.json.chipLabel }}", "type": "string" },
+            { "id": "a-url", "name": "introUrl", "value": "={{ $json.data.outputs[0] }}", "type": "string" },
+            { "id": "a-src", "name": "introSource", "value": "lipsync", "type": "string" },
+            { "id": "a-reason", "name": "fallbackReason", "value": "", "type": "string" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "n-fallback",
+      "name": "Use fallback intro",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-120, 520],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "f-url", "name": "introUrl", "value": "={{ $('Campaign Config').first().json.fallbackIntroUrl }}", "type": "string" },
+            { "id": "f-src", "name": "introSource", "value": "fallback", "type": "string" }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "n-intros-merged",
+      "name": "All intros ready",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [1860, 300],
+      "parameters": {
+        "mode": "append"
+      }
+    },
+    {
+      "id": "n-payload",
+      "name": "Compose template payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2080, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Two scenes, hard cut. duration -1 = the renderer probes each clip and sizes\n// the scene to it, so variable-length intros need no bookkeeping. The body\n// scene gets a slow 1.05x push-in (zoom) so the cut reads as a deliberate\n// edit. Optional music bed spans both scenes; keep audio items to src+volume.\nconst cfg = $('Campaign Config').first().json;\nconst rows = $input.all().map((i) => i.json);\nif (!rows.length) throw new Error('No prospects to render');\nfor (const k of ['introMasterUrl', 'bodyVideoUrl', 'fallbackIntroUrl']) {\n  if (!/^https:\\/\\/\\S+$/.test(String(cfg[k] || '')) || String(cfg[k]).includes('YOUR-CDN')) {\n    throw new Error(`Campaign Config.${k} is not set - upload the clip and paste its public https URL`);\n  }\n}\n\nconst W = Number(cfg.videoWidth) || 1920;\nconst H = Number(cfg.videoHeight) || 1080;\nconst cx = Math.round(W / 2);\nconst cy = Math.round(H / 2);\n\nconst chip = {\n  type: 'TEXT',\n  x: Math.round(W * 0.05),\n  y: Math.round(H * 0.88),\n  anchor: 'center-left',\n  track: 1,\n  enterBegin: 0.5,\n  enterEnd: 1,\n  enterAnimation: 'fade',\n  style: { fontFamily: 'Archivo' },\n  html: `<div style='display:inline-block; background:rgba(10,10,10,0.62); border-left:6px solid ${cfg.brandColor || '#C6FF3D'}; border-radius:12px; padding:16px 28px; color:#ffffff; font-size:${Math.round(H * 0.028)}px; font-weight:700; letter-spacing:0.5px;'>{{chipLabel}}</div>`,\n};\n\nconst payload = {\n  name: 'avatar-outreach',\n  width: W,\n  height: H,\n  frameRate: 30,\n  backgroundColor: '#000000',\n  outputFormat: 'mp4',\n  variables: { introUrl: cfg.fallbackIntroUrl, chipLabel: 'Hey there' },\n  scenes: [\n    {\n      id: 'intro',\n      duration: -1,\n      backgroundColor: '#000000',\n      visuals: [\n        { type: 'VIDEO', id: 'introclip', src: '{{introUrl}}', x: cx, y: cy, width: W, height: H, anchor: 'center-center', volume: 1, track: 0 },\n        ...(cfg.nameChip ? [chip] : []),\n      ],\n    },\n    {\n      id: 'body',\n      duration: -1,\n      backgroundColor: '#000000',\n      visuals: [\n        { type: 'VIDEO', id: 'bodyclip', src: cfg.bodyVideoUrl, x: cx, y: cy, width: W, height: H, anchor: 'center-center', volume: 1, track: 0, zoom: { depth: 1.05 } },\n      ],\n    },\n  ],\n};\nif (cfg.musicUrl) {\n  payload.audios = [{ src: cfg.musicUrl, volume: Number(cfg.musicVolume) || 0.08 }];\n}\n\nreturn [{ json: { payload, rows } }];"
+      }
+    },
+    {
+      "id": "n-items",
+      "name": "Build bulk items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2300, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// One bulk item per prospect. Job names are slugged: spaces in output names\n// produce CDN URLs that need percent-encoding everywhere downstream.\nconst cfg = $('Campaign Config').first().json;\nconst rows = $json.rows;\nconst slug = (v) => String(v).toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80);\nreturn rows.map((r, i) => {\n  if (!/^https:\\/\\/\\S+$/.test(String(r.introUrl || ''))) {\n    throw new Error(`Row ${i + 1} (${r.firstName}): missing intro URL (${r.introSource || 'unknown'})`);\n  }\n  return { json: {\n    row_number: r.row_number,\n    firstName: r.firstName,\n    introSource: r.introSource,\n    fallbackReason: r.fallbackReason || '',\n    name: slug(`${cfg.batchName}-${r.firstName}-r${r.row_number != null ? r.row_number : i + 1}`),\n    variables: { introUrl: r.introUrl, chipLabel: r.chipLabel },\n  } };\n});"
+      }
+    },
+    {
+      "id": "n-validate",
+      "name": "Validate row (free)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2520, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Campaign Config').first().json.apiUrl }}/api/render/validate/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ payload: $('Compose template payload').first().json.payload, variables: $json.variables }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ZvidXApiKeyCred1",
+          "name": "Zvid API key (x-api-key)"
+        }
+      }
+    },
+    {
+      "id": "n-checkvalid",
+      "name": "Check validation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2740, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render runs, so a\n// failure here is a payload/URL bug - surface every failing row at once.\nconst built = $('Build bulk items').all();\nconst failures = [];\nconst out = [];\n$input.all().forEach((res, i) => {\n  const status = res.json.statusCode;\n  const body = res.json.body || {};\n  const meta = built[i].json;\n  if (status !== 200 || body.valid === false) {\n    const details = Array.isArray(body.details)\n      ? body.details.map((d) => `${d.field}: ${d.message}`).join('; ')\n      : JSON.stringify(body).slice(0, 300);\n    failures.push(`- ${meta.firstName} (${meta.introSource}): HTTP ${status} ${body.message || body.error || ''} ${details}`);\n    return;\n  }\n  out.push({ json: { ...meta, creditsRequired: body.creditsRequired || 0 }, pairedItem: { item: i } });\n});\nif (failures.length) {\n  throw new Error(`Zvid rejected ${failures.length} row(s):\\n${failures.join('\\n')}`);\n}\nreturn out;"
+      }
+    },
+    {
+      "id": "n-dryrun",
+      "name": "Dry run?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [2960, 300],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-dryrun",
+              "leftValue": "={{ $('Campaign Config').first().json.dryRun }}",
+              "rightValue": "",
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "n-drysummary",
+      "name": "Dry-run summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3180, 140],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const items = $input.all().map((i) => i.json);\nconst total = items.reduce((s, x) => s + (x.creditsRequired || 0), 0);\nreturn [{ json: {\n  dryRun: true,\n  rows: items.length,\n  creditsRequired: total,\n  perRow: items.map((x) => ({ name: x.name, firstName: x.firstName, introSource: x.introSource, credits: x.creditsRequired })),\n  note: 'Free pass: every intro used the fallback clip, so WaveSpeed spent $0 and Zvid only validated + quoted credits. Set dryRun: false to lip-sync and render for real.',\n} }];"
+      }
+    },
+    {
+      "id": "n-bulkreq",
+      "name": "Build bulk request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3180, 460],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Campaign Config').first().json;\nconst items = $input.all().map((i) => i.json);\nconst slug = (v) => String(v).toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '');\nreturn [{ json: {\n  request: {\n    payload: $('Compose template payload').first().json.payload,\n    items: items.map(({ name, variables }) => ({ name, variables })),\n    name: slug(cfg.batchName) || 'avatar-outreach',\n  },\n  rowsMeta: items.map(({ row_number, firstName, introSource, fallbackReason, name }) => ({ row_number, firstName, introSource, fallbackReason, name })),\n} }];"
+      }
+    },
+    {
+      "id": "n-submit",
+      "name": "Submit bulk render",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3400, 460],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Campaign Config').first().json.apiUrl }}/api/render/bulk/api-key",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.request) }}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ZvidXApiKeyCred1",
+          "name": "Zvid API key (x-api-key)"
+        }
+      }
+    },
+    {
+      "id": "n-collect",
+      "name": "Collect submission",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3620, 460],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Map every queued job back to its prospect via jobs[].index (job name is\n// null until completed, so never join by name).\nconst meta = $('Build bulk request').first().json.rowsMeta;\nconst s = $input.first().json;\nif (!s || !s.bulkId) {\n  throw new Error('Bulk submit did not return a bulkId: ' + JSON.stringify(s).slice(0, 300));\n}\nconst jobsMeta = (s.jobs || []).map((j) => ({ jobId: j.jobId, ...(meta[j.index] || {}) }));\nconst rejected = (s.errors || []).map((e) => {\n  const idx = e.item != null ? e.item : e.index;\n  return { ...(meta[idx] || {}), status: 'rejected', error: typeof e.error === 'string' ? e.error : (e.error && e.error.message) || e.message || 'rejected at submit' };\n});\nreturn [{ json: { bulkId: s.bulkId, jobsMeta, rejected, creditsReserved: s.creditsReserved } }];"
+      }
+    },
+    {
+      "id": "n-pollwait",
+      "name": "Wait before poll",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [3840, 460],
+      "parameters": {
+        "amount": "={{ $('Campaign Config').first().json.pollSeconds }}"
+      }
+    },
+    {
+      "id": "n-status",
+      "name": "Get bulk status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4060, 460],
+      "parameters": {
+        "url": "={{ $('Campaign Config').first().json.apiUrl }}/api/render/bulk/{{ $json.bulkId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ZvidXApiKeyCred1",
+          "name": "Zvid API key (x-api-key)"
+        }
+      }
+    },
+    {
+      "id": "n-finished",
+      "name": "All jobs finished?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [4280, 460],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-finished",
+              "leftValue": "={{ $json.bulk.counts.pending }}",
+              "rightValue": 0,
+              "operator": { "type": "number", "operation": "equals" }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "n-pollguard",
+      "name": "Poll timeout guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4060, 640],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Loop back to the wait node unless we have polled past timeoutMinutes.\nconst cfg = $('Campaign Config').first().json;\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 30) * 60) / Math.max(2, Number(cfg.pollSeconds || 6)));\nconst first = $input.first().json;\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error(`Timed out after ${cfg.timeoutMinutes} min with ${first.bulk.counts.pending} job(s) still rendering. Check later: GET ${cfg.apiUrl}/api/render/bulk/${$('Collect submission').first().json.bulkId}`);\n}\nreturn [{ json: { bulkId: $('Collect submission').first().json.bulkId } }];"
+      }
+    },
+    {
+      "id": "n-results",
+      "name": "Build results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4500, 460],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cs = $('Collect submission').first().json;\nconst byId = new Map(cs.jobsMeta.map((m) => [m.jobId, m]));\nconst resp = $input.first().json;\nconst out = [];\nfor (const job of resp.jobs || []) {\n  const m = byId.get(job.id) || {};\n  out.push({ json: {\n    row_number: m.row_number != null ? m.row_number : null,\n    firstName: m.firstName || job.name || job.id,\n    introSource: m.introSource || '',\n    fallbackReason: m.fallbackReason || '',\n    status: job.status,\n    video_url: job.outputUrl || '',\n    thumbnail_url: job.thumbnailUrl || '',\n    creditsCharged: job.creditsConsumed != null ? job.creditsConsumed : job.creditsEstimated,\n    error: job.errorMessage || '',\n  } });\n}\nfor (const r of cs.rejected || []) {\n  out.push({ json: { ...r, video_url: '', thumbnail_url: '', creditsCharged: 0 } });\n}\nif (!out.length) throw new Error('Bulk status returned no jobs');\nreturn out;"
+      }
+    },
+    {
+      "id": "n-sheetmode",
+      "name": "Update sheet?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [4720, 460],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-sheetmode",
+              "leftValue": "={{ $('Campaign Config').first().json.useTestRows }}",
+              "rightValue": "",
+              "operator": { "type": "boolean", "operation": "false", "singleValue": true }
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "n-sheet-write",
+      "name": "Write results to sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [4940, 340],
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "={{ $('Campaign Config').first().json.sheetUrl }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Campaign Config').first().json.sheetTab }}"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number }}",
+            "Status": "={{ $json.status }}",
+            "VideoUrl": "={{ $json.video_url }}",
+            "IntroSource": "={{ $json.introSource }}"
+          },
+          "matchingColumns": ["row_number"],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "n-summary",
+      "name": "Run summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [5160, 460],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cfg = $('Campaign Config').first().json;\nconst rows = $('Build results').all().map((i) => i.json);\nconst cs = $('Collect submission').first().json;\nconst done = rows.filter((r) => r.status === 'completed');\nconst problems = rows.filter((r) => r.status !== 'completed');\nreturn [{ json: {\n  rendered: done.length,\n  problems: problems.length,\n  lipsyncIntros: rows.filter((r) => r.introSource === 'lipsync').length,\n  fallbackIntros: rows.filter((r) => r.introSource === 'fallback').length,\n  creditsReserved: cs.creditsReserved,\n  bulkId: cs.bulkId,\n  videos: done.map((r) => ({ name: r.firstName, url: r.video_url })),\n  failures: problems,\n  note: cfg.useTestRows\n    ? 'useTestRows: true - nothing was written back. Point sheetUrl at your prospect sheet and set useTestRows: false for real campaigns.'\n    : 'Status / VideoUrl / IntroSource written back to the sheet.',\n} }];"
+      }
+    },
+    {
+      "id": "n-watch",
+      "name": "▶ Watch video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [5380, 460],
+      "parameters": {
+        "url": "={{ $json.videos && $json.videos.length ? $json.videos[0].url : '' }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    }
+  ],
+  "connections": {
+    "When clicking 'Execute workflow'": {
+      "main": [[{ "node": "Campaign Config", "type": "main", "index": 0 }]]
+    },
+    "Campaign Config": {
+      "main": [[{ "node": "Test rows mode?", "type": "main", "index": 0 }]]
+    },
+    "Test rows mode?": {
+      "main": [
+        [{ "node": "Test prospects", "type": "main", "index": 0 }],
+        [{ "node": "Read prospect rows", "type": "main", "index": 0 }]
+      ]
+    },
+    "Test prospects": {
+      "main": [[{ "node": "Prospects", "type": "main", "index": 0 }]]
+    },
+    "Read prospect rows": {
+      "main": [[{ "node": "Prospects", "type": "main", "index": 1 }]]
+    },
+    "Prospects": {
+      "main": [[{ "node": "Clean names", "type": "main", "index": 0 }]]
+    },
+    "Clean names": {
+      "main": [[{ "node": "Needs lipsync?", "type": "main", "index": 0 }]]
+    },
+    "Needs lipsync?": {
+      "main": [
+        [{ "node": "Start voice line (TTS)", "type": "main", "index": 0 }],
+        [{ "node": "Use fallback intro", "type": "main", "index": 0 }]
+      ]
+    },
+    "Start voice line (TTS)": {
+      "main": [[{ "node": "Wait for TTS", "type": "main", "index": 0 }]]
+    },
+    "Wait for TTS": {
+      "main": [[{ "node": "Check TTS", "type": "main", "index": 0 }]]
+    },
+    "Check TTS": {
+      "main": [[{ "node": "TTS done?", "type": "main", "index": 0 }]]
+    },
+    "TTS done?": {
+      "main": [
+        [{ "node": "Start lipsync", "type": "main", "index": 0 }],
+        [{ "node": "TTS guard", "type": "main", "index": 0 }]
+      ]
+    },
+    "TTS guard": {
+      "main": [[{ "node": "Wait for TTS", "type": "main", "index": 0 }]]
+    },
+    "Start lipsync": {
+      "main": [[{ "node": "Wait for lipsync", "type": "main", "index": 0 }]]
+    },
+    "Wait for lipsync": {
+      "main": [[{ "node": "Check lipsync", "type": "main", "index": 0 }]]
+    },
+    "Check lipsync": {
+      "main": [[{ "node": "Lipsync done?", "type": "main", "index": 0 }]]
+    },
+    "Lipsync done?": {
+      "main": [
+        [{ "node": "Personalized intro ready", "type": "main", "index": 0 }],
+        [{ "node": "Lipsync guard", "type": "main", "index": 0 }]
+      ]
+    },
+    "Lipsync guard": {
+      "main": [[{ "node": "Wait for lipsync", "type": "main", "index": 0 }]]
+    },
+    "Personalized intro ready": {
+      "main": [[{ "node": "All intros ready", "type": "main", "index": 0 }]]
+    },
+    "Use fallback intro": {
+      "main": [[{ "node": "All intros ready", "type": "main", "index": 1 }]]
+    },
+    "All intros ready": {
+      "main": [[{ "node": "Compose template payload", "type": "main", "index": 0 }]]
+    },
+    "Compose template payload": {
+      "main": [[{ "node": "Build bulk items", "type": "main", "index": 0 }]]
+    },
+    "Build bulk items": {
+      "main": [[{ "node": "Validate row (free)", "type": "main", "index": 0 }]]
+    },
+    "Validate row (free)": {
+      "main": [[{ "node": "Check validation", "type": "main", "index": 0 }]]
+    },
+    "Check validation": {
+      "main": [[{ "node": "Dry run?", "type": "main", "index": 0 }]]
+    },
+    "Dry run?": {
+      "main": [
+        [{ "node": "Dry-run summary", "type": "main", "index": 0 }],
+        [{ "node": "Build bulk request", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build bulk request": {
+      "main": [[{ "node": "Submit bulk render", "type": "main", "index": 0 }]]
+    },
+    "Submit bulk render": {
+      "main": [[{ "node": "Collect submission", "type": "main", "index": 0 }]]
+    },
+    "Collect submission": {
+      "main": [[{ "node": "Wait before poll", "type": "main", "index": 0 }]]
+    },
+    "Wait before poll": {
+      "main": [[{ "node": "Get bulk status", "type": "main", "index": 0 }]]
+    },
+    "Get bulk status": {
+      "main": [[{ "node": "All jobs finished?", "type": "main", "index": 0 }]]
+    },
+    "All jobs finished?": {
+      "main": [
+        [{ "node": "Build results", "type": "main", "index": 0 }],
+        [{ "node": "Poll timeout guard", "type": "main", "index": 0 }]
+      ]
+    },
+    "Poll timeout guard": {
+      "main": [[{ "node": "Wait before poll", "type": "main", "index": 0 }]]
+    },
+    "Build results": {
+      "main": [[{ "node": "Update sheet?", "type": "main", "index": 0 }]]
+    },
+    "Update sheet?": {
+      "main": [
+        [{ "node": "Write results to sheet", "type": "main", "index": 0 }],
+        [{ "node": "Run summary", "type": "main", "index": 0 }]
+      ]
+    },
+    "Write results to sheet": {
+      "main": [[{ "node": "Run summary", "type": "main", "index": 0 }]]
+    },
+    "Run summary": {
+      "main": [[{ "node": "▶ Watch video", "type": "main", "index": 0 }]]
+    }
+  }
+}

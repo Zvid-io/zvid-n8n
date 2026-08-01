@@ -4,10 +4,11 @@
 
 Every Monday at 9am: take one week of KPIs (up to five metrics), turn them into
 a narrated 1920×1080 stats video — branded title card, one scene per metric with
-a green/red delta pill and a trend panel, then a summary grid — and drop the
-finished video link into Slack. Dashboards go unopened; a forty-second video
-gets watched. It runs with **zero external data**: leave `metricsUrl` empty and
-a bundled demo dataset (an invented but realistic SaaS week) drives the video.
+a green/red delta pill (plus a sparkline whenever you send real history), then a
+summary grid — and drop the finished video link into Slack. Dashboards go
+unopened; a forty-second video gets watched. It runs with **zero external
+data**: leave `metricsUrl` empty and a bundled demo dataset (an invented but
+realistic SaaS week) drives the video.
 
 ```
 Schedule (Mon 9am) ─▶ Config ─▶ Fetch metrics (or bundled demo data) ─▶ Music guard
@@ -25,16 +26,15 @@ infrastructure spend going *up* renders red ▲ — with a small "Lower is bette
 for this one." caption so nobody misreads the direction. Most stats-video
 automations color by sign; this one colors by meaning.
 
-**It never draws a chart it does not have data for.** The trend panel beside
-each number has exactly two states. Give a metric a `series` array (past values,
-oldest first) and it draws a **real sparkline of those numbers**, labelled
-`TREND · LAST N PERIODS`. Leave `series` out and it draws a **single straight
-arrow** — no gridlines, no area fill, no end-point dot — labelled
-`DIRECTION ONLY`, because the only thing known is the sign of `delta`. Omit
-`delta` as well and the panel disappears entirely and the number centres on the
-card. Plenty of "KPI video" generators fill that space with a good-looking
-squiggle; this one would rather show less than imply history that was never
-supplied.
+**It never draws a chart it does not have data for.** A metric scene has exactly
+two layouts. Give a metric a `history` array (past values, oldest first) and you
+get the two-column card: the number on the left, a **real sparkline of those
+numbers** on the right, labelled `TREND · LAST N PERIODS`. Leave `history` out
+and you get **no chart at all** — a single centred column, accent rule, label,
+big number, delta pill — because a trend line would be an invention. There is no
+third state, no decorative squiggle, no "illustrative" line. Plenty of "KPI
+video" generators fill that space with a good-looking curve nobody sent them;
+this one would rather show less.
 
 **It demos with zero external anything.** `metricsUrl` empty → a bundled demo
 dataset (MRR, signups, active users, churn, NPS) renders, so your first video
@@ -57,12 +57,12 @@ design either way — both paths were rendered and frame-reviewed on the
 production engine.
 
 **Numbers typeset like a designed report, not a caption.** Values auto-scale
-(a 7-digit `$4,821,004` steps down from 184 px to 134 px), the panel and the
-label column swap to a centred single column when a metric has no panel to
-show, and the summary grid re-flows for 1–5 metrics (3+2 for five, 2×2 for
-four, a single centred row for three or fewer). Every one of those five grid
-branches was rendered on the production engine and checked; nothing clips,
-including 22-character labels next to 7-digit values.
+(a 7-digit `$4,821,004` steps down from 184 px to 134 px), the card swaps to a
+vertically centred single column when a metric has no `history` to chart, and
+the summary grid re-flows for 1–5 metrics (3+2 for five, 2×2 for four, a single
+centred row for three or fewer) — every row is centred on the canvas, not just
+the odd ones. All five grid branches were rendered on the production engine and
+checked; nothing clips, including 23-character labels next to 7-digit values.
 
 ## Requirements
 
@@ -113,7 +113,7 @@ Set `narrate: false` and the workflow runs on a Zvid key alone.
   "company": "Acme",
   "metrics": [
     { "label": "MRR", "value": 48210, "unit": "$", "delta": 4.1, "lowerIsBetter": false,
-      "series": [45990, 46311, 48210] }
+      "history": [45990, 46311, 48210] }
   ]
 }
 ```
@@ -124,15 +124,15 @@ Set `narrate: false` and the workflow runs on a Zvid key alone.
 - `delta` — percent change vs the previous period. Omit it for no pill.
 - `lowerIsBetter: true` flips the colors: a falling value renders green, a
   rising one red. Arrows always follow the sign; only the color changes.
-- `series` — **optional** past values, oldest first, ending at `value` (two or
-  more numbers, last 24 kept). Supply it and the metric scene draws a real
-  sparkline of those numbers, labelled `TREND · LAST N PERIODS`. Omit it and
-  the scene draws a single straight arrow labelled `DIRECTION ONLY` — its slope
-  is nothing more than the sign of `delta`. Omit `delta` too and the panel
-  disappears entirely. **The workflow never invents history**: there is no
-  state where a squiggle on screen stands for numbers you did not send.
-  A malformed `series` (non-numbers, a single point) fails the run loudly
-  rather than being quietly dropped.
+- `history` — **optional** past values, oldest first, ending at `value` (two or
+  more numbers, last 24 kept; the key `series` is accepted as an alias). Supply
+  it and that metric scene draws a real sparkline of exactly those numbers,
+  labelled `TREND · LAST N PERIODS`. Omit it and that scene draws **no chart at
+  all** — the number and its delta pill centre on the card instead.
+  **The workflow never invents history**: there is no state in which a line on
+  screen stands for numbers you did not send. A malformed `history`
+  (non-numbers, a single point) fails the run loudly rather than being quietly
+  dropped or quietly charted.
 - If your endpoint needs auth, attach any n8n credential to *Fetch metrics*.
 
 ### Wiring real sources (documented, not built in)
@@ -159,7 +159,7 @@ Everything lives in the `Config` node.
 | `summaryLine` | `Full breakdown in the dashboard.` | Closing line under the summary grid **on `narrate: false` runs only** — when narration is on, the LLM's own closing sentence is printed there instead. |
 | `brandAccent` / `brandBackground` | `#38E1FF` / `#0B1220` | Accent + canvas. |
 | `textColor` / `mutedColor` | `#FFFFFF` / `#9DB0CC` | Ink + secondary text. |
-| `goodColor` / `badColor` | `#34D399` / `#FF6B78` | Improvement / setback pills and trend panels. |
+| `goodColor` / `badColor` | `#34D399` / `#FF6B78` | Improvement / setback pills and sparklines. |
 | `font` | `Space Grotesk` | Any Google Font name. |
 | `titleVideoUrl` | a pinned, verified stock clip | Background footage on the title card. `""` = clean gradient card, no video dependency. |
 | `llmModel` | `openai/gpt-4.1-mini` | Any OpenRouter chat model. |
@@ -180,13 +180,14 @@ Everything lives in the `Config` node.
 ## Cost per video
 
 The live validator quoted **40 credits** for the default narrated report
-(39.4 s), **28 credits** for the music-only 5-metric fixture (27.6 s) and
+(39.39 s), **28 credits** for the music-only 5-metric fixture (27.6 s) and
 **21 credits** for a 3-metric report (20.4 s) — the cost tracks video length,
 so fewer metrics and a shorter script cost less. *Validate project (free)* runs
-before every render and
-reports the exact figure as `creditsCharged` in the run summary. The narration
-itself is cheap: the script costs well under a cent on a small model, and a
-~110-word voice-over uses about 600 ElevenLabs characters.
+before every render and reports the exact figure as `creditsCharged` in the run
+summary. The narration itself is cheap: the script costs well under a cent on a
+small model, and a 45-second analyst voice-over is short — the 109-word script
+used by the reviewed fixture measures **625 ElevenLabs characters**, so check
+that figure against whatever character allowance your ElevenLabs plan gives you.
 
 ## How it works
 
@@ -194,7 +195,7 @@ itself is cheap: the script costs well under a cent on a small model, and a
 | --- | --- |
 | **Metrics source?** | Routes on `metricsUrl`: empty goes straight to *Prepare metrics* (demo data), set fetches your endpoint. |
 | **Fetch metrics** | GET with `neverError` — HTTP failures are data, not crashes. |
-| **Prepare metrics** | Normalises the response to the contract. Unreachable / HTTP error → bundled demo dataset with `usingDemoData: true`. A 200 that violates the contract → loud failure with the expected shape echoed back. |
+| **Prepare metrics** | Normalises the response to the contract, including the optional `history` array (2+ numbers, last 24 kept; `series` accepted as an alias). Unreachable / HTTP error → bundled demo dataset with `usingDemoData: true`. A 200 that violates the contract → loud failure with the expected shape echoed back, naming the offending field. |
 | **Check music / Music guard** | HEAD-checks `musicUrl` (status + `content-length` vs `maxMusicBytes`). A bad bed means *no music*, never a failed render. Also builds the narration prompt — with the direction AND goodness of every delta resolved (`lowerIsBetter` is decided here, not by the LLM). |
 | **Narrate?** | Routes on `narrate`. The false branch goes straight to the builder. |
 | **Write narration** | OpenRouter, JSON mode: `{opening, perMetric[], closing}` — one sentence per metric, digits spelled out as words so captions align. |
@@ -202,7 +203,7 @@ itself is cheap: the script costs well under a cent on a small model, and a
 | **Generate voiceover** | ElevenLabs `/with-timestamps` — the timings ARE the audio; nothing can drift. |
 | **Voice + timings** | Groups character alignment into words, emits the mp3 binary. |
 | **Upload voiceover** | Multipart upload to Zvid; returns the audio URL the render uses. |
-| **Build project JSON** | The whole design lives here: adaptive value type (184→88 px), delta pills colored by `lowerIsBetter`, the three trend-panel states (real sparkline from `series` / direction-only arrow / no panel), the 1–5-metric summary grid, the closing line (LLM `closing` when narrating, else `summaryLine`), word-timed scene spans (or fixed lengths without narration), transition padding so cuts land on sentence ends. |
+| **Build project JSON** | The whole design lives here: adaptive value type (184→88 px), delta pills colored by `lowerIsBetter`, the two card layouts (two-column with a real sparkline when `history` is present, centred single column with no chart when it is not), the 1–5-metric summary grid, the closing line (LLM `closing` when narrating, else `summaryLine`), word-timed scene spans (or fixed lengths without narration), transition padding so cuts land on sentence ends. |
 | **Validate project (free)** | The exact pipeline a render submission runs — schema, plan limits, cost — without spending credits. |
 | **Dry run?** | `false` by default. `true` saves a free draft and reports `editorLink` instead of rendering. |
 | **Submit render / Wait / Get render status / Still rendering?** | Paid render plus the poll loop; fails fast on `failed` and stops at `timeoutMinutes`. |
@@ -236,6 +237,7 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `narrate is true but the voiceover chain produced no usable audio` | The OpenRouter or ElevenLabs credential is missing/invalid on *Write narration* / *Generate voiceover*. Fix the credentials, or set `narrate: false` for a music-only video. |
 | ElevenLabs returns 402 | Free ElevenLabs plans can only use default voices — Voice Library voices are blocked. Keep Brian or another default voice. |
 | `The model wrote N metric sentences for 5 metrics` | The LLM under-delivered. Run again, or set a stronger `llmModel`. |
+| A metric scene shows no chart | That metric carried no `history` array, so there was nothing real to plot and the card switched to the centred number layout — by design. Send two or more past values (see the contract) and that scene draws a sparkline of exactly those numbers. `Build project JSON` reports which state each metric took in `meta.metrics[].trendPanel`. |
 | Video rendered without music | The HEAD guard skipped the bed (unreachable or over `maxMusicBytes`). The run summary's `musicNote` says exactly why. |
 | Render fails on the title card | `titleVideoUrl` points at a dead clip. Restore the default pinned URL or set it to `""` for the gradient-only title card. |
 | Nothing posted to Slack | `slackWebhookUrl` empty (step skipped), or the webhook was revoked — Slack answers 404 and the step continues; the summary still carries `videoUrl` with `slackConfigured` / `slackAttempted` flags. |
@@ -244,44 +246,60 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 
 ## Verified
 
-n8n **2.29.10** node types and versions (every node resolves in a stock
-install; core nodes only). What was actually verified at authoring time:
+Core n8n node types only — no community nodes — at the type versions a stock
+n8n **2.29.10** resolves (`httpRequest` 4.2, `code` 2, `set` 3.4, `if` 2.2,
+`wait` 1.1, `scheduleTrigger` 1.2, `manualTrigger` 1, `stickyNote` 1). What was
+actually verified, and nothing more:
 
 - **Rendered on the production engine** (the same `@zvid-io/zvid` package the
   render farm runs) four times from the builder's real output:
-  - the default fixture (39.4 s, narrated — demo dataset, 5 metrics with
-    `series`, word-timed cuts from synthetic timings at a realistic
+  - the default fixture (39.39 s, narrated — demo dataset, 5 metrics with real
+    `history`, word-timed cuts from synthetic timings at a realistic
     2.8 words/sec, 28 karaoke caption cues, closing card carrying the script's
     own closing sentence);
-  - a `narrate: false` stress fixture (27.6 s — five 7-digit values,
-    22-character labels, a −12.4% red pill, green ▼ pills on `lowerIsBetter`
+  - a `narrate: false` stress fixture (27.6 s — five 7-digit values, labels up
+    to 23 characters, a −12.4% red pill, green ▼ pills on `lowerIsBetter`
     metrics, a flat-delta neutral pill, a 26-character company name, and no
-    `series` anywhere, so every panel is the `DIRECTION ONLY` arrow);
-  - a 3-metric fixture (20.4 s) that exercises all three panel states in one
-    video — real sparkline, direction arrow, and a metric with neither `delta`
-    nor `series` (no pill, no panel, number centred);
+    `history` anywhere, so all five cards use the centred no-chart layout);
+  - a 3-metric fixture (20.4 s) carrying both layouts in one video — a real
+    sparkline card, a card with a delta but no `history` (centred, no chart) and
+    a card with neither (centred, no pill, no chart);
   - a summary-grid coverage render (16.2 s) stitched from the builder's own
-    output at 1, 2 and 4 metrics, so all five grid branches are on film.
-  **Every extracted frame was looked at** — 229 frames (2 fps sweeps plus exact
-  grabs at every transition midpoint and every final frame): all four complete
-  frame sets on contact sheets, plus 22 frames at full review resolution
-  covering every scene, every panel state, every grid branch and the
-  transitions. No clipping, no overflow, no low-contrast text, correct
-  green/red/flat semantics on every pill and panel.
+    output at 1, 2 and 4 metrics — the branches no fixture reaches. With the
+    3-metric fixture above and the two 5-metric ones, all five grid branches are
+    on film.
+- **Frames reviewed:** all **207** extracted sweep frames (2 fps across the four
+  renders) on four contact sheets, plus all **36** frames at full review
+  resolution (22 exact grabs at every transition midpoint and every final frame,
+  14 detail frames at 1600×900) — every scene type, both card layouts, all five
+  grid branches. No clipping, no overflow, no low-contrast text, no
+  `{{`/`undefined`/`NaN`, correct green/red/flat semantics on every pill (churn
+  and backlog falling → green; infrastructure spend rising → red).
 - **Remote validation against the live API** (`POST /api/render/validate/api-key`
-  via MCP with `remote: true`) on all three payload shapes: `valid: true`,
-  **0 errors, 0 warnings**, schema **1.0.0**, `creditsRequired: 40` (narrated,
-  39.39 s), **28** (music-only, 27.6 s) and **21** (3-metric, 20.4 s). The
-  validated JSON was diffed against the rendered `config.json` to confirm it
-  was the same payload. One lint round was caught and fixed this way (the
-  layout checker reads `style.color`, not inline HTML colors).
-- **Every pinned URL probed at authoring time** — the title-card clip
-  (1920×1080, 13.2 s, 3.1 MB), the music bed (115.5 s, 3.7 MB — under the plan
-  audio cap, and HEAD-guarded at runtime anyway).
+  through MCP `validate_project_json` with `remote: true`) on all three payload
+  shapes plus the grid-coverage payload, re-run against these exact rendered
+  payloads: `valid: true`, **0 errors, 0 warnings**, schema **1.0.0**,
+  `creditsRequired: 40` (narrated, 39.39 s), **28** (music-only 5-metric,
+  27.6 s), **21** (3-metric, 20.4 s) and **17** (grid coverage, 16.2 s). Each
+  server-resolved duration matched the rendered MP4 exactly, and for the default
+  payload the validator's echoed project was compared field-by-field against the
+  rendered `config.json` and was identical.
+- **Pinned URLs re-probed** (HTTP 200 on this pass, and all three were actually
+  downloaded by the local renders): the title-card clip (`video/mp4`,
+  3,080,531 bytes), the music bed (`audio/mpeg`, 3,695,616 bytes — under the
+  plan's 5 MB audio cap, and HEAD-guarded at runtime anyway) and the stand-in
+  narration mp3 used only by the local render (1,556,480 bytes).
 - **The embedded code node is byte-identical** to the frame-reviewed standalone
-  builder (asserted programmatically after generation), and every code node in
-  the workflow compiles; all connections resolve; no credentials blocks ship in
-  the file.
+  builder (asserted programmatically after generation), and the three payloads
+  that were rendered and validated were re-derived by executing the *shipped
+  file's own* `Build project JSON` source and matched character for character.
+  Every code node in the workflow compiles; all connections resolve; no
+  credentials blocks ship in the file.
+- **The shipped `Prepare metrics` node was unit-exercised** against the contract:
+  the demo fallback (empty `metricsUrl`, unreachable endpoint, HTTP 500), a valid
+  `history`, the `series` alias, a 26-point array (clamped to the last 24), and
+  the three malformed cases — non-array, non-numeric, single point — each of
+  which fails the run loudly naming `metrics[i].history`.
 
 **Not executed at authoring time:** the OpenRouter and ElevenLabs calls (the
 narration fixture used a hand-written script and synthetic word timings that
