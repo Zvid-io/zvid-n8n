@@ -43,7 +43,7 @@ test('one-click AI Agent template stores a concrete creator profile', () => {
 	assert.equal(mcp.parameters.include, 'all');
 
 	assert.ok(hasConnection('When chat message received', 'main', 'Zvid AI Agent'));
-	assert.ok(hasConnection('OpenAI Chat Model', 'ai_languageModel', 'Zvid AI Agent'));
+	assert.ok(hasConnection('OpenRouter Chat Model', 'ai_languageModel', 'Zvid AI Agent'));
 	assert.ok(hasConnection('Conversation Memory', 'ai_memory', 'Zvid AI Agent'));
 	assert.ok(hasConnection('Zvid MCP Tools', 'ai_tool', 'Zvid AI Agent'));
 });

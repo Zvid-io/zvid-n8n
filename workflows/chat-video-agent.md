@@ -70,7 +70,7 @@ there is nothing in it for the agent to render against.
 | --- | --- |
 | n8n with the built-in AI nodes | *AI Agent*, *OpenRouter Chat Model*, *Simple Memory* and *MCP Client Tool* ship with n8n Cloud and with any current self-hosted install. No community package. Built and version-checked against **n8n 2.29.10**. |
 | Telegram bot | `/newbot` in [@BotFather](https://t.me/BotFather), about two minutes, gives you a token. The trigger is a **webhook**, so n8n has to be reachable from the internet — Cloud is; a local instance needs a tunnel or `N8N_WEBHOOK_URL` pointing at a public address. |
-| OpenRouter API key | One key, any model. Prefer OpenAI, Anthropic or a local gateway directly? Swap *Chat model (OpenRouter)* for the matching model node — nothing else changes. |
+| OpenRouter API key | One key, any model. Choose any OpenRouter model id in *Config* and keep *Chat model (OpenRouter)* connected to the agent. |
 | Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to try it. |
 
 No Google account, no stock-media account, no payload builder — the agent
