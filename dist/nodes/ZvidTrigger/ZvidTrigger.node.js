@@ -17,7 +17,6 @@ class ZvidTrigger {
             version: 1,
             subtitle: '={{$parameter["events"].join(", ")}}',
             description: 'Starts the workflow when a Zvid render completes or fails',
-            usableAsTool: true,
             defaults: {
                 name: 'Zvid Trigger',
             },

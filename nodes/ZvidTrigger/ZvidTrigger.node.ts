@@ -11,6 +11,8 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 
 import { zvidApiRequest } from '../Zvid/GenericFunctions';
 
+// Triggers start workflows and cannot be invoked as AI tools.
+// eslint-disable-next-line @n8n/community-nodes/node-usable-as-tool
 export class ZvidTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Zvid Trigger',
@@ -23,7 +25,6 @@ export class ZvidTrigger implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["events"].join(", ")}}',
 		description: 'Starts the workflow when a Zvid render completes or fails',
-		usableAsTool: true,
 		defaults: {
 			name: 'Zvid Trigger',
 		},

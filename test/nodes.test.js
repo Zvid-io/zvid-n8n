@@ -297,6 +297,7 @@ test('credentials send X-Api-Key and test against /api/credits/balance', () => {
 test('trigger registers webhook lifecycle methods', () => {
 	const trigger = new ZvidTrigger();
 	assert.equal(trigger.description.name, 'zvidTrigger');
+	assert.equal(trigger.description.usableAsTool, undefined);
 	const methods = trigger.webhookMethods.default;
 	for (const fn of ['checkExists', 'create', 'delete']) {
 		assert.equal(typeof methods[fn], 'function');
