@@ -1,6 +1,6 @@
 {
   "name": "@zvid/n8n-nodes-zvid",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "n8n community nodes for Zvid — generate videos and images from JSON or templates, with bulk rendering, stock media, render-completed triggers, and an AI-agent workflow.",
   "keywords": [
     "n8n-community-node-package",
@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Zvid-io/zvid-n8n.git"
+    "url": "git+https://github.com/Zvid-io/zvid-n8n.git"
   },
   "bugs": {
     "url": "https://github.com/Zvid-io/zvid-n8n/issues",
