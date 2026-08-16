@@ -83,6 +83,14 @@ export async function buildRenderBody(
 			this.getNodeParameter('projectJson', '{}'),
 			'Project JSON',
 		);
+		const validationVariables = parseJsonParameter(
+			this,
+			this.getNodeParameter('validationVariables', '{}'),
+			'Validation Variables',
+		);
+		if (validationVariables && Object.keys(validationVariables).length > 0) {
+			body.variables = validationVariables;
+		}
 	} else {
 		body.template = this.getNodeParameter('templateId', '') as string;
 		const variables = parseJsonParameter(
@@ -100,6 +108,18 @@ export async function buildRenderBody(
 	if (additional.webhookUrl) body.webhookUrl = additional.webhookUrl;
 
 	requestOptions.body = body;
+	return requestOptions;
+}
+
+/** preSend: create an editable dashboard/editor project from validated JSON. */
+export async function buildProjectCreateBody(
+	this: IExecuteSingleFunctions,
+	requestOptions: IHttpRequestOptions,
+): Promise<IHttpRequestOptions> {
+	requestOptions.body = {
+		name: this.getNodeParameter('projectName', '') as string,
+		payload: parseJsonParameter(this, this.getNodeParameter('projectJson', '{}'), 'Project JSON'),
+	};
 	return requestOptions;
 }
 

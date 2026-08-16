@@ -55,6 +55,10 @@ class Zvid {
                             value: 'credit',
                         },
                         {
+                            name: 'Project',
+                            value: 'project',
+                        },
+                        {
                             name: 'Render',
                             value: 'render',
                         },
@@ -254,6 +258,30 @@ class Zvid {
                     name: 'operation',
                     type: 'options',
                     noDataExpression: true,
+                    displayOptions: { show: { resource: ['project'] } },
+                    options: [
+                        {
+                            name: 'Create Editor Project',
+                            value: 'create',
+                            action: 'Create an editor project',
+                            description: 'Save validated project JSON as an editable project in Zvid',
+                            routing: {
+                                request: {
+                                    method: 'POST',
+                                    url: '/api/projects',
+                                    ignoreHttpStatusErrors: true,
+                                },
+                                send: { preSend: [GenericFunctions_1.buildProjectCreateBody] },
+                            },
+                        },
+                    ],
+                    default: 'create',
+                },
+                {
+                    displayName: 'Operation',
+                    name: 'operation',
+                    type: 'options',
+                    noDataExpression: true,
                     displayOptions: {
                         show: {
                             resource: ['render'],
@@ -305,6 +333,18 @@ class Zvid {
                                 },
                                 output: {
                                     postReceive: [GenericFunctions_1.waitForRenderCompletion],
+                                },
+                            },
+                        },
+                        {
+                            name: 'Get Bulk',
+                            value: 'getBulk',
+                            action: 'Get a bulk render',
+                            description: 'Get the status and jobs for a bulk render batch',
+                            routing: {
+                                request: {
+                                    method: 'GET',
+                                    url: '=/api/render/bulk/{{$parameter.bulkId}}',
                                 },
                             },
                         },
@@ -771,6 +811,28 @@ class Zvid {
                     },
                 },
                 {
+                    displayName: 'Project Name',
+                    name: 'projectName',
+                    type: 'string',
+                    default: '',
+                    required: true,
+                    description: 'Name shown in the Zvid dashboard and visual editor',
+                    displayOptions: {
+                        show: { resource: ['project'], operation: ['create'] },
+                    },
+                },
+                {
+                    displayName: 'Project JSON',
+                    name: 'projectJson',
+                    type: 'json',
+                    default: '{}',
+                    required: true,
+                    description: 'Validated project JSON to save as an editable Zvid project',
+                    displayOptions: {
+                        show: { resource: ['project'], operation: ['create'] },
+                    },
+                },
+                {
                     displayName: 'Render Type',
                     name: 'renderType',
                     type: 'options',
@@ -867,6 +929,20 @@ class Zvid {
                             resource: ['render'],
                             operation: ['create', 'createBulk', 'validate'],
                             source: ['template'],
+                        },
+                    },
+                },
+                {
+                    displayName: 'Validation Variables',
+                    name: 'validationVariables',
+                    type: 'json',
+                    default: '{}',
+                    description: 'Variable values used to resolve placeholders while validating project JSON',
+                    displayOptions: {
+                        show: {
+                            resource: ['render'],
+                            operation: ['validate'],
+                            source: ['json'],
                         },
                     },
                 },
@@ -993,6 +1069,20 @@ class Zvid {
                         show: {
                             resource: ['render'],
                             operation: ['get'],
+                        },
+                    },
+                },
+                {
+                    displayName: 'Bulk ID',
+                    name: 'bulkId',
+                    type: 'string',
+                    default: '',
+                    required: true,
+                    description: 'Bulk batch ID returned by Create Bulk',
+                    displayOptions: {
+                        show: {
+                            resource: ['render'],
+                            operation: ['getBulk'],
                         },
                     },
                 },

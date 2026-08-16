@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.zvidApiRequest = zvidApiRequest;
 exports.parseJsonParameter = parseJsonParameter;
 exports.buildRenderBody = buildRenderBody;
+exports.buildProjectCreateBody = buildProjectCreateBody;
 exports.buildBulkRenderBody = buildBulkRenderBody;
 exports.normalizeValidationResponse = normalizeValidationResponse;
 exports.addRenderListQuery = addRenderListQuery;
@@ -54,6 +55,10 @@ async function buildRenderBody(requestOptions) {
     const body = {};
     if (source === 'json') {
         body.payload = parseJsonParameter(this, this.getNodeParameter('projectJson', '{}'), 'Project JSON');
+        const validationVariables = parseJsonParameter(this, this.getNodeParameter('validationVariables', '{}'), 'Validation Variables');
+        if (validationVariables && Object.keys(validationVariables).length > 0) {
+            body.variables = validationVariables;
+        }
     }
     else {
         body.template = this.getNodeParameter('templateId', '');
@@ -68,6 +73,13 @@ async function buildRenderBody(requestOptions) {
     if (additional.webhookUrl)
         body.webhookUrl = additional.webhookUrl;
     requestOptions.body = body;
+    return requestOptions;
+}
+async function buildProjectCreateBody(requestOptions) {
+    requestOptions.body = {
+        name: this.getNodeParameter('projectName', ''),
+        payload: parseJsonParameter(this, this.getNodeParameter('projectJson', '{}'), 'Project JSON'),
+    };
     return requestOptions;
 }
 async function buildBulkRenderBody(requestOptions) {

@@ -13,12 +13,37 @@ const packageJson = require('../package.json');
 const agentWorkflow = JSON.parse(
 	readFileSync(join(__dirname, '..', 'workflows', 'zvid-ai-agent.json'), 'utf8'),
 );
+const shopifyCatalogWorkflow = JSON.parse(
+	readFileSync(join(__dirname, '..', 'workflows', 'zvid-shopify-catalog-videos.json'), 'utf8'),
+);
 
 function hasConnection(source, type, target) {
 	return agentWorkflow.connections[source]?.[type]?.[0]?.some(
 		(connection) => connection.node === target && connection.type === type,
 	);
 }
+
+test('Shopify catalog template is attributed to the published Zvid integration', () => {
+	const submit = shopifyCatalogWorkflow.nodes.find((node) => node.name === 'Submit bulk render');
+	assert.equal(submit.type, '@zvid/n8n-nodes-zvid.zvid');
+	assert.equal(submit.typeVersion, 1);
+	assert.equal(submit.parameters.resource, 'render');
+	assert.equal(submit.parameters.operation, 'createBulk');
+	assert.equal(submit.parameters.source, 'json');
+
+	const zvidTypes = shopifyCatalogWorkflow.nodes
+		.map((node) => node.type)
+		.filter((type) => type.includes('n8n-nodes-zvid'));
+	assert.deepEqual(zvidTypes, ['@zvid/n8n-nodes-zvid.zvid']);
+
+	for (const name of ['Validate project (free)', 'Save draft to editor', 'Get batch status']) {
+		const node = shopifyCatalogWorkflow.nodes.find((candidate) => candidate.name === name);
+		assert.equal(node.type, 'n8n-nodes-base.httpRequest');
+		assert.equal(node.parameters.authentication, 'predefinedCredentialType');
+		assert.equal(node.parameters.nodeCredentialType, 'zvidApi');
+		assert.equal(node.parameters.genericAuthType, undefined);
+	}
+});
 
 test('one-click AI Agent template stores a concrete creator profile', () => {
 	assert.equal(agentWorkflow.name, 'Zvid AI Agent - Creator');
@@ -70,12 +95,15 @@ test('Zvid node description is wired correctly', () => {
 		(p) => p.name === 'operation' && p.displayOptions.show.resource[0] === 'render',
 	);
 	const values = renderOps.options.map((o) => o.value).sort();
-	assert.deepEqual(values, ['create', 'createBulk', 'get', 'getAll', 'validate']);
+	assert.deepEqual(values, ['create', 'createBulk', 'get', 'getAll', 'getBulk', 'validate']);
 
 	const create = renderOps.options.find((o) => o.value === 'create');
 	assert.match(create.routing.request.url, /\/api\/render/);
 	assert.equal(typeof create.routing.send.preSend[0], 'function');
 	assert.equal(typeof create.routing.output.postReceive[0], 'function');
+
+	const getBulk = renderOps.options.find((o) => o.value === 'getBulk');
+	assert.equal(getBulk.routing.request.url, '=/api/render/bulk/{{$parameter.bulkId}}');
 });
 
 test('validate operation hits the validation endpoint without failing the workflow', () => {
@@ -92,6 +120,49 @@ test('validate operation hits the validation endpoint without failing the workfl
 	// the shared render input fields are shown for the validate operation too
 	const source = node.description.properties.find((p) => p.name === 'source');
 	assert.ok(source.displayOptions.show.operation.includes('validate'));
+	const validationVariables = node.description.properties.find(
+		(p) => p.name === 'validationVariables',
+	);
+	assert.deepEqual(validationVariables.displayOptions.show.operation, ['validate']);
+});
+
+test('project resource creates editable projects through the Zvid node', async () => {
+	const node = new Zvid();
+	const projectOps = node.description.properties.find(
+		(p) => p.name === 'operation' && p.displayOptions.show.resource[0] === 'project',
+	);
+	assert.deepEqual(projectOps.options.map((o) => o.value), ['create']);
+	assert.equal(projectOps.options[0].routing.request.url, '/api/projects');
+	assert.equal(projectOps.options[0].routing.request.ignoreHttpStatusErrors, true);
+
+	const { buildProjectCreateBody } = require('../dist/nodes/Zvid/GenericFunctions.js');
+	const project = { scenes: [{ duration: 2, elements: [] }] };
+	const result = await buildProjectCreateBody.call(
+		{
+			getNodeParameter: (name) => ({ projectName: 'Ad preview', projectJson: project })[name],
+			getNode: () => ({ name: 'Zvid' }),
+		},
+		{},
+	);
+	assert.deepEqual(result.body, { name: 'Ad preview', payload: project });
+});
+
+test('raw-project validation includes placeholder variables', async () => {
+	const { buildRenderBody } = require('../dist/nodes/Zvid/GenericFunctions.js');
+	const params = {
+		source: 'json',
+		projectJson: { scenes: [{ elements: [{ type: 'TEXT', html: '{{title}}' }] }] },
+		validationVariables: { title: 'Clay Tee' },
+		additionalFields: {},
+	};
+	const result = await buildRenderBody.call(
+		{
+			getNodeParameter: (name, fallback) => params[name] ?? fallback,
+			getNode: () => ({ name: 'Zvid' }),
+		},
+		{},
+	);
+	assert.deepEqual(result.body.variables, { title: 'Clay Tee' });
 });
 
 test('authoring resource exposes creative planning, schema, docs, examples, and repair to AI agents', () => {

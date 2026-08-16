@@ -10,6 +10,7 @@ n8n community nodes for [Zvid](https://zvid.io) — render videos and images fro
 
 | Workflow | What it does |
 | -------- | ------------ |
+| [Shopify catalog to product videos](workflows/shopify-catalog-videos.md) | Shopify catalog to bulk videos through the native Zvid node, then review links or native Shopify product media. |
 | [Faceless YouTube Shorts on autopilot](workflows/faceless-shorts-autopilot.md) | Daily: topic → script → voiceover → stock b-roll → captioned 1080×1920 render → YouTube. Core nodes only, so it runs on n8n Cloud unmodified. |
 | [Zvid AI Agent](workflows/zvid-ai-agent.json) | Chat agent wired to the hosted MCP endpoint (see below). |
 
@@ -51,7 +52,8 @@ Zvid AI Agent to the n8n workflow-template gallery.
 | Authoring        | **Plan Creative Video**, **Get Project Schema**, **List Supported Elements**, **Get Element Documentation**, **Get Example Project**, **Repair Project JSON**; all plan-aware and suitable for AI Agent tool use                                                                 |
 | Creative Library | **Search**, **Get Metadata**, **Get Content** for complete examples, animated design templates, canvas presets, and shapes                                                                                                                                                       |
 | Stock Media      | **Get Library Availability**, **Search** Zvid's stock library for normalized image/video/GIF/audio results with render-ready URLs                                                                                                                                                     |
-| Render           | **Create** (video/image, from project JSON or template + variables, optional _Wait for Completion_ polling), **Create Bulk** (one template × up to 500 variable sets), **Get** (status + output URL, optional wait), **Get Many**, **Validate** (pre-flight payload check, free) |
+| Project          | **Create Editor Project** from validated project JSON for review in the Zvid visual editor                                                                                                                                                                                          |
+| Render           | **Create** (video/image, from project JSON or template + variables, optional _Wait for Completion_ polling), **Create Bulk** (one template × up to 500 variable sets), **Get**, **Get Bulk**, **Get Many**, **Validate** (pre-flight payload check, free)                                  |
 | Template         | **Create**, **Get**, **Get Many**, **Update**, **Delete (Archive)**, **Duplicate**, **Preview** (free dry run), **Render** (template + variables, optional wait)                                                                                                                 |
 | Credit           | **Get Balance**                                                                                                                                                                                                                                                                  |
 
@@ -84,7 +86,7 @@ For repetition control across workflow executions, store the selected library sl
 
 For reusable-template creation, use Authoring to compose and validate the project first, then Template → Create. Fetch the current template before updating it. Delete is a soft delete (archive), and agents should call it only on an explicit removal request.
 
-**Render → Validate** sends the same envelope as Create (project JSON, or template + variables, plus overrides) to `POST /api/render/validate/api-key`, which runs the _actual_ backend validation — template resolution, your plan's limits, the full project schema — without rendering or spending credits. The node never fails on an invalid payload; it outputs one item you can branch on with an IF node:
+**Render → Validate** sends the same envelope as Create (project JSON plus optional validation variables, or template + variables, plus overrides) to `POST /api/render/validate/api-key`, which runs the _actual_ backend validation — template resolution, your plan's limits, the full project schema — without rendering or spending credits. The node never fails on an invalid payload; it outputs one item you can branch on with an IF node:
 
 ```json
 {
@@ -197,6 +199,33 @@ API** credential in **Zvid MCP Tools**. Later dashboard changes do not alter the
 imported workflow.
 
 ## Publishing
+
+### Workflow-template attribution
+
+n8n associates a published workflow template with an integration from each
+serialized `nodes[].type`, not from node labels, API URLs, credentials, workflow
+titles, or descriptions. A renamed HTTP Request node that calls
+`https://api.zvid.io` is still `n8n-nodes-base.httpRequest` and does not make the
+template a Zvid integration workflow.
+
+Publishable Zvid templates must contain at least one shipped node type:
+`@zvid/n8n-nodes-zvid.zvid` or
+`@zvid/n8n-nodes-zvid.zvidTrigger`. The dynamic Shopify product-ad template uses
+native Zvid operations for validation, editor-project creation, bulk submission,
+and bulk-status polling. Its only HTTP Request node calls Shopify's Admin GraphQL
+API.
+
+For new or materially updated publishable workflows, use the official Zvid
+action node for every operation it supports, including validation, editor-project
+creation, render submission, and render-status reads. An HTTP Request node may
+call Zvid only when the published action node lacks the required capability; note
+that exception in the workflow sticky notes and companion documentation. Add a
+validator that rejects supported Zvid API routes inside HTTP Request nodes so a
+later generator change cannot silently remove native-node attribution.
+
+Export gallery JSON from an installation of the published scoped package. A
+development mount can serialize a dev-only or unscoped type that n8n cannot
+associate with this integration.
 
 Releases are published by
 [`publish.yml`](.github/workflows/publish.yml) from version tags such as

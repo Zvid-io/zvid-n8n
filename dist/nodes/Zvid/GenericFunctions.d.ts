@@ -3,6 +3,7 @@ type ZvidContext = IExecuteSingleFunctions | IHookFunctions | IWebhookFunctions;
 export declare function zvidApiRequest(this: ZvidContext, method: IHttpRequestMethods, endpoint: string, body?: IDataObject, qs?: IDataObject): Promise<IDataObject>;
 export declare function parseJsonParameter(context: IExecuteSingleFunctions, value: unknown, parameterName: string): IDataObject | undefined;
 export declare function buildRenderBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
+export declare function buildProjectCreateBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
 export declare function buildBulkRenderBody(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
 export declare function normalizeValidationResponse(this: IExecuteSingleFunctions, items: INodeExecutionData[], response: IN8nHttpFullResponse): Promise<INodeExecutionData[]>;
 export declare function addRenderListQuery(this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions>;
