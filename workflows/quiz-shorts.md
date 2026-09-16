@@ -1,5 +1,9 @@
 # Daily quiz Shorts: question, countdown, answer
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-quiz-shorts.json`](zvid-quiz-shorts.json)
 
 Every day: read the next unused quiz question from a Google Sheet and render a
@@ -85,9 +89,7 @@ first: that path validates the payload, quotes the exact credit cost and saves a
 draft you can watch in the editor, without charging anything.
 
 1. **Import** `zvid-quiz-shorts.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Get quiz rows* and *Mark row
    done*, and pick your spreadsheet + tab in BOTH nodes.
 4. **Open `Config`** and set `brandName`, `channelHandle` and your colours.
@@ -165,11 +167,7 @@ canvas shows the two-node YouTube tail (HTTP download → YouTube upload, keep i
 `private` until you have watched a few). A 9:16 video under 3 minutes is
 automatically a Short. TikTok, Instagram or Drive slot in the same way.
 
-On self-hosted n8n, [`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-replaces *Submit render* + *Wait* + *Get render status* with a native **Zvid**
-node and a **Zvid Trigger** (render webhook) — no polling loop. The shipped
-nodes are core-only so the workflow also runs on n8n Cloud with nothing
-installed.
+The workflow already uses the official Zvid node for all supported operations. Install and configure it as described above.
 
 ## Troubleshooting
 
@@ -186,6 +184,8 @@ installed.
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10**, Zvid API schema **1.0.0**. Every node type and version
 resolves in a stock n8n install (Google Sheets node introspected at

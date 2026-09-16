@@ -1,5 +1,9 @@
 # Webinar / demo no-show → personal re-book video
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-no-show-reengagement.json`](zvid-no-show-reengagement.json)
 
 Somebody booked a session and did not turn up. This workflow turns that into a
@@ -60,9 +64,7 @@ Google account at all.
 ## Setup
 
 1. **Import** `zvid-no-show-reengagement.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Read no-shows sheet* and *Mark
    row sent*, and pick your spreadsheet + tab in both nodes.
 4. **Create the sheet** with this exact header row:
@@ -270,6 +272,8 @@ payload.
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. A 15-minute poll over a short queue never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 Core-only node types throughout (`httpRequest` 4.2, `code` 2, `set` 3.4, `if`
 2.2, `wait` 1.1, `googleSheets` 4.5/4.7, `emailSend` 2.1, `webhook` 2,

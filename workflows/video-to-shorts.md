@@ -1,5 +1,9 @@
 # Turn one long video into vertical Shorts
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-video-to-shorts.json`](zvid-video-to-shorts.json)
 
 POST a direct video URL to this workflow and get finished vertical clips back.
@@ -66,10 +70,8 @@ progress hairline instead.
 ## Setup
 
 1. **Import** `zvid-video-to-shorts.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit render* and *Get render status*.
-3. **ElevenLabs credential** — add a **second Header Auth** credential, name
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
+3. **ElevenLabs credential** — add a **Header Auth** credential, name
    `xi-api-key`, value = your ElevenLabs key. Attach it to *Transcribe (Scribe)*.
 4. **OpenRouter credential** — add an **OpenRouter** credential and attach it to
    *Pick highlights*.
@@ -237,6 +239,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | Render timed out | Long clips from a large source take longer than the 20-minute default. Raise `timeoutMinutes`. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10** node types and versions (every node resolves in a stock
 install — core nodes only, no community package needed). Here is exactly what

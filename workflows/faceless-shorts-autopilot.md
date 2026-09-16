@@ -1,5 +1,11 @@
 # Faceless YouTube Shorts on autopilot
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
+File upload exception: the published Zvid node does not expose multipart uploads. The upload step uses HTTP Request → `POST /api/uploads`, authenticated with the same **Zvid API** credential. All supported Zvid operations use the Zvid node.
+
 [`zvid-faceless-shorts-autopilot.json`](zvid-faceless-shorts-autopilot.json)
 
 Every morning: pick a topic the channel has not covered yet, write a short script,
@@ -9,8 +15,15 @@ Zvid, and upload it to YouTube. No filming, no editing, no manual step.
 ```
 Schedule ─▶ Config ─▶ Write script ─▶ Stock footage (per scene) ─▶ Music
         ─▶ Voiceover + word timings ─▶ Upload ─▶ Build project ─▶ Validate (free)
-        ─▶ Render ─▶ Download ─▶ YouTube
+        ─▶ Render ─▶ Download ─▶ Optional YouTube upload ─▶ Run summary
+        ─▶ Video ready to watch? ─▶ ▶ Watch video
 ```
+
+## Watch the finished video
+
+After a completed render, open **▶ Watch video**, then choose **Binary → data → View** in the output panel to play or download the MP4. **Video ready to watch?** skips dry runs and missing links. Watching downloads the existing file and does not start another render.
+
+The numbered notes above the workflow cover setup, media inputs, rendering, watching, and optional publishing. Duplicate Zvid setup cards have been consolidated.
 
 ## Why this one is different
 
@@ -57,21 +70,18 @@ authentication of its own.
 ## Setup
 
 1. **Import** `zvid-faceless-shorts-autopilot.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Upload voiceover*, *Save draft to editor*,
-   *Validate project (free)*, *Submit render* and *Get render status*.
-3. **ElevenLabs credential** — add a **second Header Auth** credential, name
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node. Use it on the HTTP upload step too (Predefined Credential Type → Zvid API).
+3. **ElevenLabs credential** — add a **Header Auth** credential, name
    `xi-api-key`, value = your ElevenLabs key. Attach it to *Generate voiceover*.
    (n8n has no built-in ElevenLabs credential; Header Auth is the supported way and
    works on n8n Cloud.)
 4. **OpenRouter credential** — attach it to *Write script*.
 5. **Open `Channel Config`** and set `niche`, `audience`, `channelHandle`, `voiceId`
    and your brand colours. Everything else has a working default.
-6. **Run once with `dryRun: true`** (the default). No credits are charged. You get the
-   scene breakdown, the exact credit cost, and an **`editorLink`** that opens the draft
-   in the Zvid editor so you can watch it back before spending anything.
-7. Set `dryRun: false` to render for real, then `uploadToYouTube: true` once the output
-   looks right.
+6. **Run once with `dryRun: false`** (the default). This renders a video and spends
+   Zvid credits. Open **▶ Watch video** to view it. For an optional free editor draft
+   and credit quote, set `dryRun: true` before running.
+7. Set `uploadToYouTube: true` once the rendered output looks right.
 
 The workflow has both a **Test manually** trigger and a daily schedule, so you can try
 it before activating it.
@@ -102,7 +112,7 @@ Everything lives in the `Channel Config` node — no expressions to hunt through
 | `outroSeconds` / `outroText` | `2.5` / `Follow for more` | Set `outroSeconds` to `0` to drop the outro. |
 | `musicVolume` | `0.12` | Music sits under the narration. |
 | `maxMusicSeconds` / `maxMusicBytes` | `200` / `5242880` | Guards against a music track that would blow the plan's audio size cap and fail the render. |
-| `dryRun` | `true` | Validate, quote and save a draft without spending credits. |
+| `dryRun` | `false` | Render a video and spend credits. Set `true` for an optional free validation, quote, and editor draft. |
 | `uploadToYouTube` / `youTubePrivacy` | `false` / `private` | |
 | `pollSeconds` / `timeoutMinutes` | `10` / `20` | Render poll loop. |
 
@@ -191,11 +201,7 @@ uses ~400 ElevenLabs characters, so the free tier covers roughly 25 videos a mon
   `timestamp_granularities[]=word`) and feed its word list into *Build project JSON*.
   That is a strictly worse design: two calls instead of one, and a second source of
   truth that can disagree with the audio.
-- **Skip the polling loop** — on self-hosted n8n, install
-  [`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid) and
-  replace *Submit render* + *Wait* + *Get render status* with a **Zvid** node and a
-  **Zvid Trigger** (render webhook). The HTTP nodes are deliberately core-only so the
-  workflow also runs on n8n Cloud with nothing installed.
+- **Zvid nodes** — validation, editor drafts, rendering and status checks already use the official Zvid node. Keep the existing wait loop, or configure a Zvid Trigger separately if you prefer webhook delivery.
 
 | HTTP Request node | Native replacement |
 | --- | --- |
@@ -221,6 +227,8 @@ uses ~400 ElevenLabs characters, so the free tier covers roughly 25 videos a mon
 | Spoken word unreadable | You are in a box mode with a thick stroke. Use `karaoke` (the default). |
 
 ## Verified against
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10**, Zvid API schema **1.0.0**. Every node type and version resolves in a
 stock n8n install.

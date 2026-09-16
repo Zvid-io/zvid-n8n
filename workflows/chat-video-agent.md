@@ -1,5 +1,9 @@
 # Telegram chat to a finished video, with an AI agent
 
+## Zvid integration
+
+AI-agent exception: this workflow uses n8n’s built-in **MCP Client Tool** against **https://mcp.zvid.io/mcp**. Zvid’s conversational creation and approval tools are exposed through MCP, not equivalent operations in the published Zvid node. Keep the existing MCP authentication and approval settings.
+
 [`zvid-chat-video-agent.json`](zvid-chat-video-agent.json)
 
 Message your own Telegram bot — *"12-second vertical teaser for FocusFlow, dark
@@ -81,11 +85,7 @@ composes from Zvid's library through the MCP endpoint.
 1. **Import** `zvid-chat-video-agent.json`.
 2. **OpenRouter credential** — create an **OpenRouter API** credential and
    attach it to *Chat model (OpenRouter)*.
-3. **Zvid credential** — create a key at
-   [app.zvid.io/api-keys](https://app.zvid.io/api-keys), add an n8n
-   **Header Auth** credential with name `x-api-key` and your key as the value,
-   and attach it to *Zvid MCP tools*. (Same credential type the rest of this
-   series uses for the Zvid HTTP nodes.)
+3. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 4. **Try it before Telegram exists.** Click **Test manually**. The fixed brief
    in *Test brief* runs the whole agent loop and **carries no approval**, so the
    agent's instructions are to stop at the quote — read its words in the
@@ -225,11 +225,12 @@ not dollars — but a long argument with a frontier model is not free.
 | **Chat memory** | Window buffer keyed on `tg-<chatId>`, `memoryWindow` turns deep. |
 | **Zvid MCP tools** | n8n's stock **MCP Client Tool** against `https://mcp.zvid.io/mcp?profile=creator&maxRenderCredits=<Config>`, Header Auth (`x-api-key`), streamable HTTP, `include: selected` with the nine tools listed above. |
 | **Chat reply** | The single exit for all three paths — the agent's answer, the agent's error output, a screened-out message. Takes the **last** `.mp4` URL that starts with a `videoUrlPrefixes` entry (so none of an older link, an off-host one, or an on-host *preview* can hijack the fetch), HTML-escapes the text, and trims to Telegram's 4096-character limit without ever dropping the video URL. `replyPlain` holds the un-escaped text for reading a run. |
-| **Reply in Telegram?** | Real chat → the Telegram nodes. Manual run → straight to *▶ Watch video*, so a test run needs no Telegram credential. |
+| **Reply in Telegram?** | Real chat → the Telegram nodes. Manual run → *Video ready to watch?*, so a test run needs no Telegram credential. |
 | **Send reply** | `sendMessage` with `parse_mode: HTML`. That is not cosmetic: the Telegram node **forces legacy Markdown when no parse mode is set**, and one unbalanced `_` — which any `prj_…` id or job id supplies — either fails the send with `400 can't parse entities` or silently italicises and eats part of the editor link. *Chat reply* escapes `& < >` to match. Attribution footer off, retries 3×, and set to continue on error so a text failure can never stop the clip going out. |
 | **Video ready?** | True only when *Chat reply* found an allowed MP4 URL. |
 | **Send video** | `sendVideo` with the render's own CDN URL, so Telegram fetches the file and plays it inline. It deliberately ships **no** additional fields: n8n's attribution footer is a `sendMessage`-only option, so on `sendVideo` there is nothing to switch off — and a flag set here would be copied straight into the Bot API request as an unrecognised parameter. Continues on error: if Telegram cannot fetch it (size or format), the run still ends green and the text reply already carried the link. |
-| **▶ Watch video** | Downloads the MP4 as binary so you can play the result inside n8n too. Retries a few times (the CDN can 404 for a moment right after a render) and can never fail the run. On a quote-only run there is no URL to fetch and it shows a warning. |
+| **Video ready to watch?** | Continues only when the reply contains an allowed finished-video URL. Quote-only replies and missing links skip the download. The existing URL allow-list remains in effect. |
+| **▶ Watch video** | Downloads the MP4 as binary so you can play the result inside n8n: open **Binary → data → View**. Retries a few times (the CDN can 404 briefly after a render) and continues on download errors. |
 
 ## Extending it
 

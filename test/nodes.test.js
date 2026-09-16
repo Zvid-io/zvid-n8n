@@ -34,13 +34,12 @@ test('Shopify catalog template is attributed to the published Zvid integration',
 	const zvidTypes = shopifyCatalogWorkflow.nodes
 		.map((node) => node.type)
 		.filter((type) => type.includes('n8n-nodes-zvid'));
-	assert.deepEqual(zvidTypes, ['@zvid/n8n-nodes-zvid.zvid']);
+	assert.equal(zvidTypes.length, 4);
+	assert.ok(zvidTypes.every((type) => type === '@zvid/n8n-nodes-zvid.zvid'));
 
 	for (const name of ['Validate project (free)', 'Save draft to editor', 'Get batch status']) {
 		const node = shopifyCatalogWorkflow.nodes.find((candidate) => candidate.name === name);
-		assert.equal(node.type, 'n8n-nodes-base.httpRequest');
-		assert.equal(node.parameters.authentication, 'predefinedCredentialType');
-		assert.equal(node.parameters.nodeCredentialType, 'zvidApi');
+		assert.equal(node.type, '@zvid/n8n-nodes-zvid.zvid');
 		assert.equal(node.parameters.genericAuthType, undefined);
 	}
 });

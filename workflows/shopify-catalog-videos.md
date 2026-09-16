@@ -1,5 +1,9 @@
 # Create and publish Shopify product videos with Zvid
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-shopify-catalog-videos.json`](zvid-shopify-catalog-videos.json)
 
 This workflow finds active Shopify products without video media, turns the next
@@ -175,12 +179,7 @@ Select the same Zvid API credential on:
 - **Submit bulk render**
 - **Get batch status**
 
-**Submit bulk render** is the native Zvid action node. The other three steps
-remain HTTP Request nodes because this workflow needs API shapes the action node
-does not yet expose exactly: resolving the first catalog item's variables during
-validation, saving the resolved preview as an editor draft, and polling a bulk
-batch. They use **Predefined Credential Type → Zvid API**, so the key is stored
-only once and is never placed in the workflow JSON.
+**Validate project (free)**, **Save draft to editor**, **Submit bulk render**, and **Get batch status** all use the official Zvid node with one **Zvid API** credential. Validation resolves the first product’s variables; the draft uses that resolved preview and the existing loop polls the bulk batch.
 
 ### How n8n associates this template with Zvid
 
@@ -207,17 +206,18 @@ Zvid integration.
    to the storefront domain you want displayed in the video.
 5. Review `brandName`, `website`, the palette, and copy labels. The defaults
    already match the connected Zvid Studio catalog.
-6. Keep `dryRun: true` and execute manually. The output includes the exact
-   batch credit quote and an `editorLink` for the first product.
-7. Set `dryRun: false` to render. Keep `publishToShopify: false` for a batch of
-   review links, or set it to `true` to attach each result automatically.
+6. Execute manually with `dryRun: false` (the default). Validation runs first,
+   then the batch renders and spends Zvid credits. Review the finished videos
+   in **▶ Watch video**. Set `dryRun: true` for an optional free editor preview.
+7. Keep `publishToShopify: false` for review links, or set it to `true` to
+   attach each approved result automatically.
 8. Activate the daily schedule only after reviewing a live batch and deciding
    how the Shopify credential will stay valid. Dev Dashboard client-credentials
    tokens expire after 24 hours; refresh the token securely before scheduled
    runs or use a supported existing admin-created app token.
 
-The imported workflow is inactive and ships with both safety controls enabled:
-`dryRun: true` and `publishToShopify: false`.
+The imported workflow is inactive and ships with `dryRun: false` and
+`publishToShopify: false`: manual execution renders videos for review.
 
 ## Configuration
 
@@ -229,7 +229,7 @@ The imported workflow is inactive and ships with both safety controls enabled:
 | `scanLimit` | `100` | Products inspected per run; Shopify allows up to 250 in this query. |
 | `maxProducts` | `5` | Videos submitted in one Zvid bulk batch. |
 | `processedTag` | `zvid-video` | Added only after Shopify accepts the product-media request. |
-| `dryRun` | `true` | Free validate, quote, and first-product editor preview. |
+| `dryRun` | `false` | Render the batch and spend credits. Set `true` for an optional free quote and first-product editor preview. |
 | `publishToShopify` | `false` | `false` returns rendered review links; `true` writes product media. |
 | `brandName` / `website` | `Zvid Studio` / `your-store.myshopify.com` | Sample brand and storefront copy displayed throughout each video. |
 | palette and type keys | Zvid Studio editorial defaults | Rebrand the shared video design. Product-specific accents are selected from title and tags. |
@@ -271,6 +271,8 @@ variant are reported in `skipped` and are not rendered.
   This workflow does not poll Shopify's transcoding pipeline.
 
 ## Verification
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 - The workflow JSON parses successfully.
 - Node IDs and names are unique, and every graph connection resolves.

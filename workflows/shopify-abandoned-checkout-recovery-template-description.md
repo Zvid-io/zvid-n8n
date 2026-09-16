@@ -39,9 +39,11 @@ with the default `https://api.zvid.io` Base URL, and assign it to the four
 official Zvid nodes: Render → Validate, Project → Create Editor Project, Render
 → Create, and Render → Get. Update `shopDomain`, brand copy, colors, fonts, and
 timing in `Config`.
-First run with `manualFixture: true`, `dryRun: true`, and `sendEmail: false`.
-Review the editor draft and credit quote, then enable live Shopify data,
-rendering, and optional SMTP delivery separately.
+First run with `manualFixture: true`, `dryRun: false`, and `sendEmail: false`.
+This renders the sample video and spends Zvid credits. Set `dryRun: true` before
+running for an optional free editor preview and quote.
+Review the finished video, then switch to live Shopify data when ready and
+enable optional SMTP delivery separately.
 
 ## Requirements
 

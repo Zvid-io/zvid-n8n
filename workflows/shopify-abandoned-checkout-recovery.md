@@ -102,19 +102,19 @@ These are native Zvid operations, not renamed HTTP Request nodes. The native
 nodes preserve Zvid attribution in an n8n Creator template and give users the
 package's credential test and operation-specific controls.
 
-Keep `dryRun: true` for the first test. Validation and saving the editor draft do
-not render an MP4. The dry-run summary returns the exact credit quote and a link
-for [editor.zvid.io](https://editor.zvid.io). Set `dryRun: false` only after the
-draft and credit cost are approved.
+The default is `dryRun: false`, so execution renders an MP4 and spends Zvid
+credits. For an optional free editor draft and credit quote, set `dryRun: true`
+before running. The dry-run summary includes a link for
+[editor.zvid.io](https://editor.zvid.io).
 
-## Safe first run
+## First run
 
 Import the JSON, connect the credentials, and leave these `Config` values as:
 
 ```json
 {
   "manualFixture": true,
-  "dryRun": true,
+  "dryRun": false,
   "sendEmail": false,
   "testFixtureRecoveredBeforeFollowUp": true
 }
@@ -124,6 +124,7 @@ The fixture represents shopper **Alex** with one **Clay Pocket Oversized Tee**,
 variant **M**, quantity **1**, a **$35** total, and the product's Shopify CDN hero
 image. It uses two-second waits and simulates a purchase before the follow-up,
 proving that the later reminder stops. Its example contact values are never sent.
+The first test renders the sample video and spends credits; email remains off.
 
 The current design is a 1080x1920 reel with three scenes and a single-item layout.
 It expands for two or three checkout items, shortens long titles, formats prices,
@@ -135,11 +136,11 @@ and falls back to a designed numbered tile when an image URL is missing.
    **Settings → Domains**, for example `your-store`. Do not copy the Shopify
    Admin `/store/...` handle unless it is identical.
 2. Confirm the API version is `2026-07`.
-3. Set `manualFixture: false` while leaving `dryRun: true` and
-   `sendEmail: false`.
+3. Set `manualFixture: false` with `dryRun: false` and `sendEmail: false`.
 4. Run manually. No eligible checkout is a successful no-op.
-5. Review the editor draft and quoted credits.
-6. Set `dryRun: false` to allow the paid render only after approval.
+5. Review the rendered video in **▶ Watch video**.
+6. Enable email separately when ready. Set `dryRun: true` before a run if you
+   want a free editor preview and quote instead of a render.
 
 Shopify's built-in n8n node is not used for the abandoned-checkout reads because
 it does not expose the required Admin GraphQL abandonment objects, recovery URL,

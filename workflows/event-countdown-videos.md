@@ -1,5 +1,9 @@
 # Event promo + countdown reminder videos from a Google Sheet
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-event-countdown-videos.json`](zvid-event-countdown-videos.json)
 
 One row per event. Every morning this workflow works out how many days away each
@@ -89,9 +93,7 @@ background image are pinned, pre-verified URLs in `Config`.
 ## Setup
 
 1. **Import** `zvid-event-countdown-videos.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Read events sheet* and *Update
    event row*, then pick your spreadsheet and tab in both nodes.
 4. **Create the sheet** with this exact header row:
@@ -273,6 +275,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | A gradient (no-photo) reel feels like a slideshow | Expected. The photo backdrops carry a slow push and the designed gradient does not, so a no-photo reel is roughly two-thirds still frames. Set `fallbackImageUrl` (or fill `ImageUrl`) if you want the motion. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10** node types and versions (every node resolves in a stock install;
 the two Google Sheets nodes use the same shapes as the other templates in this

@@ -1,5 +1,9 @@
 # Daily motivational quote videos from a Google Sheet
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-daily-quote-reels.json`](zvid-daily-quote-reels.json)
 
 Every morning: take the first quote in your sheet that has not been used yet,
@@ -64,9 +68,7 @@ pinned, pre-verified URLs inside the build step.
 ## Setup
 
 1. **Import** `zvid-daily-quote-reels.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Read quote sheet* and *Mark row
    done*, and pick your spreadsheet + tab in both nodes.
 4. **Create the sheet** with this exact header row:
@@ -154,6 +156,7 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `Row N is missing Quote or Author` | The first empty-Status row is incomplete. Fill it, or put anything in its `Status` to skip it. |
 | Run says `nothing to render` | Every row has a `Status`. Add fresh rows with `Status` empty. |
 | `Zvid rejected the project` | The message lists the offending fields. If you edited the builder, note the API only allows letters, digits, spaces, `_` and `-` in `name`, and rejects `audios[].track`. |
+| `Media too large: 1620x2430 > 1920x1920` | The old end-card source image exceeded the account's input-media limit. Output remains 1080×1920. The current template requests a 1080×1920 image and uses Full HD versions of all five background clips; source files must fit the account's limit before rendering begins. |
 | Same background every day | You pinned `poolIndexOverride`. Set it back to `-1`. |
 | Render failed and the row stayed pending | Intentional — the row is only marked `done` after a successful render, so the next run retries it. The error message carries the job's `failedReason`. |
 | Wrong row updated | Do not sort or delete rows while a run is in flight; the update matches on the `row_number` captured at read time. |
@@ -161,6 +164,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10** node types and versions (every node resolves in a stock install;
 the two Google Sheets nodes use the same shapes as the other templates in this

@@ -151,24 +151,13 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Company Config').first().json.apiUrl }}/api/render/validate/api-key",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true,
-              "neverError": true
-            }
-          }
-        }
+        "resource": "render",
+        "operation": "validate",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         1140,
         460
@@ -178,7 +167,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug - surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode;\nconst body = res.body || {};\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug - surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode ?? (res.valid === true ? 200 : 400);\nconst body = res.body || { ...res, details: res.errors ?? res.details };\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -226,17 +215,13 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Company Config').first().json.apiUrl }}/api/projects",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ name: $json.meta.projectName, payload: $json.payload }) }}",
-        "options": {}
+        "resource": "project",
+        "operation": "create",
+        "projectName": "={{ ({ name: $json.meta.projectName, payload: $json.payload }).name }}",
+        "projectJson": "={{ JSON.stringify(({ name: $json.meta.projectName, payload: $json.payload }).payload) }}"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         1820,
         300
@@ -264,17 +249,15 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Company Config').first().json.apiUrl }}/api/render/api-key",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
-        "options": {}
+        "resource": "render",
+        "operation": "create",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}",
+        "renderType": "video",
+        "waitForCompletion": false
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         1820,
         620
@@ -302,13 +285,13 @@
     },
     {
       "parameters": {
-        "url": "={{ $('Company Config').first().json.apiUrl }}/api/jobs/{{ $('Submit render').first().json.jobId }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "options": {}
+        "resource": "render",
+        "operation": "get",
+        "jobId": "={{ $('Submit render').first().json.jobId }}",
+        "waitForCompletion": false
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         2260,
         620
@@ -456,8 +439,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3180,
-        620
+        3440,
+        1140
       ],
       "id": "zvid-wh-0028",
       "name": "▶ Watch video",
@@ -469,115 +452,149 @@
     },
     {
       "parameters": {
-        "width": 460,
-        "height": 240,
-        "color": 4,
-        "content": "## ▶ Watch video\n\nClick this node after a run to watch the finished video **inline** — n8n renders\nthe `video/mp4` binary with a player and a download button, so there is no URL\nto copy. One item per rendered opening.\n\n*Rendered row report* before it still carries `videoUrl` for piping onward (see\nthe publish-tail note)."
+        "width": 800,
+        "height": 960,
+        "color": 6,
+        "content": "## 01. We're hiring — a video for every job opening\n\nAdd a row to a Google Sheet, get back a polished 1080x1920 hiring video: hero\nfootage + \"WE'RE HIRING\" + the role title, a dark offer scene with up to three\nperk cards and the salary, and an apply CTA. Vertical, so it works on LinkedIn,\nInstagram, TikTok and Shorts as-is. The finished URL is written back to the\nsheet, so a row is only ever rendered once.\n\n### Setup (about five minutes)\n\n1. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.\n2. **Google Sheets** — attach your Google credential to *Read job openings* AND\n   *Write VideoUrl to sheet*, then pick your spreadsheet + tab in both nodes\n   (they ship unselected on purpose). Columns are on the sheet note below.\n3. **Open `Company Config`** — company name, brand colours, optional logo URL,\n   hero video, music, CTA copy. Every knob lives here; no magic values are\n   buried in expressions.\n4. Run **Test manually** once. The shipped default is `dryRun: false`, so this\n   **renders for real and spends credits** — about 12 per opening, up to\n   `maxPerRun` (3) openings per run. Click **▶ Watch video** to play the result\n   inside n8n.\n   *Want a free preview first?* Set `dryRun: true` in `Company Config` before you\n   run: every open row is validated and saved as a FREE draft with an editor link\n   + the exact credit quote, and nothing is charged. Set it back to `false` to\n   render.\n5. **Activate the schedule** once you are happy with the look.\n\n### Cost\n\nOne ~12 second 1080x1920 video is about **12 credits**. *Validate render (free)*\nstill returns that exact per-row quote before every render — it is just no longer\na stopping point. Free accounts include enough credits to test."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        3160,
-        800
-      ],
-      "id": "zvid-wh-0029",
-      "name": "Note watch video"
-    },
-    {
-      "parameters": {
-        "width": 940,
-        "height": 720,
-        "color": 4,
-        "content": "## We're hiring — a video for every job opening\n\nAdd a row to a Google Sheet, get back a polished 1080x1920 hiring video: hero\nfootage + \"WE'RE HIRING\" + the role title, a dark offer scene with up to three\nperk cards and the salary, and an apply CTA. Vertical, so it works on LinkedIn,\nInstagram, TikTok and Shorts as-is. The finished URL is written back to the\nsheet, so a row is only ever rendered once.\n\n### Setup (about five minutes)\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate render (free)*, *Save draft to editor*, *Submit render*\n   and *Get render status*.\n2. **Google Sheets** — attach your Google credential to *Read job openings* AND\n   *Write VideoUrl to sheet*, then pick your spreadsheet + tab in both nodes\n   (they ship unselected on purpose). Columns are on the sheet note below.\n3. **Open `Company Config`** — company name, brand colours, optional logo URL,\n   hero video, music, CTA copy. Every knob lives here; no magic values are\n   buried in expressions.\n4. Run **Test manually** once. The shipped default is `dryRun: false`, so this\n   **renders for real and spends credits** — about 12 per opening, up to\n   `maxPerRun` (3) openings per run. Click **▶ Watch video** to play the result\n   inside n8n.\n   *Want a free preview first?* Set `dryRun: true` in `Company Config` before you\n   run: every open row is validated and saved as a FREE draft with an editor link\n   + the exact credit quote, and nothing is charged. Set it back to `false` to\n   render.\n5. **Activate the schedule** once you are happy with the look.\n\n### Cost\n\nOne ~12 second 1080x1920 video is about **12 credits**. *Validate render (free)*\nstill returns that exact per-row quote before every render — it is just no longer\na stopping point. Free accounts include enough credits to test."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -480,
-        -420
+        -540,
+        -1680
       ],
       "id": "zvid-wh-0022",
       "name": "Note overview"
     },
     {
       "parameters": {
-        "width": 620,
-        "height": 380,
-        "color": 5,
-        "content": "## The job-openings sheet\n\nHeader row (exact names, one opening per row):\n\n`Role | Team | Location | SalaryRange | Perk1 | Perk2 | Perk3 | ApplyUrl | VideoUrl`\n\n- **Role and ApplyUrl are required** — rows missing either are skipped.\n- **VideoUrl stays empty** — the workflow only picks rows where it is blank and\n  writes the finished MP4 URL there. Clear the cell to re-render an opening.\n  At most `maxPerRun` rows are processed per run.\n- Perk2 / Perk3 may be empty — the perk cards adapt (0–3 cards).\n- ApplyUrl is DISPLAYED on the video, so a short address reads best\n  (`acme.com/careers` beats a 70-character tracking link — long ones wrap)."
+        "width": 800,
+        "height": 480,
+        "color": 2,
+        "content": "## 03. The job-openings sheet\n\nHeader row (exact names, one opening per row):\n\n`Role | Team | Location | SalaryRange | Perk1 | Perk2 | Perk3 | ApplyUrl | VideoUrl`\n\n- **Role and ApplyUrl are required** — rows missing either are skipped.\n- **VideoUrl stays empty** — the workflow only picks rows where it is blank and\n  writes the finished MP4 URL there. Clear the cell to re-render an opening.\n  At most `maxPerRun` rows are processed per run.\n- Perk2 / Perk3 may be empty — the perk cards adapt (0–3 cards).\n- ApplyUrl is DISPLAYED on the video, so a short address reads best\n  (`acme.com/careers` beats a 70-character tracking link — long ones wrap)."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        140,
-        640
+        1220,
+        -1680
       ],
       "id": "zvid-wh-0023",
       "name": "Note sheet schema"
     },
     {
       "parameters": {
-        "width": 640,
-        "height": 420,
-        "color": 3,
-        "content": "## One designed template, adaptive type\n\nThe look is adapted from Zvid's hr-were-hiring / hr-job-opening library\nexamples: hero video under a gradient scrim + hairline frame, accent kicker\npill, numbered perk cards, a salary pill and a glow CTA with a circled check.\n\n**Type sizes adapt to the text.** A 70-character role title steps down through\nfive font sizes instead of overflowing; the salary pill and perk cards do the\nsame, so \"Competitive + meaningful equity\" fits as cleanly as \"€85k–€110k\".\n\nColours (`accentColor`, `backgroundColor`), font, kicker and CTA copy are all\nCompany Config knobs. Set `companyLogoUrl` to swap the wordmark for a logo\nimage. The hero clip and music are stock defaults — replace either with your\nown brand asset by URL. A music track that is unreachable or over ~5 MB (the\nfree plan's audio cap) is dropped automatically instead of failing the render."
+        "width": 800,
+        "height": 480,
+        "color": 7,
+        "content": "## 04. One designed template, adaptive type\n\nThe look is adapted from Zvid's hr-were-hiring / hr-job-opening library\nexamples: hero video under a gradient scrim + hairline frame, accent kicker\npill, numbered perk cards, a salary pill and a glow CTA with a circled check.\n\n**Type sizes adapt to the text.** A 70-character role title steps down through\nfive font sizes instead of overflowing; the salary pill and perk cards do the\nsame, so \"Competitive + meaningful equity\" fits as cleanly as \"€85k–€110k\".\n\nColours (`accentColor`, `backgroundColor`), font, kicker and CTA copy are all\nCompany Config knobs. Set `companyLogoUrl` to swap the wordmark for a logo\nimage. The hero clip and music are stock defaults — replace either with your\nown brand asset by URL. A music track that is unreachable or over ~5 MB (the\nfree plan's audio cap) is dropped automatically instead of failing the render."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        820,
-        780
+        2100,
+        -1680
       ],
       "id": "zvid-wh-0024",
       "name": "Note design"
     },
     {
       "parameters": {
-        "width": 620,
-        "height": 380,
-        "color": 4,
-        "content": "## Dry run — the free opt-in, not the default\n\nThe shipped default is `dryRun: false`: rows go straight down the render branch\nand credits are spent.\n\nSet `dryRun: true` in **Company Config** and every open row stops here instead —\nthe payload is validated, saved as a **draft**, and reported with an editor link\nlike `https://editor.zvid.io/?project=prj_...` plus the exact credit cost.\nNothing is charged.\n\nOpen the link, watch the video back, tweak anything by hand. When it looks right,\nset `dryRun` back to `false` — same rows, real renders, URLs written back to the\nsheet."
+        "width": 800,
+        "height": 400,
+        "color": 3,
+        "content": "## 05. Dry run — the free opt-in, not the default\n\nThe shipped default is `dryRun: false`: rows go straight down the render branch\nand credits are spent.\n\nSet `dryRun: true` in **Company Config** and every open row stops here instead —\nthe payload is validated, saved as a **draft**, and reported with an editor link\nlike `https://editor.zvid.io/?project=prj_...` plus the exact credit cost.\nNothing is charged.\n\nOpen the link, watch the video back, tweak anything by hand. When it looks right,\nset `dryRun` back to `false` — same rows, real renders, URLs written back to the\nsheet."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1780,
-        -120
+        -540,
+        -640
       ],
       "id": "zvid-wh-0025",
       "name": "Note dry run"
     },
     {
       "parameters": {
-        "width": 680,
-        "height": 420,
-        "color": 7,
-        "content": "## Publish tail: LinkedIn, Blotato, anywhere\n\nAfter a live run the sheet holds a ready-to-post MP4 URL per opening. Two easy\ntails to bolt onto *Rendered row report*:\n\n- **LinkedIn node** (OAuth2 credential): add an HTTP Request node that downloads\n  `videoUrl` (response format: *File*), then a LinkedIn → Create Post node with\n  the binary + caption. Build the caption from `role` and the apply link, e.g.\n  \"We're hiring: {{role}} — apply at ...\".\n- **Blotato** (or any cross-poster with an HTTP API): skip the download and POST\n  `videoUrl` straight to its post endpoint with one HTTP Request node — it\n  fetches the video itself and can fan out to LinkedIn, X, TikTok and Instagram.\n\nKeep the first runs manual: post one, check how it looks in the feed, then\nautomate. The report item also carries `sheetRow` and `jobId` if you want to\nlog posts back to the sheet."
+        "width": 800,
+        "height": 520,
+        "color": 5,
+        "content": "## 07. Publish tail: LinkedIn, Blotato, anywhere\n\nAfter a live run the sheet holds a ready-to-post MP4 URL per opening. Two easy\ntails to bolt onto *Rendered row report*:\n\n- **LinkedIn node** (OAuth2 credential): add an HTTP Request node that downloads\n  `videoUrl` (response format: *File*), then a LinkedIn → Create Post node with\n  the binary + caption. Build the caption from `role` and the apply link, e.g.\n  \"We're hiring: {{role}} — apply at ...\".\n- **Blotato** (or any cross-poster with an HTTP API): skip the download and POST\n  `videoUrl` straight to its post endpoint with one HTTP Request node — it\n  fetches the video itself and can fan out to LinkedIn, X, TikTok and Instagram.\n\nKeep the first runs manual: post one, check how it looks in the feed, then\nautomate. The report item also carries `sheetRow` and `jobId` if you want to\nlog posts back to the sheet."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2900,
-        100
+        1220,
+        -640
       ],
       "id": "zvid-wh-0026",
       "name": "Note publish tail"
     },
     {
-      "parameters": {
-        "width": 640,
-        "height": 340,
-        "color": 6,
-        "content": "## Official Zvid nodes\n\nThese HTTP Request nodes are deliberately core-only so the workflow runs\nanywhere, including n8n Cloud with nothing installed.\n\nOn self-hosted n8n you can install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and swap them for native nodes:\n\n| HTTP Request node | Native replacement |\n| --- | --- |\n| Validate render (free) | **Zvid** → Render → Validate |\n| Submit render | **Zvid** → Render → Create |\n| Get render status + Wait | **Zvid Trigger** (render webhook) |\n\nThe Zvid Trigger removes the polling loop entirely."
-      },
+      "id": "zvid-native-setup",
+      "name": "Install and connect Zvid",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1080,
-        60
+        340,
+        -1680
       ],
-      "id": "zvid-wh-0027",
-      "name": "Note official nodes"
+      "parameters": {
+        "width": 800,
+        "height": 280,
+        "color": 6,
+        "content": "## 02. Install and connect Zvid\n\nInstall **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node."
+      }
+    },
+    {
+      "id": "zvid-watch-ready",
+      "name": "Video ready to watch?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3180,
+        1140
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "zvid-watch-ready-condition",
+              "leftValue": "={{ !$json.dryRun && /^https?:\\/\\//i.test(String(($json.videoUrl) || '')) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-watch-instructions",
+      "name": "Watch the finished video",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        340,
+        -640
+      ],
+      "parameters": {
+        "content": "## 06. Watch the finished video\n\nAfter a render finishes, open **▶ Watch video**. In its output, choose **Binary → data → View** to play the video or download the file. For a batch, select an output item to watch each result. Image outputs open as images.\n\n**Video ready to watch?** skips previews when there is no finished media URL, including quote-only and dry-run results. The watch step downloads the finished file and does not start another render.\n\nIf the file is not available yet, the download retries up to three times. A preview download failure does not undo a completed render. The preceding result node still provides the media URL.",
+        "width": 800,
+        "height": 440,
+        "color": 4
+      }
     }
   ],
   "pinData": {},
@@ -821,11 +838,23 @@
             "index": 0
           },
           {
-            "node": "▶ Watch video",
+            "node": "Video ready to watch?",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Video ready to watch?": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
       ]
     }
   },

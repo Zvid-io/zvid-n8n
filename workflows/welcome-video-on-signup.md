@@ -1,5 +1,9 @@
 # Personalized welcome video for every trial signup
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-welcome-video-on-signup.json`](zvid-welcome-video-on-signup.json)
 
 A new user starts a trial → your product POSTs their name, plan and company to
@@ -52,16 +56,12 @@ chip takes whatever your product sends, and every user string is HTML-escaped �
 | Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to test. |
 | SMTP (or Gmail) credential | **Optional** — only for the email step, which is off by default. |
 
-Nothing else. The workflow is core-nodes-only (webhook, code, HTTP request, if,
-wait, set, respond-to-webhook, send-email), so it imports and runs on n8n Cloud
-with no community nodes installed.
+Install the Zvid community package as described above; the remaining steps use n8n’s built-in nodes.
 
 ## Setup
 
 1. **Import** `zvid-welcome-video-on-signup.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name
-   `x-api-key`, value = your Zvid key. Attach it to *Validate project (free)*,
-   *Save draft to editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Open `Config`** and set your brand: `brandName`, `brandAccent`,
    `brandLogoUrl`, `ctaText`, `ctaUrl` and the three onboarding cards.
 4. **Click Execute workflow.** The *Test manually* trigger feeds the *Sample
@@ -175,12 +175,7 @@ always free.
   the sticky note next to it walks through it. Or drop the email tail and pipe
   `videoUrl` into your existing email platform (Customer.io, Loops, HubSpot…)
   from the webhook response.
-- **Native Zvid nodes** — on self-hosted n8n, install
-  [`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-  and swap *Validate project (free)* → **Zvid → Render → Validate**,
-  *Submit render* → **Zvid → Render → Create**, and *Get render status* +
-  *Wait* → **Zvid Trigger** (render webhook). The HTTP nodes are deliberately
-  core-only so the workflow also runs on n8n Cloud with nothing installed.
+- **Zvid nodes** — validation, editor drafts, rendering and status checks already use the official Zvid node. Keep the existing wait loop, or configure a Zvid Trigger separately if you prefer webhook delivery.
 
 ## Troubleshooting
 
@@ -198,6 +193,8 @@ always free.
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n schema check on **2026-07-27**, Zvid API schema **1.0.0**.
 

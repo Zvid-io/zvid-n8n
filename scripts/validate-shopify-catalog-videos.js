@@ -43,6 +43,10 @@ for (const node of workflow.nodes.filter((candidate) => candidate.type === 'n8n-
 }
 
 const behaviorErrors = [];
+const { zvidRoute } = require('./zvid-native-workflows');
+for (const node of workflow.nodes) {
+  if (zvidRoute(node)) behaviorErrors.push(`Supported Zvid operation must use the Zvid node: ${node.name}`);
+}
 const watchNode = workflow.nodes.find((node) => node.name.includes('Watch video'));
 if (!watchNode || watchNode.parameters.url !== '={{ $json.videoUrl }}') {
   behaviorErrors.push('Watch video must read the case-sensitive videoUrl output property');
@@ -66,8 +70,8 @@ try {
 } catch (error) {
   behaviorErrors.push(`Config JSON is invalid: ${error.message}`);
 }
-if (config.dryRun !== true || config.publishToShopify !== false) {
-  behaviorErrors.push('Safe defaults must keep dryRun=true and publishToShopify=false');
+if (config.dryRun !== false || config.publishToShopify !== false) {
+  behaviorErrors.push('Defaults must use dryRun=false and publishToShopify=false');
 }
 if (config.apiUrl !== 'https://api.zvid.io' || config.editorUrl !== 'https://editor.zvid.io') {
   behaviorErrors.push('Config uses a non-canonical Zvid URL');

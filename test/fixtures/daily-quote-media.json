@@ -1,0 +1,53 @@
+{
+  "verifiedAt": "2026-09-15",
+  "maxInputDimension": 1920,
+  "assets": [
+    {
+      "src": "https://videos.pexels.com/video-files/30149713/12928657_1080_1920_60fps.mp4",
+      "type": "VIDEO",
+      "width": 1080,
+      "height": 1920,
+      "duration": 15.06505,
+      "bytes": 20095608
+    },
+    {
+      "src": "https://images.pexels.com/photos/15637846/pexels-photo-15637846.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1920&fit=crop",
+      "type": "IMAGE",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 46938
+    },
+    {
+      "src": "https://videos.pexels.com/video-files/15168374/15168374-hd_1080_1920_24fps.mp4",
+      "type": "VIDEO",
+      "width": 1080,
+      "height": 1920,
+      "duration": 38.913333,
+      "bytes": 27430295
+    },
+    {
+      "src": "https://videos.pexels.com/video-files/19802056/19802056-hd_1080_1920_30fps.mp4",
+      "type": "VIDEO",
+      "width": 1080,
+      "height": 1920,
+      "duration": 50.733333,
+      "bytes": 15688234
+    },
+    {
+      "src": "https://videos.pexels.com/video-files/32634790/13916180_1080_1920_25fps.mp4",
+      "type": "VIDEO",
+      "width": 1080,
+      "height": 1920,
+      "duration": 11,
+      "bytes": 11949589
+    },
+    {
+      "src": "https://videos.pexels.com/video-files/28197979/12324927_1080_1920_60fps.mp4",
+      "type": "VIDEO",
+      "width": 1080,
+      "height": 1920,
+      "duration": 10.46045,
+      "bytes": 16775472
+    }
+  ]
+}

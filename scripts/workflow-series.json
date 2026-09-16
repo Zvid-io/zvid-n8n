@@ -1,0 +1,127 @@
+[
+  {
+    "day": 1,
+    "file": "zvid-faceless-shorts-autopilot.json"
+  },
+  {
+    "day": 2,
+    "file": "zvid-daily-quote-reels.json"
+  },
+  {
+    "day": 3,
+    "file": "zvid-reddit-story-video.json"
+  },
+  {
+    "day": 4,
+    "file": "zvid-blog-to-video.json"
+  },
+  {
+    "day": 5,
+    "file": "zvid-weekly-news-roundup.json"
+  },
+  {
+    "day": 6,
+    "file": "zvid-shopify-product-promo.json"
+  },
+  {
+    "day": 7,
+    "file": "zvid-bulk-catalog-videos.json"
+  },
+  {
+    "day": 8,
+    "file": "zvid-flash-sale-alert.json"
+  },
+  {
+    "day": 9,
+    "file": "zvid-review-testimonial-video.json"
+  },
+  {
+    "day": 10,
+    "file": "zvid-abandoned-cart-video.json"
+  },
+  {
+    "day": 11,
+    "file": "zvid-cold-outreach-videos.json"
+  },
+  {
+    "day": 12,
+    "file": "zvid-welcome-video-on-signup.json"
+  },
+  {
+    "day": 13,
+    "file": "zvid-proposal-recap-video.json"
+  },
+  {
+    "day": 14,
+    "file": "zvid-no-show-reengagement.json"
+  },
+  {
+    "day": 15,
+    "file": "zvid-month-in-review-stats.json"
+  },
+  {
+    "day": 16,
+    "file": "zvid-podcast-audiogram-clips.json"
+  },
+  {
+    "day": 17,
+    "file": "zvid-video-to-shorts.json"
+  },
+  {
+    "day": 18,
+    "file": "zvid-testimonial-compilation.json"
+  },
+  {
+    "day": 19,
+    "file": "zvid-blog-content-kit.json"
+  },
+  {
+    "day": 20,
+    "file": "zvid-event-countdown-videos.json"
+  },
+  {
+    "day": 21,
+    "file": "zvid-real-estate-listing-video.json"
+  },
+  {
+    "day": 22,
+    "file": "zvid-were-hiring-video.json"
+  },
+  {
+    "day": 23,
+    "file": "zvid-restaurant-weekly-specials.json"
+  },
+  {
+    "day": 24,
+    "file": "zvid-workout-of-the-day.json"
+  },
+  {
+    "day": 25,
+    "file": "zvid-quiz-shorts.json"
+  },
+  {
+    "day": 26,
+    "file": "zvid-kpi-report-video.json"
+  },
+  {
+    "day": 27,
+    "file": "zvid-daily-weather-video.json"
+  },
+  {
+    "day": 28,
+    "file": "zvid-sports-recap-video.json"
+  },
+  {
+    "day": 29,
+    "file": "zvid-birthday-greetings.json"
+  },
+  {
+    "day": 30,
+    "file": "zvid-chat-video-agent.json"
+  },
+  {
+    "day": 6,
+    "file": "zvid-shopify-catalog-videos.json",
+    "variant": true
+  }
+]

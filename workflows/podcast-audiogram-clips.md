@@ -1,5 +1,11 @@
 # Podcast episode to captioned audiogram clips
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
+File upload exception: the published Zvid node does not expose multipart uploads. The upload step uses HTTP Request → `POST /api/uploads`, authenticated with the same **Zvid API** credential. All supported Zvid operations use the Zvid node.
+
 [`zvid-podcast-audiogram-clips.json`](zvid-podcast-audiogram-clips.json)
 
 Every morning: read your podcast feed, download the opening of the newest
@@ -65,9 +71,7 @@ No Google account, no stock-media account, no sheet.
 ## Setup
 
 1. **Import** `zvid-podcast-audiogram-clips.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Upload episode audio*, *Validate project
-   (free)*, *Save draft to editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node. Use it on the HTTP upload step too (Predefined Credential Type → Zvid API).
 3. **ElevenLabs credential** — add a second **Header Auth** credential, name
    `xi-api-key`, value = your ElevenLabs key. Attach it to *Transcribe (Scribe)*.
 4. **OpenRouter credential** — add an **OpenRouter** credential and attach it to
@@ -199,6 +203,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. Note this template submits `clipCount` renders per run, so it reaches the limit faster than a one-video template. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 Node types and versions are the same core set the rest of this template series
 already ships — `scheduleTrigger` 1.2, `manualTrigger` 1, `set` 3.4, `code` 2,

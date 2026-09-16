@@ -1,5 +1,9 @@
 # Month-in-review stats video per customer (Wrapped-style)
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-month-in-review-stats.json`](zvid-month-in-review-stats.json)
 
 On the 1st of each month: fetch one customer's usage stats, turn them into a
@@ -68,9 +72,7 @@ with a download button, so the recap plays in the output panel.
 > anything. Set it back to `false` when you want the actual video.
 
 1. **Import** `zvid-month-in-review-stats.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Open `Config`** and set `brandName`, `ctaText` and your brand colours.
    Everything else has a working default.
 4. **Run "Test manually"**. With `metricsUrl` empty the bundled demo dataset
@@ -176,13 +178,11 @@ want the quote without the render. Free accounts include enough credits to test.
 
 - **Delivery** — replace *Email the video* with Slack, a webhook back into your
   product, or a CRM note. Everything before it stays identical.
-- **Skip the polling loop** — on self-hosted n8n, install
-  [`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-  and replace *Submit render* + *Wait* + *Get render status* with a **Zvid**
-  node and a **Zvid Trigger** (render webhook). The HTTP nodes are deliberately
-  core-only so the workflow also runs on n8n Cloud with nothing installed.
+- **Zvid nodes** — validation, editor drafts, rendering and status checks already use the official Zvid node. Keep the existing wait loop, or configure a Zvid Trigger separately if you prefer webhook delivery.
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 The exact payload this workflow's builder produces was rendered **locally on the
 production render engine** (the same `@zvid-io/zvid` package the cloud runs) for

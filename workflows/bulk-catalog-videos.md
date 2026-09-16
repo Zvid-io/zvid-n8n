@@ -1,5 +1,9 @@
 # Bulk product videos for a whole catalog
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-bulk-catalog-videos.json`](zvid-bulk-catalog-videos.json)
 
 Point this workflow at a Google Sheet of products and it turns every row that
@@ -94,9 +98,7 @@ Product | Price | CompareAtPrice | Feature1 | Feature2 | Feature3 | ImageUrl1 | 
 ## Setup
 
 1. **Import** `zvid-bulk-catalog-videos.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name
-   `x-api-key`, value = your Zvid key. Attach it to *Validate project (free)*,
-   *Save draft to editor*, *Submit bulk render* and *Get batch status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Get catalog rows* AND
    *Write links to sheet*, and pick your spreadsheet + tab in **both** nodes.
 4. **Open `Config`** and set `brandName`, `website`, the four colours,
@@ -204,14 +206,11 @@ element cap is never a concern):
   delivered links. If you want the MP4 files themselves rather than URLs,
   *▶ Watch video* already downloads each one as binary — chain your upload or
   attachment node onto it.
-- **Skip the polling loop** — on self-hosted n8n, install
-  [`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-  and swap: *Validate project (free)* → **Zvid → Render → Validate**,
-  *Submit bulk render* → **Zvid → Render → Create Bulk**, *Get batch status* +
-  *Wait* → **Zvid Trigger** (render webhook). The HTTP nodes are deliberately
-  core-only so the workflow also imports untouched on n8n Cloud.
+- **Zvid nodes** — validation, editor drafts, rendering and status checks already use the official Zvid node. Keep the existing wait loop, or configure a Zvid Trigger separately if you prefer webhook delivery.
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n node types and versions follow the same conventions as the rest of this
 series (core nodes only; `httpRequest` 4.2, `code` 2, `set` 3.4, `if` 2.2,

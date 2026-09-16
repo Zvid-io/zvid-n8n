@@ -1,5 +1,9 @@
 # New listing to a cinematic property reel
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-real-estate-listing-video.json`](zvid-real-estate-listing-video.json)
 
 Every morning: take the first listing in your sheet that has no `Status` yet, turn
@@ -73,9 +77,7 @@ size-checked URL in `Config`, and the whole design lives in one code node.
 ## Setup
 
 1. **Import** `zvid-real-estate-listing-video.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Read listings sheet* and *Mark
    listing done*, and pick your spreadsheet + tab in both nodes.
 4. **Create the sheet** with this exact header row:
@@ -246,6 +248,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10** node types and versions (every node resolves in a stock install;
 the two Google Sheets nodes use the same shapes as the other templates in this

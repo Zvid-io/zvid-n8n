@@ -1,5 +1,11 @@
 # Weekly news roundup video from your RSS feeds
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
+File upload exception: the published Zvid node does not expose multipart uploads. The upload step uses HTTP Request → `POST /api/uploads`, authenticated with the same **Zvid API** credential. All supported Zvid operations use the Zvid node.
+
 [`zvid-weekly-news-roundup.json`](zvid-weekly-news-roundup.json)
 
 Every Friday afternoon: read your RSS feeds, pool the week's headlines, let an LLM
@@ -64,9 +70,7 @@ credential on those two nodes.
 ## Setup
 
 1. **Import** `zvid-weekly-news-roundup.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`, value =
-   your Zvid key. Attach it to *Upload voiceover*, *Validate project (free)*, *Save draft
-   to editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node. Use it on the HTTP upload step too (Predefined Credential Type → Zvid API).
 3. **ElevenLabs credential** — a *second* **Header Auth** credential, name `xi-api-key`,
    value = your ElevenLabs key. Attach it to *Generate voiceover*.
 4. **OpenRouter credential** — attach it to *Curate top five*. To use a different provider,
@@ -193,6 +197,8 @@ which removes the poll loop.
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a week never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10** node types and versions (every node resolves in a stock install; `RSS Feed
 Read` is core n8n, so this template also runs untouched on n8n Cloud with nothing

@@ -1,5 +1,9 @@
 # Weekly sports recap videos from TheSportsDB
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-sports-recap-video.json`](zvid-sports-recap-video.json)
 
 Every Monday morning: pull your league's latest final scores from TheSportsDB,
@@ -60,9 +64,7 @@ step — no stock-media accounts needed.
 ## Setup
 
 1. **Import** `zvid-sports-recap-video.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name
-   `x-api-key`, value = your Zvid key. Attach it to *Validate project (free)*,
-   *Save draft to editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **OpenRouter credential** — attach it to *Write recap*.
 4. **Open `Config`** — set `brandName`, `handle` and `ctaText`. `leagueId`
    `4328` is the English Premier League; see the table below for others.
@@ -179,6 +181,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a week never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10** node types and versions (every node resolves in a stock
 install; the render chain uses the same shapes as the other templates in this

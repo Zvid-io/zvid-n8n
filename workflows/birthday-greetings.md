@@ -1,5 +1,9 @@
 # Birthday & anniversary greeting videos from your CRM
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-birthday-greetings.json`](zvid-birthday-greetings.json)
 
 Every morning at 08:00: read your contact sheet, find everyone whose birthday or
@@ -86,11 +90,7 @@ Matching uses the **workflow timezone** (n8n Settings → Timezone) — set it, 
 ## Setup
 
 1. **Import** `zvid-birthday-greetings.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name
-   `x-api-key`, value = your Zvid key. Attach it to *Validate project (free)*,
-   *Submit render*, *Get render status* — and *Save draft to editor* if you
-   plan to use the dry run. (*▶ Watch video* needs no credential; the finished
-   MP4 is served from the public CDN.)
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Read contacts* and
    *Mark as sent*, and pick your spreadsheet + sheet in **both** nodes.
 4. **Open `Config`** — set `brandName`, colours and default messages.
@@ -168,11 +168,7 @@ days someone actually has a birthday or anniversary.
 - **Other CRMs** — replace the two Google Sheets nodes with HubSpot/Airtable/
   Notion equivalents; keep the same fields (`Name`, `Type`, `Date`, `Years`,
   `Email`, `LastSentYear`) and a way to write `LastSentYear` back.
-- **Skip the polling loop** — on self-hosted n8n, install
-  [`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-  and replace *Submit render* + *Wait* + *Get render status* with a **Zvid**
-  node and a **Zvid Trigger** (render webhook). The HTTP nodes are deliberately
-  core-only so the workflow also runs on n8n Cloud with nothing installed.
+- **Zvid nodes** — validation, editor drafts, rendering and status checks already use the official Zvid node. Keep the existing wait loop, or configure a Zvid Trigger separately if you prefer webhook delivery.
 
 ## Troubleshooting
 
@@ -190,6 +186,8 @@ days someone actually has a birthday or anniversary.
 | `429` / `hourly_limit_exceeded` on submit | The batch exceeds what is left of your plan's hourly render limit (every item counts). The message names the remaining allowance and the reset time; lower the per-run cap or wait it out. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 Core node types and versions (scheduleTrigger 1.2, code 2, set 3.4, if 2.2,
 wait 1.1, httpRequest 4.2) are the same ones the

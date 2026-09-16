@@ -1,5 +1,9 @@
 # Personalised cold outreach videos for a whole lead list
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-cold-outreach-videos.json`](zvid-cold-outreach-videos.json)
 
 Point this workflow at a Google Sheet of leads and every row without a video yet
@@ -100,9 +104,7 @@ FirstName | Company | Website | LogoUrl | Role | Status | VideoUrl
 ## Setup
 
 1. **Import** `zvid-cold-outreach-videos.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit bulk render* and *Get batch status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Read leads sheet* AND *Write URLs
    back*, and pick your spreadsheet + tab in **both** nodes.
 4. **Create the sheet** with the header row above and add a few leads with `Status`
@@ -242,12 +244,7 @@ after *Run summary* (one item per lead, each carrying `videoUrl`, `firstName`,
   send it by hand.
 - **Human in the loop** — a Slack node with the lead name and URL for whoever sends.
 
-These stay out of the required path. On self-hosted n8n you can also install
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid) and swap
-*Validate project (free)* → **Zvid → Render → Validate**, *Submit bulk render* →
-**Zvid → Render → Create Bulk**, and *Get batch status* + *Wait* → **Zvid Trigger**
-(render webhook), which removes the poll loop. The HTTP nodes are deliberately
-core-only so the workflow also imports untouched on n8n Cloud.
+These delivery steps stay out of the required path. Validation, editor drafts, bulk rendering, and batch-status checks already use the official Zvid node.
 
 ## Feeding it from a CRM instead of a sheet
 
@@ -296,6 +293,8 @@ Sheet with zero extra keys.
 | `429` / `hourly_limit_exceeded` on submit | The batch exceeds what is left of your plan's hourly render limit (every item in the batch counts). The message names the remaining allowance and the reset time; lower `maxPerRun` or wait it out. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n node types and versions follow the same conventions as the rest of this series
 (core nodes only; `httpRequest` 4.2, `code` 2, `set` 3.4, `if` 2.2, `wait` 1.1,

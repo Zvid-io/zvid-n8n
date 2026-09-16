@@ -1,5 +1,9 @@
 # Restaurant weekly specials from a Google Sheet
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-restaurant-weekly-specials.json`](zvid-restaurant-weekly-specials.json)
 
 Every Monday morning: read your menu sheet, take the dishes you marked for this
@@ -64,9 +68,7 @@ with a clear message instead of rendering an empty video.
 ## Setup
 
 1. **Import** `zvid-restaurant-weekly-specials.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name
-   `x-api-key`, value = your Zvid key. Attach it to *Validate project (free)*,
-   *Save draft to editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Read menu sheet*, then pick
    your spreadsheet and sheet in that node.
 4. **Open `Config`** — restaurant name, tagline, handle, address, brand
@@ -136,11 +138,7 @@ calls (`/media` → `/media_publish` for Reels, `/videos` for a Page) if you wan
 to bolt automatic posting onto the end — the run output was shaped so those
 nodes only need `videoUrl` and `suggestedCaption`.
 
-On self-hosted n8n you can swap the HTTP nodes for
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-native nodes; the **Zvid Trigger** (render webhook) removes the polling loop.
-The shipped workflow is deliberately core-only so it imports untouched on n8n
-Cloud.
+The workflow already uses the official Zvid node for all supported operations. Install and configure it as described above.
 
 ## Troubleshooting
 
@@ -152,7 +150,7 @@ Cloud.
 | `Zvid rejected the project` | The message lists the offending fields. Most often a malformed colour in `Config` or a photo URL the platform cannot fetch. |
 | `Render did not finish within N minutes` | Raise `timeoutMinutes`, or check the job in the dashboard at [app.zvid.io](https://app.zvid.io). |
 | `Render failed: …` | The reason string comes straight from the render pipeline — usually an unreachable media URL. |
-| 401 from Zvid nodes | The Header Auth credential is missing, misnamed (it must be `x-api-key`), or not attached to all four Zvid nodes. |
+| 401 from Zvid nodes | The Zvid API credential is missing, invalid, or not attached to all four Zvid nodes. |
 | Price chip missing on one card | That row's `Price` cell is empty — by design. |
 | Video shorter/longer than expected | Duration is `hookSeconds + dishes × dishSeconds + ctaSeconds` minus transition overlaps: ~12.9s at 3 dishes, ~17.6s at 5. |
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
@@ -160,6 +158,8 @@ Cloud.
 | A run ended at *Dry run summary*, no video | `dryRun` is set to `true` in `Config`. Set it back to `false` to render. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 Verified on **2026-07-27** and **2026-07-28** against Zvid API schema **1.0.0**:
 

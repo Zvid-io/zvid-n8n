@@ -213,24 +213,13 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Config').first().json.apiUrl }}/api/render/validate/api-key",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true,
-              "neverError": true
-            }
-          }
-        }
+        "resource": "render",
+        "operation": "validate",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         1420,
         300
@@ -240,7 +229,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list per clip instead\n// of a generic HTTP error.\nconst built = $('Build project JSON').all();\nreturn $input.all().map((res, i) => {\n  const status = res.json.statusCode;\n  const body = res.json.body || {};\n  const meta = built[i].json.meta;\n  if (status !== 200 || body.valid === false) {\n    const details = Array.isArray(body.details)\n      ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n      : JSON.stringify(body).slice(0, 500);\n    throw new Error('Zvid rejected clip ' + meta.index + ' of ' + meta.clipCount + ' (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n  }\n  return {\n    json: {\n      ...built[i].json,\n      creditsRequired: body.creditsRequired,\n      warnings: body.warnings || [],\n      schemaVersion: body.schemaVersion,\n    },\n    pairedItem: { item: i },\n  };\n});\n"
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list per clip instead\n// of a generic HTTP error.\nconst built = $('Build project JSON').all();\nreturn $input.all().map((res, i) => {\n  const status = res.json.statusCode ?? (res.json.valid === true ? 200 : 400);\n  const body = res.json.body || { ...res.json, details: res.json.errors ?? res.json.details };\n  const meta = built[i].json.meta;\n  if (status !== 200 || body.valid === false) {\n    const details = Array.isArray(body.details)\n      ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n      : JSON.stringify(body).slice(0, 500);\n    throw new Error('Zvid rejected clip ' + meta.index + ' of ' + meta.clipCount + ' (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n  }\n  return {\n    json: {\n      ...built[i].json,\n      creditsRequired: body.creditsRequired,\n      warnings: body.warnings || [],\n      schemaVersion: body.schemaVersion,\n    },\n    pairedItem: { item: i },\n  };\n});\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -288,17 +277,13 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ name: $json.payload.name, payload: $json.payload }) }}",
-        "options": {}
+        "resource": "project",
+        "operation": "create",
+        "projectName": "={{ ({ name: $json.payload.name, payload: $json.payload }).name }}",
+        "projectJson": "={{ JSON.stringify(({ name: $json.payload.name, payload: $json.payload }).payload) }}"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         2080,
         120
@@ -326,17 +311,15 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Config').first().json.apiUrl }}/api/render/api-key",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
-        "options": {}
+        "resource": "render",
+        "operation": "create",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}",
+        "renderType": "video",
+        "waitForCompletion": false
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         2080,
         480
@@ -377,13 +360,13 @@
     },
     {
       "parameters": {
-        "url": "={{ $('Config').first().json.apiUrl }}/api/jobs/{{ $json.jobId }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "options": {}
+        "resource": "render",
+        "operation": "get",
+        "jobId": "={{ $json.jobId }}",
+        "waitForCompletion": false
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         2740,
         480
@@ -512,8 +495,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4060,
-        480
+        3900,
+        1000
       ],
       "id": "zvid-vts-0027",
       "name": "▶ Watch video",
@@ -525,115 +508,181 @@
     },
     {
       "parameters": {
-        "width": 900,
-        "height": 660,
-        "color": 4,
-        "content": "## Long video in, vertical Shorts out\n\nPOST a direct video URL to this workflow. It downloads the start of the file,\ntranscribes it with ElevenLabs **Scribe**, asks an LLM to pick the best\nmoments, and renders each one as a polished 1080x1920 clip with word-timed\nkaraoke captions, a title card and a progress hairline — then answers the\nwebhook with the finished clip URLs.\n\n```\nPOST http://<your-n8n>/webhook/video-to-shorts\n{ \"videoUrl\": \"https://.../talk.mp4\", \"title\": \"optional\", \"layout\": \"fit | fill\" }\n```\n\n### Setup (about four minutes)\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate project (free)*, *Save draft to editor*,\n   *Submit render* and *Get render status*.\n2. **ElevenLabs** — add a SECOND **Header Auth** credential: name\n   `xi-api-key`, value = your ElevenLabs key. Attach it to\n   *Transcribe (Scribe)*. Speech-to-text is billed per minute of audio.\n3. **OpenRouter** — add an **OpenRouter** credential and attach it to\n   *Pick highlights*. Any JSON-capable model works; the default is\n   `google/gemini-2.5-flash`.\n4. **Open `Config`** — set `handle` and `brandAccent`.\n5. **Run it.** *Test manually* uses the sample video in the *Sample video*\n   node so you can see the whole thing work before wiring anything up.\n   **The first run renders for real and spends credits — about 28 per 27-second\n   clip, so roughly 56 for a default two-clip run.**\n6. Free preview first? Set `dryRun: true` in **Config**: you get the exact\n   credit quote per clip plus an **editorLink** for each one, nothing spent."
+        "width": 800,
+        "height": 920,
+        "color": 6,
+        "content": "## 01. Long video in, vertical Shorts out\n\nPOST a direct video URL to this workflow. It downloads the start of the file,\ntranscribes it with ElevenLabs **Scribe**, asks an LLM to pick the best\nmoments, and renders each one as a polished 1080x1920 clip with word-timed\nkaraoke captions, a title card and a progress hairline — then answers the\nwebhook with the finished clip URLs.\n\n```\nPOST http://<your-n8n>/webhook/video-to-shorts\n{ \"videoUrl\": \"https://.../talk.mp4\", \"title\": \"optional\", \"layout\": \"fit | fill\" }\n```\n\n### Setup (about four minutes)\n\n1. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.\n2. **ElevenLabs** — add a SECOND **Header Auth** credential: name\n   `xi-api-key`, value = your ElevenLabs key. Attach it to\n   *Transcribe (Scribe)*. Speech-to-text is billed per minute of audio.\n3. **OpenRouter** — add an **OpenRouter** credential and attach it to\n   *Pick highlights*. Any JSON-capable model works; the default is\n   `google/gemini-2.5-flash`.\n4. **Open `Config`** — set `handle` and `brandAccent`.\n5. **Run it.** *Test manually* uses the sample video in the *Sample video*\n   node so you can see the whole thing work before wiring anything up.\n   **The first run renders for real and spends credits — about 28 per 27-second\n   clip, so roughly 56 for a default two-clip run.**\n6. Free preview first? Set `dryRun: true` in **Config**: you get the exact\n   credit quote per clip plus an **editorLink** for each one, nothing spent."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -800,
-        -520
+        -860,
+        -1840
       ],
       "id": "zvid-vts-0028",
       "name": "Note A"
     },
     {
       "parameters": {
-        "width": 700,
-        "height": 560,
+        "width": 800,
+        "height": 680,
         "color": 5,
-        "content": "## What you can POST\n\n`videoUrl` must return **the video file itself**, not a watch page.\n\n| Source | What to send |\n| --- | --- |\n| Your own CDN / S3 / R2 | the object URL |\n| Google Drive | the normal share link — *Video request* rewrites it to the `uc?export=download` form for you |\n| Dropbox | the share link with `?dl=1` |\n| YouTube / Vimeo / TikTok | **not supported** — those are watch pages, not files. Export the video and upload it somewhere that serves the MP4 directly. |\n\n`title` is optional context for the highlight picker. `layout` is optional\nand overrides the Config default for that one call.\n\nThe manual trigger uses *Sample video* instead of the webhook body, so you\ncan test the whole chain before pointing anything at n8n.\n\n### Post footage you have the right to post\n\nEvery clip renders `handle`, the model-written hook and the transcript over\nwhoever is on screen. That is fine on your own recording. It is **not** fine\non someone else's: a stranger's face under your handle, or under a hook they\nnever said, is a false attribution — and a brand's product under an invented\nclaim is worse. If you are demoing this template with stock or borrowed\nfootage, use clips with no identifiable faces and no logos, wordmarks or\nlegible signage in frame, and keep the hook out of the first person."
+        "content": "## 09. What you can POST\n\n`videoUrl` must return **the video file itself**, not a watch page.\n\n| Source | What to send |\n| --- | --- |\n| Your own CDN / S3 / R2 | the object URL |\n| Google Drive | the normal share link — *Video request* rewrites it to the `uc?export=download` form for you |\n| Dropbox | the share link with `?dl=1` |\n| YouTube / Vimeo / TikTok | **not supported** — those are watch pages, not files. Export the video and upload it somewhere that serves the MP4 directly. |\n\n`title` is optional context for the highlight picker. `layout` is optional\nand overrides the Config default for that one call.\n\nThe manual trigger uses *Sample video* instead of the webhook body, so you\ncan test the whole chain before pointing anything at n8n.\n\n### Post footage you have the right to post\n\nEvery clip renders `handle`, the model-written hook and the transcript over\nwhoever is on screen. That is fine on your own recording. It is **not** fine\non someone else's: a stranger's face under your handle, or under a hook they\nnever said, is a false attribution — and a brand's product under an invented\nclaim is worse. If you are demoing this template with stock or borrowed\nfootage, use clips with no identifiable faces and no logos, wordmarks or\nlegible signage in frame, and keep the hook out of the first person."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -360,
-        560
+        1780,
+        -840
       ],
       "id": "zvid-vts-0029",
       "name": "Note B"
     },
     {
       "parameters": {
-        "width": 680,
-        "height": 420,
-        "color": 6,
-        "content": "## Only the downloaded part gets clipped\n\n*Fetch video sample* sends a `Range: bytes=0-…` header capped at\n`maxTranscribeMB` (24 MB by default), so a two-hour recording never has to\ntravel through n8n. MP4 and MP3 tolerate that: the decoder reads what\narrived and stops.\n\nThe honest consequence: **clips can only come from the part that was\ndownloaded.** At 24 MB that is roughly the first 2–6 minutes of a typical\n1080p upload, more for a low-bitrate talking-head recording. Raise\n`maxTranscribeMB` to reach further in — the cost is transfer time and\nElevenLabs minutes, not credits.\n\nIf the file was written with its index (`moov` atom) at the END — some\nphone exports and screen recorders do this — a truncated download will not\nparse at all and *Read transcript* fails loudly. Re-export with\n\"fast start\" / \"web optimised\", or raise the cap above the file size."
+        "width": 800,
+        "height": 480,
+        "color": 7,
+        "content": "## 03. Only the downloaded part gets clipped\n\n*Fetch video sample* sends a `Range: bytes=0-…` header capped at\n`maxTranscribeMB` (24 MB by default), so a two-hour recording never has to\ntravel through n8n. MP4 and MP3 tolerate that: the decoder reads what\narrived and stops.\n\nThe honest consequence: **clips can only come from the part that was\ndownloaded.** At 24 MB that is roughly the first 2–6 minutes of a typical\n1080p upload, more for a low-bitrate talking-head recording. Raise\n`maxTranscribeMB` to reach further in — the cost is transfer time and\nElevenLabs minutes, not credits.\n\nIf the file was written with its index (`moov` atom) at the END — some\nphone exports and screen recorders do this — a truncated download will not\nparse at all and *Read transcript* fails loudly. Re-export with\n\"fast start\" / \"web optimised\", or raise the cap above the file size."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        520,
-        -300
+        900,
+        -1840
       ],
       "id": "zvid-vts-0030",
       "name": "Note C"
     },
     {
       "parameters": {
-        "width": 700,
-        "height": 430,
-        "color": 3,
-        "content": "## How the clips are chosen\n\n*Read transcript* turns Scribe's word list into a numbered transcript:\nevery 15 words start a new line prefixed with the index of the first word.\n\n*Pick highlights* asks the model for `startWord`/`endWord` INDEX pairs plus\na ≤ 6-word title — never for timestamps. *Prepare clips* maps those indices\nback to the real Scribe times, grows or trims each clip one word at a time\nuntil it lands between `minClipSeconds` and `maxClipSeconds`, drops any\noverlap, and adds a 0.3 s lead-in and 0.45 s tail.\n\nSo the model chooses WHICH words; the arithmetic that decides where the cut\nlands is ours. If the model returns nothing usable, the transcript is split\nevenly instead and `pickedByModel: false` shows up in the summary — a run\nnever dies because a model had an off day."
+        "width": 800,
+        "height": 480,
+        "color": 7,
+        "content": "## 04. How the clips are chosen\n\n*Read transcript* turns Scribe's word list into a numbered transcript:\nevery 15 words start a new line prefixed with the index of the first word.\n\n*Pick highlights* asks the model for `startWord`/`endWord` INDEX pairs plus\na ≤ 6-word title — never for timestamps. *Prepare clips* maps those indices\nback to the real Scribe times, grows or trims each clip one word at a time\nuntil it lands between `minClipSeconds` and `maxClipSeconds`, drops any\noverlap, and adds a 0.3 s lead-in and 0.45 s tail.\n\nSo the model chooses WHICH words; the arithmetic that decides where the cut\nlands is ours. If the model returns nothing usable, the transcript is split\nevenly instead and `pickedByModel: false` shows up in the summary — a run\nnever dies because a model had an off day."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        960,
-        560
+        1780,
+        -1840
       ],
       "id": "zvid-vts-0031",
       "name": "Note D"
     },
     {
       "parameters": {
-        "width": 640,
-        "height": 380,
-        "color": 4,
-        "content": "## fit vs fill\n\nThis workflow does **not** track faces, so it never guesses where the\nsubject is.\n\n- **`fit`** (default) — the whole frame is kept and centred, with a\n  blurred, darkened copy of the same footage filling the rest of the\n  canvas. Two-shots, panels, screen shares and slides all survive.\n- **`fill`** — a full-bleed centre crop. Sharper and cheaper to render,\n  correct when you know the subject is centred (a single talking head, or\n  footage that is already vertical).\n\nSet it in `Config`, or per call in the webhook body."
+        "width": 800,
+        "height": 440,
+        "color": 7,
+        "content": "## 05. fit vs fill\n\nThis workflow does **not** track faces, so it never guesses where the\nsubject is.\n\n- **`fit`** (default) — the whole frame is kept and centred, with a\n  blurred, darkened copy of the same footage filling the rest of the\n  canvas. Two-shots, panels, screen shares and slides all survive.\n- **`fill`** — a full-bleed centre crop. Sharper and cheaper to render,\n  correct when you know the subject is centred (a single talking head, or\n  footage that is already vertical).\n\nSet it in `Config`, or per call in the webhook body."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1820,
-        -300
+        2660,
+        -1840
       ],
       "id": "zvid-vts-0032",
       "name": "Note E"
     },
     {
       "parameters": {
-        "width": 660,
-        "height": 400,
-        "color": 6,
-        "content": "## One render job per clip\n\n*Build project JSON* emits one item per clip, and every node from there on\nruns once per item: N validations, N renders, N jobs polled in the same\nloop. *Merge job status* zips each status response back onto its clip by\nindex, which is safe because Wait passes items through unchanged.\n\nClips do not finish on the same lap, so *Merge job status* also sets one\n`allCompleted` flag on every item and *Render finished?* routes on that.\nThe batch leaves the loop together and the webhook gets ONE answer listing\nevery clip, instead of an early partial list.\n\n**Credits scale with clips.** `clipCount: 2` at `clipSeconds: 28` is about\n56 credits a run. Drop to `clipCount: 1`, `clipSeconds: 20` for a cheap\ntest — the validator quotes the exact figure before anything is spent."
+        "width": 800,
+        "height": 480,
+        "color": 3,
+        "content": "## 07. One render job per clip\n\n*Build project JSON* emits one item per clip, and every node from there on\nruns once per item: N validations, N renders, N jobs polled in the same\nloop. *Merge job status* zips each status response back onto its clip by\nindex, which is safe because Wait passes items through unchanged.\n\nClips do not finish on the same lap, so *Merge job status* also sets one\n`allCompleted` flag on every item and *Render finished?* routes on that.\nThe batch leaves the loop together and the webhook gets ONE answer listing\nevery clip, instead of an early partial list.\n\n**Credits scale with clips.** `clipCount: 2` at `clipSeconds: 28` is about\n56 credits a run. Drop to `clipCount: 1`, `clipSeconds: 20` for a cheap\ntest — the validator quotes the exact figure before anything is spent."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2900,
-        760
+        20,
+        -840
       ],
       "id": "zvid-vts-0033",
       "name": "Note F"
     },
     {
       "parameters": {
-        "width": 760,
-        "height": 470,
-        "color": 3,
-        "content": "## Watching the clips, and shipping them onward\n\nClick **▶ Watch video** after a run: n8n renders each downloaded MP4 as an\ninline video player with a download button — one per clip, no URLs to copy.\n*Run summary* before it carries `videoUrl`, `title`, `sourceStart` and\n`creditsCharged` per clip if you want to pipe the result onward.\n\n### Publishing (optional tail)\n\nThe workflow ends with the clip URLs in the webhook response. To\nauto-publish, extend after **Run summary**:\n\n- **YouTube Shorts** — the *▶ Watch video* node already downloads the MP4\n  as binary `data`; add the native **YouTube** node (Video → Upload) after\n  it. Needs a YouTube OAuth2 credential.\n- **Instagram / TikTok / everywhere** — pass each `videoUrl` to a scheduler\n  like Blotato, Buffer or Metricool over their HTTP API; they take a public\n  video URL directly, no download step.\n- **Human in the loop** — a Slack or Email node sending the clip list to\n  whoever approves.\n\nThey are left out of the required path on purpose so the template imports\nand runs with three credentials and nothing else."
+        "width": 800,
+        "height": 720,
+        "color": 7,
+        "content": "## 06. Watching the clips, and shipping them onward\n\nClick **▶ Watch video** after a run: n8n renders each downloaded MP4 as an\ninline video player with a download button — one per clip, no URLs to copy.\n*Run summary* before it carries `videoUrl`, `title`, `sourceStart` and\n`creditsCharged` per clip if you want to pipe the result onward.\n\n### Publishing (optional tail)\n\nThe workflow ends with the clip URLs in the webhook response. To\nauto-publish, extend after **Run summary**:\n\n- **YouTube Shorts** — the *▶ Watch video* node already downloads the MP4\n  as binary `data`; add the native **YouTube** node (Video → Upload) after\n  it. Needs a YouTube OAuth2 credential.\n- **Instagram / TikTok / everywhere** — pass each `videoUrl` to a scheduler\n  like Blotato, Buffer or Metricool over their HTTP API; they take a public\n  video URL directly, no download step.\n- **Human in the loop** — a Slack or Email node sending the clip list to\n  whoever approves.\n\nThey are left out of the required path on purpose so the template imports\nand runs with three credentials and nothing else."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        3560,
-        700
+        -860,
+        -840
       ],
       "id": "zvid-vts-0034",
       "name": "Note G"
+    },
+    {
+      "id": "zvid-native-setup",
+      "name": "Install and connect Zvid",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        20,
+        -1840
+      ],
+      "parameters": {
+        "width": 800,
+        "height": 280,
+        "color": 6,
+        "content": "## 02. Install and connect Zvid\n\nInstall **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node."
+      }
+    },
+    {
+      "id": "zvid-watch-ready",
+      "name": "Video ready to watch?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3640,
+        1000
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "zvid-watch-ready-condition",
+              "leftValue": "={{ !$json.dryRun && /^https?:\\/\\//i.test(String(($json.videoUrl) || '')) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-watch-instructions",
+      "name": "Watch the finished video",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        900,
+        -840
+      ],
+      "parameters": {
+        "content": "## 08. Watch the finished video\n\nAfter a render finishes, open **▶ Watch video**. In its output, choose **Binary → data → View** to play the video or download the file. For a batch, select an output item to watch each result. Image outputs open as images.\n\n**Video ready to watch?** skips previews when there is no finished media URL, including quote-only and dry-run results. The watch step downloads the finished file and does not start another render.\n\nIf the file is not available yet, the download retries up to three times. A preview download failure does not undo a completed render. The preceding result node still provides the media URL.",
+        "width": 800,
+        "height": 440,
+        "color": 4
+      }
     }
   ],
   "pinData": {},
@@ -914,7 +963,7 @@
             "index": 0
           },
           {
-            "node": "▶ Watch video",
+            "node": "Video ready to watch?",
             "type": "main",
             "index": 0
           }
@@ -930,6 +979,18 @@
             "index": 0
           }
         ]
+      ]
+    },
+    "Video ready to watch?": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
       ]
     }
   },

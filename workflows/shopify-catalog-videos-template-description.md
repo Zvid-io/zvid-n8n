@@ -11,7 +11,7 @@ creative in repeatable batches.
   tag.
 - Maps up to four images, prices, description bullets, sizes, vendor, type,
   title, and tags into one shared vertical design.
-- Validates the batch and returns a free editor preview and credit quote.
+- Validates the batch before rendering; an optional dry run returns a free editor preview and credit quote.
 - Renders approved products together and returns review links.
 - When enabled, stages every MP4 in Shopify, associates it with the correct
   product, and tags only successful products.
@@ -22,12 +22,12 @@ creative in repeatable batches.
    `write_files`, then obtain an Admin API access token.
 2. Store it in n8n Header Auth as `X-Shopify-Access-Token` and assign it to the
    four Shopify-authenticated HTTP Request nodes.
-3. Install `@zvid/n8n-nodes-zvid`, create a key at
-   https://app.zvid.io/api-keys, and store it in a **Zvid API** credential.
-   Select that credential on the native **Submit bulk render** node and the
-   three advanced Zvid API steps.
+3. Install `@zvid/n8n-nodes-zvid` from **Settings → Community nodes** before
+   configuring Zvid credentials; a workspace owner/admin may need to install it.
+   Create a key at https://app.zvid.io/api-keys and store it in a **Zvid API**
+   credential. Select it on all four Zvid nodes.
 4. Update the store, brand, palette, query, and batch size in Config.
-5. Run manually with `dryRun: true`; review the preview and quote first.
+5. Run manually with `dryRun: false` (the default) to render and spend Zvid credits. Set `dryRun: true` for an optional free preview and quote.
 
 ## Requirements
 
@@ -36,14 +36,12 @@ creative in repeatable batches.
 - n8n Cloud or self-hosted n8n with the verified
   `@zvid/n8n-nodes-zvid` community package installed.
 
-## Why Zvid still has some HTTP Request steps
+## Zvid nodes
 
-The bulk submission uses the native Zvid node. First-item variable validation,
-the editor draft, and bulk-status polling currently need advanced API shapes,
-so those steps remain HTTP Request nodes and reuse the same **Zvid API**
-credential. n8n associates this template with Zvid through the exported native
-node type, `@zvid/n8n-nodes-zvid.zvid`; node labels and Zvid API URLs alone do
-not create that association.
+Validation, saving the editor draft, bulk rendering, and bulk-status polling
+all use `@zvid/n8n-nodes-zvid.zvid` with the same **Zvid API** credential.
+The validation step resolves the first product's variables before quoting
+the batch, and the editor preview uses the resolved first product.
 
 ## How to customize
 

@@ -1,5 +1,9 @@
 # Daily local weather video — zero API keys
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-daily-weather-video.json`](zvid-daily-weather-video.json)
 
 Every morning at 06:30: fetch your city's forecast from a keyless public API,
@@ -73,9 +77,7 @@ the credits and saves a draft you can watch in the editor without spending
 anything.
 
 1. **Import** `zvid-daily-weather-video.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name
-   `x-api-key`, value = your Zvid key. Attach it to *Validate project (free)*,
-   *Save draft to editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Open `Config`** and set `cityName`, `brandName`, `handle`, `locale`.
 4. **Run "Test manually"**. It geocodes, fetches the forecast, validates, then
    renders. When it finishes, click **▶ Watch video** to play the result inside
@@ -136,12 +138,7 @@ through your scheduler of choice, a Slack or Discord message, or an Email Send
 with the link. `caption` is pre-written from the day's data
 (`Lisbon today: Clear sky · 25°C · H 31° / L 19° · RAIN 5% #Lisbon #weather`).
 
-On self-hosted n8n you can also install
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-and replace *Submit render* + *Wait* + *Get render status* with a **Zvid** node
-and a **Zvid Trigger** (render webhook) — that removes the polling loop. The
-HTTP nodes are deliberately core-only so the workflow also runs on n8n Cloud
-with nothing installed.
+The workflow already uses the official Zvid node for all supported operations. Install and configure it as described above.
 
 ## Troubleshooting
 
@@ -149,7 +146,7 @@ with nothing installed.
 | --- | --- |
 | `Open-Meteo could not find "…"` | Geocoder miss. Try the local spelling or more of the name. |
 | It found a namesake city instead of yours | `Find city` takes the most relevant match. Raise `count` there and pick your match by `country`/`admin1` in *Check city*. |
-| `Zvid rejected the project (HTTP 401/403)` | The Header Auth credential is missing on one of the four Zvid nodes, or its name is not exactly `x-api-key`. |
+| `Zvid rejected the project (HTTP 401/403)` | The Zvid API credential is missing on a Zvid node, or its API key is invalid. |
 | `Zvid rejected the project` with a field list | Payload bug — the listed fields say what to fix. |
 | `Render failed: …` | The message carries the engine's reason. If it names the audio asset, your custom `musicUrl` is unreachable or too large — set it back to the default or to `""`. |
 | `Render did not finish within 20 minutes` | The poll loop gave up. Check the job in the dashboard at [app.zvid.io](https://app.zvid.io) and your credit balance. |
@@ -159,6 +156,8 @@ with nothing installed.
 | **▶ Watch video** shows an error instead of a player | It retries 3× and then continues rather than failing the run, so the render itself is fine and already paid for — open `videoUrl` from *Run summary* in a browser. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 What was actually executed for this template, and what was not:
 

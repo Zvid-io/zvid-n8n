@@ -35,7 +35,7 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "{\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"shopDomain\": \"your-store\",\n  \"shopifyApiVersion\": \"2026-07\",\n  \"checkoutQuery\": \"recovery_state:not_recovered status:open\",\n  \"scanLimit\": 20,\n  \"recoveryWaitMinutes\": 60,\n  \"followUpEnabled\": true,\n  \"followUpWaitMinutes\": 720,\n  \"skipIfShopifyAlreadyEmailed\": true,\n  \"lockTtlHours\": 48,\n  \"brandName\": \"YOUR BRAND\",\n  \"storeUrl\": \"your-store.myshopify.com\",\n  \"brandBackground\": \"#12100E\",\n  \"brandAccent\": \"#E2714B\",\n  \"accentSoft\": \"#F0B08C\",\n  \"creamColor\": \"#F6F1E9\",\n  \"mutedColor\": \"#9C948A\",\n  \"headingFont\": \"Sora\",\n  \"accentFont\": \"Fraunces\",\n  \"uiFont\": \"DM Sans\",\n  \"currencySymbol\": \"$\",\n  \"hookLine\": \"you left something behind.\",\n  \"hookNote\": \"Your cart is still saved - for now.\",\n  \"cartKicker\": \"STILL IN YOUR CART\",\n  \"cartNote\": \"We saved your cart. Nothing stays reserved forever.\",\n  \"totalLabel\": \"YOUR CART TOTAL\",\n  \"ctaText\": \"Complete your order\",\n  \"ctaSubline\": \"Pick up exactly where you left off.\",\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.16,\n  \"dryRun\": true,\n  \"sendEmail\": false,\n  \"emailFrom\": \"hello@your-store.com\",\n  \"emailSubject\": \"{firstName}, your cart is still saved\",\n  \"emailIntro\": \"We kept your cart exactly where you left it. Here is a quick look at what is waiting.\",\n  \"emailButtonText\": \"Complete your order\",\n  \"followUpSubject\": \"{firstName}, one last look at your saved cart\",\n  \"followUpIntro\": \"Your saved checkout is still open. Complete it while the products are available.\",\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"manualFixture\": true,\n  \"testWaitSeconds\": 2,\n  \"testFollowUpInFixture\": true,\n  \"testFollowUpSeconds\": 2,\n  \"testFixtureEligible\": true,\n  \"testFixtureRecoveredBeforeFollowUp\": true,\n  \"testFixture\": {\n    \"checkoutId\": \"gid://shopify/AbandonedCheckout/TEST\",\n    \"checkoutName\": \"#TEST\",\n    \"firstName\": \"Alex\",\n    \"email\": \"alex@example.com\",\n    \"phone\": \"+15555550123\",\n    \"recoveryUrl\": \"https://your-store.myshopify.com\",\n    \"totalPrice\": \"35.00\",\n    \"items\": [\n      {\n        \"title\": \"Clay Pocket Oversized Tee\",\n        \"variantTitle\": \"M\",\n        \"quantity\": 1,\n        \"price\": \"35.00\",\n        \"imageUrl\": \"https://cdn.shopify.com/s/files/1/0738/3888/6956/files/terracotta-pocket-hero.png?v=1786110389\"\n      }\n    ]\n  }\n}",
+        "jsonOutput": "{\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"shopDomain\": \"your-store\",\n  \"shopifyApiVersion\": \"2026-07\",\n  \"checkoutQuery\": \"recovery_state:not_recovered status:open\",\n  \"scanLimit\": 20,\n  \"recoveryWaitMinutes\": 60,\n  \"followUpEnabled\": true,\n  \"followUpWaitMinutes\": 720,\n  \"skipIfShopifyAlreadyEmailed\": true,\n  \"lockTtlHours\": 48,\n  \"brandName\": \"YOUR BRAND\",\n  \"storeUrl\": \"your-store.myshopify.com\",\n  \"brandBackground\": \"#12100E\",\n  \"brandAccent\": \"#E2714B\",\n  \"accentSoft\": \"#F0B08C\",\n  \"creamColor\": \"#F6F1E9\",\n  \"mutedColor\": \"#9C948A\",\n  \"headingFont\": \"Sora\",\n  \"accentFont\": \"Fraunces\",\n  \"uiFont\": \"DM Sans\",\n  \"currencySymbol\": \"$\",\n  \"hookLine\": \"you left something behind.\",\n  \"hookNote\": \"Your cart is still saved - for now.\",\n  \"cartKicker\": \"STILL IN YOUR CART\",\n  \"cartNote\": \"We saved your cart. Nothing stays reserved forever.\",\n  \"totalLabel\": \"YOUR CART TOTAL\",\n  \"ctaText\": \"Complete your order\",\n  \"ctaSubline\": \"Pick up exactly where you left off.\",\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.16,\n  \"dryRun\": false,\n  \"sendEmail\": false,\n  \"emailFrom\": \"hello@your-store.com\",\n  \"emailSubject\": \"{firstName}, your cart is still saved\",\n  \"emailIntro\": \"We kept your cart exactly where you left it. Here is a quick look at what is waiting.\",\n  \"emailButtonText\": \"Complete your order\",\n  \"followUpSubject\": \"{firstName}, one last look at your saved cart\",\n  \"followUpIntro\": \"Your saved checkout is still open. Complete it while the products are available.\",\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"manualFixture\": true,\n  \"testWaitSeconds\": 2,\n  \"testFollowUpInFixture\": true,\n  \"testFollowUpSeconds\": 2,\n  \"testFixtureEligible\": true,\n  \"testFixtureRecoveredBeforeFollowUp\": true,\n  \"testFixture\": {\n    \"checkoutId\": \"gid://shopify/AbandonedCheckout/TEST\",\n    \"checkoutName\": \"#TEST\",\n    \"firstName\": \"Alex\",\n    \"email\": \"alex@example.com\",\n    \"phone\": \"+15555550123\",\n    \"recoveryUrl\": \"https://your-store.myshopify.com\",\n    \"totalPrice\": \"35.00\",\n    \"items\": [\n      {\n        \"title\": \"Clay Pocket Oversized Tee\",\n        \"variantTitle\": \"M\",\n        \"quantity\": 1,\n        \"price\": \"35.00\",\n        \"imageUrl\": \"https://cdn.shopify.com/s/files/1/0738/3888/6956/files/terracotta-pocket-hero.png?v=1786110389\"\n      }\n    ]\n  }\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -928,7 +928,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        5600,
+        5900,
         220
       ],
       "id": "zvid-sac-0044",
@@ -941,210 +941,261 @@
     },
     {
       "parameters": {
-        "content": "# Recover abandoned Shopify checkouts with personalized Zvid videos\n\nThis workflow finds one open abandoned Shopify checkout, waits before contacting the shopper, and confirms that the checkout still has inventory and that the customer has not completed an order or received a newer recovery message. It then maps up to three checkout items into a personalized vertical Zvid video.\n\n### How it works\nThe scheduled path reads Shopify's current Admin GraphQL abandonment objects. An in-flight lock prevents overlapping executions from rendering the same checkout. After the first wait, conversion, inventory, draft-order, newer-abandonment, and Shopify-email guards run before Zvid validation. A free dry run returns the exact credit quote and an editor draft. Live mode renders the MP4, optionally sends it by SMTP, waits for one optional follow-up, and checks conversion again before sending.\n\n### Safe setup\n1. Configure the Shopify and Zvid credentials in the notes to the right.\n2. Keep `manualFixture: true`, `dryRun: true`, and `sendEmail: false` for the first test.\n3. Review the editor draft and quote.\n4. Switch to live Shopify data, then enable rendering and email separately.\n\nCustomer email and phone values are never added to the video payload, project name, or final summary.",
-        "height": 720,
-        "width": 760
+        "content": "## 01. Recover abandoned Shopify checkouts with personalized Zvid videos\n\nThis workflow finds one open abandoned Shopify checkout, waits before contacting the shopper, and confirms that the checkout still has inventory and that the customer has not completed an order or received a newer recovery message. It then maps up to three checkout items into a personalized vertical Zvid video.\n\n### How it works\nThe scheduled path reads Shopify's current Admin GraphQL abandonment objects. An in-flight lock prevents overlapping executions from rendering the same checkout. After the first wait, conversion, inventory, draft-order, newer-abandonment, and Shopify-email guards run before Zvid validation. A free dry run returns the exact credit quote and an editor draft. Live mode renders the MP4, optionally sends it by SMTP, waits for one optional follow-up, and checks conversion again before sending.\n\n### Safe setup\n1. Configure the Shopify and Zvid credentials in the notes to the right.\n2. The defaults are `manualFixture: true`, `dryRun: false`, and `sendEmail: false`. The first test renders the sample video and spends Zvid credits.\n3. Review the finished video in **▶ Watch video**. For a free editor preview and quote, set `dryRun: true` before running.\n4. Switch to live Shopify data when ready, then enable email separately.\n\nCustomer email and phone values are never added to the video payload, project name, or final summary.",
+        "height": 960,
+        "width": 800,
+        "color": 6
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1900,
-        -1040
+        -1780,
+        -1980
       ],
       "id": "zvid-sac-n001",
       "name": "Overview"
     },
     {
       "parameters": {
-        "content": "## 1. Create the Shopify app\n\nIn Shopify Admin open **Settings -> Apps -> Develop apps -> Build apps in Dev Dashboard**. Create an app version and grant:\n- `read_orders`\n- `read_customers`\n- `read_products`\n\nAbandoned checkout data is protected customer data. The installing staff member also needs **manage abandoned checkouts** permission. Release the version, install it on the store, and approve access.\n\nThe workflow uses GraphQL because the built-in Shopify node does not expose the required abandonment query, recovery URL, conversion flags, and inventory gates.\n\nOfficial object: https://shopify.dev/docs/api/admin-graphql/latest/objects/AbandonedCheckout",
-        "height": 720,
-        "width": 700,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -1120,
-        -1040
-      ],
-      "id": "zvid-sac-n002",
-      "name": "Shopify app setup"
-    },
-    {
-      "parameters": {
-        "content": "## 2. Get `X-Shopify-Access-Token`\n\nThe Client ID and Client secret are not the access token. First open **Shopify Admin -> Settings -> Domains** and copy the canonical `*.myshopify.com` domain. Use only its subdomain for `Config.shopDomain`. The `/store/...` Admin URL handle can be different; a redirecting alias can cause n8n to drop the access-token header.\n\nExchange the app credentials with:\n\n```bash\ncurl -X POST https://YOUR_STORE.myshopify.com/admin/oauth/access_token \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -d 'grant_type=client_credentials' \\\n  -d 'client_id=YOUR_CLIENT_ID' \\\n  -d 'client_secret=YOUR_CLIENT_SECRET'\n```\n\nCreate an n8n **Header Auth** credential:\n- Name: `X-Shopify-Access-Token`\n- Value: returned `access_token`\n\nAssign it to **Find open abandoned checkouts**, **Confirm no purchase and inventory**, and **Confirm before follow-up**. Dev Dashboard tokens expire after 24 hours; refresh the credential for later scheduled runs or implement a secure token-refresh service. Existing admin-created custom-app tokens can continue while supported.\n\nOfficial guide: https://shopify.dev/docs/apps/build/dev-dashboard/get-api-access-tokens?lang=curl",
-        "height": 820,
-        "width": 760,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -400,
-        -1040
-      ],
-      "id": "zvid-sac-n003",
-      "name": "Shopify token setup"
-    },
-    {
-      "parameters": {
-        "content": "## 3. Install and connect Zvid\n\nThis workflow requires Zvid's official n8n community package. Before configuring credentials:\n1. Open **Settings -> Community nodes**.\n2. Install **`@zvid/n8n-nodes-zvid`**.\n3. If installation is unavailable, ask the n8n workspace owner or admin.\n\nCreate an API key at **https://app.zvid.io/api-keys**. In n8n create a **Zvid API** credential:\n- API Key: your `zvid_...` key\n- Base URL: `https://api.zvid.io`\n\nAssign it to all four official Zvid nodes:\n- **Validate project (free)** - Render -> Validate\n- **Save draft to editor** - Project -> Create Editor Project\n- **Submit render** - Render -> Create\n- **Get render status** - Render -> Get\n\nKeep `dryRun: true` until the editor draft and credit quote are approved. Only rendering consumes credits.\n\nEditor: https://editor.zvid.io",
-        "height": 720,
-        "width": 680,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        380,
-        -1040
-      ],
-      "id": "zvid-sac-n004",
-      "name": "Zvid setup"
-    },
-    {
-      "parameters": {
-        "content": "## 4. Optional SMTP delivery\n\nThe workflow sends nothing by default. To enable email:\n1. Create an n8n **SMTP** credential.\n2. Assign it to both email nodes.\n3. Set `emailFrom` to an approved sender.\n4. Set `sendEmail: true` only after a private test.\n\nThe email contains the Shopify recovery URL and the Zvid video URL. Configure SPF, DKIM, consent, quiet hours, and local recovery-message rules before activation. If Shopify already sent an abandonment email, the default guard stops this workflow before rendering. Disable overlapping Shopify automations or keep the guard enabled.\n\nTo use SMS instead, replace the two SMTP nodes with your approved SMS provider and pass the same recovery URL and video URL. Never send to the fixture address or phone.",
-        "height": 720,
-        "width": 640,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1080,
-        -1040
-      ],
-      "id": "zvid-sac-n005",
-      "name": "Email setup"
-    },
-    {
-      "parameters": {
-        "content": "## Safe example checkout\n\nThe default manual fixture mirrors a real example product from the Zvid Shopify test store:\n- Shopper first name: **Alex**\n- Product: **Clay Pocket Oversized Tee**\n- Variant: **M**\n- Quantity: **1**\n- Cart total: **$35**\n- Product image: Shopify CDN hero image\n\n`manualFixture: true` avoids Shopify and uses short waits. `testFixtureRecoveredBeforeFollowUp: true` simulates a purchase before the second reminder and proves that follow-up stops.\n\nFor a real run set `manualFixture: false`. Do not replace the fixture with real customer contact data in a publishable JSON file.",
-        "height": 720,
-        "width": 620,
+        "content": "## 05. Create the Shopify app\n\nIn Shopify Admin open **Settings -> Apps -> Develop apps -> Build apps in Dev Dashboard**. Create an app version and grant:\n- `read_orders`\n- `read_customers`\n- `read_products`\n\nAbandoned checkout data is protected customer data. The installing staff member also needs **manage abandoned checkouts** permission. Release the version, install it on the store, and approve access.\n\nThe workflow uses GraphQL because the built-in Shopify node does not expose the required abandonment query, recovery URL, conversion flags, and inventory gates.\n\nOfficial object: https://shopify.dev/docs/api/admin-graphql/latest/objects/AbandonedCheckout",
+        "height": 560,
+        "width": 800,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
         1740,
-        -1040
+        -1980
+      ],
+      "id": "zvid-sac-n002",
+      "name": "Shopify app setup"
+    },
+    {
+      "parameters": {
+        "content": "## 02. Get `X-Shopify-Access-Token`\n\nThe Client ID and Client secret are not the access token. First open **Shopify Admin -> Settings -> Domains** and copy the canonical `*.myshopify.com` domain. Use only its subdomain for `Config.shopDomain`. The `/store/...` Admin URL handle can be different; a redirecting alias can cause n8n to drop the access-token header.\n\nExchange the app credentials with:\n\n```bash\ncurl -X POST https://YOUR_STORE.myshopify.com/admin/oauth/access_token \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -d 'grant_type=client_credentials' \\\n  -d 'client_id=YOUR_CLIENT_ID' \\\n  -d 'client_secret=YOUR_CLIENT_SECRET'\n```\n\nCreate an n8n **Header Auth** credential:\n- Name: `X-Shopify-Access-Token`\n- Value: returned `access_token`\n\nAssign it to **Find open abandoned checkouts**, **Confirm no purchase and inventory**, and **Confirm before follow-up**. Dev Dashboard tokens expire after 24 hours; refresh the credential for later scheduled runs or implement a secure token-refresh service. Existing admin-created custom-app tokens can continue while supported.\n\nOfficial guide: https://shopify.dev/docs/apps/build/dev-dashboard/get-api-access-tokens?lang=curl",
+        "height": 840,
+        "width": 800,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        -1980
+      ],
+      "id": "zvid-sac-n003",
+      "name": "Shopify token setup"
+    },
+    {
+      "parameters": {
+        "content": "## 03. Install and connect Zvid\n\nThis workflow requires Zvid's official n8n community package. Before configuring credentials:\n1. Open **Settings -> Community nodes**.\n2. Install **`@zvid/n8n-nodes-zvid`**.\n3. If installation is unavailable, ask the n8n workspace owner or admin.\n\nCreate an API key at **https://app.zvid.io/api-keys**. In n8n create a **Zvid API** credential:\n- API Key: your `zvid_...` key\n- Base URL: `https://api.zvid.io`\n\nAssign it to all four official Zvid nodes:\n- **Validate project (free)** - Render -> Validate\n- **Save draft to editor** - Project -> Create Editor Project\n- **Submit render** - Render -> Create\n- **Get render status** - Render -> Get\n\nThe default is `dryRun: false`, so execution renders a video and spends credits. Set `dryRun: true` for an optional free editor preview and credit quote.\n\nEditor: https://editor.zvid.io",
+        "height": 800,
+        "width": 800,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        -1980
+      ],
+      "id": "zvid-sac-n004",
+      "name": "Zvid setup"
+    },
+    {
+      "parameters": {
+        "content": "## 13. Optional SMTP delivery\n\nThe workflow sends nothing by default. To enable email:\n1. Create an n8n **SMTP** credential.\n2. Assign it to both email nodes.\n3. Set `emailFrom` to an approved sender.\n4. Set `sendEmail: true` only after a private test.\n\nThe email contains the Shopify recovery URL and the Zvid video URL. Configure SPF, DKIM, consent, quiet hours, and local recovery-message rules before activation. If Shopify already sent an abandonment email, the default guard stops this workflow before rendering. Disable overlapping Shopify automations or keep the guard enabled.\n\nTo use SMS instead, replace the two SMTP nodes with your approved SMS provider and pass the same recovery URL and video URL. Never send to the fixture address or phone.",
+        "height": 520,
+        "width": 800,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        -940
+      ],
+      "id": "zvid-sac-n005",
+      "name": "Email setup"
+    },
+    {
+      "parameters": {
+        "content": "## 04. Safe example checkout\n\nThe default manual fixture mirrors a real example product from the Zvid Shopify test store:\n- Shopper first name: **Alex**\n- Product: **Clay Pocket Oversized Tee**\n- Variant: **M**\n- Quantity: **1**\n- Cart total: **$35**\n- Product image: Shopify CDN hero image\n\n`manualFixture: true` avoids Shopify and uses short waits. `testFixtureRecoveredBeforeFollowUp: true` simulates a purchase before the second reminder and proves that follow-up stops.\n\nFor a real run set `manualFixture: false`. Do not replace the fixture with real customer contact data in a publishable JSON file.",
+        "height": 600,
+        "width": 800,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        860,
+        -1980
       ],
       "id": "zvid-sac-n006",
       "name": "Fixture example"
     },
     {
       "parameters": {
-        "content": "## Privacy, deduplication, and recovery\n\nShopify checkout contact data is protected customer data. n8n execution history can contain the address needed by SMTP, so set an appropriate execution-retention policy and restrict workflow access.\n\nThe video receives only the shopper's first name, product titles, images, prices, and cart total. Email, phone, and the recovery URL are excluded from the render payload and project name.\n\nThe workflow holds one in-flight checkout ID while waiting, remembers up to 500 completed IDs, and removes stale locks after `lockTtlHours`. A failed execution becomes eligible again after the lock expires. Re-importing the workflow resets static data.\n\nA Zvid render timeout does not necessarily cancel the remote job. Check https://app.zvid.io before retrying to avoid duplicate credit use.",
-        "height": 720,
-        "width": 700,
+        "content": "## 06. Privacy, deduplication, and recovery\n\nShopify checkout contact data is protected customer data. n8n execution history can contain the address needed by SMTP, so set an appropriate execution-retention policy and restrict workflow access.\n\nThe video receives only the shopper's first name, product titles, images, prices, and cart total. Email, phone, and the recovery URL are excluded from the render payload and project name.\n\nThe workflow holds one in-flight checkout ID while waiting, remembers up to 500 completed IDs, and removes stale locks after `lockTtlHours`. A failed execution becomes eligible again after the lock expires. Re-importing the workflow resets static data.\n\nA Zvid render timeout does not necessarily cancel the remote job. Check https://app.zvid.io before retrying to avoid duplicate credit use.",
+        "height": 480,
+        "width": 800,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2380,
-        -1040
+        2620,
+        -1980
       ],
       "id": "zvid-sac-n007",
       "name": "Privacy and operations"
     },
     {
       "parameters": {
-        "content": "### 1. Detect and wait\nManual fixture or live Shopify GraphQL -> choose one eligible checkout -> lock it -> wait one hour in production. No checkout is a successful no-op.",
-        "height": 620,
-        "width": 1160,
+        "content": "## 07. Detect and wait\nManual fixture or live Shopify GraphQL -> choose one eligible checkout -> lock it -> wait one hour in production. No checkout is a successful no-op.",
+        "height": 280,
+        "width": 800,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1720,
-        120
+        3500,
+        -1980
       ],
       "id": "zvid-sac-n008",
       "name": "Section: detect and wait"
     },
     {
       "parameters": {
-        "content": "### 2. Confirm and build\nAfter the wait, Shopify confirms no order, no draft order, available inventory, the most significant abandonment, and no prior Shopify email. Eligible data becomes a privacy-safe video payload.",
-        "height": 760,
-        "width": 1280,
+        "content": "## 08. Confirm and build\nAfter the wait, Shopify confirms no order, no draft order, available inventory, the most significant abandonment, and no prior Shopify email. Eligible data becomes a privacy-safe video payload.",
+        "height": 280,
+        "width": 800,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -500,
-        -40
+        4380,
+        -1980
       ],
       "id": "zvid-sac-n009",
       "name": "Section: confirm and build"
     },
     {
       "parameters": {
-        "content": "### 3. Preview or render\nFree validation runs before the credit gate. Dry run saves an editor draft. Live mode renders one MP4 and polls until completion or timeout.",
-        "height": 940,
-        "width": 1640,
-        "color": 7
+        "content": "## 11. Preview or render\nFree validation runs before the credit gate. Dry run saves an editor draft. Live mode renders one MP4 and polls until completion or timeout.",
+        "height": 280,
+        "width": 800,
+        "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        800,
-        -180
+        -20,
+        -940
       ],
       "id": "zvid-sac-n010",
       "name": "Section: preview or render"
     },
     {
       "parameters": {
-        "content": "### 4. Deliver once\nSMTP is optional and disabled by default. The first message contains the recovery URL and personalized video; failed sends are reported without exposing the address in the final summary.",
-        "height": 760,
-        "width": 900,
-        "color": 7
+        "content": "## 14. Deliver once\nSMTP is optional and disabled by default. The first message contains the recovery URL and personalized video; failed sends are reported without exposing the address in the final summary.",
+        "height": 280,
+        "width": 800,
+        "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2460,
-        -40
+        2620,
+        -940
       ],
       "id": "zvid-sac-n011",
       "name": "Section: deliver"
     },
     {
       "parameters": {
-        "content": "### 5. Stop later reminders after conversion\nAn optional second wait is followed by the same Shopify conversion and inventory check. A completed order, draft order, newer abandonment, or unavailable inventory stops the follow-up.",
-        "height": 900,
-        "width": 1840,
+        "content": "## 09. Stop later reminders after conversion\nAn optional second wait is followed by the same Shopify conversion and inventory check. A completed order, draft order, newer abandonment, or unavailable inventory stops the follow-up.",
+        "height": 280,
+        "width": 800,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        3380,
-        -260
+        -1780,
+        -940
       ],
       "id": "zvid-sac-n012",
       "name": "Section: stop follow-up"
     },
     {
       "parameters": {
-        "content": "### 6. Audit result\nThe final output reports the video, credit charge, initial and follow-up delivery state, and whether conversion stopped the reminder. It deliberately omits customer email and phone.",
-        "height": 600,
-        "width": 640,
+        "content": "## 10. Audit result\nThe final output reports the video, credit charge, initial and follow-up delivery state, and whether conversion stopped the reminder. It deliberately omits customer email and phone.",
+        "height": 280,
+        "width": 800,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        5240,
-        40
+        -900,
+        -940
       ],
       "id": "zvid-sac-n013",
       "name": "Section: summary"
+    },
+    {
+      "id": "zvid-watch-ready",
+      "name": "Video ready to watch?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        5640,
+        220
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "zvid-watch-ready-condition",
+              "leftValue": "={{ !$json.dryRun && /^https?:\\/\\//i.test(String(($json.videoUrl) || '')) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-watch-instructions",
+      "name": "Watch the finished video",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        860,
+        -940
+      ],
+      "parameters": {
+        "content": "## 12. Watch the finished video\n\nAfter a render finishes, open **▶ Watch video**. In its output, choose **Binary → data → View** to play the video or download the file. For a batch, select an output item to watch each result. Image outputs open as images.\n\n**Video ready to watch?** skips previews when there is no finished media URL, including quote-only and dry-run results. The watch step downloads the finished file and does not start another render.\n\nIf the file is not available yet, the download retries up to three times. A preview download failure does not undo a completed render. The preceding result node still provides the media URL.",
+        "width": 800,
+        "height": 440,
+        "color": 4
+      }
     }
   ],
   "pinData": {},
@@ -1659,11 +1710,23 @@
       "main": [
         [
           {
-            "node": "▶ Watch video",
+            "node": "Video ready to watch?",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Video ready to watch?": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
       ]
     }
   },

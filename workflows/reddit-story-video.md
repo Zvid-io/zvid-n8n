@@ -1,5 +1,11 @@
 # Reddit story videos on autopilot
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
+File upload exception: the published Zvid node does not expose multipart uploads. The upload step uses HTTP Request → `POST /api/uploads`, authenticated with the same **Zvid API** credential. All supported Zvid operations use the Zvid node.
+
 [`zvid-reddit-story-video.json`](zvid-reddit-story-video.json)
 
 Every morning: pull the day's top story from a subreddit like r/tifu, rewrite it
@@ -90,11 +96,8 @@ server-side keys.
 ## Setup
 
 1. **Import** `zvid-reddit-story-video.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name
-   `x-api-key`, value = your Zvid key. Attach it to *Upload voiceover*,
-   *Validate project (free)*, *Save draft to editor*, *Submit render* and
-   *Get render status*.
-3. **ElevenLabs credential** — add a **second Header Auth** credential, name
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node. Use it on the HTTP upload step too (Predefined Credential Type → Zvid API).
+3. **ElevenLabs credential** — add a **Header Auth** credential, name
    `xi-api-key`, value = your ElevenLabs key. Attach it to *Generate
    voiceover*. On a free ElevenLabs plan only default voices work — Brian (the
    default), George, Roger, Sarah and Bill are confirmed working; Voice
@@ -253,6 +256,8 @@ responsible for what your channel posts.
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n **2.29.10** node types and versions (every node resolves in a stock
 install; the render chain uses the same shapes as the other templates in this

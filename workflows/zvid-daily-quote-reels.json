@@ -137,7 +137,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// === buildProject — identical to the frame-reviewed standalone builder ===\nfunction buildProject(config, data) {\n  const cfg = config || {};\n  const clean = (v) => String(v == null ? '' : v).replace(/\\s+/g, ' ').trim();\n  const quote = clean(data.quote);\n  const author = clean(data.author);\n  const authorNote = clean(data.authorNote);\n  if (!quote) throw new Error('The sheet row has no Quote text.');\n  if (!author) throw new Error('The sheet row has no Author.');\n\n  const channelName = clean(cfg.channelName) || '@yourchannel';\n  const ctaText = clean(cfg.ctaText) || 'Follow for more';\n  const quoteFont = clean(cfg.quoteFont) || 'Playfair Display';\n  const uiFont = clean(cfg.uiFont) || 'Inter';\n  const paper = clean(cfg.paperColor) || '#F0ECE3';\n  const muted = clean(cfg.mutedColor) || '#B9B4A6';\n  const ink = clean(cfg.inkColor) || '#14181A';\n\n  const esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\n  const round = (n) => Math.round(n * 100) / 100;\n\n  // ---- daily rotation pool ------------------------------------------------\n  // Every URL verified reachable and probed (dimensions/duration/size) when\n  // this template was authored. `videoSeconds` is the source clip length: the\n  // quote scene must never outlast its background. `overlay` darkens the clip\n  // so the paper-coloured text always has contrast — brighter clips get more.\n  const MUSIC_CALM = 'https://cdn.pixabay.com/audio/2025/04/21/audio_ed6f0ed574.mp3'; // 48.6s, 1.5 MB\n  const MUSIC_WARM = 'https://cdn.pixabay.com/audio/2025/03/19/audio_56ae1dae5f.mp3'; // 115.5s, 3.7 MB\n  const POOL = [\n    { label: 'mist-forest', video: 'https://videos.pexels.com/video-files/30149713/12928657_1080_1920_60fps.mp4', videoSeconds: 15.0, music: MUSIC_CALM, overlay: 0.5 },\n    { label: 'ember-ink', video: 'https://videos.pexels.com/video-files/15168374/15168374-hd_1080_1920_24fps.mp4', videoSeconds: 38.9, music: MUSIC_WARM, overlay: 0.55 },\n    { label: 'rain-window', video: 'https://videos.pexels.com/video-files/19802056/19802056-uhd_1440_2560_30fps.mp4', videoSeconds: 50.7, music: MUSIC_CALM, overlay: 0.45 },\n    { label: 'cloud-sea', video: 'https://videos.pexels.com/video-files/32634790/13916180_1080_1920_25fps.mp4', videoSeconds: 11.0, music: MUSIC_WARM, overlay: 0.62 },\n    { label: 'calm-shore', video: 'https://videos.pexels.com/video-files/28197979/12324927_1080_1920_60fps.mp4', videoSeconds: 10.4, music: MUSIC_CALM, overlay: 0.62 },\n  ];\n\n  const when = data.date ? new Date(data.date) : new Date();\n  const dayOfYear = Math.floor((Date.UTC(when.getUTCFullYear(), when.getUTCMonth(), when.getUTCDate()) - Date.UTC(when.getUTCFullYear(), 0, 0)) / 86400000);\n  const overrideIdx = Number(cfg.poolIndexOverride);\n  const poolIndex = Number.isInteger(overrideIdx) && overrideIdx >= 0 ? overrideIdx % POOL.length : dayOfYear % POOL.length;\n  const entry = POOL[poolIndex];\n\n  const bgVideo = clean(cfg.backgroundVideoOverride) || entry.video;\n  const musicUrl = clean(cfg.musicUrlOverride) || entry.music;\n  // An override video has an unknown length, so never let the quote scene run\n  // past the shortest clip in the pool.\n  const bgSeconds = clean(cfg.backgroundVideoOverride) ? 10.4 : entry.videoSeconds;\n\n  // ---- adaptive type ------------------------------------------------------\n  // Greedy word-wrap estimate calibrated against the rendered source example\n  // (\"Almost everything will work\" = 27 chars exactly fills 840px at 62px, so\n  // the average glyph runs ~0.50em in Playfair italic).\n  const wrapLines = (text, fontPx, boxPx, avgEm) => {\n    const perLine = Math.max(6, Math.floor(boxPx / (fontPx * avgEm)));\n    let lines = 1;\n    let used = 0;\n    for (const w of String(text).split(' ')) {\n      const need = used === 0 ? w.length : used + 1 + w.length;\n      if (need <= perLine) { used = need; continue; }\n      lines += 1;\n      used = Math.min(w.length, perLine);\n    }\n    return lines;\n  };\n\n  const qLen = quote.length;\n  const quoteSize = qLen <= 90 ? 62 : qLen <= 140 ? 54 : qLen <= 180 ? 48 : 42;\n  const quoteLines = wrapLines(quote, quoteSize, 840, 0.5);\n  const quoteBlockH = Math.round(quoteLines * quoteSize * 1.35);\n  // Keep the block visually centred where the source design places it, but\n  // never above the big quote glyph.\n  const quoteY = Math.max(600, Math.min(700, Math.round(800 - quoteBlockH / 2)));\n\n  // Reading-time scene length: never past the background clip.\n  const quoteSeconds = round(Math.min(Math.max(7, 3.5 + qLen * 0.03), 9.8, bgSeconds - 0.4));\n  const cardSeconds = 4.6;\n\n  const nameSize = author.length <= 20 ? 56 : author.length <= 30 ? 46 : 40;\n  const nameLines = wrapLines(author, nameSize, 860, 0.55);\n  const noteY = Math.round(850 + nameLines * nameSize * 1.25 + 30);\n  const noteLines = authorNote ? wrapLines(authorNote, 27, 800, 0.62 + 2 / 27) : 0;\n  const ctaY = Math.max(1160, noteY + noteLines * 40 + 110);\n\n  // ---- scenes -------------------------------------------------------------\n  const s1 = {\n    id: 'quote',\n    duration: quoteSeconds,\n    backgroundColor: '#1B1E22',\n    transition: 'fade',\n    transitionId: 'author',\n    transitionDuration: 0.8,\n    visuals: [\n      { type: 'VIDEO', src: bgVideo, width: 1080, height: 1920, position: 'center-center', resize: 'cover', volume: 0, track: 0, enterBegin: 0, exitEnd: quoteSeconds },\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: quoteSeconds,\n        svg: \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><rect width='1080' height='1920' fill='rgba(20,24,26,\" + entry.overlay + \")'/><rect x='70' y='70' width='940' height='1780' fill='none' stroke='rgba(240,236,227,0.35)' stroke-width='1'/><text x='150' y='560' font-family='Georgia' font-size='220' fill='rgba(240,236,227,0.55)'>&#8220;</text><path d='M420 1480 H660' stroke='rgba(240,236,227,0.6)' stroke-width='1.5'/></svg>\",\n      },\n      {\n        type: 'TEXT', x: 540, y: 170, anchor: 'top-center', track: 2, enterBegin: 0.3, enterEnd: 0.9, enterAnimation: 'fade', exitEnd: quoteSeconds,\n        style: { fontFamily: uiFont },\n        html: \"<div style=\\\"text-align:center; color:\" + muted + \"; font-size:23px; font-weight:600; letter-spacing:7px; text-shadow:0 2px 14px rgba(20,24,26,0.75);\\\">\" + esc(channelName) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: quoteY, width: 840, anchor: 'top-center', track: 3, enterBegin: 0.7, enterEnd: 1.5, enterAnimation: 'smoothup', exitEnd: quoteSeconds,\n        style: { fontFamily: quoteFont },\n        html: \"<div style=\\\"text-align:center; color:\" + paper + '; font-size:' + quoteSize + \"px; line-height:1.35; font-style:italic;\\\">\" + esc(quote) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: 1530, width: 800, anchor: 'top-center', track: 4, enterBegin: 1.8, enterEnd: 2.4, enterAnimation: 'fade', exitEnd: quoteSeconds,\n        style: { fontFamily: uiFont },\n        html: \"<div style=\\\"text-align:center; color:\" + paper + \"; font-size:34px; font-weight:700; letter-spacing:2px;\\\">&mdash; \" + esc(author) + '</div>',\n      },\n    ],\n  };\n\n  const s2 = {\n    id: 'author',\n    duration: cardSeconds,\n    backgroundColor: ink,\n    visuals: [\n      { type: 'IMAGE', src: 'https://images.pexels.com/photos/15637846/pexels-photo-15637846.jpeg?auto=compress&cs=tinysrgb&w=1620', width: 1080, height: 1920, position: 'center-center', resize: 'cover', zoom: true, opacity: 0.5, track: 0, enterBegin: 0, exitEnd: cardSeconds },\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: cardSeconds,\n        svg: \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='dqrEnd' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#14181A' stop-opacity='0.6'/><stop offset='1' stop-color='#14181A' stop-opacity='0.92'/></linearGradient></defs><rect width='1080' height='1920' fill='url(#dqrEnd)'/><circle cx='540' cy='760' r='6' fill='#F0ECE3'/><path d='M420 760 H520 M560 760 H660' stroke='rgba(240,236,227,0.5)' stroke-width='1'/></svg>\",\n      },\n      {\n        type: 'TEXT', x: 540, y: 850, width: 860, anchor: 'top-center', track: 2, enterBegin: 0.3, enterEnd: 0.9, enterAnimation: 'smoothup', exitEnd: cardSeconds,\n        style: { fontFamily: quoteFont },\n        html: \"<div style=\\\"text-align:center; color:\" + paper + '; font-size:' + nameSize + \"px; font-weight:700;\\\">\" + esc(author) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: ctaY, anchor: 'top-center', track: 4, enterBegin: 1.1, enterEnd: 1.5, enterAnimation: 'circleopen', exitEnd: cardSeconds,\n        style: { fontFamily: uiFont },\n        html: \"<div style=\\\"display:inline-block; border:1.5px solid \" + paper + '; color:' + paper + \"; border-radius:999px; padding:22px 56px; font-size:30px; font-weight:700;\\\">\" + esc(ctaText) + \"</div><div style=\\\"margin-top:16px; text-align:center; color:#7E7A6F; font-size:23px; letter-spacing:5px;\\\">\" + esc(channelName) + '</div>',\n      },\n    ],\n  };\n  if (authorNote) {\n    s2.visuals.splice(3, 0, {\n      type: 'TEXT', x: 540, y: noteY, width: 800, anchor: 'top-center', track: 3, enterBegin: 0.7, enterEnd: 1.2, enterAnimation: 'fade', exitEnd: cardSeconds,\n      style: { fontFamily: uiFont },\n      html: \"<div style=\\\"text-align:center; color:#A8A396; font-size:27px; font-weight:500; letter-spacing:2px;\\\">\" + esc(authorNote) + '</div>',\n    });\n  }\n\n  const totalSeconds = round(quoteSeconds + cardSeconds - 0.8);\n  // The render API only allows letters, digits, spaces, _ and - in `name`.\n  const safeName = ('daily-quote-' + author).toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);\n\n  const payload = {\n    name: safeName || 'Daily quote',\n    resolution: 'instagram-reel',\n    frameRate: 30,\n    backgroundColor: '#1B1E22',\n    outputFormat: 'mp4',\n    scenes: [s1, s2],\n    // NOTE: no `track` here — the render API rejects audios[].track.\n    audios: [{ src: musicUrl, volume: Number(cfg.musicVolume ?? 0.15) }],\n  };\n\n  return {\n    payload,\n    meta: {\n      poolIndex,\n      poolLabel: entry.label,\n      bgVideo,\n      musicUrl,\n      quoteSeconds,\n      totalSeconds,\n      quoteSize,\n      quoteLines,\n      quote,\n      author,\n      quoteChars: qLen,\n    },\n  };\n}\n\n// === n8n glue ===\nconst config = $('Config').first().json;\nconst row = $input.first().json;\nconst built = buildProject(config, { quote: row.quote, author: row.author, authorNote: row.authorNote, date: new Date() });\nbuilt.meta.rowNumber = row.rowNumber;\nreturn [{ json: built }];"
+        "jsCode": "// === buildProject — identical to the frame-reviewed standalone builder ===\nfunction buildProject(config, data) {\n  const cfg = config || {};\n  const clean = (v) => String(v == null ? '' : v).replace(/\\s+/g, ' ').trim();\n  const quote = clean(data.quote);\n  const author = clean(data.author);\n  const authorNote = clean(data.authorNote);\n  if (!quote) throw new Error('The sheet row has no Quote text.');\n  if (!author) throw new Error('The sheet row has no Author.');\n\n  const channelName = clean(cfg.channelName) || '@yourchannel';\n  const ctaText = clean(cfg.ctaText) || 'Follow for more';\n  const quoteFont = clean(cfg.quoteFont) || 'Playfair Display';\n  const uiFont = clean(cfg.uiFont) || 'Inter';\n  const paper = clean(cfg.paperColor) || '#F0ECE3';\n  const muted = clean(cfg.mutedColor) || '#B9B4A6';\n  const ink = clean(cfg.inkColor) || '#14181A';\n\n  const esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\n  const round = (n) => Math.round(n * 100) / 100;\n\n  // ---- daily rotation pool ------------------------------------------------\n  // Every URL verified reachable and probed (dimensions/duration/size) when\n  // this template was authored. `videoSeconds` is the source clip length: the\n  // quote scene must never outlast its background. `overlay` darkens the clip\n  // so the paper-coloured text always has contrast — brighter clips get more.\n  const MUSIC_CALM = 'https://cdn.pixabay.com/audio/2025/04/21/audio_ed6f0ed574.mp3'; // 48.6s, 1.5 MB\n  const MUSIC_WARM = 'https://cdn.pixabay.com/audio/2025/03/19/audio_56ae1dae5f.mp3'; // 115.5s, 3.7 MB\n  const POOL = [\n    { label: 'mist-forest', video: 'https://videos.pexels.com/video-files/30149713/12928657_1080_1920_60fps.mp4', videoSeconds: 15.0, music: MUSIC_CALM, overlay: 0.5 },\n    { label: 'ember-ink', video: 'https://videos.pexels.com/video-files/15168374/15168374-hd_1080_1920_24fps.mp4', videoSeconds: 38.9, music: MUSIC_WARM, overlay: 0.55 },\n    { label: 'rain-window', video: 'https://videos.pexels.com/video-files/19802056/19802056-hd_1080_1920_30fps.mp4', videoSeconds: 50.7, music: MUSIC_CALM, overlay: 0.45 },\n    { label: 'cloud-sea', video: 'https://videos.pexels.com/video-files/32634790/13916180_1080_1920_25fps.mp4', videoSeconds: 11.0, music: MUSIC_WARM, overlay: 0.62 },\n    { label: 'calm-shore', video: 'https://videos.pexels.com/video-files/28197979/12324927_1080_1920_60fps.mp4', videoSeconds: 10.4, music: MUSIC_CALM, overlay: 0.62 },\n  ];\n\n  const when = data.date ? new Date(data.date) : new Date();\n  const dayOfYear = Math.floor((Date.UTC(when.getUTCFullYear(), when.getUTCMonth(), when.getUTCDate()) - Date.UTC(when.getUTCFullYear(), 0, 0)) / 86400000);\n  const overrideIdx = Number(cfg.poolIndexOverride);\n  const poolIndex = Number.isInteger(overrideIdx) && overrideIdx >= 0 ? overrideIdx % POOL.length : dayOfYear % POOL.length;\n  const entry = POOL[poolIndex];\n\n  const bgVideo = clean(cfg.backgroundVideoOverride) || entry.video;\n  const musicUrl = clean(cfg.musicUrlOverride) || entry.music;\n  // An override video has an unknown length, so never let the quote scene run\n  // past the shortest clip in the pool.\n  const bgSeconds = clean(cfg.backgroundVideoOverride) ? 10.4 : entry.videoSeconds;\n\n  // ---- adaptive type ------------------------------------------------------\n  // Greedy word-wrap estimate calibrated against the rendered source example\n  // (\"Almost everything will work\" = 27 chars exactly fills 840px at 62px, so\n  // the average glyph runs ~0.50em in Playfair italic).\n  const wrapLines = (text, fontPx, boxPx, avgEm) => {\n    const perLine = Math.max(6, Math.floor(boxPx / (fontPx * avgEm)));\n    let lines = 1;\n    let used = 0;\n    for (const w of String(text).split(' ')) {\n      const need = used === 0 ? w.length : used + 1 + w.length;\n      if (need <= perLine) { used = need; continue; }\n      lines += 1;\n      used = Math.min(w.length, perLine);\n    }\n    return lines;\n  };\n\n  const qLen = quote.length;\n  const quoteSize = qLen <= 90 ? 62 : qLen <= 140 ? 54 : qLen <= 180 ? 48 : 42;\n  const quoteLines = wrapLines(quote, quoteSize, 840, 0.5);\n  const quoteBlockH = Math.round(quoteLines * quoteSize * 1.35);\n  // Keep the block visually centred where the source design places it, but\n  // never above the big quote glyph.\n  const quoteY = Math.max(600, Math.min(700, Math.round(800 - quoteBlockH / 2)));\n\n  // Reading-time scene length: never past the background clip.\n  const quoteSeconds = round(Math.min(Math.max(7, 3.5 + qLen * 0.03), 9.8, bgSeconds - 0.4));\n  const cardSeconds = 4.6;\n\n  const nameSize = author.length <= 20 ? 56 : author.length <= 30 ? 46 : 40;\n  const nameLines = wrapLines(author, nameSize, 860, 0.55);\n  const noteY = Math.round(850 + nameLines * nameSize * 1.25 + 30);\n  const noteLines = authorNote ? wrapLines(authorNote, 27, 800, 0.62 + 2 / 27) : 0;\n  const ctaY = Math.max(1160, noteY + noteLines * 40 + 110);\n\n  // ---- scenes -------------------------------------------------------------\n  const s1 = {\n    id: 'quote',\n    duration: quoteSeconds,\n    backgroundColor: '#1B1E22',\n    transition: 'fade',\n    transitionId: 'author',\n    transitionDuration: 0.8,\n    visuals: [\n      { type: 'VIDEO', src: bgVideo, width: 1080, height: 1920, position: 'center-center', resize: 'cover', volume: 0, track: 0, enterBegin: 0, exitEnd: quoteSeconds },\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: quoteSeconds,\n        svg: \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><rect width='1080' height='1920' fill='rgba(20,24,26,\" + entry.overlay + \")'/><rect x='70' y='70' width='940' height='1780' fill='none' stroke='rgba(240,236,227,0.35)' stroke-width='1'/><text x='150' y='560' font-family='Georgia' font-size='220' fill='rgba(240,236,227,0.55)'>&#8220;</text><path d='M420 1480 H660' stroke='rgba(240,236,227,0.6)' stroke-width='1.5'/></svg>\",\n      },\n      {\n        type: 'TEXT', x: 540, y: 170, anchor: 'top-center', track: 2, enterBegin: 0.3, enterEnd: 0.9, enterAnimation: 'fade', exitEnd: quoteSeconds,\n        style: { fontFamily: uiFont },\n        html: \"<div style=\\\"text-align:center; color:\" + muted + \"; font-size:23px; font-weight:600; letter-spacing:7px; text-shadow:0 2px 14px rgba(20,24,26,0.75);\\\">\" + esc(channelName) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: quoteY, width: 840, anchor: 'top-center', track: 3, enterBegin: 0.7, enterEnd: 1.5, enterAnimation: 'smoothup', exitEnd: quoteSeconds,\n        style: { fontFamily: quoteFont },\n        html: \"<div style=\\\"text-align:center; color:\" + paper + '; font-size:' + quoteSize + \"px; line-height:1.35; font-style:italic;\\\">\" + esc(quote) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: 1530, width: 800, anchor: 'top-center', track: 4, enterBegin: 1.8, enterEnd: 2.4, enterAnimation: 'fade', exitEnd: quoteSeconds,\n        style: { fontFamily: uiFont },\n        html: \"<div style=\\\"text-align:center; color:\" + paper + \"; font-size:34px; font-weight:700; letter-spacing:2px;\\\">&mdash; \" + esc(author) + '</div>',\n      },\n    ],\n  };\n\n  const s2 = {\n    id: 'author',\n    duration: cardSeconds,\n    backgroundColor: ink,\n    visuals: [\n      { type: 'IMAGE', src: 'https://images.pexels.com/photos/15637846/pexels-photo-15637846.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1920&fit=crop', width: 1080, height: 1920, position: 'center-center', resize: 'cover', zoom: true, opacity: 0.5, track: 0, enterBegin: 0, exitEnd: cardSeconds },\n      {\n        type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: cardSeconds,\n        svg: \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='dqrEnd' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#14181A' stop-opacity='0.6'/><stop offset='1' stop-color='#14181A' stop-opacity='0.92'/></linearGradient></defs><rect width='1080' height='1920' fill='url(#dqrEnd)'/><circle cx='540' cy='760' r='6' fill='#F0ECE3'/><path d='M420 760 H520 M560 760 H660' stroke='rgba(240,236,227,0.5)' stroke-width='1'/></svg>\",\n      },\n      {\n        type: 'TEXT', x: 540, y: 850, width: 860, anchor: 'top-center', track: 2, enterBegin: 0.3, enterEnd: 0.9, enterAnimation: 'smoothup', exitEnd: cardSeconds,\n        style: { fontFamily: quoteFont },\n        html: \"<div style=\\\"text-align:center; color:\" + paper + '; font-size:' + nameSize + \"px; font-weight:700;\\\">\" + esc(author) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: ctaY, anchor: 'top-center', track: 4, enterBegin: 1.1, enterEnd: 1.5, enterAnimation: 'circleopen', exitEnd: cardSeconds,\n        style: { fontFamily: uiFont },\n        html: \"<div style=\\\"display:inline-block; border:1.5px solid \" + paper + '; color:' + paper + \"; border-radius:999px; padding:22px 56px; font-size:30px; font-weight:700;\\\">\" + esc(ctaText) + \"</div><div style=\\\"margin-top:16px; text-align:center; color:#7E7A6F; font-size:23px; letter-spacing:5px;\\\">\" + esc(channelName) + '</div>',\n      },\n    ],\n  };\n  if (authorNote) {\n    s2.visuals.splice(3, 0, {\n      type: 'TEXT', x: 540, y: noteY, width: 800, anchor: 'top-center', track: 3, enterBegin: 0.7, enterEnd: 1.2, enterAnimation: 'fade', exitEnd: cardSeconds,\n      style: { fontFamily: uiFont },\n      html: \"<div style=\\\"text-align:center; color:#A8A396; font-size:27px; font-weight:500; letter-spacing:2px;\\\">\" + esc(authorNote) + '</div>',\n    });\n  }\n\n  const totalSeconds = round(quoteSeconds + cardSeconds - 0.8);\n  // The render API only allows letters, digits, spaces, _ and - in `name`.\n  const safeName = ('daily-quote-' + author).toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);\n\n  const payload = {\n    name: safeName || 'Daily quote',\n    resolution: 'instagram-reel',\n    frameRate: 30,\n    backgroundColor: '#1B1E22',\n    outputFormat: 'mp4',\n    scenes: [s1, s2],\n    // NOTE: no `track` here — the render API rejects audios[].track.\n    audios: [{ src: musicUrl, volume: Number(cfg.musicVolume ?? 0.15) }],\n  };\n\n  return {\n    payload,\n    meta: {\n      poolIndex,\n      poolLabel: entry.label,\n      bgVideo,\n      musicUrl,\n      quoteSeconds,\n      totalSeconds,\n      quoteSize,\n      quoteLines,\n      quote,\n      author,\n      quoteChars: qLen,\n    },\n  };\n}\n\n// === n8n glue ===\nconst config = $('Config').first().json;\nconst row = $input.first().json;\nconst built = buildProject(config, { quote: row.quote, author: row.author, authorNote: row.authorNote, date: new Date() });\nbuilt.meta.rowNumber = row.rowNumber;\nreturn [{ json: built }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -150,24 +150,13 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Config').first().json.apiUrl }}/api/render/validate/api-key",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true,
-              "neverError": true
-            }
-          }
-        }
+        "resource": "render",
+        "operation": "validate",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         860,
         220
@@ -177,7 +166,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode;\nconst body = res.body || {};\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
+        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode ?? (res.valid === true ? 200 : 400);\nconst body = res.body || { ...res, details: res.errors ?? res.details };\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -190,17 +179,15 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Config').first().json.apiUrl }}/api/render/api-key",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ payload: $json.payload }) }}",
-        "options": {}
+        "resource": "render",
+        "operation": "create",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}",
+        "renderType": "video",
+        "waitForCompletion": false
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         1520,
         380
@@ -228,13 +215,13 @@
     },
     {
       "parameters": {
-        "url": "={{ $('Config').first().json.apiUrl }}/api/jobs/{{ $('Submit render').first().json.jobId }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "options": {}
+        "resource": "render",
+        "operation": "get",
+        "jobId": "={{ $('Submit render').first().json.jobId }}",
+        "waitForCompletion": false
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         1960,
         380
@@ -393,7 +380,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2840,
+        3140,
         280
       ],
       "id": "zvid-dq-0027",
@@ -406,115 +393,83 @@
     },
     {
       "parameters": {
-        "width": 420,
-        "height": 240,
-        "color": 3,
-        "content": "## ▶ Watch video\n\nClick this node after a run: n8n renders the downloaded MP4 as an inline\nvideo player with a download button — today's quote reel, no URL to copy.\n\n*Run summary* before it still carries `videoUrl` (and `jobId`,\n`creditsCharged`) if you want to pipe the result onward."
+        "width": 800,
+        "height": 1120,
+        "color": 6,
+        "content": "## 01. Create daily motivational quote videos from Google Sheets with Zvid\n\n## Who it is for\n\nCreators and content teams who keep a queue of quotes in Google Sheets and want\nbranded vertical videos without editing each one manually.\n\n## What it does\n\nRun manually or daily to select the first row with an empty **Status**. Zvid renders\nthe quote, author, optional author note, and channel branding into a 1080×1920 MP4.\nFive background clips rotate by date, paired with music. After a successful render,\nthe workflow writes **done** and the **VideoUrl** to the same row. Open **Watch video\n→ Binary → data → View** to review the result. Social publishing is not included.\n\n## Setup and requirements\n\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before\n   configuring Zvid credentials. A workspace owner/admin may need to install it.\n   On n8n Cloud, the owner can install the verified **Zvid** integration from the\n   Nodes panel.\n2. Create a **Zvid API** credential using a key from\n   [app.zvid.io/api-keys](https://app.zvid.io/api-keys) and Base URL\n   `https://api.zvid.io`; select it on every Zvid node.\n3. Connect Google Sheets and select the same spreadsheet and tab in **Read quote\n   sheet** and **Mark row done**. Use these exact headers: **Quote**, **Author**,\n   **AuthorNote**, **Status**, **VideoUrl**. Fill Quote and Author; leave Status and\n   VideoUrl empty.\n4. Customize **Config** with your channel handle, call to action, colors, and fonts.\n5. Run manually. **`dryRun: false` is the default**, so rendering spends Zvid\n   credits. Set `dryRun: true` for a free editor draft and quote without updating\n   the sheet. Review the result before activating the daily schedule.\n\nRequires Google Sheets access and Zvid render credits. The included visual assets\nare 1080×1920. Custom media must fit your account's input limits. Confirm quote\nattribution before sharing the finished video."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2800,
-        440
-      ],
-      "id": "zvid-dq-0028",
-      "name": "Note 27"
-    },
-    {
-      "parameters": {
-        "width": 860,
-        "height": 600,
-        "color": 4,
-        "content": "## Daily motivational quote videos from a Google Sheet\n\nEvery morning this workflow takes the first quote in your sheet that has not\nbeen used yet, renders it as a polished 1080x1920 quote reel (~11-14 s) with\nZvid, then writes the finished video URL back to that row and marks it done.\nThe background footage and music rotate daily from a curated pool, so the\nchannel never posts the same look two days in a row.\n\n### Setup (about three minutes)\n\n1. **Zvid API key** — create one at https://app.zvid.io/api-keys\n   Add an n8n **Header Auth** credential: name `x-api-key`, value = your key.\n   Attach it to *Validate project (free)*, *Save draft to editor*,\n   *Submit render* and *Get render status*.\n2. **Google Sheets** — attach your Google credential to *Read quote sheet* and\n   *Mark row done*, then pick your spreadsheet and tab in both nodes.\n   The expected columns are in the yellow note next to the sheet node.\n3. **Open `Config`** — set `channelName` and `ctaText` to your brand.\n4. **Run it — the first run renders for real and spends about 11 credits.**\n   `dryRun` is `false` out of the box. When it finishes, click\n   **▶ Watch video** to play the reel right here in n8n.\n5. Want a free preview first? Set `dryRun: true` in **Config**: you get the\n   credit quote plus an **editorLink** to watch the video in the editor,\n   nothing spent and the sheet untouched. Set it back to `false` to render.\n6. **Activate** — it posts a fresh quote video to the sheet every day at 8am.\n\n### Cost per video\n\nA ~11 s quote reel is about **11 credits**; a two-hundred-character quote\n(~14 s) is about **14**. *Validate project (free)* runs before every render and\nreports the figure as `creditsCharged`, but the render then proceeds on its\nown — a `dryRun: true` pass gives you the number without spending anything."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -480,
-        -320
+        -540,
+        -1900
       ],
       "id": "zvid-dq-0021",
       "name": "Note 21"
     },
     {
       "parameters": {
-        "width": 620,
-        "height": 340,
-        "color": 5,
-        "content": "## Your sheet: five columns\n\nHeader row (row 1), spelled exactly like this:\n\n| Quote | Author | AuthorNote | Status | VideoUrl |\n| --- | --- | --- | --- | --- |\n\n- **Quote** + **Author** — required. AuthorNote is an optional line under the\n  author's name on the end card (\"Writer & essayist\").\n- **Status** — leave EMPTY for quotes waiting to be rendered. The workflow\n  takes the first empty-Status row (top to bottom), and writes `done` +\n  the video URL when the render finishes. Put anything in Status by hand to\n  skip a row.\n- Batch-paste a month of quotes whenever you like — one row is consumed per\n  day, and when every row is used the workflow simply reports \"nothing to\n  render\" until you add more."
+        "width": 800,
+        "height": 480,
+        "color": 2,
+        "content": "## 03. Your sheet: five columns\n\nHeader row (row 1), spelled exactly like this:\n\n| Quote | Author | AuthorNote | Status | VideoUrl |\n| --- | --- | --- | --- | --- |\n\n- **Quote** + **Author** — required. AuthorNote is an optional line under the\n  author's name on the end card (\"Writer & essayist\").\n- **Status** — leave EMPTY for quotes waiting to be rendered. The workflow\n  takes the first empty-Status row (top to bottom), and writes `done` +\n  the video URL when the render finishes. Put anything in Status by hand to\n  skip a row.\n- Batch-paste a month of quotes whenever you like — one row is consumed per\n  day, and when every row is used the workflow simply reports \"nothing to\n  render\" until you add more."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -80,
-        560
+        1220,
+        -1900
       ],
       "id": "zvid-dq-0022",
       "name": "Note 22"
     },
     {
       "parameters": {
-        "width": 640,
-        "height": 340,
-        "color": 6,
-        "content": "## Why it looks different every day\n\n*Build project JSON* carries a **pool of five curated background clips, each\npaired with a music bed** — misty forest, ember ink, rain on a window, a sea\nof clouds, a calm shore. The day-of-year picks the entry\n(`dayOfYear % 5`), so the rotation is deterministic: no repeats on\nconsecutive days within a year, and a re-run on the same day produces the same\nlook. (A leap year ends on day 366 and 366 % 5 == 1 % 5, so that one New Year's\nDay repeats New Year's Eve — pin poolIndexOverride if it matters.)\nEvery URL in the pool was verified reachable when this template was built.\n\n- Pin one look: set `poolIndexOverride` (0-4) in Config.\n- Bring your own: `backgroundVideoOverride` / `musicUrlOverride`\n  (portrait ~1080x1920, at least 10 s of video).\n\nType scales with content: the quote drops from 62 px to 42 px as it grows\ntowards ~220 characters, and long author names shrink to fit the end card —\nno clipping, no overflow."
+        "width": 800,
+        "height": 560,
+        "color": 7,
+        "content": "## 04. Why it looks different every day\n\n*Build project JSON* carries a **pool of five curated background clips, each\npaired with a music bed** — misty forest, ember ink, rain on a window, a sea\nof clouds, a calm shore. The day-of-year picks the entry\n(`dayOfYear % 5`), so the rotation is deterministic: no repeats on\nconsecutive days within a year, and a re-run on the same day produces the same\nlook. (A leap year ends on day 366 and 366 % 5 == 1 % 5, so that one New Year's\nDay repeats New Year's Eve — pin poolIndexOverride if it matters.)\nAll five background clips and the shared end-card image were verified at 1080×1920. Custom source media must fit your account's input limits before rendering begins.\n\n- Pin one look: set `poolIndexOverride` (0-4) in Config.\n- Bring your own: `backgroundVideoOverride` / `musicUrlOverride`\n  (portrait ~1080x1920, at least 10 s of video).\n\nType scales with content: the quote drops from 62 px to 42 px as it grows\ntowards ~220 characters, and long author names shrink to fit the end card —\nreview unusually long quotes and author notes before sharing."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        560,
-        -180
+        2100,
+        -1900
       ],
       "id": "zvid-dq-0023",
       "name": "Note 23"
     },
     {
       "parameters": {
-        "width": 620,
-        "height": 300,
-        "color": 4,
-        "content": "## Free preview: the optional dry run\n\n**`dryRun` is `false` in Config, so a run renders for real.** Set it to\n`true` whenever you want a free pass instead: the workflow validates the\npayload, quotes the exact credit cost and saves the project as a **draft**,\nthen reports an **editorLink** like `https://editor.zvid.io/?project=prj_...`\n\nOpen it to watch the exact video and tweak anything by hand, with nothing\nspent. **The sheet row is not marked done on a dry run**, so the next real\nrun renders the same quote.\n\nSet `dryRun` back to `false` to render and mark the row done."
+        "width": 800,
+        "height": 400,
+        "color": 3,
+        "content": "## 05. Free preview: the optional dry run\n\n**`dryRun` is `false` in Config, so a run renders for real.** Set it to\n`true` whenever you want a free pass instead: the workflow validates the\npayload, quotes the exact credit cost and saves the project as a **draft**,\nthen reports an **editorLink** like `https://editor.zvid.io/?project=prj_...`\n\nOpen it to watch the exact video and tweak anything by hand, with nothing\nspent. **The sheet row is not marked done on a dry run**, so the next real\nrun renders the same quote.\n\nSet `dryRun` back to `false` to render and mark the row done."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1480,
-        -260
+        -540,
+        -700
       ],
       "id": "zvid-dq-0024",
       "name": "Note 24"
     },
     {
       "parameters": {
-        "width": 660,
-        "height": 320,
-        "color": 7,
-        "content": "## Publishing the video (optional tail)\n\nThe workflow ends with the video URL in the sheet — a clean handoff you can\nextend after **Mark row done**:\n\n- **YouTube Shorts** — add an *HTTP Request* node (GET the `videoUrl`,\n  response format `File`) followed by the native **YouTube** node\n  (Video → Upload, binary `data`). Needs a YouTube OAuth2 credential.\n- **Instagram / TikTok / everywhere** — pass `videoUrl` to a scheduler\n  like Blotato, Buffer or Metricool via their HTTP API; they accept a public\n  video URL directly, no download step needed.\n- **Human in the loop** — a Slack or Email node that sends `videoUrl` to\n  whoever posts manually.\n\nThey are left out of the required path on purpose so the template imports\nand runs with a Zvid key and a Google account, nothing else."
+        "width": 800,
+        "height": 520,
+        "color": 5,
+        "content": "## 07. Publishing the video (optional tail)\n\nThe workflow ends with the video URL in the sheet — a clean handoff you can\nextend after **Mark row done**:\n\n- **YouTube Shorts** — add an *HTTP Request* node (GET the `videoUrl`,\n  response format `File`) followed by the native **YouTube** node\n  (Video → Upload, binary `data`). Needs a YouTube OAuth2 credential.\n- **Instagram / TikTok / everywhere** — pass `videoUrl` to a scheduler\n  like Blotato, Buffer or Metricool via their HTTP API; they accept a public\n  video URL directly, no download step needed.\n- **Human in the loop** — a Slack or Email node that sends `videoUrl` to\n  whoever posts manually.\n\nThey are left out of the required path on purpose so the template imports\nand runs with a Zvid key and a Google account, nothing else."
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2560,
-        -60
+        1220,
+        -700
       ],
       "id": "zvid-dq-0025",
       "name": "Note 25"
-    },
-    {
-      "parameters": {
-        "width": 620,
-        "height": 260,
-        "color": 6,
-        "content": "## Official Zvid nodes\n\nThese HTTP Request nodes are deliberately core-only so the workflow runs\nanywhere, including n8n Cloud with nothing installed.\n\nOn self-hosted n8n you can install **`@zvid/n8n-nodes-zvid`**\n(Settings → Community nodes) and swap:\n\n| HTTP Request node | Native replacement |\n| --- | --- |\n| Validate project (free) | **Zvid** → Render → Validate |\n| Submit render | **Zvid** → Render → Create |\n| Get render status + Wait | **Zvid Trigger** (render webhook) |"
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1860,
-        660
-      ],
-      "id": "zvid-dq-0026",
-      "name": "Note 26"
     },
     {
       "parameters": {
@@ -553,17 +508,13 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ name: $json.payload.name, payload: $json.payload }) }}",
-        "options": {}
+        "resource": "project",
+        "operation": "create",
+        "projectName": "={{ ({ name: $json.payload.name, payload: $json.payload }).name }}",
+        "projectJson": "={{ JSON.stringify(({ name: $json.payload.name, payload: $json.payload }).payload) }}"
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
       "position": [
         1520,
         60
@@ -588,6 +539,72 @@
       ],
       "id": "zvid-dq-0013",
       "name": "Dry run summary"
+    },
+    {
+      "id": "zvid-native-setup",
+      "name": "Install and connect Zvid",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        340,
+        -1900
+      ],
+      "parameters": {
+        "width": 800,
+        "height": 280,
+        "color": 6,
+        "content": "## 02. Install and connect Zvid\n\nInstall **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node."
+      }
+    },
+    {
+      "id": "zvid-watch-ready",
+      "name": "Video ready to watch?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2880,
+        280
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "zvid-watch-ready-condition",
+              "leftValue": "={{ !$json.dryRun && /^https?:\\/\\//i.test(String(($json.videoUrl) || '')) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-watch-instructions",
+      "name": "Watch the finished video",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        340,
+        -700
+      ],
+      "parameters": {
+        "content": "## 06. Watch the finished video\n\nAfter a render finishes, open **▶ Watch video**. In its output, choose **Binary → data → View** to play the video or download the file. For a batch, select an output item to watch each result. Image outputs open as images.\n\n**Video ready to watch?** skips previews when there is no finished media URL, including quote-only and dry-run results. The watch step downloads the finished file and does not start another render.\n\nIf the file is not available yet, the download retries up to three times. A preview download failure does not undo a completed render. The preceding result node still provides the media URL.",
+        "width": 800,
+        "height": 440,
+        "color": 4
+      }
     }
   ],
   "pinData": {},
@@ -804,11 +821,23 @@
       "main": [
         [
           {
-            "node": "▶ Watch video",
+            "node": "Video ready to watch?",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Video ready to watch?": {
+      "main": [
+        [
+          {
+            "node": "▶ Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
       ]
     }
   },

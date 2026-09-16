@@ -1,5 +1,11 @@
 # Weekly KPI report video to Slack
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
+File upload exception: the published Zvid node does not expose multipart uploads. The upload step uses HTTP Request → `POST /api/uploads`, authenticated with the same **Zvid API** credential. All supported Zvid operations use the Zvid node.
+
 [`zvid-kpi-report-video.json`](zvid-kpi-report-video.json)
 
 Every Monday at 9am: take one week of KPIs (up to five metrics), turn them into
@@ -85,9 +91,7 @@ Set `narrate: false` and the workflow runs on a Zvid key alone.
 > editor without spending anything. Set it back to `false` to render.
 
 1. **Import** `zvid-kpi-report-video.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Upload voiceover*, *Validate project
-   (free)*, *Save draft to editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node. Use it on the HTTP upload step too (Predefined Credential Type → Zvid API).
 3. **OpenRouter credential** — attach it to *Write narration*. (Skip when
    `narrate: false`.)
 4. **ElevenLabs credential** — add a SECOND **Header Auth** credential, name
@@ -245,6 +249,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a week never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 Core n8n node types only — no community nodes — at the type versions a stock
 n8n **2.29.10** resolves (`httpRequest` 4.2, `code` 2, `set` 3.4, `if` 2.2,

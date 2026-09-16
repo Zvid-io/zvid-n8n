@@ -1,5 +1,9 @@
 # Workout of the day from your training sheet
 
+## Required Zvid node
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+
 [`zvid-workout-of-the-day.json`](zvid-workout-of-the-day.json)
 
 Every morning at 06:00: read today's row from the gym's training sheet and turn it
@@ -83,9 +87,7 @@ always shows that row's own date, never today's.
 ## Setup
 
 1. **Import** `zvid-workout-of-the-day.json`.
-2. **Zvid credential** — add an n8n **Header Auth** credential, name `x-api-key`,
-   value = your Zvid key. Attach it to *Validate project (free)*, *Save draft to
-   editor*, *Submit render* and *Get render status*.
+2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **Google Sheets credential** — attach it to *Read workout sheet* and pick your
    spreadsheet + sheet in the two dropdowns.
 4. **Open `Config`** and set `gymName`, `handle`, `accent`.
@@ -145,10 +147,7 @@ in the workflow.
 | **Run summary** | `videoUrl`, `jobId`, `creditsCharged`, the workout name, date, exercise count and video length, plus a ready-to-paste `caption` (workout, focus, all exercises with reps, coach's note, hashtags). |
 | **▶ Watch video** | Downloads the finished MP4 into a binary field. n8n branches its output panel on the binary's mime type and renders `video/*` inline with a player and a download button, and Zvid's CDN serves these as `Content-Type: video/mp4` — so clicking the node just plays today's workout. Retries 3× (the CDN can 404 for a moment right after a render completes) and is set to continue on error, so watching a video can never fail a run that already succeeded. Attach any platform node after it: the MP4 is already on the item as binary `data`, and the text is `{{ $('Run summary').first().json.caption }}`. |
 
-On self-hosted n8n you can replace the render HTTP nodes with the native
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-nodes — the sticky note in the workflow has the mapping. The shipped workflow is
-deliberately core-only so it imports untouched on n8n Cloud.
+The workflow already uses the official Zvid node for all supported operations. Install and configure it as described above.
 
 ## Troubleshooting
 
@@ -166,6 +165,8 @@ deliberately core-only so it imports untouched on n8n Cloud.
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
 ## Verified
+
+> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 
 n8n import structure checked mechanically (JSON parses, all connections resolve,
 every code node compiles, unique names, Header Auth on all four Zvid calls), and

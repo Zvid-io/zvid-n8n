@@ -53,8 +53,9 @@
     "format": "prettier nodes credentials --write",
     "lint": "n8n-node lint",
     "lintfix": "n8n-node lint --fix",
-    "test": "npm run build && node --test test/nodes.test.js",
-    "prepublishOnly": "npm run build && npm run lint && node --test test/nodes.test.js"
+    "workflows:organize": "node scripts/organize-workflow-series.js --write",
+    "test": "npm run build && node --test test/nodes.test.js test/workflow-series.test.js test/workflow-preview.test.js",
+    "prepublishOnly": "npm run build && npm run lint && node --test test/nodes.test.js test/workflow-series.test.js test/workflow-preview.test.js"
   },
   "files": [
     "dist",
