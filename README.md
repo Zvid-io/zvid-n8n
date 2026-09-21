@@ -223,6 +223,18 @@ that exception in the workflow sticky notes and companion documentation. Add a
 validator that rejects supported Zvid API routes inside HTTP Request nodes so a
 later generator change cannot silently remove native-node attribution.
 
+Every new or materially updated publishable workflow must follow the
+[workflow template authoring standard](docs/workflow-template-authoring.md),
+which documents the required copy, layout, generator integration and checks.
+The 30-day workflow series and its Shopify variants use one yellow overview at
+the top left, with `### How it works` and `### Setup` in 100–300 words. Neutral
+section notes contain fewer than 50 words and surround related nodes. Keep
+required credentials, input columns, run costs and supported-operation exceptions
+in these instructions; companion workflow guides hold the detailed reference.
+Run `npm run workflows:organize` after regenerating a series template. The
+publication layouts preserve functional settings and are checked by
+`test/workflow-preview.test.js`.
+
 Export gallery JSON from an installation of the published scoped package. A
 development mount can serialize a dev-only or unscoped type that n8n cannot
 associate with this integration.

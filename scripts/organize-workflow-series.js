@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const { normalizeNodeGroups } = require('./zvid-native-workflows');
+const { applyPublicationNotes, publicationKind } = require('./publication-sticky-notes');
 
 const STICKY = 'n8n-nodes-base.stickyNote';
 const WATCH = '▶ Watch video';
@@ -105,6 +106,13 @@ function organizeWorkflow(original) {
     watch.position = [gateX + 260, gateY];
   }
 
+  // Reviewed publication layouts place short neutral section notes around nodes.
+  // Keep them intact instead of moving their instructions into detached rows.
+  const curatedKind = publicationKind(workflow);
+  if (curatedKind) {
+    const organized = applyPublicationNotes(workflow, curatedKind);
+    return { workflow: organized, addedWatch, removedDuplicateNotes: 0, noteCount: organized.nodes.filter(n => n.type === STICKY).length };
+  }
   const notes = workflow.nodes.filter(n => n.type === STICKY);
   // Preserve any unique instructions when consolidating the old setup cards.
   const generatedSetup = notes.find(n => n.id === 'zvid-native-setup');

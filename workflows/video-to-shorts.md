@@ -72,7 +72,7 @@ progress hairline instead.
 1. **Import** `zvid-video-to-shorts.json`.
 2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
 3. **ElevenLabs credential** — add a **Header Auth** credential, name
-   `xi-api-key`, value = your ElevenLabs key. Attach it to *Transcribe (Scribe)*.
+   `xi-api-key`, value = your ElevenLabs key. Enable **Speech to Text** (`speech_to_text`) for that key in ElevenLabs → Developers → API Keys → Edit. A narration-only key cannot transcribe. Attach it to *Transcribe (Scribe)*.
 4. **OpenRouter credential** — add an **OpenRouter** credential and attach it to
    *Pick highlights*.
 5. **Open `Config`** — set `handle` and `brandAccent`. Everything else works out

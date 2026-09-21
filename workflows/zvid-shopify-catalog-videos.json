@@ -6,8 +6,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1460,
-        280
+        50,
+        240
       ],
       "id": "zvid-sc-0001",
       "name": "Test manually"
@@ -26,8 +26,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1460,
-        460
+        310,
+        240
       ],
       "id": "zvid-sc-0002",
       "name": "Every day at 6am"
@@ -41,8 +41,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1240,
-        360
+        570,
+        240
       ],
       "id": "zvid-sc-0003",
       "name": "Config"
@@ -64,8 +64,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2300,
-        200
+        50,
+        1840
       ],
       "id": "zvid-sc-0038",
       "name": "Get Zvid video headers"
@@ -77,8 +77,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2540,
-        200
+        310,
+        1840
       ],
       "id": "zvid-sc-0039",
       "name": "Check Zvid video headers"
@@ -104,8 +104,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2780,
-        200
+        570,
+        1840
       ],
       "id": "zvid-sc-0040",
       "name": "Create Shopify upload targets"
@@ -117,8 +117,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3020,
-        200
+        830,
+        1840
       ],
       "id": "zvid-sc-0041",
       "name": "Check Shopify upload targets"
@@ -139,8 +139,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3260,
-        200
+        1310,
+        1840
       ],
       "id": "zvid-sc-0042",
       "name": "Download videos for Shopify",
@@ -196,8 +196,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3500,
-        200
+        1570,
+        1840
       ],
       "id": "zvid-sc-0043",
       "name": "Upload videos to Shopify staging",
@@ -212,8 +212,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3740,
-        200
+        1830,
+        1840
       ],
       "id": "zvid-sc-0044",
       "name": "Check Shopify staged uploads"
@@ -239,8 +239,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1020,
-        360
+        1050,
+        240
       ],
       "id": "zvid-sc-0004",
       "name": "Get Shopify catalog"
@@ -252,8 +252,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -800,
-        360
+        1310,
+        240
       ],
       "id": "zvid-sc-0005",
       "name": "Rows needing videos"
@@ -287,8 +287,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -580,
-        360
+        1570,
+        240
       ],
       "id": "zvid-sc-0006",
       "name": "Products found?"
@@ -300,8 +300,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -340,
-        600
+        1830,
+        240
       ],
       "id": "zvid-sc-0007",
       "name": "Nothing to render"
@@ -313,8 +313,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -340,
-        260
+        2310,
+        240
       ],
       "id": "zvid-sc-0008",
       "name": "Build project JSON"
@@ -330,8 +330,8 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        -100,
-        260
+        2570,
+        240
       ],
       "id": "zvid-sc-0009",
       "name": "Validate project (free)"
@@ -343,8 +343,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        140,
-        260
+        2830,
+        240
       ],
       "id": "zvid-sc-0010",
       "name": "Check validation"
@@ -378,8 +378,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        380,
-        260
+        50,
+        920
       ],
       "id": "zvid-sc-0011",
       "name": "Dry run?"
@@ -394,8 +394,8 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        620,
-        80
+        310,
+        920
       ],
       "id": "zvid-sc-0012",
       "name": "Save draft to editor",
@@ -412,8 +412,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        860,
-        80
+        570,
+        920
       ],
       "id": "zvid-sc-0013",
       "name": "Dry run summary"
@@ -433,8 +433,8 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        620,
-        360
+        1050,
+        920
       ],
       "id": "zvid-sc-0014",
       "name": "Submit bulk render",
@@ -449,8 +449,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        860,
-        360
+        1310,
+        920
       ],
       "id": "zvid-sc-0015",
       "name": "Check batch accepted"
@@ -463,8 +463,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1100,
-        360
+        1570,
+        920
       ],
       "id": "zvid-sc-0016",
       "name": "Wait"
@@ -478,8 +478,8 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        1340,
-        360
+        1830,
+        920
       ],
       "id": "zvid-sc-0017",
       "name": "Get batch status",
@@ -516,8 +516,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1580,
-        360
+        1830,
+        1160
       ],
       "id": "zvid-sc-0018",
       "name": "Batch finished?"
@@ -529,8 +529,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1580,
-        560
+        1570,
+        1160
       ],
       "id": "zvid-sc-0019",
       "name": "Still rendering?"
@@ -542,8 +542,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1820,
-        260
+        2310,
+        920
       ],
       "id": "zvid-sc-0020",
       "name": "Collect video links"
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2060,
-        260
+        2570,
+        920
       ],
       "id": "zvid-sc-0021",
       "name": "Publish automatically?"
@@ -590,8 +590,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2300,
-        480
+        2830,
+        920
       ],
       "id": "zvid-sc-0022",
       "name": "Rendered for review"
@@ -617,8 +617,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3980,
-        140
+        2310,
+        1840
       ],
       "id": "zvid-sc-0036",
       "name": "Attach video to Shopify product"
@@ -630,8 +630,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4220,
-        140
+        2570,
+        1840
       ],
       "id": "zvid-sc-0037",
       "name": "Check Shopify publish requests"
@@ -657,8 +657,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4460,
-        140
+        2830,
+        1840
       ],
       "id": "zvid-sc-0025",
       "name": "Mark product processed"
@@ -670,8 +670,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4700,
-        140
+        50,
+        2520
       ],
       "id": "zvid-sc-0026",
       "name": "Published summary"
@@ -691,8 +691,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2320,
-        900
+        570,
+        2520
       ],
       "id": "zvid-sc-0027",
       "name": "▶ Watch video",
@@ -703,301 +703,13 @@
       "waitBetweenTries": 5000
     },
     {
-      "parameters": {
-        "content": "## 01. Create and publish Shopify product videos with Zvid\n\nTurn active Shopify apparel products into branded vertical videos, review them, and optionally attach the finished MP4s to the matching product pages. It is designed for ecommerce and marketing teams that want catalog-scale product creative without rebuilding every video by hand.\n\n### How it works\nThe workflow reads active products, skips items already tagged or carrying usable video, maps product images and data into one shared Zvid design, validates the batch, and renders the videos together by default. An optional dry run provides a free editor preview. Publishing uses Shopify's staged-upload flow, associates each hosted video with its product, and adds the processed tag only after Shopify accepts the request.\n\n### Setup\n1. Complete the Shopify and Zvid credential notes to the right.\n2. Open Config and replace the store, brand, copy, palette, limits, and schedule values.\n3. Run manually with `dryRun: false` (the default). Rendering spends Zvid credits.\n4. Review the finished videos in **▶ Watch video**. Set `dryRun: true` before running if you want a free editor preview and quote instead.\n5. Keep `publishToShopify` false until the videos are approved.\n\n### Customization\nThe sample is optimized for apparel with square studio or flat-lay images, description bullets, prices, and sizes. Other product categories can reuse the flow after changing the scene labels and copy in Config. Never put secrets in Config.",
-        "height": 1040,
-        "width": 800,
-        "color": 6
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -1540,
-        -2080
-      ],
-      "id": "zvid-sc-note-overview",
-      "name": "Overview — required"
-    },
-    {
-      "parameters": {
-        "content": "## 08. Shopify app (2026+)\n\nShopify Admin → Settings → Apps → Develop apps → Build apps in Dev Dashboard. Create an app/version, request `read_products`, `write_products`, and `write_files`, release it, then install it on the target store.",
-        "height": 280,
-        "width": 800,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -1540,
-        -960
-      ],
-      "id": "zvid-sc-note-shopify-app",
-      "name": "Shopify app setup"
-    },
-    {
-      "parameters": {
-        "content": "## 03. Get the Shopify token\n\nDev Dashboard apps show Client ID and Client secret—not a token. Exchange them with `POST https://{shop}.myshopify.com/admin/oauth/access_token` using `grant_type=client_credentials`. Copy the returned `access_token`; it expires after 24 hours. The ID or secret alone is never the access token.",
-        "height": 280,
-        "width": 800,
-        "color": 6
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        220,
-        -2080
-      ],
-      "id": "zvid-sc-note-shopify-token",
-      "name": "Shopify token setup"
-    },
-    {
-      "parameters": {
-        "content": "## 04. Connect Shopify in n8n\n\nCreate Header Auth: Name `X-Shopify-Access-Token`; Value = returned Admin API token. Assign it to Get catalog, Create upload targets, Attach video, and Mark processed. Existing admin-created apps can use their installed token. Refresh expiring tokens before scheduled runs.",
-        "height": 280,
-        "width": 800,
-        "color": 6
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1100,
-        -2080
-      ],
-      "id": "zvid-sc-note-shopify-credential",
-      "name": "Shopify n8n credential"
-    },
-    {
-      "parameters": {
-        "content": "## 05. Connect Zvid in n8n\n\nBefore configuring credentials, ask a workspace owner or admin to install `@zvid/n8n-nodes-zvid` from **Settings → Community nodes** if you cannot install community nodes yourself. Then create a key at https://app.zvid.io/api-keys and save it in a **Zvid API** credential. Select that credential on Validate project, Save draft, Submit bulk render, and Get batch status. All four steps use the native Zvid node and the same credential. Never paste either provider's secret into Config.",
-        "height": 320,
-        "width": 800,
-        "color": 6
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1980,
-        -2080
-      ],
-      "id": "zvid-sc-note-zvid-credential",
-      "name": "Zvid n8n credential"
-    },
-    {
-      "parameters": {
-        "content": "## 06. Example catalog\n\nFive unisex tees: Alpine Crest ivory ($34), Clay Pocket terracotta ($35), Dawnline washed black ($32), Harbor Stripe navy/ivory ($36), and Meadow Sprig sage ($30). Each has square studio or flat-lay imagery, product copy, and S–XXL variants.",
-        "height": 280,
-        "width": 800,
-        "color": 2
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2860,
-        -2080
-      ],
-      "id": "zvid-sc-note-examples",
-      "name": "Example Shopify products"
-    },
-    {
-      "parameters": {
-        "content": "## 07. Product data used\n\nRequired: active title, public product image, and priced variant. Up to four images feed the scenes. Description bullets, sizes, vendor, type, prices, title, tags, handle, and storefront domain personalize the output. Missing essentials are reported in `skipped`.",
-        "height": 280,
-        "width": 800,
-        "color": 2
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        3740,
-        -2080
-      ],
-      "id": "zvid-sc-note-product-data",
-      "name": "Product data requirements"
-    },
-    {
-      "parameters": {
-        "content": "## 14. Safe run modes\n\nThe default is `dryRun: false`: validate and render the batch, spending Zvid credits. Keep `publishToShopify: false` to review the finished videos. Set `dryRun: true` for an optional free quote and editor preview. Enable publishing after approval; publishing changes Shopify media.",
-        "height": 280,
-        "width": 800,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        3740,
-        -960
-      ],
-      "id": "zvid-sc-note-run-modes",
-      "name": "Run modes and credits"
-    },
-    {
-      "parameters": {
-        "content": "## 09. Why some HTTP Request nodes?\n\nn8n's Shopify node does not expose the required GraphQL media and staged-upload flow. Zvid's advanced first-item validation, editor-draft, and bulk-status calls also need API shapes not yet exposed by the action node. The actual bulk submission uses the native Zvid node, so n8n can associate this template with the Zvid integration.",
-        "height": 280,
-        "width": 800,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -660,
-        -960
-      ],
-      "id": "zvid-sc-note-http",
-      "name": "Why some HTTP Request nodes"
-    },
-    {
-      "parameters": {
-        "content": "## 18. Shopify video publishing\n\nA public MP4 cannot be attached directly as hosted video. This flow reads file size, creates a staged target, uploads the MP4, then associates Shopify's staged URL. Only accepted products are tagged; Shopify processes the media asynchronously.",
-        "height": 280,
-        "width": 800,
-        "color": 5
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1100,
-        -600
-      ],
-      "id": "zvid-sc-note-publishing",
-      "name": "Shopify publishing behavior"
-    },
-    {
-      "parameters": {
-        "content": "## 10. Queue and final status\n\nSuccessful products receive `zvid-video`; the query excludes that tag. Existing non-failed videos are skipped, so scheduled batches advance safely. Final media status is initially `PROCESSING`; confirm `READY` in Shopify Admin before treating it as live.",
-        "height": 280,
-        "width": 800,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        220,
-        -960
-      ],
-      "id": "zvid-sc-note-queue",
-      "name": "Catalog queue behavior"
-    },
-    {
-      "parameters": {
-        "content": "## 11. Start and load products\n\nManual test or daily schedule → Config → Shopify catalog → eligibility checks.",
-        "height": 280,
-        "width": 800,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1100,
-        -960
-      ],
-      "id": "zvid-sc-section-1",
-      "name": "Section 1 — Catalog input"
-    },
-    {
-      "parameters": {
-        "content": "## 15. Build and validate\n\nCreate the shared video design, validate every product, then choose dry run or rendering.",
-        "height": 280,
-        "width": 800,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -1540,
-        -600
-      ],
-      "id": "zvid-sc-section-2",
-      "name": "Section 2 — Build and validate"
-    },
-    {
-      "parameters": {
-        "content": "## 16. Preview or render\n\nSave a free editor draft, or submit and monitor one Zvid bulk render.",
-        "height": 280,
-        "width": 800,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -660,
-        -600
-      ],
-      "id": "zvid-sc-section-3",
-      "name": "Section 3 — Preview or render"
-    },
-    {
-      "parameters": {
-        "content": "## 19. Review or publish\n\nMap completed videos to Shopify product GIDs and stop for review unless publishing is enabled.",
-        "height": 280,
-        "width": 800,
-        "color": 5
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1980,
-        -600
-      ],
-      "id": "zvid-sc-section-4",
-      "name": "Section 4 — Review gate"
-    },
-    {
-      "parameters": {
-        "content": "## 12. Stage videos in Shopify\n\nInspect each MP4, create secure upload targets, download, upload, and verify every staged transfer.",
-        "height": 280,
-        "width": 800,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1980,
-        -960
-      ],
-      "id": "zvid-sc-section-5",
-      "name": "Section 5 — Shopify staging"
-    },
-    {
-      "parameters": {
-        "content": "## 13. Attach, tag, summarize\n\nAssociate staged videos, tag only successful products, and return processing status plus failures.",
-        "height": 280,
-        "width": 800,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2860,
-        -960
-      ],
-      "id": "zvid-sc-section-6",
-      "name": "Section 6 — Publish result"
-    },
-    {
-      "id": "zvid-native-setup",
-      "name": "Install and connect Zvid",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -660,
-        -2080
-      ],
-      "parameters": {
-        "width": 800,
-        "height": 280,
-        "color": 6,
-        "content": "## 02. Install and connect Zvid\n\nInstall **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node."
-      }
-    },
-    {
       "id": "zvid-watch-ready",
       "name": "Video ready to watch?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2060,
-        900
+        310,
+        2520
       ],
       "parameters": {
         "conditions": {
@@ -1025,19 +737,179 @@
       }
     },
     {
-      "id": "zvid-watch-instructions",
-      "name": "Watch the finished video",
+      "id": "publication-overview-shopify-catalog-videos",
+      "name": "Workflow overview and setup",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        220,
-        -600
+        -800,
+        0
       ],
       "parameters": {
-        "content": "## 17. Watch the finished video\n\nAfter a render finishes, open **▶ Watch video**. In its output, choose **Binary → data → View** to play the video or download the file. For a batch, select an output item to watch each result. Image outputs open as images.\n\n**Video ready to watch?** skips previews when there is no finished media URL, including quote-only and dry-run results. The watch step downloads the finished file and does not start another render.\n\nIf the file is not available yet, the download retries up to three times. A preview download failure does not undo a completed render. The preceding result node still provides the media URL.",
-        "width": 800,
-        "height": 440,
-        "color": 4
+        "content": "## Create and publish Shopify product videos\n\n### How it works\nSelect eligible Shopify products, render branded vertical videos in a batch, and return them for review. When publishing is enabled, stage the files in Shopify, attach them to matching products and tag accepted results.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node.\n3. Set the canonical shopDomain, branding and maxProducts in Config. Keep publishToShopify=false while reviewing videos.\n4. Create Header Auth named X-Shopify-Access-Token with an installed Shopify Admin token and assign it to the Shopify requests. The app needs read_products, write_products and write_files; refresh expiring tokens before scheduled runs.\n5. **dryRun=false** renders and spends Zvid credits. Set it to **true** for an editor draft and quote.\n6. Test manually and review the output before activating automatic runs.\n\n### Customization\nAdjust branding, media and timing in the configuration node. [Detailed setup guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/shopify-catalog-videos.md).",
+        "color": 1,
+        "width": 720,
+        "height": 1160
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-configure",
+      "name": "1. Choose settings and an entry point",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "content": "## 1. Choose settings and an entry point\n\nComplete the overview setup first. Use the manual trigger for a test, then check the trigger settings and workflow timezone before activation.",
+        "color": 7,
+        "width": 880,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-catalog",
+      "name": "2. Load eligible Shopify products",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        0
+      ],
+      "parameters": {
+        "content": "## 2. Load eligible Shopify products\n\nRequire an active product with a title, public photo and priced variant. Skip already processed products and usable existing videos.",
+        "color": 7,
+        "width": 1140,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-validate",
+      "name": "3. Build and validate the design",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        0
+      ],
+      "parameters": {
+        "content": "## 3. Build and validate the design\n\nPrepare the media and video design, then validate the payload and credit quote. Resolve validation errors before submitting a render.",
+        "color": 7,
+        "width": 880,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-preview",
+      "name": "4. Choose an optional editor preview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        680
+      ],
+      "parameters": {
+        "content": "## 4. Choose an optional editor preview\n\ndryRun=true returns an editor draft and credit quote. The default false branch renders and spends Zvid credits; upstream AI services may charge separately.",
+        "color": 7,
+        "width": 880,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-render",
+      "name": "5. Render and wait for completion",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        680
+      ],
+      "parameters": {
+        "content": "## 5. Render and wait for completion\n\nSubmit the render, then check its status until completion or timeout. Keep each result paired with its source item. Check Zvid before retrying a timed-out job.",
+        "color": 7,
+        "width": 1140,
+        "height": 760
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-review",
+      "name": "6. Review or begin publishing",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        680
+      ],
+      "parameters": {
+        "content": "## 6. Review or begin publishing\n\npublishToShopify=false returns videos for review. Enabling it changes product media in Shopify.",
+        "color": 7,
+        "width": 880,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-headers",
+      "name": "7. Check each video before upload",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1600
+      ],
+      "parameters": {
+        "content": "## 7. Check each video before upload\n\nRead each completed file’s size and create a Shopify staged-upload target. Shopify media transfer requires HTTP Request nodes.",
+        "color": 7,
+        "width": 1140,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-stage",
+      "name": "8. Transfer videos to Shopify",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        1600
+      ],
+      "parameters": {
+        "content": "## 8. Transfer videos to Shopify\n\nDownload each MP4, upload it to the staged target, and check that the transfer succeeded before attaching it.",
+        "color": 7,
+        "width": 880,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-shopify-catalog-videos-publish",
+      "name": "9. Attach and tag accepted products",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        1600
+      ],
+      "parameters": {
+        "content": "## 9. Attach and tag accepted products\n\nAssociate staged videos with their matching product IDs. Tag accepted products only; Shopify processes the media asynchronously, so confirm READY in Shopify Admin.",
+        "color": 7,
+        "width": 880,
+        "height": 520
+      }
+    },
+    {
+      "id": "zvid-watch-instructions",
+      "name": "10. Review the finished media",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        2280
+      ],
+      "parameters": {
+        "content": "## 10. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.",
+        "color": 7,
+        "width": 880,
+        "height": 520
       }
     }
   ],

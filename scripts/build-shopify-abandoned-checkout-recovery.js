@@ -771,5 +771,7 @@ const workflow = {
   tags: [],
 };
 
-fs.writeFileSync(outputPath, JSON.stringify(workflow, null, 2) + '\n');
-console.log(`Wrote ${outputPath} (${nodes.length} nodes)`);
+const { organizeWorkflow } = require('./organize-workflow-series');
+const organized = organizeWorkflow(workflow).workflow;
+fs.writeFileSync(outputPath, JSON.stringify(organized, null, 2) + '\n');
+console.log(`Wrote ${outputPath} (${organized.nodes.length} nodes)`);

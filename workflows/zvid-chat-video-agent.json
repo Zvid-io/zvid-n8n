@@ -11,8 +11,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.3,
       "position": [
-        -720,
-        260
+        50,
+        240
       ],
       "id": "zvid-cva-0001",
       "name": "On Telegram message"
@@ -22,8 +22,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -720,
-        480
+        310,
+        240
       ],
       "id": "zvid-cva-0002",
       "name": "Test manually"
@@ -37,8 +37,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -500,
-        480
+        1050,
+        240
       ],
       "id": "zvid-cva-0003",
       "name": "Test brief"
@@ -50,8 +50,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -280,
-        360
+        1310,
+        240
       ],
       "id": "zvid-cva-0004",
       "name": "Prepare chat input"
@@ -65,8 +65,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -60,
-        360
+        570,
+        240
       ],
       "id": "zvid-cva-0005",
       "name": "Config"
@@ -78,8 +78,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        160,
-        360
+        1570,
+        240
       ],
       "id": "zvid-cva-0006",
       "name": "Screen request"
@@ -113,8 +113,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        380,
-        360
+        1830,
+        240
       ],
       "id": "zvid-cva-0007",
       "name": "Brief ready?"
@@ -133,8 +133,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        620,
-        340
+        2310,
+        240
       ],
       "id": "zvid-cva-0008",
       "name": "Zvid AI Agent",
@@ -148,8 +148,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        420,
-        700
+        2570,
+        240
       ],
       "id": "zvid-cva-0009",
       "name": "Chat model (OpenRouter)"
@@ -163,8 +163,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.4,
       "position": [
-        620,
-        700
+        2830,
+        240
       ],
       "id": "zvid-cva-0010",
       "name": "Chat memory"
@@ -193,8 +193,8 @@
       "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
       "typeVersion": 1.4,
       "position": [
-        820,
-        700
+        3090,
+        240
       ],
       "id": "zvid-cva-0011",
       "name": "Zvid MCP tools"
@@ -206,8 +206,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        900,
-        360
+        50,
+        920
       ],
       "id": "zvid-cva-0012",
       "name": "Chat reply"
@@ -241,8 +241,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1120,
-        360
+        310,
+        920
       ],
       "id": "zvid-cva-0013",
       "name": "Reply in Telegram?"
@@ -261,8 +261,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1360,
-        280
+        570,
+        920
       ],
       "id": "zvid-cva-0014",
       "name": "Send reply",
@@ -301,8 +301,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1580,
-        280
+        830,
+        920
       ],
       "id": "zvid-cva-0015",
       "name": "Video ready?"
@@ -319,8 +319,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1820,
-        200
+        830,
+        1160
       ],
       "id": "zvid-cva-0016",
       "name": "Send video",
@@ -345,8 +345,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2340,
-        360
+        1570,
+        920
       ],
       "id": "zvid-cva-0017",
       "name": "▶ Watch video",
@@ -357,125 +357,13 @@
       "waitBetweenTries": 5000
     },
     {
-      "parameters": {
-        "width": 800,
-        "height": 1280,
-        "color": 6,
-        "content": "## 01. Telegram chat to finished video (Zvid AI agent)\n\nSend a written brief to your own Telegram bot. An n8n AI Agent plans it,\nadapts the closest design from Zvid's library, saves a draft, and replies\nwith the **credit quote plus an editor link**. It renders after you reply\nyes — then the finished MP4 is posted back into the chat as a playable clip.\n\n```\nTelegram message -> Prepare chat input -> Config -> Screen request\n   -> Zvid AI Agent (OpenRouter model + per-chat memory + Zvid MCP tools)\n   -> Chat reply -> Send reply -> Send video\n```\n\n### Setup (about three minutes)\n\n1. **Telegram bot** — talk to @BotFather, `/newbot`, copy the token. In n8n add\n   a **Telegram API** credential with that token and attach it to\n   *On Telegram message*, *Send reply* and *Send video*.\n2. **OpenRouter** — add an **OpenRouter API** credential and attach it to\n   *Chat model (OpenRouter)*. Choose any OpenRouter model id in **Config**; keep this\n   OpenRouter model node connected to the agent.\n3. **Zvid key** — create one at https://app.zvid.io/api-keys, add an n8n\n   **Header Auth** credential with name `x-api-key` and your key as the value,\n   and attach it to *Zvid MCP tools*.\n4. **Try it with no Telegram at all** — click **Test manually**. The brief in\n   *Test brief* runs the whole agent loop and carries no approval, so the agent\n   is told to stop at the quote. Read its words in *Chat reply*.\n5. **Activate the workflow.** The Telegram trigger is a webhook: n8n has to be\n   reachable from the internet (n8n Cloud is; a local instance needs a tunnel\n   or `N8N_WEBHOOK_URL` pointing at a public address). Nothing arrives while\n   the workflow is inactive.\n6. **Let your own chat in.** `allowedChatIds` in **Config** ships empty, and an\n   empty list answers no Telegram chat at all. Message the bot once — the reply\n   tells you your chat id. Paste it into the list and save.\n7. Message your bot: *\"12-second vertical teaser for FocusFlow, dark premium\n   look, tagline Focus without friction\"*, then reply yes to the quote.\n\n### Cost\n\nChatting, planning and quoting are **free** — drafts do not spend credits.\nOnly a render you approve costs anything, and the exact number is quoted to\nyou first (a short vertical clip is usually ten to twenty credits).\n`maxRenderCredits` in **Config** is the server-enforced ceiling per render.\nThe model provider bills its own tokens per message."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -800,
-        -3200
-      ],
-      "id": "zvid-cva-0018",
-      "name": "Note 60"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 800,
-        "color": 3,
-        "content": "## 06. What actually stops a surprise charge\n\nTwo of these are enforced by Zvid's server. One is the model following its\ninstructions. It is worth knowing which is which.\n\n**Server-side — a confused model cannot talk past these:**\n\n- `render_media` refuses to run without the signed `quoteToken` that came back\n  with the draft, and the server re-checks the draft version, the payload hash\n  and the price before it accepts one. Change any of them and the render is\n  refused with \"call get_media for a new quote\".\n- `maxRenderCredits` in **Config** is a **ceiling per render**, enforced by the\n  MCP server (it travels in the *Zvid MCP tools* endpoint URL). It ships at\n  **25**; a short vertical clip is usually 10–20. Your dashboard's MCP credit\n  limit caps it further — the lower of the two wins.\n- The `creator` profile in that URL exposes no render tool that can skip a\n  quote in the first place.\n\n**Prompt-level — asked for in the system message, not locked:** quoting first,\nwaiting for your yes, and rendering at most once per message.\n`create_media_from_example` hands the model the quote token in the *same* tool\nresult, so nothing but that instruction stops a model from quoting and\nrendering inside one turn. Keep `maxRenderCredits` at a number you would not\nmind losing, and leave `allowSameMessageApproval` at `false`.\n\n**Who can talk to it at all:** `allowedChatIds` ships **empty**, and an empty\nlist serves no Telegram chat — bot usernames are public, so this template fails\nclosed on purpose. The manual test path ignores the list."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        960,
-        -1840
-      ],
-      "id": "zvid-cva-0019",
-      "name": "Note 61"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 520,
-        "color": 6,
-        "content": "## 02. Needs the built-in AI nodes\n\n*Zvid AI Agent*, *Chat model (OpenRouter)*, *Chat memory* and *Zvid MCP tools*\nare n8n's built-in **LangChain** nodes — available on n8n Cloud and on any\ncurrent self-hosted install, no community package required. Built and\nversion-checked against **n8n 2.29.10**.\n\n**If you ever loaded Zvid's community node locally**, do not export a workflow\nwhose nodes show up as `CUSTOM.zvidAgentTools`: a `CUSTOM.`-prefixed type only\nresolves on the machine that had the extension mounted, and the import fails\neverywhere else. This template deliberately uses the stock **MCP Client Tool**\ninstead, so it runs anywhere.\n\nPrefer signing in to Zvid over pasting an API key? Switch *Zvid MCP tools*\nto an **MCP OAuth2 API** credential (keep dynamic client registration\nenabled) and sign in with your Zvid account instead of the Header Auth key.\nThe flow around it stays exactly the same."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        80,
-        -3200
-      ],
-      "id": "zvid-cva-0020",
-      "name": "Note 62"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 720,
-        "color": 2,
-        "content": "## 03. Two entry points\n\n**On Telegram message** is the real one: message updates only, and\n*Prepare chat input* answers politely instead of guessing when someone sends\na sticker, a voice note or a photo with no caption.\n\n**Test manually** exists so you can exercise the agent with no Telegram\ncredential at all — handy for a first run, and for comparing models. It feeds\nthe fixed brief in *Test brief* into the same *Prepare chat input* node, and\nbecause that run is not a Telegram chat, *Reply in Telegram?* sends it straight\nto **▶ Watch video**, skipping both Telegram nodes. `allowedChatIds` never\napplies to it, so locking the bot down cannot break your own test.\n\nThe shipped brief carries **no approval**, so the agent's instructions are to\nstop at the quote — which is a rule the model follows, not a lock, so keep\n`maxRenderCredits` somewhere you would not mind. On a quote-only run\n*▶ Watch video* has no URL to fetch and shows a warning, which by design can\nnever fail a run. Read the quote in *Chat reply*.\n\nWant the manual run to render for real? Set `allowSameMessageApproval` to\n`true` in **Config** and append this line to *Test brief*:\n\n`You may treat this message as approval to render up to 20 credits.`\n\nThat is the only setting in which one message can pay for its own render — put\nit back to `false` afterwards."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        960,
-        -3200
-      ],
-      "id": "zvid-cva-0021",
-      "name": "Note 63"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 920,
-        "color": 5,
-        "content": "## 08. How the clip gets into the chat\n\n*Chat reply* is the single exit for all three paths — the agent's answer, the\nagent's error output, and a screened-out message — so the Telegram nodes never\nhave to know which one produced the text.\n\nThe system message tells the agent to print a finished MP4 URL **on a line of\nits own**. *Chat reply* takes the last `.mp4` link that starts with one of the\n`videoUrlPrefixes` entries from **Config**, and *Send video* posts it with\n`sendVideo` so Telegram plays it inline instead of showing a link.\n\n- **Those prefixes are paths, not just hosts** — `https://cdn.zvid.io/videos/`\n  by default, which is where a finished render lands. Every library example the\n  agent looks at also has a preview on `cdn.zvid.io`, under\n  `/library/examples/previews/`, so a host-only check would happily post\n  another project's demo clip as your finished video before anything had\n  rendered. Anything outside the prefixes is called out in the reply and never\n  fetched — which matters, because Telegram fetches that URL server-side and\n  **▶ Watch video** downloads it from inside n8n, and the text it was lifted\n  from was written by a model that just read a chat message and third-party\n  stock captions.\n- *Send reply* uses **HTML** parse mode and *Chat reply* escapes `& < >` to\n  match. n8n's Telegram node otherwise forces legacy Markdown, where a single\n  stray underscore in a `prj_...` id either 400s the send or silently eats part\n  of the editor link.\n- The text reply goes out first and carries the URL, and it cannot swallow the\n  clip: *Send reply* and *Send video* both continue on error.\n- **▶ Watch video** downloads the MP4 as binary, so you can play the result\n  right here in n8n after a run.\n- Replies over Telegram's 4096-character limit are trimmed, never dropped —\n  and the trim keeps the video URL."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        80,
-        -960
-      ],
-      "id": "zvid-cva-0022",
-      "name": "Note 64"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 600,
-        "color": 7,
-        "content": "## 05. Model and tools\n\n**Config** holds the knobs: `model`, `maxIterations`, `memoryWindow`,\n`maxRenderCredits`, `allowedChatIds`, `allowSameMessageApproval`,\n`videoUrlPrefixes`, `replyOnError`. Credentials never live here.\n\n`openai/gpt-4.1-mini` is a cheap default. A stronger model plans noticeably\nbetter videos — it picks better library examples and writes better copy — and\nholds a multi-step rule more reliably, so put a current frontier model id here\n(Claude Sonnet or GPT-5 class; OpenRouter's model list has the exact strings)\nif the output feels generic or the agent fumbles the quote-then-ask sequence.\nNo particular model's behaviour was verified while building this template.\n\n*Zvid MCP tools* is set to **Selected** tools on purpose: nine of them, instead\nof the full catalogue. The whole tool schema is ~74 KB of prompt on every\nsingle turn, which slows and confuses small models. Add more only if you need\nthem — `revise_media` is the usual next one.\n\n*Chat memory* is keyed per chat (`tg-<chatId>`) and keeps the last\n`memoryWindow` turns, which is what lets \"yes, render it\" refer to the quote\nfrom the previous message."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        80,
-        -1840
-      ],
-      "id": "zvid-cva-0023",
-      "name": "Note 65"
-    },
-    {
-      "id": "zvid-native-setup",
-      "name": "Zvid agent integration",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -800,
-        -1840
-      ],
-      "parameters": {
-        "width": 800,
-        "height": 280,
-        "color": 7,
-        "content": "## 04. Zvid agent integration\n\nAI-agent exception: this workflow uses n8n’s built-in **MCP Client Tool** against **https://mcp.zvid.io/mcp**. Zvid’s conversational creation and approval tools are exposed through MCP, not equivalent operations in the published Zvid node. Keep the existing MCP authentication and approval settings."
-      }
-    },
-    {
       "id": "zvid-watch-ready",
       "name": "Video ready to watch?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2080,
-        360
+        1310,
+        920
       ],
       "parameters": {
         "conditions": {
@@ -503,19 +391,99 @@
       }
     },
     {
-      "id": "zvid-watch-instructions",
-      "name": "Watch the finished video",
+      "id": "publication-overview-chat-video-agent",
+      "name": "Workflow overview and setup",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
         -800,
-        -960
+        0
       ],
       "parameters": {
-        "content": "## 07. Watch the finished video\n\nAfter a render finishes, open **▶ Watch video**. In its output, choose **Binary → data → View** to play the video or download the file. For a batch, select an output item to watch each result. Image outputs open as images.\n\n**Video ready to watch?** skips previews when there is no finished media URL, including quote-only and dry-run results. The watch step downloads the finished file and does not start another render.\n\nIf the file is not available yet, the download retries up to three times. A preview download failure does not undo a completed render. The preceding result node still provides the media URL.",
-        "width": 800,
-        "height": 440,
-        "color": 4
+        "content": "## Create videos through a Telegram chat\n\n### How it works\nAn AI agent uses your brief to find a Zvid design, create an editable draft and return a credit quote. It is instructed to wait for approval before rendering and can send a finished video back to Telegram.\n\n### Setup\n1. Connect Telegram credentials to the trigger and both send nodes. Add your chat ID to allowedChatIds; the empty list allows no Telegram chats.\n2. Connect OpenRouter to Chat model (OpenRouter). Attach Header Auth with header x-api-key and your Zvid key from https://app.zvid.io/api-keys to Zvid MCP tools.\n3. Use n8n’s built-in AI nodes and https://mcp.zvid.io/mcp. Set maxRenderCredits and keep the finished-video URL allow-list.\n4. Test manually with Test brief. Telegram needs an active workflow and a publicly reachable webhook.\n\n### Customization\nAdjust the model and creative brief in Config. Approval is a prompt instruction, not a hard lock; keep a conservative credit ceiling. [Detailed setup guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/chat-video-agent.md).",
+        "color": 1,
+        "width": 720,
+        "height": 1160
+      }
+    },
+    {
+      "id": "publication-section-chat-video-agent-configure",
+      "name": "1. Choose settings and an entry point",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "content": "## 1. Choose settings and an entry point\n\nComplete the overview setup first. Use the manual trigger for a test, then check the trigger settings and workflow timezone before activation.",
+        "color": 7,
+        "width": 880,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-chat-video-agent-brief",
+      "name": "2. Prepare and screen the brief",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        0
+      ],
+      "parameters": {
+        "content": "## 2. Prepare and screen the brief\n\nTest brief needs no Telegram connection. Live requests must pass allowedChatIds and include a usable brief.",
+        "color": 7,
+        "width": 1140,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-chat-video-agent-agent",
+      "name": "3. Plan, quote and render with MCP",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        0
+      ],
+      "parameters": {
+        "content": "## 3. Plan, quote and render with MCP\n\nAI-agent exception: use the built-in MCP Client Tool for Zvid’s conversational tools. Approval is an agent instruction; maxRenderCredits supplies a server-enforced per-render ceiling. Model usage can still incur charges.",
+        "color": 7,
+        "width": 1140,
+        "height": 520
+      }
+    },
+    {
+      "id": "publication-section-chat-video-agent-telegram",
+      "name": "4. Reply in the allowed chat",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        680
+      ],
+      "parameters": {
+        "content": "## 4. Reply in the allowed chat\n\nReturn the quote or completed result. Only finished-video URLs matching the allow-list are sent as Telegram video.",
+        "color": 7,
+        "width": 1140,
+        "height": 760
+      }
+    },
+    {
+      "id": "zvid-watch-instructions",
+      "name": "5. Review the finished media",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        680
+      ],
+      "parameters": {
+        "content": "## 5. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.",
+        "color": 7,
+        "width": 620,
+        "height": 520
       }
     }
   ],

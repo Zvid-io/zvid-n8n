@@ -71,18 +71,18 @@ const codeNodes = functional.filter((entry) => entry.type === 'n8n-nodes-base.co
 for (const entry of codeNodes) new Function(entry.parameters.jsCode);
 
 const countWords = (text) => String(text || '').trim().split(/\s+/).filter(Boolean).length;
-const overview = stickies.filter((entry) => entry.parameters.color === undefined);
+const overview = stickies.filter((entry) => entry.parameters.color === 1);
 assert.strictEqual(overview.length, 1, 'Exactly one default yellow overview sticky is required');
 const overviewWords = countWords(overview[0].parameters.content);
 assert(overviewWords >= 100 && overviewWords <= 300, `Overview must be 100-300 words, got ${overviewWords}`);
-const sectionNotes = stickies.filter((entry) => /^### \d\./.test(entry.parameters.content));
+const sectionNotes = stickies.filter((entry) => /^## \d+\./.test(entry.parameters.content));
 for (const entry of sectionNotes) assert(countWords(entry.parameters.content) < 50, `${entry.name} must be under 50 words`);
 
 const config = JSON.parse(nodeByName.get('Config').parameters.jsonOutput);
 assert.strictEqual(config.shopDomain, 'your-store');
 assert.strictEqual(config.shopifyApiVersion, '2026-07');
 assert.strictEqual(config.manualFixture, true);
-assert.strictEqual(config.dryRun, true);
+assert.strictEqual(config.dryRun, false);
 assert.strictEqual(config.sendEmail, false);
 assert.strictEqual(config.testFixture.email, 'alex@example.com');
 assert.strictEqual(config.testFixture.items[0].title, 'Clay Pocket Oversized Tee');
@@ -93,8 +93,8 @@ assert(raw.includes('https://app.zvid.io/api-keys'));
 assert(raw.includes('https://api.zvid.io'));
 assert(raw.includes('https://editor.zvid.io'));
 assert(raw.includes('@zvid/n8n-nodes-zvid'));
-assert(raw.includes('Settings -> Community nodes'));
-assert(raw.includes('workspace owner or admin'));
+assert(raw.includes('Settings → Community nodes'));
+assert(raw.includes('workspace owner/admin'));
 assert(raw.includes('read_orders') && raw.includes('read_customers') && raw.includes('read_products'));
 assert(raw.includes('abandonedCheckouts(first: $first'));
 assert(raw.includes('abandonmentByAbandonedCheckoutId'));

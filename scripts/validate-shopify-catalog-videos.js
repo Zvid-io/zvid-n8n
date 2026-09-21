@@ -57,9 +57,9 @@ if (!submitNode || submitNode.type !== '@zvid/n8n-nodes-zvid.zvid') {
   behaviorErrors.push('Submit bulk render must use the published Zvid community node');
 }
 
-const zvidSetup = workflow.nodes.find((node) => node.name === 'Zvid n8n credential');
+const zvidSetup = workflow.nodes.find((node) => node.id === 'publication-overview-shopify-catalog-videos');
 const setupText = zvidSetup?.parameters?.content || '';
-if (!setupText.includes('@zvid/n8n-nodes-zvid') || !/owner or admin/i.test(setupText)) {
+if (!setupText.includes('@zvid/n8n-nodes-zvid') || !/owner(?: or |\/)admin/i.test(setupText)) {
   behaviorErrors.push('Zvid setup note must contain the scoped package and owner/admin prerequisite');
 }
 

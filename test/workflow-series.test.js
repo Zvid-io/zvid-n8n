@@ -7,6 +7,89 @@ const { ZVID_TYPE, zvidRoute, migrateWorkflow } = require('../scripts/zvid-nativ
 const entries = require('../scripts/workflow-series.json');
 const { Zvid } = require('../dist/nodes/Zvid/Zvid.node');
 const description = new Zvid().description;
+const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+
+test('Bulk catalog completes without paid steps when every row has a video', () => {
+  const w = require('../workflows/zvid-bulk-catalog-videos.json');
+  const node = name => w.nodes.find(n => n.name === name);
+  const runQueue = rows => new Function('$', '$input', node('Rows needing videos').parameters.jsCode)(
+    () => ({first:()=>({json:{maxProducts:1}})}), {all:()=>rows.map(json=>({json}))},
+  )[0].json;
+  const product = {row_number:2,Product:'Example product',Price:20,ImageUrl1:'https://example.com/product.jpg',Feature1:'One',Feature2:'Two',Feature3:'Three'};
+  const complete = {...product,VideoUrl:'https://cdn.zvid.io/example.mp4'};
+  const gate = node('Products need videos?');
+  const pending = new Function('$json', 'return (' + gate.parameters.conditions.conditions[0].leftValue.slice(3,-2).trim() + ');');
+  const completed = runQueue([complete]);
+  assert.equal(pending(completed), false);
+  const noop = new Function('$input', node('No pending products').parameters.jsCode)({first:()=>({json:completed})})[0].json;
+  assert.equal(noop.status, 'nothing_to_render');
+  assert.equal(noop.creditsSpent, 0);
+  assert.equal(noop.totalRowsRead, 1);
+  assert.equal(w.connections['No pending products'], undefined, 'Completed catalogs must not reach a paid or write step');
+  assert.deepEqual(w.connections['Rows needing videos'].main[0], [{node:gate.name,type:'main',index:0}]);
+  assert.deepEqual(w.connections[gate.name].main.map(branch=>branch.map(edge=>edge.node)), [['Build project JSON'],['No pending products']]);
+  const mixed = runQueue([complete,{...product,row_number:3,Product:'New product'}]);
+  assert.equal(pending(mixed), true);
+  assert.equal(mixed.rows.length, 1);
+  assert.equal(mixed.rows[0].Product, 'New product');
+  assert.throws(()=>runQueue([{...product,Price:''}]), /No renderable rows.*Price is empty/);
+  assert.equal(pending(runQueue([])), false);
+});
+
+test('Podcast samples respect render audio limits and reject ignored Range responses before transcription', async () => {
+  const w = require('../workflows/zvid-podcast-audiogram-clips.json');
+  const config = JSON.parse(w.nodes.find(n => n.name === 'Config').parameters.jsonOutput);
+  const picker = w.nodes.find(n => n.name === 'Pick latest episode').parameters.jsCode;
+  const episode = {title:'Episode',pubDate:'2026-09-20',enclosure:{url:'https://example.com/audio.mp3',type:'audio/mpeg'}};
+  const pick = overrides => new Function('$', '$input', picker)(
+    () => ({first:()=>({json:{...config,...overrides}})}), {all:()=>[{json:episode}]},
+  )[0].json;
+  assert.equal(pick({}).maxBytes, 4 * 1048576);
+  assert.equal(pick({maxTranscribeMB:12}).maxBytes, 5 * 1048576);
+  assert.equal(pick({}).rangeHeader, 'bytes=0-4194303');
+  assert.throws(()=>pick({maxAudioBytes:'invalid'}), /positive numbers/);
+  const guard = w.nodes.find(n => n.name === 'Check audio sample');
+  const items = [{json:{},binary:{data:{}}}];
+  const run = bytes => new AsyncFunction('$', '$input', guard.parameters.jsCode).call(
+    {helpers:{getBinaryDataBuffer:async()=>Buffer.alloc(bytes)}},
+    () => ({first:()=>({json:pick({})})}), {all:()=>items},
+  );
+  assert.equal(await run(4*1048576), items);
+  await assert.rejects(run(5*1048576), /may have ignored Range/);
+  await assert.rejects(run(0), /empty audio/);
+  assert.equal(w.connections['Fetch episode audio'].main[0][0].node, guard.name);
+  assert.equal(w.connections[guard.name].main[0][0].node, 'Transcribe (Scribe)');
+});
+
+test('Reddit story source handles missing input, access failures and eligible posts before paid calls', () => {
+  const w = require('../workflows/zvid-reddit-story-video.json');
+  const config = JSON.parse(w.nodes.find(n => n.name === 'Config').parameters.jsonOutput);
+  const picker = w.nodes.find(n => n.name === 'Pick story');
+  const store = { usedPostIds: ['t3_used'] };
+  const run = (cfg, response) => new Function('$', '$input', '$getWorkflowStaticData', picker.parameters.jsCode)(
+    () => ({ first: () => ({ json: { ...config, ...cfg } }) }),
+    { first: () => ({ json: response }) }, () => store,
+  );
+  assert.throws(() => run({}, {}), /manualStoryTitle and manualStoryText/);
+  assert.throws(() => run({ manualStoryTitle: 'Short input', manualStoryText: 'Too short.' }, {}), /between 400 and 2200 characters/);
+  const story = 'I found a handwritten note inside an old library book. '.repeat(10);
+  const manual = run({ manualStoryTitle: 'The library note', manualStoryText: story }, {});
+  assert.equal(manual[0].json.postText, story.trim());
+  assert.equal(manual[0].json.subreddit, '', 'Manual stories must not claim a Reddit source');
+  assert.throws(() => run({ sourceMode: 'reddit' }, { statusCode: 429, headers: { 'retry-after': '120' } }), /Wait at least 120 seconds/);
+  assert.throws(() => run({ sourceMode: 'reddit' }, { statusCode: 403 }), /approved Reddit OAuth2/);
+  assert.throws(() => run({ sourceMode: 'reddit' }, { statusCode: 200, body: {} }), /invalid listing/);
+  const post = { name: 't3_ok', title: 'Story', selftext: story, is_self: true, permalink: '/r/tifu/comments/ok/story' };
+  const response = { statusCode: 200, body: { data: { children: [
+    { data: { ...post, name: 't3_used' } }, { data: { ...post, name: 't3_nsfw', over_18: true } },
+    { data: { ...post, name: 't3_pinned', stickied: true } }, { data: post },
+  ] } } };
+  assert.equal(run({ sourceMode: 'reddit' }, response)[0].json.id, 't3_ok');
+  assert.deepEqual(store.usedPostIds, ['t3_used'], 'Failed or draft runs must not consume the post');
+  const fetch = w.nodes.find(n => n.name === 'Fetch top stories');
+  assert.equal(fetch.parameters.nodeCredentialType, 'redditOAuth2Api');
+  assert.equal(fetch.retryOnFail, false);
+});
 
 test('Day 2: every daily background fits the verified 1920-pixel input limit', () => {
   const workflow = JSON.parse(fs.readFileSync(path.join(__dirname, '../workflows/zvid-daily-quote-reels.json'), 'utf8'));
@@ -87,7 +170,7 @@ for (const entry of entries) {
         assert.ok(operation?.options.some(o => o.value === n.parameters.operation), `Invalid operation in ${n.name}`);
         for (const key of Object.keys(n.parameters)) assert.ok(description.properties.some(p => p.name === key), `Unknown parameter ${key}`);
       }
-      if (n.type === 'n8n-nodes-base.code') assert.doesNotThrow(() => new Function(n.parameters.jsCode));
+      if (n.type === 'n8n-nodes-base.code') assert.doesNotThrow(() => new AsyncFunction(n.parameters.jsCode));
     }
     const notes = w.nodes.filter(n => n.type === 'n8n-nodes-base.stickyNote').map(n => n.parameters.content).join('\n');
     const docs = fs.readFileSync(path.join(__dirname, '../workflows', entry.file.replace(/^zvid-/, '').replace(/\.json$/, '.md')), 'utf8');

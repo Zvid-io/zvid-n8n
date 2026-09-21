@@ -8,7 +8,7 @@ File upload exception: the published Zvid node does not expose multipart uploads
 
 [`zvid-reddit-story-video.json`](zvid-reddit-story-video.json)
 
-Every morning: pull the day's top story from a subreddit like r/tifu, rewrite it
+Supply your own story text, or connect approved Reddit OAuth access to pull the day's top story from a subreddit like r/tifu. Rewrite it
 into a clean first-person narration, voice it, match stock footage to every
 beat, and render a captioned 1080×1920 story video with Zvid — cover card,
 word-timed karaoke captions, music bed and end card included. Story channels
@@ -16,7 +16,8 @@ are a proven faceless format; the production hours are the bottleneck this
 removes.
 
 ```
-Schedule ─▶ Config ─▶ Fetch top stories (keyless) ─▶ Pick story ─▶ Write script
+Schedule/manual ─▶ Config ─▶ Manual story? ─▶ Pick story ─▶ Write script
+                              └─ Reddit OAuth fetch ─┘
         ─▶ Stock b-roll (per beat) ─▶ Music ─▶ Voiceover + word timings ─▶ Upload
         ─▶ Build project ─▶ Validate (free) ─▶ Render ─▶ ▶ Watch video
 ```
@@ -57,17 +58,23 @@ with it. Music candidates are
 HEAD-checked for reachability and byte size before use — a dead URL or an
 oversized track downgrades the video to "no music", it never fails the job.
 
-**It reads the public Atom feed — no Reddit account, app or OAuth.**
-`https://www.reddit.com/r/<subreddit>/top/.rss?t=day` is keyless (the `.json`
-listing answers `403` to server traffic, which is why the workflow does not
-use it). The picker unescapes the post's rendered HTML, strips tags, links,
-markdown and the "submitted by /u/…" tail, then keeps text posts only, skips
-mod/meta posts and anything outside `minChars`…`maxChars`, skips the last 200
-already-used ids (remembered on production runs) and takes the first survivor —
-the feed already arrives sorted by top-of-day. If nothing qualifies, the run
-fails with a count of *why* each post was skipped. **The Atom feed carries no
-NSFW, score or pinned flag**, so those cannot be filtered on: pick a subreddit
-you are happy to publish from.
+**Two explicit story sources.** The default `sourceMode: "manual"` requires
+`manualStoryTitle` and `manualStoryText` in Config. The template does not invent
+or silently substitute a story when Reddit is unavailable. Optional
+`manualStoryUrl` records the original source link; review rights and attribution
+before publishing.
+
+For automatic Reddit selection, set `sourceMode: "reddit"`, connect an approved
+**Reddit OAuth2 API** credential to **Fetch top stories**, and replace the
+username in `redditUserAgent`. The request uses `oauth.reddit.com` and a
+descriptive User-Agent. The picker excludes NSFW, pinned, removed, moderator,
+non-text and already-rendered posts, then applies the character limits.
+Production runs record the post ID only after a successful render.
+
+HTTP 429 stops before AI and rendering and reports Reddit's Retry-After delay
+when supplied. There is no rapid retry loop. HTTP 401/403 explains the OAuth
+setup. A browser-style User-Agent cannot replace approved access; the earlier
+keyless RSS instructions were unreliable. See [Reddit's access guidance](https://support.reddithelp.com/hc/en-us/articles/16160319875092-Reddit-Data-API-Wiki).
 
 ## Requirements
 
@@ -77,17 +84,7 @@ you are happy to publish from.
 | ElevenLabs API key | Voice **and** word timings in one call. The key only needs **text-to-speech** permission. A ~45 s story uses ~700 characters. |
 | OpenRouter API key | Rewrites the post into a narration. Any OpenAI-compatible chat endpoint works — swap the URL and credential type. |
 
-Reddit needs **no key** — the workflow reads the public `.rss` Atom feed. Two
-things about that endpoint are load-bearing:
-
-- **It answers only to a browser-like `User-Agent`.** *Fetch top stories*
-  ships one in its header parameters. **Do not remove or "tidy" that header** —
-  without it every run comes back `403`.
-- **It is rate-limited per IP, and some datacenter IPs are blocked outright.**
-  One scheduled run a day never troubles it; back-to-back manual test runs can
-  earn a temporary `429` (hence the 3 retries a minute apart on that node). If
-  it never answers at all, run n8n from a home/office IP, raise the schedule
-  interval, or point the trigger at another story source.
+Automatic mode requires approved Reddit API access. Without it, leave the default manual mode and supply your own story.
 
 There are no stock-media accounts to set up either — footage, photos and music
 come from Zvid's stock library via `/api/stock/search`, which runs on
@@ -103,18 +100,17 @@ server-side keys.
    default), George, Roger, Sarah and Bill are confirmed working; Voice
    Library voices return `402` on free plans.
 4. **OpenRouter credential** — attach it to *Write script*.
-5. **Open `Config`** — set `subreddit` (no `r/` prefix), `channelHandle` and
-   `ctaText`. Everything else has a working default.
+5. **Open `Config`** — fill `manualStoryTitle` and `manualStoryText` (400–2200 characters by default), plus `channelHandle` and `ctaText`. For automatic mode, select `sourceMode: "reddit"`, set `subreddit` without `r/`, update `redditUserAgent`, and connect approved Reddit OAuth2 credentials to *Fetch top stories*.
 6. **Run it.** The workflow renders for real out of the box, so **the first
    run spends credits — about 42** for a ~42 s story. When it finishes, click
    **`▶ Watch video`** to play it inside n8n.
 
-   Prefer a free preview first? Set `dryRun: true` in `Config`: you get the
+   Prefer an editor preview first? Set `dryRun: true` in `Config`: you get the
    exact credit cost and an **`editorLink`** that opens the draft in the Zvid
-   editor, with nothing spent.
-7. **Activate.** A fresh story every day at 9am — the used-story list only
-   persists on production executions, so manual test runs may repeat a story
-   but the daily schedule never will.
+   editor without render credits. OpenRouter and ElevenLabs can still charge.
+7. **Activate only after configuring the source.** Automatic Reddit mode runs
+   daily at 9am and remembers the last 200 successfully rendered post IDs in
+   production. Manual mode reuses the text in Config until you replace it.
 
 ## Configuration
 
@@ -122,6 +118,10 @@ Everything lives in the `Config` node.
 
 | Key | Default | Notes |
 | --- | --- | --- |
+| `sourceMode` | `manual` | `manual` uses your story; `reddit` requires approved Reddit OAuth2 access. |
+| `manualStoryTitle` / `manualStoryText` | empty | Required in manual mode; no automatic sample substitution. |
+| `manualStoryUrl` | empty | Optional source URL for manual input. |
+| `redditUserAgent` | descriptive placeholder | Replace `YOUR_REDDIT_USERNAME` before automatic fetching. |
 | `subreddit` | `tifu` | Story source, without the `r/` prefix. Story-shaped subs (r/tifu and similar) work best. |
 | `minChars` / `maxChars` | `400` / `2200` | Selftext length window — long enough for a real arc, short enough for a ~45 s retelling. |
 | `targetSeconds` | `45` | Target narration length (~2.7 words/second). |
@@ -146,7 +146,7 @@ Everything lives in the `Config` node.
 | `maxMusicSeconds` / `maxMusicBytes` | `240` / `5242880` | Guards against a music track that would blow the plan's audio size cap and fail the render. |
 | `resolution` / `frameRate` | `tiktok` / `30` | 1080×1920. |
 | `tailSeconds` | `0.4` | Breathing room after the last word before the end card. |
-| `dryRun` | `false` | `false` renders for real. `true` = free pass: validate, quote the credits, save an editor draft. |
+| `dryRun` | `false` | `false` renders for real. `true` validates, quotes and saves a draft without render credits; upstream services may charge. |
 | `pollSeconds` / `timeoutMinutes` | `10` / `20` | Render poll loop. |
 | `apiUrl` | `https://api.zvid.io` | |
 
@@ -166,8 +166,8 @@ well under a cent; the voice uses roughly 700 ElevenLabs characters per story.
 | Node | What it does |
 | --- | --- |
 | **Every day at 9am / Test manually** | Schedule trigger plus a manual trigger, both feeding *Config*. The manual one is what `n8n execute --id` needs. |
-| **Fetch top stories** | GET `https://www.reddit.com/r/<subreddit>/top/.rss?t=day` — the public, keyless **Atom feed**, read as text. Sends a browser-like `User-Agent` (load-bearing — see Requirements) plus an Atom `Accept` header. Three tries a minute apart, then it hands the failure to *Pick story* rather than dying with a bare status code. |
-| **Pick story** | Parses the Atom `<entry>` blocks, double-unescapes the post's rendered HTML, strips tags, links, markdown and the `submitted by /u/…` tail, then keeps the first entry that is a text post, is not a mod/meta post, is between `minChars` and `maxChars`, and has not been used before — the feed already arrives sorted by top-of-day, and Atom carries no score, NSFW or pinned flag to filter on. Remembers the last 200 used ids in workflow static data (production runs only). Explains itself when nothing qualifies or the feed never arrived. |
+| **Fetch top stories** | Authenticated GET `https://oauth.reddit.com/r/<subreddit>/top?t=day&limit=25&raw_json=1` with Reddit OAuth2 and a descriptive User-Agent. Returns status and headers to the picker; no automatic retry loop. |
+| **Pick story** | Validates the manual title and story, or filters the authenticated Reddit JSON listing. Rejects access errors before paid calls and excludes non-text, NSFW, pinned, removed, AutoModerator and previously rendered Reddit posts. Applies `minChars`/`maxChars` and chooses the first eligible post. Successful production renders record the last 200 IDs. |
 | **Write script** | One JSON-mode call: rewrite the post as a first-person narration — a sub-twelve-word hook plus four to six beats of one to three sentences, each with a concrete stock-footage hint that must name an object, a place or a pair of hands, never a person. No usernames, no profanity, digits spelled out, ASCII only. |
 | **Parse script** | Validates the JSON, normalises curly quotes to ASCII, rebuilds beats from the narration if the model forgot them, merges beat seven-plus into beat six, plans the shot list (splitting any beat that would run past `maxShotSeconds` at a sentence boundary), and joins hook + beats into the exact string the voice will speak. Hard-fails below 55% of the word target. |
 | **Expand scenes / Search stock clips** | One stock search per **shot**. The first shot of each beat asks for footage while the five-video budget lasts; continuation shots and anything past the budget ask for photos. |
@@ -197,31 +197,26 @@ The required path ends with the finished MP4 in **▶ Watch video** (binary
 - **Human in the loop** — Slack/Email node sending `videoUrl` + `title` to
   whoever posts.
 
-These stay out of the required path so the import runs with a Zvid key, an
-ElevenLabs key and an OpenRouter key, nothing else. On self-hosted n8n you can
-also install
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid)
-and replace the render HTTP nodes with the native **Zvid** node + **Zvid
-Trigger** (render webhook), which removes the poll loop.
+These stay out of the required path. Manual mode needs a story, a Zvid key,
+an ElevenLabs key and an OpenRouter key. Automatic fetching additionally needs
+approved Reddit OAuth access. Supported Zvid operations already use the native
+**Zvid** node. A **Zvid Trigger** render webhook can replace the poll loop in a
+customized workflow.
 
 ## A word on the source material
 
 These are real people's stories, and the b-roll shows real people too. Read
 this section before you point the template at a monetised channel.
 
-**There is no NSFW filter, because the feed has nothing to filter on.** The
-Atom feed carries no `over_18` flag, no score and no pinned flag, so *Pick
-story* cannot check any of them — its only filters are: text post, not a
-mod/meta post, inside `minChars`…`maxChars`, not used before. Pick a subreddit
-you are happy to publish from, and read the story in the run summary (or the
-`dryRun: true` draft) before it goes out. If you need a hard content gate, add
-your own IF or moderation step after *Pick story*.
+**Reddit metadata filtering is limited.** Automatic mode excludes posts marked
+NSFW, pinned, removed or authored by AutoModerator, plus non-text and previously
+rendered posts. These checks do not establish permission to republish or guarantee
+appropriate content. Manual text has no Reddit metadata to check. Review the
+source and finished draft before publication.
 
-**What the workflow does do:** *Pick story* strips usernames, links and the
-`submitted by /u/…` tail before the model ever sees the post, and the writer
-prompt asks for a family-friendly retelling with no usernames, no real names
-and nothing explicit. That is a prompt, not a guarantee — a model can still
-carry something through.
+**The writer prompt asks for a family-friendly retelling** without usernames,
+real names or explicit content. A prompt does not guarantee removal of personal
+details, so review the narration and captions.
 
 **B-roll and real faces.** A stock clip of a recognisable stranger running
 under a first-person confession reads as *this is the person it happened to*,
@@ -241,9 +236,9 @@ responsible for what your channel posts.
 | Symptom | Cause |
 | --- | --- |
 | `Reddit returned no feed for r/…` | The feed never arrived. Check `subreddit` has no `r/` prefix (use `tifu`), and that the sub is not private or banned. Otherwise it is the endpoint: see the two rows below. |
-| `403` from Reddit / `Reddit did not return a story feed` | The `.rss` endpoint answers only to a browser-like `User-Agent`. *Fetch top stories* ships one in its header parameters — **do not remove or "tidy" that header**, and do not replace it with a "descriptive" bot UA. Without it every run comes back `403`. |
-| `429` from Reddit, or nothing ever answers | The feed is rate-limited per IP, and **some datacenter IPs are blocked outright**. One scheduled run a day never troubles it; hammering *Test manually* back-to-back earns a temporary `429` — the node already waits a full minute between its three tries. If it never answers at all, run n8n from a home/office IP, raise the schedule interval, or point the trigger at another story source. |
-| `No story … passed the filters today` | The error lists why each of the feed's posts was skipped: mod/meta, no usable text (link or image post), shorter than `minChars`, longer than `maxChars`, already used. Widen `minChars`/`maxChars`, try another subreddit, or wait a day. There is no NSFW/score/pinned filter — Atom carries no such fields. |
+| `401` / `403` from Reddit | Connect an approved Reddit OAuth2 app and set `redditUserAgent`. Without approved access, use `sourceMode: "manual"` and fill the story fields. |
+| `429` from Reddit | The picker stops before AI/render requests and reports Retry-After when supplied. Wait for access to reset; browser headers and repeated retries do not fix missing authorization. |
+| `No eligible unused text story` | None of the fetched posts passes metadata, length and prior-render checks. Adjust `minChars`/`maxChars`, wait for new posts, or supply your own manual story. |
 | `The model did not return JSON` | The model ignored JSON mode. Use one that supports `response_format: json_object`. |
 | `The script is only N words` | The writer under-delivered badly (below 55% of target). Retry, or use a stronger model. |
 | `ElevenLabs returned no audio` | Bad or missing `xi-api-key` credential, an unknown `voiceId`, or your monthly character quota is spent. |
@@ -255,7 +250,11 @@ responsible for what your channel posts.
 | Same story twice in tests | Workflow static data only persists on **production** executions. Manual test runs always start with an empty used-list. |
 | `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
 
-## Verified
+## Live retest on 2026-09-20
+
+The original Reddit RSS fetch returned HTTP 429 inside Docker n8n. Automatic OAuth fetching remains unverified because no approved Reddit app is connected. The manual source path and rate-limit guards are tested separately; see the runtime audit for the completed live runs.
+
+## Historical verification
 
 > Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
 

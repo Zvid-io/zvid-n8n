@@ -14,7 +14,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -460,
+        40,
         380
       ],
       "id": "zvid-dq-0001",
@@ -25,7 +25,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -460,
+        40,
         200
       ],
       "id": "zvid-dq-0002",
@@ -40,8 +40,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -240,
-        300
+        280,
+        280
       ],
       "id": "zvid-dq-0003",
       "name": "Config"
@@ -65,8 +65,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        -20,
-        300
+        500,
+        280
       ],
       "id": "zvid-dq-0004",
       "name": "Read quote sheet",
@@ -81,8 +81,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        200,
-        300
+        860,
+        240
       ],
       "id": "zvid-dq-0005",
       "name": "Pick next quote"
@@ -116,8 +116,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        420,
-        300
+        1080,
+        240
       ],
       "id": "zvid-dq-0006",
       "name": "Row found?"
@@ -129,8 +129,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        640,
-        480
+        1300,
+        400
       ],
       "id": "zvid-dq-0007",
       "name": "Nothing to render today"
@@ -142,8 +142,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        640,
-        220
+        1680,
+        280
       ],
       "id": "zvid-dq-0008",
       "name": "Build project JSON"
@@ -158,8 +158,8 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        860,
-        220
+        1900,
+        280
       ],
       "id": "zvid-dq-0009",
       "name": "Validate project (free)"
@@ -171,8 +171,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1080,
-        220
+        2120,
+        280
       ],
       "id": "zvid-dq-0010",
       "name": "Check validation"
@@ -189,8 +189,8 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        1520,
-        380
+        40,
+        960
       ],
       "id": "zvid-dq-0014",
       "name": "Submit render",
@@ -206,8 +206,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1740,
-        380
+        260,
+        960
       ],
       "id": "zvid-dq-0015",
       "name": "Wait",
@@ -223,8 +223,8 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        1960,
-        380
+        480,
+        960
       ],
       "id": "zvid-dq-0016",
       "name": "Get render status",
@@ -261,8 +261,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2180,
-        380
+        700,
+        960
       ],
       "id": "zvid-dq-0017",
       "name": "Render finished?"
@@ -274,8 +274,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2180,
-        600
+        700,
+        1200
       ],
       "id": "zvid-dq-0018",
       "name": "Still rendering?"
@@ -343,8 +343,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        2400,
-        280
+        1080,
+        1560
       ],
       "id": "zvid-dq-0019",
       "name": "Mark row done",
@@ -359,8 +359,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2620,
-        280
+        1300,
+        1560
       ],
       "id": "zvid-dq-0020",
       "name": "Run summary"
@@ -380,8 +380,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3140,
-        280
+        1740,
+        1560
       ],
       "id": "zvid-dq-0027",
       "name": "▶ Watch video",
@@ -390,86 +390,6 @@
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 5000
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 1120,
-        "color": 6,
-        "content": "## 01. Create daily motivational quote videos from Google Sheets with Zvid\n\n## Who it is for\n\nCreators and content teams who keep a queue of quotes in Google Sheets and want\nbranded vertical videos without editing each one manually.\n\n## What it does\n\nRun manually or daily to select the first row with an empty **Status**. Zvid renders\nthe quote, author, optional author note, and channel branding into a 1080×1920 MP4.\nFive background clips rotate by date, paired with music. After a successful render,\nthe workflow writes **done** and the **VideoUrl** to the same row. Open **Watch video\n→ Binary → data → View** to review the result. Social publishing is not included.\n\n## Setup and requirements\n\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before\n   configuring Zvid credentials. A workspace owner/admin may need to install it.\n   On n8n Cloud, the owner can install the verified **Zvid** integration from the\n   Nodes panel.\n2. Create a **Zvid API** credential using a key from\n   [app.zvid.io/api-keys](https://app.zvid.io/api-keys) and Base URL\n   `https://api.zvid.io`; select it on every Zvid node.\n3. Connect Google Sheets and select the same spreadsheet and tab in **Read quote\n   sheet** and **Mark row done**. Use these exact headers: **Quote**, **Author**,\n   **AuthorNote**, **Status**, **VideoUrl**. Fill Quote and Author; leave Status and\n   VideoUrl empty.\n4. Customize **Config** with your channel handle, call to action, colors, and fonts.\n5. Run manually. **`dryRun: false` is the default**, so rendering spends Zvid\n   credits. Set `dryRun: true` for a free editor draft and quote without updating\n   the sheet. Review the result before activating the daily schedule.\n\nRequires Google Sheets access and Zvid render credits. The included visual assets\nare 1080×1920. Custom media must fit your account's input limits. Confirm quote\nattribution before sharing the finished video."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -540,
-        -1900
-      ],
-      "id": "zvid-dq-0021",
-      "name": "Note 21"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 480,
-        "color": 2,
-        "content": "## 03. Your sheet: five columns\n\nHeader row (row 1), spelled exactly like this:\n\n| Quote | Author | AuthorNote | Status | VideoUrl |\n| --- | --- | --- | --- | --- |\n\n- **Quote** + **Author** — required. AuthorNote is an optional line under the\n  author's name on the end card (\"Writer & essayist\").\n- **Status** — leave EMPTY for quotes waiting to be rendered. The workflow\n  takes the first empty-Status row (top to bottom), and writes `done` +\n  the video URL when the render finishes. Put anything in Status by hand to\n  skip a row.\n- Batch-paste a month of quotes whenever you like — one row is consumed per\n  day, and when every row is used the workflow simply reports \"nothing to\n  render\" until you add more."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1220,
-        -1900
-      ],
-      "id": "zvid-dq-0022",
-      "name": "Note 22"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 560,
-        "color": 7,
-        "content": "## 04. Why it looks different every day\n\n*Build project JSON* carries a **pool of five curated background clips, each\npaired with a music bed** — misty forest, ember ink, rain on a window, a sea\nof clouds, a calm shore. The day-of-year picks the entry\n(`dayOfYear % 5`), so the rotation is deterministic: no repeats on\nconsecutive days within a year, and a re-run on the same day produces the same\nlook. (A leap year ends on day 366 and 366 % 5 == 1 % 5, so that one New Year's\nDay repeats New Year's Eve — pin poolIndexOverride if it matters.)\nAll five background clips and the shared end-card image were verified at 1080×1920. Custom source media must fit your account's input limits before rendering begins.\n\n- Pin one look: set `poolIndexOverride` (0-4) in Config.\n- Bring your own: `backgroundVideoOverride` / `musicUrlOverride`\n  (portrait ~1080x1920, at least 10 s of video).\n\nType scales with content: the quote drops from 62 px to 42 px as it grows\ntowards ~220 characters, and long author names shrink to fit the end card —\nreview unusually long quotes and author notes before sharing."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2100,
-        -1900
-      ],
-      "id": "zvid-dq-0023",
-      "name": "Note 23"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 400,
-        "color": 3,
-        "content": "## 05. Free preview: the optional dry run\n\n**`dryRun` is `false` in Config, so a run renders for real.** Set it to\n`true` whenever you want a free pass instead: the workflow validates the\npayload, quotes the exact credit cost and saves the project as a **draft**,\nthen reports an **editorLink** like `https://editor.zvid.io/?project=prj_...`\n\nOpen it to watch the exact video and tweak anything by hand, with nothing\nspent. **The sheet row is not marked done on a dry run**, so the next real\nrun renders the same quote.\n\nSet `dryRun` back to `false` to render and mark the row done."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -540,
-        -700
-      ],
-      "id": "zvid-dq-0024",
-      "name": "Note 24"
-    },
-    {
-      "parameters": {
-        "width": 800,
-        "height": 520,
-        "color": 5,
-        "content": "## 07. Publishing the video (optional tail)\n\nThe workflow ends with the video URL in the sheet — a clean handoff you can\nextend after **Mark row done**:\n\n- **YouTube Shorts** — add an *HTTP Request* node (GET the `videoUrl`,\n  response format `File`) followed by the native **YouTube** node\n  (Video → Upload, binary `data`). Needs a YouTube OAuth2 credential.\n- **Instagram / TikTok / everywhere** — pass `videoUrl` to a scheduler\n  like Blotato, Buffer or Metricool via their HTTP API; they accept a public\n  video URL directly, no download step needed.\n- **Human in the loop** — a Slack or Email node that sends `videoUrl` to\n  whoever posts manually.\n\nThey are left out of the required path on purpose so the template imports\nand runs with a Zvid key and a Google account, nothing else."
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1220,
-        -700
-      ],
-      "id": "zvid-dq-0025",
-      "name": "Note 25"
     },
     {
       "parameters": {
@@ -500,8 +420,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1300,
-        220
+        2340,
+        280
       ],
       "id": "zvid-dq-0011",
       "name": "Dry run?"
@@ -516,8 +436,8 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        1520,
-        60
+        2080,
+        940
       ],
       "id": "zvid-dq-0012",
       "name": "Save draft to editor",
@@ -534,27 +454,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1740,
-        60
+        2320,
+        940
       ],
       "id": "zvid-dq-0013",
       "name": "Dry run summary"
-    },
-    {
-      "id": "zvid-native-setup",
-      "name": "Install and connect Zvid",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        340,
-        -1900
-      ],
-      "parameters": {
-        "width": 800,
-        "height": 280,
-        "color": 6,
-        "content": "## 02. Install and connect Zvid\n\nInstall **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node."
-      }
     },
     {
       "id": "zvid-watch-ready",
@@ -562,8 +466,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2880,
-        280
+        1520,
+        1560
       ],
       "parameters": {
         "conditions": {
@@ -591,19 +495,115 @@
       }
     },
     {
-      "id": "zvid-watch-instructions",
-      "name": "Watch the finished video",
+      "id": "publication-overview-quote",
+      "name": "Workflow overview and setup",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        340,
-        -700
+        -800,
+        0
       ],
       "parameters": {
-        "content": "## 06. Watch the finished video\n\nAfter a render finishes, open **▶ Watch video**. In its output, choose **Binary → data → View** to play the video or download the file. For a batch, select an output item to watch each result. Image outputs open as images.\n\n**Video ready to watch?** skips previews when there is no finished media URL, including quote-only and dry-run results. The watch step downloads the finished file and does not start another render.\n\nIf the file is not available yet, the download retries up to three times. A preview download failure does not undo a completed render. The preceding result node still provides the media URL.",
-        "width": 800,
-        "height": 440,
-        "color": 4
+        "content": "## Create daily quote videos from Google Sheets\n\n### How it works\nFor creators with a queue of quotes. Run manually or daily to select the first row with an empty **Status**. Zvid turns the quote, author and branding into a 1080×1920 video, using a rotating background and music. After rendering, the same row receives **done** and **VideoUrl**. Open **Watch video → Binary → data → View** to review the MP4. Social publishing is not included.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring credentials. A workspace owner/admin may need to install it. On n8n Cloud, the owner can install verified **Zvid** from the Nodes panel.\n2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node.\n3. Connect Google Sheets; choose the same spreadsheet and tab in **Read quote sheet** and **Mark row done**.\n4. Add these exact headers: **Quote**, **Author**, **AuthorNote**, **Status**, **VideoUrl**. Fill Quote and Author; AuthorNote is optional. Leave Status and VideoUrl empty.\n5. Customize **Config**, then run **Test manually**. **`dryRun: false` renders and spends credits.** Use `true` for an editor draft and quote without updating the sheet.\n6. Review the video and quote attribution before activating the daily schedule.\n\n### Customization\nSet your channel name, call to action, fonts and colors in **Config**. Optional background and music overrides replace the rotation. Custom media must fit your account’s input limits; the included visuals are 1080×1920.",
+        "color": 1,
+        "width": 720,
+        "height": 1160
+      }
+    },
+    {
+      "id": "publication-section-quote-configure",
+      "name": "1. Connect the quote queue",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "content": "## 1. Connect the quote queue\n\nEdit Config, then select your spreadsheet and tab in both Google Sheets nodes.",
+        "color": 7,
+        "width": 740,
+        "height": 560
+      }
+    },
+    {
+      "id": "publication-section-quote-queue",
+      "name": "2. Pick the next unused quote",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        820,
+        0
+      ],
+      "parameters": {
+        "content": "## 2. Pick the next unused quote\n\nTake the first empty-Status row. If no row is available, finish without rendering.",
+        "color": 7,
+        "width": 740,
+        "height": 560
+      }
+    },
+    {
+      "id": "publication-section-quote-validate",
+      "name": "3. Build and validate the video",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        0
+      ],
+      "parameters": {
+        "content": "## 3. Build and validate the video\n\nApply the quote design and selected media. Validate before choosing an editor preview or a paid render.",
+        "color": 7,
+        "width": 960,
+        "height": 560
+      }
+    },
+    {
+      "id": "publication-section-quote-preview",
+      "name": "4. Preview without updating the sheet",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        680
+      ],
+      "parameters": {
+        "content": "## 4. Preview without updating the sheet\n\nThis branch runs only when dryRun=true. Open the returned editorLink to inspect the draft.",
+        "color": 7,
+        "width": 560,
+        "height": 480
+      }
+    },
+    {
+      "id": "publication-section-quote-render",
+      "name": "5. Render and wait for the result",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        680
+      ],
+      "parameters": {
+        "content": "## 5. Render and wait for the result\n\nThe default branch spends Zvid credits. Stop on a failed render or timeout; update the sheet only after success.",
+        "color": 7,
+        "width": 960,
+        "height": 740
+      }
+    },
+    {
+      "id": "zvid-watch-instructions",
+      "name": "6. Save the result and watch",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        1280
+      ],
+      "parameters": {
+        "content": "## 6. Save the result and watch\n\nWrite done and VideoUrl to the same row. Open Watch video → Binary → data → View to play the MP4.",
+        "color": 7,
+        "width": 1000,
+        "height": 520
       }
     }
   ],

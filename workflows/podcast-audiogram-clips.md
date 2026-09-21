@@ -16,7 +16,7 @@ two by default — and each one lands in n8n as a playable file.
 
 ```
 Schedule ─▶ Config ─▶ Read podcast feed ─▶ Pick latest episode
-        ─▶ Fetch episode audio (Range) ─▶ Transcribe (Scribe) ─▶ Pick moments
+        ─▶ Fetch episode audio (Range) ─▶ Check audio sample ─▶ Transcribe (Scribe) ─▶ Pick moments
         ─▶ Prepare clips ─▶ Build project ─▶ Validate (free) ─▶ Render ×N
         ─▶ ▶ Watch video
 ```
@@ -73,7 +73,7 @@ No Google account, no stock-media account, no sheet.
 1. **Import** `zvid-podcast-audiogram-clips.json`.
 2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node. Use it on the HTTP upload step too (Predefined Credential Type → Zvid API).
 3. **ElevenLabs credential** — add a second **Header Auth** credential, name
-   `xi-api-key`, value = your ElevenLabs key. Attach it to *Transcribe (Scribe)*.
+   `xi-api-key`, value = your ElevenLabs key. Enable **Speech to Text** (`speech_to_text`) for that key in ElevenLabs → Developers → API Keys → Edit. A narration-only key cannot transcribe. Attach it to *Transcribe (Scribe)*.
 4. **OpenRouter credential** — add an **OpenRouter** credential and attach it to
    *Pick moments*.
 5. **Open `Config`** — set `feedUrl` to your show's RSS feed, `showNameOverride`
@@ -103,7 +103,8 @@ Everything lives in the `Config` node.
 | `minClipSeconds` | `18` | A picked moment shorter than this is extended, not shipped short. |
 | `skipIntroSeconds` | `0` | Ignore the first N seconds (cold open, sponsor read) when picking. |
 | `clipWindowSeconds` | `300` | How far into the uploaded audio a clip may start. The API caps `audioBegin`/`audioEnd` at your plan's maximum video length — 300 s on the free plan — and rejects anything past it. |
-| `maxTranscribeMB` | `12` | Size of the `Range` request against the episode file. |
+| `maxTranscribeMB` | `4` | Requested audio sample size in MiB, also capped by `maxAudioBytes`. |
+| `maxAudioBytes` | `5242880` | Render audio-file ceiling in bytes. Only raise it when your Zvid plan supports larger audio assets. |
 | `sttModel` | `scribe_v1` | ElevenLabs speech-to-text model id. |
 | `llmModel` | `openai/gpt-4.1-mini` | OpenRouter model for *Pick moments*. |
 | `showNameOverride` | `""` | Overrides the show name from the feed. Empty = use the feed's. |
@@ -150,7 +151,8 @@ OpenRouter bill separately, per their own pricing.
 | --- | --- |
 | **Read podcast feed** | Reads `feedUrl` with the core RSS node — one item per episode. |
 | **Pick latest episode** | Sorts by date (feed order is not guaranteed) and keeps the newest entry that actually carries a playable audio enclosure, probing `media:content` and `<link>` before giving up. Also resolves the artwork and the episode chip. |
-| **Fetch episode audio** | Downloads only the first `maxTranscribeMB` with an HTTP **Range** request (`bytes=0-12582911` at the default). MP3/AAC decode fine from a truncated head — measured below — so the download, the transcription bill and the run time all stay small. |
+| **Fetch episode audio** | Requests the first `maxTranscribeMB`, capped by `maxAudioBytes`, using HTTP Range (`bytes=0-4194303` by default). A host can ignore Range, so the following size check is required. The downloaded MP3/AAC head is the same file used for transcription and rendering. |
+| **Check audio sample** | Reads the actual binary byte length before paid transcription. Empty or oversized files stop here with an actionable error. This prevents a source that ignores Range from producing a render asset above the configured limit. |
 | **Transcribe (Scribe)** | ElevenLabs `POST /v1/speech-to-text`, `model_id` from Config, `timestamps_granularity=word`, the audio posted as multipart binary. |
 | **Read transcript** | Builds the word list every later node reads plus the numbered transcript the model picks from — and re-attaches the same binary so the next node uploads the exact transcribed bytes. Missing `words[]` fails loudly with the response body, because that is what a quota or key problem looks like. |
 | **Upload episode audio** | Puts those bytes on the Zvid CDN once. Every clip seeks inside that one asset. |
@@ -189,7 +191,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 
 | Symptom | Cause |
 | --- | --- |
-| Every clip comes from the first few minutes | By design. *Fetch episode audio* only downloads `maxTranscribeMB` (12 MiB — measured at 13 min 6 s of a real 128 kbps episode, ~26 min at 64 kbps), and the render API can only seek `clipWindowSeconds` into an audio asset — 300 s on the free plan. The effective window is the smaller of the two, so in practice the first 5 minutes. Raise both together if your plan allows, or set `skipIntroSeconds` to step past a cold open. |
+| Every clip comes from the first few minutes | By design. The default sample is 4 MiB, and the usable window is limited by both the transcript and `clipWindowSeconds`. Duration depends on the source bitrate. Raise sample and timing limits only within your plan's audio-file and seek limits, or use `skipIntroSeconds` to move past an intro. |
+| `Downloaded audio ... above ... sample limit` | The host may have ignored Range. Use a smaller MP3/AAC file or a host that supports byte ranges. The workflow stops before transcription and rendering. |
 | `audioBegin … must be less than or equal to 300` | You raised `clipWindowSeconds` past your plan's maximum video length. That number is the hard ceiling on how far into an audio asset a render may seek; the free plan's is 300 s. |
 | `The feed … returned no items` | `feedUrl` points at the show page, not the RSS feed. Podcast directories usually link the feed under "RSS". |
 | `No episode in the feed carries a downloadable audio enclosure` | The feed publishes players rather than files (some private/paid feeds do). Use the feed your host generates for podcast apps. |

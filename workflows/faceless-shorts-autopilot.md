@@ -23,7 +23,9 @@ Schedule ─▶ Config ─▶ Write script ─▶ Stock footage (per scene) ─�
 
 After a completed render, open **▶ Watch video**, then choose **Binary → data → View** in the output panel to play or download the MP4. **Video ready to watch?** skips dry runs and missing links. Watching downloads the existing file and does not start another render.
 
-The numbered notes above the workflow cover setup, media inputs, rendering, watching, and optional publishing. Duplicate Zvid setup cards have been consolidated.
+The canvas has one yellow overview at the top left with **How it works** and
+**Setup** instructions. Short white section notes surround the related nodes,
+covering inputs, media, narration, validation, rendering, and review.
 
 ## Why this one is different
 

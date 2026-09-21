@@ -11,6 +11,10 @@ render it as a polished 1080×1920 quote reel with Zvid, then write the finished
 video URL back to that row and mark it `done`. Paste a month of quotes once; the
 workflow consumes one row per day.
 
+The canvas has one yellow overview at the top left with **How it works** and
+**Setup** instructions. Short white section notes group the queue, video design,
+optional preview, rendering, and finished-video steps.
+
 ```
 Schedule ─▶ Config ─▶ Read sheet ─▶ Pick first empty-Status row
         ─▶ Build project ─▶ Validate (free) ─▶ Render ─▶ Mark row done + VideoUrl

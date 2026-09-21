@@ -154,6 +154,7 @@ want the quote without the spend. Failed renders are refunded automatically.
 | --- | --- |
 | **Get catalog rows** | Reads every row (plus its `row_number`) from your sheet. |
 | **Rows needing videos** | Keeps rows with an empty `VideoUrl`, validates required columns, reports skipped rows with reasons, and caps the batch at `maxProducts`. |
+| **Products need videos? / No pending products** | When every row already has a `VideoUrl`, finishes successfully with `status: nothing_to_render` and zero credits spent. This branch bypasses validation, rendering, sheet writes and downloads. Invalid pending rows still fail with a data-validation message. |
 | **Build project JSON** | Builds ONE templated Zvid project (brand baked in, row data as `{{placeholders}}`) and one `{ variables, name }` item per row — with per-row font auto-sizing, price/savings math, compare-at logic and HTML escaping. |
 | **Validate project (free)** | Runs the first row through `POST /api/render/validate/api-key` — the same resolve+validate pipeline every bulk item runs — and returns the per-video credit price. Failures surface as a field list. |
 | **Dry run?** | Branches on `Config.dryRun`. It is `false` by default, so runs normally go straight to the bulk render; the two nodes below only run when you set it to `true`. |
@@ -185,7 +186,7 @@ element cap is never a concern):
 
 | Symptom | Cause |
 | --- | --- |
-| `Nothing to do — every row already has a VideoUrl` | The catalog is fully rendered. Clear a `VideoUrl` cell to redo a row. |
+| `nothing_to_render` in **No pending products** | Successful completion: the catalog already has videos. Add a new product with an empty `VideoUrl`, or clear a specific `VideoUrl` only when you intend to regenerate that product and spend render credits. Older workflow copies reported this normal state as `Nothing to do — every row already has a VideoUrl`; reimport the updated template to get the successful exit. |
 | `No renderable rows: …` | Every pending row is missing required data; the message names the first problem. Check the run output's `rowsSkipped` for the rest. |
 | `Zvid rejected the project (HTTP 400)` | The message lists the offending fields — usually a malformed image URL in the first pending row. |
 | `Bulk limit exceeded` | `maxProducts` is above your plan's bulk item cap (5 on free plans). Lower it or upgrade. |

@@ -162,7 +162,13 @@ function migrateWorkflow(original, options = {}) {
         node.parameters.height = Math.max(node.parameters.height || 0, uploads.length ? 460 : 320);
       }
     }
-    if (!workflow.nodes.some((n) => n.id === 'zvid-native-setup')) {
+    const hasSetup = workflow.nodes.some((n) => n.id === 'zvid-native-setup'
+      || (n.type === 'n8n-nodes-base.stickyNote' && n.id.startsWith('publication-overview-')
+          && n.parameters.content.includes('https://app.zvid.io/api-keys')
+          && ((n.parameters.content.includes('@zvid/n8n-nodes-zvid')
+            && n.parameters.content.includes('Settings → Community nodes'))
+            || (hasMcp && n.parameters.content.includes('https://mcp.zvid.io/mcp')))));
+    if (!hasSetup) {
       const x = Math.min(...workflow.nodes.map((n) => n.position[0]));
       const y = Math.min(...workflow.nodes.map((n) => n.position[1])) - 520;
       workflow.nodes.push({ id: 'zvid-native-setup', name: hasNative ? 'Install and connect Zvid' : 'Zvid agent integration', type: 'n8n-nodes-base.stickyNote', typeVersion: 1, position: [x, y], parameters: { width: 720, height: 460, color: 6, content: hasNative ? `## Install and connect Zvid\n\n${INSTALL}${uploads.length ? '\n\n' + UPLOAD : ''}` : `## Zvid agent integration\n\n${MCP}` } });

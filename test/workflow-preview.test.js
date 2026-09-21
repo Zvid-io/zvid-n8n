@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { organizeWorkflow, entries, expressionBody, STICKY, GATE, WATCH_NOTE_ID } = require('../scripts/organize-workflow-series');
+const { publicationKind, OVERVIEW_PREFIX } = require('../scripts/publication-sticky-notes');
 
 function overlaps(a, b) {
   return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
@@ -49,10 +50,31 @@ for (const entry of entries) {
     }
     const notes = result.nodes.filter(n => n.type === STICKY);
     assert.ok(notes.some(n => n.id === WATCH_NOTE_ID));
-    const numbers = notes.map(n => Number(n.parameters.content.match(/^## (\d+)\./)?.[1])).sort((a, b) => a - b);
-    assert.deepEqual(numbers, Array.from({ length: notes.length }, (_, i) => i + 1));
-    for (const note of notes) for (const other of result.nodes) {
-      if (note.id !== other.id) assert.equal(overlaps(rect(note), rect(other)), false, 'Instruction cards must not overlap: ' + note.name + ' / ' + other.name);
+    assert.ok(publicationKind(result), 'Every series template must use the publication note standard');
+    {
+      const overview = notes.find(n => n.id.startsWith(OVERVIEW_PREFIX));
+      assert.equal(notes.filter(n => n.parameters.color === 1).length, 1, 'Exactly one yellow overview');
+      const words = overview.parameters.content.split(/\s+/).length;
+      assert.ok(words >= 100 && words <= 300, 'Overview must contain 100–300 words');
+      assert.match(overview.parameters.content, /^### How it works$/m);
+      assert.match(overview.parameters.content, /^### Setup$/m);
+      const sections = notes.filter(n => n !== overview);
+      const functional = result.nodes.filter(n => n.type !== STICKY);
+      const enclosed = new Map(functional.map(n => [n.id, 0]));
+      for (const section of sections) {
+        assert.equal(section.parameters.color, 7, 'Section notes use neutral white/grey');
+        assert.ok(section.parameters.content.split(/\s+/).length < 50);
+        assert.match(section.parameters.content, /^## \d+\./);
+        assert.ok(overview.position[0] < section.position[0] && overview.position[1] <= section.position[1], 'Overview sits at top left');
+        const box = rect(section);
+        const members = functional.filter(n => n.position[0] >= box.x + 30 && n.position[0] + 160 <= box.x + box.width - 20 && n.position[1] >= box.y + 150 && n.position[1] + 120 <= box.y + box.height - 20);
+        assert.ok(members.length >= 2, 'Section must surround multiple nodes: ' + section.name);
+        for (const node of members) enclosed.set(node.id, enclosed.get(node.id) + 1);
+      }
+      for (const count of enclosed.values()) assert.equal(count, 1, 'Every node belongs to exactly one section');
+      for (const note of notes) for (const other of notes) if (note.id !== other.id) assert.equal(overlaps(rect(note), rect(other)), false, 'Section notes must not collide');
+      for (const node of functional) for (const other of functional) if (node.id !== other.id) assert.equal(overlaps(rect(node), rect(other)), false, 'Functional nodes must not collide');
+      return;
     }
   });
 }
