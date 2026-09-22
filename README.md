@@ -251,3 +251,9 @@ n8n requires verified community nodes to be published from GitHub Actions with
 provenance. After the npm release passes
 `npx @n8n/scan-community-package @zvid/n8n-nodes-zvid`, submit the package
 through the [n8n Creator Portal](https://creators.n8n.io/).
+
+## Community and support
+
+Join the [Zvid community on Discord](https://discord.gg/MZyWKqHDj3) to ask
+questions, discuss video automation workflows, and share what you build.
+For private account or billing questions, email [help@zvid.io](mailto:help@zvid.io).
