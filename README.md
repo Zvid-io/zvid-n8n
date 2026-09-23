@@ -256,4 +256,4 @@ through the [n8n Creator Portal](https://creators.n8n.io/).
 
 Join the [Zvid community on Discord](https://discord.gg/MZyWKqHDj3) to ask
 questions, discuss video automation workflows, and share what you build.
-For private account or billing questions, use our [contact form](https://zvid.io/contact).
+For private account or billing questions, contact us at [https://zvid.io/contact](https://zvid.io/contact).

@@ -301,7 +301,7 @@ The workflow therefore needs only one Zvid API credential for every Zvid step.
 | Polling times out | Renders continue server-side. Check [app.zvid.io](https://app.zvid.io) before re-running, or raise `timeoutMinutes`. |
 | No external delivery occurs | This is expected when `deliveryWebhookUrl` is blank. The review branch returns all asset URLs inside n8n. |
 
-For Zvid help, see [docs.zvid.io](https://docs.zvid.io) or use our [contact form](https://zvid.io/contact).
+For Zvid help, see [docs.zvid.io](https://docs.zvid.io) or contact us at [https://zvid.io/contact](https://zvid.io/contact).
 
 ## Manual verification
 
