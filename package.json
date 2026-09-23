@@ -32,16 +32,14 @@
   "homepage": "https://zvid.io",
   "author": {
     "name": "Zvid",
-    "email": "help@zvid.io",
-    "url": "https://zvid.io"
+    "url": "https://zvid.io/contact"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Zvid-io/zvid-n8n.git"
   },
   "bugs": {
-    "url": "https://github.com/Zvid-io/zvid-n8n/issues",
-    "email": "help@zvid.io"
+    "url": "https://zvid.io/contact"
   },
   "engines": {
     "node": ">=20.19"
