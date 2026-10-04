@@ -1,0 +1,425 @@
+{
+  "name": "S2 D42 - Holiday Rental Cinematic Booking",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "durationMode": "fixed",
+  "duration": 22.4,
+  "backgroundColor": "#182D24",
+  "variables": {
+    "paper": "#182D24",
+    "ink": "#FFF8EA",
+    "accent": "#FFD4AA",
+    "headlineFont": "DM Serif Display",
+    "bodyFont": "Manrope",
+    "rental": "Juniper Pool Villa",
+    "location": "A slower stay in Bali",
+    "poolImage": "https://images.pexels.com/photos/33709939/pexels-photo-33709939.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "roomImage": "https://images.pexels.com/photos/26859070/pexels-photo-26859070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "terraceImage": "https://images.unsplash.com/photo-1720161263981-84281892ee4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDgwMTZ8MHwxfHNlYXJjaHwxfHxob2xpZGF5JTIwdmlsbGElMjBwb29sJTIwaW50ZXJpb3J8ZW58MHx8fHwxNzkwODgyMTgzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "heroTitle": "A few days, entirely yours",
+    "checkIn": "15 OCT",
+    "checkOut": "19 OCT",
+    "stayLength": "4 nights",
+    "dateYear": "2026",
+    "availabilityLabel": "Sample availability",
+    "guests": "Up to 4 guests",
+    "amenities": "Private pool · Two bedrooms",
+    "nightlyPrice": "$190 / night",
+    "priceContext": "Illustrative rate · taxes and fees extra",
+    "bookingTerms": "Availability and final price confirmed at booking.",
+    "cta": "Plan your poolside escape",
+    "bookingUrl": "juniper.example/stay",
+    "brand": "JUNIPER STAYS",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943307/zvid-series2-unique-music-20261002/day-42-music.mp3",
+    "musicVolume": 0.8
+  },
+  "scenes": [
+    {
+      "id": "cinematic-pool-cover",
+      "duration": 4.8,
+      "backgroundColor": "{{paper}}",
+      "transition": "dissolve",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{poolImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.12
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.8
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 4.8,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:5px;color:{{accent}};margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:108px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{heroTitle}}</div><div style=\"font-family:{{bodyFont}};font-size:36px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:26px\">{{location}}</div>",
+          "position": "custom",
+          "x": 96,
+          "y": 1240,
+          "width": 864,
+          "height": 550,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.8
+        }
+      ]
+    },
+    {
+      "id": "floating-date-ticket",
+      "duration": 4.8,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{terraceImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.08
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.8
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 4.8,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:#9A432C;margin-top:0px\">{{availabilityLabel}} · {{dateYear}}</div><div style=\"display:flex;width:90%;justify-content:space-between;margin-top:26px\"><div style=\"width:46%;text-align:center\"><div style=\"font-family:{{bodyFont}};font-size:24px;line-height:1.13;font-weight:700;letter-spacing:2px;color:#3C281E;margin-top:0px\">CHECK IN</div><div style=\"font-family:{{bodyFont}};font-size:53px;line-height:1.13;font-weight:700;letter-spacing:0px;color:#3C281E;margin-top:8px\">{{checkIn}}</div></div><div style=\"width:46%;text-align:center\"><div style=\"font-family:{{bodyFont}};font-size:24px;line-height:1.13;font-weight:700;letter-spacing:2px;color:#3C281E;margin-top:0px\">CHECK OUT</div><div style=\"font-family:{{bodyFont}};font-size:53px;line-height:1.13;font-weight:700;letter-spacing:0px;color:#3C281E;margin-top:8px\">{{checkOut}}</div></div></div><div style=\"font-family:{{bodyFont}};font-size:34px;line-height:1.13;font-weight:600;letter-spacing:0px;color:#3C281E;margin-top:25px\">{{stayLength}}</div>",
+          "position": "custom",
+          "x": 180,
+          "y": 1250,
+          "width": 720,
+          "height": 470,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "#3C281E",
+            "textAlign": "center",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "center",
+            "backgroundColor": "#F7EBDD",
+            "borderRadius": "24px"
+          },
+          "exitEnd": 4.8
+        }
+      ]
+    },
+    {
+      "id": "interior-pool-diptych",
+      "duration": 4.8,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">ROOM TO UNWIND</div><div style=\"font-family:{{headlineFont}};font-size:80px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{rental}}</div>",
+          "position": "custom",
+          "x": 96,
+          "y": 65,
+          "width": 864,
+          "height": 220,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.8
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{roomImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 350,
+          "width": 520,
+          "height": 1190,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "smoothright",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.8
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{poolImage}}",
+          "position": "custom",
+          "x": 560,
+          "y": 350,
+          "width": 520,
+          "height": 1190,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.07
+          },
+          "enterAnimation": "smoothleft",
+          "enterBegin": 0.1,
+          "enterEnd": 0.65,
+          "exitEnd": 4.8
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:38px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{amenities}}</div><div style=\"font-family:{{bodyFont}};font-size:33px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:20px\">{{guests}}</div>",
+          "position": "custom",
+          "x": 96,
+          "y": 1625,
+          "width": 864,
+          "height": 180,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.8
+        }
+      ]
+    },
+    {
+      "id": "transparent-stay-rate",
+      "duration": 4.8,
+      "backgroundColor": "{{paper}}",
+      "transition": "dissolve",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{poolImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.13
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.8
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 4.8,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"width:100%;height:100%;box-sizing:border-box;padding:54px 60px;display:flex;flex-direction:column;justify-content:center\"><div style=\"font-family:{{bodyFont}};font-size:23px;line-height:1.2;font-weight:700;letter-spacing:2.5px;color:#89523A\">YOUR STAY, CLEARLY PRICED</div><div style=\"font-family:{{headlineFont}};font-size:98px;line-height:1.08;font-weight:400;color:#2E3428;margin-top:18px\">{{nightlyPrice}}</div><div style=\"height:1px;min-height:1px;width:100%;background:#CFC8B7;margin-top:28px;margin-bottom:25px\"></div><div style=\"font-family:{{bodyFont}};font-size:28px;line-height:1.3;font-weight:600;color:#3F4938\">{{priceContext}}</div><div style=\"font-family:{{bodyFont}};font-size:26px;line-height:1.4;font-weight:400;color:#56604F;margin-top:15px\">{{bookingTerms}}</div></div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1260,
+          "width": 920,
+          "height": 500,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "#2E3428",
+            "textAlign": "left",
+            "display": "flex",
+            "alignItems": "stretch",
+            "justifyContent": "center",
+            "backgroundColor": "#F4F0E4",
+            "borderRadius": "26px",
+            "overflow": "hidden"
+          },
+          "exitEnd": 4.8
+        }
+      ]
+    },
+    {
+      "id": "poolside-booking",
+      "duration": 4.8,
+      "backgroundColor": "{{paper}}",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{poolImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.05
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.8
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 4.8,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:95px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{cta}}</div><div style=\"font-family:{{bodyFont}};font-size:38px;line-height:1.13;font-weight:700;letter-spacing:0px;color:{{ink}};margin-top:28px\">{{bookingUrl}}</div><div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:26px\">Confirm dates before booking</div>",
+          "position": "custom",
+          "x": 96,
+          "y": 1280,
+          "width": 864,
+          "height": 520,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.8
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 22.4,
+      "audioBegin": 0,
+      "audioEnd": 22.4,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

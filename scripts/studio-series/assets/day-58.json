@@ -1,0 +1,182 @@
+{
+  "name": "S2 D58 Language Listening Challenge",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "variables": {
+    "audioUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790882250/zvid-series2-design-review-20261001/listening-demo.mp3",
+    "waveform": "<svg width=\"1140\" height=\"180\" viewBox=\"0 0 1140 180\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"7\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"24.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"42\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"59.5\" y=\"39.0\" width=\"10\" height=\"102.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"77\" y=\"17.2\" width=\"10\" height=\"145.7\" rx=\"5\" fill=\"#44685f\"/><rect x=\"94.5\" y=\"25.5\" width=\"10\" height=\"129.1\" rx=\"5\" fill=\"#44685f\"/><rect x=\"112\" y=\"44.2\" width=\"10\" height=\"91.7\" rx=\"5\" fill=\"#44685f\"/><rect x=\"129.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"147\" y=\"21.1\" width=\"10\" height=\"137.9\" rx=\"5\" fill=\"#44685f\"/><rect x=\"164.5\" y=\"10.0\" width=\"10\" height=\"160.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"182\" y=\"15.4\" width=\"10\" height=\"149.3\" rx=\"5\" fill=\"#44685f\"/><rect x=\"199.5\" y=\"75.4\" width=\"10\" height=\"29.1\" rx=\"5\" fill=\"#44685f\"/><rect x=\"217\" y=\"73.2\" width=\"10\" height=\"33.6\" rx=\"5\" fill=\"#44685f\"/><rect x=\"234.5\" y=\"84.2\" width=\"10\" height=\"11.6\" rx=\"5\" fill=\"#44685f\"/><rect x=\"252\" y=\"29.9\" width=\"10\" height=\"120.3\" rx=\"5\" fill=\"#44685f\"/><rect x=\"269.5\" y=\"53.2\" width=\"10\" height=\"73.6\" rx=\"5\" fill=\"#44685f\"/><rect x=\"287\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"304.5\" y=\"48.4\" width=\"10\" height=\"83.2\" rx=\"5\" fill=\"#44685f\"/><rect x=\"322\" y=\"69.5\" width=\"10\" height=\"40.9\" rx=\"5\" fill=\"#44685f\"/><rect x=\"339.5\" y=\"44.8\" width=\"10\" height=\"90.3\" rx=\"5\" fill=\"#44685f\"/><rect x=\"357\" y=\"34.2\" width=\"10\" height=\"111.7\" rx=\"5\" fill=\"#44685f\"/><rect x=\"374.5\" y=\"58.2\" width=\"10\" height=\"63.7\" rx=\"5\" fill=\"#44685f\"/><rect x=\"392\" y=\"80.2\" width=\"10\" height=\"19.5\" rx=\"5\" fill=\"#44685f\"/><rect x=\"409.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"427\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"444.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"462\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"479.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"497\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"514.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"532\" y=\"55.4\" width=\"10\" height=\"69.2\" rx=\"5\" fill=\"#44685f\"/><rect x=\"549.5\" y=\"52.1\" width=\"10\" height=\"75.7\" rx=\"5\" fill=\"#44685f\"/><rect x=\"567\" y=\"56.1\" width=\"10\" height=\"67.9\" rx=\"5\" fill=\"#44685f\"/><rect x=\"584.5\" y=\"34.6\" width=\"10\" height=\"110.8\" rx=\"5\" fill=\"#44685f\"/><rect x=\"602\" y=\"41.5\" width=\"10\" height=\"97.1\" rx=\"5\" fill=\"#44685f\"/><rect x=\"619.5\" y=\"43.4\" width=\"10\" height=\"93.2\" rx=\"5\" fill=\"#44685f\"/><rect x=\"637\" y=\"69.3\" width=\"10\" height=\"41.3\" rx=\"5\" fill=\"#44685f\"/><rect x=\"654.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"672\" y=\"47.0\" width=\"10\" height=\"85.9\" rx=\"5\" fill=\"#44685f\"/><rect x=\"689.5\" y=\"26.9\" width=\"10\" height=\"126.3\" rx=\"5\" fill=\"#44685f\"/><rect x=\"707\" y=\"34.9\" width=\"10\" height=\"110.1\" rx=\"5\" fill=\"#44685f\"/><rect x=\"724.5\" y=\"45.8\" width=\"10\" height=\"88.4\" rx=\"5\" fill=\"#44685f\"/><rect x=\"742\" y=\"76.5\" width=\"10\" height=\"26.9\" rx=\"5\" fill=\"#44685f\"/><rect x=\"759.5\" y=\"83.9\" width=\"10\" height=\"12.2\" rx=\"5\" fill=\"#44685f\"/><rect x=\"777\" y=\"42.0\" width=\"10\" height=\"95.9\" rx=\"5\" fill=\"#44685f\"/><rect x=\"794.5\" y=\"53.9\" width=\"10\" height=\"72.2\" rx=\"5\" fill=\"#44685f\"/><rect x=\"812\" y=\"15.4\" width=\"10\" height=\"149.2\" rx=\"5\" fill=\"#44685f\"/><rect x=\"829.5\" y=\"21.3\" width=\"10\" height=\"137.4\" rx=\"5\" fill=\"#44685f\"/><rect x=\"847\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"864.5\" y=\"72.1\" width=\"10\" height=\"35.9\" rx=\"5\" fill=\"#44685f\"/><rect x=\"882\" y=\"48.5\" width=\"10\" height=\"82.9\" rx=\"5\" fill=\"#44685f\"/><rect x=\"899.5\" y=\"65.9\" width=\"10\" height=\"48.1\" rx=\"5\" fill=\"#44685f\"/><rect x=\"917\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"934.5\" y=\"77.4\" width=\"10\" height=\"25.3\" rx=\"5\" fill=\"#44685f\"/><rect x=\"952\" y=\"51.4\" width=\"10\" height=\"77.2\" rx=\"5\" fill=\"#44685f\"/><rect x=\"969.5\" y=\"60.7\" width=\"10\" height=\"58.7\" rx=\"5\" fill=\"#44685f\"/><rect x=\"987\" y=\"75.8\" width=\"10\" height=\"28.3\" rx=\"5\" fill=\"#44685f\"/><rect x=\"1004.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"1022\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"1039.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"1057\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"1074.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"1092\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/><rect x=\"1109.5\" y=\"86.0\" width=\"10\" height=\"8.0\" rx=\"5\" fill=\"#44685f\"/></svg>",
+    "prompt": "HOW DID THE SPEAKER TRAVEL?",
+    "firstChoice": "BY BUS",
+    "secondChoice": "ON FOOT",
+    "thirdChoice": "BY TAXI",
+    "transcriptStart": "I was going to take the bus,",
+    "transcriptTurn": "but I decided to walk instead.",
+    "answer": "ON FOOT",
+    "explanation": "“Going to” describes the earlier plan.\n“Decided to walk” tells us what happened.",
+    "closing": "Listen for the change of plan.",
+    "audioLabel": "Demonstration: synthetic British English voice"
+  },
+  "scenes": [
+    {
+      "id": "listen-first",
+      "duration": 7,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#f0eee5\"><div style=\"position:absolute;left:65px;top:30px;width:1150px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#44685f\">LISTENING ROOM / BRITISH ENGLISH</div><div style=\"position:absolute;left:65px;top:130px;width:1150px;height:110px;\"><div class=\"head\">{{prompt}}</div></div><div style=\"position:absolute;left:70px;top:305px;width:1140px;height:180px;\"><div class=\"listen\">{{waveform}}</div></div><div style=\"position:absolute;left:65px;top:535px;width:1150px;height:65px;font-family:Inter;font-size:30px;letter-spacing:3px;color:#44685f\">LISTEN FIRST. NO TRANSCRIPT YET.</div></div>",
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.head{font-family:Inter;font-size:62px;font-weight:700;line-height:1.12;color:#193f36}.body{font-family:Inter;font-size:33px;line-height:1.4;color:#31564c}.listen{animation:listen 4.416s 1s linear both}@keyframes listen{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}.keyword{color:#9d472a}.keyword2{background:#f4c97d}.after{animation:in .4s 3s both}.pulse{animation:sound 1s infinite}@keyframes sound{0%,100%{transform:scale(.8);opacity:.6}50%{transform:scale(1);opacity:1}}",
+            "animationDuration": 7
+          }
+        }
+      ],
+      "audios": [
+        {
+          "src": "{{audioUrl}}",
+          "enter": 1,
+          "exit": 5.416,
+          "audioBegin": 0,
+          "audioEnd": 4.416,
+          "volume": 1,
+          "speed": 1
+        }
+      ]
+    },
+    {
+      "id": "choose",
+      "duration": 6,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#f0eee5\"><div style=\"position:absolute;left:65px;top:30px;width:1150px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#44685f\">LISTENING ROOM / BRITISH ENGLISH</div><div style=\"position:absolute;left:65px;top:120px;width:1150px;height:110px;\"><div class=\"head\">WHAT DID YOU HEAR?</div></div><div style=\"position:absolute;left:65px;top:310px;width:345px;height:180px;background:#e0e7de;border-radius:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Inter;font-size:36px;line-height:1.8;color:#193f36\">A<br/><b>{{firstChoice}}</b></div><div style=\"position:absolute;left:465px;top:310px;width:345px;height:180px;background:#e0e7de;border-radius:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Inter;font-size:36px;line-height:1.8;color:#193f36\">B<br/><b>{{secondChoice}}</b></div><div style=\"position:absolute;left:865px;top:310px;width:345px;height:180px;background:#e0e7de;border-radius:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Inter;font-size:36px;line-height:1.8;color:#193f36\">C<br/><b>{{thirdChoice}}</b></div><div style=\"position:absolute;left:65px;top:560px;width:1150px;height:65px;font-family:Inter;font-size:30px;letter-spacing:3px;color:#44685f\">CHOOSE BEFORE THE REPLAY.</div></div>",
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.head{font-family:Inter;font-size:62px;font-weight:700;line-height:1.12;color:#193f36}.body{font-family:Inter;font-size:33px;line-height:1.4;color:#31564c}.listen{animation:listen 4.416s 1s linear both}@keyframes listen{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}.keyword{color:#9d472a}.keyword2{background:#f4c97d}.after{animation:in .4s 3s both}.pulse{animation:sound 1s infinite}@keyframes sound{0%,100%{transform:scale(.8);opacity:.6}50%{transform:scale(1);opacity:1}}",
+            "animationDuration": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "replay",
+      "duration": 7,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#f0eee5\"><div style=\"position:absolute;left:65px;top:30px;width:1150px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#44685f\">LISTENING ROOM / BRITISH ENGLISH</div><div style=\"position:absolute;left:65px;top:130px;width:1150px;height:160px;\"><div class=\"head\">{{transcriptStart}}</div></div><div style=\"position:absolute;left:65px;top:340px;width:1150px;height:170px;\"><div class=\"head keyword\">{{transcriptTurn}}</div></div><div style=\"position:absolute;left:65px;top:570px;width:1150px;height:70px;\"><div class=\"body\">The second clause changes the plan.</div></div></div>",
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.head{font-family:Inter;font-size:62px;font-weight:700;line-height:1.12;color:#193f36}.body{font-family:Inter;font-size:33px;line-height:1.4;color:#31564c}.listen{animation:listen 4.416s 1s linear both}@keyframes listen{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}.keyword{color:#9d472a}.keyword2{background:#f4c97d}.after{animation:in .4s 3s both}.pulse{animation:sound 1s infinite}@keyframes sound{0%,100%{transform:scale(.8);opacity:.6}50%{transform:scale(1);opacity:1}}.keyword{animation:in .4s 3s both}",
+            "animationDuration": 7
+          }
+        }
+      ],
+      "audios": [
+        {
+          "src": "{{audioUrl}}",
+          "enter": 1,
+          "exit": 5.416,
+          "audioBegin": 0,
+          "audioEnd": 4.416,
+          "volume": 1,
+          "speed": 1
+        }
+      ]
+    },
+    {
+      "id": "explain",
+      "duration": 6,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#f0eee5\"><div style=\"position:absolute;left:65px;top:30px;width:1150px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#44685f\">LISTENING ROOM / BRITISH ENGLISH</div><div style=\"position:absolute;left:65px;top:140px;width:1150px;height:135px;\"><div class=\"head rise\">B / {{answer}}</div></div><div style=\"position:absolute;left:65px;top:340px;width:1150px;height:190px;white-space:pre-line\"><div class=\"body\">{{explanation}}</div></div><div style=\"position:absolute;left:65px;top:570px;width:1150px;height:75px;font-family:Inter;font-size:36px;font-weight:700;color:#9d472a\">{{closing}}</div></div>",
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.head{font-family:Inter;font-size:62px;font-weight:700;line-height:1.12;color:#193f36}.body{font-family:Inter;font-size:33px;line-height:1.4;color:#31564c}.listen{animation:listen 4.416s 1s linear both}@keyframes listen{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}.keyword{color:#9d472a}.keyword2{background:#f4c97d}.after{animation:in .4s 3s both}.pulse{animation:sound 1s infinite}@keyframes sound{0%,100%{transform:scale(.8);opacity:.6}50%{transform:scale(1);opacity:1}}",
+            "animationDuration": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "repeat",
+      "duration": 4,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#f0eee5\"><div style=\"position:absolute;left:65px;top:30px;width:1150px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#44685f\">LISTENING ROOM / BRITISH ENGLISH</div><div style=\"position:absolute;left:65px;top:160px;width:1150px;height:180px;\"><div class=\"head\">{{closing}}</div></div><div style=\"position:absolute;left:65px;top:410px;width:1150px;height:140px;\"><div class=\"body\">Did you catch the word “but”?</div></div><div style=\"position:absolute;left:65px;top:620px;width:1150px;height:45px;font-family:Inter;font-size:20px;color:#44685f\">{{audioLabel}}</div></div>",
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.head{font-family:Inter;font-size:62px;font-weight:700;line-height:1.12;color:#193f36}.body{font-family:Inter;font-size:33px;line-height:1.4;color:#31564c}.listen{animation:listen 4.416s 1s linear both}@keyframes listen{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}.keyword{color:#9d472a}.keyword2{background:#f4c97d}.after{animation:in .4s 3s both}.pulse{animation:sound 1s infinite}@keyframes sound{0%,100%{transform:scale(.8);opacity:.6}50%{transform:scale(1);opacity:1}}",
+            "animationDuration": 4
+          }
+        }
+      ]
+    }
+  ]
+}

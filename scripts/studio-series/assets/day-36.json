@@ -1,0 +1,256 @@
+{
+  "type": "video",
+  "name": "S2 D36 - Market Specific Launch",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#BA6045",
+  "scenes": [
+    {
+      "id": "arriving-here",
+      "duration": 5,
+      "backgroundColor": "#BA6045",
+      "transition": "fadeblack",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "x": 70,
+          "y": 620,
+          "width": 940,
+          "height": 1160,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 470,
+            "tr": 470,
+            "bl": 24,
+            "br": 24
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:28px;letter-spacing:4px\">{{brand}} / {{market}}</div><div style=\"font-size:100px;margin-top:28px\">{{headline}}</div>",
+          "x": 70,
+          "y": 100,
+          "width": 940,
+          "height": 370,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 100,
+            "color": "#FFF0D6",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-collection",
+      "duration": 5,
+      "backgroundColor": "#FFF0D6",
+      "transition": "fadeblack",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{detailImage}}",
+          "x": 70,
+          "y": 110,
+          "width": 560,
+          "height": 1160,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "x": 690,
+          "y": 540,
+          "width": 320,
+          "height": 790,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:79px\">{{collection}}</div><div style=\"font-size:35px;margin-top:22px\">{{price}}</div>",
+          "x": 70,
+          "y": 1460,
+          "width": 940,
+          "height": 330,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 79,
+            "color": "#713526",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "your-local-edit",
+      "duration": 5,
+      "backgroundColor": "#713526",
+      "transition": "fadeblack",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{lifestyleImage}}",
+          "x": 70,
+          "y": 130,
+          "width": 940,
+          "height": 1190,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:31px;letter-spacing:4px\">A HELLO TO {{market}}</div><div style=\"font-size:72px;margin-top:28px\">{{localNote}}</div>",
+          "x": 70,
+          "y": 1470,
+          "width": 940,
+          "height": 330,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 72,
+            "color": "#FFF0D6",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "come-to-the-table",
+      "duration": 5,
+      "backgroundColor": "#FFF0D6",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "x": 70,
+          "y": 200,
+          "width": 940,
+          "height": 1030,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 470,
+            "tr": 470,
+            "bl": 470,
+            "br": 470
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:88px\">{{cta}}</div><div style=\"font-size:31px;margin-top:28px\">{{url}}</div>",
+          "x": 70,
+          "y": 1430,
+          "width": 940,
+          "height": 350,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 88,
+            "color": "#713526",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "COMMON TABLE",
+    "market": "Melbourne",
+    "headline": "A new table story.",
+    "heroImage": "https://images.pexels.com/photos/4466240/pexels-photo-4466240.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "detailImage": "https://images.pexels.com/photos/6312194/pexels-photo-6312194.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "lifestyleImage": "https://images.pexels.com/photos/7674567/pexels-photo-7674567.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1400&fit=crop",
+    "collection": "The everyday ceramic edit",
+    "localNote": "Available in your local collection",
+    "price": "From A$28",
+    "cta": "Meet the collection",
+    "url": "common.example/au",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943494/zvid-series2-unique-music-20261002/day-36-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 18.95,
+      "audioBegin": 0,
+      "audioEnd": 18.95,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

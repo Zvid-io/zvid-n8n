@@ -1,0 +1,60 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-43-demo",
+    "revision": "1",
+    "dealer": "NORTHLINE MOTORS",
+    "dealer_id": "northline",
+    "showroomImage": "https://images.pexels.com/photos/29566905/pexels-photo-29566905.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "currency": "USD",
+    "maxAgeHours": 24,
+    "cta": "See it. Drive it. Decide.",
+    "destination": "https://northline.example/stock",
+    "terms": "Demonstration inventory. Confirm vehicle details and availability."
+  },
+  "records": [
+    {
+      "kind": "vehicle",
+      "record_id": "NL1042",
+      "dealer_id": "northline",
+      "name": "Touring SUV",
+      "priceCents": 2990000,
+      "currency": "USD",
+      "mileageKm": 42000,
+      "image": "https://images.pexels.com/photos/27497571/pexels-photo-27497571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z",
+      "acquiredAt": "2026-09-10T10:00:00Z",
+      "marketingApproved": true
+    },
+    {
+      "kind": "vehicle",
+      "record_id": "NL1098",
+      "dealer_id": "northline",
+      "name": "Sport sedan",
+      "priceCents": 2450000,
+      "currency": "USD",
+      "mileageKm": 51000,
+      "image": "https://images.pexels.com/photos/12920621/pexels-photo-12920621.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z",
+      "acquiredAt": "2026-09-15T10:00:00Z",
+      "marketingApproved": true
+    },
+    {
+      "kind": "vehicle",
+      "record_id": "NL1131",
+      "dealer_id": "northline",
+      "name": "Urban SUV",
+      "priceCents": 2680000,
+      "currency": "USD",
+      "mileageKm": 38000,
+      "image": "https://images.pexels.com/photos/9494958/pexels-photo-9494958.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z",
+      "acquiredAt": "2026-09-20T10:00:00Z",
+      "marketingApproved": true
+    }
+  ]
+}

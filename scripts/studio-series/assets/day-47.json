@@ -1,0 +1,354 @@
+{
+  "name": "S2 D47 - Available Branch Lunch Combos",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "durationMode": "fixed",
+  "duration": 21.9,
+  "backgroundColor": "#F6D968",
+  "variables": {
+    "paper": "#F6D968",
+    "ink": "#262216",
+    "accent": "#59431A",
+    "headlineFont": "Space Grotesk",
+    "bodyFont": "Inter",
+    "brand": "SUNROOM LUNCH",
+    "heroImage": "https://images.pexels.com/photos/16266737/pexels-photo-16266737.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "comboOneImage": "https://images.pexels.com/photos/5292918/pexels-photo-5292918.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "comboTwoImage": "https://images.pexels.com/photos/16266737/pexels-photo-16266737.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "heroTitle": "Good lunch. Right nearby.",
+    "branchOne": "Downtown branch",
+    "branchTwo": "Quayside branch",
+    "comboOne": "Toasted sandwich + salad",
+    "comboOnePrice": "$12.50",
+    "comboTwo": "Salad bowl + sandwich",
+    "comboTwoPrice": "$13.50",
+    "serviceTime": "11:30–15:00",
+    "availability": "Sample branch menu · confirm today’s stock",
+    "cta": "Choose your branch. Order lunch.",
+    "destination": "sunroom.example/lunch",
+    "inclusions": "Combo inclusions and prices are branch-specific.",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943365/zvid-series2-unique-music-20261002/day-47-music.mp3",
+    "musicVolume": 0.8
+  },
+  "scenes": [
+    {
+      "id": "lunch-cover",
+      "duration": 4.7,
+      "backgroundColor": "{{paper}}",
+      "transition": "smoothleft",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:104px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{heroTitle}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 55,
+          "width": 920,
+          "height": 310,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.7
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 420,
+          "width": 1080,
+          "height": 1190,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.11
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.7
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:39px;line-height:1.13;font-weight:700;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{serviceTime}}</div><div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:23px\">{{availability}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1650,
+          "width": 920,
+          "height": 190,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.7
+        }
+      ]
+    },
+    {
+      "id": "downtown-combo",
+      "duration": 4.7,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{comboOneImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1280,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.09
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.7
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{branchOne}}</div><div style=\"font-family:{{headlineFont}};font-size:80px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{comboOne}}</div><div style=\"font-family:{{bodyFont}};font-size:72px;line-height:1.13;font-weight:700;letter-spacing:0px;color:{{ink}};margin-top:23px\">{{comboOnePrice}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1340,
+          "width": 920,
+          "height": 450,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.7
+        }
+      ]
+    },
+    {
+      "id": "quayside-combo",
+      "duration": 4.7,
+      "backgroundColor": "{{paper}}",
+      "transition": "smoothleft",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{comboTwoImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1260,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.06
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.7
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{branchTwo}}</div><div style=\"font-family:{{headlineFont}};font-size:80px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{comboTwo}}</div><div style=\"font-family:{{bodyFont}};font-size:72px;line-height:1.13;font-weight:700;letter-spacing:0px;color:{{ink}};margin-top:23px\">{{comboTwoPrice}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1320,
+          "width": 920,
+          "height": 460,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.7
+        }
+      ]
+    },
+    {
+      "id": "branch-service",
+      "duration": 4.7,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 900,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.7
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">LUNCH WHERE YOU ARE</div><div style=\"font-family:{{headlineFont}};font-size:58px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{branchOne}}</div><div style=\"font-family:{{headlineFont}};font-size:58px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:25px\">{{branchTwo}}</div><div style=\"font-family:{{bodyFont}};font-size:43px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:35px\">{{serviceTime}}</div><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:35px\">{{inclusions}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 980,
+          "width": 920,
+          "height": 740,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.7
+        }
+      ]
+    },
+    {
+      "id": "lunch-order",
+      "duration": 4.7,
+      "backgroundColor": "{{paper}}",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{comboOneImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.1
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.7
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 4.7,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:#FFE381;margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:92px;line-height:1.13;font-weight:500;letter-spacing:0px;color:#FFF5D1;margin-top:0px\">{{cta}}</div><div style=\"font-family:{{bodyFont}};font-size:36px;line-height:1.13;font-weight:600;letter-spacing:0px;color:#FFF5D1;margin-top:26px\">{{destination}}</div><div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:400;letter-spacing:0px;color:#FFF5D1;margin-top:24px\">{{availability}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1230,
+          "width": 920,
+          "height": 570,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.7
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 21.9,
+      "audioBegin": 0,
+      "audioEnd": 21.9,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

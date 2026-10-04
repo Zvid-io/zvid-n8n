@@ -1,0 +1,271 @@
+{
+  "type": "video",
+  "name": "S2 D38 - Performance Informed Product Refresh",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#DCFF36",
+  "scenes": [
+    {
+      "id": "fresh-hook",
+      "duration": 4,
+      "backgroundColor": "#DCFF36",
+      "transition": "wipeup",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{productImage}}",
+          "x": 180,
+          "y": 630,
+          "width": 810,
+          "height": 1100,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "smoothleft",
+          "exitEnd": 4
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:29px;letter-spacing:6px\">{{brand}}</div><div style=\"font-size:163px;line-height:0.95;margin-top:28px\">{{approvedHook}}</div>",
+          "x": 65,
+          "y": 90,
+          "width": 950,
+          "height": 450,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 4,
+          "style": {
+            "fontFamily": "Bebas Neue",
+            "fontSize": 163,
+            "color": "#131B12",
+            "lineHeight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "new-angle",
+      "duration": 5,
+      "backgroundColor": "#131B12",
+      "transition": "wipeup",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{detailImage}}",
+          "x": 65,
+          "y": 100,
+          "width": 950,
+          "height": 1290,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "zoom": {
+            "depth": 1.06
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:31px;letter-spacing:5px\">{{productName}}</div><div style=\"font-size:85px;margin-top:20px\">{{benefit}}</div>",
+          "x": 65,
+          "y": 1480,
+          "width": 950,
+          "height": 320,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Bebas Neue",
+            "fontSize": 85,
+            "color": "#DCFF36",
+            "lineHeight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "on-repeat",
+      "duration": 5,
+      "backgroundColor": "#DCFF36",
+      "transition": "wipeup",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{productImage}}",
+          "x": 60,
+          "y": 140,
+          "width": 460,
+          "height": 1000,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{detailImage}}",
+          "x": 565,
+          "y": 380,
+          "width": 450,
+          "height": 1000,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0.25,
+          "enterEnd": 0.85,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:175px\">{{price}}</div><div style=\"font-size:32px;margin-top:20px\">YOUR EVERYDAY. REFRAMED.</div>",
+          "x": 65,
+          "y": 1510,
+          "width": 950,
+          "height": 290,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Bebas Neue",
+            "fontSize": 175,
+            "color": "#131B12",
+            "lineHeight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "next-stride",
+      "duration": 5,
+      "backgroundColor": "#131B12",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{productImage}}",
+          "x": 250,
+          "y": 520,
+          "width": 760,
+          "height": 1090,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 380,
+            "tr": 380,
+            "bl": 380,
+            "br": 380
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{cta}}",
+          "x": 65,
+          "y": 110,
+          "width": 950,
+          "height": 370,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Bebas Neue",
+            "fontSize": 155,
+            "color": "#DCFF36",
+            "lineHeight": 1
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{url}}",
+          "x": 65,
+          "y": 1730,
+          "width": 950,
+          "height": 100,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 32,
+            "color": "#DCFF36",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "PACE STUDIO",
+    "productImage": "https://images.pexels.com/photos/20755674/pexels-photo-20755674.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "detailImage": "https://images.pexels.com/photos/27503504/pexels-photo-27503504.png?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "approvedHook": "Own your city days.",
+    "productName": "CITY / EVERYDAY",
+    "benefit": "A new angle on your daily pair.",
+    "price": "$89",
+    "cta": "Find your next stride",
+    "url": "pace.example/city",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943508/zvid-series2-unique-music-20261002/day-38-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 17.95,
+      "audioBegin": 0,
+      "audioEnd": 17.95,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

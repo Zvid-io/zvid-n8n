@@ -1,0 +1,2771 @@
+{
+  "capturedAt": "2026-10-01T14:34:26.439Z",
+  "readOnly": true,
+  "rootConfirmed": false,
+  "executions": [
+    {
+      "executionId": 821,
+      "workflowId": "ZvidSeries2PubCheckpointAccepted",
+      "mode": "manual",
+      "status": "success",
+      "targetStatus": "accepted",
+      "currentFunctionalSha256": "acd58aa7fe0fd7ba42fa74856d795dad4a23fef2263551b852e8a52ee10c09b9",
+      "functionalMatch": true,
+      "allReadsBeforePreflight": true,
+      "firstWriteAfterPreflight": true,
+      "outcome": {
+        "status": "all_thirty_synthetic_checkpoints_ready",
+        "targetStatus": "accepted",
+        "count": 30,
+        "noPaidOrExternalNodesPresent": true
+      },
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "List existing Data Tables": {
+          "runs": 1,
+          "status": "success",
+          "items": 40
+        },
+        "Select 30 exact QA tables": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D31 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D32 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D33 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D34 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D35 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D36 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D37 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D38 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D39 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D40 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D41 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D42 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D43 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D44 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D45 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D46 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D47 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D48 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D49 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D50 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D51 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D52 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D53 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D54 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D55 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D56 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D57 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D58 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D59 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D60 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify all 30 delivered frozen requests": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D31 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D31 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D31 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D32 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D32 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D32 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D33 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D33 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D33 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D34 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D34 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D34 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D35 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D35 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D35 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D36 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D36 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D36 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D37 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D37 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D37 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D38 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D38 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D38 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D39 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D39 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D39 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D40 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D40 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D40 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D41 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D41 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D41 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D42 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D42 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D42 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D43 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D43 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D43 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D44 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D44 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D44 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D45 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D45 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D45 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D46 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D46 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D46 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D47 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D47 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D47 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D48 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D48 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D48 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D49 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D49 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D49 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D50 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D50 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D50 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D51 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D51 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D51 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D52 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D52 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D52 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D53 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D53 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D53 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D54 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D54 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D54 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D55 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D55 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D55 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D56 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D56 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D56 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D57 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D57 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D57 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D58 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D58 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D58 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D59 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D59 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D59 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D60 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D60 accepted": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D60 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Checkpoint helper outcome": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        }
+      },
+      "checkpoints": [
+        {
+          "day": 31,
+          "sourceId": "qa-d31-record-001",
+          "revision": "r1",
+          "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+          "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "530c60667751c3a1cf9b04404abbf8af5db6274dbfbf422afb6b196c5dde450d",
+          "retainedHashAfter": "530c60667751c3a1cf9b04404abbf8af5db6274dbfbf422afb6b196c5dde450d",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 32,
+          "sourceId": "qa-d32-record-001",
+          "revision": "r1",
+          "requestKey": "procedure-tutorial-video|qa-d32-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "cc02f5f1-340a-4635-a99a-a3884aa38387",
+          "inputHash": "7ff90cd78e636bd604e3d909194d38f378d2dedad9deb6195ed1a46ee4485a28",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "c58c4a998cd8d7e22ac3a94a1e85cdd1748e04231b2639caed4af1a1e683d06a",
+          "retainedHashAfter": "c58c4a998cd8d7e22ac3a94a1e85cdd1748e04231b2639caed4af1a1e683d06a",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 33,
+          "sourceId": "qa-d33-record-001",
+          "revision": "r1",
+          "requestKey": "plan-comparison-video|qa-d33-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "e502a7b9-8120-4b8a-847e-a12f6d1b1877",
+          "inputHash": "ecd7b340cc9c7a7d1493d66e7e3df99223f59abfad28641fd3dfe775b83934a0",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "49eacdc3cf0acf865a74bd56532b66b911833e2093f1ccf3f0c02a1e19477f4a",
+          "retainedHashAfter": "49eacdc3cf0acf865a74bd56532b66b911833e2093f1ccf3f0c02a1e19477f4a",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 34,
+          "sourceId": "qa-d34-record-001",
+          "revision": "r1",
+          "requestKey": "incident-timeline-video|qa-d34-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "18c4d4f5-45b1-4350-b155-d33dbdfb4e6f",
+          "inputHash": "511abe60b46de17ec551df38f9dc7a05a9b6b15d6874974c04717187b9b05084",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "af534e9021ee4b5785cb67b860f2d9d28972d40c3a93ef8169e11151c6abaf2b",
+          "retainedHashAfter": "af534e9021ee4b5785cb67b860f2d9d28972d40c3a93ef8169e11151c6abaf2b",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 35,
+          "sourceId": "qa-d35-record-001",
+          "revision": "r1",
+          "requestKey": "maintenance-notice-video|qa-d35-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "bdbef051-2132-496f-9899-b76a3525e898",
+          "inputHash": "533d33a3d53a262ee89ca68dc78144b8105d02a72a0312a3dff15db9edad309d",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "023135f714bb8105a8ea09f08d3d40d094059faeb0b7d1c247f8c65254ce6833",
+          "retainedHashAfter": "023135f714bb8105a8ea09f08d3d40d094059faeb0b7d1c247f8c65254ce6833",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 36,
+          "sourceId": "qa-d36-record-001",
+          "revision": "r1",
+          "requestKey": "order-progress-video|qa-d36-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "3bd51248-6c6c-476f-a031-797eb1766723",
+          "inputHash": "d3b1ff4da3405899951d32fb23b6f4882d47d12fbc783b2712f08100e7f7377a",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "29224cffca339cfd173a9c20fc39701c6fccbfb2a563b909214b4fae37830474",
+          "retainedHashAfter": "29224cffca339cfd173a9c20fc39701c6fccbfb2a563b909214b4fae37830474",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 37,
+          "sourceId": "qa-d37-record-001",
+          "revision": "r1",
+          "requestKey": "product-bundle-savings-video|qa-d37-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "3db6bab9-3869-4256-b1e8-871d1c816a83",
+          "inputHash": "34850c1b58cc51b07746d1d46e48f8d076f6b25d7100799d9188cc9fd450287a",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "6aa258049b674e2f6c2a2e30d6c07cbdfd51e95e9db6a5523e6fbac5bd0d16ca",
+          "retainedHashAfter": "6aa258049b674e2f6c2a2e30d6c07cbdfd51e95e9db6a5523e6fbac5bd0d16ca",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 38,
+          "sourceId": "qa-d38-record-001",
+          "revision": "r1",
+          "requestKey": "delivery-delay-video|qa-d38-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "90b29c7b-8974-452d-9601-53bb8599e982",
+          "inputHash": "f5bd5b16998b16f61fa24d8a7df33e02f73ca788d25146dbace46c5b15eb4f35",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "0b8b084dd86c30ed1cc54c5b4face07d2e88bc8696878c469bf2d35d22225db1",
+          "retainedHashAfter": "0b8b084dd86c30ed1cc54c5b4face07d2e88bc8696878c469bf2d35d22225db1",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 39,
+          "sourceId": "qa-d39-record-001",
+          "revision": "r1",
+          "requestKey": "appointment-preparation-video|qa-d39-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "40c4837d-e64e-4ae7-9730-d34247669bd5",
+          "inputHash": "4a219d23afb4e5e17f773b4947b915c3ae3ede2e0cc3160d29c640dd7a748dea",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "f3088a781200d0c126f17cbf48d3ecb7a44bd5797604853e20add5dbc2a6d429",
+          "retainedHashAfter": "f3088a781200d0c126f17cbf48d3ecb7a44bd5797604853e20add5dbc2a6d429",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 40,
+          "sourceId": "qa-d40-record-001",
+          "revision": "r1",
+          "requestKey": "return-instructions-video|qa-d40-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "54c0cc5b-b3ed-4ee8-b34c-2f2ec30da7e9",
+          "inputHash": "e00972ee170c153ccdd7911f3882ac1fefe9d91cf802513453d60c03a04c62da",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "baf108fdf78fa40d2cf0fb5c7ea42d917835435d53b417e5d1c27c31c3df606f",
+          "retainedHashAfter": "baf108fdf78fa40d2cf0fb5c7ea42d917835435d53b417e5d1c27c31c3df606f",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 41,
+          "sourceId": "qa-d41-record-001",
+          "revision": "r1",
+          "requestKey": "employee-first-week-video|qa-d41-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "2970bd23-456e-4883-bbfb-16efacac7980",
+          "inputHash": "785777ea0e2f607a3885ea1e0dfe7a486cfb771d3e963ffd31e9e102ab47ee6d",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "c81764c16c16e0c37dcb2d0b0d7d2d92991e5be6c9f69ad75bc5929c6f4989b6",
+          "retainedHashAfter": "c81764c16c16e0c37dcb2d0b0d7d2d92991e5be6c9f69ad75bc5929c6f4989b6",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 42,
+          "sourceId": "qa-d42-record-001",
+          "revision": "r1",
+          "requestKey": "interview-agenda-video|qa-d42-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "2e7cd157-1e0b-4281-9057-3cea03d0e5d1",
+          "inputHash": "6129e54ef43adcb2d440bde1aaa80edbb0fc728842ea4ab9b418220aaf9b9e14",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "bdcc96e856607edbda4dae2d97bba73145d4b55d297690259a3ac27084752408",
+          "retainedHashAfter": "bdcc96e856607edbda4dae2d97bba73145d4b55d297690259a3ac27084752408",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 43,
+          "sourceId": "qa-d43-record-001",
+          "revision": "r1",
+          "requestKey": "course-roadmap-video|qa-d43-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "052a9a6f-b5fc-46db-90ec-59f167cad66b",
+          "inputHash": "e75daa4e420790d94fce78cf8e9d5cbb7caf8a9cc093836a69920eeb5160cbb8",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "dfe4c852cfa0b4436b6dd46699ff5dceb9d0288eb60b774195667d0fb2bdb3d4",
+          "retainedHashAfter": "dfe4c852cfa0b4436b6dd46699ff5dceb9d0288eb60b774195667d0fb2bdb3d4",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 44,
+          "sourceId": "qa-d44-record-001",
+          "revision": "r1",
+          "requestKey": "safety-briefing-video|qa-d44-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "6c4ba7da-c25b-4aee-8e95-3ae57bb8e134",
+          "inputHash": "a6cf1048fb37ac4279ea89112cd7f7b097049e791ba09005190bedd31e2e3c22",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "2c19c504016d7278a8ad98e7e46ae06b7a96fe2b5a5ade5d35160fa179566498",
+          "retainedHashAfter": "2c19c504016d7278a8ad98e7e46ae06b7a96fe2b5a5ade5d35160fa179566498",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 45,
+          "sourceId": "qa-d45-record-001",
+          "revision": "r1",
+          "requestKey": "training-completion-video|qa-d45-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "fdff49cf-ad78-46bf-b90d-df1cd294f081",
+          "inputHash": "08b4485e94a99dac23776df4897333edad6c6825bd7269d1ec537cd0e9c09086",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "f82478afc6f7cf054ae0cd51a1f5e028c4342f96ca76fe356309b5028cb70997",
+          "retainedHashAfter": "f82478afc6f7cf054ae0cd51a1f5e028c4342f96ca76fe356309b5028cb70997",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 46,
+          "sourceId": "qa-d46-record-001",
+          "revision": "r1",
+          "requestKey": "meeting-action-brief-video|qa-d46-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "255fb563-2bd4-4c90-868f-f9e0e2f6fa60",
+          "inputHash": "8e93203a795b9f5583b16b791331bb716934658e508d6f5c9d76a71043df15c4",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "92590dd996d3349ec7e8851e53deb8301e9a179210516fa7796651e5bead69e2",
+          "retainedHashAfter": "92590dd996d3349ec7e8851e53deb8301e9a179210516fa7796651e5bead69e2",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 47,
+          "sourceId": "qa-d47-record-001",
+          "revision": "r1",
+          "requestKey": "equipment-maintenance-video|qa-d47-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "0156dda7-0ec9-4f38-a6ad-27ea4c062858",
+          "inputHash": "5c4b6f0e40e6a5382cb046f022c791a17f004d1d12ad5d53747b4d92f2ab6e95",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "cdf4b852d9eac7b08695e0d5243685f0d72da4e44bcd49fef0fdf5b2383921df",
+          "retainedHashAfter": "cdf4b852d9eac7b08695e0d5243685f0d72da4e44bcd49fef0fdf5b2383921df",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 48,
+          "sourceId": "qa-d48-record-001",
+          "revision": "r1",
+          "requestKey": "inventory-replenishment-video|qa-d48-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "090bcf03-bc7b-48f7-a7a9-0f046b2fc01f",
+          "inputHash": "9a0d0dd56b03dafa5e2e1e6a3530614c16c9befe61fe39fce55a02d21a66ff6b",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "fc60f4ab4dd5ad3d630239802652dddf1b44a7ead6c0c0bba6a4757b6e091d9d",
+          "retainedHashAfter": "fc60f4ab4dd5ad3d630239802652dddf1b44a7ead6c0c0bba6a4757b6e091d9d",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 49,
+          "sourceId": "qa-d49-record-001",
+          "revision": "r1",
+          "requestKey": "delivery-route-brief-video|qa-d49-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "eca8eb7c-9ef8-4e7e-bc8d-aee7451fe713",
+          "inputHash": "f33dc34eee4a820c5ea653df1709afbe340e622a6640b25cf69e9e8bc1e2979d",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "3efa2b08f923cf5899548ecebeabb8eeb32a6bc365f8cf91f615f2f0f3e9b373",
+          "retainedHashAfter": "3efa2b08f923cf5899548ecebeabb8eeb32a6bc365f8cf91f615f2f0f3e9b373",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 50,
+          "sourceId": "qa-d50-record-001",
+          "revision": "r2",
+          "requestKey": "tender-checklist-video|qa-d50-record-001|r2|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "8862babc-a6ef-4825-9c60-082720bd7d69",
+          "inputHash": "d82a414e8d997ec73260c953daf88396152455478002b051dcd6eb366aef8f94",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "aaa969adb93cc3ec3b19a13c2453e94951cb7083fa084c078e3025aeade7fc4e",
+          "retainedHashAfter": "aaa969adb93cc3ec3b19a13c2453e94951cb7083fa084c078e3025aeade7fc4e",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 51,
+          "sourceId": "qa-d51-record-001",
+          "revision": "r1",
+          "requestKey": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "7797cb1d-f316-492d-8c8a-7950a5a0c2b4",
+          "inputHash": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "133e4686e1c67d937294abe6bccd7defbe77befb3c903f7bb987ad9c748df047",
+          "retainedHashAfter": "133e4686e1c67d937294abe6bccd7defbe77befb3c903f7bb987ad9c748df047",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 52,
+          "sourceId": "qa-d52-record-001",
+          "revision": "r1",
+          "requestKey": "hotel-arrival-guide-video|qa-d52-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "b6933876-873a-4aa5-8f0b-b08d04866d2c",
+          "inputHash": "1c7bcbc317e6dc51f8ad42cf46107cb36a9a356af50f8c910f67699e46809bbc",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "2d0d3960f611c846eaef23f4421274d66c8c235cd9e187175b14cab51bf7ed50",
+          "retainedHashAfter": "2d0d3960f611c846eaef23f4421274d66c8c235cd9e187175b14cab51bf7ed50",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 53,
+          "sourceId": "qa-d53-record-001",
+          "revision": "r1",
+          "requestKey": "pet-adoption-video|qa-d53-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "96c5fbf9-bc3f-4aea-afbf-05b56e6c9fb0",
+          "inputHash": "a2b4dbe8c41b882b06f260441fabe181da01be005e4406d32b6c414216422f19",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "16c5b7df193be5de70046c562dba6caddd5c1a6d96b399a4b770ce8cc478f208",
+          "retainedHashAfter": "16c5b7df193be5de70046c562dba6caddd5c1a6d96b399a4b770ce8cc478f208",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 54,
+          "sourceId": "qa-d54-record-001",
+          "revision": "r1",
+          "requestKey": "volunteer-shift-video|qa-d54-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "b0f3410c-13a0-4c0c-becb-81849b1c48e7",
+          "inputHash": "0a07370c057b1011e56699410f785da77ee2cc821ed51d23953b57e520999769",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "4aca3f096c2aabdee3f3f96a8f8aa75345345e9cbc496533d230e73a067a6cb3",
+          "retainedHashAfter": "4aca3f096c2aabdee3f3f96a8f8aa75345345e9cbc496533d230e73a067a6cb3",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 55,
+          "sourceId": "qa-d55-record-001",
+          "revision": "r1",
+          "requestKey": "donation-impact-video|qa-d55-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "e49bb090-2a49-4dcd-a0eb-1467d7c7384b",
+          "inputHash": "6031641c20831806b0481f3c5d949947b30952b584025b394bc9f15ccc1558c1",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "a42406d4c44da353c7d6909c0ff786b01c273d67d8d2c315c1ca8ef1785ca4ce",
+          "retainedHashAfter": "a42406d4c44da353c7d6909c0ff786b01c273d67d8d2c315c1ca8ef1785ca4ce",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 56,
+          "sourceId": "qa-d56-record-001",
+          "revision": "r1",
+          "requestKey": "survey-results-video|qa-d56-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "de1eb00d-30f2-4752-b72e-87241d3d2300",
+          "inputHash": "96afda9f2274fd22dc310ed8c89a401720316452c7d77305dfe51219c7b904c7",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "6aa650cd52b8b3b70aa55fc03e61e8c5b82e3f486f3ec9add9869337ce20dafe",
+          "retainedHashAfter": "6aa650cd52b8b3b70aa55fc03e61e8c5b82e3f486f3ec9add9869337ce20dafe",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 57,
+          "sourceId": "qa-d57-record-001",
+          "revision": "r1",
+          "requestKey": "fundraiser-progress-video|qa-d57-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "3c319c9c-42e7-4bcb-8347-6cc77d830f76",
+          "inputHash": "26354701fdd56cdbb2bdc0dca2bc2eb0a64a4c3852c82a3f4730718b7a29a340",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "6758acfe04336996fd81cba961590b55fbf46e5903012ee9a97ce6412f328acd",
+          "retainedHashAfter": "6758acfe04336996fd81cba961590b55fbf46e5903012ee9a97ce6412f328acd",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 58,
+          "sourceId": "qa-d58-record-001",
+          "revision": "r1",
+          "requestKey": "before-after-case-study-video|qa-d58-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "8be386ad-f68e-4846-840d-30856ca328c4",
+          "inputHash": "b32b9f06d648e1e1b2da46536c774de37b3eda1093688480a17808e02f7b0839",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "aae1eb593d3e46d6341c1eeb20d533abf4cb3e21a8ca987e8a306265928dd5ee",
+          "retainedHashAfter": "aae1eb593d3e46d6341c1eeb20d533abf4cb3e21a8ca987e8a306265928dd5ee",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 59,
+          "sourceId": "qa-d59-record-001",
+          "revision": "r1",
+          "requestKey": "milestone-roadmap-video|qa-d59-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "766e80a1-561d-4ff9-b84b-8f42bbb70377",
+          "inputHash": "41f57599cf47ff8b67db26d88ee153a0b6a972c7911c9a8e3414cc5669d0266d",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "df3a5e05416ca6fa0fdf15e235171ba2d4998fd543125ef685904604dbb776c1",
+          "retainedHashAfter": "df3a5e05416ca6fa0fdf15e235171ba2d4998fd543125ef685904604dbb776c1",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 60,
+          "sourceId": "qa-d60-record-001",
+          "revision": "r1",
+          "requestKey": "recipe-cooking-guide-video|qa-d60-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "596ce330-07e1-47b6-9628-b89ac4fa11b7",
+          "inputHash": "d6bc6f262582141f0df44a24d3c24d212d2196632f346ff455d4bd47ab8b88ef",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "3a9e4eb06de4094095ab9248f09baa19d26dba8016bfefe1e20bf7686205b952",
+          "retainedHashAfter": "3a9e4eb06de4094095ab9248f09baa19d26dba8016bfefe1e20bf7686205b952",
+          "changedFields": [
+            "status",
+            "video_url",
+            "drive_file_id",
+            "drive_url"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "accepted",
+          "videoUrlRetained": false,
+          "driveIdRetained": false,
+          "frozenContentRetained": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "executionId": 852,
+      "workflowId": "ZvidSeries2PubCheckpointUploaded",
+      "mode": "manual",
+      "status": "success",
+      "targetStatus": "uploaded",
+      "currentFunctionalSha256": "96eb70f983054c278cc5aef3e420d0481fc276941928b0a326c615208e1ccdfa",
+      "functionalMatch": true,
+      "allReadsBeforePreflight": true,
+      "firstWriteAfterPreflight": true,
+      "outcome": {
+        "status": "all_thirty_synthetic_checkpoints_ready",
+        "targetStatus": "uploaded",
+        "count": 30,
+        "noPaidOrExternalNodesPresent": true
+      },
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "List existing Data Tables": {
+          "runs": 1,
+          "status": "success",
+          "items": 40
+        },
+        "Select 30 exact QA tables": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D31 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D32 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D33 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D34 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D35 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D36 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D37 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D38 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D39 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D40 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D41 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D42 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D43 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D44 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D45 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D46 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D47 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D48 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D49 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D50 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D51 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D52 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D53 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D54 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D55 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D56 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D57 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D58 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D59 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Read D60 synthetic ledger": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify all 30 delivered frozen requests": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D31 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D31 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D31 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D32 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D32 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D32 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D33 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D33 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D33 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D34 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D34 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D34 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D35 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D35 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D35 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D36 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D36 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D36 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D37 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D37 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D37 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D38 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D38 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D38 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D39 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D39 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D39 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D40 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D40 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D40 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D41 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D41 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D41 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D42 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D42 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D42 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D43 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D43 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D43 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D44 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D44 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D44 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D45 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D45 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D45 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D46 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D46 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D46 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D47 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D47 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D47 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D48 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D48 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D48 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D49 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D49 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D49 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D50 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D50 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D50 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D51 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D51 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D51 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D52 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D52 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D52 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D53 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D53 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D53 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D54 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D54 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D54 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D55 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D55 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D55 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D56 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D56 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D56 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D57 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D57 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D57 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D58 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D58 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D58 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D59 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D59 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D59 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Prepare D60 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Set D60 uploaded": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Verify D60 checkpoint": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        },
+        "Checkpoint helper outcome": {
+          "runs": 1,
+          "status": "success",
+          "items": 1
+        }
+      },
+      "checkpoints": [
+        {
+          "day": 31,
+          "sourceId": "qa-d31-record-001",
+          "revision": "r1",
+          "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+          "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "451695a99be30e251c1156b1b0bc6371f99b1812d2a33c5301294e8316c38aaf",
+          "retainedHashAfter": "451695a99be30e251c1156b1b0bc6371f99b1812d2a33c5301294e8316c38aaf",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 32,
+          "sourceId": "qa-d32-record-001",
+          "revision": "r1",
+          "requestKey": "procedure-tutorial-video|qa-d32-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "cc02f5f1-340a-4635-a99a-a3884aa38387",
+          "inputHash": "7ff90cd78e636bd604e3d909194d38f378d2dedad9deb6195ed1a46ee4485a28",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "5a74658238965e53d152ee8d17b9ab0ae31a05330f1d39d5aa7a0b45bdc29963",
+          "retainedHashAfter": "5a74658238965e53d152ee8d17b9ab0ae31a05330f1d39d5aa7a0b45bdc29963",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 33,
+          "sourceId": "qa-d33-record-001",
+          "revision": "r1",
+          "requestKey": "plan-comparison-video|qa-d33-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "e502a7b9-8120-4b8a-847e-a12f6d1b1877",
+          "inputHash": "ecd7b340cc9c7a7d1493d66e7e3df99223f59abfad28641fd3dfe775b83934a0",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "d6d365cfee5fc8c0e239291395950450a80c3b626299c116fd899db8759c74c5",
+          "retainedHashAfter": "d6d365cfee5fc8c0e239291395950450a80c3b626299c116fd899db8759c74c5",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 34,
+          "sourceId": "qa-d34-record-001",
+          "revision": "r1",
+          "requestKey": "incident-timeline-video|qa-d34-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "18c4d4f5-45b1-4350-b155-d33dbdfb4e6f",
+          "inputHash": "511abe60b46de17ec551df38f9dc7a05a9b6b15d6874974c04717187b9b05084",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "ddfbaf89060ee5810ef2dadc51a321945de4c9cfd63f012d177c8cf1c3af1ab1",
+          "retainedHashAfter": "ddfbaf89060ee5810ef2dadc51a321945de4c9cfd63f012d177c8cf1c3af1ab1",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 35,
+          "sourceId": "qa-d35-record-001",
+          "revision": "r1",
+          "requestKey": "maintenance-notice-video|qa-d35-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "bdbef051-2132-496f-9899-b76a3525e898",
+          "inputHash": "533d33a3d53a262ee89ca68dc78144b8105d02a72a0312a3dff15db9edad309d",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "06e266c075f2020cf6b85fcc9ace3d9e636a3abf586a0ad7e8d2ac579197ba7d",
+          "retainedHashAfter": "06e266c075f2020cf6b85fcc9ace3d9e636a3abf586a0ad7e8d2ac579197ba7d",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 36,
+          "sourceId": "qa-d36-record-001",
+          "revision": "r1",
+          "requestKey": "order-progress-video|qa-d36-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "3bd51248-6c6c-476f-a031-797eb1766723",
+          "inputHash": "d3b1ff4da3405899951d32fb23b6f4882d47d12fbc783b2712f08100e7f7377a",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "e89d0419d184cdb018515220acd6ca9d14c8a678f427ae83877d11da14deec1c",
+          "retainedHashAfter": "e89d0419d184cdb018515220acd6ca9d14c8a678f427ae83877d11da14deec1c",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 37,
+          "sourceId": "qa-d37-record-001",
+          "revision": "r1",
+          "requestKey": "product-bundle-savings-video|qa-d37-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "3db6bab9-3869-4256-b1e8-871d1c816a83",
+          "inputHash": "34850c1b58cc51b07746d1d46e48f8d076f6b25d7100799d9188cc9fd450287a",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "e5251c19c4b650a91885ff9e2529695b6b0bcf3dd659415309999f79faa3aeae",
+          "retainedHashAfter": "e5251c19c4b650a91885ff9e2529695b6b0bcf3dd659415309999f79faa3aeae",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 38,
+          "sourceId": "qa-d38-record-001",
+          "revision": "r1",
+          "requestKey": "delivery-delay-video|qa-d38-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "90b29c7b-8974-452d-9601-53bb8599e982",
+          "inputHash": "f5bd5b16998b16f61fa24d8a7df33e02f73ca788d25146dbace46c5b15eb4f35",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "fca2c839b0b75e54fbd6aee77f624d5b1a4b2637009d99ed81cfed765e19c364",
+          "retainedHashAfter": "fca2c839b0b75e54fbd6aee77f624d5b1a4b2637009d99ed81cfed765e19c364",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 39,
+          "sourceId": "qa-d39-record-001",
+          "revision": "r1",
+          "requestKey": "appointment-preparation-video|qa-d39-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "40c4837d-e64e-4ae7-9730-d34247669bd5",
+          "inputHash": "4a219d23afb4e5e17f773b4947b915c3ae3ede2e0cc3160d29c640dd7a748dea",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "967346440f358993e57995e4284540cd03b81f786c16aca67f4af27faf9d5f46",
+          "retainedHashAfter": "967346440f358993e57995e4284540cd03b81f786c16aca67f4af27faf9d5f46",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 40,
+          "sourceId": "qa-d40-record-001",
+          "revision": "r1",
+          "requestKey": "return-instructions-video|qa-d40-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "54c0cc5b-b3ed-4ee8-b34c-2f2ec30da7e9",
+          "inputHash": "e00972ee170c153ccdd7911f3882ac1fefe9d91cf802513453d60c03a04c62da",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "405c53f5f17de7fa4b9f51d809030d72a28c3d584e310b0772e01df9bc2e5e04",
+          "retainedHashAfter": "405c53f5f17de7fa4b9f51d809030d72a28c3d584e310b0772e01df9bc2e5e04",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 41,
+          "sourceId": "qa-d41-record-001",
+          "revision": "r1",
+          "requestKey": "employee-first-week-video|qa-d41-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "2970bd23-456e-4883-bbfb-16efacac7980",
+          "inputHash": "785777ea0e2f607a3885ea1e0dfe7a486cfb771d3e963ffd31e9e102ab47ee6d",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "d66ac6b2350f535077a92d107234e65498ac03621a635f192d4415c5258b6a01",
+          "retainedHashAfter": "d66ac6b2350f535077a92d107234e65498ac03621a635f192d4415c5258b6a01",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 42,
+          "sourceId": "qa-d42-record-001",
+          "revision": "r1",
+          "requestKey": "interview-agenda-video|qa-d42-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "2e7cd157-1e0b-4281-9057-3cea03d0e5d1",
+          "inputHash": "6129e54ef43adcb2d440bde1aaa80edbb0fc728842ea4ab9b418220aaf9b9e14",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "62cfe969d64079e5b1da93c63c06ccd7662ccc8f96a46a1c404989b9ace1f06a",
+          "retainedHashAfter": "62cfe969d64079e5b1da93c63c06ccd7662ccc8f96a46a1c404989b9ace1f06a",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 43,
+          "sourceId": "qa-d43-record-001",
+          "revision": "r1",
+          "requestKey": "course-roadmap-video|qa-d43-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "052a9a6f-b5fc-46db-90ec-59f167cad66b",
+          "inputHash": "e75daa4e420790d94fce78cf8e9d5cbb7caf8a9cc093836a69920eeb5160cbb8",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "2c3e3be227ebb2a089fb601674306be75dd6fe93d093a436ddad99c804a790f2",
+          "retainedHashAfter": "2c3e3be227ebb2a089fb601674306be75dd6fe93d093a436ddad99c804a790f2",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 44,
+          "sourceId": "qa-d44-record-001",
+          "revision": "r1",
+          "requestKey": "safety-briefing-video|qa-d44-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "6c4ba7da-c25b-4aee-8e95-3ae57bb8e134",
+          "inputHash": "a6cf1048fb37ac4279ea89112cd7f7b097049e791ba09005190bedd31e2e3c22",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "0e5537e81cdcd5804eaa845c801bed484e9d1db5a09f4515ddb2abbddb70725c",
+          "retainedHashAfter": "0e5537e81cdcd5804eaa845c801bed484e9d1db5a09f4515ddb2abbddb70725c",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 45,
+          "sourceId": "qa-d45-record-001",
+          "revision": "r1",
+          "requestKey": "training-completion-video|qa-d45-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "fdff49cf-ad78-46bf-b90d-df1cd294f081",
+          "inputHash": "08b4485e94a99dac23776df4897333edad6c6825bd7269d1ec537cd0e9c09086",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "71709587720f8524b4ebcfe9676491d2e7e95cfc1fd0ce2fc4795843d7bac23c",
+          "retainedHashAfter": "71709587720f8524b4ebcfe9676491d2e7e95cfc1fd0ce2fc4795843d7bac23c",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 46,
+          "sourceId": "qa-d46-record-001",
+          "revision": "r1",
+          "requestKey": "meeting-action-brief-video|qa-d46-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "255fb563-2bd4-4c90-868f-f9e0e2f6fa60",
+          "inputHash": "8e93203a795b9f5583b16b791331bb716934658e508d6f5c9d76a71043df15c4",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "3fc2bf79e98583cbd75d80e683e86edf38cb14d281e81d10ba843333f4d49a86",
+          "retainedHashAfter": "3fc2bf79e98583cbd75d80e683e86edf38cb14d281e81d10ba843333f4d49a86",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 47,
+          "sourceId": "qa-d47-record-001",
+          "revision": "r1",
+          "requestKey": "equipment-maintenance-video|qa-d47-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "0156dda7-0ec9-4f38-a6ad-27ea4c062858",
+          "inputHash": "5c4b6f0e40e6a5382cb046f022c791a17f004d1d12ad5d53747b4d92f2ab6e95",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "535f97d70022fe4f112526df79dd2fbe8d47ad7ceb32a19bd074b4c9e79b79b0",
+          "retainedHashAfter": "535f97d70022fe4f112526df79dd2fbe8d47ad7ceb32a19bd074b4c9e79b79b0",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 48,
+          "sourceId": "qa-d48-record-001",
+          "revision": "r1",
+          "requestKey": "inventory-replenishment-video|qa-d48-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "090bcf03-bc7b-48f7-a7a9-0f046b2fc01f",
+          "inputHash": "9a0d0dd56b03dafa5e2e1e6a3530614c16c9befe61fe39fce55a02d21a66ff6b",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "6ce6e27fb3a8f317cc2b8e96a155330107210a4b0646c40dc82d3be60032ff89",
+          "retainedHashAfter": "6ce6e27fb3a8f317cc2b8e96a155330107210a4b0646c40dc82d3be60032ff89",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 49,
+          "sourceId": "qa-d49-record-001",
+          "revision": "r1",
+          "requestKey": "delivery-route-brief-video|qa-d49-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "eca8eb7c-9ef8-4e7e-bc8d-aee7451fe713",
+          "inputHash": "f33dc34eee4a820c5ea653df1709afbe340e622a6640b25cf69e9e8bc1e2979d",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "b3c979927e1420d6d7d6bdf49b821deb81c6dc4db8789038210dd43a4e87d43e",
+          "retainedHashAfter": "b3c979927e1420d6d7d6bdf49b821deb81c6dc4db8789038210dd43a4e87d43e",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 50,
+          "sourceId": "qa-d50-record-001",
+          "revision": "r2",
+          "requestKey": "tender-checklist-video|qa-d50-record-001|r2|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "8862babc-a6ef-4825-9c60-082720bd7d69",
+          "inputHash": "d82a414e8d997ec73260c953daf88396152455478002b051dcd6eb366aef8f94",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "2f18e42be0c75f635da9de9429b63c770043f522b8459bc9f77d2454e908c02c",
+          "retainedHashAfter": "2f18e42be0c75f635da9de9429b63c770043f522b8459bc9f77d2454e908c02c",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 51,
+          "sourceId": "qa-d51-record-001",
+          "revision": "r1",
+          "requestKey": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "7797cb1d-f316-492d-8c8a-7950a5a0c2b4",
+          "inputHash": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "db80b4dba146ff32c9fc61cabd098958cf8128418fa40fcaab8aa21f5e7b0720",
+          "retainedHashAfter": "db80b4dba146ff32c9fc61cabd098958cf8128418fa40fcaab8aa21f5e7b0720",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 52,
+          "sourceId": "qa-d52-record-001",
+          "revision": "r1",
+          "requestKey": "hotel-arrival-guide-video|qa-d52-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "b6933876-873a-4aa5-8f0b-b08d04866d2c",
+          "inputHash": "1c7bcbc317e6dc51f8ad42cf46107cb36a9a356af50f8c910f67699e46809bbc",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "888124c0a71963c85aa9d54ddcf70b6a1633f31605a9fd3714a0d6f0db89204a",
+          "retainedHashAfter": "888124c0a71963c85aa9d54ddcf70b6a1633f31605a9fd3714a0d6f0db89204a",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 53,
+          "sourceId": "qa-d53-record-001",
+          "revision": "r1",
+          "requestKey": "pet-adoption-video|qa-d53-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "96c5fbf9-bc3f-4aea-afbf-05b56e6c9fb0",
+          "inputHash": "a2b4dbe8c41b882b06f260441fabe181da01be005e4406d32b6c414216422f19",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "19c7b06af12aa5b40ab0ab0b548429e7170858cd15320813a5833becc5a68645",
+          "retainedHashAfter": "19c7b06af12aa5b40ab0ab0b548429e7170858cd15320813a5833becc5a68645",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 54,
+          "sourceId": "qa-d54-record-001",
+          "revision": "r1",
+          "requestKey": "volunteer-shift-video|qa-d54-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "b0f3410c-13a0-4c0c-becb-81849b1c48e7",
+          "inputHash": "0a07370c057b1011e56699410f785da77ee2cc821ed51d23953b57e520999769",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "8ff5137781b37a34c0e4bb277442185fd25f297d636333569718249f0b288e7f",
+          "retainedHashAfter": "8ff5137781b37a34c0e4bb277442185fd25f297d636333569718249f0b288e7f",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 55,
+          "sourceId": "qa-d55-record-001",
+          "revision": "r1",
+          "requestKey": "donation-impact-video|qa-d55-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "e49bb090-2a49-4dcd-a0eb-1467d7c7384b",
+          "inputHash": "6031641c20831806b0481f3c5d949947b30952b584025b394bc9f15ccc1558c1",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "d290d2c36ac2b1f2cf83e3c8e07c4a481a1d3c4eb823d46f0ffee81eb8ef1282",
+          "retainedHashAfter": "d290d2c36ac2b1f2cf83e3c8e07c4a481a1d3c4eb823d46f0ffee81eb8ef1282",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 56,
+          "sourceId": "qa-d56-record-001",
+          "revision": "r1",
+          "requestKey": "survey-results-video|qa-d56-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "de1eb00d-30f2-4752-b72e-87241d3d2300",
+          "inputHash": "96afda9f2274fd22dc310ed8c89a401720316452c7d77305dfe51219c7b904c7",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "f812415b497a7c30cf73ab56fe98daeb271258e3754b9bf6e5b4d0de87f1eb27",
+          "retainedHashAfter": "f812415b497a7c30cf73ab56fe98daeb271258e3754b9bf6e5b4d0de87f1eb27",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 57,
+          "sourceId": "qa-d57-record-001",
+          "revision": "r1",
+          "requestKey": "fundraiser-progress-video|qa-d57-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "3c319c9c-42e7-4bcb-8347-6cc77d830f76",
+          "inputHash": "26354701fdd56cdbb2bdc0dca2bc2eb0a64a4c3852c82a3f4730718b7a29a340",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "50c5e479188e1c205ed58ed5096f147c261c211d3297795bb2d83af0557dcad2",
+          "retainedHashAfter": "50c5e479188e1c205ed58ed5096f147c261c211d3297795bb2d83af0557dcad2",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 58,
+          "sourceId": "qa-d58-record-001",
+          "revision": "r1",
+          "requestKey": "before-after-case-study-video|qa-d58-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "8be386ad-f68e-4846-840d-30856ca328c4",
+          "inputHash": "b32b9f06d648e1e1b2da46536c774de37b3eda1093688480a17808e02f7b0839",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "6e1a414c30b69cc0213d3ef4cbee39a0b3dc2440c26454bdd4678dd724f19315",
+          "retainedHashAfter": "6e1a414c30b69cc0213d3ef4cbee39a0b3dc2440c26454bdd4678dd724f19315",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 59,
+          "sourceId": "qa-d59-record-001",
+          "revision": "r1",
+          "requestKey": "milestone-roadmap-video|qa-d59-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "766e80a1-561d-4ff9-b84b-8f42bbb70377",
+          "inputHash": "41f57599cf47ff8b67db26d88ee153a0b6a972c7911c9a8e3414cc5669d0266d",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "53a3c83a7b1a0e78f6ce89253d2099c5dc2db829780df17ffd71689f3e623531",
+          "retainedHashAfter": "53a3c83a7b1a0e78f6ce89253d2099c5dc2db829780df17ffd71689f3e623531",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        },
+        {
+          "day": 60,
+          "sourceId": "qa-d60-record-001",
+          "revision": "r1",
+          "requestKey": "recipe-cooking-guide-video|qa-d60-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+          "jobId": "596ce330-07e1-47b6-9628-b89ac4fa11b7",
+          "inputHash": "d6bc6f262582141f0df44a24d3c24d212d2196632f346ff455d4bd47ab8b88ef",
+          "sourceReadRuns": 1,
+          "writeRuns": 1,
+          "readItems": 1,
+          "writeItems": 1,
+          "retainedHashBefore": "b29f74edb41f5c98a55282a242a590e333bee653228c7fc96c3d44fa6d6e9d7d",
+          "retainedHashAfter": "b29f74edb41f5c98a55282a242a590e333bee653228c7fc96c3d44fa6d6e9d7d",
+          "changedFields": [
+            "status"
+          ],
+          "statusBefore": "delivered",
+          "statusAfter": "uploaded",
+          "videoUrlRetained": true,
+          "driveIdRetained": true,
+          "frozenContentRetained": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ]
+}

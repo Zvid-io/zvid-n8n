@@ -1,0 +1,53 @@
+{
+  "archived": [
+    {
+      "id": "Series2EdgeCreditCap31",
+      "name": "TEST ONLY · Day31 zero-credit cap rejects quote",
+      "active": 0,
+      "isArchived": 1
+    },
+    {
+      "id": "Series2EdgeDryRun31",
+      "name": "TEST ONLY · Day31 editor draft and quote",
+      "active": 0,
+      "isArchived": 1
+    },
+    {
+      "id": "Series2EdgeJobStates",
+      "name": "TEST ONLY · Read accepted series-two job states",
+      "active": 0,
+      "isArchived": 1
+    },
+    {
+      "id": "Series2EdgeMissingProduct31",
+      "name": "TEST ONLY · Day31 missing required product",
+      "active": 0,
+      "isArchived": 1
+    },
+    {
+      "id": "Series2EdgeRecovery35",
+      "name": "TEST ONLY · Recover accepted Day35 URL without rendering",
+      "active": 0,
+      "isArchived": 1
+    },
+    {
+      "id": "Series2EdgeWebhook31",
+      "name": "TEST ONLY · Day31 webhook draft and 202 acknowledgement",
+      "active": 0,
+      "isArchived": 1
+    },
+    {
+      "id": "Series2EdgeZeroWork47",
+      "name": "TEST ONLY · Day47 no equipment due",
+      "active": 0,
+      "isArchived": 1
+    },
+    {
+      "id": "ZvidSeries2Preflight",
+      "name": "Series 2 credit preflight",
+      "active": 0,
+      "isArchived": 1
+    }
+  ],
+  "executionHistoryPreserved": true
+}

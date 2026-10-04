@@ -6,6 +6,19 @@ Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before 
 
 [`zvid-cold-outreach-videos.json`](zvid-cold-outreach-videos.json)
 
+## If the Watch video step stalls
+
+Completed videos are written to the lead sheet before **Watch video** downloads
+them. The preview uses the built-in HTTP Request v2 download operation to avoid
+an n8n 2.29.10 manual-execution bug: newer HTTP Request nodes retain a response
+stream that cannot be saved, leaving the editor spinning after a successful
+download. Keep the supplied node version when importing this template.
+
+Each download has a 30-second request timeout, with up to three node attempts.
+A preview error leaves those videos intact. Open each **Run summary →
+videoUrl** or the sheet's **VideoUrl**; retry only the preview step to avoid paying
+to render completed leads again.
+
 Point this workflow at a Google Sheet of leads and every row without a video yet
 becomes its own ~11.8-second 1920×1080 outreach video — *their* first name, *their*
 company, *their* logo, *their* role — and the whole list goes up as **one Zvid bulk

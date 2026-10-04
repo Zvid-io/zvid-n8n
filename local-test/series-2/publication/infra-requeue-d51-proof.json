@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-10-01T13:14:55.709Z",
+  "expected": {
+    "ledgerTableId": "LQgWxc1qaXzfNqlx",
+    "ledgerRowId": 1,
+    "requestKey": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+    "sourceId": "qa-d51-record-001",
+    "revision": "r1",
+    "status": "submitting",
+    "jobId": null,
+    "inputHash": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8",
+    "projectSha256": "a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836",
+    "inputJsonSha256": "93a38620bf1fb61468a7c3f50110930a2fb51abf7804b5a564eade994f18710a",
+    "briefJsonSha256": "9fe131d16bf5bd3518ecd8992f2898756ca43a01392be22295608ac6aa83b978",
+    "contextJsonSha256": "86fc69b27caa06e50b870fcaf5b18d4e87c5ea0588e68259682356f6b85f2f0b",
+    "attemptedProjectName": "travel-itinerary-video",
+    "quotedCredits": 18,
+    "updatedAt": "2026-10-01T12:57:48.240Z"
+  },
+  "safety": {
+    "failedExecutionId": 794,
+    "httpCode": 429,
+    "reason": "concurrent_limit_exceeded",
+    "current": 3,
+    "limit": 3,
+    "noAcceptanceCheckpoints": true,
+    "routeSha256": "27a64ec5f0652eb34cc227cd3bb83f3186d10b80ce44ec329f286bd13d633276",
+    "middlewareSha256": "574e8f47c7a9c7b3a99f8e39075e9ca70521ceb5d431858b59a644a316e0ce9b",
+    "middlewareRejectedBeforeController": true
+  },
+  "onlyChangedFields": [
+    "status",
+    "last_error"
+  ],
+  "fixtureId": "ZvidSeries2PublicationRequeueRejectedD51"
+}

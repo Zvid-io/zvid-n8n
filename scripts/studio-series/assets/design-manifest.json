@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "approvedDesignRevision": "2026-10-02 unique music by subject",
+  "templates": [
+    {
+      "day": 31,
+      "title": "Personalized Shopping Edit",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_FI6OE9MkmPucVtAOMN6d",
+      "designHash": "85eaf99d363108331c13fa77e1af35b613cd296fb115447a1ee7e342a78f47b1",
+      "payloadFile": "day-31.json"
+    },
+    {
+      "day": 32,
+      "title": "Complete the Look",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_bICOO1bGvhquZeHNFIlF",
+      "designHash": "1a558f82538763b86337ae57d55d04c861fab0462114f4bfc18e73c26590487f",
+      "payloadFile": "day-32.json"
+    },
+    {
+      "day": 33,
+      "title": "Questions to Product Demonstration",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_YlNPoqbMBlqxeIIOIKI1",
+      "designHash": "7ebe58632281293b6c016bcce882be9852ce79214e67711532cec0175dca0692",
+      "payloadFile": "day-33.json"
+    },
+    {
+      "day": 34,
+      "title": "Side by Side Buying Guide",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_VafftRT1WzQ2ErVyyR7Y",
+      "designHash": "1e59bb1e2cb364719dac8701d246cf486aa26ba9a4c9152d5119acf642d49d6a",
+      "payloadFile": "day-34.json"
+    },
+    {
+      "day": 35,
+      "title": "Back in Stock",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_4hJG4oEgfoYMH349LlDX",
+      "designHash": "8829ba8bb770bb695253e50f086d40deb642aa4b0e94e67961dd17578bc1fcec",
+      "payloadFile": "day-35.json"
+    },
+    {
+      "day": 36,
+      "title": "Market Specific Launch",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_UKKeZt7mcVSOtlxEWYUh",
+      "designHash": "763c95c6210944384909b13ff8a6b1f4ce2f1a7451f01522d91be4d9acbf995f",
+      "payloadFile": "day-36.json"
+    },
+    {
+      "day": 37,
+      "title": "Approved Customer Footage Ad",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_yUbLtT8G1fTYCqefQsKv",
+      "designHash": "40b92e47a1d8b68bb57722b9374e16b4bc63293ffb356697f71706b12088621a",
+      "payloadFile": "day-37.json"
+    },
+    {
+      "day": 38,
+      "title": "Performance Informed Product Refresh",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_qwvLWYTGiCI4aCxyyipV",
+      "designHash": "158da07bf50271ec7eade440b49eb5cca25f284b508e7615380de632981c742c",
+      "payloadFile": "day-38.json"
+    },
+    {
+      "day": 39,
+      "title": "Buyer Property Shortlist",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_4Ej2xXrS8SQv0QQGHS6o",
+      "designHash": "9b29e74d03ab881e74a8c29bb2370f7d99953082ff279be9f2746b3686498b53",
+      "payloadFile": "day-39.json"
+    },
+    {
+      "day": 40,
+      "title": "Open House Invitation",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_Xu4Nkd1vlEyzTLaEANIt",
+      "designHash": "bf547c734505fe1edaf49691193e055e519e036d595e88995f51409e136dbdd0",
+      "payloadFile": "day-40.json"
+    },
+    {
+      "day": 41,
+      "title": "Development Available Unit Grid",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_Ipp8JT1uPvPVvs5OeX9T",
+      "designHash": "ed96fc24c8ef041acf2dea05ebd6263b9fbd07620f01d4880f5e6a477e15423c",
+      "payloadFile": "day-41.json"
+    },
+    {
+      "day": 42,
+      "title": "Holiday Rental Cinematic Booking",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_HvPKqTZrRFdbQgZ27ca3",
+      "designHash": "0d132374ce04612e2c22c59e68421e3539f888ce91622383e7e715b38a54b15f",
+      "payloadFile": "day-42.json"
+    },
+    {
+      "day": 43,
+      "title": "Live Vehicle Inventory Showroom",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_4vvY039IX4mlpzqTwQtH",
+      "designHash": "79e1a301ff1b93da0fabb1dff75e32aa0e9fd9cfceea5610e2c9ff8cab00e3bb",
+      "payloadFile": "day-43.json"
+    },
+    {
+      "day": 44,
+      "title": "Buyer Matched Vehicle Comparison Board",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_GGjto61HMKCoIK2GAVEu",
+      "designHash": "c044cdbb4317b716bf386cc15b0edcdca97fbf77199c4bad584eff1dac5cc3c8",
+      "payloadFile": "day-44.json"
+    },
+    {
+      "day": 45,
+      "title": "Approved Car Price Poster Campaign",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_lpy8GAvlrxNjDHyzrHZl",
+      "designHash": "77945348a814c2cf3bbdbe1406fbbf8b421d103e5697f451a9a8042b826d5435",
+      "payloadFile": "day-45.json"
+    },
+    {
+      "day": 46,
+      "title": "Inspection Evidence Dossier",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_jLXN7m31PhtfwCSHVitH",
+      "designHash": "db904281d7df22396acd3919608a1c8424f557b84511748d9f6b2bae9a230144",
+      "payloadFile": "day-46.json"
+    },
+    {
+      "day": 47,
+      "title": "Available Branch Lunch Combos",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_FB1juZF1YAvFwwRwyaoI",
+      "designHash": "365f1cf4323ae44b6b229cc23b51bc94943daed45302c7559faca74ef7e8ced4",
+      "payloadFile": "day-47.json"
+    },
+    {
+      "day": 48,
+      "title": "Catering Visual Quote",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_EaTAFpsU65O7jLKZ00Nf",
+      "designHash": "6b64c5ce6ff6ad32743a42aa44a5bed7e09f7d18d5b98144a798eea9eb3aff3f",
+      "payloadFile": "day-48.json"
+    },
+    {
+      "day": 49,
+      "title": "Tonight Available Tables",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_1iVYh1l05Kx4e9VgzHZq",
+      "designHash": "d63a90363774bcd0d77bfeb4c7aa6c74e5ad51316bc6bb82e72ad13e09bea48d",
+      "payloadFile": "day-49.json"
+    },
+    {
+      "day": 50,
+      "title": "Signature Salmon Kitchen Story",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_XRcja1I2i5fGw6Q3CwPY",
+      "designHash": "74a5ab04b1650266dfea44d02e29e72fd872e2659ff805154c49931ca957990b",
+      "payloadFile": "day-50.json"
+    },
+    {
+      "day": 51,
+      "title": "Harry Kane Career Turning Point",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_d7cGcFTC0a2OWYCfjCPD",
+      "designHash": "b0f7b647ac7271411b01073db6f98a8f04bed6eb72389c882092d358b83a40ad",
+      "payloadFile": "day-51.json"
+    },
+    {
+      "day": 52,
+      "title": "Istanbul Historic Football Comeback",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_EYYOfcwiKJyaiG7AjwYE",
+      "designHash": "1a1e18a744aa1b7d64cdb1ab8f98e62a61e6efeb1589db138cdd2dafa0546261",
+      "payloadFile": "day-52.json"
+    },
+    {
+      "day": 53,
+      "title": "Merseyside Rivalry Origins",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_ZftrVxqI2r89VRmprXpD",
+      "designHash": "cbf343ac9457cf36f73f99e3556b1e846b152f23230f4b96f646b19ad10293c1",
+      "payloadFile": "day-53.json"
+    },
+    {
+      "day": 54,
+      "title": "Football Third Man Pattern",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_ifgcTAGGRaCf4QA43nVR",
+      "designHash": "c976462fdd42011d82ec51a545dbb5a4ec924cac8cfba21276cbaf5ebb433c38",
+      "payloadFile": "day-54.json"
+    },
+    {
+      "day": 55,
+      "title": "Title and Relegation Scenarios",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_3KLROHbEKrcdK5gGeBJg",
+      "designHash": "4fa30dc1eea128d540b61e7b3b052b60b4769ba5abe83243e01db1db425b9e00",
+      "payloadFile": "day-55.json"
+    },
+    {
+      "day": 56,
+      "title": "Exam Revision Misconception Quiz",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_5ByyaI7kzHHdR4K7QVpr",
+      "designHash": "fe67ac6a34e40e62a74941cec5bf0db044eabc52508cebcbfadd89cedc283798",
+      "payloadFile": "day-56.json"
+    },
+    {
+      "day": 57,
+      "title": "Geography Progressive Clues",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_GEYYsBHS2VRNiIZ48tu4",
+      "designHash": "1e6177142785f21fd09ac01aba7136c35dd81e812b71fef62ac8dc4250eacbff",
+      "payloadFile": "day-57.json"
+    },
+    {
+      "day": 58,
+      "title": "Language Listening Challenge",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_6Grycck86WRNoH3azaTR",
+      "designHash": "a80d5da17757328ab9d40b3f7925c7c777fdab61ec7c67f1f15debf8d47a008d",
+      "payloadFile": "day-58.json"
+    },
+    {
+      "day": 59,
+      "title": "Predict and Explain Earth Seasons",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_ItapUk7kXUOuGqx1zY7w",
+      "designHash": "db4ddde723f5511480518fcaf4a2eb9914229cb07b67ffbf55c872613544f626",
+      "payloadFile": "day-59.json"
+    },
+    {
+      "day": 60,
+      "title": "Visual Multiplication Two Methods",
+      "editorUrl": "https://editor.zvid.io/?template=tpl_Vo63BalrLDATHlnpxfC4",
+      "designHash": "aeae87a89ea75b79f1563f26b4878a94ca53d11e5a2a3b71c1ac77e9c2ffba2e",
+      "payloadFile": "day-60.json"
+    }
+  ]
+}

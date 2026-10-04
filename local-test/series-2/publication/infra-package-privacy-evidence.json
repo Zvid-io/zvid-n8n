@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-10-01T14:10:26.984Z",
+  "nodeCliVersion": "0.41.2",
+  "staticCopyConfigurable": false,
+  "guard": "Build appends guarded cleanup of only dist/local-test",
+  "build": "n8n-node build && node scripts/clean-local-qa-dist.js",
+  "whitelist": [
+    "dist",
+    "workflows"
+  ],
+  "totalPackedFiles": 156,
+  "privateQAFileCount": 0,
+  "sourceQAPreserved": true,
+  "generatedQACopyRemoved": true,
+  "nodeMetadataEntries": [
+    {
+      "file": "dist/nodes/Zvid/Zvid.node.js",
+      "packed": true
+    },
+    {
+      "file": "dist/nodes/ZvidTrigger/ZvidTrigger.node.js",
+      "packed": true
+    },
+    {
+      "file": "dist/credentials/ZvidApi.credentials.js",
+      "packed": true
+    }
+  ],
+  "passed": true,
+  "generatedTestCopyRemoved": true
+}

@@ -1,0 +1,91 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-55",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "One match left. Alder have seventy-two points. Beacon have seventy, so their ceiling is seventy-three. Alder’s win reaches seventy-five and guarantees the title. A draw reaches seventy-three, so tie-break rules may matter. Now survival: Marsh have thirty-three, Coast thirty-two. Marsh’s win reaches thirty-six, beyond Coast’s maximum thirty-five. Calculate the ceiling before you declare a result enough.",
+    "league": "ILLUSTRATIVE LEAGUE / ONE MATCH LEFT",
+    "rules": "Fictional table · win 3, draw 1, loss 0 · equal points require competition tie-breaks"
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-55",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Teacher-authored fictional standings with 3/1/0 points; no real competition claim.",
+      "url": "https://www.tottenhamhotspur.com/the-club/history/"
+    },
+    {
+      "parent_id": "qa-studio-55",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "standing",
+      "position": 2,
+      "approval": "approved",
+      "role": "leader",
+      "club": "Alder",
+      "points": 72,
+      "remaining": 1
+    },
+    {
+      "parent_id": "qa-studio-55",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "standing",
+      "position": 3,
+      "approval": "approved",
+      "role": "chaser",
+      "club": "Beacon",
+      "points": 70,
+      "remaining": 1
+    },
+    {
+      "parent_id": "qa-studio-55",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "standing",
+      "position": 4,
+      "approval": "approved",
+      "role": "safe",
+      "club": "Marsh",
+      "points": 33,
+      "remaining": 1
+    },
+    {
+      "parent_id": "qa-studio-55",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "standing",
+      "position": 5,
+      "approval": "approved",
+      "role": "danger",
+      "club": "Coast",
+      "points": 32,
+      "remaining": 1
+    },
+    {
+      "parent_id": "qa-studio-55",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "narration",
+      "position": 6,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790883849/zvid-series2-design-review-20261001/d55-narration.mp3",
+      "seconds": 30.288,
+      "content_fingerprint": "66ce46c8aea036de8b4686b758c84bbafdeece520739e6a6f9426cc0123e8539",
+      "script": "One match left. Alder have seventy-two points. Beacon have seventy, so their ceiling is seventy-three. Alder’s win reaches seventy-five and guarantees the title. A draw reaches seventy-three, so tie-break rules may matter. Now survival: Marsh have thirty-three, Coast thirty-two. Marsh’s win reaches thirty-six, beyond Coast’s maximum thirty-five. Calculate the ceiling before you declare a result enough.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

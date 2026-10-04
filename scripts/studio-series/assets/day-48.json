@@ -1,0 +1,438 @@
+{
+  "name": "S2 D48 - Catering Visual Quote",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "durationMode": "fixed",
+  "duration": 25,
+  "backgroundColor": "#F3EEE5",
+  "variables": {
+    "paper": "#F3EEE5",
+    "ink": "#332A20",
+    "accent": "#86694A",
+    "headlineFont": "Cormorant Garamond",
+    "bodyFont": "Inter",
+    "brand": "JUNIPER CATERING",
+    "heroImage": "https://images.pexels.com/photos/29086309/pexels-photo-29086309.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "menuOneImage": "https://images.pexels.com/photos/29086309/pexels-photo-29086309.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "menuTwoImage": "https://images.pexels.com/photos/2337843/pexels-photo-2337843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "heroTitle": "A menu made for your gathering",
+    "eventLabel": "Private autumn reception",
+    "eventDate": "24 Oct 2026",
+    "guests": "40 guests",
+    "quoteId": "Sample quote QT 1042",
+    "menuOne": "Grazing and seasonal bites",
+    "menuTwo": "Pastry and dessert selection",
+    "package": "$32 per guest",
+    "foodTotal": "$1,280",
+    "serviceFee": "$120",
+    "deliveryFee": "$60",
+    "total": "$1,460",
+    "taxNote": "Tax not included in this illustrative quote.",
+    "validity": "Sample quote · valid until 15 Oct 2026",
+    "cta": "Review the menu. Confirm your event.",
+    "destination": "juniper.example/quotes/QT-1042",
+    "terms": "Final menu, allergens, timing and price require written confirmation.",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943371/zvid-series2-unique-music-20261002/day-48-music.mp3",
+    "musicVolume": 0.8
+  },
+  "scenes": [
+    {
+      "id": "catering-cover",
+      "duration": 4.5,
+      "backgroundColor": "{{paper}}",
+      "transition": "dissolve",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.1
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.85),rgba(7,10,13,0.08) 80%)"
+          },
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:23px;line-height:1.13;font-weight:700;letter-spacing:4px;color:#F3E7CE;margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:79px;line-height:1.13;font-weight:500;letter-spacing:0px;color:#FFF8EA;margin-top:0px\">{{heroTitle}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 125,
+          "width": 730,
+          "height": 430,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.5
+        }
+      ]
+    },
+    {
+      "id": "event-brief",
+      "duration": 4.5,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{menuOneImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.85),rgba(7,10,13,0.08) 80%)"
+          },
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:24px;line-height:1.13;font-weight:600;letter-spacing:0px;color:#E8D4B7;margin-top:0px\">{{quoteId}}</div><div style=\"font-family:{{headlineFont}};font-size:65px;line-height:1.13;font-weight:500;letter-spacing:0px;color:#FFF8EA;margin-top:0px\">{{eventLabel}}</div><div style=\"font-family:{{bodyFont}};font-size:31px;line-height:1.13;font-weight:400;letter-spacing:0px;color:#FFF8EA;margin-top:30px\">{{eventDate}} · {{guests}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 185,
+          "width": 750,
+          "height": 360,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.5
+        }
+      ]
+    },
+    {
+      "id": "menu-pair",
+      "duration": 4.5,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{menuOneImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 620,
+          "height": 440,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.06
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{menuTwoImage}}",
+          "position": "custom",
+          "x": 660,
+          "y": 0,
+          "width": 620,
+          "height": 440,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.06
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0.1,
+          "enterEnd": 0.65,
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"display:flex;width:100%;justify-content:space-between\"><div style=\"width:47%\"><div style=\"font-family:{{headlineFont}};font-size:48px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{menuOne}}</div></div><div style=\"width:47%\"><div style=\"font-family:{{headlineFont}};font-size:48px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{menuTwo}}</div></div></div>",
+          "position": "custom",
+          "x": 64,
+          "y": 490,
+          "width": 1152,
+          "height": 165,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.5
+        }
+      ]
+    },
+    {
+      "id": "transparent-quote",
+      "duration": 4.5,
+      "backgroundColor": "{{paper}}",
+      "transition": "smoothleft",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{menuTwoImage}}",
+          "position": "custom",
+          "x": 845,
+          "y": 0,
+          "width": 435,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{quoteId}}</div><div style=\"font-family:{{headlineFont}};font-size:66px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">Your catering quote</div><div style=\"display:flex;width:100%;justify-content:space-between;margin-top:17px\"><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">Food · {{package}}</div><div style=\"font-family:{{bodyFont}};font-size:32px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{foodTotal}}</div></div><div style=\"display:flex;width:100%;justify-content:space-between;margin-top:17px\"><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">Service</div><div style=\"font-family:{{bodyFont}};font-size:32px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{serviceFee}}</div></div><div style=\"display:flex;width:100%;justify-content:space-between;margin-top:17px\"><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">Delivery</div><div style=\"font-family:{{bodyFont}};font-size:32px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{deliveryFee}}</div></div><div style=\"display:flex;width:100%;justify-content:space-between;margin-top:17px\"><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">Quoted total</div><div style=\"font-family:{{bodyFont}};font-size:32px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{total}}</div></div><div style=\"font-family:{{bodyFont}};font-size:21px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:22px\">{{taxNote}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 55,
+          "width": 720,
+          "height": 605,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.5
+        }
+      ]
+    },
+    {
+      "id": "confirmation-details",
+      "duration": 4.5,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{menuTwoImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.08
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{validity}}</div><div style=\"font-family:{{bodyFont}};font-size:32px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:20px\">{{terms}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 463,
+          "width": 1152,
+          "height": 205,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch",
+            "backgroundColor": "#F3EEE5",
+            "borderRadius": "12px"
+          },
+          "exitEnd": 4.5
+        }
+      ]
+    },
+    {
+      "id": "quote-handoff",
+      "duration": 4.5,
+      "backgroundColor": "{{paper}}",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.03
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.85),rgba(7,10,13,0.08) 80%)"
+          },
+          "exitEnd": 4.5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:24px;line-height:1.13;font-weight:700;letter-spacing:4px;color:#E8D4B7;margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:73px;line-height:1.13;font-weight:500;letter-spacing:0px;color:#FFF8EA;margin-top:0px\">{{cta}}</div><div style=\"font-family:{{bodyFont}};font-size:28px;line-height:1.13;font-weight:600;letter-spacing:0px;color:#FFF8EA;margin-top:26px\">{{destination}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 138,
+          "width": 820,
+          "height": 450,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.5
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 25,
+      "audioBegin": 0,
+      "audioEnd": 25,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

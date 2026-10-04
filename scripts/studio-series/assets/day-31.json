@@ -1,0 +1,471 @@
+{
+  "type": "video",
+  "name": "S2 D31 - Personalized Shopping Edit",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#DDF2E5",
+  "scenes": [
+    {
+      "id": "personal-edit",
+      "duration": 4,
+      "backgroundColor": "#DDF2E5",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{mugThumbnail}}",
+          "x": 60,
+          "y": 580,
+          "width": 300,
+          "height": 470,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 4,
+          "radius": {
+            "tl": 42,
+            "tr": 42,
+            "bl": 42,
+            "br": 42
+          }
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{shoeImage}}",
+          "x": 390,
+          "y": 760,
+          "width": 300,
+          "height": 470,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0.2,
+          "enterEnd": 0.8,
+          "enterAnimation": "fade",
+          "exitEnd": 4,
+          "radius": {
+            "tl": 42,
+            "tr": 42,
+            "bl": 42,
+            "br": 42
+          }
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{bagImage}}",
+          "x": 720,
+          "y": 580,
+          "width": 300,
+          "height": 470,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 2,
+          "enterBegin": 0.4,
+          "enterEnd": 1,
+          "enterAnimation": "fade",
+          "exitEnd": 4,
+          "radius": {
+            "tl": 42,
+            "tr": 42,
+            "bl": 42,
+            "br": 42
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:28px;letter-spacing:5px\">{{brand}}</div><div style=\"font-size:85px;margin-top:24px\">{{headline}}</div>",
+          "x": 70,
+          "y": 110,
+          "width": 940,
+          "height": 270,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 5,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 4,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 85,
+            "color": "#142E25",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{profile}}",
+          "x": 70,
+          "y": 1620,
+          "width": 940,
+          "height": 130,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 5,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 4,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 36,
+            "color": "#142E25",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "slow-mornings",
+      "duration": 5,
+      "backgroundColor": "#142E25",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{mugImage}}",
+          "x": 55,
+          "y": 390,
+          "width": 970,
+          "height": 850,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 34,
+            "tr": 34,
+            "bl": 34,
+            "br": 34
+          },
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:29px;letter-spacing:4px\">01 / YOUR MORNING</div><div style=\"font-size:74px;margin-top:14px\">{{mugName}} · {{mugPrice}}</div><div style=\"font-size:38px;margin-top:18px\">{{mugReason}}</div>",
+          "x": 70,
+          "y": 1470,
+          "width": 940,
+          "height": 320,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 74,
+            "color": "#DDF2E5",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "walk-everywhere",
+      "duration": 5,
+      "backgroundColor": "#DDF2E5",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{shoeImage}}",
+          "x": 240,
+          "y": 280,
+          "width": 780,
+          "height": 1200,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "smoothleft",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 260,
+            "tr": 32,
+            "bl": 32,
+            "br": 260
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:29px;letter-spacing:4px\">02 / YOUR PACE</div><div style=\"font-size:78px;margin-top:18px\">{{shoeName}}<br>{{shoePrice}}</div>",
+          "x": 60,
+          "y": 100,
+          "width": 690,
+          "height": 310,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 78,
+            "color": "#142E25",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{shoeReason}}",
+          "x": 70,
+          "y": 1580,
+          "width": 870,
+          "height": 170,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 48,
+            "color": "#142E25",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "daily-carry",
+      "duration": 5,
+      "backgroundColor": "#C7DCD0",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{bagImage}}",
+          "x": 60,
+          "y": 120,
+          "width": 960,
+          "height": 1280,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:29px;letter-spacing:4px\">03 / YOUR ROUTINE</div><div style=\"font-size:77px;margin-top:16px\">{{bagName}} · {{bagPrice}}</div><div style=\"font-size:40px;margin-top:18px\">{{bagReason}}</div>",
+          "x": 70,
+          "y": 1480,
+          "width": 940,
+          "height": 310,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 77,
+            "color": "#142E25",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "your-three",
+      "duration": 5,
+      "backgroundColor": "#142E25",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{mugThumbnail}}",
+          "x": 60,
+          "y": 570,
+          "width": 300,
+          "height": 470,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 42,
+            "tr": 42,
+            "bl": 42,
+            "br": 42
+          }
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{shoeImage}}",
+          "x": 390,
+          "y": 570,
+          "width": 300,
+          "height": 470,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 42,
+            "tr": 42,
+            "bl": 42,
+            "br": 42
+          }
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{bagImage}}",
+          "x": 720,
+          "y": 570,
+          "width": 300,
+          "height": 470,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 2,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 42,
+            "tr": 42,
+            "bl": 42,
+            "br": 42
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{brand}} / YOUR PERSONAL EDIT",
+          "x": 60,
+          "y": 130,
+          "width": 960,
+          "height": 100,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 5,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 33,
+            "color": "#DDF2E5",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:75px\">{{cta}}</div><div style=\"font-size:33px;margin-top:30px\">{{url}}</div>",
+          "x": 70,
+          "y": 1440,
+          "width": 940,
+          "height": 300,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 5,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 75,
+            "color": "#DDF2E5",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "STUDIO EDIT",
+    "headline": "Made for your everyday",
+    "profile": "Your edit · useful, understated, under $120",
+    "mugImage": "https://images.unsplash.com/photo-1777034536405-244ca3dbcb54?auto=format&fit=crop&w=1080&h=900&q=85",
+    "shoeImage": "https://images.pexels.com/photos/20755674/pexels-photo-20755674.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1440&fit=crop",
+    "bagImage": "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?auto=format&fit=crop&w=1080&h=1440&q=85",
+    "mugName": "Sunday ceramic",
+    "mugReason": "For your slow mornings",
+    "mugPrice": "$28",
+    "shoeName": "City runner",
+    "shoeReason": "For the walk everywhere days",
+    "shoePrice": "$89",
+    "bagName": "Daily carry",
+    "bagReason": "For everything you take along",
+    "bagPrice": "$74",
+    "cta": "Explore your three picks",
+    "url": "studio.example/your-edit",
+    "mugThumbnail": "https://images.unsplash.com/photo-1777034536405-244ca3dbcb54?auto=format&fit=crop&w=1080&h=1440&q=85",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943439/zvid-series2-unique-music-20261002/day-31-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 22.6,
+      "audioBegin": 0,
+      "audioEnd": 22.6,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-10-01T12:01:13.551Z",
+  "spreadsheetConfigured": true,
+  "days": [
+    58,
+    59,
+    60
+  ],
+  "tabCount": 6,
+  "paceSeconds": 6,
+  "recovery": true,
+  "tabs": [
+    {
+      "title": "D58Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D58Details",
+      "columnCount": 9,
+      "records": 2
+    },
+    {
+      "title": "D59Source",
+      "columnCount": 18,
+      "records": 1
+    },
+    {
+      "title": "D59Details",
+      "columnCount": 7,
+      "records": 3
+    },
+    {
+      "title": "D60Source",
+      "columnCount": 21,
+      "records": 1
+    },
+    {
+      "title": "D60Details",
+      "columnCount": 8,
+      "records": 6
+    }
+  ],
+  "fixtureId": "ZvidSeries2PublicationSeedRemaining",
+  "localUrl": "http://localhost:5678/workflow/ZvidSeries2PublicationSeedRemaining"
+}

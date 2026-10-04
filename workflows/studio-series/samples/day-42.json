@@ -1,0 +1,75 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-42-demo",
+    "revision": "1",
+    "property_id": "juniper",
+    "checkIn": "2026-10-15",
+    "checkOut": "2026-10-19",
+    "guests": 4,
+    "currency": "USD",
+    "maxAgeHours": 24,
+    "cta": "Plan your poolside escape"
+  },
+  "records": [
+    {
+      "kind": "property",
+      "record_id": "juniper",
+      "name": "Juniper Pool Villa",
+      "location": "A slower stay in Bali",
+      "maxGuests": 4,
+      "minNights": 2,
+      "brand": "JUNIPER STAYS",
+      "amenities": "Private pool · Two bedrooms",
+      "poolImage": "https://images.pexels.com/photos/33709939/pexels-photo-33709939.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "roomImage": "https://images.pexels.com/photos/26859070/pexels-photo-26859070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "terraceImage": "https://images.unsplash.com/photo-1720161263981-84281892ee4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDgwMTZ8MHwxfHNlYXJjaHwxfHxob2xpZGF5JTIwdmlsbGElMjBwb29sJTIwaW50ZXJpb3J8ZW58MHx8fHwxNzkwODgyMTgzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "bookingUrl": "https://juniper.example/stay",
+      "cleaningCents": 5000,
+      "taxBasisPoints": 1000,
+      "feeLabel": "Cleaning; tax on accommodation + cleaning",
+      "approved": true
+    },
+    {
+      "kind": "night",
+      "record_id": "juniper-2026-10-15",
+      "property_id": "juniper",
+      "date": "2026-10-15",
+      "available": true,
+      "nightlyCents": 19000,
+      "currency": "USD",
+      "updatedAt": "2026-10-03T10:00:00Z"
+    },
+    {
+      "kind": "night",
+      "record_id": "juniper-2026-10-16",
+      "property_id": "juniper",
+      "date": "2026-10-16",
+      "available": true,
+      "nightlyCents": 19000,
+      "currency": "USD",
+      "updatedAt": "2026-10-03T10:00:00Z"
+    },
+    {
+      "kind": "night",
+      "record_id": "juniper-2026-10-17",
+      "property_id": "juniper",
+      "date": "2026-10-17",
+      "available": true,
+      "nightlyCents": 19000,
+      "currency": "USD",
+      "updatedAt": "2026-10-03T10:00:00Z"
+    },
+    {
+      "kind": "night",
+      "record_id": "juniper-2026-10-18",
+      "property_id": "juniper",
+      "date": "2026-10-18",
+      "available": true,
+      "nightlyCents": 19000,
+      "currency": "USD",
+      "updatedAt": "2026-10-03T10:00:00Z"
+    }
+  ]
+}

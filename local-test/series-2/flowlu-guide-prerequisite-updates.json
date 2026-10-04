@@ -1,0 +1,546 @@
+{
+  "phase": "Public companion guide prerequisite; no publication performed",
+  "snapshots": [],
+  "updates": [
+    {
+      "id": 367,
+      "slug": "release-notes-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>release-notes-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-release-notes-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/release-notes-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 369,
+      "slug": "release-notes-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>release-notes-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-release-notes-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/release-notes-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 382,
+      "slug": "procedure-tutorial-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>procedure-tutorial-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-procedure-tutorial-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/procedure-tutorial-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 384,
+      "slug": "procedure-tutorial-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>procedure-tutorial-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-procedure-tutorial-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/procedure-tutorial-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 397,
+      "slug": "plan-comparison-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>plan-comparison-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-plan-comparison-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/plan-comparison-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 399,
+      "slug": "plan-comparison-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>plan-comparison-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-plan-comparison-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/plan-comparison-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 412,
+      "slug": "incident-timeline-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>incident-timeline-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-incident-timeline-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/incident-timeline-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 414,
+      "slug": "incident-timeline-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>incident-timeline-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-incident-timeline-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/incident-timeline-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 427,
+      "slug": "maintenance-notice-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>maintenance-notice-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-maintenance-notice-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/maintenance-notice-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 429,
+      "slug": "maintenance-notice-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>maintenance-notice-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-maintenance-notice-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/maintenance-notice-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 442,
+      "slug": "order-progress-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>order-progress-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-order-progress-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/order-progress-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 444,
+      "slug": "order-progress-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>order-progress-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-order-progress-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/order-progress-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 457,
+      "slug": "product-bundle-savings-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>product-bundle-savings-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-product-bundle-savings-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/product-bundle-savings-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 459,
+      "slug": "product-bundle-savings-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>product-bundle-savings-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-product-bundle-savings-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/product-bundle-savings-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 472,
+      "slug": "delivery-delay-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>delivery-delay-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-delivery-delay-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/delivery-delay-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 474,
+      "slug": "delivery-delay-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>delivery-delay-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-delivery-delay-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/delivery-delay-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 487,
+      "slug": "appointment-preparation-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>appointment-preparation-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-appointment-preparation-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/appointment-preparation-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 489,
+      "slug": "appointment-preparation-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>appointment-preparation-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-appointment-preparation-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/appointment-preparation-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 502,
+      "slug": "return-instructions-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>return-instructions-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-return-instructions-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/return-instructions-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 504,
+      "slug": "return-instructions-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>return-instructions-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-return-instructions-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/return-instructions-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 517,
+      "slug": "employee-first-week-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>employee-first-week-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-employee-first-week-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/employee-first-week-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 519,
+      "slug": "employee-first-week-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>employee-first-week-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-employee-first-week-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/employee-first-week-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 532,
+      "slug": "interview-agenda-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>interview-agenda-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-interview-agenda-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/interview-agenda-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 534,
+      "slug": "interview-agenda-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>interview-agenda-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-interview-agenda-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/interview-agenda-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 547,
+      "slug": "course-roadmap-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>course-roadmap-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-course-roadmap-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/course-roadmap-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 549,
+      "slug": "course-roadmap-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>course-roadmap-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-course-roadmap-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/course-roadmap-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 562,
+      "slug": "safety-briefing-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>safety-briefing-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-safety-briefing-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/safety-briefing-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 564,
+      "slug": "safety-briefing-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>safety-briefing-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-safety-briefing-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/safety-briefing-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 577,
+      "slug": "training-completion-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>training-completion-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-training-completion-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/training-completion-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 579,
+      "slug": "training-completion-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>training-completion-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-training-completion-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/training-completion-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 592,
+      "slug": "meeting-action-brief-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>meeting-action-brief-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-meeting-action-brief-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/meeting-action-brief-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 594,
+      "slug": "meeting-action-brief-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>meeting-action-brief-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-meeting-action-brief-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/meeting-action-brief-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 607,
+      "slug": "equipment-maintenance-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>equipment-maintenance-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-equipment-maintenance-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/equipment-maintenance-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 609,
+      "slug": "equipment-maintenance-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>equipment-maintenance-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-equipment-maintenance-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/equipment-maintenance-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 622,
+      "slug": "inventory-replenishment-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>inventory-replenishment-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-inventory-replenishment-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/inventory-replenishment-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 624,
+      "slug": "inventory-replenishment-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>inventory-replenishment-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-inventory-replenishment-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/inventory-replenishment-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 637,
+      "slug": "delivery-route-brief-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>delivery-route-brief-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-delivery-route-brief-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/delivery-route-brief-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 639,
+      "slug": "delivery-route-brief-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>delivery-route-brief-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-delivery-route-brief-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/delivery-route-brief-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 652,
+      "slug": "tender-checklist-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>tender-checklist-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-tender-checklist-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/tender-checklist-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 654,
+      "slug": "tender-checklist-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>tender-checklist-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-tender-checklist-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/tender-checklist-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 667,
+      "slug": "travel-itinerary-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>travel-itinerary-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-travel-itinerary-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/travel-itinerary-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 669,
+      "slug": "travel-itinerary-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>travel-itinerary-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-travel-itinerary-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/travel-itinerary-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 682,
+      "slug": "hotel-arrival-guide-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>hotel-arrival-guide-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-hotel-arrival-guide-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/hotel-arrival-guide-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 684,
+      "slug": "hotel-arrival-guide-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>hotel-arrival-guide-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-hotel-arrival-guide-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/hotel-arrival-guide-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 697,
+      "slug": "pet-adoption-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>pet-adoption-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-pet-adoption-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/pet-adoption-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 699,
+      "slug": "pet-adoption-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>pet-adoption-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-pet-adoption-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/pet-adoption-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 712,
+      "slug": "volunteer-shift-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>volunteer-shift-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-volunteer-shift-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/volunteer-shift-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 714,
+      "slug": "volunteer-shift-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>volunteer-shift-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-volunteer-shift-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/volunteer-shift-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 727,
+      "slug": "donation-impact-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>donation-impact-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-donation-impact-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/donation-impact-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 729,
+      "slug": "donation-impact-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>donation-impact-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-donation-impact-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/donation-impact-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 742,
+      "slug": "survey-results-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>survey-results-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-survey-results-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/survey-results-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 744,
+      "slug": "survey-results-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>survey-results-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-survey-results-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/survey-results-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 757,
+      "slug": "fundraiser-progress-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>fundraiser-progress-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-fundraiser-progress-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/fundraiser-progress-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 759,
+      "slug": "fundraiser-progress-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>fundraiser-progress-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-fundraiser-progress-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/fundraiser-progress-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 772,
+      "slug": "before-after-case-study-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>before-after-case-study-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-before-after-case-study-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/before-after-case-study-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 774,
+      "slug": "before-after-case-study-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>before-after-case-study-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-before-after-case-study-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/before-after-case-study-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 787,
+      "slug": "milestone-roadmap-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>milestone-roadmap-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-milestone-roadmap-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/milestone-roadmap-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 789,
+      "slug": "milestone-roadmap-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>milestone-roadmap-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-milestone-roadmap-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/milestone-roadmap-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 802,
+      "slug": "recipe-cooking-guide-video",
+      "child": "[Release] Publish/verify in n8n Cloud",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>recipe-cooking-guide-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-recipe-cooking-guide-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish/verify in n8n Cloud</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><h2>Completion evidence</h2><p>Required: Verified live workflow/template URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/recipe-cooking-guide-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    },
+    {
+      "id": 804,
+      "slug": "recipe-cooking-guide-video",
+      "child": "[Community] Publish to n8n community",
+      "stage": "Backlog",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Backlog</li><li>Workflow slug: <code>recipe-cooking-guide-video</code></li><li>Source: <code>zvid-integrations/n8n/workflows/zvid-recipe-cooking-guide-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Publish to n8n community</p><h2>Dependencies</h2><p>Complete and validate the applicable platform build first. The current request covers n8n preparation and local Docker n8n manual testing; this later launch item is retained in the checklist.</p><p>Written launch content must retain <code>{{YOUTUBE_VIDEO_URL}}</code> until a verified public video URL is available. Public distribution requires separate authorization.</p><h2>Completion evidence</h2><p>Required: Verified live n8n community listing URL or provider identifier and verification note.</p><p>No completion is claimed at registration.</p><h2>Public companion guide prerequisite</h2><p>The current request covers local templates and Docker n8n testing. The companion is available at <code>zvid-integrations/n8n/workflows/recipe-cooking-guide-video.md</code> and through the local catalog. Its public URL is not yet published. The overview names the included guide and links to real Zvid documentation; no unavailable public guide URL is claimed.</p><h2>Next action</h2><p>Publish the companion guide as part of an authorized public release, verify its public URL, and replace the inline guide filename in the overview with that verified link. Then complete this publication item under the launch contract and record its live URL or provider identifier.</p>"
+      }
+    }
+  ]
+}

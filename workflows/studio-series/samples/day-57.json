@@ -1,0 +1,89 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-57",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "Can you name this country from its shape? Clue one: an archipelago on the western edge of the Pacific. Clue two: its neighbors include Korea, China and Russia. Final clue: its capital is Tokyo. It’s Japan. Which clue gave it away? The outline, the location, or the capital?",
+    "country": "Japan",
+    "country_code": "JP",
+    "location": "NORTHERN HEMISPHERE / EAST ASIA",
+    "repeat_after_days": 30,
+    "credit": "Map geometry: Natural Earth, public domain.\nCountry facts: Government of Japan.\nProjection is simplified for this quiz."
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-57",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Editor reviewed the exact supplied lesson and cited its underlying source.",
+      "url": "https://www.japan.go.jp/japan/index.html"
+    },
+    {
+      "parent_id": "qa-studio-57",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "clue",
+      "position": 2,
+      "approval": "approved",
+      "text": "An archipelago on the western edge of the Pacific.",
+      "specificity": 20
+    },
+    {
+      "parent_id": "qa-studio-57",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "clue",
+      "position": 3,
+      "approval": "approved",
+      "text": "Its neighbors include Korea, China and Russia.",
+      "specificity": 55
+    },
+    {
+      "parent_id": "qa-studio-57",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "clue",
+      "position": 4,
+      "approval": "approved",
+      "text": "Its capital is Tokyo.",
+      "specificity": 90
+    },
+    {
+      "parent_id": "qa-studio-57",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "map",
+      "position": 5,
+      "approval": "approved",
+      "polygons_json": "[[[736.2,390.4],[685.3,445.8],[686.2,502.5],[665.5,546.4],[675.1,574],[646.5,612.7],[576.2,638.6],[479.5,642],[401.1,704.8],[364.2,683.6],[361.9,642.5],[266.3,654.7],[201.2,680.6],[136.8,681.6],[192.5,722.1],[155.8,815.6],[120.3,838.7],[93.7,817.3],[107.2,767.8],[72.3,751.8],[50,714],[102,697.1],[130.8,662.5],[186.2,634.1],[226.5,596.5],[336,580.1],[394.8,591.3],[452.3,493.6],[489,519.8],[569.7,464.8],[601,443.5],[635.5,376.2],[626.1,314.3],[649.4,279.6],[707.8,269.5],[737.8,345.8],[736.2,390.4]],[[886.3,127.5],[925.2,104.2],[937.4,165.9],[855.8,181],[807.6,235.6],[721.2,198],[691.2,258.2],[630.1,259],[622.5,204.3],[649.7,162],[708.5,158.9],[724.5,82.9],[740.8,40],[805.4,97.3],[847.6,115.8],[886.3,127.5]],[[212.9,704.8],[243.4,672],[274.6,678.4],[297.3,655.3],[337.6,667.1],[344.7,686],[313.7,719.3],[291.1,701.6],[262.9,714.4],[248.4,746.6],[212.5,730.9],[212.9,704.8]]]",
+      "capital_x": 615.6,
+      "capital_y": 582.4,
+      "rights": "Natural Earth public-domain geometry",
+      "url": "https://www.naturalearthdata.com/about/terms-of-use/"
+    },
+    {
+      "parent_id": "qa-studio-57",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "narration",
+      "position": 6,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790930325/zvid-series2-design-review-20261001/d57-narration-timed-r2.mp3",
+      "seconds": 31.2,
+      "content_fingerprint": "7f06a65a3ec792ce44664aa2538b0cba6a68729fa2ead7edb17f5e6b729a61f2",
+      "script": "Can you name this country from its shape? Clue one: an archipelago on the western edge of the Pacific. Clue two: its neighbors include Korea, China and Russia. Final clue: its capital is Tokyo. It’s Japan. Which clue gave it away? The outline, the location, or the capital?",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

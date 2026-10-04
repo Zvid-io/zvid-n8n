@@ -1,0 +1,103 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-local-launch-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "COMMON TABLE",
+    "as_of": "2026-10-03T09:00:00Z",
+    "launch_id": "CERAMIC-AU",
+    "market": "Melbourne",
+    "locale": "en-AU",
+    "currency": "AUD",
+    "launch_at": "2026-10-03T08:00:00Z",
+    "valid_until": "2026-10-10T08:00:00Z",
+    "market_url": "https://example.com/au/ceramics"
+  },
+  "records": [
+    {
+      "kind": "product",
+      "record_id": "C1",
+      "sku": "C1",
+      "market": "Melbourne",
+      "active": true,
+      "stock": 10,
+      "hero_image": "https://images.pexels.com/photos/4466240/pexels-photo-4466240.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+      "detail_image": "https://images.pexels.com/photos/6312194/pexels-photo-6312194.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+      "lifestyle_image": "https://images.pexels.com/photos/7674567/pexels-photo-7674567.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1400&fit=crop",
+      "priority": 1
+    },
+    {
+      "kind": "price",
+      "record_id": "pC1",
+      "sku": "C1",
+      "market": "Melbourne",
+      "currency": "AUD",
+      "price_minor": 4000,
+      "effective_from": "2026-10-01T00:00:00Z",
+      "effective_to": "2026-11-01T00:00:00Z",
+      "tax_label": "GST included",
+      "approval": "approved"
+    },
+    {
+      "kind": "product",
+      "record_id": "C2",
+      "sku": "C2",
+      "market": "Melbourne",
+      "active": true,
+      "stock": 8,
+      "hero_image": "https://images.pexels.com/photos/4466240/pexels-photo-4466240.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+      "detail_image": "https://images.pexels.com/photos/6312194/pexels-photo-6312194.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+      "lifestyle_image": "https://images.pexels.com/photos/7674567/pexels-photo-7674567.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1400&fit=crop",
+      "priority": 2
+    },
+    {
+      "kind": "price",
+      "record_id": "pC2",
+      "sku": "C2",
+      "market": "Melbourne",
+      "currency": "AUD",
+      "price_minor": 2800,
+      "effective_from": "2026-10-01T00:00:00Z",
+      "effective_to": "2026-11-01T00:00:00Z",
+      "tax_label": "GST included",
+      "approval": "approved"
+    },
+    {
+      "kind": "product",
+      "record_id": "C3",
+      "sku": "C3",
+      "market": "Melbourne",
+      "active": true,
+      "stock": 0,
+      "hero_image": "https://images.pexels.com/photos/4466240/pexels-photo-4466240.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+      "detail_image": "https://images.pexels.com/photos/6312194/pexels-photo-6312194.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+      "lifestyle_image": "https://images.pexels.com/photos/7674567/pexels-photo-7674567.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1400&fit=crop",
+      "priority": 3
+    },
+    {
+      "kind": "price",
+      "record_id": "pC3",
+      "sku": "C3",
+      "market": "Melbourne",
+      "currency": "AUD",
+      "price_minor": 1800,
+      "effective_from": "2026-10-01T00:00:00Z",
+      "effective_to": "2026-11-01T00:00:00Z",
+      "tax_label": "GST included",
+      "approval": "approved"
+    },
+    {
+      "kind": "copy",
+      "record_id": "au-copy",
+      "market": "Melbourne",
+      "locale": "en-AU",
+      "headline": "A new table story.",
+      "collection": "The everyday ceramic edit",
+      "local_note": "Available in your local collection",
+      "cta": "Meet the collection",
+      "approval": "approved"
+    }
+  ]
+}

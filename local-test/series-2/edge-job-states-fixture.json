@@ -1,0 +1,93 @@
+[
+  {
+    "id": "Series2EdgeJobStates",
+    "name": "TEST ONLY · Read accepted series-two job states",
+    "active": false,
+    "nodes": [
+      {
+        "id": "edge-states-start",
+        "name": "Test manually",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "edge-states-list",
+        "name": "Read recent renders",
+        "type": "@zvid/n8n-nodes-zvid.zvid",
+        "typeVersion": 1,
+        "position": [
+          250,
+          0
+        ],
+        "parameters": {
+          "resource": "render",
+          "operation": "getAll",
+          "limit": 50,
+          "page": 1,
+          "filterType": "video"
+        },
+        "credentials": {
+          "zvidApi": {
+            "id": "e3b494f287402c80c13bf080",
+            "name": "Zvid workflow series"
+          }
+        },
+        "alwaysOutputData": true
+      },
+      {
+        "id": "edge-states-match",
+        "name": "Known series job states",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          500,
+          0
+        ],
+        "parameters": {
+          "jsCode": "const targets=new Set([\"98f6e00a-4230-479d-a45d-e9ed19de6b3f\",\"661136cf-a20a-48b8-b1dc-70f314ca5b17\",\"07b325db-6575-4a4d-b393-4cb1aabe082a\",\"be471b9f-9511-4fcb-ad77-6e019eb6e2b6\",\"772ecded-9700-4474-ae4f-628f6cf94ae2\",\"51ed7b90-2f6d-42e3-a9d5-e537fbacba36\",\"88cd9096-52b5-4ebc-94b6-d5913c914e5b\",\"97d85174-37a1-4dd1-9fb0-462d4e93733e\",\"9314d815-74ec-4ba8-a04f-2351adec75f5\",\"ef24062a-c508-43d7-9925-a88e0dde87a5\",\"08edea32-87ef-4269-832a-abcb1f2179ad\",\"3cf60a86-a938-4c0f-9709-dc87887b4b3a\",\"4d3920e8-fe4b-4a49-a4df-d1bc131d33a7\",\"cf01ab64-f7a2-45c7-ada9-96e6b3fac75b\",\"e6ee7d8f-e1de-407a-bf92-1efa05d423d5\",\"11ee5767-d933-4932-9b94-ecaae0cf1b64\",\"cacf2ce3-5735-470a-be72-9ae237cdfde6\",\"85493692-65c2-4ab5-aa0b-f34f9303e014\",\"7ea52ac6-a58e-4a9c-b2f5-cc58edc2c57d\",\"41a98ad4-3232-4d5c-8204-3783da67a7a3\"]);const jobs=$input.all().flatMap(item=>Array.isArray(item.json.jobs)?item.json.jobs:[item.json]);const matches=jobs.filter(job=>targets.has(String(job.id||job.jobId))).map(job=>({id:job.id||job.jobId,status:job.status||job.state||null,outputUrlPresent:Boolean(job.output_url||job.outputUrl||job.videoUrl),thumbnailUrlPresent:Boolean(job.thumbnail_url||job.thumbnailUrl),fileName:job.name||job.file_name||null}));const activeStatuses=new Set([\"queued\",\"waiting\",\"processing\",\"running\",\"pending\",\"rendering\"]);return [{json:{requested:targets.size,found:matches.length,missing:[...targets].filter(id=>!matches.some(job=>job.id===id)),activeKnownJobs:matches.filter(job=>activeStatuses.has(String(job.status).toLowerCase())),jobs:matches}}];"
+        }
+      }
+    ],
+    "connections": {
+      "Test manually": {
+        "main": [
+          [
+            {
+              "node": "Read recent renders",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read recent renders": {
+        "main": [
+          [
+            {
+              "node": "Known series job states",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {},
+    "settings": {
+      "executionOrder": "v1",
+      "executionTimeout": 120
+    },
+    "meta": {
+      "seriesTwoEdge": {
+        "testOnly": true,
+        "paidNodesRemoved": true,
+        "readOnly": true
+      }
+    }
+  }
+]

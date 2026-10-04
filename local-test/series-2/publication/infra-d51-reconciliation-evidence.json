@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-10-01T13:31:40.469Z",
+  "day": 51,
+  "rejectedExecutionId": 794,
+  "readOnlyAcceptanceAuditExecutionId": 796,
+  "guardedRequeueExecutionId": 798,
+  "acceptedAndDeliveredExecutionId": 800,
+  "noFailedAcceptance": true,
+  "noAcceptedJobFoundByAudit": true,
+  "frozenFieldsPreserved": true,
+  "frozenProjectAndInputMatchDelivered": true,
+  "changedFields": [
+    "status",
+    "last_error"
+  ],
+  "paidNodesInRequeue": [],
+  "accountCountersModified": false,
+  "requestKey": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+  "inputHash": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8",
+  "projectSha256": "a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836",
+  "jobId": "7797cb1d-f316-492d-8c8a-7950a5a0c2b4",
+  "driveFileId": "1zmPX2A0F8hCaTxJUqR49-HKTqi2eg4Uz",
+  "canonicalFunctionalHash": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+  "evidenceFiles": [
+    "infra-quota-error-794.json",
+    "infra-job-audit-evidence.json",
+    "infra-requeue-d51-evidence.json",
+    "upgraded-executions.json"
+  ],
+  "verified": true
+}

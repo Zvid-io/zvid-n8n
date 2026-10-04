@@ -1,0 +1,103 @@
+[
+  {
+    "id": "ZvidSeries2PublicationAuditRecentJobs",
+    "name": "QA read-only Zvid acceptance and concurrent jobs audit",
+    "active": false,
+    "nodes": [
+      {
+        "id": "infra-jobs-audit-trigger",
+        "name": "Audit recent jobs manually",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          200
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "infra-jobs-audit-native",
+        "name": "Read recent account renders",
+        "type": "@zvid/n8n-nodes-zvid.zvid",
+        "typeVersion": 1,
+        "position": [
+          280,
+          200
+        ],
+        "parameters": {
+          "resource": "render",
+          "operation": "getAll",
+          "limit": 100,
+          "page": 1,
+          "filterType": "all"
+        },
+        "credentials": {
+          "zvidApi": {
+            "id": "e3b494f287402c80c13bf080",
+            "name": "Zvid workflow series"
+          }
+        },
+        "executeOnce": true,
+        "alwaysOutputData": true
+      },
+      {
+        "id": "infra-jobs-audit-safe",
+        "name": "Sanitize acceptance and active-job evidence",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          570,
+          200
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const expected={\"ledgerTableId\":\"LQgWxc1qaXzfNqlx\",\"ledgerRowId\":1,\"requestKey\":\"travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh\",\"sourceId\":\"qa-d51-record-001\",\"revision\":\"r1\",\"status\":\"submitting\",\"jobId\":null,\"inputHash\":\"214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8\",\"projectSha256\":\"a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836\",\"inputJsonSha256\":\"93a38620bf1fb61468a7c3f50110930a2fb51abf7804b5a564eade994f18710a\",\"briefJsonSha256\":\"9fe131d16bf5bd3518ecd8992f2898756ca43a01392be22295608ac6aa83b978\",\"contextJsonSha256\":\"86fc69b27caa06e50b870fcaf5b18d4e87c5ea0588e68259682356f6b85f2f0b\",\"attemptedProjectName\":\"travel-itinerary-video\",\"quotedCredits\":18,\"updatedAt\":\"2026-10-01T12:57:48.240Z\",\"failedExecutionId\":794,\"failedStartedAt\":\"2026-10-01 12:57:45.857\",\"failedStoppedAt\":\"2026-10-01 12:57:48.645\"};\nconst jobs=$input.all().flatMap(item=>Array.isArray(item.json)?item.json:Array.isArray(item.json.jobs)?item.json.jobs:[item.json]).filter(job=>job.id||job.jobId||job.job_id);\nconst safe=jobs.map(job=>({jobId:String(job.id||job.jobId||job.job_id),name:job.name||null,status:job.status||job.state||null,type:job.job_type||job.type||null,createdAt:job.created_at||job.createdAt||job.ts?.created||null,completedAt:job.completed_at||job.ts?.finished||null}));\nconst failedAt=Date.parse(expected.failedStartedAt.replace(' ','T')+'Z');\nif(!Number.isFinite(failedAt)||!safe.length||safe.some(job=>!Number.isFinite(Date.parse(job.createdAt))))throw new Error('Native job-list time coverage cannot be verified.');\nconst earliest=Math.min(...safe.map(job=>Date.parse(job.createdAt)));\nconst coverageSinceFailure=earliest<=failedAt-10000;\nconst matchingD51Jobs=safe.filter(job=>job.name===expected.attemptedProjectName);\nconst candidatesAfterFailure=matchingD51Jobs.filter(job=>Date.parse(job.createdAt)>=failedAt-10000);\nconst terminal=new Set(['completed','complete','failed','cancelled','canceled']);\nconst activeJobs=safe.filter(job=>!terminal.has(String(job.status).toLowerCase()));\nreturn [{json:{resource:'native_readonly_render_acceptance_audit',auditedAt:new Date().toISOString(),failedExecutionId:794,expected,page:1,limit:100,returnedJobCount:safe.length,coverageSinceFailure,earliestJobAt:new Date(earliest).toISOString(),matchingD51Jobs,candidatesAfterFailure,nonterminalJobs:activeJobs,nonterminalJobCount:activeJobs.length,rejectedRequestHasNoAcceptedJob:coverageSinceFailure&&candidatesAfterFailure.length===0}}];"
+        }
+      },
+      {
+        "id": "infra-jobs-audit-note",
+        "name": "Read-only quota reconciliation audit",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -20,
+          -190
+        ],
+        "parameters": {
+          "color": 5,
+          "width": 900,
+          "height": 290,
+          "content": "### Read-only quota rejection audit\n\nThis native Zvid Get Many fixture lists100 recent jobs with the existing account credential. It does not create, mutate, cancel, rerender or delete jobs, change plan counters, or spend render credits.\n\nRun manually and inspect the sanitized output. It checks timestamp coverage around rejected execution794 and identifies any travel-itinerary-video job created in that interval, plus nonterminal account jobs. A missing timestamp or incomplete coverage fails the audit. This is a private QA fixture, not a publishable template."
+        }
+      }
+    ],
+    "connections": {
+      "Audit recent jobs manually": {
+        "main": [
+          [
+            {
+              "node": "Read recent account renders",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read recent account renders": {
+        "main": [
+          [
+            {
+              "node": "Sanitize acceptance and active-job evidence",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "timezone": "Africa/Cairo"
+    }
+  }
+]

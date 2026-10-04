@@ -1,0 +1,47 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-45-demo",
+    "revision": "1",
+    "offer_id": "OF1042",
+    "dealer": "NORTHLINE SELECT",
+    "cta": "MAKE IT\nYOUR NEXT DRIVE.",
+    "destination": "https://northline.example/approved-offer",
+    "maxAgeHours": 24
+  },
+  "records": [
+    {
+      "kind": "offer",
+      "record_id": "OF1042",
+      "vehicle_id": "NL1042",
+      "offerVersion": "3",
+      "priceCents": 2750000,
+      "currency": "USD",
+      "validFrom": "2026-10-03T00:00:00Z",
+      "validUntil": "2026-10-10T23:59:59Z",
+      "terms": "Demonstration dealer offer. Taxes and registration fees are additional.",
+      "priceNote": "Taxes and registration fees extra",
+      "status": "approved"
+    },
+    {
+      "kind": "approval",
+      "record_id": "AP1042",
+      "offer_id": "OF1042",
+      "offerRevision": "3",
+      "approvedPriceCents": 2750000,
+      "currency": "USD",
+      "approvedBy": "Demo sales manager",
+      "approvedAt": "2026-10-03T10:00:00Z",
+      "status": "approved"
+    },
+    {
+      "kind": "vehicle",
+      "record_id": "NL1042",
+      "name": "Touring SUV",
+      "image": "https://images.pexels.com/photos/27497571/pexels-photo-27497571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z"
+    }
+  ]
+}

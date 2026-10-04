@@ -1,0 +1,87 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-fatigue-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "PACE STUDIO",
+    "as_of": "2026-10-03T09:00:00Z",
+    "campaign_id": "CAM1",
+    "sku": "SHOE1",
+    "baseline_start": "2026-09-19",
+    "baseline_end": "2026-09-25",
+    "recent_start": "2026-09-26",
+    "recent_end": "2026-10-02",
+    "min_impressions": 1000,
+    "decline_threshold": 0.3,
+    "frequency_threshold": 3,
+    "cooldown_days": 30,
+    "product_name": "CITY / EVERYDAY",
+    "product_image": "https://images.pexels.com/photos/20755674/pexels-photo-20755674.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "detail_image": "https://images.pexels.com/photos/27503504/pexels-photo-27503504.png?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "price_minor": 8900,
+    "currency": "USD",
+    "product_url": "https://example.com/shop/city"
+  },
+  "records": [
+    {
+      "kind": "window_metric",
+      "record_id": "baseline",
+      "campaign_id": "CAM1",
+      "sku": "SHOE1",
+      "window": "baseline",
+      "start": "2026-09-19",
+      "end": "2026-09-25",
+      "impressions": 10000,
+      "clicks": 300,
+      "reach": 4000,
+      "spend_minor": 100000
+    },
+    {
+      "kind": "window_metric",
+      "record_id": "recent",
+      "campaign_id": "CAM1",
+      "sku": "SHOE1",
+      "window": "recent",
+      "start": "2026-09-26",
+      "end": "2026-10-02",
+      "impressions": 10000,
+      "clicks": 150,
+      "reach": 2500,
+      "spend_minor": 100000
+    },
+    {
+      "kind": "angle",
+      "record_id": "new-city",
+      "angle_id": "new-city",
+      "sku": "SHOE1",
+      "hook": "Own your city days.",
+      "benefit": "A new angle on your daily pair.",
+      "cta": "Find your next stride",
+      "approval": "approved",
+      "priority": 1
+    },
+    {
+      "kind": "angle",
+      "record_id": "old-comfort",
+      "angle_id": "old-comfort",
+      "sku": "SHOE1",
+      "hook": "A daily comfort story.",
+      "benefit": "See your everyday pair.",
+      "cta": "Explore the collection",
+      "approval": "approved",
+      "priority": 0
+    },
+    {
+      "kind": "creative",
+      "record_id": "live-one",
+      "creative_id": "live-one",
+      "campaign_id": "CAM1",
+      "sku": "SHOE1",
+      "angle_id": "old-comfort",
+      "last_used": "2026-10-02",
+      "status": "live"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "capturedAt": "2026-10-01T11:40:15.934Z",
+  "expectedFixtures": [
+    "ZvidSeries2PublicationSeedSources"
+  ],
+  "results": [
+    {
+      "workflowId": "ZvidSeries2PublicationSeedSources",
+      "executionId": 738,
+      "status": "running",
+      "mode": "manual",
+      "startedAt": "2026-10-01 11:38:06.825",
+      "stoppedAt": null,
+      "nodes": {},
+      "evidence": null,
+      "error": null
+    }
+  ]
+}

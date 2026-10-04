@@ -676,18 +676,18 @@
     },
     {
       "parameters": {
+        "authentication": "none",
+        "requestMethod": "GET",
         "url": "={{ $json.videoUrl }}",
+        "responseFormat": "file",
+        "dataPropertyName": "data",
+        "jsonParameters": false,
         "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file",
-              "outputPropertyName": "data"
-            }
-          }
+          "timeout": 30000
         }
       },
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "typeVersion": 2,
       "position": [
         570,
         2520

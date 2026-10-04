@@ -1,0 +1,748 @@
+[
+  {
+    "updatedAt": "2026-10-01T08:58:24.496Z",
+    "createdAt": "2026-10-01T08:58:24.496Z",
+    "id": "ZvidSeries2Day35",
+    "name": "D35 A maintenance window to a customer notice video (Zvid)",
+    "description": null,
+    "active": false,
+    "isArchived": false,
+    "nodes": [
+      {
+        "id": "zvid-series-two-35-01",
+        "name": "Test manually",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          70,
+          160
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "zvid-series-two-35-02",
+        "name": "Sample input",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          310,
+          160
+        ],
+        "parameters": {
+          "jsCode": "return [{ json: {\n  \"service\": \"Acme Desk\",\n  \"startsAt\": \"2026-10-03T01:00:00Z\",\n  \"endsAt\": \"2026-10-03T02:30:00Z\",\n  \"affectedFeatures\": [\n    \"Report exports\",\n    \"Workspace analytics\"\n  ],\n  \"referenceDate\": \"2026-10-01T01:00:00Z\"\n} }];"
+        }
+      },
+      {
+        "id": "zvid-series-two-35-03",
+        "name": "Receive event",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          70,
+          340
+        ],
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "maintenance-notice-video",
+          "responseMode": "onReceived",
+          "options": {
+            "responseCode": {
+              "values": {
+                "responseCode": "customCode",
+                "customCode": 202
+              }
+            },
+            "responseData": "{\"accepted\":true,\"message\":\"Inspect the workflow execution for its result.\"}",
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Content-Type",
+                  "value": "application/json"
+                }
+              ]
+            }
+          }
+        },
+        "webhookId": "zvid-series-two-35-event"
+      },
+      {
+        "id": "zvid-series-two-35-04",
+        "name": "Config",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          590,
+          245
+        ],
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "{\n  \"brandName\": \"Zvid\",\n  \"accentColor\": \"#F5ADA1\",\n  \"dryRun\": false,\n  \"maxRenderCredits\": 30,\n  \"sceneSeconds\": 6,\n  \"pollSeconds\": 5,\n  \"maxWaitSeconds\": 600\n}",
+          "includeOtherFields": true,
+          "options": {}
+        }
+      },
+      {
+        "id": "zvid-series-two-35-05",
+        "name": "Normalize and build video",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1010,
+          160
+        ],
+        "parameters": {
+          "jsCode": "function req(value, label = 'value') {\n  if (value === undefined || value === null || (typeof value === 'string' && !value.trim())) throw new Error(label + ' is required.');\n  return value;\n}\n\nfunction str(value, max = 100) {\n  return String(value === undefined || value === null ? '' : value).replace(/[\\u0000-\\u001f\\u007f]/g, ' ').replace(/\\s+/g, ' ').trim().slice(0, max);\n}\n\nfunction num(value, label = 'number', min = 0, max = 1e12) {\n  req(value, label);\n  if (typeof value === 'boolean' || typeof value === 'object') throw new Error(label + ' must be a finite number.');\n  const n = Number(value);\n  if (!Number.isFinite(n) || n < min || n > max) throw new Error(label + ' must be a finite number from ' + min + ' to ' + max + '.');\n  return n;\n}\n\nfunction list(value, label = 'items') {\n  if (!Array.isArray(value)) throw new Error(label + ' must be an array.');\n  if (value.length > 1000) throw new Error(label + ' is limited to 1,000 input records per run.');\n  return value;\n}\n\nfunction escapeHtml(value) {\n  return String(value).replace(/[&<>\"'{}]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;', '{': '&#123;', '}': '&#125;' }[c]));\n}\n\nfunction normalizeBrief(brief) {\n  if (!brief || typeof brief !== 'object' || Array.isArray(brief)) throw new Error('The transformation must return a video brief or explicit skip result.');\n  if (brief.skip === true) return { skip: true, reason: str(req(brief.reason, 'Skip reason'), 250), meta: brief.meta || {} };\n  const cards = list(brief.cards, 'cards');\n  if (!cards.length || cards.length > 6) throw new Error('The video brief must contain one to six cards.');\n  return {\n    title: str(req(brief.title, 'Video title'), 100),\n    subtitle: str(brief.subtitle, 180),\n    cards: cards.map((card, i) => {\n      if (!card || typeof card !== 'object') throw new Error('Card ' + (i + 1) + ' must be an object.');\n      return { label: str(req(card.label, 'Card label'), 60), value: str(req(card.value, 'Card value'), 80), detail: str(card.detail, 140) };\n    }),\n    footer: str(brief.footer || 'Review the result before sharing.', 160),\n    sourceKey: str(req(brief.sourceKey, 'sourceKey'), 160),\n    meta: brief.meta && typeof brief.meta === 'object' ? brief.meta : {},\n  };\n}\n\nfunction normalizeConfig(cfg = {}) {\n  if (typeof cfg.dryRun !== 'boolean') throw new Error('Config dryRun must be a boolean.');\n  const color = String(cfg.accentColor || '#D8F17C');\n  if (!/^#[0-9a-f]{6}$/i.test(color)) throw new Error('accentColor must use six hexadecimal digits.');\n  return {\n    dryRun: cfg.dryRun,\n    brandName: str(cfg.brandName || 'Zvid', 45),\n    accentColor: color,\n    maxRenderCredits: num(cfg.maxRenderCredits ?? 30, 'maxRenderCredits', 0, 1000),\n    sceneSeconds: num(cfg.sceneSeconds ?? 6, 'sceneSeconds', 2, 8),\n    pollSeconds: num(cfg.pollSeconds ?? 5, 'pollSeconds', 1, 30),\n    maxWaitSeconds: num(cfg.maxWaitSeconds ?? 600, 'maxWaitSeconds', 10, 1200),\n  };\n}\n\nfunction buildPayload(inputBrief, inputCfg = {}, spec = {}) {\n  const brief = normalizeBrief(inputBrief);\n  if (brief.skip) return null;\n  const cfg = normalizeConfig({ dryRun: false, maxRenderCredits: 30, ...inputCfg });\n  const duration = cfg.sceneSeconds;\n  const accent = cfg.accentColor;\n  const ink = '#102026';\n  const cream = '#F5F2E8';\n  const text = (html, x, y, width, track = 2, size = 32) => ({ type: 'TEXT', x, y, width, anchor: 'top-left', track, enterBegin: 0.15, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: duration, style: { fontFamily: 'Arial', color: cream, fontSize: size }, html });\n  const svg = (markup) => ({ type: 'SVG', width: 1280, height: 720, track: 0, enterBegin: 0, exitEnd: duration, svg: '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1280\" height=\"720\" viewBox=\"0 0 1280 720\">' + markup + '</svg>' });\n  const limited = (value, style, lines) => {\n    const size = Number((style.match(/font-size:(\\d+)px/) || [0, 32])[1]);\n    const leading = Number((style.match(/line-height:([\\d.]+)/) || [0, 1.3])[1]);\n    const height = Math.ceil(size * leading * lines) + 2;\n    return '<div style=\"overflow:hidden;max-height:' + height + 'px;overflow-wrap:anywhere;' + style + '\">' + escapeHtml(value) + '</div>';\n  };\n  const smallHeader = (label, dark = false) => text('<div style=\"font-size:20px;font-weight:700;letter-spacing:3px;color:' + (dark ? ink : accent) + ';\">' + escapeHtml(label) + '</div>', 74, 54, 1110, 3);\n  const scenes = [{ id: 'opening', duration, backgroundColor: ink, visuals: [\n    svg('<rect width=\"1280\" height=\"720\" fill=\"' + ink + '\"/><circle cx=\"1170\" cy=\"130\" r=\"280\" fill=\"' + accent + '\" opacity=\".12\"/><path d=\"M900 0V720 M1060 0V720 M1220 0V720\" stroke=\"' + cream + '\" opacity=\".08\"/><rect x=\"74\" y=\"143\" width=\"94\" height=\"7\" rx=\"3\" fill=\"' + accent + '\"/>'),\n    smallHeader(cfg.brandName + ' / ' + String(spec.day || 'BRIEF')),\n    text(limited(brief.title, 'font-size:' + (brief.title.length > 70 ? 54 : 66) + 'px;line-height:1.09;font-weight:800;color:' + cream + ';', 3), 74, 192, 1030, 2),\n    text(limited(brief.subtitle, 'font-size:27px;line-height:1.4;color:#BBD0CE;', 3), 78, 460, 1020, 2),\n    text('<div style=\"font-size:17px;color:#BBD0CE;letter-spacing:2px;\">' + escapeHtml(brief.sourceKey) + '</div>', 78, 645, 1110, 3),\n  ] }];\n  for (let start = 0; start < brief.cards.length; start += 3) {\n    const cards = brief.cards.slice(start, start + 3);\n    const count = cards.length;\n    const gap = 24;\n    const width = Math.floor((1132 - gap * (count - 1)) / count);\n    const visuals = [svg('<rect width=\"1280\" height=\"720\" fill=\"' + cream + '\"/><rect x=\"74\" y=\"139\" width=\"1132\" height=\"2\" fill=\"' + ink + '\" opacity=\".16\"/>'), smallHeader(cfg.brandName + ' / THE DETAILS', true)];\n    cards.forEach((card, i) => {\n      const left = 74 + i * (width + gap);\n      visuals.push({ ...svg('<rect x=\"' + left + '\" y=\"192\" width=\"' + width + '\" height=\"407\" rx=\"22\" fill=\"' + ink + '\"/><circle cx=\"' + (left + width - 35) + '\" cy=\"226\" r=\"8\" fill=\"' + accent + '\"/>'), track: 1 });\n      visuals.push(text(limited(card.label, 'font-size:20px;line-height:1.35;letter-spacing:1px;font-weight:700;color:' + accent + ';', 2), left + 26, 237, width - 52, 2));\n      const valueSize = card.value.length > 42 ? 28 : card.value.length > 22 ? 36 : 48;\n      visuals.push(text(limited(card.value, 'font-size:' + valueSize + 'px;line-height:1.1;font-weight:800;color:' + cream + ';', 3), left + 26, 324, width - 52, 2));\n      visuals.push(text(limited(card.detail, 'font-size:19px;line-height:1.35;color:#C3D3D0;', 4), left + 26, 482, width - 52, 2));\n    });\n    visuals.push(text('<div style=\"font-size:18px;color:' + ink + ';\">' + (start + 1) + '–' + (start + cards.length) + ' / ' + brief.cards.length + '</div>', 74, 650, 1110, 3));\n    scenes.push({ id: 'details-' + (start / 3 + 1), duration, backgroundColor: cream, visuals });\n  }\n  scenes.push({ id: 'closing', duration, backgroundColor: accent, visuals: [\n    svg('<rect width=\"1280\" height=\"720\" fill=\"' + accent + '\"/><circle cx=\"1140\" cy=\"560\" r=\"230\" fill=\"none\" stroke=\"' + ink + '\" stroke-width=\"2\" opacity=\".2\"/><circle cx=\"1140\" cy=\"560\" r=\"180\" fill=\"none\" stroke=\"' + ink + '\" stroke-width=\"2\" opacity=\".2\"/><path d=\"M78 181h100\" stroke=\"' + ink + '\" stroke-width=\"8\"/>'),\n    smallHeader(cfg.brandName + ' / NEXT STEP', true),\n    text(limited(brief.footer, 'font-size:51px;line-height:1.17;font-weight:800;color:' + ink + ';', 4), 74, 248, 1000, 2),\n    text('<div style=\"font-size:19px;color:' + ink + ';\">' + escapeHtml(brief.sourceKey) + '</div>', 78, 645, 1080, 3),\n  ] });\n  return { name: String(spec.slug || 'zvid-business-brief').replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, 100), resolution: 'hd', frameRate: 30, backgroundColor: ink, outputFormat: 'mp4', scenes, audios: [] };\n}\n\nfunction checkValidationResult(result, build, cfg) {\n  if (!result || result.valid !== true) {\n    const errors = Array.isArray(result && result.errors) ? result.errors.map(e => (e.field || 'project') + ': ' + e.message).join('; ') : 'Project did not validate.';\n    throw new Error('Zvid validation failed: ' + errors.slice(0, 1000));\n  }\n  const credits = num(result.creditsRequired, 'Validation creditsRequired', 0, 1000);\n  if (credits > cfg.maxRenderCredits) throw new Error('Render requires ' + credits + ' credits; maxRenderCredits is ' + cfg.maxRenderCredits + '. Increase the configured cap deliberately.');\n  return { ...build, quotedCredits: credits, warnings: result.warnings || [], payload: result.payload || build.payload };\n}\nconst incoming = $input.first().json;\nconst src = incoming.body !== undefined ? incoming.body : incoming;\nif (!src || typeof src !== \"object\" || Array.isArray(src)) throw new Error(\"Input must be a JSON object.\");\nconst cfg = normalizeConfig($(\"Config\").first().json);\nconst transform = (src) => {\nconst u = (function validationHelpers() {\n  const DAY = 86400000;\n  function text(value, label, max = 2000) {\n    if (typeof value !== 'string' || !value.trim()) throw new Error(`${label} must be a nonempty string`);\n    const clean = value.trim();\n    if (clean.length > max) throw new Error(`${label} exceeds ${max} characters`);\n    return clean;\n  }\n  function number(value, label, min = 0, max = 1e12, integer = false) {\n    if (typeof value !== 'number' || !Number.isFinite(value) || value < min || value > max || (integer && !Number.isInteger(value))) {\n      throw new Error(`${label} must be ${integer ? 'an integer' : 'a finite number'} between ${min} and ${max}`);\n    }\n    return value;\n  }\n  function array(value, label, min = 1, max = 100) {\n    if (!Array.isArray(value) || value.length < min || value.length > max) throw new Error(`${label} must contain ${min} to ${max} items`);\n    return value;\n  }\n  function object(value, label) {\n    if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${label} must be an object`);\n    return value;\n  }\n  function choice(value, label, options) {\n    const clean = text(value, label, 100);\n    if (!options.includes(clean)) throw new Error(`${label} must be one of ${options.join(', ')}`);\n    return clean;\n  }\n  function date(value, label) {\n    const clean = text(value, label, 10);\n    if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(clean)) throw new Error(`${label} must be an ISO date YYYY-MM-DD`);\n    const result = Date.parse(`${clean}T00:00:00Z`);\n    if (!Number.isFinite(result) || new Date(result).toISOString().slice(0, 10) !== clean) throw new Error(`${label} is not a valid calendar date`);\n    return result;\n  }\n  function instant(value, label) {\n    const clean = text(value, label, 30);\n    if (!/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?Z$/.test(clean)) throw new Error(`${label} must be an ISO timestamp with seconds and UTC Z`);\n    const result = Date.parse(clean);\n    if (!Number.isFinite(result) || new Date(result).toISOString().slice(0, 19) !== clean.slice(0, 19)) throw new Error(`${label} is not a valid UTC timestamp`);\n    return result;\n  }\n  function dateText(value) { return new Date(value).toISOString().slice(0, 10); }\n  function timeText(value) { return new Date(value).toISOString().slice(0, 16).replace('T', ' ') + ' UTC'; }\n  function currency(value) {\n    const clean = text(value, 'currency', 3);\n    if (!/^[A-Z]{3}$/.test(clean)) throw new Error('currency must be a three-letter uppercase code');\n    return clean;\n  }\n  function cents(value, label, min = 0) {\n    number(value, label, min, 1e10);\n    const scaled = value * 100;\n    if (Math.abs(scaled - Math.round(scaled)) > 0.00001) throw new Error(`${label} must have at most two decimal places`);\n    return Math.round(scaled);\n  }\n  function amount(value, code) { return `${code} ${(value / 100).toFixed(2)}`; }\n  function sum(values, label = 'total') { return number(values.reduce((total, value) => total + value, 0), label, 0, 1e15); }\n  function percent(value) { return Math.round(value * 10) / 10; }\n  function url(value, label) {\n    const clean = text(value, label, 2000);\n    // n8n's Code sandbox does not guarantee the WHATWG URL global. Validate\n    // an absolute HTTPS authority without importing any builtin modules.\n    const match = /^https:\\/\\/([^/?#]+)(?:[/?#].*)?$/i.exec(clean);\n    if (!match || /[\\s\\\\\\u0000-\\u001f\\u007f]/.test(clean)) throw new Error(`${label} must be an absolute HTTPS URL`);\n    const authority = match[1];\n    if (authority.includes('@')) throw new Error(`${label} must be an absolute HTTPS URL without credentials`);\n    let host, port;\n    if (authority.startsWith('[')) {\n      const bracket = /^\\[([^\\]]+)\\](?::(\\d+))?$/.exec(authority);\n      if (!bracket) throw new Error(`${label} has an invalid HTTPS host`);\n      host = bracket[1]; port = bracket[2];\n      const pieces = host.split('::');\n      if (pieces.length > 2) throw new Error(`${label} has an invalid IPv6 host`);\n      const groups = pieces.flatMap((part) => part ? part.split(':') : []);\n      if (groups.length && groups.at(-1).includes('.')) {\n        const ipv4 = groups.pop().split('.');\n        if (ipv4.length !== 4 || ipv4.some((part) => !/^\\d{1,3}$/.test(part) || Number(part) > 255)) throw new Error(`${label} has an invalid IPv6 host`);\n        groups.push('0', '0');\n      }\n      if (groups.some((group) => !/^[a-f\\d]{1,4}$/i.test(group)) || (pieces.length === 1 ? groups.length !== 8 : groups.length >= 8)) throw new Error(`${label} has an invalid IPv6 host`);\n    } else {\n      const normal = /^([^:]+)(?::(\\d+))?$/.exec(authority);\n      if (!normal) throw new Error(`${label} has an invalid HTTPS host`);\n      try { host = decodeURIComponent(normal[1]); } catch { throw new Error(`${label} has an invalid HTTPS host`); }\n      port = normal[2];\n      if (!host || /[\\s\\/@\\[\\]?#:\\\\]/.test(host) || !/^[\\p{L}\\p{N}_.-]+$/u.test(host) || host.replace(/\\.$/, '').split('.').some((part) => !part || part.startsWith('-') || part.endsWith('-'))) throw new Error(`${label} has an invalid HTTPS host`);\n      if (/^[\\d.]+$/.test(host)) {\n        const ipv4 = host.split('.');\n        if (ipv4.length !== 4 || ipv4.some((part) => !/^\\d{1,3}$/.test(part) || Number(part) > 255)) throw new Error(`${label} has an invalid IPv4 host`);\n      }\n    }\n    if (port !== undefined && (port.length > 5 || Number(port) > 65535)) throw new Error(`${label} has an invalid HTTPS port`);\n    return clean;\n  }\n  function strings(value, label, min = 1, max = 100) { return array(value, label, min, max).map((item, i) => text(item, `${label}[${i}]`)); }\n  function card(label, value, detail = '') { return { label: String(label), value: String(value), detail: String(detail) }; }\n  function out(title, subtitle, cards, footer, sourceKey, meta) {\n    return { title, subtitle, cards: cards.slice(0, 5), footer, sourceKey, meta };\n  }\n  return { DAY, text, number, array, object, choice, date, instant, dateText, timeText, currency, cents, amount, sum, percent, url, strings, card, out };\n})();\nu.object(src, 'input');\nreturn ((src) => {\n      const service = u.text(src.service, 'service'), start = u.instant(src.startsAt, 'startsAt'), end = u.instant(src.endsAt, 'endsAt'), reference = u.instant(src.referenceDate, 'referenceDate');\n      const features = u.strings(src.affectedFeatures, 'affectedFeatures');\n      if (end <= start) throw new Error('endsAt must be after startsAt');\n      if (reference >= end) return { skip: true, reason: 'The maintenance window has already ended.' };\n      const durationMinutes = (end - start) / 60000, hoursUntilStart = Math.max(0, (start - reference) / 3600000);\n      return u.out(`${service}: maintenance notice`, reference >= start ? 'Maintenance is in progress' : `Starts in ${u.percent(hoursUntilStart)} hours`, [\n        u.card('WINDOW', `${u.timeText(start)} to ${u.timeText(end)}`, 'All times shown in UTC.'),\n        u.card('DURATION', `${u.percent(durationMinutes)} minutes`, 'Plan around the stated service window.'),\n        u.card('AFFECTED FEATURES', features.slice(0, 4).join(' • '), `${features.length} features listed in the source notice.`),\n      ], 'Check your service status page for updates', `${service}:${src.startsAt}`, { durationMinutes, hoursUntilStart, inProgress: reference >= start });\n    })(src);\n};\nconst sourceBrief = transform(src);\nconst brief = normalizeBrief(sourceBrief);\nif (brief.skip) return [{ json: { ready: false, status: \"nothing_to_render\", reason: brief.reason, meta: brief.meta } }];\nconst payload = buildPayload(brief, cfg, {\"slug\":\"maintenance-notice-video\",\"day\":35});\nreturn [{ json: { ready: true, brief, sourceBrief, payload, sourceKey: brief.sourceKey, meta: brief.meta, seconds: payload.scenes.reduce((total,scene)=>total+scene.duration,0) } }];"
+        }
+      },
+      {
+        "id": "zvid-series-two-35-06",
+        "name": "Work found?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1260,
+          160
+        ],
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "zvid-series-two-35-work",
+                "leftValue": "={{ $json.ready === true }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "zvid-series-two-35-07",
+        "name": "Nothing to render",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1510,
+          340
+        ],
+        "parameters": {
+          "jsCode": "const result=$input.first().json; return [{json:{status:\"nothing_to_render\",reason:result.reason,meta:result.meta,renderSubmitted:false}}];"
+        }
+      },
+      {
+        "id": "zvid-series-two-35-08",
+        "name": "Validate project (free)",
+        "type": "@zvid/n8n-nodes-zvid.zvid",
+        "typeVersion": 1,
+        "position": [
+          1970,
+          160
+        ],
+        "parameters": {
+          "resource": "render",
+          "operation": "validate",
+          "source": "json",
+          "projectJson": "={{ JSON.stringify($json.payload) }}",
+          "additionalFields": {}
+        },
+        "credentials": {
+          "zvidApi": {
+            "id": "e3b494f287402c80c13bf080",
+            "name": "Zvid workflow series"
+          }
+        }
+      },
+      {
+        "id": "zvid-series-two-35-09",
+        "name": "Check validation and credit cap",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2220,
+          160
+        ],
+        "parameters": {
+          "jsCode": "function req(value, label = 'value') {\n  if (value === undefined || value === null || (typeof value === 'string' && !value.trim())) throw new Error(label + ' is required.');\n  return value;\n}\n\nfunction str(value, max = 100) {\n  return String(value === undefined || value === null ? '' : value).replace(/[\\u0000-\\u001f\\u007f]/g, ' ').replace(/\\s+/g, ' ').trim().slice(0, max);\n}\n\nfunction num(value, label = 'number', min = 0, max = 1e12) {\n  req(value, label);\n  if (typeof value === 'boolean' || typeof value === 'object') throw new Error(label + ' must be a finite number.');\n  const n = Number(value);\n  if (!Number.isFinite(n) || n < min || n > max) throw new Error(label + ' must be a finite number from ' + min + ' to ' + max + '.');\n  return n;\n}\n\nfunction list(value, label = 'items') {\n  if (!Array.isArray(value)) throw new Error(label + ' must be an array.');\n  if (value.length > 1000) throw new Error(label + ' is limited to 1,000 input records per run.');\n  return value;\n}\n\nfunction escapeHtml(value) {\n  return String(value).replace(/[&<>\"'{}]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;', '{': '&#123;', '}': '&#125;' }[c]));\n}\n\nfunction normalizeBrief(brief) {\n  if (!brief || typeof brief !== 'object' || Array.isArray(brief)) throw new Error('The transformation must return a video brief or explicit skip result.');\n  if (brief.skip === true) return { skip: true, reason: str(req(brief.reason, 'Skip reason'), 250), meta: brief.meta || {} };\n  const cards = list(brief.cards, 'cards');\n  if (!cards.length || cards.length > 6) throw new Error('The video brief must contain one to six cards.');\n  return {\n    title: str(req(brief.title, 'Video title'), 100),\n    subtitle: str(brief.subtitle, 180),\n    cards: cards.map((card, i) => {\n      if (!card || typeof card !== 'object') throw new Error('Card ' + (i + 1) + ' must be an object.');\n      return { label: str(req(card.label, 'Card label'), 60), value: str(req(card.value, 'Card value'), 80), detail: str(card.detail, 140) };\n    }),\n    footer: str(brief.footer || 'Review the result before sharing.', 160),\n    sourceKey: str(req(brief.sourceKey, 'sourceKey'), 160),\n    meta: brief.meta && typeof brief.meta === 'object' ? brief.meta : {},\n  };\n}\n\nfunction normalizeConfig(cfg = {}) {\n  if (typeof cfg.dryRun !== 'boolean') throw new Error('Config dryRun must be a boolean.');\n  const color = String(cfg.accentColor || '#D8F17C');\n  if (!/^#[0-9a-f]{6}$/i.test(color)) throw new Error('accentColor must use six hexadecimal digits.');\n  return {\n    dryRun: cfg.dryRun,\n    brandName: str(cfg.brandName || 'Zvid', 45),\n    accentColor: color,\n    maxRenderCredits: num(cfg.maxRenderCredits ?? 30, 'maxRenderCredits', 0, 1000),\n    sceneSeconds: num(cfg.sceneSeconds ?? 6, 'sceneSeconds', 2, 8),\n    pollSeconds: num(cfg.pollSeconds ?? 5, 'pollSeconds', 1, 30),\n    maxWaitSeconds: num(cfg.maxWaitSeconds ?? 600, 'maxWaitSeconds', 10, 1200),\n  };\n}\n\nfunction buildPayload(inputBrief, inputCfg = {}, spec = {}) {\n  const brief = normalizeBrief(inputBrief);\n  if (brief.skip) return null;\n  const cfg = normalizeConfig({ dryRun: false, maxRenderCredits: 30, ...inputCfg });\n  const duration = cfg.sceneSeconds;\n  const accent = cfg.accentColor;\n  const ink = '#102026';\n  const cream = '#F5F2E8';\n  const text = (html, x, y, width, track = 2, size = 32) => ({ type: 'TEXT', x, y, width, anchor: 'top-left', track, enterBegin: 0.15, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: duration, style: { fontFamily: 'Arial', color: cream, fontSize: size }, html });\n  const svg = (markup) => ({ type: 'SVG', width: 1280, height: 720, track: 0, enterBegin: 0, exitEnd: duration, svg: '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1280\" height=\"720\" viewBox=\"0 0 1280 720\">' + markup + '</svg>' });\n  const limited = (value, style, lines) => {\n    const size = Number((style.match(/font-size:(\\d+)px/) || [0, 32])[1]);\n    const leading = Number((style.match(/line-height:([\\d.]+)/) || [0, 1.3])[1]);\n    const height = Math.ceil(size * leading * lines) + 2;\n    return '<div style=\"overflow:hidden;max-height:' + height + 'px;overflow-wrap:anywhere;' + style + '\">' + escapeHtml(value) + '</div>';\n  };\n  const smallHeader = (label, dark = false) => text('<div style=\"font-size:20px;font-weight:700;letter-spacing:3px;color:' + (dark ? ink : accent) + ';\">' + escapeHtml(label) + '</div>', 74, 54, 1110, 3);\n  const scenes = [{ id: 'opening', duration, backgroundColor: ink, visuals: [\n    svg('<rect width=\"1280\" height=\"720\" fill=\"' + ink + '\"/><circle cx=\"1170\" cy=\"130\" r=\"280\" fill=\"' + accent + '\" opacity=\".12\"/><path d=\"M900 0V720 M1060 0V720 M1220 0V720\" stroke=\"' + cream + '\" opacity=\".08\"/><rect x=\"74\" y=\"143\" width=\"94\" height=\"7\" rx=\"3\" fill=\"' + accent + '\"/>'),\n    smallHeader(cfg.brandName + ' / ' + String(spec.day || 'BRIEF')),\n    text(limited(brief.title, 'font-size:' + (brief.title.length > 70 ? 54 : 66) + 'px;line-height:1.09;font-weight:800;color:' + cream + ';', 3), 74, 192, 1030, 2),\n    text(limited(brief.subtitle, 'font-size:27px;line-height:1.4;color:#BBD0CE;', 3), 78, 460, 1020, 2),\n    text('<div style=\"font-size:17px;color:#BBD0CE;letter-spacing:2px;\">' + escapeHtml(brief.sourceKey) + '</div>', 78, 645, 1110, 3),\n  ] }];\n  for (let start = 0; start < brief.cards.length; start += 3) {\n    const cards = brief.cards.slice(start, start + 3);\n    const count = cards.length;\n    const gap = 24;\n    const width = Math.floor((1132 - gap * (count - 1)) / count);\n    const visuals = [svg('<rect width=\"1280\" height=\"720\" fill=\"' + cream + '\"/><rect x=\"74\" y=\"139\" width=\"1132\" height=\"2\" fill=\"' + ink + '\" opacity=\".16\"/>'), smallHeader(cfg.brandName + ' / THE DETAILS', true)];\n    cards.forEach((card, i) => {\n      const left = 74 + i * (width + gap);\n      visuals.push({ ...svg('<rect x=\"' + left + '\" y=\"192\" width=\"' + width + '\" height=\"407\" rx=\"22\" fill=\"' + ink + '\"/><circle cx=\"' + (left + width - 35) + '\" cy=\"226\" r=\"8\" fill=\"' + accent + '\"/>'), track: 1 });\n      visuals.push(text(limited(card.label, 'font-size:20px;line-height:1.35;letter-spacing:1px;font-weight:700;color:' + accent + ';', 2), left + 26, 237, width - 52, 2));\n      const valueSize = card.value.length > 42 ? 28 : card.value.length > 22 ? 36 : 48;\n      visuals.push(text(limited(card.value, 'font-size:' + valueSize + 'px;line-height:1.1;font-weight:800;color:' + cream + ';', 3), left + 26, 324, width - 52, 2));\n      visuals.push(text(limited(card.detail, 'font-size:19px;line-height:1.35;color:#C3D3D0;', 4), left + 26, 482, width - 52, 2));\n    });\n    visuals.push(text('<div style=\"font-size:18px;color:' + ink + ';\">' + (start + 1) + '–' + (start + cards.length) + ' / ' + brief.cards.length + '</div>', 74, 650, 1110, 3));\n    scenes.push({ id: 'details-' + (start / 3 + 1), duration, backgroundColor: cream, visuals });\n  }\n  scenes.push({ id: 'closing', duration, backgroundColor: accent, visuals: [\n    svg('<rect width=\"1280\" height=\"720\" fill=\"' + accent + '\"/><circle cx=\"1140\" cy=\"560\" r=\"230\" fill=\"none\" stroke=\"' + ink + '\" stroke-width=\"2\" opacity=\".2\"/><circle cx=\"1140\" cy=\"560\" r=\"180\" fill=\"none\" stroke=\"' + ink + '\" stroke-width=\"2\" opacity=\".2\"/><path d=\"M78 181h100\" stroke=\"' + ink + '\" stroke-width=\"8\"/>'),\n    smallHeader(cfg.brandName + ' / NEXT STEP', true),\n    text(limited(brief.footer, 'font-size:51px;line-height:1.17;font-weight:800;color:' + ink + ';', 4), 74, 248, 1000, 2),\n    text('<div style=\"font-size:19px;color:' + ink + ';\">' + escapeHtml(brief.sourceKey) + '</div>', 78, 645, 1080, 3),\n  ] });\n  return { name: String(spec.slug || 'zvid-business-brief').replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, 100), resolution: 'hd', frameRate: 30, backgroundColor: ink, outputFormat: 'mp4', scenes, audios: [] };\n}\n\nfunction checkValidationResult(result, build, cfg) {\n  if (!result || result.valid !== true) {\n    const errors = Array.isArray(result && result.errors) ? result.errors.map(e => (e.field || 'project') + ': ' + e.message).join('; ') : 'Project did not validate.';\n    throw new Error('Zvid validation failed: ' + errors.slice(0, 1000));\n  }\n  const credits = num(result.creditsRequired, 'Validation creditsRequired', 0, 1000);\n  if (credits > cfg.maxRenderCredits) throw new Error('Render requires ' + credits + ' credits; maxRenderCredits is ' + cfg.maxRenderCredits + '. Increase the configured cap deliberately.');\n  return { ...build, quotedCredits: credits, warnings: result.warnings || [], payload: result.payload || build.payload };\n}\nconst result=checkValidationResult($input.first().json,$(\"Normalize and build video\").first().json,normalizeConfig($(\"Config\").first().json));return [{json:result}];"
+        }
+      },
+      {
+        "id": "zvid-series-two-35-10",
+        "name": "Dry run?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2470,
+          160
+        ],
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "zvid-series-two-35-dry",
+                "leftValue": "={{ $(\"Config\").first().json.dryRun === true }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "zvid-series-two-35-11",
+        "name": "Save draft to editor",
+        "type": "@zvid/n8n-nodes-zvid.zvid",
+        "typeVersion": 1,
+        "position": [
+          2940,
+          25
+        ],
+        "parameters": {
+          "resource": "project",
+          "operation": "create",
+          "projectName": "={{ $(\"Normalize and build video\").first().json.brief.title }}",
+          "projectJson": "={{ JSON.stringify($json.payload) }}"
+        },
+        "onError": "continueRegularOutput",
+        "alwaysOutputData": true,
+        "credentials": {
+          "zvidApi": {
+            "id": "e3b494f287402c80c13bf080",
+            "name": "Zvid workflow series"
+          }
+        }
+      },
+      {
+        "id": "zvid-series-two-35-12",
+        "name": "Draft and credit quote",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3200,
+          25
+        ],
+        "parameters": {
+          "jsCode": "const saved=$input.first().json;const built=$(\"Check validation and credit cap\").first().json;const project=saved.project||saved;const id=project.id||project.projectId;const editorLink=typeof id===\"string\"&&/^prj_[a-zA-Z0-9_-]+$/.test(id)?\"https://editor.zvid.io/?project=\"+encodeURIComponent(id):null;const editorDraftSaved=Boolean(editorLink);return [{json:{status:editorDraftSaved?\"draft\":\"draft_unavailable\",dryRun:true,renderSubmitted:false,editorDraftSaved,sourceKey:built.sourceKey,quotedCredits:built.quotedCredits,seconds:built.seconds,brief:built.brief,sourceBrief:built.sourceBrief,editorLink,editorDraftError:saved.error?String(saved.error.message||saved.error).slice(0,500):null,meta:built.meta}}];"
+        }
+      },
+      {
+        "id": "zvid-series-two-35-13",
+        "name": "Submit render once",
+        "type": "@zvid/n8n-nodes-zvid.zvid",
+        "typeVersion": 1,
+        "position": [
+          2940,
+          510
+        ],
+        "parameters": {
+          "resource": "render",
+          "operation": "create",
+          "renderType": "video",
+          "source": "json",
+          "projectJson": "={{ JSON.stringify($json.payload) }}",
+          "waitForCompletion": false,
+          "additionalFields": {}
+        },
+        "credentials": {
+          "zvidApi": {
+            "id": "e3b494f287402c80c13bf080",
+            "name": "Zvid workflow series"
+          }
+        }
+      },
+      {
+        "id": "zvid-series-two-35-14",
+        "name": "Wait for completed render",
+        "type": "@zvid/n8n-nodes-zvid.zvid",
+        "typeVersion": 1,
+        "position": [
+          3200,
+          510
+        ],
+        "parameters": {
+          "resource": "render",
+          "operation": "get",
+          "jobId": "={{ $json.jobId || $json.id }}",
+          "waitForCompletion": true,
+          "waitOptions": {
+            "pollInterval": "={{ $(\"Config\").first().json.pollSeconds }}",
+            "maxWaitTime": "={{ $(\"Config\").first().json.maxWaitSeconds }}"
+          }
+        },
+        "credentials": {
+          "zvidApi": {
+            "id": "e3b494f287402c80c13bf080",
+            "name": "Zvid workflow series"
+          }
+        }
+      },
+      {
+        "id": "zvid-series-two-35-15",
+        "name": "Video result",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3460,
+          510
+        ],
+        "parameters": {
+          "jsCode": "const job=$input.first().json;const built=$(\"Check validation and credit cap\").first().json;const result=job.result||job.output||job.returnvalue||{};const raw=job.outputUrl||job.videoUrl||(typeof result===\"string\"?result:result.url||result.outputUrl||result.videoUrl);const status=String(job.state||job.status||\"\");if(status!==\"completed\")throw new Error(\"Render ended with state \"+status);if(typeof raw!==\"string\"||!/^https:\\/\\//i.test(raw))throw new Error(\"Completed render job \"+String(job.jobId||job.id||\"unknown\")+\" has no HTTPS video URL. Its video upload is missing or unavailable. Inspect the job in your Zvid dashboard before running again. Another run spends credits. This workflow does not resubmit automatically.\");return [{json:{status,dryRun:false,jobId:job.jobId||job.id,videoUrl:raw,sourceKey:built.sourceKey,quotedCredits:built.quotedCredits,seconds:built.seconds,title:built.brief.title,brief:built.brief,sourceBrief:built.sourceBrief,meta:built.meta,renderSubmitted:true}}];"
+        }
+      },
+      {
+        "id": "zvid-series-two-35-16",
+        "name": "Completed video available?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          3980,
+          510
+        ],
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "zvid-series-two-35-watch",
+                "leftValue": "={{ $json.status === \"completed\" && $json.dryRun === false && typeof $json.videoUrl === \"string\" && $json.videoUrl.startsWith(\"https://\") }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "zvid-series-two-35-17",
+        "name": "Watch video",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 2,
+        "position": [
+          4240,
+          510
+        ],
+        "parameters": {
+          "url": "={{ $json.videoUrl }}",
+          "responseFormat": "file",
+          "dataPropertyName": "data",
+          "options": {
+            "timeout": 30000
+          }
+        },
+        "retryOnFail": true,
+        "maxTries": 3,
+        "waitBetweenTries": 5000,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "id": "zvid-series-two-35-18",
+        "name": "Overview — day 35",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -740,
+          -160
+        ],
+        "parameters": {
+          "color": 1,
+          "width": 660,
+          "height": 1140,
+          "content": "## A maintenance window to a customer notice video\n\n### How it works\nCalculate the maintenance duration and time until it starts, using an explicit UTC reference timestamp. Run the included sample manually or POST the required JSON to the webhook. The workflow applies deterministic business rules and creates a branded 1280×720 MP4 with vector graphics and text. The output contains the source key, calculated metadata, credit quote and completed video URL. Delivery and social publishing can be added after reviewing the result.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential at https://app.zvid.io/api-keys with Base URL `https://api.zvid.io`. Select it on all four Zvid nodes.\n3. Required input: **service, startsAt, endsAt, affectedFeatures, referenceDate**. Edit **Sample input** or send the same shape to **Receive event**.\n4. Edit **Config**. The default **`dryRun: false` renders and spends credits** after checking `maxRenderCredits`. Set `dryRun: true` for an editor draft and quote.\n5. Review **Watch video → Binary → data → View**. The webhook returns an immediate 202 acknowledgement; open its execution for the result.\n\n### Customization\nChange brandName, accentColor, sceneSeconds and the bounded polling controls in Config. Exact input rules are in the included `maintenance-notice-video.md` companion; [Zvid documentation](https://docs.zvid.io) covers API setup. Support: https://zvid.io/contact"
+        }
+      },
+      {
+        "id": "zvid-series-two-35-section-1",
+        "name": "1. Choose input",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 850,
+          "height": 540,
+          "content": "## 1. Choose input\nRun the included sample manually, or POST JSON to Receive event. The webhook acknowledges immediately; its execution contains the eventual result. Edit Config before rendering."
+        }
+      },
+      {
+        "id": "zvid-series-two-35-section-2",
+        "name": "2. Apply the business rules",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          940,
+          0
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 850,
+          "height": 540,
+          "content": "## 2. Apply the business rules\nNormalize required fields and calculate the actual brief. Empty eligible input produces a visible zero-work result and skips validation and rendering."
+        }
+      },
+      {
+        "id": "zvid-series-two-35-section-3",
+        "name": "3. Validate and control credits",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1900,
+          0
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 850,
+          "height": 400,
+          "content": "## 3. Validate and control credits\nZvid checks the project free of render charges. Reject invalid input, unavailable quotes and quotes above maxRenderCredits before choosing draft or paid rendering."
+        }
+      },
+      {
+        "id": "zvid-series-two-35-section-4",
+        "name": "4. Optional editor draft",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          2870,
+          -160
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 620,
+          "height": 360,
+          "content": "## 4. Optional editor draft\nOnly dryRun=true enters this branch. Open editorLink and inspect the quoted credits. A draft-save error remains visible in editorDraftError."
+        }
+      },
+      {
+        "id": "zvid-series-two-35-section-5",
+        "name": "5. Render once and retain the URL",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          2870,
+          330
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 920,
+          "height": 380,
+          "content": "## 5. Render once and retain the URL\nPaid submission has no automatic retries. Poll the accepted job within the configured wait budget; Video result keeps its completed URL and source metadata."
+        }
+      },
+      {
+        "id": "zvid-series-two-35-section-6",
+        "name": "6. Watch the completed MP4",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          3910,
+          330
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 620,
+          "height": 380,
+          "content": "## 6. Watch the completed MP4\nCompleted media only: Watch video → Binary → data → View. Downloads have a 30-second timeout and at most three attempts. The result URL survives a failed preview."
+        }
+      }
+    ],
+    "connections": {
+      "Test manually": {
+        "main": [
+          [
+            {
+              "node": "Sample input",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Sample input": {
+        "main": [
+          [
+            {
+              "node": "Config",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Receive event": {
+        "main": [
+          [
+            {
+              "node": "Config",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Config": {
+        "main": [
+          [
+            {
+              "node": "Normalize and build video",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Normalize and build video": {
+        "main": [
+          [
+            {
+              "node": "Work found?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Work found?": {
+        "main": [
+          [
+            {
+              "node": "Validate project (free)",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Nothing to render",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Validate project (free)": {
+        "main": [
+          [
+            {
+              "node": "Check validation and credit cap",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check validation and credit cap": {
+        "main": [
+          [
+            {
+              "node": "Dry run?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Dry run?": {
+        "main": [
+          [
+            {
+              "node": "Save draft to editor",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Submit render once",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Save draft to editor": {
+        "main": [
+          [
+            {
+              "node": "Draft and credit quote",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Submit render once": {
+        "main": [
+          [
+            {
+              "node": "Wait for completed render",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait for completed render": {
+        "main": [
+          [
+            {
+              "node": "Video result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Video result": {
+        "main": [
+          [
+            {
+              "node": "Completed video available?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Completed video available?": {
+        "main": [
+          [
+            {
+              "node": "Watch video",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "executionTimeout": 1500
+    },
+    "staticData": null,
+    "meta": {
+      "templateCredsSetupCompleted": false,
+      "seriesTwo": {
+        "day": 35,
+        "slug": "maintenance-notice-video",
+        "groups": [
+          {
+            "note": "1. Choose input",
+            "nodes": [
+              "Test manually",
+              "Sample input",
+              "Receive event",
+              "Config"
+            ]
+          },
+          {
+            "note": "2. Apply the business rules",
+            "nodes": [
+              "Normalize and build video",
+              "Work found?",
+              "Nothing to render"
+            ]
+          },
+          {
+            "note": "3. Validate and control credits",
+            "nodes": [
+              "Validate project (free)",
+              "Check validation and credit cap",
+              "Dry run?"
+            ]
+          },
+          {
+            "note": "4. Optional editor draft",
+            "nodes": [
+              "Save draft to editor",
+              "Draft and credit quote"
+            ]
+          },
+          {
+            "note": "5. Render once and retain the URL",
+            "nodes": [
+              "Submit render once",
+              "Wait for completed render",
+              "Video result"
+            ]
+          },
+          {
+            "note": "6. Watch the completed MP4",
+            "nodes": [
+              "Completed video available?",
+              "Watch video"
+            ]
+          }
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "pinData": {},
+    "versionId": "1af3c008-635b-4fb8-a69a-dca197ae64e4",
+    "activeVersionId": null,
+    "versionCounter": 5,
+    "triggerCount": 0,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-10-01T08:58:24.498Z",
+        "createdAt": "2026-10-01T08:58:24.498Z",
+        "role": "workflow:owner",
+        "workflowId": "ZvidSeries2Day35",
+        "projectId": "J8m2f1Xa3iMnqYEx",
+        "project": {
+          "updatedAt": "2026-07-13T02:59:00.078Z",
+          "createdAt": "2026-07-13T02:56:59.773Z",
+          "id": "J8m2f1Xa3iMnqYEx",
+          "name": "Mina Ramzy <menanasser234@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "51429d9e-4259-449f-b29a-79f8b902546a"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  }
+]

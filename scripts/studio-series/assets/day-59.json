@@ -1,0 +1,171 @@
+{
+  "name": "S2 D59 Predict and Explain Earth Seasons",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "variables": {
+    "question": "WHAT CAUSES THE SEASONS?",
+    "guessOne": "DISTANCE FROM THE SUN?",
+    "guessTwo": "THE TILT OF EARTH'S AXIS?",
+    "reveal": "THE TILT IS THE KEY.",
+    "tilt": "Earth’s axis is tilted about 23.5 degrees.",
+    "summer": "TILTED TOWARD THE SUN",
+    "summerExplanation": "More direct sunlight.\nLonger days.",
+    "winter": "TILTED AWAY FROM THE SUN",
+    "winterExplanation": "Less direct sunlight.\nShorter days.",
+    "conclusion": "Opposite hemispheres.\nOpposite seasons.",
+    "credit": "Scientific source: NASA Space Place, What Causes the Seasons?\nOriginal schematic illustrations, not to scale.",
+    "narrationUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790930053/zvid-series2-design-review-20261001/d59-narration-timed-r2.mp3"
+  },
+  "scenes": [
+    {
+      "id": "predict",
+      "duration": 7,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#e9e6d7\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;\"><div class=\"tag\">PREDICT / EXPLAIN / SCIENCE</div></div><div style=\"position:absolute;left:55px;top:105px;width:1170px;height:90px;\"><div class=\"headline\">{{question}}</div></div><div style=\"position:absolute;left:75px;top:225px;width:1060px;height:370px;\"><svg width=\"1060\" height=\"370\" viewBox=\"0 0 1060 370\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"150\" cy=\"185\" r=\"80\" fill=\"#df8449\"/><circle cx=\"150\" cy=\"185\" r=\"110\" fill=\"none\" stroke=\"#df8449\" stroke-width=\"3\"/><path class=\"draw\" d=\"M285 100 H770 M285 185 H770 M285 270 H770\" stroke=\"#df8449\" stroke-width=\"8\" fill=\"none\"/><circle cx=\"855\" cy=\"185\" r=\"125\" fill=\"#5c92a4\"/><path d=\"M767.5 135 Q817.5 110 848.75 160 L880 185 L855 260 L817.5 222.5Z\" fill=\"#77a780\"/><path d=\"M892.5 110 Q942.5 122.5 948.75 166.25 L905 197.5 L867.5 172.5Z\" fill=\"#77a780\"/><path d=\"M795.188 47.441 L914.812 322.559\" stroke=\"#263b4c\" stroke-width=\"5\" stroke-dasharray=\"8 7\"/><path d=\"M751.831 229.859 L958.169 140.141\" stroke=\"#e9e6d7\" stroke-width=\"3\"/></svg></div><div style=\"position:absolute;left:55px;top:570px;width:540px;height:85px;\"><div class=\"body\">{{guessOne}}</div></div><div style=\"position:absolute;left:660px;top:570px;width:555px;height:85px;\"><div class=\"body\">{{guessTwo}}</div></div></div>",
+          "style": {
+            "fontFamily": "DM Sans",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:DM Sans;font-size:65px;font-weight:700;line-height:1.1;color:#263b4c}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#41566a}.tag{font-family:Inter;font-size:22px;letter-spacing:4px;color:#8d4b2a}.ring{animation:ring 4s linear both;transform-origin:center}@keyframes ring{from{transform:rotate(-23.5deg)}to{transform:rotate(0)}}",
+            "animationDuration": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "reveal",
+      "duration": 6.8,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#e9e6d7\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;\"><div class=\"tag\">PREDICT / EXPLAIN / SCIENCE</div></div><div style=\"position:absolute;left:55px;top:115px;width:650px;height:140px;\"><div class=\"headline rise\">{{reveal}}</div></div><div style=\"position:absolute;left:55px;top:335px;width:560px;height:170px;\"><div class=\"body\">{{tilt}}</div></div><div style=\"position:absolute;left:740px;top:170px;width:450px;height:380px;\"><svg width=\"450\" height=\"380\" viewBox=\"0 0 450 380\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"225\" cy=\"190\" r=\"135\" fill=\"#5c92a4\"/><path d=\"M130.5 136 Q184.5 109 218.25 163 L252 190 L225 271 L184.5 230.5Z\" fill=\"#77a780\"/><path d=\"M265.5 109 Q319.5 122.5 326.25 169.75 L279 203.5 L238.5 176.5Z\" fill=\"#77a780\"/><path d=\"M160.403 41.436 L289.597 338.564\" stroke=\"#263b4c\" stroke-width=\"5\" stroke-dasharray=\"8 7\"/><path d=\"M113.577 238.448 L336.423 141.552\" stroke=\"#e9e6d7\" stroke-width=\"3\"/></svg></div><div style=\"position:absolute;left:875px;top:90px;width:250px;height:65px;font-family:DM Sans;font-size:56px;font-weight:700;color:#8d4b2a\">23.5°</div></div>",
+          "style": {
+            "fontFamily": "DM Sans",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:DM Sans;font-size:65px;font-weight:700;line-height:1.1;color:#263b4c}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#41566a}.tag{font-family:Inter;font-size:22px;letter-spacing:4px;color:#8d4b2a}.ring{animation:ring 4s linear both;transform-origin:center}@keyframes ring{from{transform:rotate(-23.5deg)}to{transform:rotate(0)}}",
+            "animationDuration": 6.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "summer",
+      "duration": 6.6,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#e9e6d7\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;\"><div class=\"tag\">PREDICT / EXPLAIN / SCIENCE</div></div><div style=\"position:absolute;left:55px;top:105px;width:1170px;height:100px;\"><div class=\"headline\">{{summer}}</div></div><div style=\"position:absolute;left:75px;top:265px;width:1060px;height:370px;\"><svg width=\"1060\" height=\"370\" viewBox=\"0 0 1060 370\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"150\" cy=\"185\" r=\"80\" fill=\"#df8449\"/><circle cx=\"150\" cy=\"185\" r=\"110\" fill=\"none\" stroke=\"#df8449\" stroke-width=\"3\"/><path class=\"draw\" d=\"M285 100 H770 M285 185 H770 M285 270 H770\" stroke=\"#df8449\" stroke-width=\"8\" fill=\"none\"/><circle cx=\"855\" cy=\"185\" r=\"125\" fill=\"#5c92a4\"/><path d=\"M767.5 135 Q817.5 110 848.75 160 L880 185 L855 260 L817.5 222.5Z\" fill=\"#77a780\"/><path d=\"M892.5 110 Q942.5 122.5 948.75 166.25 L905 197.5 L867.5 172.5Z\" fill=\"#77a780\"/><path d=\"M795.188 47.441 L914.812 322.559\" stroke=\"#263b4c\" stroke-width=\"5\" stroke-dasharray=\"8 7\"/><path d=\"M751.831 229.859 L958.169 140.141\" stroke=\"#e9e6d7\" stroke-width=\"3\"/></svg></div><div style=\"position:absolute;left:300px;top:602px;width:500px;height:90px;white-space:pre-line\"><div class=\"body\">{{summerExplanation}}</div></div><div style=\"position:absolute;left:850px;top:245px;width:160px;height:70px;font-family:DM Sans;font-size:40px;font-weight:700;color:#263b4c\">N</div></div>",
+          "style": {
+            "fontFamily": "DM Sans",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:DM Sans;font-size:65px;font-weight:700;line-height:1.1;color:#263b4c}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#41566a}.tag{font-family:Inter;font-size:22px;letter-spacing:4px;color:#8d4b2a}.ring{animation:ring 4s linear both;transform-origin:center}@keyframes ring{from{transform:rotate(-23.5deg)}to{transform:rotate(0)}}",
+            "animationDuration": 6.6
+          }
+        }
+      ]
+    },
+    {
+      "id": "winter",
+      "duration": 4.6,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#e9e6d7\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;\"><div class=\"tag\">PREDICT / EXPLAIN / SCIENCE</div></div><div style=\"position:absolute;left:55px;top:105px;width:1170px;height:100px;\"><div class=\"headline\">{{winter}}</div></div><div style=\"position:absolute;left:80px;top:210px;width:1120px;height:410px;\"><svg width=\"1120\" height=\"410\" viewBox=\"0 0 1120 410\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse cx=\"560\" cy=\"215\" rx=\"420\" ry=\"110\" fill=\"none\" stroke=\"#aaaca0\" stroke-width=\"3\" stroke-dasharray=\"8 8\"/><circle cx=\"560\" cy=\"215\" r=\"65\" fill=\"#df8449\"/><circle cx=\"170\" cy=\"215\" r=\"95\" fill=\"#5c92a4\"/><path d=\"M103.5 177 Q141.5 158 165.25 196 L189 215 L170 272 L141.5 243.5Z\" fill=\"#77a780\"/><path d=\"M198.5 158 Q236.5 167.5 241.25 200.75 L208 224.5 L179.5 205.5Z\" fill=\"#77a780\"/><path d=\"M124.543 110.455 L215.457 319.545\" stroke=\"#263b4c\" stroke-width=\"5\" stroke-dasharray=\"8 7\"/><path d=\"M91.591 249.093 L248.409 180.907\" stroke=\"#e9e6d7\" stroke-width=\"3\"/><circle cx=\"950\" cy=\"215\" r=\"95\" fill=\"#5c92a4\"/><path d=\"M883.5 177 Q921.5 158 945.25 196 L969 215 L950 272 L921.5 243.5Z\" fill=\"#77a780\"/><path d=\"M978.5 158 Q1016.5 167.5 1021.25 200.75 L988 224.5 L959.5 205.5Z\" fill=\"#77a780\"/><path d=\"M904.543 110.455 L995.457 319.545\" stroke=\"#263b4c\" stroke-width=\"5\" stroke-dasharray=\"8 7\"/><path d=\"M871.591 249.093 L1028.409 180.907\" stroke=\"#e9e6d7\" stroke-width=\"3\"/><path class=\"draw\" d=\"M320 215 H450 M670 215 H800\" stroke=\"#df8449\" stroke-width=\"7\" fill=\"none\"/></svg></div><div style=\"position:absolute;left:55px;top:550px;width:1170px;height:115px;white-space:pre-line\"><div class=\"body\">{{winterExplanation}}</div></div><div style=\"position:absolute;left:55px;top:220px;width:350px;height:60px;font-family:Inter;font-size:24px;font-weight:700;color:#263b4c\">WINTER IN THE NORTH</div><div style=\"position:absolute;left:870px;top:220px;width:355px;height:60px;font-family:Inter;font-size:24px;font-weight:700;color:#263b4c\">SUMMER IN THE NORTH</div></div>",
+          "style": {
+            "fontFamily": "DM Sans",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:DM Sans;font-size:65px;font-weight:700;line-height:1.1;color:#263b4c}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#41566a}.tag{font-family:Inter;font-size:22px;letter-spacing:4px;color:#8d4b2a}.ring{animation:ring 4s linear both;transform-origin:center}@keyframes ring{from{transform:rotate(-23.5deg)}to{transform:rotate(0)}}",
+            "animationDuration": 4.6
+          }
+        }
+      ]
+    },
+    {
+      "id": "conclusion",
+      "duration": 9,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#e9e6d7\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;\"><div class=\"tag\">PREDICT / EXPLAIN / SCIENCE</div></div><div style=\"position:absolute;left:55px;top:115px;width:1170px;height:160px;white-space:pre-line\"><div class=\"headline rise\">{{conclusion}}</div></div><div style=\"position:absolute;left:55px;top:385px;width:1170px;height:130px;font-family:Inter;font-size:35px;line-height:1.4;color:#41566a\">Tilt changes the sunlight each hemisphere receives.</div><div style=\"position:absolute;left:55px;top:580px;width:1170px;height:80px;font-family:Inter;font-size:20px;line-height:1.4;white-space:pre-line;color:#41566a\">{{credit}}</div></div>",
+          "style": {
+            "fontFamily": "DM Sans",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:DM Sans;font-size:65px;font-weight:700;line-height:1.1;color:#263b4c}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#41566a}.tag{font-family:Inter;font-size:22px;letter-spacing:4px;color:#8d4b2a}.ring{animation:ring 4s linear both;transform-origin:center}@keyframes ring{from{transform:rotate(-23.5deg)}to{transform:rotate(0)}}",
+            "animationDuration": 9
+          }
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{narrationUrl}}",
+      "enter": 0,
+      "exit": 34,
+      "audioBegin": 0,
+      "audioEnd": 34,
+      "volume": 1,
+      "speed": 1
+    }
+  ]
+}

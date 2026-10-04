@@ -1,0 +1,95 @@
+{
+  "issue": "An accepted render completed without an uploaded video URL",
+  "day": 35,
+  "acceptedJobId": "7ea52ac6-a58e-4a9c-b2f5-cc58edc2c57d",
+  "manualExecutionId": 694,
+  "recoveryExecutionId": 700,
+  "observed": {
+    "state": "completed",
+    "nativeGetOutput": "Completed metadata and thumbnail were present; video URL was absent.",
+    "nativeGetAllExactMatch": true,
+    "nativeGetAllOutputUrl": null,
+    "paidRecoveryNodesExecuted": 0
+  },
+  "evidenceFile": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/edge-recovery-result.json",
+  "sourceEvidence": [
+    {
+      "file": "D:/Nodejs/Projects/zvid-cline/zvid-cell/services/maybeUpload.js",
+      "line": 122,
+      "endLine": 126,
+      "fact": "The upload helper catches upload errors and returns uploaded:false instead of failing the render worker."
+    },
+    {
+      "file": "D:/Nodejs/Projects/zvid-cline/zvid-cell/index.js",
+      "line": 321,
+      "endLine": 327,
+      "fact": "The completed video URL is set only when the main upload returns a URL, or when uploads are disabled."
+    },
+    {
+      "file": "D:/Nodejs/Projects/zvid-cline/zvid-cell/index.js",
+      "line": 358,
+      "endLine": 366,
+      "fact": "The worker response still marks ok:true even if the video URL was never set."
+    },
+    {
+      "file": "D:/Nodejs/Projects/zvid-cline/zvid-cell/index.js",
+      "line": 376,
+      "endLine": 382,
+      "fact": "For upload-enabled jobs, the output directory is removed after the upload attempt."
+    },
+    {
+      "file": "D:/Nodejs/Projects/zvid-cline/orch/services/jobLifecycle.js",
+      "line": 181,
+      "endLine": 193,
+      "fact": "Completion persists status completed and stores a null output_url when the worker URL is missing."
+    }
+  ],
+  "inference": "An unavailable or failed main-video upload is consistent with the observed completed status, present thumbnail, and absent video URL. This inference does not identify the exact live storage error.",
+  "workflowResponse": "Keep the completed-HTTPS guard; report the accepted job ID and direct the user to inspect the job before another paid submission.",
+  "changesNotMade": [
+    "No worker or orchestrator changes",
+    "No inferred CDN URL",
+    "No automatic resubmission",
+    "No paid recovery render"
+  ],
+  "incidents": [
+    {
+      "day": 35,
+      "executionId": 694,
+      "status": "error",
+      "mode": "manual",
+      "startedAt": "2026-10-01 09:16:02.984",
+      "stoppedAt": "2026-10-01 09:16:20.468",
+      "lastNode": "Video result",
+      "acceptedJobId": "7ea52ac6-a58e-4a9c-b2f5-cc58edc2c57d",
+      "completedState": "completed",
+      "outputUrl": null,
+      "thumbnailUrl": "https://cdn.zvid.io/images/1/maintenance-notice-video_thumbnail-1790846174520.jpg",
+      "fileName": "maintenance-notice-video.mp4",
+      "duration": 18,
+      "errorMessage": "Completed render has no HTTPS media URL. [line 1]",
+      "paidSubmitSucceeded": true,
+      "noAutomaticSubmissionRetry": true
+    },
+    {
+      "day": 49,
+      "executionId": 714,
+      "status": "error",
+      "mode": "manual",
+      "startedAt": "2026-10-01 09:40:20.412",
+      "stoppedAt": "2026-10-01 09:40:40.097",
+      "lastNode": "Video result",
+      "acceptedJobId": "41a98ad4-3232-4d5c-8204-3783da67a7a3",
+      "completedState": "completed",
+      "outputUrl": null,
+      "thumbnailUrl": "https://cdn.zvid.io/images/1/delivery-route-brief-video_thumbnail-1790847634534.jpg",
+      "fileName": "delivery-route-brief-video.mp4",
+      "duration": 24,
+      "errorMessage": "//app.zvid.io before running again; another run spends credits. This workflow does not resubmit automatically. [line 1]",
+      "paidSubmitSucceeded": true,
+      "noAutomaticSubmissionRetry": true
+    }
+  ],
+  "observedPattern": "Two independently accepted jobs completed without a downloadable video URL; both completed responses include a thumbnail and each has one paid submission.",
+  "errorMessageCompatibility": "n8n task-runner error formatting truncated the previous message at the colon in an embedded HTTPS URL. The workflow error now contains no URL or colon and refers to the Zvid dashboard; the companion guide keeps the canonical app link."
+}

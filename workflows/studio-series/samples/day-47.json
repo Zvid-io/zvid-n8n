@@ -1,0 +1,95 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-47-demo",
+    "revision": "1",
+    "brand": "SUNROOM LUNCH",
+    "heroImage": "https://images.pexels.com/photos/16266737/pexels-photo-16266737.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "currency": "USD",
+    "minPortions": 5,
+    "maxAgeMinutes": 60,
+    "cta": "Choose your branch. Order lunch.",
+    "destination": "https://sunroom.example/lunch"
+  },
+  "records": [
+    {
+      "kind": "combo",
+      "record_id": "C1",
+      "branch_id": "downtown",
+      "branchName": "Downtown branch",
+      "name": "Toasted sandwich + salad",
+      "image": "https://images.pexels.com/photos/5292918/pexels-photo-5292918.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "priceCents": 1250,
+      "currency": "USD",
+      "serviceStart": "2026-10-03T09:30:00Z",
+      "serviceEnd": "2026-10-03T13:00:00Z",
+      "ingredients": [
+        {
+          "ingredient_id": "bread",
+          "unitsPerPortion": 2
+        },
+        {
+          "ingredient_id": "salad",
+          "unitsPerPortion": 1
+        }
+      ],
+      "approved": true
+    },
+    {
+      "kind": "combo",
+      "record_id": "C2",
+      "branch_id": "quayside",
+      "branchName": "Quayside branch",
+      "name": "Salad bowl + sandwich",
+      "image": "https://images.pexels.com/photos/16266737/pexels-photo-16266737.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "priceCents": 1350,
+      "currency": "USD",
+      "serviceStart": "2026-10-03T09:30:00Z",
+      "serviceEnd": "2026-10-03T13:00:00Z",
+      "ingredients": [
+        {
+          "ingredient_id": "bread",
+          "unitsPerPortion": 2
+        },
+        {
+          "ingredient_id": "salad",
+          "unitsPerPortion": 1
+        }
+      ],
+      "approved": true
+    },
+    {
+      "kind": "ingredient",
+      "record_id": "downtown-bread",
+      "branch_id": "downtown",
+      "ingredient_id": "bread",
+      "availableUnits": 50,
+      "updatedAt": "2026-10-03T10:00:00Z"
+    },
+    {
+      "kind": "ingredient",
+      "record_id": "downtown-salad",
+      "branch_id": "downtown",
+      "ingredient_id": "salad",
+      "availableUnits": 30,
+      "updatedAt": "2026-10-03T10:00:00Z"
+    },
+    {
+      "kind": "ingredient",
+      "record_id": "quayside-bread",
+      "branch_id": "quayside",
+      "ingredient_id": "bread",
+      "availableUnits": 50,
+      "updatedAt": "2026-10-03T10:00:00Z"
+    },
+    {
+      "kind": "ingredient",
+      "record_id": "quayside-salad",
+      "branch_id": "quayside",
+      "ingredient_id": "salad",
+      "availableUnits": 30,
+      "updatedAt": "2026-10-03T10:00:00Z"
+    }
+  ]
+}

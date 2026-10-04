@@ -1,0 +1,443 @@
+[
+  {
+    "day": 31,
+    "slug": "release-notes-video",
+    "title": "Release notes to a feature announcement video",
+    "filename": "zvid-release-notes-video.json",
+    "workflowId": "ZvidSeries2Day31",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day31",
+    "fields": [
+      "product",
+      "version",
+      "changes"
+    ],
+    "description": "Turn structured product release notes into a video grouped by added, improved and fixed changes."
+  },
+  {
+    "day": 32,
+    "slug": "procedure-tutorial-video",
+    "title": "A procedure to a step-by-step tutorial video",
+    "filename": "zvid-procedure-tutorial-video.json",
+    "workflowId": "ZvidSeries2Day32",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day32",
+    "fields": [
+      "title",
+      "steps",
+      "outcome"
+    ],
+    "description": "Number validated instructions and show the expected outcome of a practical procedure."
+  },
+  {
+    "day": 33,
+    "slug": "plan-comparison-video",
+    "title": "Pricing plans to a feature comparison video",
+    "filename": "zvid-plan-comparison-video.json",
+    "workflowId": "ZvidSeries2Day33",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day33",
+    "fields": [
+      "product",
+      "plans"
+    ],
+    "description": "Compare supplied plan prices and separate shared features from features unique to each plan."
+  },
+  {
+    "day": 34,
+    "slug": "incident-timeline-video",
+    "title": "A service incident to a status timeline video",
+    "filename": "zvid-incident-timeline-video.json",
+    "workflowId": "ZvidSeries2Day34",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day34",
+    "fields": [
+      "service",
+      "startedAt",
+      "resolvedAt",
+      "events"
+    ],
+    "description": "Sort supplied incident events and calculate the actual UTC resolution duration."
+  },
+  {
+    "day": 35,
+    "slug": "maintenance-notice-video",
+    "title": "A maintenance window to a customer notice video",
+    "filename": "zvid-maintenance-notice-video.json",
+    "workflowId": "ZvidSeries2Day35",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day35",
+    "fields": [
+      "service",
+      "startsAt",
+      "endsAt",
+      "affectedFeatures",
+      "referenceDate"
+    ],
+    "description": "Calculate the maintenance duration and time until it starts, using an explicit UTC reference timestamp."
+  },
+  {
+    "day": 36,
+    "slug": "order-progress-video",
+    "title": "An order status to a fulfillment progress video",
+    "filename": "zvid-order-progress-video.json",
+    "workflowId": "ZvidSeries2Day36",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day36",
+    "fields": [
+      "orderNumber",
+      "status",
+      "estimatedDelivery",
+      "items"
+    ],
+    "description": "Map a validated order status to completed, current and next fulfillment stages."
+  },
+  {
+    "day": 37,
+    "slug": "product-bundle-savings-video",
+    "title": "Product components to a bundle savings explainer video",
+    "filename": "zvid-product-bundle-savings-video.json",
+    "workflowId": "ZvidSeries2Day37",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day37",
+    "fields": [
+      "product",
+      "components",
+      "bundlePrice",
+      "currency"
+    ],
+    "description": "Calculate the regular component total, bundle price and accurate savings using integer cents."
+  },
+  {
+    "day": 38,
+    "slug": "delivery-delay-video",
+    "title": "A delivery delay to a revised ETA video",
+    "filename": "zvid-delivery-delay-video.json",
+    "workflowId": "ZvidSeries2Day38",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day38",
+    "fields": [
+      "orderNumber",
+      "originalDeliveryDate",
+      "revisedDeliveryDate",
+      "reason",
+      "nextStep"
+    ],
+    "description": "Calculate a real delay from original and revised UTC dates and explain the supplied next step."
+  },
+  {
+    "day": 39,
+    "slug": "appointment-preparation-video",
+    "title": "An appointment to a preparation checklist video",
+    "filename": "zvid-appointment-preparation-video.json",
+    "workflowId": "ZvidSeries2Day39",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day39",
+    "fields": [
+      "appointmentType",
+      "appointmentAt",
+      "location",
+      "preparation"
+    ],
+    "description": "Turn appointment details and preparation requirements into a numbered reminder video."
+  },
+  {
+    "day": 40,
+    "slug": "return-instructions-video",
+    "title": "A return authorization to a packing and drop-off video",
+    "filename": "zvid-return-instructions-video.json",
+    "workflowId": "ZvidSeries2Day40",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day40",
+    "fields": [
+      "returnNumber",
+      "deadline",
+      "referenceDate",
+      "items",
+      "steps"
+    ],
+    "description": "Check the return deadline and combine authorized items with ordered return instructions."
+  },
+  {
+    "day": 41,
+    "slug": "employee-first-week-video",
+    "title": "An employee start date to a first-week agenda video",
+    "filename": "zvid-employee-first-week-video.json",
+    "workflowId": "ZvidSeries2Day41",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day41",
+    "fields": [
+      "employeeName",
+      "role",
+      "startDate",
+      "sessions"
+    ],
+    "description": "Group onboarding sessions by day and derive the five actual workday dates from the supplied start date."
+  },
+  {
+    "day": 42,
+    "slug": "interview-agenda-video",
+    "title": "An interview schedule to a candidate agenda video",
+    "filename": "zvid-interview-agenda-video.json",
+    "workflowId": "ZvidSeries2Day42",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day42",
+    "fields": [
+      "candidateName",
+      "role",
+      "sessions"
+    ],
+    "description": "Validate nonoverlapping interview sessions and calculate session time versus the full agenda span."
+  },
+  {
+    "day": 43,
+    "slug": "course-roadmap-video",
+    "title": "A course syllabus to a learning roadmap video",
+    "filename": "zvid-course-roadmap-video.json",
+    "workflowId": "ZvidSeries2Day43",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day43",
+    "fields": [
+      "course",
+      "modules"
+    ],
+    "description": "Calculate course duration and present the supplied learning outcomes in module order."
+  },
+  {
+    "day": 44,
+    "slug": "safety-briefing-video",
+    "title": "Workplace hazards to a safety briefing video",
+    "filename": "zvid-safety-briefing-video.json",
+    "workflowId": "ZvidSeries2Day44",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day44",
+    "fields": [
+      "site",
+      "hazards",
+      "emergencyInstruction"
+    ],
+    "description": "Prioritize supplied workplace hazards by severity and pair each with its approved control."
+  },
+  {
+    "day": 45,
+    "slug": "training-completion-video",
+    "title": "A training result to a completion video",
+    "filename": "zvid-training-completion-video.json",
+    "workflowId": "ZvidSeries2Day45",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day45",
+    "fields": [
+      "recipient",
+      "course",
+      "completedAt",
+      "score",
+      "passingScore",
+      "certificateId"
+    ],
+    "description": "Compare a supplied assessment score with its passing threshold and show a certificate only for a passing result."
+  },
+  {
+    "day": 46,
+    "slug": "meeting-action-brief-video",
+    "title": "Meeting actions to an owner and deadline brief video",
+    "filename": "zvid-meeting-action-brief-video.json",
+    "workflowId": "ZvidSeries2Day46",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day46",
+    "fields": [
+      "meeting",
+      "referenceDate",
+      "actions"
+    ],
+    "description": "Sort meeting actions by due date, calculate overdue counts and group tasks by owner."
+  },
+  {
+    "day": 47,
+    "slug": "equipment-maintenance-video",
+    "title": "Equipment records to a maintenance-due video",
+    "filename": "zvid-equipment-maintenance-video.json",
+    "workflowId": "ZvidSeries2Day47",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day47",
+    "fields": [
+      "referenceDate",
+      "equipment"
+    ],
+    "description": "Calculate next-service dates and create a briefing only for equipment whose service is due."
+  },
+  {
+    "day": 48,
+    "slug": "inventory-replenishment-video",
+    "title": "Stock levels to a replenishment brief video",
+    "filename": "zvid-inventory-replenishment-video.json",
+    "workflowId": "ZvidSeries2Day48",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day48",
+    "fields": [
+      "warehouse",
+      "items"
+    ],
+    "description": "Select inventory at or below its reorder threshold and calculate quantities needed to reach target stock."
+  },
+  {
+    "day": 49,
+    "slug": "delivery-route-brief-video",
+    "title": "A dispatch plan to a delivery-route briefing video",
+    "filename": "zvid-delivery-route-brief-video.json",
+    "workflowId": "ZvidSeries2Day49",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day49",
+    "fields": [
+      "route",
+      "departureAt",
+      "stops"
+    ],
+    "description": "Sort numbered stops and derive estimated arrival times from supplied travel and service durations."
+  },
+  {
+    "day": 50,
+    "slug": "tender-checklist-video",
+    "title": "Tender requirements to a bid checklist video",
+    "filename": "zvid-tender-checklist-video.json",
+    "workflowId": "ZvidSeries2Day50",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day50",
+    "fields": [
+      "title",
+      "deadline",
+      "referenceDate",
+      "eligibility",
+      "documents"
+    ],
+    "description": "Check the submission deadline and separate eligibility rules from required bid documents."
+  },
+  {
+    "day": 51,
+    "slug": "travel-itinerary-video",
+    "title": "Travel bookings to a day-by-day itinerary video",
+    "filename": "zvid-travel-itinerary-video.json",
+    "workflowId": "ZvidSeries2Day51",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day51",
+    "fields": [
+      "trip",
+      "days"
+    ],
+    "description": "Sort trip days and activities chronologically without changing the supplied destination-local times."
+  },
+  {
+    "day": 52,
+    "slug": "hotel-arrival-guide-video",
+    "title": "Accommodation details to a public arrival guide video",
+    "filename": "zvid-hotel-arrival-guide-video.json",
+    "workflowId": "ZvidSeries2Day52",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day52",
+    "fields": [
+      "property",
+      "checkInTime",
+      "address",
+      "arrivalSteps",
+      "amenities"
+    ],
+    "description": "Combine public arrival instructions with amenities without embedding access codes or guest credentials."
+  },
+  {
+    "day": 53,
+    "slug": "pet-adoption-video",
+    "title": "A rescue profile to a pet adoption video",
+    "filename": "zvid-pet-adoption-video.json",
+    "workflowId": "ZvidSeries2Day53",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day53",
+    "fields": [
+      "name",
+      "species",
+      "age",
+      "traits",
+      "careNeeds",
+      "adoptionUrl"
+    ],
+    "description": "Create an adoption profile from supplied temperament and care requirements with a validated HTTPS application link."
+  },
+  {
+    "day": 54,
+    "slug": "volunteer-shift-video",
+    "title": "A volunteer roster to a station briefing video",
+    "filename": "zvid-volunteer-shift-video.json",
+    "workflowId": "ZvidSeries2Day54",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day54",
+    "fields": [
+      "event",
+      "startsAt",
+      "endsAt",
+      "assignments"
+    ],
+    "description": "Group volunteer tasks by station and calculate coverage and shift duration."
+  },
+  {
+    "day": 55,
+    "slug": "donation-impact-video",
+    "title": "A donation to an estimated impact thank-you video",
+    "filename": "zvid-donation-impact-video.json",
+    "workflowId": "ZvidSeries2Day55",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day55",
+    "fields": [
+      "donor",
+      "amount",
+      "currency",
+      "campaign",
+      "unitCost",
+      "impactUnit"
+    ],
+    "description": "Calculate whole impact units from the supplied amount and unit cost, clearly labeling the estimate."
+  },
+  {
+    "day": 56,
+    "slug": "survey-results-video",
+    "title": "Survey response counts to a results breakdown video",
+    "filename": "zvid-survey-results-video.json",
+    "workflowId": "ZvidSeries2Day56",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day56",
+    "fields": [
+      "question",
+      "options"
+    ],
+    "description": "Calculate vote percentages, rank answer options and preserve ties without inventing a winner."
+  },
+  {
+    "day": 57,
+    "slug": "fundraiser-progress-video",
+    "title": "Fundraiser contributions to a progress video",
+    "filename": "zvid-fundraiser-progress-video.json",
+    "workflowId": "ZvidSeries2Day57",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day57",
+    "fields": [
+      "campaign",
+      "goal",
+      "currency",
+      "contributions"
+    ],
+    "description": "Sum contributions in integer cents and distinguish remaining goal, goal reached and funds above the goal."
+  },
+  {
+    "day": 58,
+    "slug": "before-after-case-study-video",
+    "title": "Before-and-after measurements to a case study video",
+    "filename": "zvid-before-after-case-study-video.json",
+    "workflowId": "ZvidSeries2Day58",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day58",
+    "fields": [
+      "project",
+      "metrics"
+    ],
+    "description": "Calculate absolute and percentage changes and interpret improvement according to each metric’s direction."
+  },
+  {
+    "day": 59,
+    "slug": "milestone-roadmap-video",
+    "title": "Project milestones to a delivery roadmap video",
+    "filename": "zvid-milestone-roadmap-video.json",
+    "workflowId": "ZvidSeries2Day59",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day59",
+    "fields": [
+      "project",
+      "referenceDate",
+      "milestones"
+    ],
+    "description": "Sort milestones, calculate completion and identify overdue unfinished work and the next planned milestone."
+  },
+  {
+    "day": 60,
+    "slug": "recipe-cooking-guide-video",
+    "title": "Recipe ingredients to a scaled cooking guide video",
+    "filename": "zvid-recipe-cooking-guide-video.json",
+    "workflowId": "ZvidSeries2Day60",
+    "url": "http://localhost:5678/workflow/ZvidSeries2Day60",
+    "fields": [
+      "recipe",
+      "baseServings",
+      "targetServings",
+      "ingredients",
+      "steps"
+    ],
+    "description": "Scale ingredient quantities to a requested serving count and display the supplied cooking steps in order."
+  }
+]

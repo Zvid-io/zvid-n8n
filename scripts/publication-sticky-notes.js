@@ -99,13 +99,15 @@ function seriesLayout(workflow, kind) {
   add('voice','Create narration and timings','Generate voice audio and caption timings. Multipart audio upload uses HTTP Request because the published Zvid node does not expose uploads.','Generate voiceover|Voice + timings|Upload voiceover');
   add('validate','Build and validate the design','Prepare the media and video design, then validate the payload and credit quote. Resolve validation errors before submitting a render.','Check lead logos|Check music|Check music track|Check music bed|Build project JSON|Build personalized recovery video|Validate project (free)|Validate render (free)|Check validation');
   add('preview','Choose an optional editor preview','dryRun=true returns an editor draft and credit quote. The default false branch renders and spends Zvid credits; upstream AI services may charge separately.','Dry run?|Save draft to editor|Dry run summary|Dry-run row report');
+  if (['flash-sale-alert','podcast-audiogram-clips','video-to-shorts','blog-content-kit'].includes(kind)) add('capacity','Submit one asset safely','Render one asset at a time. Retry only explicit HTTP 429 rejections after at least 30 seconds, up to timeoutMinutes. Other submission errors stop for inspection; an accepted job is never automatically resubmitted.','Render one asset at a time|Prepare render attempt|Submit render|Check submission rejection|Wait for render capacity');
   add('render','Render and wait for completion','Submit the render, then check its status until completion or timeout. Keep each result paired with its source item. Check Zvid before retrying a timed-out job.','Submit render|Submit bulk render|Attach job to item|Attach job to clip|Attach job to piece|Attach job to event|Attach job to contact|Check batch accepted|Wait|Wait for render|Get render status|Get batch status|Merge job status|Render finished?|Batch finished?|All finished?|Still rendering?');
   for (const group of copy.groups || []) if (post.has(group[0])) add(...group);
   add('email','Send the optional delivery','Configure the delivery credential and destination before enabling this branch. Confirm the completed video and recipient in a private test.','Send email?|Email the video|Slack configured?|Post to Slack');
   const recording = 'Collect video links|Write links to sheet|Collect finished videos|Write URLs back|Sheet mode?|Mark row done|Mark listing done'.split('|').filter(n=>byName.has(n)&&!assigned.has(byName.get(n).name));
   add('record','Save the completed result','Write the completed URL back to its source row. Review the result before adding any further distribution steps.',recording);
   const watchNames = ['Run summary','Recovery run summary','Published summary','Video ready to watch?','▶ Watch video','▶ View banner',...recording];
-  add('watch','Review the finished media','Open Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.',watchNames);
+  const boundedPreview = ['flash-sale-alert','abandoned-cart-video','review-testimonial-video','cold-outreach-videos','podcast-audiogram-clips','video-to-shorts','blog-content-kit','testimonial-compilation'].includes(kind);
+  add('watch','Review the finished media','Open Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.' + (boundedPreview ? ' Each request times out after 30 seconds; completed links remain available.' : ''),watchNames);
   assert.deepEqual(functional.filter(n => !assigned.has(n.name)).map(n=>n.name), [], 'Every node needs a documented section: ' + kind);
 
   const agent = kind === 'chat-video-agent';
@@ -146,7 +148,7 @@ function seriesLayout(workflow, kind) {
 }
 
 function applyPublicationNotes(original, kind) {
-  const spec = layouts[kind] || seriesLayout(original, kind);
+  const spec = require('./upgrade-reviewed-templates').getReviewLayout(original, kind) || layouts[kind] || seriesLayout(original, kind);
   assert.ok(spec, 'Unknown publication layout');
   const workflow = structuredClone(original);
   const functional = workflow.nodes.filter(n => n.type !== STICKY);

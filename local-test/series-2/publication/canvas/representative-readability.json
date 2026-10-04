@@ -1,0 +1,168 @@
+{
+  "workflowId": "ZvidSeries2Day31",
+  "sections": [
+    {
+      "section": 1,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:47:14.889Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-1.png",
+      "rect": {
+        "bottom": 710.0000762939453,
+        "height": 630,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 80.00007629394531,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 80.00007629394531
+      }
+    },
+    {
+      "section": 2,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:47:15.933Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-2.png",
+      "rect": {
+        "bottom": 940.0001373291016,
+        "height": 860.0000610351562,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 80.00007629394531,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 80.00007629394531
+      },
+      "bottomPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-2-bottom.png"
+    },
+    {
+      "section": 3,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:47:18.365Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-3.png",
+      "rect": {
+        "bottom": 710.0000381469727,
+        "height": 630,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 80.00003814697266,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 80.00003814697266
+      }
+    },
+    {
+      "section": 4,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:48:20.747Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-4.png",
+      "rect": {
+        "bottom": 940.0000991821288,
+        "height": 860.0000610351562,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 80.00003814697266,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 80.00003814697266
+      },
+      "bottomPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-4-bottom.png"
+    },
+    {
+      "section": 5,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:48:23.416Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-5.png",
+      "rect": {
+        "bottom": 709.9998626708984,
+        "height": 630,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 79.99986267089844,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 79.99986267089844
+      }
+    },
+    {
+      "section": 6,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:48:24.279Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-6.png",
+      "rect": {
+        "bottom": 709.9998626708984,
+        "height": 630,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 79.99986267089844,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 79.99986267089844
+      }
+    },
+    {
+      "section": 7,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:48:43.431Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-7.png",
+      "rect": {
+        "bottom": 709.9998626708984,
+        "height": 630,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 79.99986267089844,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 79.99986267089844
+      }
+    },
+    {
+      "section": 8,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:48:44.382Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-8.png",
+      "rect": {
+        "bottom": 939.9999237060548,
+        "height": 860.0000610351562,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 79.99986267089844,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 79.99986267089844
+      },
+      "bottomPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-8-bottom.png"
+    },
+    {
+      "section": 9,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:48:46.995Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-9.png",
+      "rect": {
+        "bottom": 710,
+        "height": 630,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 80,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 80
+      }
+    },
+    {
+      "section": 10,
+      "workflowId": "ZvidSeries2Day31",
+      "capturedAt": "2026-10-01T12:48:47.896Z",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-10.png",
+      "rect": {
+        "bottom": 710,
+        "height": 630,
+        "left": 300,
+        "right": 1180.0000610351562,
+        "top": 80,
+        "width": 880.0000610351562,
+        "x": 300,
+        "y": 80
+      }
+    }
+  ]
+}

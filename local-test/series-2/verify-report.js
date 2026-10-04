@@ -1,0 +1,16 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const rows = JSON.parse(fs.readFileSync(path.join(__dirname, 'test-results.json')));
+const html = fs.readFileSync(path.join(__dirname, 'catalog.html'), 'utf8');
+const links = [...html.matchAll(/href="([^"]+)"/g)].map(match => match[1]);
+const missing = links.filter(link => !/^https?:/.test(link)).filter(link => !fs.existsSync(path.resolve(__dirname, link)));
+assert.equal(rows.length, 30);
+assert(rows.every(row => row.passed && row.execution.mode === 'manual'));
+assert(rows.every(row => String(row.execution.id) === String(row.mediaQA.executionId)));
+assert(rows.every(row => row.execution.preview.mimeType === 'video/mp4' && row.mediaQA.fullDecodePassed));
+assert(rows.every(row => Number.isFinite(row.execution.output.quotedCredits) && row.execution.output.quotedCredits <= 30));
+assert.equal(links.filter(link => link.startsWith('http://localhost:5678/workflow/')).length, 30);
+assert.deepEqual(missing, []);
+console.log(JSON.stringify({ workflows: 30, manualPassed: 30, mediaPassed: 30, localWorkflowLinks: 30, missingFiles: missing }));

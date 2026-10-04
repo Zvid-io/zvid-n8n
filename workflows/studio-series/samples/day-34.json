@@ -1,0 +1,107 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-compare-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "GROUND GUIDE",
+    "as_of": "2026-10-03T09:00:00Z",
+    "left_sku": "L",
+    "right_sku": "R",
+    "currency": "USD",
+    "budget_minor": 50000,
+    "buyer_use_case": "Which coffee setup fits you?",
+    "compare_url": "https://example.com/shop/compare"
+  },
+  "records": [
+    {
+      "kind": "product",
+      "record_id": "L",
+      "sku": "L",
+      "name": "All-in-one setup",
+      "price_minor": 24900,
+      "currency": "USD",
+      "active": true,
+      "stock": 10,
+      "image": "https://images.unsplash.com/photo-1620051787208-a45bc64e32ff?auto=format&fit=crop&w=1600&h=1000&q=85",
+      "approved_use": "For your complete coffee corner"
+    },
+    {
+      "kind": "product",
+      "record_id": "R",
+      "sku": "R",
+      "name": "Hands-on ritual",
+      "price_minor": 49900,
+      "currency": "USD",
+      "active": true,
+      "stock": 8,
+      "image": "https://images.unsplash.com/photo-1637030157778-794c92f75e97?auto=format&fit=crop&w=1600&h=1000&q=85",
+      "approved_use": "For a hands-on morning ritual"
+    },
+    {
+      "kind": "criterion",
+      "record_id": "ease",
+      "criterion_id": "ease",
+      "label": "Guided preparation",
+      "weight": 3,
+      "direction": "higher"
+    },
+    {
+      "kind": "criterion",
+      "record_id": "control",
+      "criterion_id": "control",
+      "label": "Manual control",
+      "weight": 2,
+      "direction": "higher"
+    },
+    {
+      "kind": "evidence",
+      "record_id": "L-ease",
+      "sku": "L",
+      "criterion_id": "ease",
+      "value": 5,
+      "unit": "approved rubric 1-5",
+      "source_url": "https://example.com/manual/L",
+      "approved_claim": "Built-in grinder",
+      "approval": "approved",
+      "checked_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "kind": "evidence",
+      "record_id": "R-ease",
+      "sku": "R",
+      "criterion_id": "ease",
+      "value": 2,
+      "unit": "approved rubric 1-5",
+      "source_url": "https://example.com/manual/R",
+      "approved_claim": "Manual lever brewing",
+      "approval": "approved",
+      "checked_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "kind": "evidence",
+      "record_id": "L-control",
+      "sku": "L",
+      "criterion_id": "control",
+      "value": 2,
+      "unit": "approved rubric 1-5",
+      "source_url": "https://example.com/manual/L",
+      "approved_claim": "Built-in grinder",
+      "approval": "approved",
+      "checked_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "kind": "evidence",
+      "record_id": "R-control",
+      "sku": "R",
+      "criterion_id": "control",
+      "value": 5,
+      "unit": "approved rubric 1-5",
+      "source_url": "https://example.com/manual/R",
+      "approved_claim": "Manual lever brewing",
+      "approval": "approved",
+      "checked_at": "2026-10-03T08:00:00Z"
+    }
+  ]
+}

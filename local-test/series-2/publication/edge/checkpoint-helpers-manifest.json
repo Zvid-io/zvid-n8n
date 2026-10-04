@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-10-01T13:24:30.783Z",
+  "syntheticRevisionByDay": {
+    "31": "r1",
+    "32": "r1",
+    "33": "r1",
+    "34": "r1",
+    "35": "r1",
+    "36": "r1",
+    "37": "r1",
+    "38": "r1",
+    "39": "r1",
+    "40": "r1",
+    "41": "r1",
+    "42": "r1",
+    "43": "r1",
+    "44": "r1",
+    "45": "r1",
+    "46": "r1",
+    "47": "r1",
+    "48": "r1",
+    "49": "r1",
+    "50": "r2",
+    "51": "r1",
+    "52": "r1",
+    "53": "r1",
+    "54": "r1",
+    "55": "r1",
+    "56": "r1",
+    "57": "r1",
+    "58": "r1",
+    "59": "r1",
+    "60": "r1"
+  },
+  "dailyRequestPeriod": "2026-10-01",
+  "privateQaFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+  "nativeOnly": true,
+  "allThirtyPreflightBeforeAnyWrite": true,
+  "requiresDeliveredRows": true,
+  "manualOnly": true,
+  "fixtures": [
+    {
+      "workflowId": "ZvidSeries2PubCheckpointAccepted",
+      "name": "QA checkpoint all 30 synthetic ledgers as accepted",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubCheckpointAccepted",
+      "targetStatus": "accepted",
+      "sequence": "After all 30 canonical synthetic full deliveries, run this helper once. Then manually run each canonical workflow; each must poll its existing job and reuse its private Drive asset without Submit or Upload."
+    },
+    {
+      "workflowId": "ZvidSeries2PubCheckpointUploaded",
+      "name": "QA checkpoint all 30 synthetic ledgers as uploaded",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubCheckpointUploaded",
+      "targetStatus": "uploaded",
+      "sequence": "After all 30 accepted-resume runs return delivered, run this helper once. Then manually run each canonical workflow; each must recover its existing uploaded asset and verify source writeback without Submit, Get or Upload."
+    }
+  ]
+}

@@ -1,0 +1,327 @@
+{
+  "type": "video",
+  "name": "S2 D34 - Side by Side Buying Guide",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#EBF0FA",
+  "scenes": [
+    {
+      "id": "two-routines",
+      "duration": 4,
+      "backgroundColor": "#244CA5",
+      "transition": "smoothleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{leftImage}}",
+          "x": 30,
+          "y": 200,
+          "width": 590,
+          "height": 470,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 4
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{rightImage}}",
+          "x": 660,
+          "y": 200,
+          "width": 590,
+          "height": 470,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 4
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:20px;letter-spacing:4px\">{{brand}}</div><div style=\"font-size:53px;margin-top:12px\">{{headline}}</div>",
+          "x": 40,
+          "y": 35,
+          "width": 1200,
+          "height": 135,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 4,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 53,
+            "color": "#FFFFFF",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-comparison",
+      "duration": 7,
+      "backgroundColor": "#EBF0FA",
+      "transition": "smoothleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{leftImage}}",
+          "x": 40,
+          "y": 40,
+          "width": 540,
+          "height": 360,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 7
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{rightImage}}",
+          "x": 700,
+          "y": 40,
+          "width": 540,
+          "height": 360,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 7
+        },
+        {
+          "type": "SVG",
+          "svg": "<svg xmlns='http://www.w3.org/2000/svg' width='8' height='620' viewBox='0 0 8 620'><rect width='8' height='620' rx='0' fill='#244CA5'/></svg>",
+          "x": 636,
+          "y": 40,
+          "width": 8,
+          "height": 620,
+          "anchor": "top-left",
+          "position": "custom",
+          "track": 2,
+          "exitEnd": 7
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:47px\">{{leftName}} · {{leftPrice}}</div><div style=\"font-size:27px;margin-top:16px\">{{leftFeature}}</div><div style=\"font-size:24px;margin-top:20px;color:#244CA5\">{{leftUse}}</div>",
+          "x": 40,
+          "y": 455,
+          "width": 540,
+          "height": 210,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 7,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 47,
+            "color": "#152344",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:47px\">{{rightName}} · {{rightPrice}}</div><div style=\"font-size:27px;margin-top:16px\">{{rightFeature}}</div><div style=\"font-size:24px;margin-top:20px;color:#244CA5\">{{rightUse}}</div>",
+          "x": 700,
+          "y": 455,
+          "width": 540,
+          "height": 210,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 7,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 47,
+            "color": "#152344",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "choose-by-routine",
+      "duration": 5,
+      "backgroundColor": "#152344",
+      "transition": "smoothleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{leftImage}}",
+          "x": 40,
+          "y": 50,
+          "width": 360,
+          "height": 590,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 180,
+            "tr": 180,
+            "bl": 12,
+            "br": 12
+          }
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{rightImage}}",
+          "x": 450,
+          "y": 50,
+          "width": 360,
+          "height": 590,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 180,
+            "tr": 180,
+            "bl": 12,
+            "br": 12
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:52px\">Different kitchens.<br>Different rhythms.</div><div style=\"font-size:27px;margin-top:28px\">Choose for the way<br>you actually brew.</div>",
+          "x": 870,
+          "y": 90,
+          "width": 350,
+          "height": 530,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 52,
+            "color": "#FFFFFF",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "your-next-cup",
+      "duration": 5,
+      "backgroundColor": "#EBF0FA",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{leftImage}}",
+          "x": 40,
+          "y": 40,
+          "width": 440,
+          "height": 640,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:66px\">{{cta}}</div><div style=\"font-size:29px;margin-top:32px;color:#244CA5\">{{url}}</div>",
+          "x": 550,
+          "y": 190,
+          "width": 660,
+          "height": 360,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 66,
+            "color": "#152344",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "GROUND GUIDE",
+    "headline": "Which coffee setup fits you?",
+    "leftImage": "https://images.unsplash.com/photo-1620051787208-a45bc64e32ff?auto=format&fit=crop&w=1600&h=1000&q=85",
+    "rightImage": "https://images.unsplash.com/photo-1637030157778-794c92f75e97?auto=format&fit=crop&w=1600&h=1000&q=85",
+    "leftName": "All-in-one setup",
+    "rightName": "Hands-on ritual",
+    "leftPrice": "$249",
+    "rightPrice": "$499",
+    "leftFeature": "Built-in grinder",
+    "rightFeature": "Manual lever brewing",
+    "leftUse": "For your complete coffee corner",
+    "rightUse": "For a hands-on morning ritual",
+    "cta": "Choose your everyday setup",
+    "url": "ground.example/compare",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943460/zvid-series2-unique-music-20261002/day-34-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 19.95,
+      "audioBegin": 0,
+      "audioEnd": 19.95,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

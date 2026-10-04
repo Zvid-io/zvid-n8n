@@ -1,0 +1,21 @@
+{
+  "product": "Acme Desk",
+  "version": "2.4",
+  "changes": [
+    {
+      "type": "added",
+      "title": "Shared inbox",
+      "detail": "Assign customer conversations to a team."
+    },
+    {
+      "type": "improved",
+      "title": "Faster search",
+      "detail": "Find past conversations with clearer filters."
+    },
+    {
+      "type": "fixed",
+      "title": "Export dates",
+      "detail": "CSV exports now keep UTC dates consistent."
+    }
+  ]
+}

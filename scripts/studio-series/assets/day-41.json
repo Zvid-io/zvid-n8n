@@ -1,0 +1,399 @@
+{
+  "name": "S2 D41 - Development Available Unit Grid",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "durationMode": "fixed",
+  "duration": 23.4,
+  "backgroundColor": "#EFF1EA",
+  "variables": {
+    "paper": "#EFF1EA",
+    "ink": "#27312D",
+    "accent": "#546944",
+    "headlineFont": "Space Grotesk",
+    "bodyFont": "Inter",
+    "development": "The Alder Residences",
+    "heroImage": "https://images.pexels.com/photos/39214892/pexels-photo-39214892.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "unitOneImage": "https://images.pexels.com/photos/8089172/pexels-photo-8089172.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "unitTwoImage": "https://images.pexels.com/photos/7745929/pexels-photo-7745929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "unitThreeImage": "https://images.pexels.com/photos/18470969/pexels-photo-18470969.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "heroTitle": "Choose the space that fits",
+    "unitOne": "Unit A 204",
+    "unitOneSpecs": "2 bedrooms · 92 m²",
+    "unitOnePrice": "From $420,000",
+    "unitTwo": "Unit B 508",
+    "unitTwoSpecs": "3 bedrooms · 126 m²",
+    "unitTwoPrice": "From $560,000",
+    "unitThree": "Unit C 701",
+    "unitThreeSpecs": "Penthouse · 158 m²",
+    "unitThreePrice": "From $720,000",
+    "availability": "3 sample units available",
+    "asOf": "Illustrative inventory · 01 Oct 2026",
+    "statusOne": "Available",
+    "statusTwo": "Available",
+    "statusThree": "Available",
+    "cta": "Request a private viewing",
+    "destination": "alder.example/viewings",
+    "terms": "Sample units and prices. Confirm current availability.",
+    "floorPlanImage": "https://images.pexels.com/photos/4792507/pexels-photo-4792507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "planLabel": "Illustrative layout · replace with approved plan",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943301/zvid-series2-unique-music-20261002/day-41-music.mp3",
+    "musicVolume": 0.8
+  },
+  "scenes": [
+    {
+      "id": "inventory-cover",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "transition": "smoothleft",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 420,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{development}}</div><div style=\"font-family:{{headlineFont}};font-size:57px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{heroTitle}}</div><div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:15px\">{{availability}} · {{asOf}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 452,
+          "width": 1152,
+          "height": 220,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "three-unit-grid",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{unitOneImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 400,
+          "height": 400,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.07
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{unitTwoImage}}",
+          "position": "custom",
+          "x": 440,
+          "y": 0,
+          "width": 400,
+          "height": 400,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0.12,
+          "enterEnd": 0.67,
+          "exitEnd": 5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{unitThreeImage}}",
+          "position": "custom",
+          "x": 880,
+          "y": 0,
+          "width": 400,
+          "height": 400,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.06
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0.24,
+          "enterEnd": 0.79,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"display:flex;justify-content:space-between\"><div style=\"width:31%;display:flex;flex-direction:column\"><div style=\"font-family:{{headlineFont}};font-size:36px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{unitOne}}</div><div style=\"font-family:{{bodyFont}};font-size:23px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:12px\">{{unitOneSpecs}}<br>{{unitOnePrice}}<br>{{statusOne}}</div></div><div style=\"width:31%;display:flex;flex-direction:column\"><div style=\"font-family:{{headlineFont}};font-size:36px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{unitTwo}}</div><div style=\"font-family:{{bodyFont}};font-size:23px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:12px\">{{unitTwoSpecs}}<br>{{unitTwoPrice}}<br>{{statusTwo}}</div></div><div style=\"width:31%;display:flex;flex-direction:column\"><div style=\"font-family:{{headlineFont}};font-size:36px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{unitThree}}</div><div style=\"font-family:{{bodyFont}};font-size:23px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:12px\">{{unitThreeSpecs}}<br>{{unitThreePrice}}<br>{{statusThree}}</div></div></div>",
+          "position": "custom",
+          "x": 40,
+          "y": 440,
+          "width": 1200,
+          "height": 220,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "unit-typology",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "transition": "smoothleft",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{unitOneImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 770,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.1
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{floorPlanImage}}",
+          "position": "custom",
+          "x": 828,
+          "y": 36,
+          "width": 390,
+          "height": 260,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.03
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">TYPE A / {{statusOne}}</div><div style=\"font-family:{{headlineFont}};font-size:47px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{unitOne}}</div><div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:18px\">{{unitOneSpecs}}</div><div style=\"font-family:{{bodyFont}};font-size:30px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:20px\">{{unitOnePrice}}</div><div style=\"font-family:{{bodyFont}};font-size:18px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:26px\">{{planLabel}}</div>",
+          "position": "custom",
+          "x": 828,
+          "y": 336,
+          "width": 390,
+          "height": 320,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "larger-unit-options",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{unitTwoImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 620,
+          "height": 390,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.05
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{unitThreeImage}}",
+          "position": "custom",
+          "x": 660,
+          "y": 0,
+          "width": 620,
+          "height": 390,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.05
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0.1,
+          "enterEnd": 0.65,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"display:flex;justify-content:space-between\"><div style=\"width:47%\"><div style=\"font-family:{{headlineFont}};font-size:42px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{unitTwo}}</div><div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:14px\">{{unitTwoSpecs}}</div><div style=\"font-family:{{bodyFont}};font-size:28px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:15px\">{{unitTwoPrice}} · {{statusTwo}}</div></div><div style=\"width:47%\"><div style=\"font-family:{{headlineFont}};font-size:42px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{unitThree}}</div><div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:14px\">{{unitThreeSpecs}}</div><div style=\"font-family:{{bodyFont}};font-size:28px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:15px\">{{unitThreePrice}} · {{statusThree}}</div></div></div>",
+          "position": "custom",
+          "x": 64,
+          "y": 425,
+          "width": 1152,
+          "height": 245,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "viewing-request",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 800,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.08
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{development}}</div><div style=\"font-family:{{headlineFont}};font-size:50px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{cta}}</div><div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:24px\">{{destination}}</div><div style=\"font-family:{{bodyFont}};font-size:21px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:30px\">{{terms}}</div>",
+          "position": "custom",
+          "x": 848,
+          "y": 85,
+          "width": 366,
+          "height": 550,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 23.4,
+      "audioBegin": 0,
+      "audioEnd": 23.4,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.3.0
+2 info using node@v24.0.2
+3 silly config load:file:C:\Users\menan\AppData\Roaming\nvm\v24.0.2\node_modules\npm\npmrc
+4 silly config load:file:D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n\.npmrc
+5 silly config load:file:C:\Users\menan\.npmrc
+6 silly config load:file:C:\Program Files\nodejs\etc\npmrc
+7 verbose title npm pack
+8 verbose argv "pack" "--dry-run" "--json" "--ignore-scripts" "--cache" "local-test/series-2/publication/infra-npm-cache"
+9 verbose logfile logs-max:10 dir:D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n\local-test\series-2\publication\infra-npm-cache\_logs\2026-10-01T14_10_19_433Z-
+10 verbose logfile D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n\local-test\series-2\publication\infra-npm-cache\_logs\2026-10-01T14_10_19_433Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 verbose cwd D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n
+14 verbose os Windows_NT 10.0.26200
+15 verbose node v24.0.2
+16 verbose npm  v11.3.0
+17 verbose exit 0
+18 info ok

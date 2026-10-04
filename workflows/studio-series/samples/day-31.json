@@ -1,0 +1,111 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-shopping-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "STUDIO EDIT",
+    "as_of": "2026-10-03T09:00:00Z",
+    "market": "US",
+    "currency": "USD",
+    "max_item_price_minor": 12000,
+    "interests": [
+      "slow-mornings",
+      "walking",
+      "carry"
+    ],
+    "occasion": "everyday",
+    "catalog_version": "2026-10-03",
+    "headline": "Made for your everyday",
+    "profile": "Your edit · everyday essentials under USD 120 each",
+    "cta": "Explore your three picks",
+    "edit_url": "https://example.com/shop/your-edit"
+  },
+  "records": [
+    {
+      "kind": "product",
+      "record_id": "m1",
+      "sku": "M1",
+      "category": "mug",
+      "name": "Sunday ceramic",
+      "price_minor": 2800,
+      "currency": "USD",
+      "market": "US",
+      "stock": 15,
+      "active": true,
+      "tags": [
+        "slow-mornings",
+        "everyday"
+      ],
+      "primary_image": "https://images.unsplash.com/photo-1777034536405-244ca3dbcb54?auto=format&fit=crop&w=1080&h=900&q=85",
+      "thumbnail_image": "https://images.unsplash.com/photo-1777034536405-244ca3dbcb54?auto=format&fit=crop&w=1080&h=1440&q=85",
+      "product_url": "https://example.com/shop/m1",
+      "updated_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "kind": "product",
+      "record_id": "s1",
+      "sku": "S1",
+      "category": "shoe",
+      "name": "City runner",
+      "price_minor": 8900,
+      "currency": "USD",
+      "market": "US",
+      "stock": 20,
+      "active": true,
+      "tags": [
+        "walking",
+        "everyday"
+      ],
+      "primary_image": "https://images.pexels.com/photos/20755674/pexels-photo-20755674.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1440&fit=crop",
+      "thumbnail_image": "https://images.pexels.com/photos/20755674/pexels-photo-20755674.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1440&fit=crop",
+      "product_url": "https://example.com/shop/s1",
+      "updated_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "kind": "product",
+      "record_id": "b1",
+      "sku": "B1",
+      "category": "bag",
+      "name": "Daily carry",
+      "price_minor": 7400,
+      "currency": "USD",
+      "market": "US",
+      "stock": 10,
+      "active": true,
+      "tags": [
+        "carry",
+        "everyday"
+      ],
+      "primary_image": "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?auto=format&fit=crop&w=1080&h=1440&q=85",
+      "thumbnail_image": "https://images.unsplash.com/photo-1605733513597-a8f8341084e6?auto=format&fit=crop&w=1080&h=1440&q=85",
+      "product_url": "https://example.com/shop/b1",
+      "updated_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "kind": "reason",
+      "record_id": "r0",
+      "category": "mug",
+      "tag": "slow-mornings",
+      "approved_copy": "For your slow mornings",
+      "priority": 1
+    },
+    {
+      "kind": "reason",
+      "record_id": "r1",
+      "category": "shoe",
+      "tag": "walking",
+      "approved_copy": "For the walk everywhere days",
+      "priority": 1
+    },
+    {
+      "kind": "reason",
+      "record_id": "r2",
+      "category": "bag",
+      "tag": "carry",
+      "approved_copy": "For everything you take along",
+      "priority": 1
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-58",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "I was going to take the bus, but I decided to walk instead.",
+    "prompt": "HOW DID THE SPEAKER TRAVEL?",
+    "transcriptStart": "I was going to take the bus,",
+    "transcriptTurn": "but I decided to walk instead.",
+    "explanation": "“Going to” describes the earlier plan.\n“Decided to walk” tells us what happened.",
+    "closing": "Listen for the change of plan.",
+    "transcript": "I was going to take the bus, but I decided to walk instead."
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-58",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Editor reviewed the exact supplied lesson and cited its underlying source.",
+      "url": "https://docs.zvid.io"
+    },
+    {
+      "parent_id": "qa-studio-58",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "choice",
+      "position": 2,
+      "approval": "approved",
+      "label": "BY BUS",
+      "correct": false
+    },
+    {
+      "parent_id": "qa-studio-58",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "choice",
+      "position": 3,
+      "approval": "approved",
+      "label": "ON FOOT",
+      "correct": true
+    },
+    {
+      "parent_id": "qa-studio-58",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "choice",
+      "position": 4,
+      "approval": "approved",
+      "label": "BY TAXI",
+      "correct": false
+    },
+    {
+      "parent_id": "qa-studio-58",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "recording",
+      "position": 5,
+      "approval": "approved",
+      "rms_bins_json": "[0.05,0.05,0.05,0.6375,0.9106249999999999,0.806875,0.573125,0.05,0.8618750000000001,1,0.9331250000000001,0.181875,0.21000000000000002,0.0725,0.751875,0.45999999999999996,0.05,0.52,0.255625,0.564375,0.698125,0.398125,0.121875,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.4325,0.473125,0.42437500000000006,0.6925,0.6068749999999999,0.5825,0.258125,0.05,0.536875,0.7893749999999999,0.688125,0.5525,0.168125,0.07625,0.599375,0.45125000000000004,0.9324999999999999,0.85875,0.05,0.224375,0.5181250000000001,0.30062500000000003,0.05,0.15812500000000002,0.48250000000000004,0.366875,0.176875,0.05,0.05,0.05,0.05,0.05,0.05,0.05]",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790882250/zvid-series2-design-review-20261001/listening-demo.mp3",
+      "seconds": 4.416,
+      "transcript": "I was going to take the bus, but I decided to walk instead.",
+      "voice_label": "Demonstration: synthetic British English voice",
+      "rights": "Approved synthetic demonstration recording"
+    },
+    {
+      "parent_id": "qa-studio-58",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "narration",
+      "position": 6,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790882250/zvid-series2-design-review-20261001/listening-demo.mp3",
+      "seconds": 4.416,
+      "content_fingerprint": "a0334839d1351a4c369e65e7efe115d00194ab9476f9a79f6318e727c4387530",
+      "script": "I was going to take the bus, but I decided to walk instead.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

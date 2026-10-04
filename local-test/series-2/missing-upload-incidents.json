@@ -1,0 +1,38 @@
+[
+  {
+    "day": 35,
+    "executionId": 694,
+    "status": "error",
+    "mode": "manual",
+    "startedAt": "2026-10-01 09:16:02.984",
+    "stoppedAt": "2026-10-01 09:16:20.468",
+    "lastNode": "Video result",
+    "acceptedJobId": "7ea52ac6-a58e-4a9c-b2f5-cc58edc2c57d",
+    "completedState": "completed",
+    "outputUrl": null,
+    "thumbnailUrl": "https://cdn.zvid.io/images/1/maintenance-notice-video_thumbnail-1790846174520.jpg",
+    "fileName": "maintenance-notice-video.mp4",
+    "duration": 18,
+    "errorMessage": "Completed render has no HTTPS media URL. [line 1]",
+    "paidSubmitSucceeded": true,
+    "noAutomaticSubmissionRetry": true
+  },
+  {
+    "day": 49,
+    "executionId": 714,
+    "status": "error",
+    "mode": "manual",
+    "startedAt": "2026-10-01 09:40:20.412",
+    "stoppedAt": "2026-10-01 09:40:40.097",
+    "lastNode": "Video result",
+    "acceptedJobId": "41a98ad4-3232-4d5c-8204-3783da67a7a3",
+    "completedState": "completed",
+    "outputUrl": null,
+    "thumbnailUrl": "https://cdn.zvid.io/images/1/delivery-route-brief-video_thumbnail-1790847634534.jpg",
+    "fileName": "delivery-route-brief-video.mp4",
+    "duration": 24,
+    "errorMessage": "//app.zvid.io before running again; another run spends credits. This workflow does not resubmit automatically. [line 1]",
+    "paidSubmitSucceeded": true,
+    "noAutomaticSubmissionRetry": true
+  }
+]

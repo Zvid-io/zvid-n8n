@@ -1,0 +1,104 @@
+{
+  "capturedAt": "2026-10-01T13:09:59.550Z",
+  "executionId": 794,
+  "workflowId": "ZvidSeries2Day51",
+  "status": "error",
+  "mode": "manual",
+  "startedAt": "2026-10-01 12:57:45.857",
+  "stoppedAt": "2026-10-01 12:57:48.645",
+  "lastNode": "Submit render once",
+  "failedNode": "Submit render once",
+  "errorShape": [
+    "level",
+    "shouldReport",
+    "description",
+    "tags",
+    "timestamp",
+    "context",
+    "functionality",
+    "name",
+    "node",
+    "messages",
+    "httpCode",
+    "message",
+    "stack"
+  ],
+  "diagnosticShapes": {
+    "description": {
+      "type": "string",
+      "length": 109,
+      "keys": null,
+      "containsNextReset": false,
+      "containsRetryAfter": false
+    },
+    "messages": {
+      "type": "object",
+      "length": null,
+      "keys": [
+        "0"
+      ],
+      "containsNextReset": null,
+      "containsRetryAfter": null
+    },
+    "context": {
+      "type": "object",
+      "length": null,
+      "keys": [
+        "data",
+        "itemIndex",
+        "runIndex"
+      ],
+      "containsNextReset": null,
+      "containsRetryAfter": null
+    },
+    "contextData": {
+      "type": "object",
+      "length": null,
+      "keys": [
+        "error",
+        "message",
+        "current",
+        "limit"
+      ],
+      "containsNextReset": null,
+      "containsRetryAfter": null
+    }
+  },
+  "quotaFields": [
+    {
+      "path": "error.context.data.error",
+      "value": "concurrent_limit_exceeded"
+    },
+    {
+      "path": "error.context.data.current",
+      "value": 3
+    },
+    {
+      "path": "error.context.data.limit",
+      "value": 3
+    },
+    {
+      "path": "error.httpCode",
+      "value": "429"
+    }
+  ],
+  "frozenIntent": {
+    "ledgerTableId": "LQgWxc1qaXzfNqlx",
+    "ledgerRowId": 1,
+    "requestKey": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+    "sourceId": "qa-d51-record-001",
+    "revision": "r1",
+    "status": "submitting",
+    "jobId": null,
+    "inputHash": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8",
+    "projectSha256": "a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836",
+    "inputJsonSha256": "93a38620bf1fb61468a7c3f50110930a2fb51abf7804b5a564eade994f18710a",
+    "briefJsonSha256": "9fe131d16bf5bd3518ecd8992f2898756ca43a01392be22295608ac6aa83b978",
+    "contextJsonSha256": "86fc69b27caa06e50b870fcaf5b18d4e87c5ea0588e68259682356f6b85f2f0b",
+    "attemptedProjectName": "travel-itinerary-video",
+    "quotedCredits": 18,
+    "updatedAt": "2026-10-01T12:57:48.240Z"
+  },
+  "acceptedCaptureExecuted": false,
+  "acceptedCheckpointExecuted": false
+}

@@ -1,0 +1,126 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-51",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "Harry Kane’s breakthrough began with four loans: Leyton Orient, Millwall, Norwich City and Leicester City. In April 2014, he made his first Premier League start for Tottenham, and scored against Sunderland. Then came 2014–15. Thirty-one goals in all competitions. Twenty-one in the Premier League. The loan years were the route. That season was the breakthrough.",
+    "player": "Harry Kane",
+    "breakthrough_year": 2014,
+    "hook": "FOUR LOANS.\nTHEN THE\nBREAKTHROUGH.",
+    "startYear": "APRIL 2014",
+    "startHeadline": "FIRST LEAGUE\nSTART FOR SPURS.",
+    "startDetail": "A goal against Sunderland.\nThe opportunity had arrived.",
+    "closing": "The loan years were the route.\n2014/15 was the breakthrough.",
+    "credit": "Kane photo: Ben Sutherland · CC BY 2.0\nPhoto captured November 2015; cropped for this edit.\nFacts: Tottenham Hotspur club history.\nStadium atmosphere: Zvid’s stock library."
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Editor reviewed the exact supplied lesson and cited its underlying source.",
+      "url": "https://www.tottenhamhotspur.com/the-club/history/"
+    },
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "loan",
+      "position": 2,
+      "approval": "approved",
+      "club": "Leyton Orient",
+      "start_year": 2011,
+      "end_year": 2011
+    },
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "loan",
+      "position": 3,
+      "approval": "approved",
+      "club": "Millwall",
+      "start_year": 2012,
+      "end_year": 2012
+    },
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "loan",
+      "position": 4,
+      "approval": "approved",
+      "club": "Norwich City",
+      "start_year": 2012,
+      "end_year": 2013
+    },
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "loan",
+      "position": 5,
+      "approval": "approved",
+      "club": "Leicester City",
+      "start_year": 2013,
+      "end_year": 2013
+    },
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "season",
+      "position": 6,
+      "approval": "approved",
+      "label": "2014 / 15",
+      "all_goals": 31,
+      "league_goals": 21
+    },
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r7",
+      "kind": "media",
+      "position": 7,
+      "approval": "approved",
+      "variable": "playerPhoto",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/England_striker_Harry_Kane_and_France_midfielder_Morgan_Schneiderlin_%2822721788819%29.jpg/1280px-England_striker_Harry_Kane_and_France_midfielder_Morgan_Schneiderlin_%2822721788819%29.jpg",
+      "rights": "Kane photo: Ben Sutherland · CC BY 2.0\nPhoto captured November 2015; cropped for this edit.\nFacts: Tottenham Hotspur club history.\nStadium atmosphere: Zvid’s stock library."
+    },
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r8",
+      "kind": "media",
+      "position": 8,
+      "approval": "approved",
+      "variable": "stadiumPhoto",
+      "url": "https://images.pexels.com/photos/30651230/pexels-photo-30651230.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "rights": "Kane photo: Ben Sutherland · CC BY 2.0\nPhoto captured November 2015; cropped for this edit.\nFacts: Tottenham Hotspur club history.\nStadium atmosphere: Zvid’s stock library."
+    },
+    {
+      "parent_id": "qa-studio-51",
+      "revision": "r1",
+      "record_id": "r9",
+      "kind": "narration",
+      "position": 9,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790883822/zvid-series2-design-review-20261001/d51-narration.mp3",
+      "seconds": 26.784,
+      "content_fingerprint": "4e691eef44de99e9ac8a87149f5cd1f00658c9886c2f4f7234eee1250f8f3bb7",
+      "script": "Harry Kane’s breakthrough began with four loans: Leyton Orient, Millwall, Norwich City and Leicester City. In April 2014, he made his first Premier League start for Tottenham, and scored against Sunderland. Then came 2014–15. Thirty-one goals in all competitions. Twenty-one in the Premier League. The loan years were the route. That season was the breakthrough.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

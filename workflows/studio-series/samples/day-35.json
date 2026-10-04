@@ -1,0 +1,122 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-restock-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "ORBIT AUDIO",
+    "as_of": "2026-10-03T09:00:00Z",
+    "restock_id": "RESTOCK1",
+    "sku": "AUD1",
+    "currency": "USD",
+    "price_minor": 12900,
+    "safety_stock": 3,
+    "units_per_recipient": 2,
+    "max_cohort": 4,
+    "product_name": "Studio listening",
+    "hero_image": "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1080&h=1600&q=85",
+    "detail_image": "https://images.pexels.com/photos/5650531/pexels-photo-5650531.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "product_url": "https://example.com/shop/audio"
+  },
+  "records": [
+    {
+      "kind": "snapshot",
+      "record_id": "sn0",
+      "snapshot_id": "SN0",
+      "sku": "AUD1",
+      "at": "2026-10-02T08:00:00Z",
+      "on_hand": 3,
+      "allocated": 0
+    },
+    {
+      "kind": "snapshot",
+      "record_id": "sn1",
+      "snapshot_id": "SN1",
+      "sku": "AUD1",
+      "at": "2026-10-03T08:00:00Z",
+      "on_hand": 15,
+      "allocated": 2
+    },
+    {
+      "kind": "waitlist",
+      "record_id": "w0",
+      "subscriber_id": "SUB0",
+      "sku": "AUD1",
+      "requested_at": "2026-09-20T09:00:00Z",
+      "consent": true,
+      "state": "waiting",
+      "market": "US"
+    },
+    {
+      "kind": "waitlist",
+      "record_id": "w1",
+      "subscriber_id": "SUB1",
+      "sku": "AUD1",
+      "requested_at": "2026-09-21T09:00:00Z",
+      "consent": true,
+      "state": "waiting",
+      "market": "US"
+    },
+    {
+      "kind": "waitlist",
+      "record_id": "w2",
+      "subscriber_id": "SUB2",
+      "sku": "AUD1",
+      "requested_at": "2026-09-22T09:00:00Z",
+      "consent": true,
+      "state": "waiting",
+      "market": "US"
+    },
+    {
+      "kind": "waitlist",
+      "record_id": "w3",
+      "subscriber_id": "SUB3",
+      "sku": "AUD1",
+      "requested_at": "2026-09-23T09:00:00Z",
+      "consent": true,
+      "state": "waiting",
+      "market": "US"
+    },
+    {
+      "kind": "waitlist",
+      "record_id": "w4",
+      "subscriber_id": "SUB4",
+      "sku": "AUD1",
+      "requested_at": "2026-09-24T09:00:00Z",
+      "consent": true,
+      "state": "waiting",
+      "market": "US"
+    },
+    {
+      "kind": "waitlist",
+      "record_id": "w5",
+      "subscriber_id": "SUB5",
+      "sku": "AUD1",
+      "requested_at": "2026-09-25T09:00:00Z",
+      "consent": true,
+      "state": "waiting",
+      "market": "US"
+    },
+    {
+      "kind": "waitlist",
+      "record_id": "w6",
+      "subscriber_id": "SUB6",
+      "sku": "AUD1",
+      "requested_at": "2026-09-26T09:00:00Z",
+      "consent": true,
+      "state": "waiting",
+      "market": "US"
+    },
+    {
+      "kind": "waitlist",
+      "record_id": "w7",
+      "subscriber_id": "SUB7",
+      "sku": "AUD1",
+      "requested_at": "2026-09-27T09:00:00Z",
+      "consent": true,
+      "state": "waiting",
+      "market": "US"
+    }
+  ]
+}

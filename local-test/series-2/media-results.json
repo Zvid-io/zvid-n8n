@@ -1,0 +1,1434 @@
+{
+  "updatedAt": "2026-10-01T10:34:58.600973+00:00",
+  "manualCompletedAvailable": 30,
+  "results": [
+    {
+      "day": 31,
+      "executionId": 722,
+      "workflowId": "ZvidSeries2Day31",
+      "jobId": "a7698623-eec9-4c66-94b3-3d016b56a450",
+      "file": "media/day-31.mp4",
+      "bytes": 147819,
+      "sha256": "9415743cab013071fc63bb85f1855ec4c495427683b71076755e63b52b10cd72",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-31-opening.png",
+          "lumaStdDev": 22.47
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-31-details-1.png",
+          "lumaStdDev": 106.1
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-31-closing.png",
+          "lumaStdDev": 20.28
+        }
+      ],
+      "contactSheet": "media/day-31-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:03.597936+00:00",
+      "visualNotes": "Final render verified: added 1 change, improved 1 change, and fixed 1 fix. Opening, detail, and closing frames are readable with no clipping."
+    },
+    {
+      "day": 32,
+      "executionId": 689,
+      "workflowId": "ZvidSeries2Day32",
+      "jobId": "cacf2ce3-5735-470a-be72-9ae237cdfde6",
+      "file": "media/day-32.mp4",
+      "bytes": 246808,
+      "sha256": "76676a36955f1ec7a5411815db13521a7a19b9a1780c8d1f5f2ec6da4c828f4f",
+      "mediaSource": "completed-video-url",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-32-opening.png",
+          "lumaStdDev": 28.39
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-32-details-1.png",
+          "lumaStdDev": 105.91
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-32-details-2.png",
+          "lumaStdDev": 106.68
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-32-closing.png",
+          "lumaStdDev": 23.9
+        }
+      ],
+      "contactSheet": "media/day-32-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:04.491385+00:00",
+      "visualNotes": "Reviewed opening, both details pages, and closing. All three numbered instructions and expected result are readable and match source data. No clipped text, collisions, blank frames, or wrong values."
+    },
+    {
+      "day": 33,
+      "executionId": 692,
+      "workflowId": "ZvidSeries2Day33",
+      "jobId": "11ee5767-d933-4932-9b94-ecaae0cf1b64",
+      "file": "media/day-33.mp4",
+      "bytes": 211496,
+      "sha256": "c68e8cd45e193db92303d65eaddf79ad2ee4c5558fd8ff774d1f07c436731a31",
+      "mediaSource": "completed-video-url",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-33-opening.png",
+          "lumaStdDev": 29.05
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-33-details-1.png",
+          "lumaStdDev": 106.09
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-33-details-2.png",
+          "lumaStdDev": 106.63
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-33-closing.png",
+          "lumaStdDev": 21.62
+        }
+      ],
+      "contactSheet": "media/day-33-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:05.350797+00:00",
+      "visualNotes": "Reviewed opening, all three pricing cards, common-features page, and closing. Supplied prices and shared/unique features are correct, all text is readable, and no clipping or collisions appear."
+    },
+    {
+      "day": 34,
+      "executionId": 693,
+      "workflowId": "ZvidSeries2Day34",
+      "jobId": "e6ee7d8f-e1de-407a-bf92-1efa05d423d5",
+      "file": "media/day-34.mp4",
+      "bytes": 214620,
+      "sha256": "c89513585c95a0bfad42f689a326a8ed0d5c0cc2efec78f7db479fd00a4c35c1",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-34-opening.png",
+          "lumaStdDev": 30.83
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-34-details-1.png",
+          "lumaStdDev": 105.98
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-34-details-2.png",
+          "lumaStdDev": 106.69
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-34-closing.png",
+          "lumaStdDev": 18.76
+        }
+      ],
+      "contactSheet": "media/day-34-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:06.289154+00:00",
+      "visualNotes": "Reviewed opening, chronological UTC incident updates, resolution-duration page, and closing. Correct 75-minute duration and final Resolved status. All text is readable without clipping or collisions. Media copied from the exact n8n Watch binary after host CDN timeouts."
+    },
+    {
+      "day": 35,
+      "executionId": 720,
+      "workflowId": "ZvidSeries2Day35",
+      "jobId": "509acf12-3042-4395-a134-2a6f18b9222b",
+      "file": "media/day-35.mp4",
+      "bytes": 196015,
+      "sha256": "ed2c0f3a425471f0fe9e790608c97348b0a58819108ae40e9067a7bac9bb2951",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-35-opening.png",
+          "lumaStdDev": 30.18
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-35-details-1.png",
+          "lumaStdDev": 105.86
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-35-closing.png",
+          "lumaStdDev": 21.78
+        }
+      ],
+      "contactSheet": "media/day-35-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:07.046470+00:00",
+      "visualNotes": "Reviewed all three scene frames from the successful retry. Full October 3 01:00-02:30 UTC window is visible, duration is correctly 90 minutes, start is 48 hours after the fixed reference, and both affected features appear. No clipping or collisions."
+    },
+    {
+      "day": 36,
+      "executionId": 699,
+      "workflowId": "ZvidSeries2Day36",
+      "jobId": "cf01ab64-f7a2-45c7-ada9-96e6b3fac75b",
+      "file": "media/day-36.mp4",
+      "bytes": 187344,
+      "sha256": "f825284ae1393c45443a0e79dc334c5aa5f6b7f10584182e8c9d2cd2fb62e3cb",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-36-opening.png",
+          "lumaStdDev": 24.83
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-36-details-1.png",
+          "lumaStdDev": 106.08
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-36-details-2.png",
+          "lumaStdDev": 106.74
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-36-closing.png",
+          "lumaStdDev": 21.04
+        }
+      ],
+      "contactSheet": "media/day-36-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:07.996851+00:00",
+      "visualNotes": "Reviewed all four scene frames. Shipped status, three-item total, supplied delivery date and next out-for-delivery stage are correct and readable. No clipping or collisions."
+    },
+    {
+      "day": 37,
+      "executionId": 701,
+      "workflowId": "ZvidSeries2Day37",
+      "jobId": "4d3920e8-fe4b-4a49-a4df-d1bc131d33a7",
+      "file": "media/day-37.mp4",
+      "bytes": 218988,
+      "sha256": "25ff5a4cdd461d3dc438aa8ce2eee5b1d0c9bd5e58769aef8b6a6380340b6538",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-37-opening.png",
+          "lumaStdDev": 28.71
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-37-details-1.png",
+          "lumaStdDev": 106.02
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-37-details-2.png",
+          "lumaStdDev": 106.74
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-37-closing.png",
+          "lumaStdDev": 24.65
+        }
+      ],
+      "contactSheet": "media/day-37-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:08.954639+00:00",
+      "visualNotes": "Reviewed all four scene frames. Components, USD 50 regular total, USD 40 bundle price, USD 10 savings and 20 percent savings match source and exact arithmetic. No clipping or collisions."
+    },
+    {
+      "day": 38,
+      "executionId": 702,
+      "workflowId": "ZvidSeries2Day38",
+      "jobId": "3cf60a86-a938-4c0f-9709-dc87887b4b3a",
+      "file": "media/day-38.mp4",
+      "bytes": 244991,
+      "sha256": "f4c570fa999192cfe42a9299c2cfcc12d43c5a9e1f3275b5ba5f8f3e0f022878",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-38-opening.png",
+          "lumaStdDev": 32.58
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-38-details-1.png",
+          "lumaStdDev": 105.94
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-38-details-2.png",
+          "lumaStdDev": 106.66
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-38-closing.png",
+          "lumaStdDev": 20.06
+        }
+      ],
+      "contactSheet": "media/day-38-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:09.928575+00:00",
+      "visualNotes": "Reviewed all four scene frames. Original and revised dates show a two-day delay; reason and next action match source. All text is readable without collisions."
+    },
+    {
+      "day": 39,
+      "executionId": 703,
+      "workflowId": "ZvidSeries2Day39",
+      "jobId": "08edea32-87ef-4269-832a-abcb1f2179ad",
+      "file": "media/day-39.mp4",
+      "bytes": 244445,
+      "sha256": "8a886b6e04f8f3be49bfbd3ea4b0d151cd1fc1b38f6b329112383413a3337341",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-39-opening.png",
+          "lumaStdDev": 32.65
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-39-details-1.png",
+          "lumaStdDev": 105.84
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-39-details-2.png",
+          "lumaStdDev": 106.68
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-39-closing.png",
+          "lumaStdDev": 22.52
+        }
+      ],
+      "contactSheet": "media/day-39-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:10.884456+00:00",
+      "visualNotes": "Reviewed all four scene frames. Correct UTC appointment, location and all three preparation instructions. Long title wraps cleanly. No text clipping or collisions."
+    },
+    {
+      "day": 40,
+      "executionId": 704,
+      "workflowId": "ZvidSeries2Day40",
+      "jobId": "ef24062a-c508-43d7-9925-a88e0dde87a5",
+      "file": "media/day-40.mp4",
+      "bytes": 240086,
+      "sha256": "fe5396ccf932643aa04c4e7222ee0ef9e6857f90a3aa9bc2fb562206afb67ae6",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-40-opening.png",
+          "lumaStdDev": 28.0
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-40-details-1.png",
+          "lumaStdDev": 105.99
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-40-details-2.png",
+          "lumaStdDev": 106.41
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-40-closing.png",
+          "lumaStdDev": 17.88
+        }
+      ],
+      "contactSheet": "media/day-40-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:12.003031+00:00",
+      "visualNotes": "Reviewed all four scene frames. Correct 14-day return deadline, singular authorized item copy, and all three return steps. Both details pages are complete and readable with no clipping or collisions."
+    },
+    {
+      "day": 41,
+      "executionId": 705,
+      "workflowId": "ZvidSeries2Day41",
+      "jobId": "9314d815-74ec-4ba8-a04f-2351adec75f5",
+      "file": "media/day-41.mp4",
+      "bytes": 180299,
+      "sha256": "fec78e334025cd66611d52e03aab2c8c07bca671329c50dece1b6014eb72949e",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-41-opening.png",
+          "lumaStdDev": 27.69
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-41-details-1.png",
+          "lumaStdDev": 106.0
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-41-closing.png",
+          "lumaStdDev": 24.41
+        }
+      ],
+      "contactSheet": "media/day-41-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:12.749577+00:00",
+      "visualNotes": "Reviewed all three scene frames. Day 1, day 2 and day 5 correctly map to October 5, 6 and 9. Employee, role, locations and weekday/holiday note are readable and match source."
+    },
+    {
+      "day": 42,
+      "executionId": 706,
+      "workflowId": "ZvidSeries2Day42",
+      "jobId": "97d85174-37a1-4dd1-9fb0-462d4e93733e",
+      "file": "media/day-42.mp4",
+      "bytes": 187585,
+      "sha256": "242729d1700bf7481008e3896a90ef3952ef9a0122dddd991c3651c79ed29d07",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-42-opening.png",
+          "lumaStdDev": 30.27
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-42-details-1.png",
+          "lumaStdDev": 105.9
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-42-closing.png",
+          "lumaStdDev": 24.3
+        }
+      ],
+      "contactSheet": "media/day-42-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:13.548481+00:00",
+      "visualNotes": "Reviewed all three scene frames. Both UTC interview slots, panel names, 60 interview minutes, 15 break minutes and 75-minute agenda are correct. Full title and closing wrap cleanly."
+    },
+    {
+      "day": 43,
+      "executionId": 707,
+      "workflowId": "ZvidSeries2Day43",
+      "jobId": "88cd9096-52b5-4ebc-94b6-d5913c914e5b",
+      "file": "media/day-43.mp4",
+      "bytes": 236602,
+      "sha256": "d2605e09c4344a63c008406f71d3e6cb2b21469cbdd75ff1a0c1ba6307cca80d",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-43-opening.png",
+          "lumaStdDev": 30.93
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-43-details-1.png",
+          "lumaStdDev": 105.77
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-43-details-2.png",
+          "lumaStdDev": 106.73
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-43-closing.png",
+          "lumaStdDev": 23.64
+        }
+      ],
+      "contactSheet": "media/day-43-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:14.522430+00:00",
+      "visualNotes": "Reviewed all four scene frames. Three module topics/outcomes and 20+25+15=60-minute total match the source. No clipped text, blank scenes or collisions."
+    },
+    {
+      "day": 44,
+      "executionId": 708,
+      "workflowId": "ZvidSeries2Day44",
+      "jobId": "51ed7b90-2f6d-42e3-a9d5-e537fbacba36",
+      "file": "media/day-44.mp4",
+      "bytes": 280196,
+      "sha256": "41aa3d5d792115bfab001d4ea0bb5c223a038b15f34ca88ed6f5249845457e57",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-44-opening.png",
+          "lumaStdDev": 31.08
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-44-details-1.png",
+          "lumaStdDev": 105.82
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-44-details-2.png",
+          "lumaStdDev": 106.6
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-44-closing.png",
+          "lumaStdDev": 26.21
+        }
+      ],
+      "contactSheet": "media/day-44-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:15.448383+00:00",
+      "visualNotes": "Reviewed all four scene frames. High/medium/low hazard order and supplied controls are correct; complete evacuation instruction is visible on the second details page. No text clipping or collisions."
+    },
+    {
+      "day": 45,
+      "executionId": 710,
+      "workflowId": "ZvidSeries2Day45",
+      "jobId": "772ecded-9700-4474-ae4f-628f6cf94ae2",
+      "file": "media/day-45.mp4",
+      "bytes": 218741,
+      "sha256": "9af08f7f7d6c759cf9658b9cca6096afbbf464181417a1f8f027955c3fcdd22f",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-45-opening.png",
+          "lumaStdDev": 28.48
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-45-details-1.png",
+          "lumaStdDev": 106.16
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-45-details-2.png",
+          "lumaStdDev": 106.56
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-45-closing.png",
+          "lumaStdDev": 20.7
+        }
+      ],
+      "contactSheet": "media/day-45-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:16.579657+00:00",
+      "visualNotes": "Reviewed all four scene frames. Score 92 percent, 80-percent threshold, Passed result, completion date and supplied certificate reference are correct and readable. No clipping or collisions."
+    },
+    {
+      "day": 46,
+      "executionId": 711,
+      "workflowId": "ZvidSeries2Day46",
+      "jobId": "be471b9f-9511-4fcb-ad77-6e019eb6e2b6",
+      "file": "media/day-46.mp4",
+      "bytes": 174093,
+      "sha256": "307da479760fb5ddb609d3b80bebf180e8c280907a169a88e68e6386840c59ef",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-46-opening.png",
+          "lumaStdDev": 27.47
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-46-details-1.png",
+          "lumaStdDev": 105.95
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-46-closing.png",
+          "lumaStdDev": 24.0
+        }
+      ],
+      "contactSheet": "media/day-46-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:17.376926+00:00",
+      "visualNotes": "Reviewed all three scene frames. Support has two actions, Product has one action with corrected singular copy, and one action is overdue on October 1. Task text and dates fit their cards; closing wraps cleanly."
+    },
+    {
+      "day": 47,
+      "executionId": 712,
+      "workflowId": "ZvidSeries2Day47",
+      "jobId": "07b325db-6575-4a4d-b393-4cb1aabe082a",
+      "file": "media/day-47.mp4",
+      "bytes": 185620,
+      "sha256": "bd04c7a9e292a57c566cae19e78d458450bdf891fb4f1be748d3865bb3bdb4d0",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-47-opening.png",
+          "lumaStdDev": 23.61
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-47-details-1.png",
+          "lumaStdDev": 105.81
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-47-closing.png",
+          "lumaStdDev": 24.15
+        }
+      ],
+      "contactSheet": "media/day-47-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:18.117597+00:00",
+      "visualNotes": "Reviewed all three scene frames. Correct September 24 next-service date, seven overdue days as of October 1, and one of two assets due. Added third card is present. All text wraps cleanly without clipping or collisions."
+    },
+    {
+      "day": 48,
+      "executionId": 713,
+      "workflowId": "ZvidSeries2Day48",
+      "jobId": "661136cf-a20a-48b8-b1dc-70f314ca5b17",
+      "file": "media/day-48.mp4",
+      "bytes": 176753,
+      "sha256": "1aedc0140a6daa804a730e0f3f55f1ce104c7ea29c7ea50da3ab85c6bb54a40a",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-48-opening.png",
+          "lumaStdDev": 35.32
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-48-details-1.png",
+          "lumaStdDev": 106.07
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-48-closing.png",
+          "lumaStdDev": 24.8
+        }
+      ],
+      "contactSheet": "media/day-48-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:18.959962+00:00",
+      "visualNotes": "Reviewed all three scene frames. Desk mat requirement is 30-8=22, pen pack requirement is 40-15=25, total 47 units. Correctly excludes healthy notebook stock. All text is readable without clipping or collisions."
+    },
+    {
+      "day": 49,
+      "executionId": 721,
+      "workflowId": "ZvidSeries2Day49",
+      "jobId": "fde594ab-5de0-4910-94c3-4a8ce13cd7dd",
+      "file": "media/day-49.mp4",
+      "bytes": 245777,
+      "sha256": "84ae697c9dad94de0f1ad7c5d67a8bb9e38e66d16b7eb04e6151362a157aaaa4",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-49-opening.png",
+          "lumaStdDev": 22.46
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-49-details-1.png",
+          "lumaStdDev": 105.84
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-49-details-2.png",
+          "lumaStdDev": 106.71
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-49-closing.png",
+          "lumaStdDev": 29.16
+        }
+      ],
+      "contactSheet": "media/day-49-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:19.919198+00:00",
+      "visualNotes": "All four scene frames verified. Three stops, UTC ETAs, service times, and the 85 minute route summary match the supplied data; text is fully visible."
+    },
+    {
+      "day": 50,
+      "executionId": 715,
+      "workflowId": "ZvidSeries2Day50",
+      "jobId": "98f6e00a-4230-479d-a45d-e9ed19de6b3f",
+      "file": "media/day-50.mp4",
+      "bytes": 268855,
+      "sha256": "5c81c8fd803749e7b8b0fb5585146f12fe3e5f02801727718eb5a37cfb5804e6",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-50-opening.png",
+          "lumaStdDev": 27.94
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-50-details-1.png",
+          "lumaStdDev": 105.92
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-50-details-2.png",
+          "lumaStdDev": 106.58
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-50-closing.png",
+          "lumaStdDev": 28.1
+        }
+      ],
+      "contactSheet": "media/day-50-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:21.011294+00:00",
+      "visualNotes": "Reviewed all four scene frames. Correct October 20 deadline, nineteen days from the October 1 reference, two eligibility conditions and all three required documents. Full final-check text fits; no clipping or collisions."
+    },
+    {
+      "day": 51,
+      "executionId": 723,
+      "workflowId": "ZvidSeries2Day51",
+      "jobId": "ebe6dd64-3bc0-4285-ae93-44a310ace078",
+      "file": "media/day-51.mp4",
+      "bytes": 181596,
+      "sha256": "b1100f07f2ca1ba4423e87d02c9a3ccb91b18e6e48be05ed96787cc47055d1e9",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-51-opening.png",
+          "lumaStdDev": 27.05
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-51-details-1.png",
+          "lumaStdDev": 105.8
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-51-closing.png",
+          "lumaStdDev": 24.6
+        }
+      ],
+      "contactSheet": "media/day-51-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:22.212587+00:00",
+      "visualNotes": "Opening, detail, and closing frames verified. Two days and three activities on October 10\u201311 match the itinerary; local time note and all activity labels are readable."
+    },
+    {
+      "day": 52,
+      "executionId": 724,
+      "workflowId": "ZvidSeries2Day52",
+      "jobId": "41f3f9ea-29f9-496f-b67d-12bf730323c5",
+      "file": "media/day-52.mp4",
+      "bytes": 305417,
+      "sha256": "271004eee28b3d4662b23d3aa37a22f7b8fdbc5d16c1402cd9f921fcac876cb7",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-52-opening.png",
+          "lumaStdDev": 30.1
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-52-details-1.png",
+          "lumaStdDev": 105.71
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-52-details-2.png",
+          "lumaStdDev": 106.26
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-52-closing.png",
+          "lumaStdDev": 26.2
+        }
+      ],
+      "contactSheet": "media/day-52-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:23.339736+00:00",
+      "visualNotes": "All four scene frames reviewed. Check-in from 15:00 local time, public arrival steps, and all three amenities match the input; private access reminder is fully visible and no text clips."
+    },
+    {
+      "day": 53,
+      "executionId": 725,
+      "workflowId": "ZvidSeries2Day53",
+      "jobId": "799faefd-0b97-4088-a441-b710e232c890",
+      "file": "media/day-53.mp4",
+      "bytes": 188908,
+      "sha256": "39c899e09780f12a4d4becd4835f3f267b996b50926577ba0543413bf51c742a",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-53-opening.png",
+          "lumaStdDev": 23.47
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-53-details-1.png",
+          "lumaStdDev": 105.62
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-53-closing.png",
+          "lumaStdDev": 21.25
+        }
+      ],
+      "contactSheet": "media/day-53-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:14:45.671013+00:00",
+      "visualNotes": "All three scene frames reviewed. Milo Demo is shown as a three year old cat; personality, care needs, and complete HTTPS application URL match the profile and fit within the cards."
+    },
+    {
+      "day": 54,
+      "executionId": 726,
+      "workflowId": "ZvidSeries2Day54",
+      "jobId": "38f31456-3383-4a4b-a0bd-9c66757bee95",
+      "file": "media/day-54.mp4",
+      "bytes": 187474,
+      "sha256": "78371481112904d64442cfa82014aeb5e5886f46d72ce9cb8445fb01091c1f99",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-54-opening.png",
+          "lumaStdDev": 28.5
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-54-details-1.png",
+          "lumaStdDev": 105.91
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-54-closing.png",
+          "lumaStdDev": 26.27
+        }
+      ],
+      "contactSheet": "media/day-54-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:16:26.109346+00:00",
+      "visualNotes": "Opening, details, and closing frames reviewed. Three volunteers across two stations and the 180 minute 08:00\u201311:00 UTC shift are correct; singular volunteer label and complete task text are readable."
+    },
+    {
+      "day": 55,
+      "executionId": 727,
+      "workflowId": "ZvidSeries2Day55",
+      "jobId": "1ac75752-e40a-47ea-bdc9-afd2d15a4c79",
+      "file": "media/day-55.mp4",
+      "bytes": 201788,
+      "sha256": "662122c958d268f4241535edb4c90424bee88d513b4b9bf954e243de0e861fa3",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-55-opening.png",
+          "lumaStdDev": 31.91
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-55-details-1.png",
+          "lumaStdDev": 105.76
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-55-closing.png",
+          "lumaStdDev": 26.57
+        }
+      ],
+      "contactSheet": "media/day-55-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:17:57.543974+00:00",
+      "visualNotes": "All three scene frames reviewed. USD 125 divided by USD 12 correctly yields ten estimated kits and USD 5 remaining. Estimated impact wording and full donor title are readable without clipping."
+    },
+    {
+      "day": 56,
+      "executionId": 728,
+      "workflowId": "ZvidSeries2Day56",
+      "jobId": "63b236b8-9ddb-45bf-bb10-641cfa87015d",
+      "file": "media/day-56.mp4",
+      "bytes": 203493,
+      "sha256": "8312bd1b6643800799551d533cefce6231f5ecc869da053e624ab66c314b69af",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-56-opening.png",
+          "lumaStdDev": 23.15
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-56-details-1.png",
+          "lumaStdDev": 106.32
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-56-details-2.png",
+          "lumaStdDev": 106.66
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-56-closing.png",
+          "lumaStdDev": 21.46
+        }
+      ],
+      "contactSheet": "media/day-56-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:19:15.346283+00:00",
+      "visualNotes": "All four scene frames reviewed. Vote counts 24/18/18 yield 40/30/30 percent from 60 votes; Workflow basics is correctly selected as the top response. All labels, counts, and rounding note are readable."
+    },
+    {
+      "day": 57,
+      "executionId": 729,
+      "workflowId": "ZvidSeries2Day57",
+      "jobId": "7fcbff11-aaca-4741-a72f-237f087d3b18",
+      "file": "media/day-57.mp4",
+      "bytes": 204404,
+      "sha256": "edcb29758155845392370feb780ea46e1c67204c09f6ac686033323e7e185914",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-57-opening.png",
+          "lumaStdDev": 27.97
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-57-details-1.png",
+          "lumaStdDev": 106.07
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-57-details-2.png",
+          "lumaStdDev": 106.71
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-57-closing.png",
+          "lumaStdDev": 22.23
+        }
+      ],
+      "contactSheet": "media/day-57-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:20:33.306500+00:00",
+      "visualNotes": "All four scene frames reviewed. Three contributions sum to USD 550 against a USD 1000 goal, correctly showing 55 percent and USD 450 remaining. Values and complete supporting copy are readable."
+    },
+    {
+      "day": 58,
+      "executionId": 730,
+      "workflowId": "ZvidSeries2Day58",
+      "jobId": "4c0aa6b8-3841-4d71-9e24-d561ab3e8a81",
+      "file": "media/day-58.mp4",
+      "bytes": 196258,
+      "sha256": "977205d24847828c3d03561320286509d520feed35fedf9a3392911293202ab7",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-58-opening.png",
+          "lumaStdDev": 31.34
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-58-details-1.png",
+          "lumaStdDev": 105.9
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "day-58-closing.png",
+          "lumaStdDev": 27.01
+        }
+      ],
+      "contactSheet": "media/day-58-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:23:09.815632+00:00",
+      "visualNotes": "All three scene frames reviewed. Setup time 40 to 25 correctly shows minus 15 and minus 37.5 percent; onboarding 60 to 78 shows plus 18 and plus 30 percent. Both count as improvements for their specified directions, and supporting copy fits."
+    },
+    {
+      "day": 59,
+      "executionId": 731,
+      "workflowId": "ZvidSeries2Day59",
+      "jobId": "66f1807f-6b6f-431d-9684-1e84c6c9aa9e",
+      "file": "media/day-59.mp4",
+      "bytes": 234411,
+      "sha256": "2964ae399b910b291018237e2d651ecee90ba8f226e74a7ce9fcab941b390614",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-59-opening.png",
+          "lumaStdDev": 27.42
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-59-details-1.png",
+          "lumaStdDev": 106.07
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-59-details-2.png",
+          "lumaStdDev": 106.67
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-59-closing.png",
+          "lumaStdDev": 25.87
+        }
+      ],
+      "contactSheet": "media/day-59-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:24:33.540802+00:00",
+      "visualNotes": "All four scene frames reviewed. One of three milestones complete correctly yields 33.3 percent; the September 30 pilot is overdue relative to October 1, and the next milestone is correct. All text is visible; Requirements approved wraps within the long first word to fit its card."
+    },
+    {
+      "day": 60,
+      "executionId": 733,
+      "workflowId": "ZvidSeries2Day60",
+      "jobId": "c906baf0-3002-4326-a634-34a44870692f",
+      "file": "media/day-60.mp4",
+      "bytes": 242167,
+      "sha256": "249870be755b5ba6bb0240c6187837d494037d7184e16cd3ba02e31e1b1cb467",
+      "mediaSource": "n8n-watch-binary",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "day-60-opening.png",
+          "lumaStdDev": 30.58
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "day-60-details-1.png",
+          "lumaStdDev": 105.92
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "day-60-details-2.png",
+          "lumaStdDev": 106.72
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "day-60-closing.png",
+          "lumaStdDev": 27.58
+        }
+      ],
+      "contactSheet": "media/day-60-contact.png",
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "checkedAt": "2026-10-01T10:34:58.600973+00:00",
+      "visualNotes": "Corrected execution 733: all four scene frames reviewed. Step 1/2/3 of 3 are readable, and every complete original cooking instruction is now visible in the detail text, including recipe and timing. Four servings and doubled ingredients are correct; no text clips."
+    }
+  ]
+}

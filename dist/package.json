@@ -32,30 +32,31 @@
     "homepage": "https://zvid.io",
     "author": {
         "name": "Zvid",
-        "email": "help@zvid.io",
-        "url": "https://zvid.io"
+        "url": "https://zvid.io/contact"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Zvid-io/zvid-n8n.git"
     },
     "bugs": {
-        "url": "https://github.com/Zvid-io/zvid-n8n/issues",
-        "email": "help@zvid.io"
+        "url": "https://zvid.io/contact"
     },
     "engines": {
         "node": ">=20.19"
     },
     "main": "index.js",
     "scripts": {
-        "build": "n8n-node build",
+        "build": "n8n-node build && node scripts/clean-local-qa-dist.js",
         "dev": "n8n-node dev",
         "format": "prettier nodes credentials --write",
         "lint": "n8n-node lint",
         "lintfix": "n8n-node lint --fix",
         "workflows:organize": "node scripts/organize-workflow-series.js --write",
-        "test": "npm run build && node --test test/nodes.test.js test/workflow-series.test.js test/workflow-preview.test.js",
-        "prepublishOnly": "npm run build && npm run lint && node --test test/nodes.test.js test/workflow-series.test.js test/workflow-preview.test.js"
+        "test": "npm run build && node --test test/nodes.test.js test/workflow-series.test.js test/workflow-preview.test.js test/workflow-runtime-repairs.test.js test/review-template-upgrades.test.js test/review-campaigns.test.js && node --test test/series-two-framework.test.js test/series-two-specs.test.js && node --test test/series-two-source-adapters.test.js test/series-two-publication-framework.test.js && npm run test:studio-series",
+        "prepublishOnly": "npm run build && npm run lint && node --test test/nodes.test.js test/workflow-series.test.js test/workflow-preview.test.js test/workflow-runtime-repairs.test.js test/review-template-upgrades.test.js test/review-campaigns.test.js && node --test test/series-two-framework.test.js test/series-two-specs.test.js && node --test test/series-two-source-adapters.test.js test/series-two-publication-framework.test.js && npm run test:studio-series",
+        "workflows:series-two": "node scripts/build-series-two.js",
+        "workflows:studio-series": "node scripts/build-studio-series.js --canonical",
+        "test:studio-series": "node --test test/studio-series-*.test.js"
     },
     "files": [
         "dist",

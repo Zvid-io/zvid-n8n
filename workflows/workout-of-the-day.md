@@ -1,214 +1,59 @@
-# Workout of the day from your training sheet
+# Standard and scaled workout-of-the-day videos
 
-## Required Zvid node
+[Import the workflow](zvid-workout-of-the-day.json).
 
-Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
-
-[`zvid-workout-of-the-day.json`](zvid-workout-of-the-day.json)
-
-Every morning at 06:00: read today's row from the gym's training sheet and turn it
-into a 1080×1920 workout-of-the-day video — hero-footage hook, the full board
-(up to five exercises with reps), the coach's note — ready for Stories, Reels,
-Shorts or the members' group chat.
-
-```
-Schedule (06:00) ─▶ Config ─▶ Read workout sheet ─▶ Pick today's row
-   ─▶ Build project ─▶ Validate (free) ─▶ Check validation ─▶ Dry run?
-        ├─ false (default) ─▶ Submit render ─▶ poll ─▶ Run summary ─▶ ▶ Watch video
-        └─ true ────────────▶ Save draft ─▶ Dry run summary (editorLink, free)
-```
-
-## What changed
-
-Two changes since the first release of this template:
-
-1. **It renders on the first run.** `dryRun` now defaults to **`false`** in
-   `Config`, so importing the workflow and hitting *Test manually* produces a
-   real video — and that **first run spends credits** (about **13**, see
-   [Cost per video](#cost-per-video)). The dry-run branch is untouched and
-   still there as an opt-in escape hatch: set `dryRun: true` in `Config` for a
-   free pass that validates, quotes the cost and saves a draft.
-2. **New `▶ Watch video` node at the end.** It downloads the finished MP4 and
-   n8n plays it inline in the node's output panel. Click the node after a run
-   and the workout video is right there — no hunting for a URL in the summary
-   JSON.
-
-## What it makes
-
-A ~13 second vertical video in three beats, adapted from the `fitness-wod`
-template in Zvid's library:
-
-1. **Hook** — your hero footage under a dark gradient, brand chip top-left, then
-   "WORKOUT OF THE DAY", the workout name, focus and date slide in.
-2. **The board** — the whole workout on one card: numbered exercises, reps in the
-   accent colour, staggered row-by-row entrance. This is the frame people
-   screenshot, so everything from the sheet is on screen at once.
-3. **Coach's note** — the day's cue as a big quote, your handle on an accent pill.
-
-Type sizes adapt to the content: a 42-character workout name, a five-word rep
-scheme like `4x8 each side`, or a two-sentence coach's note all scale down to fit
-instead of clipping. One video element total, so free plans are nowhere near the
-5-video limit.
-
-## Requirements
-
-| | |
-| --- | --- |
-| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to test. |
-| Google account | The training sheet lives in Google Sheets; n8n's built-in Google Sheets credential (OAuth2 or service account) reads it. |
-
-No other services, no LLM, no stock-media accounts. The default hero clip and
-music bed are public URLs you can keep or swap in `Config`.
-
-## The training sheet
-
-One row per day, header row required:
-
-| Date | WorkoutName | Focus | Ex1 | Ex2 | … | Ex5 | CoachNote |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 2026-07-27 | PUSH DAY 01 | Chest / Shoulders / Triceps | Bench press x 5x5 | Incline DB press x 3x10 | … | Rope triceps pushdown x 3x12 | Rest 90s between sets. |
-
-- **Date** — `YYYY-MM-DD`, ideally with the column formatted as plain text.
-  Date-formatted cells and serial numbers are handled too; ambiguous formats like
-  `07/03/2026` are not worth the risk.
-- **Ex1…Ex5** — `Exercise x Reps`. The split happens on the **last** ` x `, so
-  `Weighted chin-up cluster sets x 5x(2+2+2)` parses correctly. A cell without
-  ` x ` (say `400m run`) renders without a reps line. Blank cells are skipped;
-  Ex1 is required.
-- **Focus** and **CoachNote** are optional. An empty note falls back to
-  "Log your lifts. Tag the gym."
-- Header matching ignores case, spaces and underscores — `Workout Name` works.
-
-**No row for today?** The run fails with a message telling you exactly which date
-to add — that is the safe default for a daily social post. If you would rather
-repost the most recent past workout, set `fallbackToLatest: true`; the video
-always shows that row's own date, never today's.
+For gyms and coaches sharing a daily training board. The workflow selects today's approved plan in the configured timezone and builds a standard video plus an optional scaled version from coach-written alternatives. Each has its own exercises, caption, render ID and result columns. Completed versions are skipped independently, so rerunning can finish a missing version without paying for the completed one again.
 
 ## Setup
 
-1. **Import** `zvid-workout-of-the-day.json`.
-2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
-3. **Google Sheets credential** — attach it to *Read workout sheet* and pick your
-   spreadsheet + sheet in the two dropdowns.
-4. **Open `Config`** and set `gymName`, `handle`, `accent`.
-5. **Run `Test manually`.** The workflow renders for real out of the box, so
-   this **first run spends credits** — about **13** for the default board (see
-   [Cost per video](#cost-per-video)). When it finishes, click the
-   **`▶ Watch video`** node at the end of the canvas to play the result inside
-   n8n; *Run summary* right before it holds `videoUrl`, `creditsCharged` and
-   the ready-to-post `caption`.
-6. **Prefer a free preview first?** Set `dryRun: true` in `Config` before that
-   run. Nothing is charged: you get the exact cost, the caption, and an
-   **`editorLink`** that opens the draft in the Zvid editor. Set it back to
-   `false` when you want the render.
-7. **Activate** the workflow for the daily 06:00 schedule.
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with a key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
 
-## Configuration
+Connect every Google Sheets node to the **same spreadsheet and tab** using a Google Sheets credential with read/write access. Create all listed headers before running. The download step fetches completed media only; supported Zvid operations use the native Zvid node.
 
-Everything lives in the `Config` node.
+In **Set gym branding and workout limits**, set gymName, handle, colors, heroVideo, optional musicUrl, timezone, polling limits and maxCreditsPerVideo. Align the n8n workflow timezone with the configuration. Test manually before enabling the daily 6am schedule. Use source media within your account's limits; bundled hero footage is 1080×1920.
 
-| Key | Default | Notes |
-| --- | --- | --- |
-| `gymName` | `IRONHAUS ATHLETIC` | Brand chip on the hook, board header, footers. |
-| `handle` | `@ironhaus.athletic` | Hook date line, board footer, the accent pill at the end. |
-| `accent` / `background` | `#C6FF3D` / `#07080A` | The whole design keys off these two. |
-| `font` | `Archivo` | Any font in Zvid's font library. |
-| `heroVideo` | a gym clip from Zvid's stock library | Swap for your own footage — any public MP4 URL; portrait crops best. |
-| `musicUrl` / `musicVolume` | an energetic bed / `0.18` | Set `musicUrl` to `""` for a silent video. |
-| `timezone` | `""` (n8n instance timezone) | IANA name, e.g. `America/New_York`. Decides what "today" means. |
-| `dateLocale` | `en-US` | Formats the on-screen date label ("MON, JUL 27"). |
-| `fallbackToLatest` | `false` | Reuse the newest past row when today has no row. |
-| `resolution` / `frameRate` | `instagram-reel` (1080×1920) / `30` | |
-| `dryRun` | `false` | Renders for real by default. Set it to `true` for a free pass that validates the project, quotes the credits and saves a draft you can watch in the editor — without spending anything. |
-| `pollSeconds` / `timeoutMinutes` | `10` / `20` | Render poll loop. |
+## Sheet columns
 
-## Cost per video
-
-The default board renders for **13 Zvid credits** (~12.6 s at 1080×1920). The
-free *Validate project (free)* step still runs before every render and returns
-the exact quote for your row — it is just no longer a stopping point: the render
-now proceeds automatically. Set `dryRun: true` in `Config` if you want the quote
-without the render. Reading the sheet is free; there are no other paid services
-in the workflow.
-
-## How it works
-
-| Node | What it does |
+| Column | Purpose |
 | --- | --- |
-| **Config** | Every knob in one place — no values buried in expressions. |
-| **Read workout sheet** | Plain Google Sheets read of all rows (dropdown-picked document + sheet). |
-| **Pick today's row** | Computes "today" in your timezone, matches the Date column (ISO strings, parseable dates and sheet serials), splits `Ex1..Ex5` on the last ` x `, builds the on-screen date label from the row's own date, and fails with actionable messages (missing row, empty WorkoutName, no exercises). |
-| **Build project JSON** | Assembles the three scenes. Fixed layout + tiered type sizes: the longest exercise name picks one shared row size (46/40/34 px) so the board never mixes sizes; workout name and coach note scale the same way. Every user string is HTML-escaped. |
-| **Validate project (free)** | Runs the exact pipeline a render submission runs — schema, plan limits, credit quote — without spending credits. Failures surface as a field list. |
-| **Dry run?** | The branch switch. With the default `dryRun: false` it goes straight to the render; with `dryRun: true` it takes the free branch instead and nothing is submitted. |
-| **Save draft to editor / Dry run summary** | Dry-run branch only — these two never execute while `dryRun` is `false`. Saves the project as a draft (free) and reports `creditsRequired`, the caption, any warnings and an `editorLink` for [editor.zvid.io](https://editor.zvid.io). Best-effort: a hiccup on the draft save never hides the dry-run report. |
-| **Submit render / Wait / Get render status** | The paid render plus the `pollSeconds` poll loop. |
-| **Still rendering?** | Fails fast on a failed render and stops the poll loop at `timeoutMinutes`. |
-| **Run summary** | `videoUrl`, `jobId`, `creditsCharged`, the workout name, date, exercise count and video length, plus a ready-to-paste `caption` (workout, focus, all exercises with reps, coach's note, hashtags). |
-| **▶ Watch video** | Downloads the finished MP4 into a binary field. n8n branches its output panel on the binary's mime type and renders `video/*` inline with a player and a download button, and Zvid's CDN serves these as `Content-Type: video/mp4` — so clicking the node just plays today's workout. Retries 3× (the CDN can 404 for a moment right after a render completes) and is set to continue on error, so watching a video can never fail a run that already succeeded. Attach any platform node after it: the MP4 is already on the item as binary `data`, and the text is `{{ $('Run summary').first().json.caption }}`. |
+| WorkoutKey | Required unique, permanent identifier, such as wod-20261001. |
+| Date | Required YYYY-MM-DD; keep one training plan per date. |
+| Approval | Set to approved after the coach reviews both supplied versions. |
+| WorkoutName, Ex1 | Required title and first standard exercise. |
+| Focus, Ex2, Ex3, Ex4, Ex5, CoachNote | Optional standard-plan details. |
+| ScaledEx1, ScaledEx2, ScaledEx3, ScaledEx4, ScaledEx5 | Optional coach-authored scaled plan; ScaledEx1 enables the second video. No substitutions or exercise advice are generated. |
+| ScaledCoachNote | Optional note for the scaled video; otherwise uses CoachNote. |
+| StandardStatus, StandardJobId, StandardCredits | Workflow-maintained standard render state, job ID and quote. |
+| StandardVideoUrl, StandardCaption, StandardRenderedAt | Standard video, sharing caption and completion timestamp. |
+| ScaledStatus, ScaledJobId, ScaledCredits | Workflow-maintained scaled render state, job ID and quote. |
+| ScaledVideoUrl, ScaledCaption, ScaledRenderedAt | Scaled video, sharing caption and completion timestamp. |
 
-The workflow already uses the official Zvid node for all supported operations. Install and configure it as described above.
+Format exercises as **Exercise x Reps**, for example Squat x 5x5. The last spaced x or × separates the name and reps. Leave unused exercise cells blank. Supply the scaled exercises yourself; the workflow does not infer a suitable plan for any person.
 
-## Troubleshooting
+If today is missing, the default returns a zero-work report. Optional fallbackToLatest=true picks the latest past date, never a future date, and keeps that original date on the video and in the report. Duplicate dates or keys stop for correction. Unapproved and completed versions are reported as skipped.
 
-| Symptom | Cause |
-| --- | --- |
-| `The sheet returned no rows` | Document/sheet not picked in *Read workout sheet*, or the sheet has no header row. |
-| `No row has a readable Date` | The Date column isn't `YYYY-MM-DD` (or anything parseable). Format the column as plain text. |
-| `No workout row for today (…)` | There is no row whose Date is today in your timezone. Add the row, fix `timezone` in Config, or set `fallbackToLatest: true`. |
-| `The row for … has no exercises` | All Ex1..Ex5 cells are blank. Fill at least Ex1 as `Exercise x Reps`. |
-| Reps ended up inside the exercise name | The cell has no ` x ` separator (spaces matter): `Bench press x 5x5`, not `Bench press x5x5`. |
-| Wrong date on the video | The video shows the **row's** date by design. If the row is right but "today" is wrong, set `timezone`. |
-| `Zvid rejected the project` | The error lists the offending fields — most often a malformed `heroVideo`/`musicUrl` after editing Config. |
-| Render failed / timed out | `Still rendering?` reports the job id and state; check the render in the dashboard at [app.zvid.io](https://app.zvid.io). |
-| Video has no music | `musicUrl` is empty, or the URL is not a downloadable audio file. |
-| `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
+At most two videos are selected per run. With maxCreditsPerVideo=20, at most 40 newly quoted credits can be submitted. Each version is validated and rendered sequentially. Quotes are not reported as actual charged credits.
 
-## Verified
+## Upgrade an existing sheet
 
-> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
+Preserve Date, WorkoutName and all original exercises. Add WorkoutKey and Approval, optional ScaledEx1–ScaledEx5 and ScaledCoachNote, plus all twelve Standard/Scaled tracking columns listed above. Assign unique keys; let the coach mark reviewed plans approved. If an older workflow produced a video you want to retain, copy its URL to StandardVideoUrl to skip it. Do not change old dates to make sample content appear current.
 
-n8n import structure checked mechanically (JSON parses, all connections resolve,
-every code node compiles, unique names, Header Auth on all four Zvid calls), and
-the embedded builder/row-picker code is extracted verbatim from the same files
-that pass the unit fixtures.
+## Rendering, preview and recovery
 
-**Rendered locally on the production Zvid engine** (`@zvid-io/zvid` CLI) for two
-fixture rows — the default PUSH DAY 01 board and a stress row (42-character
-workout name, 49-character exercise names, `5x(2+2+2)`-style reps, two-sentence
-coach note) — and every extracted frame reviewed by eye: no clipped or
-overflowing text, rows stay inside the card, transitions never show an empty
-board, the long note wraps to three centred lines.
+- **dryRun=false is the default and spends Zvid credits.** Validation quotes the design before each new render. Set maxCreditsPerVideo (default 20) to your ceiling; a missing, invalid or excessive quote stops before submission.
+- **dryRun=true** returns the validated design JSON, caption and credit quote. It submits no render, writes no sheet cells and skips saved jobs. It does not create an editor draft; published package v0.1.8 lacks Project → Create.
+- Before submitting, the matching item is marked **submitting**. After acceptance, its job ID is saved with **rendering**. The workflow then polls with a separate deadline per video. A saved job is resumed before new paid work, even if content approval later changes; that recovery only records the already accepted job.
+- **completed** stores the video URL, caption and completion timestamp. **failed**, **timed_out** and **needs_review** retain the job ID. These states require inspection and are skipped on reruns. A submission that times out before returning an ID stays **submitting** because it may already have been accepted.
+- To resume a confirmed in-progress job, keep its job ID and set its status to **rendering**. To intentionally rerender after inspecting Zvid, clear that item's status, job ID and video URL. Never clear every row as a retry strategy.
+- Run one execution at a time. Google Sheets is not an atomic lock: overlapping executions can both read an eligible row. Do not edit an in-flight item's content or key. An accepted request followed by a failed sheet write needs manual reconciliation at https://app.zvid.io.
+- Open **Watch video → Binary → data → View** to review a completed MP4; select the output item for a batch. Downloads use a 30-second timeout and at most three attempts. A failed preview download preserves the saved video URL.
+- Social posting is not included. Review factual copy, media and captions before sharing.
 
-**Remote validation against the live API** (`POST /api/render/validate/api-key`
-via MCP, `remote: true`): `valid: true`, **0 errors, 0 warnings**,
-`creditsRequired: 13`, schema `1.0.0`. Media URLs HEAD-checked (hero 200
-`video/mp4` 11.1 MB, music 200 `audio/mpeg` 3.7 MB).
+## Verification
 
-**Not executed:** nothing in the publish/delivery tail — no social platform,
-no email provider. Those nodes are documented, not exercised.
+The exported workflow graph is exercised with service stubs covering normal rendering, saved-job recovery, preview-only runs, credit limits, failed outcomes and repeated runs. No paid rendering or social posting is required for those checks. Earlier render examples do not prove newly added orchestration; use the test report supplied with this revision for its actual validation evidence.
 
-### Live n8n execution (2026-07-28)
+For help: https://zvid.io/contact
 
-Imported into **n8n 2.29.10** (self-hosted, Docker) with a Header Auth
-credential holding a real Zvid API key, `dryRun: false`, and executed for
-real. Every video below was downloaded from the CDN and reviewed frame by
-frame at 2 fps.
-
-- **Run**: green end to end. Rendered `12.57 s`, 1080x1920 @30 fps, AAC audio,
-  **13 credits**.
-- **Date matching proved itself live**: the tab held both a 2026-07-27 and a
-  2026-07-28 row; the run picked today's and the board reads `TUE, JUL 28` —
-  the row's own date, as designed.
-- **The returned `videoUrl` is a valid URL.** Project names are slugged, so the
-  CDN filename carries no spaces and the link can be pasted straight into a
-  publish node or `curl` (verified: HTTP 200 on the raw URL).
-
-**Scope of that evidence after the two changes above.** That run was executed
-with `dryRun: false` — exactly the path the workflow now takes by default — so
-everything in this section still describes the default behaviour, unchanged.
-The `▶ Watch video` node was added *after* that run, so the node itself is
-**not** covered by this live evidence: its contract (binary `file` response,
-retries, `onError: continue`) and n8n's inline `video/*` rendering were
-verified separately, but it was not present in the end-to-end execution
-recorded here.
+## Canvas organization (2026-10-02)
+The main stages now follow one continuous left-to-right path. Standard/scaled writes stay beside their decision, resume paths run above the main nodes, and the completed-item batch return runs below the stages. Note 3 is the batch entry; its done output produces the summary. The Watch section sits beside the final result. This revision changes positions and section notes only; functional node settings, credentials, names, IDs and connections are preserved.

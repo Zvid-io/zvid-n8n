@@ -1,0 +1,163 @@
+{
+  "executionId": 718,
+  "status": "success",
+  "mode": "cli",
+  "startedAt": "2026-10-01 09:58:20.912",
+  "stoppedAt": "2026-10-01 09:58:22.016",
+  "lastNode": "Known series job states",
+  "output": {
+    "requested": 20,
+    "found": 20,
+    "missing": [],
+    "activeKnownJobs": [],
+    "jobs": [
+      {
+        "id": "98f6e00a-4230-479d-a45d-e9ed19de6b3f",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "tender-checklist-video"
+      },
+      {
+        "id": "41a98ad4-3232-4d5c-8204-3783da67a7a3",
+        "status": "completed",
+        "outputUrlPresent": false,
+        "thumbnailUrlPresent": true,
+        "fileName": "delivery-route-brief-video"
+      },
+      {
+        "id": "661136cf-a20a-48b8-b1dc-70f314ca5b17",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "inventory-replenishment-video"
+      },
+      {
+        "id": "07b325db-6575-4a4d-b393-4cb1aabe082a",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": false,
+        "fileName": "equipment-maintenance-video"
+      },
+      {
+        "id": "be471b9f-9511-4fcb-ad77-6e019eb6e2b6",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "meeting-action-brief-video"
+      },
+      {
+        "id": "772ecded-9700-4474-ae4f-628f6cf94ae2",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "training-completion-video"
+      },
+      {
+        "id": "51ed7b90-2f6d-42e3-a9d5-e537fbacba36",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "safety-briefing-video"
+      },
+      {
+        "id": "88cd9096-52b5-4ebc-94b6-d5913c914e5b",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "course-roadmap-video"
+      },
+      {
+        "id": "97d85174-37a1-4dd1-9fb0-462d4e93733e",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "interview-agenda-video"
+      },
+      {
+        "id": "9314d815-74ec-4ba8-a04f-2351adec75f5",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "employee-first-week-video"
+      },
+      {
+        "id": "ef24062a-c508-43d7-9925-a88e0dde87a5",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "return-instructions-video"
+      },
+      {
+        "id": "08edea32-87ef-4269-832a-abcb1f2179ad",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "appointment-preparation-video"
+      },
+      {
+        "id": "3cf60a86-a938-4c0f-9709-dc87887b4b3a",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "delivery-delay-video"
+      },
+      {
+        "id": "4d3920e8-fe4b-4a49-a4df-d1bc131d33a7",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "product-bundle-savings-video"
+      },
+      {
+        "id": "cf01ab64-f7a2-45c7-ada9-96e6b3fac75b",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "order-progress-video"
+      },
+      {
+        "id": "7ea52ac6-a58e-4a9c-b2f5-cc58edc2c57d",
+        "status": "completed",
+        "outputUrlPresent": false,
+        "thumbnailUrlPresent": true,
+        "fileName": "maintenance-notice-video"
+      },
+      {
+        "id": "e6ee7d8f-e1de-407a-bf92-1efa05d423d5",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "incident-timeline-video"
+      },
+      {
+        "id": "11ee5767-d933-4932-9b94-ecaae0cf1b64",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "plan-comparison-video"
+      },
+      {
+        "id": "cacf2ce3-5735-470a-be72-9ae237cdfde6",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "procedure-tutorial-video"
+      },
+      {
+        "id": "85493692-65c2-4ab5-aa0b-f34f9303e014",
+        "status": "completed",
+        "outputUrlPresent": true,
+        "thumbnailUrlPresent": true,
+        "fileName": "release-notes-video"
+      }
+    ]
+  },
+  "error": null,
+  "nodes": [
+    "Test manually",
+    "Read recent renders",
+    "Known series job states"
+  ],
+  "paidNodesExecuted": []
+}

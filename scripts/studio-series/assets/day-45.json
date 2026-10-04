@@ -1,0 +1,435 @@
+{
+  "name": "S2 D45 - Approved Car Price Poster Campaign",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "durationMode": "fixed",
+  "duration": 22.7,
+  "backgroundColor": "#123D32",
+  "variables": {
+    "paper": "#123D32",
+    "ink": "#FBF5DC",
+    "accent": "#DFFC76",
+    "headlineFont": "Anton",
+    "bodyFont": "Inter",
+    "dealer": "NORTHLINE SELECT",
+    "carName": "Touring SUV",
+    "carImage": "https://images.pexels.com/photos/27497571/pexels-photo-27497571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "approvedOffer": "SAMPLE APPROVED OFFER",
+    "currentPrice": "$27,500",
+    "stockId": "Stock NL 1042",
+    "offerValidity": "Price and availability require dealer confirmation.",
+    "offerTerms": "Illustrative offer. Taxes, fees and eligibility confirmed by the dealer.",
+    "cta": "MAKE IT\nYOUR NEXT DRIVE.",
+    "destination": "northline.example/approved-offer",
+    "priceCaption": "DEALER-APPROVED SAMPLE PRICE",
+    "stockCaption": "ONE VEHICLE. ALL THE DETAILS.",
+    "termsTitle": "Know the terms.",
+    "bookingLabel": "Arrange a viewing and test drive",
+    "priceNote": "Taxes and fees extra",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943327/zvid-series2-unique-music-20261002/day-45-music.mp3",
+    "musicVolume": 0.8
+  },
+  "scenes": [
+    {
+      "id": "oversized-price-poster",
+      "duration": 5.9,
+      "backgroundColor": "{{paper}}",
+      "transition": "smoothup",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{dealer}}</div><div style=\"font-family:{{bodyFont}};font-size:26px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:26px\">{{priceCaption}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 60,
+          "width": 920,
+          "height": 164,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{headlineFont}};font-size:235px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:0px\">{{currentPrice}}</div>",
+          "position": "custom",
+          "x": 60,
+          "y": 232,
+          "width": 960,
+          "height": 286,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.9
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{carImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 550,
+          "width": 1080,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.02
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{headlineFont}};font-size:85px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{carName}}</div><div style=\"font-family:{{bodyFont}};font-size:34px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:24px\">{{stockId}}</div><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:18px\">{{priceNote}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1332,
+          "width": 920,
+          "height": 309,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:28px;line-height:1.13;font-weight:700;letter-spacing:3px;color:{{ink}};margin-top:0px\">{{approvedOffer}}</div><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:26px\">{{offerValidity}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1714,
+          "width": 920,
+          "height": 143,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.9
+        }
+      ]
+    },
+    {
+      "id": "stock-details-poster",
+      "duration": 5.9,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:26px;line-height:1.13;font-weight:700;letter-spacing:2px;color:{{accent}};margin-top:0px\">{{stockCaption}}</div><div style=\"font-family:{{headlineFont}};font-size:113px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:30px\">{{carName}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 60,
+          "width": 920,
+          "height": 260,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.9
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{carImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 390,
+          "width": 1080,
+          "height": 870,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.07
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:45px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{stockId}}</div><div style=\"font-family:{{headlineFont}};font-size:162px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:24px\">{{currentPrice}}</div><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:20px\">{{priceNote}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1340,
+          "width": 920,
+          "height": 400,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.9
+        }
+      ]
+    },
+    {
+      "id": "offer-terms-poster",
+      "duration": 6.2,
+      "backgroundColor": "#DFFC76",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:700;letter-spacing:3px;color:#30523E;margin-top:0px\">{{dealer}}</div><div style=\"font-family:{{headlineFont}};font-size:145px;line-height:1.13;font-weight:500;letter-spacing:0px;color:#123D32;margin-top:0px\">{{termsTitle}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 100,
+          "width": 920,
+          "height": 295,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 6.2
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:700;letter-spacing:2px;color:#30523E;margin-top:0px\">01 / PRICE</div><div style=\"font-family:{{bodyFont}};font-size:48px;line-height:1.13;font-weight:600;letter-spacing:0px;color:#123D32;margin-top:28px\">{{offerValidity}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 480,
+          "width": 920,
+          "height": 285,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 6.2
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:700;letter-spacing:2px;color:#30523E;margin-top:0px\">02 / FINAL COST</div><div style=\"font-family:{{bodyFont}};font-size:43px;line-height:1.13;font-weight:400;letter-spacing:0px;color:#123D32;margin-top:28px\">{{offerTerms}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 840,
+          "width": 920,
+          "height": 375,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 6.2
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{carImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 1370,
+          "width": 1080,
+          "height": 550,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.02
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 6.2
+        }
+      ]
+    },
+    {
+      "id": "test-drive-poster",
+      "duration": 5.9,
+      "backgroundColor": "#DFFC76",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:3px;color:#30523E;margin-top:0px\">{{dealer}}</div><div style=\"font-family:{{headlineFont}};font-size:142px;line-height:1.13;font-weight:400;letter-spacing:0px;color:#123D32;margin-top:36px\">{{cta}}</div><div style=\"font-family:{{bodyFont}};font-size:39px;line-height:1.13;font-weight:600;letter-spacing:0px;color:#123D32;margin-top:36px\">{{bookingLabel}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 65,
+          "width": 920,
+          "height": 745,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.9
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{carImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 855,
+          "width": 1080,
+          "height": 640,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.02
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{headlineFont}};font-size:147px;line-height:1.13;font-weight:400;letter-spacing:0px;color:#123D32;margin-top:0px\">{{currentPrice}}</div><div style=\"font-family:{{bodyFont}};font-size:32px;line-height:1.13;font-weight:600;letter-spacing:0px;color:#123D32;margin-top:27px\">{{destination}}</div>",
+          "position": "custom",
+          "x": 80,
+          "y": 1560,
+          "width": 920,
+          "height": 278,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.9
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 22.7,
+      "audioBegin": 0,
+      "audioEnd": 22.7,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

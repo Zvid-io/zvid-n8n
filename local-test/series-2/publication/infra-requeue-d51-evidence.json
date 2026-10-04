@@ -1,0 +1,52 @@
+{
+  "capturedAt": "2026-10-01T13:20:05.478Z",
+  "expectedFixtures": [
+    "ZvidSeries2PublicationRequeueRejectedD51"
+  ],
+  "results": [
+    {
+      "workflowId": "ZvidSeries2PublicationRequeueRejectedD51",
+      "executionId": 798,
+      "status": "success",
+      "mode": "manual",
+      "startedAt": "2026-10-01 13:16:47.097",
+      "stoppedAt": "2026-10-01 13:16:47.695",
+      "lastNode": "Verify only status and error changed",
+      "nodes": {
+        "Reconcile rejected D51 manually": "success",
+        "Audit native recent jobs again": "success",
+        "Require proven rejection and no accepted job": "success",
+        "Read exact rejected D51 ledger row": "success",
+        "Require exact unchanged submitting row": "success",
+        "Hash frozen project_json": "success",
+        "Hash frozen input_json": "success",
+        "Hash frozen brief_json": "success",
+        "Hash frozen context_json": "success",
+        "Approve only this rejected QA row for requeue": "success",
+        "Requeue only rejected D51 status and error": "success",
+        "Read back rejected D51 reconciliation": "success",
+        "Verify only status and error changed": "success"
+      },
+      "evidence": {
+        "resource": "isolated_D51_concurrent_rejection_reconciliation",
+        "failedExecutionId": 794,
+        "ledgerTableId": "LQgWxc1qaXzfNqlx",
+        "ledgerRowId": 1,
+        "requestKey": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "status": "new",
+        "jobId": null,
+        "inputHash": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8",
+        "projectSha256": "a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836",
+        "frozenFieldsPreserved": true,
+        "onlyChangedFields": [
+          "status",
+          "last_error"
+        ],
+        "paidNodesExecuted": [],
+        "accountCountersModified": false,
+        "reconciledAt": "2026-10-01T13:16:47.694Z"
+      },
+      "error": null
+    }
+  ]
+}

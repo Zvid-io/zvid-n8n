@@ -1,0 +1,54 @@
+{
+  "reviewedAt": "2026-10-01T14:39:48.328Z",
+  "reviewedBy": "root",
+  "nativeManualUiVerified": true,
+  "currentDays": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "sourceArtifactsRemainImmutable": true,
+  "automatedChecksPassed": 620,
+  "manualRecoveryRunsPassed": 60,
+  "videoAndCanvasReviewsPassed": 30,
+  "note": "Confirmed after root manual UI execution of every canonical workflow and strict raw-byte, source, job, input, project, private file, receipt, media and canvas validation.",
+  "reports": [
+    {
+      "path": "publication/upgraded-verification.json",
+      "beforeSha256": "b122a54dac2bf2d51fd9a3b93d9c8ce82be5c1b9566bf8e8c64add330c0af25a",
+      "confirmedSha256": "69b8f49de81a6bdc8c1e19bb319538c0afb24805f0c52b7c266b6bad8869ff97"
+    },
+    {
+      "path": "flowlu-upgrade-completion.json",
+      "beforeSha256": "37ff689c8462cd33866135e4feda5eede3209d4b4eda4bc1aceab2a257856acd",
+      "confirmedSha256": "c7dcb27af3ca430e5e00271f5269ba4dc55d509cc00dcc1876211fd9bfca8269"
+    }
+  ]
+}

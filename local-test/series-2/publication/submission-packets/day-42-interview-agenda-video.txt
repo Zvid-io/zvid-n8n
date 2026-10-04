@@ -1,0 +1,50 @@
+An interview schedule to a candidate agenda video
+Day 42 — Recruiting coordinators
+
+LOCAL SUBMISSION DRAFT — NOT SUBMITTED
+
+Who needs it: Prepare a private candidate agenda from the confirmed nonconflicting interview plan.
+
+What it automates: A private Drive MP4, with full source records retained in Sheets and the n8n ledger, plus asset links, revision, job ID and handoff summary written back to D42Source for recruiting coordinators.
+
+Required services: n8n with Data Tables, @zvid/n8n-nodes-zvid, Zvid credits, Google Sheets and Google Drive.
+
+Workflow walkthrough: {{YOUTUBE_VIDEO_URL}}
+
+Describe the domain policy, source joins, persistent recovery, private handoff and verified source writeback when submitting. Include screenshots and manual execution evidence. n8n decides acceptance. Publish this companion guide and replace the overview reference with its verified public link before submission.
+
+Support: https://zvid.io/contact
+
+Why a video is useful
+A timed candidate agenda helps recruiting coordinators explain the interview topics and assigned interviewers.
+The video is a review summary; the full approved source record remains authoritative.
+
+Why the workflow complexity is justified
+Only confirmed future interviews inside the agenda window qualify; all sessions are ordered and may not overlap. Typed session rows join the source by parent_id and revision; their required fields preserve the authoritative detail. The persistent request fingerprint prevents duplicate completed revisions. Saved job and file checkpoints let interrupted work resume without blindly submitting another paid render or uploading another file. Revision rechecks and receipt readback protect the source writeback. One handoff asset per approved source revision. Changed business cells require an explicit new revision; reuse the completed asset for an unchanged source.
+
+Eligibility policy
+Only confirmed future interviews inside the agenda window qualify; all sessions are ordered and may not overlap.
+
+Input register
+D42Source: source_id, revision, approval, status, source_url, updated_at, candidateName, role, agendaLeadHours, automation_status, request_key, input_hash, job_id, video_url, drive_file_id, drive_url, completed_at, outcome_summary, automation_error
+D42Details: parent_id, revision, kind, position, startsAt, endsAt, topic, interviewer
+Typed child rows: session
+
+Business handoff
+A private Drive MP4, with full source records retained in Sheets and the n8n ledger, plus asset links, revision, job ID and handoff summary written back to D42Source for recruiting coordinators.
+
+Setup prerequisites
+Install @zvid/n8n-nodes-zvid from Settings → Community nodes before configuring Zvid credentials; a workspace owner/admin may need to install it.
+Create a Zvid API key at https://app.zvid.io/api-keys and configure Google Sheets and Google Drive OAuth2 credentials. Use a private Drive folder and a persistent n8n Data Table.
+dryRun: false submits paid renders after the free validation/quote and configured credit ceiling. Run one execution at a time; review the companion guide's lost-response reconciliation and concurrency limits.
+
+Current verification
+Local delivery verified. The earlier generation-only runs are excluded. See the local catalog for current native execution, import, media and canvas evidence.
+
+Before actual n8n submission
+Publish the included companion guide, verify its public URL, and update the overview reference before actual n8n submission.
+Complete the current manual source-to-Drive delivery, eligibility, deduplication, accepted-job resume, delivery-recovery, media and canvas checks. Attach current screenshots and evidence. n8n determines acceptance.
+
+Companion guide included locally: interview-agenda-video.md
+Canonical workflow included locally: zvid-interview-agenda-video.json
+No automatic publication, public Drive sharing or community submission has been performed.

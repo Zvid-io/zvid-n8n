@@ -1,0 +1,71 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-open-house-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "FIELDHOUSE",
+    "as_of": "2026-10-03T09:00:00Z",
+    "event_id": "OPEN1",
+    "listing_id": "PROP1",
+    "event_start": "2026-10-04T10:00:00Z",
+    "event_end": "2026-10-04T11:00:00Z",
+    "timezone": "Europe/London",
+    "lead_hours": 72,
+    "slot_minutes": 30,
+    "per_slot_capacity": 4,
+    "address": "18 Cedar Lane",
+    "area": "West Grove",
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "exterior_image": "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "interior_image": "https://images.pexels.com/photos/29012619/pexels-photo-29012619.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "garden_image": "https://images.unsplash.com/photo-1636301587190-88cbb412fea0?auto=format&fit=crop&w=1080&h=1600&q=85",
+    "first_feature": "Rooms that welcome the light.",
+    "second_feature": "A little room to breathe.",
+    "booking_url": "https://example.com/property/open-house"
+  },
+  "records": [
+    {
+      "kind": "event",
+      "record_id": "OPEN1",
+      "event_id": "OPEN1",
+      "listing_id": "PROP1",
+      "status": "scheduled",
+      "approved": true,
+      "checked_at": "2026-10-03T08:00:00Z"
+    },
+    {
+      "kind": "booking",
+      "record_id": "BK1",
+      "booking_id": "BK1",
+      "event_id": "OPEN1",
+      "slot_start": "2026-10-04T10:00:00Z",
+      "party_size": 3,
+      "status": "confirmed"
+    },
+    {
+      "kind": "interest",
+      "record_id": "I1",
+      "interest_id": "I1",
+      "event_id": "OPEN1",
+      "requested_at": "2026-10-02T08:00:00Z",
+      "party_size": 2,
+      "preferred_slot_start": "2026-10-04T10:00:00Z",
+      "contact_allowed": true,
+      "status": "interested"
+    },
+    {
+      "kind": "interest",
+      "record_id": "I2",
+      "interest_id": "I2",
+      "event_id": "OPEN1",
+      "requested_at": "2026-10-02T09:00:00Z",
+      "party_size": 1,
+      "preferred_slot_start": "",
+      "contact_allowed": true,
+      "status": "interested"
+    }
+  ]
+}

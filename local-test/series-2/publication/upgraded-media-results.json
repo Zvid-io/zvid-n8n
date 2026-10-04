@@ -1,0 +1,1944 @@
+{
+  "updatedAt": "2026-10-01T14:33:51.162324+00:00",
+  "eligibleManualDeliveries": 90,
+  "results": [
+    {
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "executionId": 742,
+      "acceptedExecutionId": 740,
+      "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+      "functionalHash": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa",
+      "projectSha256": "bce87acb7bf2772eb7c1044e4c30f53b170ebffd6f17e221c3d1a9ea679f587d",
+      "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+      "driveFileId": "1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ",
+      "file": "upgraded-media/day-31-execution-742.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 147819,
+      "sha256": "9415743cab013071fc63bb85f1855ec4c495427683b71076755e63b52b10cd72",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-31-execution-742-opening.png",
+          "lumaStdDev": 22.47
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-31-execution-742-details-1.png",
+          "lumaStdDev": 106.1
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-31-execution-742-closing.png",
+          "lumaStdDev": 20.28
+        }
+      ],
+      "contactSheet": "upgraded-media/day-31-execution-742-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:19:08.895672+00:00",
+      "visualReviewedAt": "2026-10-01T12:19:50.484218+00:00",
+      "originalMediaCaptureExecutionId": 742,
+      "replayExecutionIds": [
+        822,
+        853
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.087938+00:00"
+    },
+    {
+      "day": 32,
+      "workflowId": "ZvidSeries2Day32",
+      "executionId": 744,
+      "acceptedExecutionId": 744,
+      "jobId": "cc02f5f1-340a-4635-a99a-a3884aa38387",
+      "functionalHash": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4",
+      "projectSha256": "2949df167832a9b965e957a9af2dac872525e9b3f1075181dd61cd1e22099307",
+      "inputHash": "7ff90cd78e636bd604e3d909194d38f378d2dedad9deb6195ed1a46ee4485a28",
+      "driveFileId": "17BYMOCxjn7GfwYg4GVnVnR7DjW6M0oQw",
+      "file": "upgraded-media/day-32-execution-744.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 246808,
+      "sha256": "76676a36955f1ec7a5411815db13521a7a19b9a1780c8d1f5f2ec6da4c828f4f",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-32-execution-744-opening.png",
+          "lumaStdDev": 28.39
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-32-execution-744-details-1.png",
+          "lumaStdDev": 105.91
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-32-execution-744-details-2.png",
+          "lumaStdDev": 106.68
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-32-execution-744-closing.png",
+          "lumaStdDev": 23.9
+        }
+      ],
+      "contactSheet": "upgraded-media/day-32-execution-744-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:19:09.974583+00:00",
+      "visualReviewedAt": "2026-10-01T12:19:50.486731+00:00",
+      "originalMediaCaptureExecutionId": 744,
+      "replayExecutionIds": [
+        823,
+        854
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.089946+00:00"
+    },
+    {
+      "day": 33,
+      "workflowId": "ZvidSeries2Day33",
+      "executionId": 748,
+      "acceptedExecutionId": 748,
+      "jobId": "e502a7b9-8120-4b8a-847e-a12f6d1b1877",
+      "functionalHash": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775",
+      "projectSha256": "6011b1f2dfb86a7cf4148a4ff21c5297a15cd289aa7f720fc322ed1709b14f72",
+      "inputHash": "ecd7b340cc9c7a7d1493d66e7e3df99223f59abfad28641fd3dfe775b83934a0",
+      "driveFileId": "1ouYsln-6oW4rdvi7toHb9_Gs4JUCE6dN",
+      "file": "upgraded-media/day-33-execution-748.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 211496,
+      "sha256": "c68e8cd45e193db92303d65eaddf79ad2ee4c5558fd8ff774d1f07c436731a31",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-33-execution-748-opening.png",
+          "lumaStdDev": 29.05
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-33-execution-748-details-1.png",
+          "lumaStdDev": 106.09
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-33-execution-748-details-2.png",
+          "lumaStdDev": 106.63
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-33-execution-748-closing.png",
+          "lumaStdDev": 21.62
+        }
+      ],
+      "contactSheet": "upgraded-media/day-33-execution-748-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:19:11.053246+00:00",
+      "visualReviewedAt": "2026-10-01T12:19:50.486731+00:00",
+      "originalMediaCaptureExecutionId": 748,
+      "replayExecutionIds": [
+        824,
+        855
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.092089+00:00"
+    },
+    {
+      "day": 34,
+      "workflowId": "ZvidSeries2Day34",
+      "executionId": 750,
+      "acceptedExecutionId": 750,
+      "jobId": "18c4d4f5-45b1-4350-b155-d33dbdfb4e6f",
+      "functionalHash": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47",
+      "projectSha256": "628da8ceaa8973d5cad67a4a527cd8f7bf4db82d5499216e2dd3d9892f8f0a8c",
+      "inputHash": "511abe60b46de17ec551df38f9dc7a05a9b6b15d6874974c04717187b9b05084",
+      "driveFileId": "13xqRHqmlIwBHRq1h2vlbL8rcX9CPCbuU",
+      "file": "upgraded-media/day-34-execution-750.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 214879,
+      "sha256": "48247fe0c0031e371dd39e4e3ebe8124017024380d7f01082e56c4727e207c1c",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-34-execution-750-opening.png",
+          "lumaStdDev": 30.86
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-34-execution-750-details-1.png",
+          "lumaStdDev": 105.98
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-34-execution-750-details-2.png",
+          "lumaStdDev": 106.69
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-34-execution-750-closing.png",
+          "lumaStdDev": 18.85
+        }
+      ],
+      "contactSheet": "upgraded-media/day-34-execution-750-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:19:12.082740+00:00",
+      "visualReviewedAt": "2026-10-01T12:19:50.487731+00:00",
+      "originalMediaCaptureExecutionId": 750,
+      "replayExecutionIds": [
+        825,
+        856
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.095124+00:00"
+    },
+    {
+      "day": 35,
+      "workflowId": "ZvidSeries2Day35",
+      "executionId": 754,
+      "acceptedExecutionId": 754,
+      "jobId": "bdbef051-2132-496f-9899-b76a3525e898",
+      "functionalHash": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+      "projectSha256": "1fe1b0f135fb158b15256293f979d5feeb8b0da9b0c44b3908cf3aac58479e2b",
+      "inputHash": "533d33a3d53a262ee89ca68dc78144b8105d02a72a0312a3dff15db9edad309d",
+      "driveFileId": "1litoVTnM7HEypSKoxw1y2AC3ENJJAVcz",
+      "file": "upgraded-media/day-35-execution-754.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 199500,
+      "sha256": "743fb4e77339665dc6cd7657e0281688c431a41ae541a56aa907c484098bee41",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-35-execution-754-opening.png",
+          "lumaStdDev": 30.25
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-35-execution-754-details-1.png",
+          "lumaStdDev": 105.86
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-35-execution-754-closing.png",
+          "lumaStdDev": 21.83
+        }
+      ],
+      "contactSheet": "upgraded-media/day-35-execution-754-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:19:12.979006+00:00",
+      "visualReviewedAt": "2026-10-01T12:19:50.487731+00:00",
+      "originalMediaCaptureExecutionId": 754,
+      "replayExecutionIds": [
+        826,
+        857
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.097661+00:00"
+    },
+    {
+      "day": 36,
+      "workflowId": "ZvidSeries2Day36",
+      "executionId": 758,
+      "acceptedExecutionId": 758,
+      "jobId": "3bd51248-6c6c-476f-a031-797eb1766723",
+      "functionalHash": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1",
+      "projectSha256": "5474c23010d1199c599b5e24427eed3b6eed74ba62bb9945af8fe9594bb58286",
+      "inputHash": "d3b1ff4da3405899951d32fb23b6f4882d47d12fbc783b2712f08100e7f7377a",
+      "driveFileId": "1022LkxTfYrGifYlF7CPTWsVtwdOoFiFB",
+      "file": "upgraded-media/day-36-execution-758.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 187445,
+      "sha256": "84037bb317d8b8ff9286184863ed9ee0568aea3dbb9f4ac75e5d3189f2a99cc2",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-36-execution-758-opening.png",
+          "lumaStdDev": 24.83
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-36-execution-758-details-1.png",
+          "lumaStdDev": 106.08
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-36-execution-758-details-2.png",
+          "lumaStdDev": 106.74
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-36-execution-758-closing.png",
+          "lumaStdDev": 21.04
+        }
+      ],
+      "contactSheet": "upgraded-media/day-36-execution-758-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:21:42.928370+00:00",
+      "visualReviewedAt": "2026-10-01T12:22:14.792591+00:00",
+      "originalMediaCaptureExecutionId": 758,
+      "replayExecutionIds": [
+        827,
+        858
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.100164+00:00"
+    },
+    {
+      "day": 37,
+      "workflowId": "ZvidSeries2Day37",
+      "executionId": 762,
+      "acceptedExecutionId": 762,
+      "jobId": "3db6bab9-3869-4256-b1e8-871d1c816a83",
+      "functionalHash": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd",
+      "projectSha256": "50dea970813483b1ce9c3a4f2bb109ed3c7839d6da8af30ed578cf3d5146942a",
+      "inputHash": "34850c1b58cc51b07746d1d46e48f8d076f6b25d7100799d9188cc9fd450287a",
+      "driveFileId": "1ow9T3EN3CV98nijDcob3O8S0lR5eAhu9",
+      "file": "upgraded-media/day-37-execution-762.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 218988,
+      "sha256": "25ff5a4cdd461d3dc438aa8ce2eee5b1d0c9bd5e58769aef8b6a6380340b6538",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-37-execution-762-opening.png",
+          "lumaStdDev": 28.71
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-37-execution-762-details-1.png",
+          "lumaStdDev": 106.02
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-37-execution-762-details-2.png",
+          "lumaStdDev": 106.74
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-37-execution-762-closing.png",
+          "lumaStdDev": 24.65
+        }
+      ],
+      "contactSheet": "upgraded-media/day-37-execution-762-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:21:43.989491+00:00",
+      "visualReviewedAt": "2026-10-01T12:22:14.793594+00:00",
+      "originalMediaCaptureExecutionId": 762,
+      "replayExecutionIds": [
+        828,
+        859
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.102676+00:00"
+    },
+    {
+      "day": 38,
+      "workflowId": "ZvidSeries2Day38",
+      "executionId": 766,
+      "acceptedExecutionId": 766,
+      "jobId": "90b29c7b-8974-452d-9601-53bb8599e982",
+      "functionalHash": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5",
+      "projectSha256": "c7da6a9d937a9bf7974f49d39c014faa175bbf2f837bbd1a6a76dbe48608718b",
+      "inputHash": "f5bd5b16998b16f61fa24d8a7df33e02f73ca788d25146dbace46c5b15eb4f35",
+      "driveFileId": "1w3a6nQ58TNZCtE_RyL7xij0Pl-akhmdF",
+      "file": "upgraded-media/day-38-execution-766.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 245192,
+      "sha256": "1684cc98071bfdcf31227bcd2b056585b855c49f27d2c51586a69ec8fef6907b",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-38-execution-766-opening.png",
+          "lumaStdDev": 32.58
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-38-execution-766-details-1.png",
+          "lumaStdDev": 105.95
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-38-execution-766-details-2.png",
+          "lumaStdDev": 106.66
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-38-execution-766-closing.png",
+          "lumaStdDev": 20.06
+        }
+      ],
+      "contactSheet": "upgraded-media/day-38-execution-766-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:28:12.123970+00:00",
+      "visualReviewedAt": "2026-10-01T12:28:33.663799+00:00",
+      "originalMediaCaptureExecutionId": 766,
+      "replayExecutionIds": [
+        829,
+        860
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.104686+00:00"
+    },
+    {
+      "day": 39,
+      "workflowId": "ZvidSeries2Day39",
+      "executionId": 769,
+      "acceptedExecutionId": 769,
+      "jobId": "40c4837d-e64e-4ae7-9730-d34247669bd5",
+      "functionalHash": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07",
+      "projectSha256": "17e8ebb82457c06fb8244ba8c07bd0a2ebcf91f6134c952371f3bd3eb3129fb2",
+      "inputHash": "4a219d23afb4e5e17f773b4947b915c3ae3ede2e0cc3160d29c640dd7a748dea",
+      "driveFileId": "1SSO3zjlC5sJl4NH5d1e3-yLxJP3dHZuf",
+      "file": "upgraded-media/day-39-execution-769.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 246125,
+      "sha256": "5034d03515bcdd60039013ec0ca54627e2e3a4d134075bfeeccfb16ae25e6140",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-39-execution-769-opening.png",
+          "lumaStdDev": 32.69
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-39-execution-769-details-1.png",
+          "lumaStdDev": 105.85
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-39-execution-769-details-2.png",
+          "lumaStdDev": 106.68
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-39-execution-769-closing.png",
+          "lumaStdDev": 22.6
+        }
+      ],
+      "contactSheet": "upgraded-media/day-39-execution-769-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:33:29.112217+00:00",
+      "visualReviewedAt": "2026-10-01T12:33:44.951224+00:00",
+      "originalMediaCaptureExecutionId": 769,
+      "replayExecutionIds": [
+        830,
+        861
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.108323+00:00"
+    },
+    {
+      "day": 40,
+      "workflowId": "ZvidSeries2Day40",
+      "executionId": 773,
+      "acceptedExecutionId": 773,
+      "jobId": "54c0cc5b-b3ed-4ee8-b34c-2f2ec30da7e9",
+      "functionalHash": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9",
+      "projectSha256": "527099b3668cfc9dc66e98e6854a327535243069fef176b66edcd86316a7bb57",
+      "inputHash": "e00972ee170c153ccdd7911f3882ac1fefe9d91cf802513453d60c03a04c62da",
+      "driveFileId": "1EyYZO9rkcs-JzauLorNwhc873IUeMiWr",
+      "file": "upgraded-media/day-40-execution-773.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 239814,
+      "sha256": "197bb2aba18321f3ae9970d010dda9a5df59984791dbc72ac51012ef97cd2e49",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-40-execution-773-opening.png",
+          "lumaStdDev": 28
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-40-execution-773-details-1.png",
+          "lumaStdDev": 105.99
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-40-execution-773-details-2.png",
+          "lumaStdDev": 106.41
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-40-execution-773-closing.png",
+          "lumaStdDev": 17.88
+        }
+      ],
+      "contactSheet": "upgraded-media/day-40-execution-773-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:36:13.893413+00:00",
+      "visualReviewedAt": "2026-10-01T12:36:32.191309+00:00",
+      "originalMediaCaptureExecutionId": 773,
+      "replayExecutionIds": [
+        831,
+        862
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.109828+00:00"
+    },
+    {
+      "day": 41,
+      "workflowId": "ZvidSeries2Day41",
+      "executionId": 775,
+      "acceptedExecutionId": 775,
+      "jobId": "2970bd23-456e-4883-bbfb-16efacac7980",
+      "functionalHash": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f",
+      "projectSha256": "83b6a5cc930d3ae7ce9284f95275af9d77ef6a7602d02d0f6deb9fd38afa5ea9",
+      "inputHash": "785777ea0e2f607a3885ea1e0dfe7a486cfb771d3e963ffd31e9e102ab47ee6d",
+      "driveFileId": "1HWbVFC6J_yW9nERgy7-3oBBo9d1WWpKc",
+      "file": "upgraded-media/day-41-execution-775.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 180358,
+      "sha256": "e07944c52182edd0af09d099a6260e68c0c7d5267f5759e8b2f9f49e0f0ce9bf",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-41-execution-775-opening.png",
+          "lumaStdDev": 27.69
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-41-execution-775-details-1.png",
+          "lumaStdDev": 106
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-41-execution-775-closing.png",
+          "lumaStdDev": 24.4
+        }
+      ],
+      "contactSheet": "upgraded-media/day-41-execution-775-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:40:18.362166+00:00",
+      "visualReviewedAt": "2026-10-01T12:40:38.562171+00:00",
+      "originalMediaCaptureExecutionId": 775,
+      "replayExecutionIds": [
+        832,
+        863
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.113344+00:00"
+    },
+    {
+      "day": 42,
+      "workflowId": "ZvidSeries2Day42",
+      "executionId": 777,
+      "acceptedExecutionId": 777,
+      "jobId": "2e7cd157-1e0b-4281-9057-3cea03d0e5d1",
+      "functionalHash": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685",
+      "projectSha256": "a274c725d5135cf25289c20160a972f1e51245651a39e2dc3d8d4912d367bb53",
+      "inputHash": "6129e54ef43adcb2d440bde1aaa80edbb0fc728842ea4ab9b418220aaf9b9e14",
+      "driveFileId": "114It6RR4aXaCtqsqi72WFRo_sIo8E-gs",
+      "file": "upgraded-media/day-42-execution-777.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 188601,
+      "sha256": "c6c8934081d2d061f3e11bf7a8180be4790690022bdaf372c16c52f6311ab51d",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-42-execution-777-opening.png",
+          "lumaStdDev": 30.27
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-42-execution-777-details-1.png",
+          "lumaStdDev": 105.89
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-42-execution-777-closing.png",
+          "lumaStdDev": 24.31
+        }
+      ],
+      "contactSheet": "upgraded-media/day-42-execution-777-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:40:19.458965+00:00",
+      "visualReviewedAt": "2026-10-01T12:40:38.564173+00:00",
+      "originalMediaCaptureExecutionId": 777,
+      "replayExecutionIds": [
+        833,
+        864
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.115856+00:00"
+    },
+    {
+      "day": 43,
+      "workflowId": "ZvidSeries2Day43",
+      "executionId": 779,
+      "acceptedExecutionId": 779,
+      "jobId": "052a9a6f-b5fc-46db-90ec-59f167cad66b",
+      "functionalHash": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f",
+      "projectSha256": "ddb770bbbbf7287599936f6e857655e682cbf47a33ee6f8f5a4fd968967c4e0b",
+      "inputHash": "e75daa4e420790d94fce78cf8e9d5cbb7caf8a9cc093836a69920eeb5160cbb8",
+      "driveFileId": "14QcRJTMMLppTVY_bpBDk5DHeYVB37vRW",
+      "file": "upgraded-media/day-43-execution-779.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 236602,
+      "sha256": "d2605e09c4344a63c008406f71d3e6cb2b21469cbdd75ff1a0c1ba6307cca80d",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-43-execution-779-opening.png",
+          "lumaStdDev": 30.93
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-43-execution-779-details-1.png",
+          "lumaStdDev": 105.77
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-43-execution-779-details-2.png",
+          "lumaStdDev": 106.73
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-43-execution-779-closing.png",
+          "lumaStdDev": 23.64
+        }
+      ],
+      "contactSheet": "upgraded-media/day-43-execution-779-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:42:57.681601+00:00",
+      "visualReviewedAt": "2026-10-01T12:43:17.584057+00:00",
+      "originalMediaCaptureExecutionId": 779,
+      "replayExecutionIds": [
+        834,
+        865
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.117859+00:00"
+    },
+    {
+      "day": 44,
+      "workflowId": "ZvidSeries2Day44",
+      "executionId": 781,
+      "acceptedExecutionId": 781,
+      "jobId": "6c4ba7da-c25b-4aee-8e95-3ae57bb8e134",
+      "functionalHash": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911",
+      "projectSha256": "dbc9c9753c9cae20baea2acb52d3ac44e03f49cf908a098efb179b9c4dc0cdbb",
+      "inputHash": "a6cf1048fb37ac4279ea89112cd7f7b097049e791ba09005190bedd31e2e3c22",
+      "driveFileId": "1rxGEy_AU4K7B3Pivvw1svUh2uT9RbLvK",
+      "file": "upgraded-media/day-44-execution-781.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 280196,
+      "sha256": "41aa3d5d792115bfab001d4ea0bb5c223a038b15f34ca88ed6f5249845457e57",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-44-execution-781-opening.png",
+          "lumaStdDev": 31.08
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-44-execution-781-details-1.png",
+          "lumaStdDev": 105.82
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-44-execution-781-details-2.png",
+          "lumaStdDev": 106.6
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-44-execution-781-closing.png",
+          "lumaStdDev": 26.21
+        }
+      ],
+      "contactSheet": "upgraded-media/day-44-execution-781-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:42:58.757001+00:00",
+      "visualReviewedAt": "2026-10-01T12:43:17.585066+00:00",
+      "originalMediaCaptureExecutionId": 781,
+      "replayExecutionIds": [
+        835,
+        866
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.120363+00:00"
+    },
+    {
+      "day": 45,
+      "workflowId": "ZvidSeries2Day45",
+      "executionId": 783,
+      "acceptedExecutionId": 783,
+      "jobId": "fdff49cf-ad78-46bf-b90d-df1cd294f081",
+      "functionalHash": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e",
+      "projectSha256": "bfe80e4ed8d22f28304145abc4e16d0524ec2ffdd9d0265ef53467d5f8a76934",
+      "inputHash": "08b4485e94a99dac23776df4897333edad6c6825bd7269d1ec537cd0e9c09086",
+      "driveFileId": "1gLO3TtfK6deOVjbAJiPI54zoHbgMkeZo",
+      "file": "upgraded-media/day-45-execution-783.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 216772,
+      "sha256": "9b551ac8f026500e7232704004e813204ab37d4d9148aa9c2adc0c796536d8c3",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-45-execution-783-opening.png",
+          "lumaStdDev": 28.48
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-45-execution-783-details-1.png",
+          "lumaStdDev": 106.16
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-45-execution-783-details-2.png",
+          "lumaStdDev": 106.56
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-45-execution-783-closing.png",
+          "lumaStdDev": 20.7
+        }
+      ],
+      "contactSheet": "upgraded-media/day-45-execution-783-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:45:48.191193+00:00",
+      "visualReviewedAt": "2026-10-01T12:46:09.706849+00:00",
+      "originalMediaCaptureExecutionId": 783,
+      "replayExecutionIds": [
+        836,
+        867
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.123883+00:00"
+    },
+    {
+      "day": 46,
+      "workflowId": "ZvidSeries2Day46",
+      "executionId": 785,
+      "acceptedExecutionId": 785,
+      "jobId": "255fb563-2bd4-4c90-868f-f9e0e2f6fa60",
+      "functionalHash": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062",
+      "projectSha256": "3ef975691d4a2e119c5550bf075c47c59aac09d81007237e95cd3849f26c1ce4",
+      "inputHash": "8e93203a795b9f5583b16b791331bb716934658e508d6f5c9d76a71043df15c4",
+      "driveFileId": "1oUHLApOGd_xKiEZKpJqKVhAt0BL5VrM0",
+      "file": "upgraded-media/day-46-execution-785.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 174308,
+      "sha256": "bbadd5b1ea84cfbfaac8511feee1ef63cde7c8701ffc0f471d1812f4c0f4ce8a",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-46-execution-785-opening.png",
+          "lumaStdDev": 27.47
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-46-execution-785-details-1.png",
+          "lumaStdDev": 105.95
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-46-execution-785-closing.png",
+          "lumaStdDev": 24
+        }
+      ],
+      "contactSheet": "upgraded-media/day-46-execution-785-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:49:21.261540+00:00",
+      "visualReviewedAt": "2026-10-01T12:49:43.766777+00:00",
+      "originalMediaCaptureExecutionId": 785,
+      "replayExecutionIds": [
+        837,
+        868
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.125388+00:00"
+    },
+    {
+      "day": 47,
+      "workflowId": "ZvidSeries2Day47",
+      "executionId": 787,
+      "acceptedExecutionId": 787,
+      "jobId": "0156dda7-0ec9-4f38-a6ad-27ea4c062858",
+      "functionalHash": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162",
+      "projectSha256": "35d3c5c887e9d3adc2c14e563c6db17ba21af9081d0905edbb7a6a48d659488b",
+      "inputHash": "5c4b6f0e40e6a5382cb046f022c791a17f004d1d12ad5d53747b4d92f2ab6e95",
+      "driveFileId": "151qFe-2bjJoiLpdWt3PxqrtxYpcMO-9S",
+      "file": "upgraded-media/day-47-execution-787.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 185887,
+      "sha256": "969cd8ef32ac7316fef44d112021141ba9cdb5495c3d1893c4322548f90c19a7",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-47-execution-787-opening.png",
+          "lumaStdDev": 23.61
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-47-execution-787-details-1.png",
+          "lumaStdDev": 105.81
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-47-execution-787-closing.png",
+          "lumaStdDev": 24.15
+        }
+      ],
+      "contactSheet": "upgraded-media/day-47-execution-787-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:49:22.350154+00:00",
+      "visualReviewedAt": "2026-10-01T12:49:43.768283+00:00",
+      "originalMediaCaptureExecutionId": 787,
+      "replayExecutionIds": [
+        838,
+        869
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.128901+00:00"
+    },
+    {
+      "day": 48,
+      "workflowId": "ZvidSeries2Day48",
+      "executionId": 789,
+      "acceptedExecutionId": 789,
+      "jobId": "090bcf03-bc7b-48f7-a7a9-0f046b2fc01f",
+      "functionalHash": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d",
+      "projectSha256": "f67a6fb4b33e1f9d19f8a2c18d456b0596d3a6d1ef40340a3cd4b68012cf82dd",
+      "inputHash": "9a0d0dd56b03dafa5e2e1e6a3530614c16c9befe61fe39fce55a02d21a66ff6b",
+      "driveFileId": "19sY4sBNpl0iofZZ0JnTuqSa9WE-Ie6cB",
+      "file": "upgraded-media/day-48-execution-789.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 176753,
+      "sha256": "1aedc0140a6daa804a730e0f3f55f1ce104c7ea29c7ea50da3ab85c6bb54a40a",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-48-execution-789-opening.png",
+          "lumaStdDev": 35.32
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-48-execution-789-details-1.png",
+          "lumaStdDev": 106.07
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-48-execution-789-closing.png",
+          "lumaStdDev": 24.8
+        }
+      ],
+      "contactSheet": "upgraded-media/day-48-execution-789-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:52:02.310559+00:00",
+      "visualReviewedAt": "2026-10-01T12:52:19.086183+00:00",
+      "originalMediaCaptureExecutionId": 789,
+      "replayExecutionIds": [
+        839,
+        870
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.131410+00:00"
+    },
+    {
+      "day": 49,
+      "workflowId": "ZvidSeries2Day49",
+      "executionId": 791,
+      "acceptedExecutionId": 791,
+      "jobId": "eca8eb7c-9ef8-4e7e-bc8d-aee7451fe713",
+      "functionalHash": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a",
+      "projectSha256": "978d8424064233067ebbb2ee13ed384a1f0f7042d2ecfe95fc047985250e6505",
+      "inputHash": "f33dc34eee4a820c5ea653df1709afbe340e622a6640b25cf69e9e8bc1e2979d",
+      "driveFileId": "1aP2tP9Sqcefc3ujy_JuA5eDF0mJzxZs5",
+      "file": "upgraded-media/day-49-execution-791.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 247034,
+      "sha256": "e77acd5569c53a87479fa8d1d19bb8266c8e2fcf176a0ca2a8adb40c446b5e37",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-49-execution-791-opening.png",
+          "lumaStdDev": 22.51
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-49-execution-791-details-1.png",
+          "lumaStdDev": 105.84
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-49-execution-791-details-2.png",
+          "lumaStdDev": 106.72
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-49-execution-791-closing.png",
+          "lumaStdDev": 29.23
+        }
+      ],
+      "contactSheet": "upgraded-media/day-49-execution-791-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T12:54:42.776785+00:00",
+      "visualReviewedAt": "2026-10-01T12:55:18.436120+00:00",
+      "originalMediaCaptureExecutionId": 791,
+      "replayExecutionIds": [
+        840,
+        871
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.133920+00:00"
+    },
+    {
+      "day": 50,
+      "workflowId": "ZvidSeries2Day50",
+      "executionId": 793,
+      "acceptedExecutionId": 793,
+      "jobId": "c5a5b9df-dbb6-4950-8ba7-c507be2007d1",
+      "functionalHash": "deee411482221022d83ba0e344389fbc41670407ec9ea10cd502e98f14d3f7d4",
+      "projectSha256": "d34614541a04bed803548772a803af38741f21af123fd44e68d62f92c117434b",
+      "inputHash": "17e18c4f5bc6613e77810786a93f17cbfc38993e85d8638d0a60b29499132fd9",
+      "driveFileId": "1hrWpXih98w3tIUIRmtMhSPcCMvW8Z3ll",
+      "file": "upgraded-media/day-50-execution-793.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 273322,
+      "sha256": "6c507af7b9af2608dff932ccf8dcd88c4c1c298cc3bff7c7580f94ab4f494a1c",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-50-execution-793-opening.png",
+          "lumaStdDev": 27.95
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-50-execution-793-details-1.png",
+          "lumaStdDev": 105.9
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-50-execution-793-details-2.png",
+          "lumaStdDev": 106.58
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-50-execution-793-closing.png",
+          "lumaStdDev": 28.1
+        }
+      ],
+      "contactSheet": "upgraded-media/day-50-execution-793-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "failed",
+      "passed": false,
+      "checkedAt": "2026-10-01T13:05:46.164968+00:00",
+      "visualFailureReason": "The documents card truncates the supplied document list after Pricing schedule. Corrected by the concise documents card in revision r2, execution 805.",
+      "visualReviewedAt": "2026-10-01T13:36:41.472Z"
+    },
+    {
+      "day": 50,
+      "workflowId": "ZvidSeries2Day50",
+      "executionId": 805,
+      "acceptedExecutionId": 805,
+      "jobId": "8862babc-a6ef-4825-9c60-082720bd7d69",
+      "functionalHash": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa",
+      "projectSha256": "7e204379f2799b486216531d152cbe39c981fdd6150a5c10603a6bacaf4fa91e",
+      "inputHash": "d82a414e8d997ec73260c953daf88396152455478002b051dcd6eb366aef8f94",
+      "driveFileId": "1Xa_y6BiI3nJ39CrqAcgvmoXb1VniUGEO",
+      "file": "upgraded-media/day-50-execution-805.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 268193,
+      "sha256": "a6c10edc731578d88c56290cfac84dee5c1de52dfcd05bacd248ce4a0fe79f89",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-50-execution-805-opening.png",
+          "lumaStdDev": 27.95
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-50-execution-805-details-1.png",
+          "lumaStdDev": 105.95
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-50-execution-805-details-2.png",
+          "lumaStdDev": 106.54
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-50-execution-805-closing.png",
+          "lumaStdDev": 28.1
+        }
+      ],
+      "contactSheet": "upgraded-media/day-50-execution-805-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:33:28.762029+00:00",
+      "visualReviewedAt": "2026-10-01T13:33:42.844571+00:00",
+      "originalMediaCaptureExecutionId": 805,
+      "replayExecutionIds": [
+        841,
+        872
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.135423+00:00"
+    },
+    {
+      "day": 51,
+      "workflowId": "ZvidSeries2Day51",
+      "executionId": 800,
+      "acceptedExecutionId": 800,
+      "jobId": "7797cb1d-f316-492d-8c8a-7950a5a0c2b4",
+      "functionalHash": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+      "projectSha256": "a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836",
+      "inputHash": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8",
+      "driveFileId": "1zmPX2A0F8hCaTxJUqR49-HKTqi2eg4Uz",
+      "file": "upgraded-media/day-51-execution-800.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 181535,
+      "sha256": "f95de0d9f62485ba78c78a143d5e18ee14fdf3533f4f0f120e6cac88c44a724d",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-51-execution-800-opening.png",
+          "lumaStdDev": 27.05
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-51-execution-800-details-1.png",
+          "lumaStdDev": 105.79
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-51-execution-800-closing.png",
+          "lumaStdDev": 24.6
+        }
+      ],
+      "contactSheet": "upgraded-media/day-51-execution-800-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:20:19.650272+00:00",
+      "visualReviewedAt": "2026-10-01T13:24:46.507099+00:00",
+      "originalMediaCaptureExecutionId": 800,
+      "replayExecutionIds": [
+        842,
+        873
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.139077+00:00"
+    },
+    {
+      "day": 52,
+      "workflowId": "ZvidSeries2Day52",
+      "executionId": 797,
+      "acceptedExecutionId": 797,
+      "jobId": "b6933876-873a-4aa5-8f0b-b08d04866d2c",
+      "functionalHash": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d",
+      "projectSha256": "ae1f89f9d91a581429aa7fb56c75ad4ff20442e290ae518a5f055ff93787e0f6",
+      "inputHash": "1c7bcbc317e6dc51f8ad42cf46107cb36a9a356af50f8c910f67699e46809bbc",
+      "driveFileId": "1SSVInKazpay8k_D2bILMYU7KRoVxsDf2",
+      "file": "upgraded-media/day-52-execution-797.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 305417,
+      "sha256": "271004eee28b3d4662b23d3aa37a22f7b8fdbc5d16c1402cd9f921fcac876cb7",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-52-execution-797-opening.png",
+          "lumaStdDev": 30.1
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-52-execution-797-details-1.png",
+          "lumaStdDev": 105.71
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15,
+          "file": "upgraded-media/day-52-execution-797-details-2.png",
+          "lumaStdDev": 106.26
+        },
+        {
+          "scene": "closing",
+          "seconds": 21,
+          "file": "upgraded-media/day-52-execution-797-closing.png",
+          "lumaStdDev": 26.2
+        }
+      ],
+      "contactSheet": "upgraded-media/day-52-execution-797-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:20:18.698571+00:00",
+      "visualReviewedAt": "2026-10-01T13:24:46.506090+00:00",
+      "originalMediaCaptureExecutionId": 797,
+      "replayExecutionIds": [
+        843,
+        874
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.141586+00:00"
+    },
+    {
+      "day": 53,
+      "workflowId": "ZvidSeries2Day53",
+      "executionId": 802,
+      "acceptedExecutionId": 802,
+      "jobId": "96c5fbf9-bc3f-4aea-afbf-05b56e6c9fb0",
+      "functionalHash": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e",
+      "projectSha256": "b27ddbccad08ab3a3abc391403bb8fb8b2fd179e2df4b7245149ac0d3f3a12e8",
+      "inputHash": "a2b4dbe8c41b882b06f260441fabe181da01be005e4406d32b6c414216422f19",
+      "driveFileId": "176NRLx6AvBiC602tfX4rxqya3UR9DVNS",
+      "file": "upgraded-media/day-53-execution-802.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 188908,
+      "sha256": "39c899e09780f12a4d4becd4835f3f267b996b50926577ba0543413bf51c742a",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18,
+      "actualFrameRate": 30,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3,
+          "file": "upgraded-media/day-53-execution-802-opening.png",
+          "lumaStdDev": 23.47
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9,
+          "file": "upgraded-media/day-53-execution-802-details-1.png",
+          "lumaStdDev": 105.62
+        },
+        {
+          "scene": "closing",
+          "seconds": 15,
+          "file": "upgraded-media/day-53-execution-802-closing.png",
+          "lumaStdDev": 21.25
+        }
+      ],
+      "contactSheet": "upgraded-media/day-53-execution-802-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:30:11.447705+00:00",
+      "visualReviewedAt": "2026-10-01T13:30:28.336576+00:00",
+      "originalMediaCaptureExecutionId": 802,
+      "replayExecutionIds": [
+        844,
+        875
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.144112+00:00"
+    },
+    {
+      "day": 54,
+      "workflowId": "ZvidSeries2Day54",
+      "executionId": 807,
+      "acceptedExecutionId": 807,
+      "jobId": "b0f3410c-13a0-4c0c-becb-81849b1c48e7",
+      "functionalHash": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad",
+      "projectSha256": "046b86dd065f04bd01b1e444db4edb7d49a1856c7bc9dc77f15d806d975b3642",
+      "inputHash": "0a07370c057b1011e56699410f785da77ee2cc821ed51d23953b57e520999769",
+      "driveFileId": "1Xf_dXBVatn1lO6Wlhcjou1Gj9kHh6pDa",
+      "file": "upgraded-media/day-54-execution-807.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 189155,
+      "sha256": "41119de3b25e3ddd3c0e1419b621eb8e1eb084f124b2e520dfe729b947494648",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "actualFrameRate": 30.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "upgraded-media/day-54-execution-807-opening.png",
+          "lumaStdDev": 28.52
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "upgraded-media/day-54-execution-807-details-1.png",
+          "lumaStdDev": 105.91
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "upgraded-media/day-54-execution-807-closing.png",
+          "lumaStdDev": 26.33
+        }
+      ],
+      "contactSheet": "upgraded-media/day-54-execution-807-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:39:25.835562+00:00",
+      "visualReviewedAt": "2026-10-01T13:39:46.747159+00:00",
+      "originalMediaCaptureExecutionId": 807,
+      "replayExecutionIds": [
+        845,
+        876
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.147126+00:00"
+    },
+    {
+      "day": 55,
+      "workflowId": "ZvidSeries2Day55",
+      "executionId": 809,
+      "acceptedExecutionId": 809,
+      "jobId": "e49bb090-2a49-4dcd-a0eb-1467d7c7384b",
+      "functionalHash": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757",
+      "projectSha256": "b46209b9ec18c8ffe51588a11f48d3bdbcf10dc5dfa9736cad9d7f24892addd2",
+      "inputHash": "6031641c20831806b0481f3c5d949947b30952b584025b394bc9f15ccc1558c1",
+      "driveFileId": "12FYIA9xozp8UQAIEfnyMQYc0dnRJ86Xs",
+      "file": "upgraded-media/day-55-execution-809.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 201788,
+      "sha256": "662122c958d268f4241535edb4c90424bee88d513b4b9bf954e243de0e861fa3",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "actualFrameRate": 30.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "upgraded-media/day-55-execution-809-opening.png",
+          "lumaStdDev": 31.91
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "upgraded-media/day-55-execution-809-details-1.png",
+          "lumaStdDev": 105.76
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "upgraded-media/day-55-execution-809-closing.png",
+          "lumaStdDev": 26.57
+        }
+      ],
+      "contactSheet": "upgraded-media/day-55-execution-809-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:45:37.734070+00:00",
+      "visualReviewedAt": "2026-10-01T13:45:59.909042+00:00",
+      "originalMediaCaptureExecutionId": 809,
+      "replayExecutionIds": [
+        846,
+        877
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.149134+00:00"
+    },
+    {
+      "day": 56,
+      "workflowId": "ZvidSeries2Day56",
+      "executionId": 811,
+      "acceptedExecutionId": 811,
+      "jobId": "de1eb00d-30f2-4752-b72e-87241d3d2300",
+      "functionalHash": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7",
+      "projectSha256": "485932e43788c738cb2a17ca994a7ce5ee9dbe5100b25780faa9e6706317d2d7",
+      "inputHash": "96afda9f2274fd22dc310ed8c89a401720316452c7d77305dfe51219c7b904c7",
+      "driveFileId": "1RYkqBgxt4vj8Softk21VrTgDv4LwoQZV",
+      "file": "upgraded-media/day-56-execution-811.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 203493,
+      "sha256": "8312bd1b6643800799551d533cefce6231f5ecc869da053e624ab66c314b69af",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "actualFrameRate": 30.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "upgraded-media/day-56-execution-811-opening.png",
+          "lumaStdDev": 23.15
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "upgraded-media/day-56-execution-811-details-1.png",
+          "lumaStdDev": 106.32
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "upgraded-media/day-56-execution-811-details-2.png",
+          "lumaStdDev": 106.66
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "upgraded-media/day-56-execution-811-closing.png",
+          "lumaStdDev": 21.46
+        }
+      ],
+      "contactSheet": "upgraded-media/day-56-execution-811-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:49:03.141519+00:00",
+      "visualReviewedAt": "2026-10-01T13:50:11.092095+00:00",
+      "originalMediaCaptureExecutionId": 811,
+      "replayExecutionIds": [
+        847,
+        878
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.152148+00:00"
+    },
+    {
+      "day": 57,
+      "workflowId": "ZvidSeries2Day57",
+      "executionId": 813,
+      "acceptedExecutionId": 813,
+      "jobId": "3c319c9c-42e7-4bcb-8347-6cc77d830f76",
+      "functionalHash": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+      "projectSha256": "a97364afe7eff6da2ad36dc589a44c056bf77fe876f68e2a080c79aa2e359c87",
+      "inputHash": "26354701fdd56cdbb2bdc0dca2bc2eb0a64a4c3852c82a3f4730718b7a29a340",
+      "driveFileId": "1cQaKK7jup5ccCx9WhYYBejEVioQR-bfW",
+      "file": "upgraded-media/day-57-execution-813.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 204404,
+      "sha256": "edcb29758155845392370feb780ea46e1c67204c09f6ac686033323e7e185914",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "actualFrameRate": 30.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "upgraded-media/day-57-execution-813-opening.png",
+          "lumaStdDev": 27.97
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "upgraded-media/day-57-execution-813-details-1.png",
+          "lumaStdDev": 106.07
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "upgraded-media/day-57-execution-813-details-2.png",
+          "lumaStdDev": 106.71
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "upgraded-media/day-57-execution-813-closing.png",
+          "lumaStdDev": 22.23
+        }
+      ],
+      "contactSheet": "upgraded-media/day-57-execution-813-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:49:04.268501+00:00",
+      "visualReviewedAt": "2026-10-01T13:50:11.094682+00:00",
+      "originalMediaCaptureExecutionId": 813,
+      "replayExecutionIds": [
+        848,
+        879
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.155193+00:00"
+    },
+    {
+      "day": 58,
+      "workflowId": "ZvidSeries2Day58",
+      "executionId": 815,
+      "acceptedExecutionId": 815,
+      "jobId": "8be386ad-f68e-4846-840d-30856ca328c4",
+      "functionalHash": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f",
+      "projectSha256": "74d8aa746874a162a6fe1be3aef2d5af53843d8f9885fd4e48b66d1c45ae7b30",
+      "inputHash": "b32b9f06d648e1e1b2da46536c774de37b3eda1093688480a17808e02f7b0839",
+      "driveFileId": "1mrJFQyELjf1Mw92iZgBayXtn0J5_rtjC",
+      "file": "upgraded-media/day-58-execution-815.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 196258,
+      "sha256": "977205d24847828c3d03561320286509d520feed35fedf9a3392911293202ab7",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 18,
+      "actualSeconds": 18.0,
+      "actualFrameRate": 30.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 3,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "upgraded-media/day-58-execution-815-opening.png",
+          "lumaStdDev": 31.34
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "upgraded-media/day-58-execution-815-details-1.png",
+          "lumaStdDev": 105.9
+        },
+        {
+          "scene": "closing",
+          "seconds": 15.0,
+          "file": "upgraded-media/day-58-execution-815-closing.png",
+          "lumaStdDev": 27.01
+        }
+      ],
+      "contactSheet": "upgraded-media/day-58-execution-815-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:49:05.165276+00:00",
+      "visualReviewedAt": "2026-10-01T13:50:11.096711+00:00",
+      "originalMediaCaptureExecutionId": 815,
+      "replayExecutionIds": [
+        849,
+        880
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.157289+00:00"
+    },
+    {
+      "day": 59,
+      "workflowId": "ZvidSeries2Day59",
+      "executionId": 817,
+      "acceptedExecutionId": 817,
+      "jobId": "766e80a1-561d-4ff9-b84b-8f42bbb70377",
+      "functionalHash": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83",
+      "projectSha256": "0c3376033e05df0cd5ca9d8d5c6a59d006a0fab39decf2932bb6bc43349adacb",
+      "inputHash": "41f57599cf47ff8b67db26d88ee153a0b6a972c7911c9a8e3414cc5669d0266d",
+      "driveFileId": "1u7adekXTonmxuOlMDXGQynZ3ED7LkF_Y",
+      "file": "upgraded-media/day-59-execution-817.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 234499,
+      "sha256": "7416909e7793001a551beb8ef23c7e030bfe26626f619fe7a9446ec20d04f3f8",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "actualFrameRate": 30.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "upgraded-media/day-59-execution-817-opening.png",
+          "lumaStdDev": 27.42
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "upgraded-media/day-59-execution-817-details-1.png",
+          "lumaStdDev": 106.07
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "upgraded-media/day-59-execution-817-details-2.png",
+          "lumaStdDev": 106.67
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "upgraded-media/day-59-execution-817-closing.png",
+          "lumaStdDev": 25.87
+        }
+      ],
+      "contactSheet": "upgraded-media/day-59-execution-817-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:52:23.550508+00:00",
+      "originalMediaCaptureExecutionId": 817,
+      "visualReviewedAt": "2026-10-01T13:53:13.811939+00:00",
+      "replayExecutionIds": [
+        850,
+        881
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.160318+00:00"
+    },
+    {
+      "day": 60,
+      "workflowId": "ZvidSeries2Day60",
+      "executionId": 819,
+      "acceptedExecutionId": 819,
+      "jobId": "596ce330-07e1-47b6-9628-b89ac4fa11b7",
+      "functionalHash": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648",
+      "projectSha256": "f873569030a61c3cec7aad6149ea79f027c645f9befd8abb4332fde8f7aab9cc",
+      "inputHash": "d6bc6f262582141f0df44a24d3c24d212d2196632f346ff455d4bd47ab8b88ef",
+      "driveFileId": "1CB-7tHRk7X9HA3iebTwM-hyItbgg91gB",
+      "file": "upgraded-media/day-60-execution-819.mp4",
+      "mediaSource": "exact-n8n-watch-binary",
+      "bytes": 242167,
+      "sha256": "249870be755b5ba6bb0240c6187837d494037d7184e16cd3ba02e31e1b1cb467",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "expectedSeconds": 24,
+      "actualSeconds": 24.0,
+      "actualFrameRate": 30.0,
+      "resolutionPassed": true,
+      "durationPassed": true,
+      "frameRatePassed": true,
+      "fullDecodePassed": true,
+      "sceneCount": 4,
+      "frames": [
+        {
+          "scene": "opening",
+          "seconds": 3.0,
+          "file": "upgraded-media/day-60-execution-819-opening.png",
+          "lumaStdDev": 30.58
+        },
+        {
+          "scene": "details-1",
+          "seconds": 9.0,
+          "file": "upgraded-media/day-60-execution-819-details-1.png",
+          "lumaStdDev": 105.92
+        },
+        {
+          "scene": "details-2",
+          "seconds": 15.0,
+          "file": "upgraded-media/day-60-execution-819-details-2.png",
+          "lumaStdDev": 106.72
+        },
+        {
+          "scene": "closing",
+          "seconds": 21.0,
+          "file": "upgraded-media/day-60-execution-819-closing.png",
+          "lumaStdDev": 27.58
+        }
+      ],
+      "contactSheet": "upgraded-media/day-60-execution-819-contact.png",
+      "technicalPassed": true,
+      "mediaPassed": true,
+      "visualReview": "passed",
+      "passed": true,
+      "checkedAt": "2026-10-01T13:52:24.939500+00:00",
+      "originalMediaCaptureExecutionId": 819,
+      "visualReviewedAt": "2026-10-01T13:53:13.813501+00:00",
+      "replayExecutionIds": [
+        851,
+        882
+      ],
+      "retainedIdentityVerifiedAt": "2026-10-01T14:33:51.162324+00:00"
+    }
+  ]
+}

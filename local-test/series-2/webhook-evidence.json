@@ -1,0 +1,71 @@
+{
+  "requestSampleFile": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/webhook-sample.json",
+  "testWebhook": "http://localhost:5678/webhook-test/series-two-webhook-smoke",
+  "acknowledgement": {
+    "status": 202,
+    "contentType": [
+      "application/json; charset=utf-8"
+    ],
+    "accepted": true
+  },
+  "execution": {
+    "passed": false,
+    "executionId": 709,
+    "workflowId": "Series2EdgeWebhook31",
+    "status": "success",
+    "mode": "manual",
+    "startedAt": "2026-10-01 09:32:22.387",
+    "stoppedAt": "2026-10-01 09:32:23.301",
+    "lastNode": "Draft and credit quote",
+    "sourceBodyCorrect": true,
+    "configPreservedSourceBody": true,
+    "configDryRun": true,
+    "resultDryRun": true,
+    "renderSubmitted": false,
+    "quotedCredits": 18,
+    "editorLink": null,
+    "editorLinkValid": false,
+    "editorDraftError": "Project limit reached",
+    "resultStatus": "draft",
+    "sourceKey": "Acme Desk:2.4",
+    "calculatedMeta": {
+      "changeCount": 3,
+      "counts": {
+        "added": 1,
+        "improved": 1,
+        "fixed": 1
+      }
+    },
+    "nodes": {
+      "Receive event": "success",
+      "Config": "success",
+      "Normalize and build video": "success",
+      "Work found?": "success",
+      "Validate project (free)": "success",
+      "Check validation and credit cap": "success",
+      "Dry run?": "success",
+      "Save draft to editor": "success",
+      "Draft and credit quote": "success"
+    },
+    "paidNodesExecuted": []
+  },
+  "summary": {
+    "webhookAndBusinessRulesPassed": true,
+    "draftOnlyConfirmed": true,
+    "editorProjectSaved": false,
+    "projectLimitSurfaced": true
+  },
+  "canvasScreenshot": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/webhook-test-canvas.png",
+  "finalDraftResultVerification": {
+    "executionId": 719,
+    "mode": "manual",
+    "passed": true,
+    "resultStatus": "draft_unavailable",
+    "editorDraftSaved": false,
+    "renderSubmitted": false,
+    "quotedCredits": 18,
+    "editorDraftError": "Project limit reached",
+    "evidenceFile": "manual-dry-evidence.json",
+    "note": "Historical webhook execution 709 preserves its original draft result. The same final result Code was manually retested in execution 719 after the truthful draft status fix."
+  }
+}

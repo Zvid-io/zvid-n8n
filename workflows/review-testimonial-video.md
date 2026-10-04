@@ -4,7 +4,19 @@
 
 Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
 
+The completed-media preview uses the built-in HTTP Request v2 node to avoid a
+manual-run serialization error in n8n 2.29.10 that can leave newer download
+nodes spinning. Keep the supplied preview node version when importing.
+
 [`zvid-review-testimonial-video.json`](zvid-review-testimonial-video.json)
+
+## If the Watch video step stalls
+
+The render and sheet update finish before **Watch video** downloads the MP4.
+The download now has a 30-second request timeout and up to three attempts. A
+preview error leaves the completed video intact: open **Run summary → videoUrl**
+or the sheet's **VideoUrl**, then retry only the preview step if needed. Do not
+start another paid render to recover an existing video.
 
 Social proof piles up in a review inbox and nobody ever turns it into content.
 This workflow takes **one** customer review — from a Google Sheet out of the box,

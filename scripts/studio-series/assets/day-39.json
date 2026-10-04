@@ -1,0 +1,376 @@
+{
+  "type": "video",
+  "name": "S2 D39 - Buyer Property Shortlist",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#F1F1EB",
+  "scenes": [
+    {
+      "id": "your-shortlist",
+      "duration": 4,
+      "backgroundColor": "#F1F1EB",
+      "transition": "smoothleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{firstImage}}",
+          "x": 30,
+          "y": 200,
+          "width": 390,
+          "height": 430,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 4
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{secondImage}}",
+          "x": 445,
+          "y": 240,
+          "width": 390,
+          "height": 390,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 4
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{thirdImage}}",
+          "x": 860,
+          "y": 200,
+          "width": 390,
+          "height": 430,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 2,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 4
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:20px;letter-spacing:5px\">{{brand}} / YOUR SHORTLIST</div><div style=\"font-size:54px;margin-top:14px\">{{buyerBrief}}</div>",
+          "x": 35,
+          "y": 40,
+          "width": 1200,
+          "height": 130,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 4,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 54,
+            "color": "#233D35",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "cedar-house",
+      "duration": 5,
+      "backgroundColor": "#233D35",
+      "transition": "smoothleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{firstImage}}",
+          "x": 30,
+          "y": 30,
+          "width": 810,
+          "height": 660,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:20px\">01 / THE OUTDOOR EDIT</div><div style=\"font-size:54px;margin-top:24px\">{{firstName}}</div><div style=\"font-size:31px;margin-top:22px\">{{firstPrice}}</div><div style=\"font-size:23px;margin-top:18px\">{{firstSpecs}}</div><div style=\"font-size:27px;margin-top:60px\">{{firstFit}}</div>",
+          "x": 885,
+          "y": 90,
+          "width": 350,
+          "height": 560,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 54,
+            "color": "#F1F1EB",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "parkside",
+      "duration": 5,
+      "backgroundColor": "#F1F1EB",
+      "transition": "smoothleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{secondImage}}",
+          "x": 440,
+          "y": 30,
+          "width": 810,
+          "height": 660,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:20px\">02 / THE LIGHT EDIT</div><div style=\"font-size:54px;margin-top:24px\">{{secondName}}</div><div style=\"font-size:31px;margin-top:22px\">{{secondPrice}}</div><div style=\"font-size:23px;margin-top:18px\">{{secondSpecs}}</div><div style=\"font-size:27px;margin-top:60px\">{{secondFit}}</div>",
+          "x": 35,
+          "y": 90,
+          "width": 350,
+          "height": 560,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 54,
+            "color": "#233D35",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-courtyard",
+      "duration": 5,
+      "backgroundColor": "#233D35",
+      "transition": "smoothleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{thirdImage}}",
+          "x": 30,
+          "y": 30,
+          "width": 810,
+          "height": 660,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:20px\">03 / THE QUIET EDIT</div><div style=\"font-size:54px;margin-top:24px\">{{thirdName}}</div><div style=\"font-size:31px;margin-top:22px\">{{thirdPrice}}</div><div style=\"font-size:23px;margin-top:18px\">{{thirdSpecs}}</div><div style=\"font-size:27px;margin-top:60px\">{{thirdFit}}</div>",
+          "x": 885,
+          "y": 90,
+          "width": 350,
+          "height": 560,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 54,
+            "color": "#F1F1EB",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "visit-one",
+      "duration": 5,
+      "backgroundColor": "#F1F1EB",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{firstImage}}",
+          "x": 30,
+          "y": 190,
+          "width": 390,
+          "height": 360,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{secondImage}}",
+          "x": 445,
+          "y": 190,
+          "width": 390,
+          "height": 360,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{thirdImage}}",
+          "x": 860,
+          "y": 190,
+          "width": 390,
+          "height": 360,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 2,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "{{cta}}",
+          "x": 35,
+          "y": 45,
+          "width": 1200,
+          "height": 120,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 66,
+            "color": "#233D35",
+            "lineHeight": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:26px;text-align:center\">{{firstName}} / {{secondName}} / {{thirdName}}</div><div style=\"font-size:24px;margin-top:20px;text-align:center\">{{url}}</div>",
+          "x": 40,
+          "y": 585,
+          "width": 1200,
+          "height": 110,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 26,
+            "color": "#233D35",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "FIELDHOUSE",
+    "buyerBrief": "Space for your next chapter.",
+    "firstImage": "https://images.pexels.com/photos/30580640/pexels-photo-30580640.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop",
+    "secondImage": "https://images.unsplash.com/photo-1721815693498-cc28507c0ba2?auto=format&fit=crop&w=1600&h=1000&q=85",
+    "thirdImage": "https://images.unsplash.com/photo-1628012209120-d9db7abf7eab?auto=format&fit=crop&w=1600&h=1000&q=85",
+    "firstName": "Cedar House",
+    "secondName": "Parkside",
+    "thirdName": "The Courtyard",
+    "firstPrice": "$725,000",
+    "secondPrice": "$680,000",
+    "thirdPrice": "$749,000",
+    "firstSpecs": "3 beds · 2 baths",
+    "secondSpecs": "2 beds · 2 baths",
+    "thirdSpecs": "3 beds · 2 baths",
+    "firstFit": "For the outdoor days",
+    "secondFit": "For the light-filled mornings",
+    "thirdFit": "For a private retreat",
+    "cta": "Choose the one to visit",
+    "url": "fieldhouse.example/your-shortlist",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943516/zvid-series2-unique-music-20261002/day-39-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 22.6,
+      "audioBegin": 0,
+      "audioEnd": 22.6,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

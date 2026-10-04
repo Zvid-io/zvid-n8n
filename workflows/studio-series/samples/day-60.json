@@ -1,0 +1,55 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-60",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "Six times seven. Here are six rows, with seven blocks in each. First method: split six into five plus one. Five rows give thirty-five. One more row gives seven. That makes forty-two. Second method: double three times seven. Twenty-one plus twenty-one is also forty-two. Same product, two ways to see it. Choose the method you can explain.",
+    "rows": 6,
+    "columns": 7,
+    "split_rows": 5,
+    "mastery_threshold": 0.8
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-60",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Teacher verified integer distributive and doubling arithmetic and aggregate mastery.",
+      "url": "https://docs.zvid.io"
+    },
+    {
+      "parent_id": "qa-studio-60",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "mastery",
+      "position": 2,
+      "approval": "approved",
+      "skill": "explain_multiplication",
+      "accuracy": 0.52
+    },
+    {
+      "parent_id": "qa-studio-60",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "narration",
+      "position": 3,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790884215/zvid-series2-design-review-20261001/d60-narration.mp3",
+      "seconds": 29.16,
+      "content_fingerprint": "0a3cd43d696c2ea9197a862fd4ae599527e4a5ffc64809f6239fd6422de1e686",
+      "script": "Six times seven. Here are six rows, with seven blocks in each. First method: split six into five plus one. Five rows give thirty-five. One more row gives seven. That makes forty-two. Second method: double three times seven. Twenty-one plus twenty-one is also forty-two. Same product, two ways to see it. Choose the method you can explain.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

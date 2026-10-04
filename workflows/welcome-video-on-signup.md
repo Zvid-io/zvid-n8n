@@ -252,3 +252,15 @@ frame at 2 fps.
 - **The returned `videoUrl` is a valid URL.** Project names are slugged, so the
   CDN filename carries no spaces and the link can be pasted straight into a
   publish node or `curl` (verified: HTTP 200 on the raw URL).
+
+## Preview download compatibility
+
+The gated **Watch video** step downloads the completed MP4 into binary `data`.
+Open **Binary → data → View** to play it. Each request has a 30-second timeout,
+with at most three attempts five seconds apart. If the CDN is unavailable, the
+preview returns an error and the preceding result node retains the video URL;
+the completed render is not submitted again.
+
+This template uses the built-in HTTP Request v2 file downloader to avoid an
+n8n 2.29.10 manual-execution saving error in the v4 downloader. Zvid API
+operations continue to use the Zvid node.

@@ -1,0 +1,247 @@
+{
+  "name": "S2 D53 Merseyside Rivalry Origins",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "variables": {
+    "anfieldPhoto": "https://upload.wikimedia.org/wikipedia/commons/4/4a/The_Kop_end.jpg",
+    "goodisonPhoto": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Outside_Goodison_Park_(51930122219).jpg",
+    "hook": "EVERTON ONCE\nCALLED ANFIELD HOME.",
+    "originYear": "1878",
+    "origin": "Everton is formed.",
+    "sharedYear": "1884",
+    "sharedGround": "Everton move to Anfield.",
+    "splitYear": "1892",
+    "split": "A dispute brings a move to Goodison Park.",
+    "newClub": "Liverpool FC is formed to play at Anfield.",
+    "closing": "Two clubs.\nOne shared origin story.",
+    "credit": "History: Liverpool FC and Everton FC.\nAnfield photo: Ian Wilson · CC BY 2.0 · 2009\nGoodison photo: Daniel · CC BY 2.0 · 2022\nLater venue photographs, cropped for this edit.\nMap is an original schematic, not to scale.",
+    "narrationUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790883836/zvid-series2-design-review-20261001/d53-narration.mp3",
+    "narrationSeconds": 24.72
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "duration": 2.7,
+      "backgroundColor": "#eee6d4",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{anfieldPhoto}}",
+          "width": 640,
+          "height": 420,
+          "x": 0,
+          "y": 0,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          }
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{goodisonPhoto}}",
+          "width": 640,
+          "height": 420,
+          "x": 640,
+          "y": 0,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px\"><div style=\"position:absolute;left:0px;top:420px;width:1280px;height:300px;background:#eee6d4\"></div><div style=\"position:absolute;left:55px;top:455px;width:1150px;height:50px;\"><div class=\"tag\">MERSEYSIDE / BEFORE THE DERBY</div></div><div style=\"position:absolute;left:55px;top:520px;width:1150px;height:170px;white-space:pre-line\"><div class=\"headline rise\">{{hook}}</div></div></div>",
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": "40px",
+            "color": "#302b23",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Playfair Display;font-size:70px;line-height:1.08;font-weight:700;color:#302b23}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#3e382e}.date{font-family:Playfair Display;font-size:180px;line-height:1;color:#8d4e3d}.tag{font-family:Inter;font-size:21px;letter-spacing:4px;color:#665d4c}.move{animation:move 3s .7s forwards}@keyframes move{from{transform:translate(0,0)}to{transform:translate(-380px,-180px)}}",
+            "animationDuration": 2.7
+          },
+          "track": 2
+        }
+      ]
+    },
+    {
+      "id": "everton",
+      "duration": 2.5,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eee6d4\"><div style=\"position:absolute;left:55px;top:30px;width:1150px;height:40px;\"><div class=\"tag\">MERSEYSIDE / RIVALRY ORIGINS</div></div><div style=\"position:absolute;left:60px;top:140px;width:620px;height:210px;\"><div class=\"date\">{{originYear}}</div></div><div style=\"position:absolute;left:60px;top:410px;width:600px;height:170px;\"><div class=\"headline\">{{origin}}</div></div><div style=\"position:absolute;left:730px;top:160px;width:440px;height:370px;\"><svg width=\"440\" height=\"370\" viewBox=\"0 0 440 370\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M65 340 V180 L220 70 L375 180 V340Z\" fill=\"#c9bda5\"/><path d=\"M145 180 V25 H220 V340\" fill=\"#426284\"/><path d=\"M130 25 H235 M130 75 H235\" stroke=\"#eee6d4\" stroke-width=\"7\"/><path d=\"M90 240 H145 M280 240 H330\" stroke=\"#eee6d4\" stroke-width=\"20\"/></svg></div></div>",
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Playfair Display;font-size:70px;line-height:1.08;font-weight:700;color:#302b23}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#3e382e}.date{font-family:Playfair Display;font-size:180px;line-height:1;color:#8d4e3d}.tag{font-family:Inter;font-size:21px;letter-spacing:4px;color:#665d4c}.move{animation:move 3s .7s forwards}@keyframes move{from{transform:translate(0,0)}to{transform:translate(-380px,-180px)}}",
+            "animationDuration": 2.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "anfield",
+      "duration": 2.9,
+      "backgroundColor": "#eee6d4",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{anfieldPhoto}}",
+          "width": 735,
+          "height": 720,
+          "x": 545,
+          "y": 0,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px\"><div style=\"position:absolute;left:0px;top:0px;width:560px;height:720px;background:#eee6d4\"></div><div style=\"position:absolute;left:50px;top:130px;width:500px;height:200px;\"><div class=\"date\">{{sharedYear}}</div></div><div style=\"position:absolute;left:50px;top:390px;width:460px;height:210px;\"><div class=\"headline\">{{sharedGround}}</div></div></div>",
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": "40px",
+            "color": "#302b23",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Playfair Display;font-size:70px;line-height:1.08;font-weight:700;color:#302b23}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#3e382e}.date{font-family:Playfair Display;font-size:180px;line-height:1;color:#8d4e3d}.tag{font-family:Inter;font-size:21px;letter-spacing:4px;color:#665d4c}.move{animation:move 3s .7s forwards}@keyframes move{from{transform:translate(0,0)}to{transform:translate(-380px,-180px)}}",
+            "animationDuration": 2.9
+          },
+          "track": 2
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "duration": 8.6,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eee6d4\"><div style=\"position:absolute;left:55px;top:30px;width:1150px;height:40px;\"><div class=\"tag\">MERSEYSIDE / RIVALRY ORIGINS</div></div><div style=\"position:absolute;left:55px;top:115px;width:340px;height:170px;\"><div class=\"date\">{{splitYear}}</div></div><div style=\"position:absolute;left:55px;top:345px;width:310px;height:260px;\"><div class=\"body\">{{split}}</div></div><div style=\"position:absolute;left:390px;top:150px;width:850px;height:440px;\"><svg width=\"850\" height=\"440\" viewBox=\"0 0 850 440\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"850\" height=\"440\" fill=\"#e9e1cd\"/><path d=\"M80 60 L220 25 L680 365 L600 415 L100 160Z\" fill=\"#bac6a0\"/><path d=\"M40 210 L700 420 M180 0 L800 360 M40 0 L840 440\" stroke=\"#c9bda5\" stroke-width=\"9\" fill=\"none\"/><path d=\"M40 190 L800 420 M200 20 L800 340\" stroke=\"#f6f0e3\" stroke-width=\"3\" fill=\"none\"/><rect x=\"145\" y=\"85\" width=\"125\" height=\"70\" fill=\"#426284\"/><rect x=\"570\" y=\"320\" width=\"125\" height=\"70\" fill=\"#aa533c\"/><path class=\"draw\" d=\"M632 345 Q410 175 205 130\" fill=\"none\" stroke=\"#8b7452\" stroke-width=\"7\"/><path d=\"M235 100 L200 125 L240 145\" fill=\"none\" stroke=\"#8b7452\" stroke-width=\"7\"/></svg></div><div style=\"position:absolute;left:450px;top:220px;width:430px;height:55px;font-family:Inter;font-size:25px;color:#314864\">GOODISON PARK</div><div style=\"position:absolute;left:950px;top:570px;width:250px;height:55px;font-family:Inter;font-size:25px;color:#8d4e3d\">ANFIELD</div><div style=\"position:absolute;left:700px;top:400px;width:410px;height:60px;font-family:Inter;font-size:26px;color:#40562c;transform:rotate(32deg)\">STANLEY PARK</div></div>",
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Playfair Display;font-size:70px;line-height:1.08;font-weight:700;color:#302b23}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#3e382e}.date{font-family:Playfair Display;font-size:180px;line-height:1;color:#8d4e3d}.tag{font-family:Inter;font-size:21px;letter-spacing:4px;color:#665d4c}.move{animation:move 3s .7s forwards}@keyframes move{from{transform:translate(0,0)}to{transform:translate(-380px,-180px)}}",
+            "animationDuration": 8.6
+          }
+        }
+      ]
+    },
+    {
+      "id": "new-club",
+      "duration": 8.1,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eee6d4\"><div style=\"position:absolute;left:55px;top:30px;width:1150px;height:40px;\"><div class=\"tag\">MERSEYSIDE / RIVALRY ORIGINS</div></div><div style=\"position:absolute;left:55px;top:130px;width:1150px;height:180px;\"><div class=\"headline rise\">{{newClub}}</div></div><div style=\"position:absolute;left:55px;top:390px;width:1150px;height:190px;white-space:pre-line;font-size:48px\"><div class=\"body\">{{closing}}</div></div></div>",
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Playfair Display;font-size:70px;line-height:1.08;font-weight:700;color:#302b23}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#3e382e}.date{font-family:Playfair Display;font-size:180px;line-height:1;color:#8d4e3d}.tag{font-family:Inter;font-size:21px;letter-spacing:4px;color:#665d4c}.move{animation:move 3s .7s forwards}@keyframes move{from{transform:translate(0,0)}to{transform:translate(-380px,-180px)}}",
+            "animationDuration": 8.1
+          }
+        }
+      ]
+    },
+    {
+      "id": "credits",
+      "duration": 4,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eee6d4\"><div style=\"position:absolute;left:55px;top:30px;width:1150px;height:40px;\"><div class=\"tag\">MERSEYSIDE / RIVALRY ORIGINS</div></div><div style=\"position:absolute;left:55px;top:115px;width:1150px;height:110px;\"><div class=\"headline\">BEFORE THE WHISTLE.</div></div><div style=\"position:absolute;left:55px;top:290px;width:1150px;height:340px;font-family:Inter;font-size:25px;line-height:1.6;white-space:pre-line;color:#302b23\">{{credit}}</div></div>",
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Playfair Display;font-size:70px;line-height:1.08;font-weight:700;color:#302b23}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#3e382e}.date{font-family:Playfair Display;font-size:180px;line-height:1;color:#8d4e3d}.tag{font-family:Inter;font-size:21px;letter-spacing:4px;color:#665d4c}.move{animation:move 3s .7s forwards}@keyframes move{from{transform:translate(0,0)}to{transform:translate(-380px,-180px)}}",
+            "animationDuration": 4
+          }
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{narrationUrl}}",
+      "enter": 0,
+      "exit": "{{narrationSeconds}}",
+      "audioBegin": 0,
+      "audioEnd": "{{narrationSeconds}}",
+      "volume": 1,
+      "speed": 1
+    }
+  ]
+}

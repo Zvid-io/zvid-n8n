@@ -1,0 +1,345 @@
+{
+  "type": "video",
+  "name": "S2 D32 - Complete the Look",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#F5EFE4",
+  "scenes": [
+    {
+      "id": "whole-look",
+      "duration": 5,
+      "backgroundColor": "#F5EFE4",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{outfitImage}}",
+          "x": 90,
+          "y": 350,
+          "width": 900,
+          "height": 1190,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:27px;letter-spacing:5px\">{{brand}}</div><div style=\"font-size:86px;margin-top:16px\">{{headline}}</div>",
+          "x": 60,
+          "y": 80,
+          "width": 960,
+          "height": 270,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": 86,
+            "color": "#8D242C",
+            "lineHeight": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{lookName}}",
+          "x": 90,
+          "y": 1660,
+          "width": 900,
+          "height": 110,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 46,
+            "color": "#8D242C",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-carry",
+      "duration": 5,
+      "backgroundColor": "#8D242C",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{bagImage}}",
+          "x": 115,
+          "y": 190,
+          "width": 850,
+          "height": 1260,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "smoothright",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:28px\">THE CARRY / 01</div><div style=\"font-size:78px;margin-top:14px\">{{bagName}}</div><div style=\"font-size:42px;margin-top:16px\">{{bagPrice}}</div>",
+          "x": 70,
+          "y": 1540,
+          "width": 930,
+          "height": 275,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": 78,
+            "color": "#FFF4E1",
+            "lineHeight": 1.03
+          }
+        }
+      ]
+    },
+    {
+      "id": "finishing-pieces",
+      "duration": 6,
+      "backgroundColor": "#F5EFE4",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{shoeImage}}",
+          "x": 90,
+          "y": 100,
+          "width": 640,
+          "height": 950,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{glassesImage}}",
+          "x": 400,
+          "y": 1330,
+          "width": 600,
+          "height": 290,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:67px\">{{shoeName}}</div><div style=\"font-size:42px;margin-top:18px\">{{shoePrice}} / 02</div>",
+          "x": 100,
+          "y": 1080,
+          "width": 780,
+          "height": 180,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": 67,
+            "color": "#8D242C",
+            "lineHeight": 1.02
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:56px\">{{glassesName}}</div><div style=\"font-size:42px;margin-top:16px\">{{glassesPrice}} / 03</div>",
+          "x": 70,
+          "y": 1670,
+          "width": 930,
+          "height": 180,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": 56,
+            "color": "#8D242C",
+            "lineHeight": 1.05
+          }
+        }
+      ]
+    },
+    {
+      "id": "put-together",
+      "duration": 6,
+      "backgroundColor": "#F5EFE4",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{outfitImage}}",
+          "x": 70,
+          "y": 360,
+          "width": 540,
+          "height": 980,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{bagImage}}",
+          "x": 680,
+          "y": 370,
+          "width": 300,
+          "height": 520,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{glassesImage}}",
+          "x": 670,
+          "y": 1020,
+          "width": 300,
+          "height": 280,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 2,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "TEXT",
+          "html": "{{cta}}",
+          "x": 70,
+          "y": 90,
+          "width": 940,
+          "height": 190,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "Playfair Display",
+            "fontSize": 94,
+            "color": "#8D242C",
+            "lineHeight": 1.02
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:39px\">{{lookName}}</div><div style=\"font-size:31px;margin-top:25px\">{{url}}</div>",
+          "x": 70,
+          "y": 1530,
+          "width": 940,
+          "height": 240,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 39,
+            "color": "#8D242C",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "FORM & FIELD",
+    "headline": "One look. Every detail.",
+    "outfitImage": "https://images.pexels.com/photos/5352628/pexels-photo-5352628.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "bagImage": "https://images.unsplash.com/photo-1640901555383-7335ec5a6476?auto=format&fit=crop&w=1080&h=1600&q=85",
+    "shoeImage": "https://images.pexels.com/photos/27503504/pexels-photo-27503504.png?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "glassesImage": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1080&h=700&q=85",
+    "lookName": "The weekend edit",
+    "bagName": "Sunshine carry",
+    "bagPrice": "$68",
+    "shoeName": "City sneaker",
+    "shoePrice": "$95",
+    "glassesName": "Everyday frames",
+    "glassesPrice": "$42",
+    "cta": "Wear it your way",
+    "url": "form.example/the-look",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943446/zvid-series2-unique-music-20261002/day-32-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 20.95,
+      "audioBegin": 0,
+      "audioEnd": 20.95,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

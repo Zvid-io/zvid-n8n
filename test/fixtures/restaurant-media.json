@@ -1,0 +1,47 @@
+{
+  "verifiedAt": "2026-10-01T04:24:50.713Z",
+  "assets": [
+    {
+      "src": "https://images.pexels.com/photos/17302499/pexels-photo-17302499.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1920&fit=max&dpr=1",
+      "height": 1920,
+      "width": 1280,
+      "bytes": 133854
+    },
+    {
+      "src": "https://images.pexels.com/photos/34407507/pexels-photo-34407507.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1920&fit=max&dpr=1",
+      "height": 1920,
+      "width": 1280,
+      "bytes": 156501
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?crop=entropy&cs=tinysrgb&fm=jpg&q=80&w=1920&h=1920&fit=max&dpr=1",
+      "height": 1920,
+      "width": 1536,
+      "bytes": 361165
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1564759296729-771e78c26df7?crop=entropy&cs=tinysrgb&fm=jpg&q=80&w=1920&h=1920&fit=max&dpr=1",
+      "height": 1920,
+      "width": 1536,
+      "bytes": 250213
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?crop=entropy&cs=tinysrgb&fm=jpg&ixid=M3w3MDgwMTZ8MHwxfHNlYXJjaHw0fHxoZWFsdGh5JTIwZm9vZCUyMHNhbGFkJTIwYm93bCUyMGZyZXNofGVufDB8fHx8MTc4MzI2ODU4MHww&ixlib=rb-4.1.0&q=80&w=1920&h=1920&fit=max&dpr=1",
+      "height": 1920,
+      "width": 1536,
+      "bytes": 361165
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1564759296729-771e78c26df7?crop=entropy&cs=tinysrgb&fm=jpg&ixid=M3w3MDgwMTZ8MHwxfHNlYXJjaHwyfHxnb3VybWV0JTIwZm9vZCUyMHBsYXRlZCUyMHJlc3RhdXJhbnR8ZW58MHx8fHwxNzgzMjY4NTczfDA&ixlib=rb-4.1.0&q=80&w=1920&h=1920&fit=max&dpr=1",
+      "height": 1920,
+      "width": 1536,
+      "bytes": 250213
+    },
+    {
+      "src": "https://images.pexels.com/photos/10562410/pexels-photo-10562410.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1920&fit=max&dpr=1",
+      "height": 1920,
+      "width": 1280,
+      "bytes": 208004
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "name": "S2 D52 Istanbul Historic Football Comeback",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "variables": {
+    "stadiumPhoto": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Istanbul_Atat%C3%BCrk_Olympic_Stadium_1.jpg",
+    "match": "MILAN vs LIVERPOOL",
+    "date": "ISTANBUL · 25 MAY 2005",
+    "hook": "SIX MINUTES.\nTHREE GOALS.",
+    "halfTime": "3 – 0",
+    "minuteOne": "54′",
+    "playerOne": "STEVEN GERRARD",
+    "momentOne": "A header starts the recovery.",
+    "scoreOne": "3 – 1",
+    "minuteTwo": "56′",
+    "playerTwo": "VLADIMÍR ŠMICER",
+    "momentTwo": "A low drive brings Liverpool closer.",
+    "scoreTwo": "3 – 2",
+    "minuteThree": "60′",
+    "playerThree": "XABI ALONSO",
+    "momentThree": "The rebound makes it level.",
+    "scoreThree": "3 – 3",
+    "final": "LIVERPOOL WIN",
+    "credit": "Facts: UEFA match report, Milan–Liverpool 2005.\nVenue photo: Валерий Дед · CC BY 3.0\nLater stadium context photograph; cropped and graded.",
+    "narrationUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790883829/zvid-series2-design-review-20261001/d52-narration.mp3",
+    "narrationSeconds": 32.64,
+    "teamOne": "MILAN",
+    "teamTwo": "LIVERPOOL",
+    "halfTimeDetail": "THREE DOWN AT THE BREAK",
+    "goalLabel": "THE COMEBACK",
+    "fullTime": "3 – 3",
+    "shootoutScore": "3 – 2",
+    "shootoutLabel": "PENALTY SHOOT-OUT",
+    "finalDetail": "FROM THREE DOWN TO EUROPEAN CHAMPIONS"
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "duration": 2.7,
+      "backgroundColor": "#101a23",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{stadiumPhoto}}",
+          "width": 650,
+          "height": 720,
+          "x": 630,
+          "y": 0,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:transparent;color:#f5f2e9;overflow:hidden\"><div style=\"position:absolute;left:0px;top:0px;width:670px;height:720px;background:#bd2429\"></div><div style=\"position:absolute;left:630px;top:0px;width:650px;height:720px;background:linear-gradient(90deg,rgba(6,18,28,.18),transparent)\"></div><div style=\"position:absolute;left:52px;top:44px;width:1140px;height:35px;color:#f5f2e9\"><div class=\"eyebrow\">{{date}}</div></div><div style=\"position:absolute;left:52px;top:192px;width:600px;height:255px;white-space:pre-line\"><div class=\"title rise\">{{hook}}</div></div><div style=\"position:absolute;left:54px;top:488px;width:560px;height:60px;font-size:29px;font-weight:600\">{{match}}</div><div style=\"position:absolute;left:54px;top:620px;width:545px;height:52px;display:flex;justify-content:space-between;font-size:33px;font-weight:700;border-top:2px solid #efb3ac;padding-top:16px\"><span>{{minuteOne}}</span><span>{{minuteTwo}}</span><span>{{minuteThree}}</span></div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "32px",
+            "color": "#f5f2e9",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".rise{animation:rise .55s both}.wipe{animation:wipe .7s both}.score{font-family:Montserrat;font-weight:800;line-height:1;letter-spacing:-8px}.eyebrow{font-family:Montserrat;font-size:20px;letter-spacing:3px;font-weight:600}.title{font-family:Montserrat;font-size:77px;font-weight:800;line-height:1.03;letter-spacing:-3px}.body{font-family:Montserrat;font-size:26px;line-height:1.4}.name{font-family:Montserrat;font-size:57px;font-weight:800;line-height:1.12;letter-spacing:-2px}@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}",
+            "animationDuration": 2.7
+          },
+          "track": 2
+        }
+      ]
+    },
+    {
+      "id": "halftime",
+      "duration": 6.4,
+      "backgroundColor": "#101a23",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{stadiumPhoto}}",
+          "width": 375,
+          "height": 320,
+          "x": 850,
+          "y": 170,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:transparent;color:#f5f2e9;overflow:hidden\"><div style=\"position:absolute;left:0px;top:0px;width:805px;height:720px;background:#101a23\"></div><div style=\"position:absolute;left:805px;top:0px;width:475px;height:150px;background:#101a23\"></div><div style=\"position:absolute;left:805px;top:510px;width:475px;height:210px;background:#101a23\"></div><div style=\"position:absolute;left:55px;top:50px;width:650px;height:35px;color:#f1bc69\"><div class=\"eyebrow\">THE FINAL / HALF-TIME</div></div><div style=\"position:absolute;left:54px;top:171px;width:700px;height:64px;font-size:30px;font-weight:600\">{{teamOne}} <span style=\"color:#8c9a9f;margin:0 27px\">/</span> {{teamTwo}}</div><div style=\"position:absolute;left:43px;top:246px;width:700px;height:255px;\"><div class=\"score rise\" style=\"font-size:226px\">{{halfTime}}</div></div><div style=\"position:absolute;left:55px;top:565px;width:690px;height:70px;font-size:30px;line-height:1.3;color:#f1bc69\">{{halfTimeDetail}}</div><div style=\"position:absolute;left:850px;top:112px;width:375px;height:35px;color:#b6c2c6\"><div class=\"eyebrow\">ISTANBUL / 2005</div></div><div style=\"position:absolute;left:850px;top:535px;width:375px;height:100px;font-size:25px;line-height:1.4\">One half to change<br>the entire story.</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "32px",
+            "color": "#f5f2e9",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".rise{animation:rise .55s both}.wipe{animation:wipe .7s both}.score{font-family:Montserrat;font-weight:800;line-height:1;letter-spacing:-8px}.eyebrow{font-family:Montserrat;font-size:20px;letter-spacing:3px;font-weight:600}.title{font-family:Montserrat;font-size:77px;font-weight:800;line-height:1.03;letter-spacing:-3px}.body{font-family:Montserrat;font-size:26px;line-height:1.4}.name{font-family:Montserrat;font-size:57px;font-weight:800;line-height:1.12;letter-spacing:-2px}@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}",
+            "animationDuration": 6.4
+          },
+          "track": 2
+        }
+      ]
+    },
+    {
+      "id": "gerrard",
+      "duration": 3.2,
+      "backgroundColor": "#101a23",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#101a23;color:#f5f2e9;overflow:hidden\"><div style=\"position:absolute;left:0px;top:0px;width:1280px;height:525px;background:#101a23\"></div><div style=\"position:absolute;left:0px;top:525px;width:1280px;height:195px;background:#efede3\"></div><div style=\"position:absolute;left:56px;top:43px;width:760px;height:35px;color:#f1bc69\"><div class=\"eyebrow\">{{goalLabel}} / GOAL 1</div></div><div style=\"position:absolute;left:49px;top:126px;width:340px;height:140px;font-size:132px;font-weight:800;line-height:1;color:#e94847;letter-spacing:-7px\">{{minuteOne}}</div><div style=\"position:absolute;left:58px;top:293px;width:687px;height:130px;\"><div class=\"name rise\">{{playerOne}}</div></div><div style=\"position:absolute;left:59px;top:439px;width:710px;height:70px;\"><div class=\"body\">{{momentOne}}</div></div><div style=\"position:absolute;left:841px;top:134px;width:382px;height:331px;background:#f5f2e9;color:#101a23\"><div style=\"position:absolute;left:25px;top:28px;width:330px;height:45px;display:flex;justify-content:space-between;font-size:21px;font-weight:700\"><span>{{teamOne}}</span><span>{{teamTwo}}</span></div><div style=\"position:absolute;left:19px;top:100px;width:345px;height:139px;text-align:center\"><div class=\"score wipe\" style=\"font-size:123px\">{{scoreOne}}</div></div><div style=\"position:absolute;left:25px;top:276px;width:332px;height:30px;font-size:18px;letter-spacing:2px;text-align:center;color:#ba242a\">THE GAP IS CLOSING</div></div><div style=\"position:absolute;left:58px;top:588px;width:1164px;height:3px;background:#c6c6bd\"></div><div style=\"position:absolute;left:58px;top:577px;width:23px;height:23px;border-radius:50%;background:#c3252c;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:58px;top:623px;width:100px;height:48px;color:#c3252c;font-size:31px;font-weight:800\">{{minuteOne}}</div><div style=\"position:absolute;left:145px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#c3252c\">{{playerOne}}</div><div style=\"position:absolute;left:458px;top:577px;width:23px;height:23px;border-radius:50%;background:#b8bbb5;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:458px;top:623px;width:100px;height:48px;color:#24313a;font-size:31px;font-weight:800\">{{minuteTwo}}</div><div style=\"position:absolute;left:545px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#7a817e\">THE STORY CONTINUES</div><div style=\"position:absolute;left:858px;top:577px;width:23px;height:23px;border-radius:50%;background:#b8bbb5;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:858px;top:623px;width:100px;height:48px;color:#24313a;font-size:31px;font-weight:800\">{{minuteThree}}</div><div style=\"position:absolute;left:945px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#7a817e\">THE STORY CONTINUES</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "32px",
+            "color": "#f5f2e9",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".rise{animation:rise .55s both}.wipe{animation:wipe .7s both}.score{font-family:Montserrat;font-weight:800;line-height:1;letter-spacing:-8px}.eyebrow{font-family:Montserrat;font-size:20px;letter-spacing:3px;font-weight:600}.title{font-family:Montserrat;font-size:77px;font-weight:800;line-height:1.03;letter-spacing:-3px}.body{font-family:Montserrat;font-size:26px;line-height:1.4}.name{font-family:Montserrat;font-size:57px;font-weight:800;line-height:1.12;letter-spacing:-2px}@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}",
+            "animationDuration": 3.2
+          },
+          "track": 2
+        }
+      ]
+    },
+    {
+      "id": "smicer",
+      "duration": 4,
+      "backgroundColor": "#101a23",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#101a23;color:#f5f2e9;overflow:hidden\"><div style=\"position:absolute;left:0px;top:0px;width:1280px;height:525px;background:#101a23\"></div><div style=\"position:absolute;left:0px;top:525px;width:1280px;height:195px;background:#efede3\"></div><div style=\"position:absolute;left:56px;top:43px;width:760px;height:35px;color:#f1bc69\"><div class=\"eyebrow\">{{goalLabel}} / GOAL 2</div></div><div style=\"position:absolute;left:49px;top:126px;width:340px;height:140px;font-size:132px;font-weight:800;line-height:1;color:#e94847;letter-spacing:-7px\">{{minuteTwo}}</div><div style=\"position:absolute;left:58px;top:293px;width:687px;height:130px;\"><div class=\"name rise\">{{playerTwo}}</div></div><div style=\"position:absolute;left:59px;top:439px;width:710px;height:70px;\"><div class=\"body\">{{momentTwo}}</div></div><div style=\"position:absolute;left:841px;top:134px;width:382px;height:331px;background:#f5f2e9;color:#101a23\"><div style=\"position:absolute;left:25px;top:28px;width:330px;height:45px;display:flex;justify-content:space-between;font-size:21px;font-weight:700\"><span>{{teamOne}}</span><span>{{teamTwo}}</span></div><div style=\"position:absolute;left:19px;top:100px;width:345px;height:139px;text-align:center\"><div class=\"score wipe\" style=\"font-size:123px\">{{scoreTwo}}</div></div><div style=\"position:absolute;left:25px;top:276px;width:332px;height:30px;font-size:18px;letter-spacing:2px;text-align:center;color:#ba242a\">THE GAP IS CLOSING</div></div><div style=\"position:absolute;left:58px;top:588px;width:1164px;height:3px;background:#c6c6bd\"></div><div style=\"position:absolute;left:58px;top:577px;width:23px;height:23px;border-radius:50%;background:#101a23;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:58px;top:623px;width:100px;height:48px;color:#24313a;font-size:31px;font-weight:800\">{{minuteOne}}</div><div style=\"position:absolute;left:145px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#24313a\">{{playerOne}}</div><div style=\"position:absolute;left:458px;top:577px;width:23px;height:23px;border-radius:50%;background:#c3252c;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:458px;top:623px;width:100px;height:48px;color:#c3252c;font-size:31px;font-weight:800\">{{minuteTwo}}</div><div style=\"position:absolute;left:545px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#c3252c\">{{playerTwo}}</div><div style=\"position:absolute;left:858px;top:577px;width:23px;height:23px;border-radius:50%;background:#b8bbb5;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:858px;top:623px;width:100px;height:48px;color:#24313a;font-size:31px;font-weight:800\">{{minuteThree}}</div><div style=\"position:absolute;left:945px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#7a817e\">THE STORY CONTINUES</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "32px",
+            "color": "#f5f2e9",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".rise{animation:rise .55s both}.wipe{animation:wipe .7s both}.score{font-family:Montserrat;font-weight:800;line-height:1;letter-spacing:-8px}.eyebrow{font-family:Montserrat;font-size:20px;letter-spacing:3px;font-weight:600}.title{font-family:Montserrat;font-size:77px;font-weight:800;line-height:1.03;letter-spacing:-3px}.body{font-family:Montserrat;font-size:26px;line-height:1.4}.name{font-family:Montserrat;font-size:57px;font-weight:800;line-height:1.12;letter-spacing:-2px}@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}",
+            "animationDuration": 4
+          },
+          "track": 2
+        }
+      ]
+    },
+    {
+      "id": "alonso",
+      "duration": 7.9,
+      "backgroundColor": "#101a23",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#101a23;color:#f5f2e9;overflow:hidden\"><div style=\"position:absolute;left:0px;top:0px;width:1280px;height:525px;background:#101a23\"></div><div style=\"position:absolute;left:0px;top:525px;width:1280px;height:195px;background:#efede3\"></div><div style=\"position:absolute;left:56px;top:43px;width:760px;height:35px;color:#f1bc69\"><div class=\"eyebrow\">{{goalLabel}} / GOAL 3</div></div><div style=\"position:absolute;left:49px;top:126px;width:340px;height:140px;font-size:132px;font-weight:800;line-height:1;color:#e94847;letter-spacing:-7px\">{{minuteThree}}</div><div style=\"position:absolute;left:58px;top:293px;width:687px;height:130px;\"><div class=\"name rise\">{{playerThree}}</div></div><div style=\"position:absolute;left:59px;top:439px;width:710px;height:70px;\"><div class=\"body\">{{momentThree}}</div></div><div style=\"position:absolute;left:841px;top:134px;width:382px;height:331px;background:#f5f2e9;color:#101a23\"><div style=\"position:absolute;left:25px;top:28px;width:330px;height:45px;display:flex;justify-content:space-between;font-size:21px;font-weight:700\"><span>{{teamOne}}</span><span>{{teamTwo}}</span></div><div style=\"position:absolute;left:19px;top:100px;width:345px;height:139px;text-align:center\"><div class=\"score wipe\" style=\"font-size:123px\">{{scoreThree}}</div></div><div style=\"position:absolute;left:25px;top:276px;width:332px;height:30px;font-size:18px;letter-spacing:2px;text-align:center;color:#ba242a\">LEVEL AGAIN</div></div><div style=\"position:absolute;left:58px;top:588px;width:1164px;height:3px;background:#c6c6bd\"></div><div style=\"position:absolute;left:58px;top:577px;width:23px;height:23px;border-radius:50%;background:#101a23;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:58px;top:623px;width:100px;height:48px;color:#24313a;font-size:31px;font-weight:800\">{{minuteOne}}</div><div style=\"position:absolute;left:145px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#24313a\">{{playerOne}}</div><div style=\"position:absolute;left:458px;top:577px;width:23px;height:23px;border-radius:50%;background:#101a23;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:458px;top:623px;width:100px;height:48px;color:#24313a;font-size:31px;font-weight:800\">{{minuteTwo}}</div><div style=\"position:absolute;left:545px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#24313a\">{{playerTwo}}</div><div style=\"position:absolute;left:858px;top:577px;width:23px;height:23px;border-radius:50%;background:#c3252c;border:4px solid #efede3;box-sizing:border-box\"></div><div style=\"position:absolute;left:858px;top:623px;width:100px;height:48px;color:#c3252c;font-size:31px;font-weight:800\">{{minuteThree}}</div><div style=\"position:absolute;left:945px;top:627px;width:270px;height:48px;font-size:17px;line-height:1.3;color:#c3252c\">{{playerThree}}</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "32px",
+            "color": "#f5f2e9",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".rise{animation:rise .55s both}.wipe{animation:wipe .7s both}.score{font-family:Montserrat;font-weight:800;line-height:1;letter-spacing:-8px}.eyebrow{font-family:Montserrat;font-size:20px;letter-spacing:3px;font-weight:600}.title{font-family:Montserrat;font-size:77px;font-weight:800;line-height:1.03;letter-spacing:-3px}.body{font-family:Montserrat;font-size:26px;line-height:1.4}.name{font-family:Montserrat;font-size:57px;font-weight:800;line-height:1.12;letter-spacing:-2px}@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}",
+            "animationDuration": 7.9
+          },
+          "track": 2
+        }
+      ]
+    },
+    {
+      "id": "penalties",
+      "duration": 8.5,
+      "backgroundColor": "#101a23",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:transparent;color:#f5f2e9;overflow:hidden\"><div style=\"position:absolute;left:0px;top:0px;width:1280px;height:720px;background:#bd2429\"></div><div style=\"position:absolute;left:53px;top:44px;width:1120px;height:35px;color:#f5f2e9\"><div class=\"eyebrow\">{{finalDetail}}</div></div><div style=\"position:absolute;left:54px;top:142px;width:566px;height:197px;font-size:88px;font-weight:800;line-height:1.06;letter-spacing:-3px\"><div class=\"rise\">{{final}}</div></div><div style=\"position:absolute;left:60px;top:442px;width:552px;height:100px;font-size:28px;line-height:1.5\">HALF-TIME <b>{{halfTime}}</b><br>AFTER EXTRA TIME <b>{{fullTime}}</b></div><div style=\"position:absolute;left:678px;top:136px;width:548px;height:466px;background:#f5f2e9;color:#bd2429\"><div style=\"position:absolute;left:40px;top:35px;width:480px;height:35px;color:#8d2526\"><div class=\"eyebrow\">{{shootoutLabel}}</div></div><div style=\"position:absolute;left:27px;top:132px;width:494px;height:188px;text-align:center\"><div class=\"score wipe\" style=\"font-size:167px\">{{shootoutScore}}</div></div><div style=\"position:absolute;left:40px;top:363px;width:465px;height:60px;font-size:24px;text-align:center;color:#29343a\">LIVERPOOL PREVAIL</div></div><div style=\"position:absolute;left:58px;top:643px;width:1140px;height:36px;font-size:22px;letter-spacing:2px\">ISTANBUL · A FINAL THAT CHANGED IN SIX MINUTES</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "32px",
+            "color": "#f5f2e9",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".rise{animation:rise .55s both}.wipe{animation:wipe .7s both}.score{font-family:Montserrat;font-weight:800;line-height:1;letter-spacing:-8px}.eyebrow{font-family:Montserrat;font-size:20px;letter-spacing:3px;font-weight:600}.title{font-family:Montserrat;font-size:77px;font-weight:800;line-height:1.03;letter-spacing:-3px}.body{font-family:Montserrat;font-size:26px;line-height:1.4}.name{font-family:Montserrat;font-size:57px;font-weight:800;line-height:1.12;letter-spacing:-2px}@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}",
+            "animationDuration": 8.5
+          },
+          "track": 2
+        }
+      ]
+    },
+    {
+      "id": "credits",
+      "duration": 4,
+      "backgroundColor": "#101a23",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#efede3;color:#f5f2e9;overflow:hidden\"><div style=\"position:absolute;left:55px;top:58px;width:1155px;height:65px;font-size:44px;font-weight:800;color:#151f28\">THE ISTANBUL COMEBACK</div><div style=\"position:absolute;left:56px;top:205px;width:1110px;height:180px;font-size:27px;line-height:1.7;white-space:pre-line;color:#26343d\">{{credit}}</div><div style=\"position:absolute;left:56px;top:563px;width:1140px;height:72px;font-size:23px;line-height:1.4;color:#a6262c\">2005 UEFA CHAMPIONS LEAGUE FINAL<br>MILAN 3–3 LIVERPOOL · LIVERPOOL WON THE SHOOT-OUT</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "32px",
+            "color": "#f5f2e9",
+            "backgroundColor": "transparent"
+          },
+          "customCode": {
+            "css": ".rise{animation:rise .55s both}.wipe{animation:wipe .7s both}.score{font-family:Montserrat;font-weight:800;line-height:1;letter-spacing:-8px}.eyebrow{font-family:Montserrat;font-size:20px;letter-spacing:3px;font-weight:600}.title{font-family:Montserrat;font-size:77px;font-weight:800;line-height:1.03;letter-spacing:-3px}.body{font-family:Montserrat;font-size:26px;line-height:1.4}.name{font-family:Montserrat;font-size:57px;font-weight:800;line-height:1.12;letter-spacing:-2px}@keyframes rise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}",
+            "animationDuration": 4
+          },
+          "track": 2
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{narrationUrl}}",
+      "enter": 0,
+      "exit": "{{narrationSeconds}}",
+      "audioBegin": 0,
+      "audioEnd": "{{narrationSeconds}}",
+      "volume": 1,
+      "speed": 1
+    }
+  ]
+}

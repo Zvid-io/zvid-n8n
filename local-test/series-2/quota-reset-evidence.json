@@ -1,0 +1,82 @@
+{
+  "issue": "The account reached its hourly quota of 20 accepted render jobs",
+  "attempts": [
+    {
+      "executionId": 716,
+      "workflowId": "ZvidSeries2Day51",
+      "requestTimestampUtc": "2026-10-01T09:43:18.279Z",
+      "responseTimestampUtc": "2026-10-01T09:43:19.320Z",
+      "current": 20,
+      "limit": 20,
+      "retryAfterSeconds": 1157,
+      "retryNotBeforeUtc": "2026-10-01T10:02:36.320Z"
+    },
+    {
+      "executionId": 717,
+      "workflowId": "ZvidSeries2Day52",
+      "requestTimestampUtc": "2026-10-01T09:46:04.086Z",
+      "responseTimestampUtc": "2026-10-01T09:46:04.482Z",
+      "current": 20,
+      "limit": 20,
+      "retryAfterSeconds": 991,
+      "retryNotBeforeUtc": "2026-10-01T10:02:35.482Z"
+    }
+  ],
+  "latestReportedRetryNotBeforeUtc": "2026-10-01T10:02:36.320Z",
+  "conservativeRetryUtc": "2026-10-01T10:02:37.000Z",
+  "conservativeRetryCairo": "2026-10-01T13:02:37+03:00",
+  "requestHeadersSaved": false,
+  "retryAfterSource": "Stored API response body; n8n did not retain HTTP headers in this error.",
+  "knownJobStateEvidence": {
+    "executionId": 718,
+    "checkedAtUtc": "2026-10-01T09:58:22.016Z",
+    "requested": 20,
+    "found": 20,
+    "activeKnownJobCount": 0,
+    "allCompleted": true,
+    "paidNodesExecuted": []
+  },
+  "sourceEvidence": [
+    {
+      "file": "orch/services/renderRateLimiter.js",
+      "line": 17,
+      "fact": "Hourly quota is checked before concurrent quota."
+    },
+    {
+      "file": "orch/services/renderRateLimiter.js",
+      "line": 56,
+      "fact": "Hourly count plus the next job must remain within the plan limit."
+    },
+    {
+      "file": "orch/services/renderRateLimiter.js",
+      "line": 66,
+      "fact": "The response retryAfter comes from the counter TTL."
+    },
+    {
+      "file": "orch/services/renderRateLimiter.js",
+      "line": 117,
+      "fact": "Accepted submissions increment hourly and concurrent counters."
+    },
+    {
+      "file": "orch/services/renderRateLimiter.js",
+      "line": 145,
+      "fact": "Completion decrements only the concurrent counter."
+    },
+    {
+      "file": "orch/services/renderRateLimiter.js",
+      "line": 176,
+      "fact": "The hourly counter gets a 3600-second TTL on its first increment."
+    },
+    {
+      "file": "orch/services/renderRateLimiter.js",
+      "line": 208,
+      "fact": "The counter key uses the UTC epoch hour; no counter was bypassed or reset."
+    },
+    {
+      "file": "orch/middleware/renderRateLimiter.js",
+      "line": 25,
+      "fact": "The limiter also emits Retry-After with the 429 response."
+    }
+  ],
+  "conclusion": "Sequential completed jobs still consume hourly slots. The last two failures were hourly quota failures, not active-job concurrency failures."
+}

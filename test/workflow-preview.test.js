@@ -19,13 +19,16 @@ for (const entry of entries) {
     assert.deepEqual(organizeWorkflow(result).workflow, result, 'Repeat updates must not move notes or duplicate nodes');
     const watch = result.nodes.filter(n => n.type !== STICKY && /watch video/i.test(n.name));
     assert.equal(watch.length, 1);
-    assert.equal(watch[0].parameters.options.response.response.responseFormat, 'file');
-    assert.equal(watch[0].parameters.options.response.response.outputPropertyName, 'data');
+    const response = watch[0].typeVersion === 2
+      ? { responseFormat: watch[0].parameters.responseFormat, outputPropertyName: watch[0].parameters.dataPropertyName }
+      : watch[0].parameters.options.response.response;
+    assert.equal(response.responseFormat, 'file');
+    assert.equal(response.outputPropertyName, 'data');
     assert.equal(watch[0].onError, 'continueRegularOutput');
     assert.equal(watch[0].maxTries, 3);
-    const gate = result.nodes.find(n => n.name === GATE);
+    const gate = result.nodes.find(n => n.id === 'zvid-watch-ready');
     assert.ok(gate);
-    assert.deepEqual(result.connections[GATE].main, [[{ node: watch[0].name, type: 'main', index: 0 }], []]);
+    assert.deepEqual(result.connections[gate.name].main, [[{ node: watch[0].name, type: 'main', index: 0 }], []]);
     // Evaluate the actual n8n expressions for single videos, batches and agent replies.
     const ready = new Function('$json', '$', 'return (' + expressionBody(gate.parameters.conditions.conditions[0].leftValue) + ');');
     for (const videoUrl of ['', null, undefined, 'not a URL']) {

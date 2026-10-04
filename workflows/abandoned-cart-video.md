@@ -4,7 +4,25 @@
 
 Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
 
+The completed-media preview uses the built-in HTTP Request v2 node to avoid a
+manual-run serialization error in n8n 2.29.10 that can leave newer download
+nodes spinning. Keep the supplied preview node version when importing.
+
 [`zvid-abandoned-cart-video.json`](zvid-abandoned-cart-video.json)
+
+## Source image size and preview downloads
+
+The source photo's pixel dimensions must fit your account's input-media limits;
+setting its displayed size to 1080×1920 does not resize the downloaded source.
+The builder requests an aspect-ratio-preserving image within 1920×1920 for the
+supported stock-library image URLs used by the sample data. A 1620×2880 portrait
+therefore becomes 1080×1920. Other product URLs are preserved, including signed
+URLs: supply a resized photo from your own image host if it exceeds your limits.
+The video remains 1080×1920.
+
+**Watch video** has a 30-second request timeout and up to three download attempts.
+If the preview fails after rendering, use **Run summary → videoUrl** or retry only
+the preview step. Avoid re-running the paid render merely to download its output.
 
 Cart-recovery email number three gets ignored. This workflow takes one abandoned
 cart — from a Google Sheet, or from your Shopify store's checkouts endpoint — and

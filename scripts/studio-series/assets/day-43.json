@@ -1,0 +1,350 @@
+{
+  "name": "S2 D43 - Live Vehicle Inventory Showroom",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "durationMode": "fixed",
+  "duration": 23.4,
+  "backgroundColor": "#11161B",
+  "variables": {
+    "paper": "#11161B",
+    "ink": "#F6F7F6",
+    "accent": "#B7C5CB",
+    "headlineFont": "Sora",
+    "bodyFont": "Inter",
+    "dealer": "NORTHLINE MOTORS",
+    "heroTitle": "Your next drive is here",
+    "stockSnapshot": "Sample stock · 01 Oct 2026",
+    "showroomImage": "https://images.pexels.com/photos/29566905/pexels-photo-29566905.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "carOneImage": "https://images.pexels.com/photos/27497571/pexels-photo-27497571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "carTwoImage": "https://images.pexels.com/photos/12920621/pexels-photo-12920621.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "carThreeImage": "https://images.pexels.com/photos/9494958/pexels-photo-9494958.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "carOne": "Touring SUV",
+    "carOnePrice": "$29,900",
+    "carOneMileage": "42,000 km",
+    "carOneStock": "NL 1042 · Available",
+    "carTwo": "Sport sedan",
+    "carTwoPrice": "$24,500",
+    "carTwoMileage": "51,000 km",
+    "carTwoStock": "NL 1098 · Available",
+    "carThree": "Urban SUV",
+    "carThreePrice": "$26,800",
+    "carThreeMileage": "38,000 km",
+    "carThreeStock": "NL 1131 · Available",
+    "cta": "See it. Drive it. Decide.",
+    "destination": "northline.example/stock",
+    "terms": "Illustrative stock. Confirm vehicle details and availability.",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943314/zvid-series2-unique-music-20261002/day-43-music.mp3",
+    "musicVolume": 0.8
+  },
+  "scenes": [
+    {
+      "id": "showroom-arrival",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{showroomImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.1
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.85),rgba(7,10,13,0.08) 80%)"
+          },
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{dealer}}</div><div style=\"font-family:{{headlineFont}};font-size:68px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{heroTitle}}</div><div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:22px\">{{stockSnapshot}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 65,
+          "width": 590,
+          "height": 480,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "touring-stock",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "transition": "smoothleft",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{carOneImage}}",
+          "position": "custom",
+          "x": 430,
+          "y": 0,
+          "width": 850,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.07
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">STOCK 01</div><div style=\"font-family:{{headlineFont}};font-size:50px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{carOne}}</div><div style=\"font-family:{{bodyFont}};font-size:51px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:26px\">{{carOnePrice}}</div><div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:26px\">{{carOneMileage}}</div><div style=\"font-family:{{bodyFont}};font-size:23px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:26px\">{{carOneStock}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 70,
+          "width": 314,
+          "height": 550,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "sedan-stock",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{carTwoImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 480,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.05
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"display:flex;justify-content:space-between;width:100%\"><div><div style=\"font-family:{{headlineFont}};font-size:49px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{carTwo}}</div><div style=\"font-family:{{bodyFont}};font-size:24px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:15px\">{{carTwoStock}}</div></div><div style=\"text-align:right\"><div style=\"font-family:{{bodyFont}};font-size:49px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{carTwoPrice}}</div><div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:15px\">{{carTwoMileage}}</div></div></div>",
+          "position": "custom",
+          "x": 64,
+          "y": 526,
+          "width": 1152,
+          "height": 150,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "urban-stock",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{carThreeImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 936,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.06
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">STOCK 03</div><div style=\"font-family:{{headlineFont}};font-size:48px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{carThree}}</div><div style=\"font-family:{{bodyFont}};font-size:40px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:28px\">{{carThreePrice}}</div><div style=\"font-family:{{bodyFont}};font-size:26px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:26px\">{{carThreeMileage}}</div><div style=\"font-family:{{bodyFont}};font-size:22px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:26px\">{{carThreeStock}}</div>",
+          "position": "custom",
+          "x": 980,
+          "y": 70,
+          "width": 252,
+          "height": 570,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "test-drive-handoff",
+      "duration": 5,
+      "backgroundColor": "{{paper}}",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{showroomImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.85),rgba(7,10,13,0.08) 80%)"
+          },
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{dealer}}</div><div style=\"font-family:{{headlineFont}};font-size:67px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{cta}}</div><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:24px\">{{destination}}</div><div style=\"font-family:{{bodyFont}};font-size:22px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:24px\">{{terms}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 126,
+          "width": 770,
+          "height": 470,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 23.4,
+      "audioBegin": 0,
+      "audioEnd": 23.4,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

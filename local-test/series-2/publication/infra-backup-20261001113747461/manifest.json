@@ -1,0 +1,249 @@
+{
+  "capturedAt": "2026-10-01T11:39:19.184Z",
+  "directory": "/tmp/zvid-series2-publication-backup-20261001113747461",
+  "workflowCount": 30,
+  "method": "n8n export:workflow --id=<day id> --output=<private temp file> --pretty",
+  "credentialsDecrypted": false,
+  "workflows": [
+    {
+      "id": "ZvidSeries2Day31",
+      "filename": "ZvidSeries2Day31.json",
+      "name": "D31 Release notes to a feature announcement video (Zvid)",
+      "versionId": "028ae82a-bf64-4fc8-890b-573d425b54aa",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day32",
+      "filename": "ZvidSeries2Day32.json",
+      "name": "D32 A procedure to a step-by-step tutorial video (Zvid)",
+      "versionId": "1cb9c085-dc33-4c66-98fa-2e01e610247e",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day33",
+      "filename": "ZvidSeries2Day33.json",
+      "name": "D33 Pricing plans to a feature comparison video (Zvid)",
+      "versionId": "fd2a3d3d-c007-496d-a04f-fb90790d9d17",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day34",
+      "filename": "ZvidSeries2Day34.json",
+      "name": "D34 A service incident to a status timeline video (Zvid)",
+      "versionId": "c5c5f1aa-54fb-4f02-b642-dfb613e3e0da",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day35",
+      "filename": "ZvidSeries2Day35.json",
+      "name": "D35 A maintenance window to a customer notice video (Zvid)",
+      "versionId": "1af3c008-635b-4fb8-a69a-dca197ae64e4",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day36",
+      "filename": "ZvidSeries2Day36.json",
+      "name": "D36 An order status to a fulfillment progress video (Zvid)",
+      "versionId": "665eed25-f1f6-4b6c-83bb-ec250d3cdaa8",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day37",
+      "filename": "ZvidSeries2Day37.json",
+      "name": "D37 Product components to a bundle savings explainer video (Zvid)",
+      "versionId": "a2c50565-37db-47c7-b754-f202b04f0c6d",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day38",
+      "filename": "ZvidSeries2Day38.json",
+      "name": "D38 A delivery delay to a revised ETA video (Zvid)",
+      "versionId": "965f3326-dfa2-4243-b032-1eafc7145197",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day39",
+      "filename": "ZvidSeries2Day39.json",
+      "name": "D39 An appointment to a preparation checklist video (Zvid)",
+      "versionId": "b515a8c6-e96b-4497-9314-27e78158a80d",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day40",
+      "filename": "ZvidSeries2Day40.json",
+      "name": "D40 A return authorization to a packing and drop-off video (Zvid)",
+      "versionId": "7336e76e-33a4-439f-9cf8-74c538ce3fb3",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day41",
+      "filename": "ZvidSeries2Day41.json",
+      "name": "D41 An employee start date to a first-week agenda video (Zvid)",
+      "versionId": "dad5f01a-c93f-426b-8a5d-7bbec8e7ef3e",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day42",
+      "filename": "ZvidSeries2Day42.json",
+      "name": "D42 An interview schedule to a candidate agenda video (Zvid)",
+      "versionId": "f397970a-6485-4d66-9407-3ef4f3bc05e8",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day43",
+      "filename": "ZvidSeries2Day43.json",
+      "name": "D43 A course syllabus to a learning roadmap video (Zvid)",
+      "versionId": "351327a3-c7d9-40c9-96d0-afadb63d79c2",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day44",
+      "filename": "ZvidSeries2Day44.json",
+      "name": "D44 Workplace hazards to a safety briefing video (Zvid)",
+      "versionId": "eeb50268-c1f0-44b7-bbcb-238f9ff5d510",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day45",
+      "filename": "ZvidSeries2Day45.json",
+      "name": "D45 A training result to a completion video (Zvid)",
+      "versionId": "201a875e-5770-4493-bb91-9ec658cd2f11",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day46",
+      "filename": "ZvidSeries2Day46.json",
+      "name": "D46 Meeting actions to an owner and deadline brief video (Zvid)",
+      "versionId": "99c06fa0-b9f3-4239-86a1-f61c2c5630e3",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day47",
+      "filename": "ZvidSeries2Day47.json",
+      "name": "D47 Equipment records to a maintenance-due video (Zvid)",
+      "versionId": "757e1052-305d-4e2a-b481-79442940cf6d",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day48",
+      "filename": "ZvidSeries2Day48.json",
+      "name": "D48 Stock levels to a replenishment brief video (Zvid)",
+      "versionId": "f41e30cc-d2f8-445c-b039-a0fb23adf41c",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day49",
+      "filename": "ZvidSeries2Day49.json",
+      "name": "D49 A dispatch plan to a delivery-route briefing video (Zvid)",
+      "versionId": "eef46418-6d09-4246-a1a2-43a1ea35b905",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day50",
+      "filename": "ZvidSeries2Day50.json",
+      "name": "D50 Tender requirements to a bid checklist video (Zvid)",
+      "versionId": "d5b27f05-90dc-4d42-bb5f-29c23f9e32c8",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day51",
+      "filename": "ZvidSeries2Day51.json",
+      "name": "D51 Travel bookings to a day-by-day itinerary video (Zvid)",
+      "versionId": "4882bdb8-6b12-4cb7-a800-8226cc7edb5d",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day52",
+      "filename": "ZvidSeries2Day52.json",
+      "name": "D52 Accommodation details to a public arrival guide video (Zvid)",
+      "versionId": "967fb8fb-d08e-47db-b2c2-966e01aad64b",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day53",
+      "filename": "ZvidSeries2Day53.json",
+      "name": "D53 A rescue profile to a pet adoption video (Zvid)",
+      "versionId": "85d85429-11d4-43ce-8c30-4657e7f6b58e",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day54",
+      "filename": "ZvidSeries2Day54.json",
+      "name": "D54 A volunteer roster to a station briefing video (Zvid)",
+      "versionId": "07272392-1ce5-4765-806d-feb43afae8a9",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day55",
+      "filename": "ZvidSeries2Day55.json",
+      "name": "D55 A donation to an estimated impact thank-you video (Zvid)",
+      "versionId": "e8a8dde3-8956-4105-b0c1-9fcb002e0de8",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day56",
+      "filename": "ZvidSeries2Day56.json",
+      "name": "D56 Survey response counts to a results breakdown video (Zvid)",
+      "versionId": "827f2687-fb6e-4d73-994e-8304d64a150b",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day57",
+      "filename": "ZvidSeries2Day57.json",
+      "name": "D57 Fundraiser contributions to a progress video (Zvid)",
+      "versionId": "8fa328b2-fb4a-4283-a09b-8f19ae846832",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day58",
+      "filename": "ZvidSeries2Day58.json",
+      "name": "D58 Before-and-after measurements to a case study video (Zvid)",
+      "versionId": "ac95a3a5-e10b-46c4-a6df-f268de1baeae",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day59",
+      "filename": "ZvidSeries2Day59.json",
+      "name": "D59 Project milestones to a delivery roadmap video (Zvid)",
+      "versionId": "9fa103ae-00ab-4f46-9723-62989b9e62e5",
+      "nodeCount": 24,
+      "active": false
+    },
+    {
+      "id": "ZvidSeries2Day60",
+      "filename": "ZvidSeries2Day60.json",
+      "name": "D60 Recipe ingredients to a scaled cooking guide video (Zvid)",
+      "versionId": "c642c16a-d7c9-40ff-adf9-f0a410fb93ec",
+      "nodeCount": 24,
+      "active": false
+    }
+  ]
+}

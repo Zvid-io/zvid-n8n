@@ -1,0 +1,341 @@
+{
+  "generatedAt": "2026-10-01T11:34:42.255Z",
+  "spreadsheetConfigured": true,
+  "days": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "tabCount": 60,
+  "tabs": [
+    {
+      "title": "D31Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D31Details",
+      "columnCount": 8,
+      "records": 3
+    },
+    {
+      "title": "D32Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D32Details",
+      "columnCount": 6,
+      "records": 3
+    },
+    {
+      "title": "D33Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D33Details",
+      "columnCount": 9,
+      "records": 11
+    },
+    {
+      "title": "D34Source",
+      "columnCount": 19,
+      "records": 1
+    },
+    {
+      "title": "D34Details",
+      "columnCount": 7,
+      "records": 3
+    },
+    {
+      "title": "D35Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D35Details",
+      "columnCount": 5,
+      "records": 2
+    },
+    {
+      "title": "D36Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D36Details",
+      "columnCount": 6,
+      "records": 2
+    },
+    {
+      "title": "D37Source",
+      "columnCount": 21,
+      "records": 1
+    },
+    {
+      "title": "D37Details",
+      "columnCount": 9,
+      "records": 3
+    },
+    {
+      "title": "D38Source",
+      "columnCount": 22,
+      "records": 1
+    },
+    {
+      "title": "D38Details",
+      "columnCount": 4,
+      "records": 0
+    },
+    {
+      "title": "D39Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D39Details",
+      "columnCount": 5,
+      "records": 3
+    },
+    {
+      "title": "D40Source",
+      "columnCount": 19,
+      "records": 1
+    },
+    {
+      "title": "D40Details",
+      "columnCount": 6,
+      "records": 4
+    },
+    {
+      "title": "D41Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D41Details",
+      "columnCount": 7,
+      "records": 3
+    },
+    {
+      "title": "D42Source",
+      "columnCount": 19,
+      "records": 1
+    },
+    {
+      "title": "D42Details",
+      "columnCount": 8,
+      "records": 2
+    },
+    {
+      "title": "D43Source",
+      "columnCount": 19,
+      "records": 1
+    },
+    {
+      "title": "D43Details",
+      "columnCount": 7,
+      "records": 3
+    },
+    {
+      "title": "D44Source",
+      "columnCount": 21,
+      "records": 1
+    },
+    {
+      "title": "D44Details",
+      "columnCount": 7,
+      "records": 3
+    },
+    {
+      "title": "D45Source",
+      "columnCount": 22,
+      "records": 1
+    },
+    {
+      "title": "D45Details",
+      "columnCount": 6,
+      "records": 1
+    },
+    {
+      "title": "D46Source",
+      "columnCount": 18,
+      "records": 1
+    },
+    {
+      "title": "D46Details",
+      "columnCount": 9,
+      "records": 3
+    },
+    {
+      "title": "D47Source",
+      "columnCount": 17,
+      "records": 1
+    },
+    {
+      "title": "D47Details",
+      "columnCount": 11,
+      "records": 2
+    },
+    {
+      "title": "D48Source",
+      "columnCount": 18,
+      "records": 1
+    },
+    {
+      "title": "D48Details",
+      "columnCount": 11,
+      "records": 3
+    },
+    {
+      "title": "D49Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D49Details",
+      "columnCount": 8,
+      "records": 3
+    },
+    {
+      "title": "D50Source",
+      "columnCount": 19,
+      "records": 1
+    },
+    {
+      "title": "D50Details",
+      "columnCount": 9,
+      "records": 5
+    },
+    {
+      "title": "D51Source",
+      "columnCount": 19,
+      "records": 1
+    },
+    {
+      "title": "D51Details",
+      "columnCount": 9,
+      "records": 3
+    },
+    {
+      "title": "D52Source",
+      "columnCount": 22,
+      "records": 1
+    },
+    {
+      "title": "D52Details",
+      "columnCount": 7,
+      "records": 6
+    },
+    {
+      "title": "D53Source",
+      "columnCount": 22,
+      "records": 1
+    },
+    {
+      "title": "D53Details",
+      "columnCount": 5,
+      "records": 4
+    },
+    {
+      "title": "D54Source",
+      "columnCount": 21,
+      "records": 1
+    },
+    {
+      "title": "D54Details",
+      "columnCount": 8,
+      "records": 5
+    },
+    {
+      "title": "D55Source",
+      "columnCount": 23,
+      "records": 1
+    },
+    {
+      "title": "D55Details",
+      "columnCount": 9,
+      "records": 1
+    },
+    {
+      "title": "D56Source",
+      "columnCount": 18,
+      "records": 1
+    },
+    {
+      "title": "D56Details",
+      "columnCount": 7,
+      "records": 63
+    },
+    {
+      "title": "D57Source",
+      "columnCount": 21,
+      "records": 1
+    },
+    {
+      "title": "D57Details",
+      "columnCount": 8,
+      "records": 3
+    },
+    {
+      "title": "D58Source",
+      "columnCount": 20,
+      "records": 1
+    },
+    {
+      "title": "D58Details",
+      "columnCount": 9,
+      "records": 2
+    },
+    {
+      "title": "D59Source",
+      "columnCount": 18,
+      "records": 1
+    },
+    {
+      "title": "D59Details",
+      "columnCount": 7,
+      "records": 3
+    },
+    {
+      "title": "D60Source",
+      "columnCount": 21,
+      "records": 1
+    },
+    {
+      "title": "D60Details",
+      "columnCount": 8,
+      "records": 6
+    }
+  ],
+  "fixtureId": "ZvidSeries2PublicationSeedSources",
+  "localUrl": "http://localhost:5678/workflow/ZvidSeries2PublicationSeedSources"
+}

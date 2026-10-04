@@ -1,0 +1,171 @@
+{
+  "capturedAt": "2026-10-01T12:20:42.437Z",
+  "expectedFixtures": [
+    "ZvidSeries2PublicationSeedRemaining"
+  ],
+  "results": [
+    {
+      "workflowId": "ZvidSeries2PublicationSeedRemaining",
+      "executionId": 746,
+      "status": "success",
+      "mode": "manual",
+      "startedAt": "2026-10-01 12:08:40.446",
+      "stoppedAt": "2026-10-01 12:10:48.328",
+      "lastNode": "QA seed evidence",
+      "nodes": {
+        "Seed private QA workbook manually": "success",
+        "QA seed configuration": "success",
+        "Check QA destination": "success",
+        "Wait for Google quota window": "success",
+        "Prepare QA seed snapshot": "success",
+        "Read D58Source before seeding": "success",
+        "Require empty D58Source": "success",
+        "Seed rows for D58Source": "success",
+        "Append D58Source QA rows": "success",
+        "Pace writes after D58Source": "success",
+        "Continue after D58Source": "success",
+        "Read D58Details before seeding": "success",
+        "Require empty D58Details": "success",
+        "Seed rows for D58Details": "success",
+        "Append D58Details QA rows": "success",
+        "Pace writes after D58Details": "success",
+        "Continue after D58Details": "success",
+        "Read D59Source before seeding": "success",
+        "Require empty D59Source": "success",
+        "Seed rows for D59Source": "success",
+        "Append D59Source QA rows": "success",
+        "Pace writes after D59Source": "success",
+        "Continue after D59Source": "success",
+        "Read D59Details before seeding": "success",
+        "Require empty D59Details": "success",
+        "Seed rows for D59Details": "success",
+        "Append D59Details QA rows": "success",
+        "Pace writes after D59Details": "success",
+        "Continue after D59Details": "success",
+        "Read D60Source before seeding": "success",
+        "Require empty D60Source": "success",
+        "Seed rows for D60Source": "success",
+        "Append D60Source QA rows": "success",
+        "Pace writes after D60Source": "success",
+        "Continue after D60Source": "success",
+        "Read D60Details before seeding": "success",
+        "Require empty D60Details": "success",
+        "Seed rows for D60Details": "success",
+        "Append D60Details QA rows": "success",
+        "Pace writes after D60Details": "success",
+        "Continue after D60Details": "success",
+        "QA seed evidence": "success"
+      },
+      "evidence": {
+        "resource": "private_qa_workbook_seed",
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "seededAt": "2026-10-01T11:38:06.982Z",
+        "baselineSnapshotReused": true,
+        "seededTabs": [
+          {
+            "title": "D58Source",
+            "day": 58,
+            "kind": "source",
+            "columnCount": 20,
+            "records": 1
+          },
+          {
+            "title": "D58Details",
+            "day": 58,
+            "kind": "details",
+            "columnCount": 9,
+            "records": 2
+          },
+          {
+            "title": "D59Source",
+            "day": 59,
+            "kind": "source",
+            "columnCount": 18,
+            "records": 1
+          },
+          {
+            "title": "D59Details",
+            "day": 59,
+            "kind": "details",
+            "columnCount": 7,
+            "records": 3
+          },
+          {
+            "title": "D60Source",
+            "day": 60,
+            "kind": "source",
+            "columnCount": 21,
+            "records": 1
+          },
+          {
+            "title": "D60Details",
+            "day": 60,
+            "kind": "details",
+            "columnCount": 8,
+            "records": 6
+          }
+        ],
+        "sourceDayCount": 3,
+        "paidNodesExecuted": [],
+        "productionSourcesModified": false
+      },
+      "error": null
+    },
+    {
+      "workflowId": "ZvidSeries2PublicationSeedRemaining",
+      "executionId": 741,
+      "status": "error",
+      "mode": "manual",
+      "startedAt": "2026-10-01 11:51:46.537",
+      "stoppedAt": "2026-10-01 11:55:12.264",
+      "lastNode": "Read D58Source before seeding",
+      "nodes": {
+        "Seed private QA workbook manually": "success",
+        "QA seed configuration": "success",
+        "Check QA destination": "success",
+        "Wait for Google quota window": "success",
+        "Prepare QA seed snapshot": "success",
+        "Read D54Details before seeding": "success",
+        "Require empty D54Details": "success",
+        "Seed rows for D54Details": "success",
+        "Append D54Details QA rows": "success",
+        "Pace writes after D54Details": "success",
+        "Read D55Source before seeding": "success",
+        "Require empty D55Source": "success",
+        "Seed rows for D55Source": "success",
+        "Append D55Source QA rows": "success",
+        "Pace writes after D55Source": "success",
+        "Read D55Details before seeding": "success",
+        "Require empty D55Details": "success",
+        "Seed rows for D55Details": "success",
+        "Append D55Details QA rows": "success",
+        "Pace writes after D55Details": "success",
+        "Read D56Source before seeding": "success",
+        "Require empty D56Source": "success",
+        "Seed rows for D56Source": "success",
+        "Append D56Source QA rows": "success",
+        "Pace writes after D56Source": "success",
+        "Read D56Details before seeding": "success",
+        "Require empty D56Details": "success",
+        "Seed rows for D56Details": "success",
+        "Append D56Details QA rows": "success",
+        "Pace writes after D56Details": "success",
+        "Read D57Source before seeding": "success",
+        "Require empty D57Source": "success",
+        "Seed rows for D57Source": "success",
+        "Append D57Source QA rows": "success",
+        "Pace writes after D57Source": "success",
+        "Read D57Details before seeding": "success",
+        "Require empty D57Details": "success",
+        "Seed rows for D57Details": "success",
+        "Append D57Details QA rows": "success",
+        "Pace writes after D57Details": "success",
+        "Read D58Source before seeding": "error"
+      },
+      "evidence": null,
+      "error": {
+        "message": "The service is receiving too many requests from you"
+      }
+    }
+  ]
+}

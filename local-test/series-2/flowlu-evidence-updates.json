@@ -1,0 +1,42 @@
+{
+  "phase": "Final root-approved evidence",
+  "automatedCheckPasses": 272,
+  "automatedCheckFailures": 0,
+  "snapshots": [
+    {
+      "day": 60,
+      "slug": "recipe-cooking-guide-video",
+      "workflowId": "ZvidSeries2Day60",
+      "executionId": 733,
+      "manualStatus": "success",
+      "lastNode": "Watch video",
+      "mediaPassed": true,
+      "mediaReview": "passed",
+      "buildStage": "Done",
+      "assetStage": "Done",
+      "requiredChildrenRemaining": 12,
+      "failedExecutionIds": []
+    }
+  ],
+  "updates": [
+    {
+      "id": 800,
+      "slug": "recipe-cooking-guide-video",
+      "child": "[Build] Create n8n workflow",
+      "stage": "Done",
+      "data": {
+        "description": "<h2>Launch status</h2><ul><li>Stage: Done</li><li>Workflow slug: <code>recipe-cooking-guide-video</code></li><li>Source or artifact: <code>zvid-integrations/n8n/workflows/zvid-recipe-cooking-guide-video.json</code></li><li>Publication state: Not published</li></ul><h2>Work item</h2><p>Build and manually verify the canonical n8n automation in the local Docker n8n editor.</p><h2>Completion evidence</h2><ul><li>Canonical JSON: <code>zvid-integrations/n8n/workflows/zvid-recipe-cooking-guide-video.json</code></li><li>Companion guide: <code>zvid-integrations/n8n/workflows/recipe-cooking-guide-video.md</code></li><li>Local workflow identifier: <code>ZvidSeries2Day60</code></li><li>Recorded automated checks: 272 passed; 0 failed in <code>zvid-integrations/n8n/local-test/series-2/final-tests.log</code>. The root task confirmed final framework and test approval.</li><li>Latest recorded manual execution: <code>733</code>; status <code>success</code>; last node <code>Watch video</code>.</li><li>Manual execution completed through the gated Watch video step. The execution success does not by itself establish final media or publication completion.</li><li>Media QA: h264, 1280 by 720, 24 seconds; resolution and duration checks passed. Artifact: <code>zvid-integrations/n8n/local-test/series-2/media/day-60.mp4</code>.</li><li>Visual review: <code>passed</code>. Corrected execution 733: all four scene frames reviewed. Step 1/2/3 of 3 are readable, and every complete original cooking instruction is now visible in the detail text, including recipe and timing. Four servings and doubled ingredients are correct; no text clips.</li></ul><h2>Dependencies and next action</h2><p>No remaining n8n build work. Cloud releases, community publication, Make work and distribution remain in their separate launch children.</p>",
+        "workflow_stage_id": 14
+      }
+    },
+    {
+      "id": 799,
+      "slug": "recipe-cooking-guide-video",
+      "child": "Story roll-up",
+      "stage": "In Progress",
+      "data": {
+        "description": "<h2>Launch status</h2><p>The current request covers preparation and manual Docker n8n testing. Current child stages: 2 Done; 12 Backlog. Remaining children: 12; blocked children: 0. No public publication is claimed.</p><h2>Managed workflow</h2><ul><li>Managed by: flowlu-workflow-launch</li><li>Workflow slug: <code>recipe-cooking-guide-video</code></li><li>n8n source: <code>zvid-integrations/n8n/workflows/zvid-recipe-cooking-guide-video.json</code></li><li>Make source: Not created</li><li>Content directory: Not created</li><li>n8n cloud URL: Not published</li><li>Make cloud URL: Not published</li></ul><h2>Completion evidence</h2><p>Local workflow <code>ZvidSeries2Day60</code>; latest recorded manual execution <code>733</code> has status <code>success</code>. Evidence is held in <code>zvid-integrations/n8n/local-test/series-2/executions.json</code> and <code>zvid-integrations/n8n/local-test/series-2/media-results.json</code>.</p><h2>Public companion prerequisite</h2><p>The local guide is <code>zvid-integrations/n8n/workflows/recipe-cooking-guide-video.md</code>. Before a future public template/community release, publish it, verify its public URL, and replace the inline filename in the overview with that verified guide link.</p><h2>Next action</h2><p>Complete the remaining launch checklist when requested. Keep this Story In Progress until every required child is Done or explicitly completed as out of scope.</p>"
+      }
+    }
+  ]
+}

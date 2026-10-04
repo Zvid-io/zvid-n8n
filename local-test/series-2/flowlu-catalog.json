@@ -1,0 +1,212 @@
+[
+  {
+    "day": 31,
+    "slug": "release-notes-video",
+    "title": "Release notes feature announcement",
+    "filename": "zvid-release-notes-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 32,
+    "slug": "procedure-tutorial-video",
+    "title": "Step-by-step procedure tutorial",
+    "filename": "zvid-procedure-tutorial-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 33,
+    "slug": "plan-comparison-video",
+    "title": "Pricing plan feature comparison",
+    "filename": "zvid-plan-comparison-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 34,
+    "slug": "incident-timeline-video",
+    "title": "Service incident timeline",
+    "filename": "zvid-incident-timeline-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 35,
+    "slug": "maintenance-notice-video",
+    "title": "Maintenance window customer notice",
+    "filename": "zvid-maintenance-notice-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 36,
+    "slug": "order-progress-video",
+    "title": "Order fulfillment progress",
+    "filename": "zvid-order-progress-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 37,
+    "slug": "product-bundle-savings-video",
+    "title": "Product bundle savings comparison",
+    "filename": "zvid-product-bundle-savings-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 38,
+    "slug": "delivery-delay-video",
+    "title": "Delivery delay revised ETA",
+    "filename": "zvid-delivery-delay-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 39,
+    "slug": "appointment-preparation-video",
+    "title": "Appointment preparation checklist",
+    "filename": "zvid-appointment-preparation-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 40,
+    "slug": "return-instructions-video",
+    "title": "Return authorization instructions",
+    "filename": "zvid-return-instructions-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 41,
+    "slug": "employee-first-week-video",
+    "title": "Employee first-week agenda",
+    "filename": "zvid-employee-first-week-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 42,
+    "slug": "interview-agenda-video",
+    "title": "Candidate interview agenda",
+    "filename": "zvid-interview-agenda-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 43,
+    "slug": "course-roadmap-video",
+    "title": "Course learning roadmap",
+    "filename": "zvid-course-roadmap-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 44,
+    "slug": "safety-briefing-video",
+    "title": "Workplace safety briefing",
+    "filename": "zvid-safety-briefing-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 45,
+    "slug": "training-completion-video",
+    "title": "Training completion certificate",
+    "filename": "zvid-training-completion-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 46,
+    "slug": "meeting-action-brief-video",
+    "title": "Meeting decisions action brief",
+    "filename": "zvid-meeting-action-brief-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 47,
+    "slug": "equipment-maintenance-video",
+    "title": "Equipment maintenance due",
+    "filename": "zvid-equipment-maintenance-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 48,
+    "slug": "inventory-replenishment-video",
+    "title": "Inventory replenishment brief",
+    "filename": "zvid-inventory-replenishment-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 49,
+    "slug": "delivery-route-brief-video",
+    "title": "Delivery route briefing",
+    "filename": "zvid-delivery-route-brief-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 50,
+    "slug": "tender-checklist-video",
+    "title": "Tender submission checklist",
+    "filename": "zvid-tender-checklist-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 51,
+    "slug": "travel-itinerary-video",
+    "title": "Travel itinerary",
+    "filename": "zvid-travel-itinerary-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 52,
+    "slug": "hotel-arrival-guide-video",
+    "title": "Hotel arrival guide",
+    "filename": "zvid-hotel-arrival-guide-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 53,
+    "slug": "pet-adoption-video",
+    "title": "Pet adoption profile",
+    "filename": "zvid-pet-adoption-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 54,
+    "slug": "volunteer-shift-video",
+    "title": "Volunteer shift briefing",
+    "filename": "zvid-volunteer-shift-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 55,
+    "slug": "donation-impact-video",
+    "title": "Donation impact thank-you",
+    "filename": "zvid-donation-impact-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 56,
+    "slug": "survey-results-video",
+    "title": "Survey result breakdown",
+    "filename": "zvid-survey-results-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 57,
+    "slug": "fundraiser-progress-video",
+    "title": "Fundraiser progress",
+    "filename": "zvid-fundraiser-progress-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 58,
+    "slug": "before-after-case-study-video",
+    "title": "Before and after improvement case study",
+    "filename": "zvid-before-after-case-study-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 59,
+    "slug": "milestone-roadmap-video",
+    "title": "Project milestone roadmap",
+    "filename": "zvid-milestone-roadmap-video.json",
+    "contentDirectory": "Not created"
+  },
+  {
+    "day": 60,
+    "slug": "recipe-cooking-guide-video",
+    "title": "Scaled recipe cooking guide",
+    "filename": "zvid-recipe-cooking-guide-video.json",
+    "contentDirectory": "Not created"
+  }
+]

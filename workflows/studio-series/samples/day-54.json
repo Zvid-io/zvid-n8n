@@ -1,0 +1,103 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-54",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "Watch the third-man run. Number eight passes into number ten, drawing the defender toward the ball. Ten sets it back to eight. Seven is already accelerating into the space behind. Eight finds the run. Pass, set, run. The movement creates the opening before the final pass. Three players, one coordinated move.",
+    "pattern": "third-man-return-pass",
+    "runner_start_x": 40,
+    "runner_end_x": 75,
+    "title": "THE THIRD-MAN RUN",
+    "lesson": "Pass. Set. Run.\nThree players create one opening."
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-54",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Editor reviewed the exact supplied lesson and cited its underlying source.",
+      "url": "https://www.tottenhamhotspur.com/the-club/history/"
+    },
+    {
+      "parent_id": "qa-studio-54",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "player",
+      "position": 2,
+      "approval": "approved",
+      "number": 8
+    },
+    {
+      "parent_id": "qa-studio-54",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "player",
+      "position": 3,
+      "approval": "approved",
+      "number": 10
+    },
+    {
+      "parent_id": "qa-studio-54",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "player",
+      "position": 4,
+      "approval": "approved",
+      "number": 7
+    },
+    {
+      "parent_id": "qa-studio-54",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "phase",
+      "position": 5,
+      "approval": "approved",
+      "from": 8,
+      "to": 10
+    },
+    {
+      "parent_id": "qa-studio-54",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "phase",
+      "position": 6,
+      "approval": "approved",
+      "from": 10,
+      "to": 8
+    },
+    {
+      "parent_id": "qa-studio-54",
+      "revision": "r1",
+      "record_id": "r7",
+      "kind": "phase",
+      "position": 7,
+      "approval": "approved",
+      "from": 8,
+      "to": 7
+    },
+    {
+      "parent_id": "qa-studio-54",
+      "revision": "r1",
+      "record_id": "r8",
+      "kind": "narration",
+      "position": 8,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790927341/zvid-series2-design-review-20261001/d54-narration-r2.mp3",
+      "seconds": 25.344,
+      "content_fingerprint": "d050dcf3cc11a5656f3c45ad5f9611c47b2b4c586d01f890019a46dc62b4e737",
+      "script": "Watch the third-man run. Number eight passes into number ten, drawing the defender toward the ball. Ten sets it back to eight. Seven is already accelerating into the space behind. Eight finds the run. Pass, set, run. The movement creates the opening before the final pass. Three players, one coordinated move.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

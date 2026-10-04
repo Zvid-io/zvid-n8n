@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "workflowId": "Series2EdgeDryRun31",
+  "executionId": 719,
+  "mode": "manual",
+  "status": "success",
+  "startedAt": "2026-10-01 10:01:36.375",
+  "stoppedAt": "2026-10-01 10:01:37.290",
+  "lastNode": "Draft and credit quote",
+  "output": {
+    "status": "draft_unavailable",
+    "editorDraftSaved": false,
+    "dryRun": true,
+    "renderSubmitted": false,
+    "quotedCredits": 18,
+    "editorLink": null,
+    "editorDraftError": "Project limit reached",
+    "sourceKey": "Acme Desk:2.4",
+    "calculatedMeta": {
+      "changeCount": 3,
+      "counts": {
+        "added": 1,
+        "improved": 1,
+        "fixed": 1
+      }
+    }
+  },
+  "draftOutputTruthful": true,
+  "nodes": {
+    "Test manually": "success",
+    "Sample input": "success",
+    "Config": "success",
+    "Normalize and build video": "success",
+    "Work found?": "success",
+    "Validate project (free)": "success",
+    "Check validation and credit cap": "success",
+    "Dry run?": "success",
+    "Save draft to editor": "success",
+    "Draft and credit quote": "success"
+  },
+  "paidNodesExecuted": [],
+  "uiScreenshot": "manual-draft-result.jpg"
+}

@@ -1,0 +1,21 @@
+{
+  "scope": "Sanitized native integration setup observations retained from the root task",
+  "results": [
+    {
+      "workflowId": "ZvidSeries2PublicationCreateWorkbook",
+      "executionId": 734,
+      "mode": "manual",
+      "status": "error",
+      "lastNode": "Create private QA workbook",
+      "reason": "Google Sheets OAuth reconnection required"
+    },
+    {
+      "workflowId": "ZvidSeries2PublicationCreateFolder",
+      "executionId": 735,
+      "mode": "manual",
+      "status": "error",
+      "lastNode": "Create private QA video folder",
+      "reason": "Google Drive OAuth reconnection required"
+    }
+  ]
+}

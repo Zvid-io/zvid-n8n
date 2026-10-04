@@ -1,0 +1,272 @@
+{
+  "type": "video",
+  "name": "S2 D37 - Approved Customer Footage Ad",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#F3EEE6",
+  "scenes": [
+    {
+      "id": "real-moments",
+      "duration": 5,
+      "backgroundColor": "#F3EEE6",
+      "transition": "wipeleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "VIDEO",
+          "src": "{{customerClip}}",
+          "x": 65,
+          "y": 380,
+          "width": 950,
+          "height": 1150,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "volume": 0,
+          "hasAudio": false,
+          "videoBegin": 0,
+          "videoDuration": 5,
+          "enterEnd": 0.4,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:27px;letter-spacing:4px\">{{brand}}</div><div style=\"font-size:84px;margin-top:22px\">{{hook}}</div>",
+          "x": 65,
+          "y": 100,
+          "width": 950,
+          "height": 240,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 84,
+            "color": "#2D3932",
+            "lineHeight": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{footageLabel}}",
+          "x": 65,
+          "y": 1680,
+          "width": 950,
+          "height": 115,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 24,
+            "color": "#2D3932",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-small-step",
+      "duration": 3,
+      "backgroundColor": "#DCE6D9",
+      "transition": "wipeleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "VIDEO",
+          "src": "{{handsClip}}",
+          "x": 65,
+          "y": 280,
+          "width": 950,
+          "height": 1140,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "volume": 0,
+          "hasAudio": false,
+          "videoBegin": 0,
+          "videoDuration": 3,
+          "enterEnd": 0.4,
+          "enterAnimation": "fade",
+          "exitEnd": 3
+        },
+        {
+          "type": "TEXT",
+          "html": "{{approvedCaption}}",
+          "x": 65,
+          "y": 1510,
+          "width": 950,
+          "height": 240,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 3,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 70,
+            "color": "#2D3932",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-product",
+      "duration": 5,
+      "backgroundColor": "#2D3932",
+      "transition": "wipeleft",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{productImage}}",
+          "x": 80,
+          "y": 150,
+          "width": 920,
+          "height": 1130,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:29px;letter-spacing:4px\">IN THE ROUTINE</div><div style=\"font-size:92px;margin-top:28px\">{{productName}}</div>",
+          "x": 65,
+          "y": 1420,
+          "width": 950,
+          "height": 350,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 92,
+            "color": "#F3EEE6",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "take-it-home",
+      "duration": 6,
+      "backgroundColor": "#F3EEE6",
+      "visuals": [
+        {
+          "type": "VIDEO",
+          "src": "{{customerClip}}",
+          "x": 65,
+          "y": 250,
+          "width": 560,
+          "height": 1070,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "volume": 0,
+          "hasAudio": false,
+          "videoBegin": 5,
+          "videoDuration": 6,
+          "enterEnd": 0.4,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{productImage}}",
+          "x": 685,
+          "y": 450,
+          "width": 320,
+          "height": 700,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:78px\">{{cta}}</div><div style=\"font-size:31px;margin-top:25px\">{{url}}</div><div style=\"font-size:22px;margin-top:25px\">{{footageLabel}}</div>",
+          "x": 65,
+          "y": 1470,
+          "width": 950,
+          "height": 330,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 78,
+            "color": "#2D3932",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "DAILY FORM",
+    "hook": "A little moment for yourself.",
+    "customerClip": "https://videos.pexels.com/video-files/7314356/7314356-hd_1366_720_25fps.mp4",
+    "handsClip": "https://videos.pexels.com/video-files/7390091/7390091-hd_1920_1080_25fps.mp4",
+    "productImage": "https://images.pexels.com/photos/8102129/pexels-photo-8102129.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "productName": "The daily care edit",
+    "approvedCaption": "A simple step in my routine.",
+    "footageLabel": "DEMO FOOTAGE / REPLACE WITH CONSENTED CUSTOMER CLIPS",
+    "cta": "Make room for your routine",
+    "url": "daily.example/care",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943502/zvid-series2-unique-music-20261002/day-37-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 17.95,
+      "audioBegin": 0,
+      "audioEnd": 17.95,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "type": "video",
+  "name": "S2 D35 - Back in Stock",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#47346D",
+  "scenes": [
+    {
+      "id": "back",
+      "duration": 4,
+      "backgroundColor": "#47346D",
+      "transition": "circleopen",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "x": 270,
+          "y": 470,
+          "width": 740,
+          "height": 1290,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "smoothleft",
+          "exitEnd": 4,
+          "radius": {
+            "tl": 370,
+            "tr": 370,
+            "bl": 370,
+            "br": 370
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:30px;letter-spacing:6px\">{{brand}}</div><div style=\"font-size:205px;line-height:0.9;margin-top:40px\">BACK.</div>",
+          "x": 60,
+          "y": 110,
+          "width": 950,
+          "height": 400,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 4,
+          "style": {
+            "fontFamily": "Bebas Neue",
+            "fontSize": 205,
+            "color": "#EEE4FF",
+            "lineHeight": 1
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{availability}}",
+          "x": 60,
+          "y": 1800,
+          "width": 850,
+          "height": 80,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 4,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 48,
+            "color": "#EEE4FF",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    },
+    {
+      "id": "listen-close",
+      "duration": 5,
+      "backgroundColor": "#EEE4FF",
+      "transition": "smoothup",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{detailImage}}",
+          "x": 70,
+          "y": 120,
+          "width": 940,
+          "height": 1270,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "zoom": {
+            "depth": 1.07
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:29px;letter-spacing:4px\">{{stockNote}}</div><div style=\"font-size:89px;margin-top:25px\">{{productName}}</div>",
+          "x": 70,
+          "y": 1490,
+          "width": 940,
+          "height": 270,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Bebas Neue",
+            "fontSize": 89,
+            "color": "#33234B",
+            "lineHeight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-pair",
+      "duration": 5,
+      "backgroundColor": "#33234B",
+      "transition": "circleopen",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "x": 80,
+          "y": 120,
+          "width": 920,
+          "height": 1140,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 460,
+            "tr": 460,
+            "bl": 30,
+            "br": 30
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:150px\">{{price}}</div><div style=\"font-size:39px;margin-top:20px\">{{productName}}</div>",
+          "x": 80,
+          "y": 1390,
+          "width": 920,
+          "height": 330,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Bebas Neue",
+            "fontSize": 150,
+            "color": "#EEE4FF",
+            "lineHeight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "waitlist-first",
+      "duration": 5,
+      "backgroundColor": "#EEE4FF",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{heroImage}}",
+          "x": 70,
+          "y": 470,
+          "width": 550,
+          "height": 1080,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 275,
+            "tr": 275,
+            "bl": 275,
+            "br": 275
+          }
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{detailImage}}",
+          "x": 680,
+          "y": 690,
+          "width": 330,
+          "height": 600,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 165,
+            "tr": 165,
+            "bl": 165,
+            "br": 165
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{cta}}",
+          "x": 70,
+          "y": 120,
+          "width": 940,
+          "height": 260,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Bebas Neue",
+            "fontSize": 114,
+            "color": "#33234B",
+            "lineHeight": 1
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{url}}",
+          "x": 70,
+          "y": 1700,
+          "width": 940,
+          "height": 110,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 33,
+            "color": "#33234B",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "ORBIT AUDIO",
+    "heroImage": "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1080&h=1600&q=85",
+    "detailImage": "https://images.pexels.com/photos/5650531/pexels-photo-5650531.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "productName": "Studio listening",
+    "availability": "Your wait is over.",
+    "stockNote": "Back in the collection",
+    "price": "$129",
+    "cta": "Pick up your pair",
+    "url": "orbit.example/restock",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943467/zvid-series2-unique-music-20261002/day-35-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 17.95,
+      "audioBegin": 0,
+      "audioEnd": 17.95,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

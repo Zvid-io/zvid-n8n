@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs');const path=require('node:path');const assert=require('node:assert/strict');
+const read=name=>JSON.parse(fs.readFileSync(path.join(__dirname,name),'utf8').replace(/^\uFEFF/,''));
+const manual=read('manual-dry-evidence.json');assert.equal(manual.passed,true);
+const edge=read('edge-results.json');const entry={id:manual.executionId,workflowId:manual.workflowId,status:manual.status,mode:manual.mode,startedAt:manual.startedAt,stoppedAt:manual.stoppedAt,lastNode:manual.lastNode,nodes:manual.nodes,quotedCredits:manual.output.quotedCredits,editorLink:manual.output.editorLink,editorDraftSaved:manual.output.editorDraftSaved,editorDraftError:manual.output.editorDraftError,resultStatus:manual.output.status,error:null,paidNodesExecuted:manual.paidNodesExecuted,expectedOutcome:'Manual dry run retains the quote and truthfully reports the existing editor project quota without submitting a render',passed:manual.passed,evidenceFile:'manual-dry-evidence.json'};
+const existing=edge.findIndex(row=>row.id===entry.id);if(existing===-1)edge.push(entry);else edge[existing]=entry;
+fs.writeFileSync(path.join(__dirname,'edge-results.json'),JSON.stringify(edge,null,2)+'\n');
+const webhook=read('webhook-evidence.json');webhook.finalDraftResultVerification={executionId:manual.executionId,mode:manual.mode,passed:manual.passed,resultStatus:manual.output.status,editorDraftSaved:manual.output.editorDraftSaved,renderSubmitted:manual.output.renderSubmitted,quotedCredits:manual.output.quotedCredits,editorDraftError:manual.output.editorDraftError,evidenceFile:'manual-dry-evidence.json',note:'Historical webhook execution 709 preserves its original draft result. The same final result Code was manually retested in execution 719 after the truthful draft status fix.'};
+fs.writeFileSync(path.join(__dirname,'webhook-evidence.json'),JSON.stringify(webhook,null,2)+'\n');
+console.log(JSON.stringify({edgeProofs:edge.length,allPassed:edge.every(row=>row.passed),manualDraftExecution:manual.executionId,historicalWebhookPreserved:true}));

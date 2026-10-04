@@ -1,0 +1,1100 @@
+{
+  "schemaVersion": 1,
+  "inspectorConfirmed": true,
+  "inspectedBy": "launch_tracking",
+  "workflows": [
+    {
+      "day": 31,
+      "fitInspected": true,
+      "fitCaptureSha256": "13abecb817308cca2b2eb96324dfcb1ecb2d8c440de9d95d54913b2e1b4efc27",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-overview.png",
+      "overviewCaptureSha256": "a83385ded1402efa86ba0af806b0e44226e64830bc0fdb2d530767a99ecd787b",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:40:43.812Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 32,
+      "fitInspected": true,
+      "fitCaptureSha256": "da212a87e48d538c4bd34c2b7dfb39bd8478a26eb388b2f297fe856fbc09fe4c",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-32-overview.png",
+      "overviewCaptureSha256": "3894879795f3e773e36fb764683c10a0744ba54d7ec57cb942c87b06b024af48",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 592.2148590087891,
+          "height": 484.0402221679687,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:40:43.815Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 33,
+      "fitInspected": true,
+      "fitCaptureSha256": "d338095a7c6116082e957d5e851359695b8002acd79d3804e875489af6c760a5",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-33-overview.png",
+      "overviewCaptureSha256": "fe8cb532b91da4fa704122f7f0e0cb1d09af59b634a8e07962539f73567031b1",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:40:43.817Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 34,
+      "fitInspected": true,
+      "fitCaptureSha256": "d44c47fd0f097a9f0d93b5b6f481861e90c350b8b424a1c08f48f758185e771d",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-34-overview.png",
+      "overviewCaptureSha256": "0165506a7a61d02fa1ee80571f1774d55d04ec101a1a44f096ef00f1682767ab",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:40:43.818Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 35,
+      "fitInspected": true,
+      "fitCaptureSha256": "b20083a2f5c464be792b6febec517f45ffba8f7c5d13cac93c4a8305399f6023",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-35-overview.png",
+      "overviewCaptureSha256": "fdfc8dd1c5c1773fdb2ce8c9b2ee77a57462f63ef5a21e3b7f8ea77ad789f978",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:12.573Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 36,
+      "fitInspected": true,
+      "fitCaptureSha256": "5d34a54837b676494ca61729966fa0268d0bcbb99d7ae03b4993cb8dbbbbd8a4",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-36-overview.png",
+      "overviewCaptureSha256": "91bb357f0f96ae711fc1118c92f65ba7f52e5ffe933401ceaf26fcd9b32a4e2e",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:12.577Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 37,
+      "fitInspected": true,
+      "fitCaptureSha256": "b1bc1a41417869034947538b132afa3d5dc5c1f37bbdcb9c36db156d1eb896f8",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-37-overview.png",
+      "overviewCaptureSha256": "55933930a09aeaed4ddb4375ff61391f6bf6fa245de892d7b9269ce24d80b029",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:12.594Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 38,
+      "fitInspected": true,
+      "fitCaptureSha256": "19eeeead712b10bad0c00dfacc4f76f67d339e40fdaf448ee747980e0f968910",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-38-overview.png",
+      "overviewCaptureSha256": "4e7ae5a423455ecd6202f381830cd8c933a9531e92e733a6d822ce979e7570a6",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:33.941Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 39,
+      "fitInspected": true,
+      "fitCaptureSha256": "3dd0bfe533e9fbcd7f69090c5cc21af083a1ad5994463d3426832250cd4ff54a",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-39-overview.png",
+      "overviewCaptureSha256": "daf68e87a45ea13f3cd70e8b63c54ee5eabb4a43d07ebe04983d65d2873094f3",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:33.947Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 40,
+      "fitInspected": true,
+      "fitCaptureSha256": "c56116c5e9feef2672796ce1fab529cc9b0c6d9d974da4e9502adc3992a78a0a",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-40-overview.png",
+      "overviewCaptureSha256": "9ceca92d9d1fd4b7ab5668eb82eaa99485895f1cb4c2df820ebd8184ec76d8af",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:33.949Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 41,
+      "fitInspected": true,
+      "fitCaptureSha256": "4525c560f140994231c8433be200ecf7c13d00a7549e87b58a3f336b5e3fcd6f",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-41-overview.png",
+      "overviewCaptureSha256": "307a43b3f433e6a4adb00c300a133bc87bca47b283189ba08690aa33e7ef16b5",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:50.152Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 42,
+      "fitInspected": true,
+      "fitCaptureSha256": "0683fbfe1c5b83ff70eda8947a094734f31d8cef6f68ab6a1c06e8802a9c8a25",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-42-overview.png",
+      "overviewCaptureSha256": "146b88a260f789da5cddf6158095e532b5e9068a9c4f77b6d70c1e400d626580",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:50.158Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 43,
+      "fitInspected": true,
+      "fitCaptureSha256": "6db3f668649b5c099e6d5138fa8bb67d0281abb8f29249b8caf2844f05e35819",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-43-overview.png",
+      "overviewCaptureSha256": "5e09208d80b08e994e66386a33a8c0306affe85f007e591dcec743f51e3f7143",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:43:50.159Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 44,
+      "fitInspected": true,
+      "fitCaptureSha256": "e5e1d76899bd1162084cc9b982ab69eea89c85f39488e7d430b3e0a988b91220",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-44-overview.png",
+      "overviewCaptureSha256": "0bcf364cdb3c38c6d3c8f2d45c61a7dbea42517d14cf8bcb3001f77a0856750e",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:44:09.182Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 45,
+      "fitInspected": true,
+      "fitCaptureSha256": "d310cbc0368b28f4d5554ea1059adf2773645c5d7f23a68f53b073dc52063f7e",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-45-overview.png",
+      "overviewCaptureSha256": "33fdebcba4e017ca23410b7034ab9608cd0b5e8d68abfe9071cb9dbe5ad8b26c",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:44:09.186Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 46,
+      "fitInspected": true,
+      "fitCaptureSha256": "cac2fd270ea502acb4ef0798d2371a4ddd0a1019843e8a54b6812aea3a494864",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-46-overview.png",
+      "overviewCaptureSha256": "dbd17aa1593324ca4952b242390ff6bc3573c0a6d5e57f5766441cf3ffa5bceb",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:44:09.188Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 47,
+      "fitInspected": true,
+      "fitCaptureSha256": "66bdf6a756ebad16bf8a4d8728de085c00bf032384cfe9af5995e983f51b9a9e",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-47-overview.png",
+      "overviewCaptureSha256": "bf68e43e89506dc8567e059c0e9e3bc3e0ff123a51cf8ee7ab4d0a76a18eb322",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 592.2148590087891,
+          "height": 484.0402221679687,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:45:27.636Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 48,
+      "fitInspected": true,
+      "fitCaptureSha256": "ac6dd6c094d7b5078d030e7b913efaf83ca48ec7430ec9da202791f29024eae3",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-48-overview.png",
+      "overviewCaptureSha256": "b5f1e6dafde560b4fedbc183ab5c64c4fd0b69e4b5b06c5bf41363a6ff686721",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:45:27.640Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 49,
+      "fitInspected": true,
+      "fitCaptureSha256": "e58e764aa76dd54a575c6721317fcf48ec39fc7619610a8aa541014d47b85b4d",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-49-overview.png",
+      "overviewCaptureSha256": "7de468a3b22169583ff35e97be4596985dd7963a3711a4867d974d2591789b89",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:45:27.641Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 50,
+      "fitInspected": true,
+      "fitCaptureSha256": "cd8d7bc32e44ecfe2e52d8b85eced827adca535285966f7dffe2d6e0da8a59a5",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-50-overview.png",
+      "overviewCaptureSha256": "54f4df72990bb5c34e74f9cb7f7c467931e2baec4063226e91394a1c9df3cb62",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 591.7311859130859,
+          "height": 483.5565490722656,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T13:34:04.981Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 51,
+      "fitInspected": true,
+      "fitCaptureSha256": "91e8c3f1d38e8e6f4c896ea8916d8a01290c311287a1e8835759863cee43614a",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-51-overview.png",
+      "overviewCaptureSha256": "52b16431472b2106a09d7e27b094366d87b4dee3ad45a2837cd19639544e129d",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:46:08.409Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 52,
+      "fitInspected": true,
+      "fitCaptureSha256": "8a3e23cdcbc10afb1e17177f7743bce6993c6c206a45093e8c4cad586305963a",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-52-overview.png",
+      "overviewCaptureSha256": "0e6289d96fc41d72161e9c5e3f632302c08f023cdbc4b20c4eefeafae88c6119",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 592.2148590087891,
+          "height": 484.0402221679687,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:46:08.411Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 53,
+      "fitInspected": true,
+      "fitCaptureSha256": "cdc147982715cf5fb13893ecbb5458b64068686fbfd39603a67542e4b65eebba",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-53-overview.png",
+      "overviewCaptureSha256": "83c515a284e49659698e2ac0a03b4d9c061e29c0b3a94d78693a93f34607dd28",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:46:30.542Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 54,
+      "fitInspected": true,
+      "fitCaptureSha256": "03d40ffd5bdf77fe9667f7b9177178ce761fc916b13fa45e147ae9a39e784c49",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-54-overview.png",
+      "overviewCaptureSha256": "58c05fc5e0a91aed8f36c87f299c511a0327dab384b688717467c71ef8585b5b",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:46:30.547Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 55,
+      "fitInspected": true,
+      "fitCaptureSha256": "e1efba3341e35a02d16b4408c585593f0133acd3ab59f4718ecd09d7d8b5641c",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-55-overview.png",
+      "overviewCaptureSha256": "9b6488dc7985aa5249bf25a2c2780d6408929d050f1add0ca5c69bf9eb267e27",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:46:30.548Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 56,
+      "fitInspected": true,
+      "fitCaptureSha256": "4f59316bb440d2a871d0d237d9ef2763f26012df4fe1c9ffe9551714f99ad377",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-56-overview.png",
+      "overviewCaptureSha256": "01aee010f3dcca9b4a606ce9f695efe0a7137c8e144fd6c161ba2e361cd02677",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:46:48.763Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 57,
+      "fitInspected": true,
+      "fitCaptureSha256": "9bfca7a36714738c41fe1011573afecd0e35ec0900fe2906053122c2366abc85",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-57-overview.png",
+      "overviewCaptureSha256": "684900b335b6ebd5390f667d64bd158cd23b8cc9d1d1073b54053651afb191c1",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:46:48.768Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 58,
+      "fitInspected": true,
+      "fitCaptureSha256": "a2b9b8b9e0837730090eafb4b991085871cacce67e93a948788d2c9ff05d0f7d",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-58-overview.png",
+      "overviewCaptureSha256": "a55ef54505cc2b2107a7b0b6643145edf917fa9c4ebd8f9a7dddbc8ed0de3cf3",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 592.2148590087891,
+          "height": 484.0402221679687,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:46:48.770Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 59,
+      "fitInspected": true,
+      "fitCaptureSha256": "3c933b82ad39a4b7d41cc4329c620bd885063a3cf6161f5228eb8310db8cb390",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-59-overview.png",
+      "overviewCaptureSha256": "f76229f91b2437dc6d6942fff9e8bfebb7f3cca895eff24d02ced5d64b846fb9",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.0645294189453,
+          "height": 466.889892578125,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:47:43.176Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    },
+    {
+      "day": 60,
+      "fitInspected": true,
+      "fitCaptureSha256": "13c6816ea7b25246a26f381fd870ec339af35c38bd9c0a5807162a00ee512618",
+      "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-60-overview.png",
+      "overviewCaptureSha256": "7bdbac3ac7b152e4ed2acb5b232fe860f5b71596ad362435c38ec3bead0f1370",
+      "overviewReadable": true,
+      "overviewView": {
+        "rect": {
+          "bottom": 871.6666641235352,
+          "height": 791.6666259765625,
+          "left": 299.9999694824219,
+          "right": 758.3333129882812,
+          "top": 80.00003814697266,
+          "width": 458.3333435058594,
+          "x": 299.9999694824219,
+          "y": 80.00003814697266
+        },
+        "textRect": {
+          "bottom": 575.5481719970703,
+          "height": 467.37353515625,
+          "left": 308.7301330566406,
+          "right": 749.6031188964844,
+          "top": 108.17463684082033,
+          "width": 440.87298583984375,
+          "x": 308.7301330566406,
+          "y": 108.17463684082033
+        }
+      },
+      "reviewedAt": "2026-10-01T12:49:13.790Z",
+      "reviewMethod": "Actual full fit and overview captures inspected with view_image; required setup, package, cost, preview and support text visible"
+    }
+  ],
+  "sections": [
+    {
+      "day": 31,
+      "section": 1,
+      "noteName": "1. Configure and read saved state",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-1.png",
+      "captureSha256": "8d5f8a94d877aaa535f19cd724a28d473862de270e89332de956f58314c3123d",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "capturedAt": "2026-10-01T12:47:14.889Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 2,
+      "noteName": "2. Join and qualify a useful brief",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-2.png",
+      "captureSha256": "a1970656f6c1b8bc06788ad62804a07866fd73dc180b78348b290c468fee0256",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "bottomPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-2-bottom.png",
+      "bottomCaptureSha256": "1827e4b05c1d90e8a11b107bf219e577b080f6325e993ba8e9f42fff1ef89b71",
+      "bottomReadable": true,
+      "capturedAt": "2026-10-01T12:47:15.933Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 3,
+      "noteName": "3. Recover durable state",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-3.png",
+      "captureSha256": "79a68b25e311bf0a071fce2eef3f75fdd274da6449529f728df884762456d651",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "capturedAt": "2026-10-01T12:47:18.365Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 4,
+      "noteName": "4. Validate and preview a draft",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-4.png",
+      "captureSha256": "02c097537af19a017646ddd70606074e741805e862ee44283458be0baa0aca91",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "bottomPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-4-bottom.png",
+      "bottomCaptureSha256": "009624a2aba91298f1656ebd217dc0e5e8d876238840bcf4f4e182dce19d446f",
+      "bottomReadable": true,
+      "capturedAt": "2026-10-01T12:48:20.747Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 5,
+      "noteName": "5. Submit and checkpoint",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-5.png",
+      "captureSha256": "702198e25f9f71e33a826b4c4ea210e133a75f758a1b1323d57c93e8a558d8fe",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "capturedAt": "2026-10-01T12:48:23.416Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 6,
+      "noteName": "6. Retain completed media",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-6.png",
+      "captureSha256": "7e155aed7c65398142a027d80806e985fdb40fa8e6a2b29ab0ca391c5c39060f",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "capturedAt": "2026-10-01T12:48:24.279Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 7,
+      "noteName": "7. Deliver a private asset",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-7.png",
+      "captureSha256": "e114ec8d10c5f5ab5f3e4396cfc91e7a6e0f8c75ce5d60a3d912cb543fceca2b",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "capturedAt": "2026-10-01T12:48:43.431Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 8,
+      "noteName": "8. Protect the business source",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-8.png",
+      "captureSha256": "f03577b06cdcf5e62ea2549f9e70c9e9033b6d6fc871db1b72ccf2dd8fedb646",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "bottomPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-8-bottom.png",
+      "bottomCaptureSha256": "a587b2666eee2809a7c6478f9bec226dc83b3e13eb65e92fd376e19b97ccf887",
+      "bottomReadable": true,
+      "capturedAt": "2026-10-01T12:48:44.382Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 9,
+      "noteName": "9. Verify the handoff receipt",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-9.png",
+      "captureSha256": "cc1d07e75cc0b15a36ffbe9a7b4861995e147f582b56a52d4ad81577bc74007c",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "capturedAt": "2026-10-01T12:48:46.995Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    },
+    {
+      "day": 31,
+      "section": 10,
+      "noteName": "10. Review the recorded outcome",
+      "png": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-31-section-10.png",
+      "captureSha256": "abbf2eb7ac89a80f4f38962a40db27276cabfa944a24fd464cbec9055a24c0a6",
+      "scale": 1.0000000693581321,
+      "readable": true,
+      "capturedAt": "2026-10-01T12:48:47.896Z",
+      "reviewedAt": "2026-10-01T12:55:20.692Z",
+      "reviewMethod": "Individually inspected actual native screenshot pixels with view_image: complete section paragraph and all node names; tall groups include the inspected lower-row view"
+    }
+  ],
+  "updatedAt": "2026-10-01T13:34:04.981Z",
+  "representativeWorkflowSha256": "aca8d0e3e956d02549916425ba8c2a2ecf73a8432b839db559856afa778af5b1"
+}

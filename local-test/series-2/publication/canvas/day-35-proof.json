@@ -1,0 +1,2628 @@
+{
+  "day": 35,
+  "workflowId": "ZvidSeries2Day35",
+  "functionalHash": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+  "artifactSha256": "4a9e215aed2e6c4b264fa091ce9ff97c021a6799121b8b9bb671dada3baeb06d",
+  "canonicalSha256": "4a9e215aed2e6c4b264fa091ce9ff97c021a6799121b8b9bb671dada3baeb06d",
+  "capturedAt": "2026-10-01T12:35:19.360Z",
+  "observedUrl": "http://localhost:5678/workflow/ZvidSeries2Day35",
+  "observedTitle": "▶️ D35 A maintenance window to a customer notice video (Zvid) - n8n",
+  "titleMatches": true,
+  "actualCanvasInspected": true,
+  "inspected": true,
+  "actualNodeCount": 69,
+  "expectedNodeCount": 69,
+  "functionalNodeCount": 58,
+  "noteCount": 11,
+  "sectionCount": 10,
+  "renderedScale": 0.15504810238672678,
+  "viewportTransform": null,
+  "nativeContentMatches": true,
+  "allTextFits": true,
+  "allNodeIconsCovered": true,
+  "allFunctionalNodesCovered": true,
+  "actualLabelBoundsCount": 58,
+  "overlaps": [],
+  "notes": [
+    {
+      "id": "zvid-business-35-59",
+      "name": "1. Configure and read saved state",
+      "overview": false,
+      "bounds": {
+        "x": 264.0769348144531,
+        "y": 223.8142242431641,
+        "width": 136.4423065185547,
+        "height": 97.68028259277344,
+        "right": 400.5192413330078,
+        "bottom": 321.4945068359375
+      },
+      "contentRect": {
+        "x": 266.026123046875,
+        "y": 230.1047515869141,
+        "width": 132.54393005371094,
+        "height": 17.271240234375,
+        "right": 398.57005310058594,
+        "bottom": 247.3759918212891
+      },
+      "headerRect": {
+        "x": 264.0769348144531,
+        "y": 223.8142242431641,
+        "width": 136.4423065185547,
+        "height": 26.358177405743554,
+        "right": 400.5192413330078,
+        "bottom": 250.17240164890765
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 111,
+      "contentScrollHeight": 111,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-60",
+      "name": "2. Join and qualify a useful brief",
+      "overview": false,
+      "bounds": {
+        "x": 420.3653869628906,
+        "y": 223.8142242431641,
+        "width": 136.44232177734375,
+        "height": 133.3413543701172,
+        "right": 556.8077087402344,
+        "bottom": 357.15557861328125
+      },
+      "contentRect": {
+        "x": 422.3145751953125,
+        "y": 230.1047515869141,
+        "width": 132.5439453125,
+        "height": 13.550084114074709,
+        "right": 554.8585205078125,
+        "bottom": 243.6548357009888
+      },
+      "headerRect": {
+        "x": 420.3653869628906,
+        "y": 223.8142242431641,
+        "width": 136.44232177734375,
+        "height": 26.358177405743554,
+        "right": 556.8077087402344,
+        "bottom": 250.17240164890765
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 87,
+      "contentScrollHeight": 87,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-61",
+      "name": "3. Recover durable state",
+      "overview": false,
+      "bounds": {
+        "x": 574.173095703125,
+        "y": 223.8142242431641,
+        "width": 136.44232177734375,
+        "height": 97.68028259277344,
+        "right": 710.6154174804688,
+        "bottom": 321.4945068359375
+      },
+      "contentRect": {
+        "x": 576.1222534179688,
+        "y": 230.1047515869141,
+        "width": 132.5440216064453,
+        "height": 17.271240234375,
+        "right": 708.6662750244141,
+        "bottom": 247.3759918212891
+      },
+      "headerRect": {
+        "x": 574.173095703125,
+        "y": 223.8142242431641,
+        "width": 136.44232177734375,
+        "height": 26.358177405743554,
+        "right": 710.6154174804688,
+        "bottom": 250.17240164890765
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 111,
+      "contentScrollHeight": 111,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-62",
+      "name": "4. Validate and preview a draft",
+      "overview": false,
+      "bounds": {
+        "x": 730.4615478515625,
+        "y": 223.8142242431641,
+        "width": 136.4423828125,
+        "height": 133.3413543701172,
+        "right": 866.9039306640625,
+        "bottom": 357.15557861328125
+      },
+      "contentRect": {
+        "x": 732.4107666015625,
+        "y": 230.1047515869141,
+        "width": 132.5439453125,
+        "height": 13.550084114074709,
+        "right": 864.9547119140625,
+        "bottom": 243.6548357009888
+      },
+      "headerRect": {
+        "x": 730.4615478515625,
+        "y": 223.8142242431641,
+        "width": 136.4423828125,
+        "height": 26.358177405743554,
+        "right": 866.9039306640625,
+        "bottom": 250.17240164890765
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 87,
+      "contentScrollHeight": 87,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-63",
+      "name": "5. Submit and checkpoint",
+      "overview": false,
+      "bounds": {
+        "x": 264.0769348144531,
+        "y": 394.9873352050781,
+        "width": 136.4423065185547,
+        "height": 97.68025207519533,
+        "right": 400.5192413330078,
+        "bottom": 492.66758728027344
+      },
+      "contentRect": {
+        "x": 266.026123046875,
+        "y": 401.2778015136719,
+        "width": 132.54393005371094,
+        "height": 13.550119400024414,
+        "right": 398.57005310058594,
+        "bottom": 414.8279209136963
+      },
+      "headerRect": {
+        "x": 264.0769348144531,
+        "y": 394.9873352050781,
+        "width": 136.4423065185547,
+        "height": 26.358177405743554,
+        "right": 400.5192413330078,
+        "bottom": 421.3455126108217
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 87,
+      "contentScrollHeight": 87,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-64",
+      "name": "6. Retain completed media",
+      "overview": false,
+      "bounds": {
+        "x": 420.3653869628906,
+        "y": 394.9873352050781,
+        "width": 136.44232177734375,
+        "height": 97.68025207519533,
+        "right": 556.8077087402344,
+        "bottom": 492.66758728027344
+      },
+      "contentRect": {
+        "x": 422.3145751953125,
+        "y": 401.2778015136719,
+        "width": 132.5439453125,
+        "height": 13.550119400024414,
+        "right": 554.8585205078125,
+        "bottom": 414.8279209136963
+      },
+      "headerRect": {
+        "x": 420.3653869628906,
+        "y": 394.9873352050781,
+        "width": 136.44232177734375,
+        "height": 26.358177405743554,
+        "right": 556.8077087402344,
+        "bottom": 421.3455126108217
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 87,
+      "contentScrollHeight": 87,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-65",
+      "name": "7. Deliver a private asset",
+      "overview": false,
+      "bounds": {
+        "x": 574.173095703125,
+        "y": 394.9873352050781,
+        "width": 136.44232177734375,
+        "height": 97.68025207519533,
+        "right": 710.6154174804688,
+        "bottom": 492.66758728027344
+      },
+      "contentRect": {
+        "x": 576.1222534179688,
+        "y": 401.2778015136719,
+        "width": 132.5440216064453,
+        "height": 17.271240234375,
+        "right": 708.6662750244141,
+        "bottom": 418.5490417480469
+      },
+      "headerRect": {
+        "x": 574.173095703125,
+        "y": 394.9873352050781,
+        "width": 136.44232177734375,
+        "height": 26.358177405743554,
+        "right": 710.6154174804688,
+        "bottom": 421.3455126108217
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 111,
+      "contentScrollHeight": 111,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-66",
+      "name": "8. Protect the business source",
+      "overview": false,
+      "bounds": {
+        "x": 730.4615478515625,
+        "y": 394.9873352050781,
+        "width": 136.4423828125,
+        "height": 133.34130859375,
+        "right": 866.9039306640625,
+        "bottom": 528.3286437988281
+      },
+      "contentRect": {
+        "x": 732.4107666015625,
+        "y": 401.2778015136719,
+        "width": 132.5439453125,
+        "height": 13.550119400024414,
+        "right": 864.9547119140625,
+        "bottom": 414.8279209136963
+      },
+      "headerRect": {
+        "x": 730.4615478515625,
+        "y": 394.9873352050781,
+        "width": 136.4423828125,
+        "height": 26.358177405743554,
+        "right": 866.9039306640625,
+        "bottom": 421.3455126108217
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 87,
+      "contentScrollHeight": 87,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-67",
+      "name": "9. Verify the handoff receipt",
+      "overview": false,
+      "bounds": {
+        "x": 884.269287109375,
+        "y": 394.9873352050781,
+        "width": 136.44232177734375,
+        "height": 97.68025207519533,
+        "right": 1020.7116088867188,
+        "bottom": 492.66758728027344
+      },
+      "contentRect": {
+        "x": 886.2184448242188,
+        "y": 401.2778015136719,
+        "width": 132.5439453125,
+        "height": 13.550119400024414,
+        "right": 1018.7623901367188,
+        "bottom": 414.8279209136963
+      },
+      "headerRect": {
+        "x": 884.269287109375,
+        "y": 394.9873352050781,
+        "width": 136.44232177734375,
+        "height": 26.358177405743554,
+        "right": 1020.7116088867188,
+        "bottom": 421.3455126108217
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 87,
+      "contentScrollHeight": 87,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-68",
+      "name": "10. Review the recorded outcome",
+      "overview": false,
+      "bounds": {
+        "x": 1040.5577392578125,
+        "y": 394.9873352050781,
+        "width": 136.44232177734375,
+        "height": 97.68025207519533,
+        "right": 1177.0000610351562,
+        "bottom": 492.66758728027344
+      },
+      "contentRect": {
+        "x": 1042.5068359375,
+        "y": 401.2778015136719,
+        "width": 132.5439453125,
+        "height": 13.550119400024414,
+        "right": 1175.05078125,
+        "bottom": 414.8279209136963
+      },
+      "headerRect": {
+        "x": 1040.5577392578125,
+        "y": 394.9873352050781,
+        "width": 136.44232177734375,
+        "height": 26.358177405743554,
+        "right": 1177.0000610351562,
+        "bottom": 421.3455126108217
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 87,
+      "contentScrollHeight": 87,
+      "contentWidth": 855,
+      "contentScrollWidth": 855
+    },
+    {
+      "id": "zvid-business-35-69",
+      "name": "Overview — day 35",
+      "overview": true,
+      "bounds": {
+        "x": 145,
+        "y": 223.8142242431641,
+        "width": 102.3317413330078,
+        "height": 176.75479125976562,
+        "right": 247.3317413330078,
+        "bottom": 400.5690155029297
+      },
+      "contentRect": {
+        "x": 146.94918823242188,
+        "y": 230.1047515869141,
+        "width": 98.4333724975586,
+        "height": 104.35013580322266,
+        "right": 245.38256072998047,
+        "bottom": 334.4548873901367
+      },
+      "headerRect": {
+        "x": 145,
+        "y": 223.8142242431641,
+        "width": 102.3317413330078,
+        "height": 176.75483672086852,
+        "right": 247.3317413330078,
+        "bottom": 400.5690609640326
+      },
+      "dimensionsMatch": true,
+      "textMatches": true,
+      "textFits": true,
+      "contentHeight": 673,
+      "contentScrollHeight": 673,
+      "contentWidth": 635,
+      "contentScrollWidth": 635
+    }
+  ],
+  "nodes": [
+    {
+      "id": "zvid-business-35-01",
+      "name": "Test manually",
+      "section": "1. Configure and read saved state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 276.48077392578125,
+        "y": 251.10269165039065,
+        "width": 14.88460922241211,
+        "height": 14.88460922241211,
+        "right": 291.36538314819336,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 269.0384521484375,
+        "y": 267.05047607421875,
+        "width": 29.76923561096191,
+        "height": 3.1009697914123535,
+        "right": 298.8076877593994,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 269.0384521484375,
+        "y": 251.10269165039065,
+        "width": 29.769235610961914,
+        "height": 19.04875421524045,
+        "right": 298.8076877593994,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-02",
+      "name": "Check register hourly",
+      "section": "1. Configure and read saved state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 313.69232177734375,
+        "y": 251.10269165039065,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 328.57694816589355,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 306.25,
+        "y": 267.05047607421875,
+        "width": 29.76921844482422,
+        "height": 3.1009697914123535,
+        "right": 336.0192184448242,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 306.25,
+        "y": 251.10269165039065,
+        "width": 29.76921844482422,
+        "height": 19.04875421524045,
+        "right": 336.0192184448242,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-03",
+      "name": "Config",
+      "section": "1. Configure and read saved state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 353.3846435546875,
+        "y": 251.10269165039065,
+        "width": 14.884592056274414,
+        "height": 14.88460922241211,
+        "right": 368.2692356109619,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 345.94232177734375,
+        "y": 267.05047607421875,
+        "width": 29.76921844482422,
+        "height": 3.1009697914123535,
+        "right": 375.71154022216797,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 345.94232177734375,
+        "y": 251.10269165039065,
+        "width": 29.76921844482422,
+        "height": 19.04875421524045,
+        "right": 375.71154022216797,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-04",
+      "name": "Check source configuration",
+      "section": "1. Configure and read saved state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 276.48077392578125,
+        "y": 285.8334655761719,
+        "width": 14.88460922241211,
+        "height": 14.88460922241211,
+        "right": 291.36538314819336,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 269.0384521484375,
+        "y": 301.78125,
+        "width": 29.76923561096191,
+        "height": 6.201904773712158,
+        "right": 298.8076877593994,
+        "bottom": 307.98315477371216
+      },
+      "visibleBounds": {
+        "x": 269.0384521484375,
+        "y": 285.8334655761719,
+        "width": 29.769235610961914,
+        "height": 22.149689197540283,
+        "right": 298.8076877593994,
+        "bottom": 307.98315477371216
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-05",
+      "name": "Read source register",
+      "section": "2. Join and qualify a useful brief",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 430.2884521484375,
+        "y": 251.10269165039065,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 445.1730785369873,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 422.84613037109375,
+        "y": 267.05047607421875,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 452.61538314819336,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 422.84613037109375,
+        "y": 251.10269165039065,
+        "width": 29.76925277709961,
+        "height": 19.04875421524045,
+        "right": 452.61538314819336,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-06",
+      "name": "Read related records",
+      "section": "2. Join and qualify a useful brief",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 469.9807739257813,
+        "y": 251.10269165039065,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 484.8654003143311,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 462.5384521484375,
+        "y": 267.05047607421875,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 492.3077049255371,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 462.5384521484375,
+        "y": 251.10269165039065,
+        "width": 29.76925277709961,
+        "height": 19.04875421524045,
+        "right": 492.3077049255371,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-07",
+      "name": "Apply maintenance notice policy",
+      "section": "2. Join and qualify a useful brief",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 507.19232177734375,
+        "y": 251.10269165039065,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 522.0769481658936,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 499.7500305175781,
+        "y": 267.05047607421875,
+        "width": 29.76921844482422,
+        "height": 6.2019219398498535,
+        "right": 529.5192489624023,
+        "bottom": 273.2523980140686
+      },
+      "visibleBounds": {
+        "x": 499.7500305175781,
+        "y": 251.10269165039065,
+        "width": 29.76921844482422,
+        "height": 22.14970636367795,
+        "right": 529.5192489624023,
+        "bottom": 273.2523980140686
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-08",
+      "name": "Fingerprint approved content",
+      "section": "2. Join and qualify a useful brief",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 430.2884521484375,
+        "y": 285.8334655761719,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 445.1730785369873,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 422.84613037109375,
+        "y": 301.78125,
+        "width": 29.76925277709961,
+        "height": 6.201904773712158,
+        "right": 452.61538314819336,
+        "bottom": 307.98315477371216
+      },
+      "visibleBounds": {
+        "x": 422.84613037109375,
+        "y": 285.8334655761719,
+        "width": 29.76925277709961,
+        "height": 22.149689197540283,
+        "right": 452.61538314819336,
+        "bottom": 307.98315477371216
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-09",
+      "name": "Choose one pending revision",
+      "section": "2. Join and qualify a useful brief",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 469.9807739257813,
+        "y": 285.8334655761719,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 484.8654003143311,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 462.5384521484375,
+        "y": 301.78125,
+        "width": 29.76925277709961,
+        "height": 6.201904773712158,
+        "right": 492.3077049255371,
+        "bottom": 307.98315477371216
+      },
+      "visibleBounds": {
+        "x": 462.5384521484375,
+        "y": 285.8334655761719,
+        "width": 29.76925277709961,
+        "height": 22.149689197540283,
+        "right": 492.3077049255371,
+        "bottom": 307.98315477371216
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-10",
+      "name": "Eligible work found?",
+      "section": "2. Join and qualify a useful brief",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 507.19232177734375,
+        "y": 285.8334655761719,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 522.0769481658936,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 499.7500305175781,
+        "y": 301.78125,
+        "width": 29.76921844482422,
+        "height": 3.1009347438812256,
+        "right": 529.5192489624023,
+        "bottom": 304.8821847438812
+      },
+      "visibleBounds": {
+        "x": 499.7500305175781,
+        "y": 285.8334655761719,
+        "width": 29.76921844482422,
+        "height": 19.04871916770935,
+        "right": 529.5192489624023,
+        "bottom": 304.8821847438812
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-11",
+      "name": "No work report",
+      "section": "2. Join and qualify a useful brief",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 430.2884521484375,
+        "y": 323.0450134277344,
+        "width": 14.884626388549805,
+        "height": 14.884592056274414,
+        "right": 445.1730785369873,
+        "bottom": 337.9296054840088
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 422.84613037109375,
+        "y": 338.9927978515625,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 452.61538314819336,
+        "bottom": 342.09376764297485
+      },
+      "visibleBounds": {
+        "x": 422.84613037109375,
+        "y": 323.0450134277344,
+        "width": 29.76925277709961,
+        "height": 19.04875421524048,
+        "right": 452.61538314819336,
+        "bottom": 342.09376764297485
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-12",
+      "name": "Prepare durable request",
+      "section": "2. Join and qualify a useful brief",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 469.9807739257813,
+        "y": 323.0450134277344,
+        "width": 14.884626388549805,
+        "height": 14.884592056274414,
+        "right": 484.8654003143311,
+        "bottom": 337.9296054840088
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 462.5384521484375,
+        "y": 338.9927978515625,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 492.3077049255371,
+        "bottom": 342.09376764297485
+      },
+      "visibleBounds": {
+        "x": 462.5384521484375,
+        "y": 323.0450134277344,
+        "width": 29.76925277709961,
+        "height": 19.04875421524048,
+        "right": 492.3077049255371,
+        "bottom": 342.09376764297485
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-13",
+      "name": "Ensure publication ledger",
+      "section": "1. Configure and read saved state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 313.69232177734375,
+        "y": 285.8334655761719,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 328.57694816589355,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 306.25,
+        "y": 301.78125,
+        "width": 29.76921844482422,
+        "height": 6.201904773712158,
+        "right": 336.0192184448242,
+        "bottom": 307.98315477371216
+      },
+      "visibleBounds": {
+        "x": 306.25,
+        "y": 285.8334655761719,
+        "width": 29.76921844482422,
+        "height": 22.149689197540283,
+        "right": 336.0192184448242,
+        "bottom": 307.98315477371216
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-14",
+      "name": "Read saved requests",
+      "section": "1. Configure and read saved state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 353.3846435546875,
+        "y": 285.8334655761719,
+        "width": 14.884592056274414,
+        "height": 14.88460922241211,
+        "right": 368.2692356109619,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 345.94232177734375,
+        "y": 301.78125,
+        "width": 29.76921844482422,
+        "height": 3.1009347438812256,
+        "right": 375.71154022216797,
+        "bottom": 304.8821847438812
+      },
+      "visibleBounds": {
+        "x": 345.94232177734375,
+        "y": 285.8334655761719,
+        "width": 29.76921844482422,
+        "height": 19.04871916770935,
+        "right": 375.71154022216797,
+        "bottom": 304.8821847438812
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-15",
+      "name": "Look up saved request",
+      "section": "3. Recover durable state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 586.5769653320312,
+        "y": 251.10269165039065,
+        "width": 14.884556770324709,
+        "height": 14.88460922241211,
+        "right": 601.461522102356,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 579.1346435546875,
+        "y": 267.05047607421875,
+        "width": 29.769184112548828,
+        "height": 3.1009697914123535,
+        "right": 608.9038276672363,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 579.1346435546875,
+        "y": 251.10269165039065,
+        "width": 29.769184112548828,
+        "height": 19.04875421524045,
+        "right": 608.9038276672363,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-16",
+      "name": "Decide recovery",
+      "section": "3. Recover durable state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 623.7884521484375,
+        "y": 251.10269165039065,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 638.6730785369873,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 616.3461303710938,
+        "y": 267.05047607421875,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 646.1153831481934,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 616.3461303710938,
+        "y": 251.10269165039065,
+        "width": 29.76925277709961,
+        "height": 19.04875421524045,
+        "right": 646.1153831481934,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-17",
+      "name": "Inspect saved request only?",
+      "section": "4. Validate and preview a draft",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 740.3846435546875,
+        "y": 251.10269165039065,
+        "width": 14.884556770324709,
+        "height": 14.88460922241211,
+        "right": 755.2692003250122,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 732.9423217773438,
+        "y": 267.05047607421875,
+        "width": 29.769184112548828,
+        "height": 6.2019219398498535,
+        "right": 762.7115058898926,
+        "bottom": 273.2523980140686
+      },
+      "visibleBounds": {
+        "x": 732.9423217773438,
+        "y": 251.10269165039065,
+        "width": 29.769184112548828,
+        "height": 22.14970636367795,
+        "right": 762.7115058898926,
+        "bottom": 273.2523980140686
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-18",
+      "name": "Saved request inspection",
+      "section": "4. Validate and preview a draft",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 780.0769653320312,
+        "y": 251.10269165039065,
+        "width": 14.884556770324709,
+        "height": 14.88460922241211,
+        "right": 794.961522102356,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 772.6346435546875,
+        "y": 267.05047607421875,
+        "width": 29.769184112548828,
+        "height": 6.2019219398498535,
+        "right": 802.4038276672363,
+        "bottom": 273.2523980140686
+      },
+      "visibleBounds": {
+        "x": 772.6346435546875,
+        "y": 251.10269165039065,
+        "width": 29.769184112548828,
+        "height": 22.14970636367795,
+        "right": 802.4038276672363,
+        "bottom": 273.2523980140686
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-19",
+      "name": "Completed media saved?",
+      "section": "3. Recover durable state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 663.4807739257812,
+        "y": 251.10269165039065,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 678.365400314331,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 656.0384521484375,
+        "y": 267.05047607421875,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 685.8077049255371,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 656.0384521484375,
+        "y": 251.10269165039065,
+        "width": 29.76925277709961,
+        "height": 19.04875421524045,
+        "right": 685.8077049255371,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-20",
+      "name": "Accepted job saved?",
+      "section": "3. Recover durable state",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 586.5769653320312,
+        "y": 285.8334655761719,
+        "width": 14.884556770324709,
+        "height": 14.88460922241211,
+        "right": 601.461522102356,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 579.1346435546875,
+        "y": 301.78125,
+        "width": 29.769184112548828,
+        "height": 3.1009347438812256,
+        "right": 608.9038276672363,
+        "bottom": 304.8821847438812
+      },
+      "visibleBounds": {
+        "x": 579.1346435546875,
+        "y": 285.8334655761719,
+        "width": 29.769184112548828,
+        "height": 19.04871916770935,
+        "right": 608.9038276672363,
+        "bottom": 304.8821847438812
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-21",
+      "name": "Validate project (free)",
+      "section": "4. Validate and preview a draft",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 817.2884521484375,
+        "y": 251.10269165039065,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 832.1730785369873,
+        "bottom": 265.98730087280273
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 809.8461303710938,
+        "y": 267.05047607421875,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 839.6153831481934,
+        "bottom": 270.1514458656311
+      },
+      "visibleBounds": {
+        "x": 809.8461303710938,
+        "y": 251.10269165039065,
+        "width": 29.76925277709961,
+        "height": 19.04875421524045,
+        "right": 839.6153831481934,
+        "bottom": 270.1514458656311
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-22",
+      "name": "Check validation and credit cap",
+      "section": "4. Validate and preview a draft",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 740.3846435546875,
+        "y": 285.8334655761719,
+        "width": 14.884556770324709,
+        "height": 14.88460922241211,
+        "right": 755.2692003250122,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 732.9423217773438,
+        "y": 301.78125,
+        "width": 29.769184112548828,
+        "height": 6.201904773712158,
+        "right": 762.7115058898926,
+        "bottom": 307.98315477371216
+      },
+      "visibleBounds": {
+        "x": 732.9423217773438,
+        "y": 285.8334655761719,
+        "width": 29.769184112548828,
+        "height": 22.149689197540283,
+        "right": 762.7115058898926,
+        "bottom": 307.98315477371216
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-23",
+      "name": "Dry run?",
+      "section": "4. Validate and preview a draft",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 780.0769653320312,
+        "y": 285.8334655761719,
+        "width": 14.884556770324709,
+        "height": 14.88460922241211,
+        "right": 794.961522102356,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 772.6346435546875,
+        "y": 301.78125,
+        "width": 29.769184112548828,
+        "height": 3.1009347438812256,
+        "right": 802.4038276672363,
+        "bottom": 304.8821847438812
+      },
+      "visibleBounds": {
+        "x": 772.6346435546875,
+        "y": 285.8334655761719,
+        "width": 29.769184112548828,
+        "height": 19.04871916770935,
+        "right": 802.4038276672363,
+        "bottom": 304.8821847438812
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-24",
+      "name": "Save draft to editor",
+      "section": "4. Validate and preview a draft",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 817.2884521484375,
+        "y": 285.8334655761719,
+        "width": 14.884626388549805,
+        "height": 14.88460922241211,
+        "right": 832.1730785369873,
+        "bottom": 300.718074798584
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 809.8461303710938,
+        "y": 301.78125,
+        "width": 29.76925277709961,
+        "height": 3.1009347438812256,
+        "right": 839.6153831481934,
+        "bottom": 304.8821847438812
+      },
+      "visibleBounds": {
+        "x": 809.8461303710938,
+        "y": 285.8334655761719,
+        "width": 29.76925277709961,
+        "height": 19.04871916770935,
+        "right": 839.6153831481934,
+        "bottom": 304.8821847438812
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-25",
+      "name": "Draft and credit quote",
+      "section": "4. Validate and preview a draft",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 740.3846435546875,
+        "y": 323.0450134277344,
+        "width": 14.884556770324709,
+        "height": 14.884592056274414,
+        "right": 755.2692003250122,
+        "bottom": 337.9296054840088
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 732.9423217773438,
+        "y": 338.9927978515625,
+        "width": 29.769184112548828,
+        "height": 3.1009697914123535,
+        "right": 762.7115058898926,
+        "bottom": 342.09376764297485
+      },
+      "visibleBounds": {
+        "x": 732.9423217773438,
+        "y": 323.0450134277344,
+        "width": 29.769184112548828,
+        "height": 19.04875421524048,
+        "right": 762.7115058898926,
+        "bottom": 342.09376764297485
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-26",
+      "name": "Mark submission pending",
+      "section": "5. Submit and checkpoint",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 276.48077392578125,
+        "y": 422.2757568359375,
+        "width": 14.88460922241211,
+        "height": 14.884626388549805,
+        "right": 291.36538314819336,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 269.0384521484375,
+        "y": 438.22357177734375,
+        "width": 29.76923561096191,
+        "height": 6.201904773712158,
+        "right": 298.8076877593994,
+        "bottom": 444.4254765510559
+      },
+      "visibleBounds": {
+        "x": 269.0384521484375,
+        "y": 422.2757568359375,
+        "width": 29.769235610961914,
+        "height": 22.149719715118408,
+        "right": 298.8076877593994,
+        "bottom": 444.4254765510559
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-27",
+      "name": "Persist submission intent",
+      "section": "5. Submit and checkpoint",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 313.69232177734375,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 328.57694816589355,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 306.25,
+        "y": 438.22357177734375,
+        "width": 29.76921844482422,
+        "height": 3.1009347438812256,
+        "right": 336.0192184448242,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 306.25,
+        "y": 422.2757568359375,
+        "width": 29.76921844482422,
+        "height": 19.048749685287476,
+        "right": 336.0192184448242,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-28",
+      "name": "Submit render once",
+      "section": "5. Submit and checkpoint",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 353.3846435546875,
+        "y": 422.2757568359375,
+        "width": 14.884592056274414,
+        "height": 14.884626388549805,
+        "right": 368.2692356109619,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 345.94232177734375,
+        "y": 438.22357177734375,
+        "width": 29.76921844482422,
+        "height": 3.1009347438812256,
+        "right": 375.71154022216797,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 345.94232177734375,
+        "y": 422.2757568359375,
+        "width": 29.76921844482422,
+        "height": 19.048749685287476,
+        "right": 375.71154022216797,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-29",
+      "name": "Capture accepted job",
+      "section": "5. Submit and checkpoint",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 276.48077392578125,
+        "y": 457.0065002441406,
+        "width": 14.88460922241211,
+        "height": 14.884626388549805,
+        "right": 291.36538314819336,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 269.0384521484375,
+        "y": 472.954345703125,
+        "width": 29.76923561096191,
+        "height": 3.1009697914123535,
+        "right": 298.8076877593994,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 269.0384521484375,
+        "y": 457.0065002441406,
+        "width": 29.769235610961914,
+        "height": 19.04881525039673,
+        "right": 298.8076877593994,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-30",
+      "name": "Persist accepted job",
+      "section": "5. Submit and checkpoint",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 313.69232177734375,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 328.57694816589355,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 306.25,
+        "y": 472.954345703125,
+        "width": 29.76921844482422,
+        "height": 3.1009697914123535,
+        "right": 336.0192184448242,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 306.25,
+        "y": 457.0065002441406,
+        "width": 29.76921844482422,
+        "height": 19.04881525039673,
+        "right": 336.0192184448242,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-31",
+      "name": "Poll saved job context",
+      "section": "5. Submit and checkpoint",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 353.3846435546875,
+        "y": 457.0065002441406,
+        "width": 14.884592056274414,
+        "height": 14.884626388549805,
+        "right": 368.2692356109619,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 345.94232177734375,
+        "y": 472.954345703125,
+        "width": 29.76921844482422,
+        "height": 3.1009697914123535,
+        "right": 375.71154022216797,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 345.94232177734375,
+        "y": 457.0065002441406,
+        "width": 29.76921844482422,
+        "height": 19.04881525039673,
+        "right": 375.71154022216797,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-32",
+      "name": "Wait for completed render",
+      "section": "6. Retain completed media",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 430.2884521484375,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 445.1730785369873,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 422.84613037109375,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 6.201904773712158,
+        "right": 452.61538314819336,
+        "bottom": 444.4254765510559
+      },
+      "visibleBounds": {
+        "x": 422.84613037109375,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 22.149719715118408,
+        "right": 452.61538314819336,
+        "bottom": 444.4254765510559
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-33",
+      "name": "Video result",
+      "section": "6. Retain completed media",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 469.9807739257813,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 484.8654003143311,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 462.5384521484375,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 3.1009347438812256,
+        "right": 492.3077049255371,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 462.5384521484375,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 19.048749685287476,
+        "right": 492.3077049255371,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-34",
+      "name": "Persist completed media",
+      "section": "6. Retain completed media",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 507.19232177734375,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 522.0769481658936,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 499.7500305175781,
+        "y": 438.22357177734375,
+        "width": 29.76921844482422,
+        "height": 3.1009347438812256,
+        "right": 529.5192489624023,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 499.7500305175781,
+        "y": 422.2757568359375,
+        "width": 29.76921844482422,
+        "height": 19.048749685287476,
+        "right": 529.5192489624023,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-35",
+      "name": "Delivery context",
+      "section": "6. Retain completed media",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 430.2884521484375,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 445.1730785369873,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 422.84613037109375,
+        "y": 472.954345703125,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 452.61538314819336,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 422.84613037109375,
+        "y": 457.0065002441406,
+        "width": 29.76925277709961,
+        "height": 19.04881525039673,
+        "right": 452.61538314819336,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-36",
+      "name": "Find existing delivery",
+      "section": "7. Deliver a private asset",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 586.5769653320312,
+        "y": 422.2757568359375,
+        "width": 14.884556770324709,
+        "height": 14.884626388549805,
+        "right": 601.461522102356,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 579.1346435546875,
+        "y": 438.22357177734375,
+        "width": 29.769184112548828,
+        "height": 3.1009347438812256,
+        "right": 608.9038276672363,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 579.1346435546875,
+        "y": 422.2757568359375,
+        "width": 29.769184112548828,
+        "height": 19.048749685287476,
+        "right": 608.9038276672363,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-37",
+      "name": "Reconcile delivery file",
+      "section": "7. Deliver a private asset",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 623.7884521484375,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 638.6730785369873,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 616.3461303710938,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 3.1009347438812256,
+        "right": 646.1153831481934,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 616.3461303710938,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 19.048749685287476,
+        "right": 646.1153831481934,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-38",
+      "name": "Delivery file exists?",
+      "section": "7. Deliver a private asset",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 663.4807739257812,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 678.365400314331,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 656.0384521484375,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 3.1009347438812256,
+        "right": 685.8077049255371,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 656.0384521484375,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 19.048749685287476,
+        "right": 685.8077049255371,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-39",
+      "name": "Download delivery media",
+      "section": "7. Deliver a private asset",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 586.5769653320312,
+        "y": 457.0065002441406,
+        "width": 14.884556770324709,
+        "height": 14.884626388549805,
+        "right": 601.461522102356,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 579.1346435546875,
+        "y": 472.954345703125,
+        "width": 29.769184112548828,
+        "height": 3.1009697914123535,
+        "right": 608.9038276672363,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 579.1346435546875,
+        "y": 457.0065002441406,
+        "width": 29.769184112548828,
+        "height": 19.04881525039673,
+        "right": 608.9038276672363,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-40",
+      "name": "Check downloaded media",
+      "section": "7. Deliver a private asset",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 623.7884521484375,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 638.6730785369873,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 616.3461303710938,
+        "y": 472.954345703125,
+        "width": 29.76925277709961,
+        "height": 6.201939582824707,
+        "right": 646.1153831481934,
+        "bottom": 479.1562852859497
+      },
+      "visibleBounds": {
+        "x": 616.3461303710938,
+        "y": 457.0065002441406,
+        "width": 29.76925277709961,
+        "height": 22.149785041809082,
+        "right": 646.1153831481934,
+        "bottom": 479.1562852859497
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-41",
+      "name": "Upload private review video",
+      "section": "7. Deliver a private asset",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 663.4807739257812,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 678.365400314331,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 656.0384521484375,
+        "y": 472.954345703125,
+        "width": 29.76925277709961,
+        "height": 6.201939582824707,
+        "right": 685.8077049255371,
+        "bottom": 479.1562852859497
+      },
+      "visibleBounds": {
+        "x": 656.0384521484375,
+        "y": 457.0065002441406,
+        "width": 29.76925277709961,
+        "height": 22.149785041809082,
+        "right": 685.8077049255371,
+        "bottom": 479.1562852859497
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-42",
+      "name": "Remember delivery",
+      "section": "8. Protect the business source",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 740.3846435546875,
+        "y": 422.2757568359375,
+        "width": 14.884556770324709,
+        "height": 14.884626388549805,
+        "right": 755.2692003250122,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 732.9423217773438,
+        "y": 438.22357177734375,
+        "width": 29.769184112548828,
+        "height": 3.1009347438812256,
+        "right": 762.7115058898926,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 732.9423217773438,
+        "y": 422.2757568359375,
+        "width": 29.769184112548828,
+        "height": 19.048749685287476,
+        "right": 762.7115058898926,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-43",
+      "name": "Persist delivery file",
+      "section": "8. Protect the business source",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 780.0769653320312,
+        "y": 422.2757568359375,
+        "width": 14.884556770324709,
+        "height": 14.884626388549805,
+        "right": 794.961522102356,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 772.6346435546875,
+        "y": 438.22357177734375,
+        "width": 29.769184112548828,
+        "height": 3.1009347438812256,
+        "right": 802.4038276672363,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 772.6346435546875,
+        "y": 422.2757568359375,
+        "width": 29.769184112548828,
+        "height": 19.048749685287476,
+        "right": 802.4038276672363,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-44",
+      "name": "Recheck source revision",
+      "section": "8. Protect the business source",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 817.2884521484375,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 832.1730785369873,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 809.8461303710938,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 3.1009347438812256,
+        "right": 839.6153831481934,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 809.8461303710938,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 19.048749685287476,
+        "right": 839.6153831481934,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-45",
+      "name": "Recheck related content",
+      "section": "8. Protect the business source",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 740.3846435546875,
+        "y": 457.0065002441406,
+        "width": 14.884556770324709,
+        "height": 14.884626388549805,
+        "right": 755.2692003250122,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 732.9423217773438,
+        "y": 472.954345703125,
+        "width": 29.769184112548828,
+        "height": 3.1009697914123535,
+        "right": 762.7115058898926,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 732.9423217773438,
+        "y": 457.0065002441406,
+        "width": 29.769184112548828,
+        "height": 19.04881525039673,
+        "right": 762.7115058898926,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-46",
+      "name": "Prepare writeback check",
+      "section": "8. Protect the business source",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 780.0769653320312,
+        "y": 457.0065002441406,
+        "width": 14.884556770324709,
+        "height": 14.884626388549805,
+        "right": 794.961522102356,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 772.6346435546875,
+        "y": 472.954345703125,
+        "width": 29.769184112548828,
+        "height": 3.1009697914123535,
+        "right": 802.4038276672363,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 772.6346435546875,
+        "y": 457.0065002441406,
+        "width": 29.769184112548828,
+        "height": 19.04881525039673,
+        "right": 802.4038276672363,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-47",
+      "name": "Fingerprint source before writeback",
+      "section": "8. Protect the business source",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 817.2884521484375,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 832.1730785369873,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 809.8461303710938,
+        "y": 472.954345703125,
+        "width": 29.76925277709961,
+        "height": 6.201939582824707,
+        "right": 839.6153831481934,
+        "bottom": 479.1562852859497
+      },
+      "visibleBounds": {
+        "x": 809.8461303710938,
+        "y": 457.0065002441406,
+        "width": 29.76925277709961,
+        "height": 22.149785041809082,
+        "right": 839.6153831481934,
+        "bottom": 479.1562852859497
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-48",
+      "name": "Protect source writeback",
+      "section": "8. Protect the business source",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 740.3846435546875,
+        "y": 494.2180786132813,
+        "width": 14.884556770324709,
+        "height": 14.884626388549805,
+        "right": 755.2692003250122,
+        "bottom": 509.1027050018311
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 732.9423217773438,
+        "y": 510.1658630371094,
+        "width": 29.769184112548828,
+        "height": 3.1009697914123535,
+        "right": 762.7115058898926,
+        "bottom": 513.2668328285217
+      },
+      "visibleBounds": {
+        "x": 732.9423217773438,
+        "y": 494.2180786132813,
+        "width": 29.769184112548828,
+        "height": 19.04875421524042,
+        "right": 762.7115058898926,
+        "bottom": 513.2668328285217
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-49",
+      "name": "Update business register",
+      "section": "9. Verify the handoff receipt",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 896.673095703125,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 911.5577220916748,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 889.2307739257812,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 3.1009347438812256,
+        "right": 919.0000267028809,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 889.2307739257812,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 19.048749685287476,
+        "right": 919.0000267028809,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-50",
+      "name": "Read back delivery receipt",
+      "section": "9. Verify the handoff receipt",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 933.8846435546876,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 948.7692699432374,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 926.4423828125,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 6.201904773712158,
+        "right": 956.2116355895996,
+        "bottom": 444.4254765510559
+      },
+      "visibleBounds": {
+        "x": 926.4423828125,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 22.149719715118408,
+        "right": 956.2116355895996,
+        "bottom": 444.4254765510559
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-51",
+      "name": "Read related receipt content",
+      "section": "9. Verify the handoff receipt",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 973.5769653320312,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 988.461591720581,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 966.1346435546876,
+        "y": 438.22357177734375,
+        "width": 29.769184112548828,
+        "height": 6.201904773712158,
+        "right": 995.9038276672364,
+        "bottom": 444.4254765510559
+      },
+      "visibleBounds": {
+        "x": 966.1346435546876,
+        "y": 422.2757568359375,
+        "width": 29.769184112548828,
+        "height": 22.149719715118408,
+        "right": 995.9038276672364,
+        "bottom": 444.4254765510559
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-52",
+      "name": "Prepare receipt check",
+      "section": "9. Verify the handoff receipt",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 896.673095703125,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 911.5577220916748,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 889.2307739257812,
+        "y": 472.954345703125,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 919.0000267028809,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 889.2307739257812,
+        "y": 457.0065002441406,
+        "width": 29.76925277709961,
+        "height": 19.04881525039673,
+        "right": 919.0000267028809,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-53",
+      "name": "Fingerprint delivery receipt",
+      "section": "9. Verify the handoff receipt",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 933.8846435546876,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 948.7692699432374,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 926.4423828125,
+        "y": 472.954345703125,
+        "width": 29.76925277709961,
+        "height": 6.201939582824707,
+        "right": 956.2116355895996,
+        "bottom": 479.1562852859497
+      },
+      "visibleBounds": {
+        "x": 926.4423828125,
+        "y": 457.0065002441406,
+        "width": 29.76925277709961,
+        "height": 22.149785041809082,
+        "right": 956.2116355895996,
+        "bottom": 479.1562852859497
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-54",
+      "name": "Mark delivered",
+      "section": "9. Verify the handoff receipt",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 973.5769653320312,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 988.461591720581,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 966.1346435546876,
+        "y": 472.954345703125,
+        "width": 29.769184112548828,
+        "height": 3.1009697914123535,
+        "right": 995.9038276672364,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 966.1346435546876,
+        "y": 457.0065002441406,
+        "width": 29.769184112548828,
+        "height": 19.04881525039673,
+        "right": 995.9038276672364,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-55",
+      "name": "Persist delivered outcome",
+      "section": "10. Review the recorded outcome",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 1050.4808349609375,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 1065.3654613494873,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 1043.0384521484375,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 6.201904773712158,
+        "right": 1072.807704925537,
+        "bottom": 444.4254765510559
+      },
+      "visibleBounds": {
+        "x": 1043.0384521484375,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 22.149719715118408,
+        "right": 1072.807704925537,
+        "bottom": 444.4254765510559
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-56",
+      "name": "Business outcome",
+      "section": "10. Review the recorded outcome",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 1090.173095703125,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 1105.0577220916748,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 1082.7308349609375,
+        "y": 438.22357177734375,
+        "width": 29.76925277709961,
+        "height": 3.1009347438812256,
+        "right": 1112.500087738037,
+        "bottom": 441.324506521225
+      },
+      "visibleBounds": {
+        "x": 1082.7308349609375,
+        "y": 422.2757568359375,
+        "width": 29.76925277709961,
+        "height": 19.048749685287476,
+        "right": 1112.500087738037,
+        "bottom": 441.324506521225
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-57",
+      "name": "Completed video available?",
+      "section": "10. Review the recorded outcome",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 1127.3846435546875,
+        "y": 422.2757568359375,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 1142.2692699432373,
+        "bottom": 437.1603832244873
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 1119.9423828125,
+        "y": 438.22357177734375,
+        "width": 29.769184112548828,
+        "height": 6.201904773712158,
+        "right": 1149.7115669250488,
+        "bottom": 444.4254765510559
+      },
+      "visibleBounds": {
+        "x": 1119.9423828125,
+        "y": 422.2757568359375,
+        "width": 29.769184112548828,
+        "height": 22.149719715118408,
+        "right": 1149.7115669250488,
+        "bottom": 444.4254765510559
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    },
+    {
+      "id": "zvid-business-35-58",
+      "name": "Watch video",
+      "section": "10. Review the recorded outcome",
+      "membershipCount": 1,
+      "bodyRect": {
+        "x": 1050.4808349609375,
+        "y": 457.0065002441406,
+        "width": 14.884626388549805,
+        "height": 14.884626388549805,
+        "right": 1065.3654613494873,
+        "bottom": 471.89112663269043
+      },
+      "bodyCovered": true,
+      "labelRect": {
+        "x": 1043.0384521484375,
+        "y": 472.954345703125,
+        "width": 29.76925277709961,
+        "height": 3.1009697914123535,
+        "right": 1072.807704925537,
+        "bottom": 476.05531549453735
+      },
+      "visibleBounds": {
+        "x": 1043.0384521484375,
+        "y": 457.0065002441406,
+        "width": 29.76925277709961,
+        "height": 19.04881525039673,
+        "right": 1072.807704925537,
+        "bottom": 476.05531549453735
+      },
+      "labelCovered": true,
+      "labelSourceCapturedAt": "2026-10-01T12:35:19.360Z",
+      "labelSourceScale": 0.15504810238672678
+    }
+  ],
+  "errors": [],
+  "overviewPng": {
+    "path": "publication/canvas/normalized/day-35-overview-fdfc8dd1c5c1.png",
+    "sha256": "8e00cb5edc143872ef3348a042842aba4b23eff5c6ba87af33dc8c76dca009cb",
+    "bytes": 581208,
+    "width": 1280,
+    "height": 720,
+    "originalCapture": "publication/canvas/day-35-overview.png",
+    "originalSha256": "fdfc8dd1c5c1773fdb2ce8c9b2ee77a57462f63ef5a21e3b7f8ea77ad789f978",
+    "formatConverted": true
+  },
+  "readableOverview": true,
+  "representativeSectionsReadable": true,
+  "representativeSections": [
+    {
+      "noteName": "1. Configure and read saved state",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-1-8d5f8a94d877.png",
+        "sha256": "cba517275b7a4a311ce56a41dbdf7c3b7da1a386b4293c5ba63055cfc0d1b2c7",
+        "bytes": 347456,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-1.png",
+        "originalSha256": "8d5f8a94d877aaa535f19cd724a28d473862de270e89332de956f58314c3123d",
+        "formatConverted": true
+      },
+      "bottomRequired": false,
+      "bottomPng": null,
+      "bottomReadable": false,
+      "readable": true
+    },
+    {
+      "noteName": "2. Join and qualify a useful brief",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-2-a1970656f6c1.png",
+        "sha256": "6dc458fc75c895867063de0830feefee91c23bed7bd26f9e3b750d83989ed0fb",
+        "bytes": 272342,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-2.png",
+        "originalSha256": "a1970656f6c1b8bc06788ad62804a07866fd73dc180b78348b290c468fee0256",
+        "formatConverted": true
+      },
+      "bottomRequired": true,
+      "bottomPng": {
+        "path": "publication/canvas/normalized/day-31-section-2-bottom-1827e4b05c1d.png",
+        "sha256": "9ae4e09003b8216ba934289560a4212ce91c593f505b2f6803d2a2aabdf36f7f",
+        "bytes": 195287,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-2-bottom.png",
+        "originalSha256": "1827e4b05c1d90e8a11b107bf219e577b080f6325e993ba8e9f42fff1ef89b71",
+        "formatConverted": true
+      },
+      "bottomReadable": true,
+      "readable": true
+    },
+    {
+      "noteName": "3. Recover durable state",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-3-79a68b25e311.png",
+        "sha256": "f96d7ae962e72e06f937794d8a512bec47403562b9c644fab371fb246d49ee50",
+        "bytes": 289885,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-3.png",
+        "originalSha256": "79a68b25e311bf0a071fce2eef3f75fdd274da6449529f728df884762456d651",
+        "formatConverted": true
+      },
+      "bottomRequired": false,
+      "bottomPng": null,
+      "bottomReadable": false,
+      "readable": true
+    },
+    {
+      "noteName": "4. Validate and preview a draft",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-4-02c097537af1.png",
+        "sha256": "f61f967846961d0d644596fcbab4afbcb95d45a93f44f3c45ef121ff0b6d9784",
+        "bytes": 299798,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-4.png",
+        "originalSha256": "02c097537af19a017646ddd70606074e741805e862ee44283458be0baa0aca91",
+        "formatConverted": true
+      },
+      "bottomRequired": true,
+      "bottomPng": {
+        "path": "publication/canvas/normalized/day-31-section-4-bottom-009624a2aba9.png",
+        "sha256": "2d58e13cdac1d503e9196bfc45b88ca1721c933a46eaac0ea0f6d1293a1a3671",
+        "bytes": 170429,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-4-bottom.png",
+        "originalSha256": "009624a2aba91298f1656ebd217dc0e5e8d876238840bcf4f4e182dce19d446f",
+        "formatConverted": true
+      },
+      "bottomReadable": true,
+      "readable": true
+    },
+    {
+      "noteName": "5. Submit and checkpoint",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-5-702198e25f9f.png",
+        "sha256": "ec5e1694822e885f88840ad421e3d26a443b6329ddd3a7b79fd9e18a1d696364",
+        "bytes": 283931,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-5.png",
+        "originalSha256": "702198e25f9f71e33a826b4c4ea210e133a75f758a1b1323d57c93e8a558d8fe",
+        "formatConverted": true
+      },
+      "bottomRequired": false,
+      "bottomPng": null,
+      "bottomReadable": false,
+      "readable": true
+    },
+    {
+      "noteName": "6. Retain completed media",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-6-7e155aed7c65.png",
+        "sha256": "1a2cb6c1ce5030eebc57a35de288fe1f605f62542f7871d62a2a76ff3bd1a575",
+        "bytes": 260973,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-6.png",
+        "originalSha256": "7e155aed7c65398142a027d80806e985fdb40fa8e6a2b29ab0ca391c5c39060f",
+        "formatConverted": true
+      },
+      "bottomRequired": false,
+      "bottomPng": null,
+      "bottomReadable": false,
+      "readable": true
+    },
+    {
+      "noteName": "7. Deliver a private asset",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-7-e114ec8d10c5.png",
+        "sha256": "d6fc88af15cec3cd5d044f142c71f0d481c1a01a5dd207978d02d422b7a763d5",
+        "bytes": 320296,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-7.png",
+        "originalSha256": "e114ec8d10c5f5ab5f3e4396cfc91e7a6e0f8c75ce5d60a3d912cb543fceca2b",
+        "formatConverted": true
+      },
+      "bottomRequired": false,
+      "bottomPng": null,
+      "bottomReadable": false,
+      "readable": true
+    },
+    {
+      "noteName": "8. Protect the business source",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-8-f03577b06cdc.png",
+        "sha256": "9cbf683baa61bc2f73ab643cae4458251e80b74d244dbba3a81b722179df4432",
+        "bytes": 309173,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-8.png",
+        "originalSha256": "f03577b06cdcf5e62ea2549f9e70c9e9033b6d6fc871db1b72ccf2dd8fedb646",
+        "formatConverted": true
+      },
+      "bottomRequired": true,
+      "bottomPng": {
+        "path": "publication/canvas/normalized/day-31-section-8-bottom-a587b2666eee.png",
+        "sha256": "09bc41f76e98dc4bff472a6d14625216e740576a45593e0ce0573111d2672ff2",
+        "bytes": 185326,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-8-bottom.png",
+        "originalSha256": "a587b2666eee2809a7c6478f9bec226dc83b3e13eb65e92fd376e19b97ccf887",
+        "formatConverted": true
+      },
+      "bottomReadable": true,
+      "readable": true
+    },
+    {
+      "noteName": "9. Verify the handoff receipt",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-9-cc1d07e75cc0.png",
+        "sha256": "0fe7d0952a1df6f4b67f395af88dbb87ccc04f90b572391f91775446a1d378e0",
+        "bytes": 285234,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-9.png",
+        "originalSha256": "cc1d07e75cc0b15a36ffbe9a7b4861995e147f582b56a52d4ad81577bc74007c",
+        "formatConverted": true
+      },
+      "bottomRequired": false,
+      "bottomPng": null,
+      "bottomReadable": false,
+      "readable": true
+    },
+    {
+      "noteName": "10. Review the recorded outcome",
+      "png": {
+        "path": "publication/canvas/normalized/day-31-section-10-abbf2eb7ac89.png",
+        "sha256": "5fa04c46a783348a67030a1e2788f0b1af72aa58cd8aa6d51a62268135dffe84",
+        "bytes": 258742,
+        "width": 1280,
+        "height": 720,
+        "originalCapture": "publication/canvas/day-31-section-10.png",
+        "originalSha256": "abbf2eb7ac89a80f4f38962a40db27276cabfa944a24fd464cbec9055a24c0a6",
+        "formatConverted": true
+      },
+      "bottomRequired": false,
+      "bottomPng": null,
+      "bottomReadable": false,
+      "readable": true
+    }
+  ],
+  "fitPng": {
+    "path": "publication/canvas/normalized/day-35-fit-b20083a2f5c4.png",
+    "sha256": "5b76eb28e0667af8ab7d76fbcb440e158f5879132f7d256b187cf33786014dbf",
+    "bytes": 280038,
+    "width": 1280,
+    "height": 720,
+    "originalCapture": "publication/canvas/day-35-fit.png",
+    "originalSha256": "b20083a2f5c464be792b6febec517f45ffba8f7c5d13cac93c4a8305399f6023",
+    "formatConverted": true
+  },
+  "fitVisuallyInspected": true,
+  "overlap": [],
+  "passed": true,
+  "rawDom": {
+    "path": "publication/canvas/day-35-dom.json",
+    "sha256": "de5185d174c0d5033b517652ea47658ea468ada2b84d06dc7ec3e87de7da71eb"
+  },
+  "labelDom": []
+}

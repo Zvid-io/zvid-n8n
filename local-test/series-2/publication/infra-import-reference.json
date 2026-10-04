@@ -1,0 +1,276 @@
+{
+  "generatedAt": "2026-10-01T13:29:18.779Z",
+  "normalization": "Ignore sticky notes, node positions, credential bindings and display names; resolve connection names to node IDs; normalize QA workbook/folder Config IDs to blanks. Normalize omitted editor-added values to exactly the verified installed native defaults in infra-native-defaults-evidence.json. Retain explicit non-default parameters, code, execution settings, connections and pinData.",
+  "workflows": [
+    {
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "canonicalPath": "workflows/zvid-release-notes-video.json",
+      "functionalHash": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 32,
+      "workflowId": "ZvidSeries2Day32",
+      "canonicalPath": "workflows/zvid-procedure-tutorial-video.json",
+      "functionalHash": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 33,
+      "workflowId": "ZvidSeries2Day33",
+      "canonicalPath": "workflows/zvid-plan-comparison-video.json",
+      "functionalHash": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 34,
+      "workflowId": "ZvidSeries2Day34",
+      "canonicalPath": "workflows/zvid-incident-timeline-video.json",
+      "functionalHash": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 35,
+      "workflowId": "ZvidSeries2Day35",
+      "canonicalPath": "workflows/zvid-maintenance-notice-video.json",
+      "functionalHash": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 36,
+      "workflowId": "ZvidSeries2Day36",
+      "canonicalPath": "workflows/zvid-order-progress-video.json",
+      "functionalHash": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 37,
+      "workflowId": "ZvidSeries2Day37",
+      "canonicalPath": "workflows/zvid-product-bundle-savings-video.json",
+      "functionalHash": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 38,
+      "workflowId": "ZvidSeries2Day38",
+      "canonicalPath": "workflows/zvid-delivery-delay-video.json",
+      "functionalHash": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 39,
+      "workflowId": "ZvidSeries2Day39",
+      "canonicalPath": "workflows/zvid-appointment-preparation-video.json",
+      "functionalHash": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 40,
+      "workflowId": "ZvidSeries2Day40",
+      "canonicalPath": "workflows/zvid-return-instructions-video.json",
+      "functionalHash": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 41,
+      "workflowId": "ZvidSeries2Day41",
+      "canonicalPath": "workflows/zvid-employee-first-week-video.json",
+      "functionalHash": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 42,
+      "workflowId": "ZvidSeries2Day42",
+      "canonicalPath": "workflows/zvid-interview-agenda-video.json",
+      "functionalHash": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 43,
+      "workflowId": "ZvidSeries2Day43",
+      "canonicalPath": "workflows/zvid-course-roadmap-video.json",
+      "functionalHash": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 44,
+      "workflowId": "ZvidSeries2Day44",
+      "canonicalPath": "workflows/zvid-safety-briefing-video.json",
+      "functionalHash": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 45,
+      "workflowId": "ZvidSeries2Day45",
+      "canonicalPath": "workflows/zvid-training-completion-video.json",
+      "functionalHash": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 46,
+      "workflowId": "ZvidSeries2Day46",
+      "canonicalPath": "workflows/zvid-meeting-action-brief-video.json",
+      "functionalHash": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 47,
+      "workflowId": "ZvidSeries2Day47",
+      "canonicalPath": "workflows/zvid-equipment-maintenance-video.json",
+      "functionalHash": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 48,
+      "workflowId": "ZvidSeries2Day48",
+      "canonicalPath": "workflows/zvid-inventory-replenishment-video.json",
+      "functionalHash": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 49,
+      "workflowId": "ZvidSeries2Day49",
+      "canonicalPath": "workflows/zvid-delivery-route-brief-video.json",
+      "functionalHash": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 50,
+      "workflowId": "ZvidSeries2Day50",
+      "canonicalPath": "workflows/zvid-tender-checklist-video.json",
+      "functionalHash": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 51,
+      "workflowId": "ZvidSeries2Day51",
+      "canonicalPath": "workflows/zvid-travel-itinerary-video.json",
+      "functionalHash": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 52,
+      "workflowId": "ZvidSeries2Day52",
+      "canonicalPath": "workflows/zvid-hotel-arrival-guide-video.json",
+      "functionalHash": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 53,
+      "workflowId": "ZvidSeries2Day53",
+      "canonicalPath": "workflows/zvid-pet-adoption-video.json",
+      "functionalHash": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 54,
+      "workflowId": "ZvidSeries2Day54",
+      "canonicalPath": "workflows/zvid-volunteer-shift-video.json",
+      "functionalHash": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 55,
+      "workflowId": "ZvidSeries2Day55",
+      "canonicalPath": "workflows/zvid-donation-impact-video.json",
+      "functionalHash": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 56,
+      "workflowId": "ZvidSeries2Day56",
+      "canonicalPath": "workflows/zvid-survey-results-video.json",
+      "functionalHash": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 57,
+      "workflowId": "ZvidSeries2Day57",
+      "canonicalPath": "workflows/zvid-fundraiser-progress-video.json",
+      "functionalHash": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 58,
+      "workflowId": "ZvidSeries2Day58",
+      "canonicalPath": "workflows/zvid-before-after-case-study-video.json",
+      "functionalHash": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 59,
+      "workflowId": "ZvidSeries2Day59",
+      "canonicalPath": "workflows/zvid-milestone-roadmap-video.json",
+      "functionalHash": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    },
+    {
+      "day": 60,
+      "workflowId": "ZvidSeries2Day60",
+      "canonicalPath": "workflows/zvid-recipe-cooking-guide-video.json",
+      "functionalHash": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648",
+      "functionalNodeCount": 58,
+      "nodeCount": 69,
+      "canonicalCredentialFree": true
+    }
+  ]
+}

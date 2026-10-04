@@ -1,0 +1,322 @@
+{
+  "name": "S2 D49 - Tonight Available Tables",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "durationMode": "fixed",
+  "duration": 20,
+  "backgroundColor": "#1D1710",
+  "variables": {
+    "paper": "#1D1710",
+    "ink": "#FFF1D9",
+    "accent": "#D7A86C",
+    "headlineFont": "Prata",
+    "bodyFont": "Inter",
+    "brand": "THE AMBER ROOM",
+    "interiorImage": "https://images.pexels.com/photos/36029879/pexels-photo-36029879.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "tableImage": "https://images.pexels.com/photos/29190272/pexels-photo-29190272.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "heroTitle": "Make room for a good evening",
+    "dateLabel": "Tonight · 01 Oct 2026",
+    "slotOne": "18:30",
+    "partyOne": "Tables for two",
+    "slotTwo": "19:15",
+    "partyTwo": "Tables for four",
+    "slotThree": "20:00",
+    "partyThree": "Tables for two",
+    "availability": "Illustrative slots · check current availability",
+    "cta": "Choose your time. Reserve your table.",
+    "destination": "amber.example/reservations",
+    "terms": "Tables are confirmed only after a completed reservation.",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943377/zvid-series2-unique-music-20261002/day-49-music.mp3",
+    "musicVolume": 0.8
+  },
+  "scenes": [
+    {
+      "id": "evening-arrival",
+      "duration": 5.3,
+      "backgroundColor": "{{paper}}",
+      "transition": "dissolve",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{interiorImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.08
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5.3
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 5.3,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:104px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{heroTitle}}</div><div style=\"font-family:{{bodyFont}};font-size:35px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:29px\">{{dateLabel}}</div>",
+          "position": "custom",
+          "x": 96,
+          "y": 1120,
+          "width": 864,
+          "height": 650,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.3
+        }
+      ]
+    },
+    {
+      "id": "table-experience",
+      "duration": 5.3,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{tableImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.11
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5.3
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 5.3,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">AN EVENING TO SAVOUR</div><div style=\"font-family:{{headlineFont}};font-size:101px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">A table.<br>A little time.<br>A good meal.</div><div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:30px\">{{availability}}</div>",
+          "position": "custom",
+          "x": 96,
+          "y": 1140,
+          "width": 864,
+          "height": 620,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.3
+        }
+      ]
+    },
+    {
+      "id": "available-time-slots",
+      "duration": 5.3,
+      "backgroundColor": "{{paper}}",
+      "transition": "dissolve",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{interiorImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5.3
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 5.3,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{dateLabel}}</div><div style=\"font-family:{{headlineFont}};font-size:86px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">Find your time</div><div style=\"display:flex;width:100%;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,241,217,0.35);height:150px\"><div style=\"font-family:{{headlineFont}};font-size:67px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{slotOne}}</div><div style=\"font-family:{{bodyFont}};font-size:31px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{partyOne}}</div></div><div style=\"display:flex;width:100%;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,241,217,0.35);height:150px\"><div style=\"font-family:{{headlineFont}};font-size:67px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{slotTwo}}</div><div style=\"font-family:{{bodyFont}};font-size:31px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{partyTwo}}</div></div><div style=\"display:flex;width:100%;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,241,217,0.35);height:150px\"><div style=\"font-family:{{headlineFont}};font-size:67px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{slotThree}}</div><div style=\"font-family:{{bodyFont}};font-size:31px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{partyThree}}</div></div><div style=\"font-family:{{bodyFont}};font-size:25px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:26px\">{{availability}}</div>",
+          "position": "custom",
+          "x": 96,
+          "y": 740,
+          "width": 864,
+          "height": 1000,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch",
+            "backgroundColor": "rgba(29,23,16,0.65)",
+            "borderRadius": "14px"
+          },
+          "exitEnd": 5.3
+        }
+      ]
+    },
+    {
+      "id": "reservation-handoff",
+      "duration": 5.3,
+      "backgroundColor": "{{paper}}",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{tableImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.04
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 5.3
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "anchor": "top-left",
+          "track": 1,
+          "exitEnd": 5.3,
+          "style": {
+            "background": "linear-gradient(180deg,rgba(15,25,20,0.13) 0%,rgba(15,25,20,0.05) 42%,rgba(15,25,20,0.86) 100%)"
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:97px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{cta}}</div><div style=\"font-family:{{bodyFont}};font-size:35px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:28px\">{{destination}}</div><div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:27px\">{{terms}}</div>",
+          "position": "custom",
+          "x": 96,
+          "y": 1190,
+          "width": 864,
+          "height": 580,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 5.3
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 20,
+      "audioBegin": 0,
+      "audioEnd": 20,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

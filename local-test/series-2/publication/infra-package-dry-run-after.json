@@ -1,0 +1,796 @@
+[
+  {
+    "id": "@zvid/n8n-nodes-zvid@0.1.9",
+    "name": "@zvid/n8n-nodes-zvid",
+    "version": "0.1.9",
+    "size": 2418059,
+    "unpackedSize": 11066647,
+    "shasum": "b53951025360bde57da4955f27d1a68fec57a5f9",
+    "integrity": "sha512-ECIERJtiq3JG1bJEahFbLjtjdkMHP8B6T5jxON6PckvIn9wYUmqP4s29CgH72k95CqVGvjDKHEX1lIwCK+Do0A==",
+    "filename": "zvid-n8n-nodes-zvid-0.1.9.tgz",
+    "files": [
+      {
+        "path": "LICENSE.md",
+        "size": 1061,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 16260,
+        "mode": 420
+      },
+      {
+        "path": "dist/credentials/ZvidApi.credentials.d.ts",
+        "size": 492,
+        "mode": 420
+      },
+      {
+        "path": "dist/credentials/ZvidApi.credentials.js",
+        "size": 1538,
+        "mode": 420
+      },
+      {
+        "path": "dist/credentials/ZvidApi.credentials.js.map",
+        "size": 886,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/GenericFunctions.d.ts",
+        "size": 2197,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/GenericFunctions.js",
+        "size": 11156,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/GenericFunctions.js.map",
+        "size": 10152,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/zvid.light.svg",
+        "size": 2242,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/Zvid.node.d.ts",
+        "size": 164,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/Zvid.node.js",
+        "size": 58628,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/Zvid.node.js.map",
+        "size": 25982,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/Zvid.node.json",
+        "size": 417,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/Zvid/zvid.svg",
+        "size": 2788,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/ZvidTrigger/zvid.light.svg",
+        "size": 2242,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/ZvidTrigger/zvid.svg",
+        "size": 2788,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/ZvidTrigger/ZvidTrigger.node.d.ts",
+        "size": 536,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/ZvidTrigger/ZvidTrigger.node.js",
+        "size": 6933,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/ZvidTrigger/ZvidTrigger.node.js.map",
+        "size": 4665,
+        "mode": 420
+      },
+      {
+        "path": "dist/nodes/ZvidTrigger/ZvidTrigger.node.json",
+        "size": 424,
+        "mode": 420
+      },
+      {
+        "path": "dist/package.json",
+        "size": 3017,
+        "mode": 420
+      },
+      {
+        "path": "dist/tsconfig.tsbuildinfo",
+        "size": 237012,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 2772,
+        "mode": 420
+      },
+      {
+        "path": "workflows/abandoned-cart-video.md",
+        "size": 26845,
+        "mode": 420
+      },
+      {
+        "path": "workflows/appointment-preparation-video.md",
+        "size": 10282,
+        "mode": 420
+      },
+      {
+        "path": "workflows/avatar-outreach-lipsync.md",
+        "size": 7438,
+        "mode": 420
+      },
+      {
+        "path": "workflows/before-after-case-study-video.md",
+        "size": 10296,
+        "mode": 420
+      },
+      {
+        "path": "workflows/birthday-greetings.md",
+        "size": 17397,
+        "mode": 420
+      },
+      {
+        "path": "workflows/blog-content-kit.md",
+        "size": 24976,
+        "mode": 420
+      },
+      {
+        "path": "workflows/blog-to-video.md",
+        "size": 27516,
+        "mode": 420
+      },
+      {
+        "path": "workflows/bulk-catalog-videos.md",
+        "size": 21014,
+        "mode": 420
+      },
+      {
+        "path": "workflows/chat-video-agent.md",
+        "size": 35448,
+        "mode": 420
+      },
+      {
+        "path": "workflows/cold-outreach-videos.md",
+        "size": 31436,
+        "mode": 420
+      },
+      {
+        "path": "workflows/course-roadmap-video.md",
+        "size": 10400,
+        "mode": 420
+      },
+      {
+        "path": "workflows/daily-quote-reels-template-description.md",
+        "size": 1935,
+        "mode": 420
+      },
+      {
+        "path": "workflows/daily-quote-reels.md",
+        "size": 15259,
+        "mode": 420
+      },
+      {
+        "path": "workflows/daily-weather-video.md",
+        "size": 14786,
+        "mode": 420
+      },
+      {
+        "path": "workflows/delivery-delay-video.md",
+        "size": 9933,
+        "mode": 420
+      },
+      {
+        "path": "workflows/delivery-route-brief-video.md",
+        "size": 10436,
+        "mode": 420
+      },
+      {
+        "path": "workflows/donation-impact-video.md",
+        "size": 10179,
+        "mode": 420
+      },
+      {
+        "path": "workflows/employee-first-week-video.md",
+        "size": 10351,
+        "mode": 420
+      },
+      {
+        "path": "workflows/equipment-maintenance-video.md",
+        "size": 10569,
+        "mode": 420
+      },
+      {
+        "path": "workflows/event-countdown-videos.md",
+        "size": 29809,
+        "mode": 420
+      },
+      {
+        "path": "workflows/faceless-shorts-autopilot-template-description.md",
+        "size": 2020,
+        "mode": 420
+      },
+      {
+        "path": "workflows/faceless-shorts-autopilot.md",
+        "size": 17285,
+        "mode": 420
+      },
+      {
+        "path": "workflows/flash-sale-alert.md",
+        "size": 26055,
+        "mode": 420
+      },
+      {
+        "path": "workflows/fundraiser-progress-video.md",
+        "size": 10996,
+        "mode": 420
+      },
+      {
+        "path": "workflows/hotel-arrival-guide-video.md",
+        "size": 11017,
+        "mode": 420
+      },
+      {
+        "path": "workflows/incident-timeline-video.md",
+        "size": 10406,
+        "mode": 420
+      },
+      {
+        "path": "workflows/interview-agenda-video.md",
+        "size": 10266,
+        "mode": 420
+      },
+      {
+        "path": "workflows/inventory-replenishment-video.md",
+        "size": 10583,
+        "mode": 420
+      },
+      {
+        "path": "workflows/kpi-report-video.md",
+        "size": 22699,
+        "mode": 420
+      },
+      {
+        "path": "workflows/maintenance-notice-video.md",
+        "size": 10009,
+        "mode": 420
+      },
+      {
+        "path": "workflows/meeting-action-brief-video.md",
+        "size": 10626,
+        "mode": 420
+      },
+      {
+        "path": "workflows/milestone-roadmap-video.md",
+        "size": 10451,
+        "mode": 420
+      },
+      {
+        "path": "workflows/month-in-review-stats.md",
+        "size": 16001,
+        "mode": 420
+      },
+      {
+        "path": "workflows/no-show-reengagement.md",
+        "size": 28701,
+        "mode": 420
+      },
+      {
+        "path": "workflows/order-progress-video.md",
+        "size": 10075,
+        "mode": 420
+      },
+      {
+        "path": "workflows/pet-adoption-video.md",
+        "size": 10385,
+        "mode": 420
+      },
+      {
+        "path": "workflows/plan-comparison-video.md",
+        "size": 10920,
+        "mode": 420
+      },
+      {
+        "path": "workflows/podcast-audiogram-clips.md",
+        "size": 27203,
+        "mode": 420
+      },
+      {
+        "path": "workflows/procedure-tutorial-video.md",
+        "size": 10406,
+        "mode": 420
+      },
+      {
+        "path": "workflows/product-bundle-savings-video.md",
+        "size": 10466,
+        "mode": 420
+      },
+      {
+        "path": "workflows/proposal-recap-video.md",
+        "size": 28333,
+        "mode": 420
+      },
+      {
+        "path": "workflows/quiz-shorts.md",
+        "size": 15543,
+        "mode": 420
+      },
+      {
+        "path": "workflows/real-estate-listing-video.md",
+        "size": 23208,
+        "mode": 420
+      },
+      {
+        "path": "workflows/recipe-cooking-guide-video.md",
+        "size": 11006,
+        "mode": 420
+      },
+      {
+        "path": "workflows/reddit-story-video.md",
+        "size": 24391,
+        "mode": 420
+      },
+      {
+        "path": "workflows/release-notes-video.md",
+        "size": 10439,
+        "mode": 420
+      },
+      {
+        "path": "workflows/restaurant-weekly-specials.md",
+        "size": 16544,
+        "mode": 420
+      },
+      {
+        "path": "workflows/return-instructions-video.md",
+        "size": 10451,
+        "mode": 420
+      },
+      {
+        "path": "workflows/review-testimonial-video.md",
+        "size": 28936,
+        "mode": 420
+      },
+      {
+        "path": "workflows/safety-briefing-video.md",
+        "size": 10559,
+        "mode": 420
+      },
+      {
+        "path": "workflows/shopify-abandoned-checkout-recovery-template-description.md",
+        "size": 3962,
+        "mode": 420
+      },
+      {
+        "path": "workflows/shopify-abandoned-checkout-recovery.md",
+        "size": 7832,
+        "mode": 420
+      },
+      {
+        "path": "workflows/shopify-catalog-videos-template-description.md",
+        "size": 2356,
+        "mode": 420
+      },
+      {
+        "path": "workflows/shopify-catalog-videos.md",
+        "size": 15934,
+        "mode": 420
+      },
+      {
+        "path": "workflows/shopify-dynamic-product-ad-factory-template-description.md",
+        "size": 20439,
+        "mode": 420
+      },
+      {
+        "path": "workflows/shopify-product-promo.md",
+        "size": 25734,
+        "mode": 420
+      },
+      {
+        "path": "workflows/sports-recap-video.md",
+        "size": 16992,
+        "mode": 420
+      },
+      {
+        "path": "workflows/survey-results-video.md",
+        "size": 10768,
+        "mode": 420
+      },
+      {
+        "path": "workflows/tender-checklist-video.md",
+        "size": 11044,
+        "mode": 420
+      },
+      {
+        "path": "workflows/testimonial-compilation.md",
+        "size": 22263,
+        "mode": 420
+      },
+      {
+        "path": "workflows/training-completion-video.md",
+        "size": 10116,
+        "mode": 420
+      },
+      {
+        "path": "workflows/travel-itinerary-video.md",
+        "size": 10568,
+        "mode": 420
+      },
+      {
+        "path": "workflows/video-to-shorts.md",
+        "size": 25869,
+        "mode": 420
+      },
+      {
+        "path": "workflows/volunteer-shift-video.md",
+        "size": 11049,
+        "mode": 420
+      },
+      {
+        "path": "workflows/weekly-news-roundup.md",
+        "size": 21110,
+        "mode": 420
+      },
+      {
+        "path": "workflows/welcome-video-on-signup.md",
+        "size": 17731,
+        "mode": 420
+      },
+      {
+        "path": "workflows/were-hiring-video.md",
+        "size": 16560,
+        "mode": 420
+      },
+      {
+        "path": "workflows/workout-of-the-day.md",
+        "size": 14673,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-abandoned-cart-video.json",
+        "size": 82574,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-ai-agent.json",
+        "size": 6627,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-appointment-preparation-video.json",
+        "size": 245932,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-avatar-outreach-lipsync.json",
+        "size": 45988,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-before-after-case-study-video.json",
+        "size": 247835,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-birthday-greetings.json",
+        "size": 51247,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-blog-content-kit.json",
+        "size": 77403,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-blog-to-video.json",
+        "size": 81673,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-bulk-catalog-videos.json",
+        "size": 58310,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-chat-video-agent.json",
+        "size": 32147,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-cold-outreach-videos.json",
+        "size": 73428,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-course-roadmap-video.json",
+        "size": 245873,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-daily-quote-reels.json",
+        "size": 37213,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-daily-weather-video.json",
+        "size": 48264,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-delivery-delay-video.json",
+        "size": 245852,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-delivery-route-brief-video.json",
+        "size": 247050,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-donation-impact-video.json",
+        "size": 246954,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-employee-first-week-video.json",
+        "size": 246449,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-equipment-maintenance-video.json",
+        "size": 247502,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-event-countdown-videos.json",
+        "size": 82192,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-faceless-shorts-autopilot.json",
+        "size": 58999,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-flash-sale-alert.json",
+        "size": 94029,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-fundraiser-progress-video.json",
+        "size": 247537,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-hotel-arrival-guide-video.json",
+        "size": 247242,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-incident-timeline-video.json",
+        "size": 246236,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-interview-agenda-video.json",
+        "size": 246828,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-inventory-replenishment-video.json",
+        "size": 247725,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-kpi-report-video.json",
+        "size": 75731,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-maintenance-notice-video.json",
+        "size": 245971,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-meeting-action-brief-video.json",
+        "size": 247002,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-milestone-roadmap-video.json",
+        "size": 246521,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-month-in-review-stats.json",
+        "size": 43165,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-no-show-reengagement.json",
+        "size": 78829,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-order-progress-video.json",
+        "size": 246593,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-pet-adoption-video.json",
+        "size": 245733,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-plan-comparison-video.json",
+        "size": 246749,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-podcast-audiogram-clips.json",
+        "size": 77626,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-procedure-tutorial-video.json",
+        "size": 245727,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-product-bundle-savings-video.json",
+        "size": 247242,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-proposal-recap-video.json",
+        "size": 81602,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-quiz-shorts.json",
+        "size": 43287,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-real-estate-listing-video.json",
+        "size": 77724,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-recipe-cooking-guide-video.json",
+        "size": 247059,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-reddit-story-video.json",
+        "size": 82924,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-release-notes-video.json",
+        "size": 245987,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-restaurant-weekly-specials.json",
+        "size": 41664,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-return-instructions-video.json",
+        "size": 246286,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-review-testimonial-video.json",
+        "size": 84154,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-safety-briefing-video.json",
+        "size": 246296,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-shopify-abandoned-checkout-recovery.json",
+        "size": 95145,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-shopify-catalog-videos.json",
+        "size": 74050,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-shopify-dynamic-product-ad-factory.json",
+        "size": 56002,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-shopify-product-promo.json",
+        "size": 72451,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-sports-recap-video.json",
+        "size": 50944,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-survey-results-video.json",
+        "size": 246581,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-tender-checklist-video.json",
+        "size": 247012,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-testimonial-compilation.json",
+        "size": 78099,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-training-completion-video.json",
+        "size": 246977,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-travel-itinerary-video.json",
+        "size": 247412,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-video-to-shorts.json",
+        "size": 67652,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-volunteer-shift-video.json",
+        "size": 247957,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-weekly-news-roundup.json",
+        "size": 77109,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-welcome-video-on-signup.json",
+        "size": 41008,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-were-hiring-video.json",
+        "size": 44673,
+        "mode": 420
+      },
+      {
+        "path": "workflows/zvid-workout-of-the-day.json",
+        "size": 38957,
+        "mode": 420
+      }
+    ],
+    "entryCount": 156,
+    "bundled": []
+  }
+]

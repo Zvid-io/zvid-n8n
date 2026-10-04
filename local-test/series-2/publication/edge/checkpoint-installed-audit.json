@@ -1,0 +1,566 @@
+{
+  "capturedAt": "2026-10-01T13:51:44.991Z",
+  "readOnly": true,
+  "noCredentialsRead": true,
+  "helperCount": 2,
+  "canonicalCount": 30,
+  "passed": true,
+  "helpers": [
+    {
+      "workflowId": "ZvidSeries2PubCheckpointAccepted",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubCheckpointAccepted",
+      "name": "QA checkpoint all 30 synthetic ledgers as accepted",
+      "found": true,
+      "inactive": true,
+      "functionalSha256": "acd58aa7fe0fd7ba42fa74856d795dad4a23fef2263551b852e8a52ee10c09b9",
+      "expectedFunctionalSha256": "acd58aa7fe0fd7ba42fa74856d795dad4a23fef2263551b852e8a52ee10c09b9",
+      "nativeOnly": true,
+      "readCount": 30,
+      "writeCount": 30,
+      "syntheticRevisionByDay": {
+        "31": "r1",
+        "32": "r1",
+        "33": "r1",
+        "34": "r1",
+        "35": "r1",
+        "36": "r1",
+        "37": "r1",
+        "38": "r1",
+        "39": "r1",
+        "40": "r1",
+        "41": "r1",
+        "42": "r1",
+        "43": "r1",
+        "44": "r1",
+        "45": "r1",
+        "46": "r1",
+        "47": "r1",
+        "48": "r1",
+        "49": "r1",
+        "50": "r2",
+        "51": "r1",
+        "52": "r1",
+        "53": "r1",
+        "54": "r1",
+        "55": "r1",
+        "56": "r1",
+        "57": "r1",
+        "58": "r1",
+        "59": "r1",
+        "60": "r1"
+      },
+      "dailyRequestPeriods": [
+        "2026-10-01"
+      ],
+      "qaFolderIds": [
+        "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh"
+      ],
+      "d50ReadFilters": [
+        {
+          "key": "source_id",
+          "value": "qa-d50-record-001"
+        },
+        {
+          "key": "revision",
+          "value": "r2"
+        },
+        {
+          "key": "request_key",
+          "value": "tender-checklist-video|qa-d50-record-001|r2|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh"
+        }
+      ],
+      "readExecuteOnce": true,
+      "targetStatus": "accepted",
+      "passed": true
+    },
+    {
+      "workflowId": "ZvidSeries2PubCheckpointUploaded",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubCheckpointUploaded",
+      "name": "QA checkpoint all 30 synthetic ledgers as uploaded",
+      "found": true,
+      "inactive": true,
+      "functionalSha256": "96eb70f983054c278cc5aef3e420d0481fc276941928b0a326c615208e1ccdfa",
+      "expectedFunctionalSha256": "96eb70f983054c278cc5aef3e420d0481fc276941928b0a326c615208e1ccdfa",
+      "nativeOnly": true,
+      "readCount": 30,
+      "writeCount": 30,
+      "syntheticRevisionByDay": {
+        "31": "r1",
+        "32": "r1",
+        "33": "r1",
+        "34": "r1",
+        "35": "r1",
+        "36": "r1",
+        "37": "r1",
+        "38": "r1",
+        "39": "r1",
+        "40": "r1",
+        "41": "r1",
+        "42": "r1",
+        "43": "r1",
+        "44": "r1",
+        "45": "r1",
+        "46": "r1",
+        "47": "r1",
+        "48": "r1",
+        "49": "r1",
+        "50": "r2",
+        "51": "r1",
+        "52": "r1",
+        "53": "r1",
+        "54": "r1",
+        "55": "r1",
+        "56": "r1",
+        "57": "r1",
+        "58": "r1",
+        "59": "r1",
+        "60": "r1"
+      },
+      "dailyRequestPeriods": [
+        "2026-10-01"
+      ],
+      "qaFolderIds": [
+        "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh"
+      ],
+      "d50ReadFilters": [
+        {
+          "key": "source_id",
+          "value": "qa-d50-record-001"
+        },
+        {
+          "key": "revision",
+          "value": "r2"
+        },
+        {
+          "key": "request_key",
+          "value": "tender-checklist-video|qa-d50-record-001|r2|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh"
+        }
+      ],
+      "readExecuteOnce": true,
+      "targetStatus": "uploaded",
+      "passed": true
+    }
+  ],
+  "canonicals": [
+    {
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "found": true,
+      "functionalSha256": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D31Source",
+        "detailsSheet": "D31Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 32,
+      "workflowId": "ZvidSeries2Day32",
+      "found": true,
+      "functionalSha256": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D32Source",
+        "detailsSheet": "D32Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 33,
+      "workflowId": "ZvidSeries2Day33",
+      "found": true,
+      "functionalSha256": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D33Source",
+        "detailsSheet": "D33Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 34,
+      "workflowId": "ZvidSeries2Day34",
+      "found": true,
+      "functionalSha256": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D34Source",
+        "detailsSheet": "D34Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 35,
+      "workflowId": "ZvidSeries2Day35",
+      "found": true,
+      "functionalSha256": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D35Source",
+        "detailsSheet": "D35Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 36,
+      "workflowId": "ZvidSeries2Day36",
+      "found": true,
+      "functionalSha256": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D36Source",
+        "detailsSheet": "D36Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 37,
+      "workflowId": "ZvidSeries2Day37",
+      "found": true,
+      "functionalSha256": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D37Source",
+        "detailsSheet": "D37Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 38,
+      "workflowId": "ZvidSeries2Day38",
+      "found": true,
+      "functionalSha256": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D38Source",
+        "detailsSheet": "D38Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 39,
+      "workflowId": "ZvidSeries2Day39",
+      "found": true,
+      "functionalSha256": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D39Source",
+        "detailsSheet": "D39Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 40,
+      "workflowId": "ZvidSeries2Day40",
+      "found": true,
+      "functionalSha256": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D40Source",
+        "detailsSheet": "D40Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 41,
+      "workflowId": "ZvidSeries2Day41",
+      "found": true,
+      "functionalSha256": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D41Source",
+        "detailsSheet": "D41Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 42,
+      "workflowId": "ZvidSeries2Day42",
+      "found": true,
+      "functionalSha256": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D42Source",
+        "detailsSheet": "D42Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 43,
+      "workflowId": "ZvidSeries2Day43",
+      "found": true,
+      "functionalSha256": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D43Source",
+        "detailsSheet": "D43Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 44,
+      "workflowId": "ZvidSeries2Day44",
+      "found": true,
+      "functionalSha256": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D44Source",
+        "detailsSheet": "D44Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 45,
+      "workflowId": "ZvidSeries2Day45",
+      "found": true,
+      "functionalSha256": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D45Source",
+        "detailsSheet": "D45Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 46,
+      "workflowId": "ZvidSeries2Day46",
+      "found": true,
+      "functionalSha256": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D46Source",
+        "detailsSheet": "D46Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 47,
+      "workflowId": "ZvidSeries2Day47",
+      "found": true,
+      "functionalSha256": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D47Source",
+        "detailsSheet": "D47Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 48,
+      "workflowId": "ZvidSeries2Day48",
+      "found": true,
+      "functionalSha256": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D48Source",
+        "detailsSheet": "D48Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 49,
+      "workflowId": "ZvidSeries2Day49",
+      "found": true,
+      "functionalSha256": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D49Source",
+        "detailsSheet": "D49Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 50,
+      "workflowId": "ZvidSeries2Day50",
+      "found": true,
+      "functionalSha256": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D50Source",
+        "detailsSheet": "D50Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 51,
+      "workflowId": "ZvidSeries2Day51",
+      "found": true,
+      "functionalSha256": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D51Source",
+        "detailsSheet": "D51Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 52,
+      "workflowId": "ZvidSeries2Day52",
+      "found": true,
+      "functionalSha256": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D52Source",
+        "detailsSheet": "D52Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 53,
+      "workflowId": "ZvidSeries2Day53",
+      "found": true,
+      "functionalSha256": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D53Source",
+        "detailsSheet": "D53Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 54,
+      "workflowId": "ZvidSeries2Day54",
+      "found": true,
+      "functionalSha256": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D54Source",
+        "detailsSheet": "D54Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 55,
+      "workflowId": "ZvidSeries2Day55",
+      "found": true,
+      "functionalSha256": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D55Source",
+        "detailsSheet": "D55Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 56,
+      "workflowId": "ZvidSeries2Day56",
+      "found": true,
+      "functionalSha256": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D56Source",
+        "detailsSheet": "D56Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 57,
+      "workflowId": "ZvidSeries2Day57",
+      "found": true,
+      "functionalSha256": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D57Source",
+        "detailsSheet": "D57Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 58,
+      "workflowId": "ZvidSeries2Day58",
+      "found": true,
+      "functionalSha256": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D58Source",
+        "detailsSheet": "D58Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 59,
+      "workflowId": "ZvidSeries2Day59",
+      "found": true,
+      "functionalSha256": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D59Source",
+        "detailsSheet": "D59Details"
+      },
+      "passed": true
+    },
+    {
+      "day": 60,
+      "workflowId": "ZvidSeries2Day60",
+      "found": true,
+      "functionalSha256": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648",
+      "functionalMatch": true,
+      "parameters": {
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "driveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceSheet": "D60Source",
+        "detailsSheet": "D60Details"
+      },
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "capturedAt": "2026-10-01T12:13:33.817Z",
+  "n8nVersion": "2.29.10",
+  "scope": "Only editor-added defaults observed in manual execution 742; explicit non-default values remain significant.",
+  "results": [
+    {
+      "type": "n8n-nodes-base.code",
+      "version": 2,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code/Code.node.js",
+      "defaults": {
+        "language": "javaScript",
+        "mode": "runOnceForAllItems",
+        "notice": ""
+      },
+      "descriptors": [
+        {
+          "name": "language",
+          "type": "options",
+          "default": "javaScript",
+          "displayOptions": {
+            "show": {
+              "@version": [
+                2
+              ]
+            }
+          }
+        },
+        {
+          "name": "mode",
+          "type": "options",
+          "default": "runOnceForAllItems"
+        },
+        {
+          "name": "notice",
+          "type": "notice",
+          "default": "",
+          "displayOptions": {
+            "show": {
+              "language": [
+                "javaScript"
+              ]
+            }
+          }
+        },
+        {
+          "name": "notice",
+          "type": "notice",
+          "default": "",
+          "displayOptions": {
+            "show": {
+              "language": [
+                "python",
+                "pythonNative"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "n8n-nodes-base.manualTrigger",
+      "version": 1,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/ManualTrigger/ManualTrigger.node.js",
+      "defaults": {
+        "notice": ""
+      },
+      "descriptors": [
+        {
+          "name": "notice",
+          "type": "notice",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "version": 1.3,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Schedule/ScheduleTrigger.node.js",
+      "defaults": {
+        "notice": ""
+      },
+      "descriptors": [
+        {
+          "name": "notice",
+          "type": "notice",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "type": "n8n-nodes-base.set",
+      "version": 3.4,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Set/Set.node.js",
+      "defaults": {
+        "duplicateItem": false
+      },
+      "descriptors": [
+        {
+          "name": "duplicateItem",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "n8n-nodes-base.if",
+      "version": 2.2,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/If/If.node.js",
+      "defaults": {
+        "looseTypeValidation": false
+      },
+      "descriptors": [
+        {
+          "name": "looseTypeValidation",
+          "type": "boolean",
+          "default": false,
+          "displayOptions": {
+            "show": {
+              "@version": [
+                {
+                  "_cnd": {
+                    "gte": 2.1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "n8n-nodes-base.crypto",
+      "version": 1,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Crypto/Crypto.node.js",
+      "defaults": {
+        "binaryData": false
+      },
+      "descriptors": [
+        {
+          "name": "binaryData",
+          "type": "boolean",
+          "default": false,
+          "displayOptions": {
+            "show": {
+              "action": [
+                "hash",
+                "hmac"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "n8n-nodes-base.dataTable",
+      "version": 1.1,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/DataTable/DataTable.node.js",
+      "defaults": {
+        "orderBy": false
+      },
+      "descriptors": [
+        {
+          "name": "orderBy",
+          "type": "boolean",
+          "default": false,
+          "displayOptions": {
+            "show": {
+              "resource": [
+                "row"
+              ],
+              "operation": [
+                "get"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "n8n-nodes-base.googleSheets",
+      "version": 4.7,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Google/Sheet/GoogleSheets.node.js",
+      "defaults": {
+        "combineFilters": "AND",
+        "filtersUI": {}
+      },
+      "descriptors": [
+        {
+          "name": "combineFilters",
+          "type": "options",
+          "default": "AND",
+          "displayOptions": {
+            "show": {
+              "@version": [
+                {
+                  "_cnd": {
+                    "gte": 4.3
+                  }
+                }
+              ],
+              "resource": [
+                "sheet"
+              ],
+              "operation": [
+                "read"
+              ]
+            },
+            "hide": {
+              "sheetName": [
+                ""
+              ]
+            }
+          }
+        },
+        {
+          "name": "filtersUI",
+          "type": "fixedCollection",
+          "default": {},
+          "displayOptions": {
+            "show": {
+              "resource": [
+                "sheet"
+              ],
+              "operation": [
+                "read"
+              ]
+            },
+            "hide": {
+              "sheetName": [
+                ""
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "n8n-nodes-base.httpRequest",
+      "version": 2,
+      "modulePath": "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/HttpRequest/HttpRequest.node.js",
+      "defaults": {
+        "allowUnauthorizedCerts": false,
+        "authentication": "none",
+        "headerParametersUi": {},
+        "infoMessage": "",
+        "jsonParameters": false,
+        "queryParametersUi": {},
+        "requestMethod": "GET"
+      },
+      "descriptors": [
+        {
+          "name": "allowUnauthorizedCerts",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "authentication",
+          "type": "options",
+          "default": "none"
+        },
+        {
+          "name": "headerParametersUi",
+          "type": "fixedCollection",
+          "default": {},
+          "displayOptions": {
+            "show": {
+              "jsonParameters": [
+                false
+              ]
+            }
+          }
+        },
+        {
+          "name": "infoMessage",
+          "type": "notice",
+          "default": ""
+        },
+        {
+          "name": "jsonParameters",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "queryParametersUi",
+          "type": "fixedCollection",
+          "default": {},
+          "displayOptions": {
+            "show": {
+              "jsonParameters": [
+                false
+              ]
+            }
+          }
+        },
+        {
+          "name": "requestMethod",
+          "type": "options",
+          "default": "GET"
+        }
+      ]
+    },
+    {
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "version": 1,
+      "modulePath": "/home/node/.n8n/nodes/node_modules/@zvid/n8n-nodes-zvid/dist/nodes/Zvid/Zvid.node.js",
+      "defaults": {
+        "validationVariables": "{}",
+        "requestOptions": {}
+      },
+      "descriptors": [
+        {
+          "name": "validationVariables",
+          "type": "json",
+          "default": "{}",
+          "displayOptions": {
+            "show": {
+              "resource": [
+                "render"
+              ],
+              "operation": [
+                "validate"
+              ],
+              "source": [
+                "json"
+              ]
+            }
+          }
+        },
+        {
+          "name": "requestOptions",
+          "type": "collection",
+          "default": {},
+          "provenance": "/usr/local/lib/node_modules/n8n/node_modules/n8n-core/dist/nodes-loader/constants.js",
+          "addedBy": "/usr/local/lib/node_modules/n8n/node_modules/n8n-core/dist/nodes-loader/directory-loader.js:DirectoryLoader.applyDeclarativeNodeOptionParameters"
+        }
+      ]
+    }
+  ]
+}

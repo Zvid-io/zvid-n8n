@@ -236,3 +236,15 @@ by this live evidence: its node contract (binary `file` response, retries,
 `onError: continue`) and n8n's inline `video/*` rendering were verified separately,
 but the node has not been exercised in a full end-to-end execution of this
 workflow.
+
+## Preview download compatibility
+
+The gated **Watch video** step downloads the completed MP4 into binary `data`.
+Open **Binary → data → View** to play it. Each request has a 30-second timeout,
+with at most three attempts five seconds apart. If the CDN is unavailable, the
+preview returns an error and the preceding result node retains the video URL;
+the completed render is not submitted again.
+
+This template uses the built-in HTTP Request v2 file downloader to avoid an
+n8n 2.29.10 manual-execution saving error in the v4 downloader. Zvid API
+operations continue to use the Zvid node.

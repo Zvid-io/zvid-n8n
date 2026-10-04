@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-10-01T14:05:15.141Z",
+  "projectId": 6,
+  "projectName": "Zvid Workflow Launches",
+  "projectKey": "ZWL",
+  "workflowId": 3,
+  "nativeConnectionAvailable": true,
+  "readOnlyPreflight": true,
+  "noMutationsPerformed": true,
+  "totalNativeIssues": 528,
+  "originalRecordsVerified": 78,
+  "originalRecordsUnchanged": true,
+  "originalComparisonFields": [
+    "id",
+    "name",
+    "number_label",
+    "description",
+    "type_id",
+    "workflow_stage_id",
+    "parent_issue_id"
+  ],
+  "managedStories": 30,
+  "managedChildren": 420,
+  "buildTasksInProgress": 30,
+  "screenshotTasksInProgress": 30,
+  "futureChildrenBacklog": 360,
+  "parentsInProgress": 30,
+  "doneStageId": 14,
+  "rootCompletionPending": true,
+  "scope": "Prepare existing managed Days31–60 task updates only; original records and future children remain unchanged"
+}

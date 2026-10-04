@@ -1,0 +1,546 @@
+{
+  "checkedAt": "2026-10-01T14:40:25.373Z",
+  "scope": "Upgraded business workflows; no automatic Flowlu mutations",
+  "rootReportConfirmed": true,
+  "integrationCheckpoint": {
+    "googleSheets": {
+      "executionId": 737,
+      "status": "success",
+      "reason": "Native setup succeeded"
+    },
+    "googleDrive": {
+      "executionId": 736,
+      "status": "success",
+      "reason": "Native setup succeeded"
+    }
+  },
+  "integrationStatus": {
+    "googleSheets": {
+      "executionId": 819,
+      "status": "success",
+      "reason": "Real upgraded manual workflow integration verified"
+    },
+    "googleDrive": {
+      "executionId": 819,
+      "status": "success",
+      "reason": "Real upgraded manual workflow integration verified"
+    }
+  },
+  "buildReadyDays": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "assetReadyDays": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "pending": [],
+  "all": [
+    {
+      "day": 31,
+      "slug": "release-notes-video",
+      "workflowId": "ZvidSeries2Day31",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 822,
+      "currentCanonicalSha256": "aca8d0e3e956d02549916425ba8c2a2ecf73a8432b839db559856afa778af5b1",
+      "functionalSha256": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 742,
+        "googleDrive": 742
+      },
+      "reasons": []
+    },
+    {
+      "day": 32,
+      "slug": "procedure-tutorial-video",
+      "workflowId": "ZvidSeries2Day32",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 744,
+      "currentCanonicalSha256": "9a470c36ca700eb601ef3491022ade3ccf1a31454d024d573701349ac283207a",
+      "functionalSha256": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 744,
+        "googleDrive": 744
+      },
+      "reasons": []
+    },
+    {
+      "day": 33,
+      "slug": "plan-comparison-video",
+      "workflowId": "ZvidSeries2Day33",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 748,
+      "currentCanonicalSha256": "92849e129a2e98d5e1b62becddc3231db7d617aee3892359fcd98f4bd613395b",
+      "functionalSha256": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 748,
+        "googleDrive": 748
+      },
+      "reasons": []
+    },
+    {
+      "day": 34,
+      "slug": "incident-timeline-video",
+      "workflowId": "ZvidSeries2Day34",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 750,
+      "currentCanonicalSha256": "4b153a410fade190e4fcbf06d606dc07dbe03b35aee21f3b5426ae19984985c1",
+      "functionalSha256": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 750,
+        "googleDrive": 750
+      },
+      "reasons": []
+    },
+    {
+      "day": 35,
+      "slug": "maintenance-notice-video",
+      "workflowId": "ZvidSeries2Day35",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 754,
+      "currentCanonicalSha256": "4a9e215aed2e6c4b264fa091ce9ff97c021a6799121b8b9bb671dada3baeb06d",
+      "functionalSha256": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 754,
+        "googleDrive": 754
+      },
+      "reasons": []
+    },
+    {
+      "day": 36,
+      "slug": "order-progress-video",
+      "workflowId": "ZvidSeries2Day36",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 758,
+      "currentCanonicalSha256": "18f620685b0f27ac2ce20ed208d5f71fdee377f0087359390341cb89986e864c",
+      "functionalSha256": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 758,
+        "googleDrive": 758
+      },
+      "reasons": []
+    },
+    {
+      "day": 37,
+      "slug": "product-bundle-savings-video",
+      "workflowId": "ZvidSeries2Day37",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 762,
+      "currentCanonicalSha256": "55160336207f74757c10ec59415f0419304154b65ea0a418881cb03e387f56ee",
+      "functionalSha256": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 762,
+        "googleDrive": 762
+      },
+      "reasons": []
+    },
+    {
+      "day": 38,
+      "slug": "delivery-delay-video",
+      "workflowId": "ZvidSeries2Day38",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 766,
+      "currentCanonicalSha256": "244ca708f64f63790f0b31ba5e65234fcaf7d9a5b03f05fb46c19340615bd3e7",
+      "functionalSha256": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 766,
+        "googleDrive": 766
+      },
+      "reasons": []
+    },
+    {
+      "day": 39,
+      "slug": "appointment-preparation-video",
+      "workflowId": "ZvidSeries2Day39",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 769,
+      "currentCanonicalSha256": "6be20691af4e9d4e73550c844740b8c605863fa36c83c30d4eb809cc450c6e25",
+      "functionalSha256": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 769,
+        "googleDrive": 769
+      },
+      "reasons": []
+    },
+    {
+      "day": 40,
+      "slug": "return-instructions-video",
+      "workflowId": "ZvidSeries2Day40",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 773,
+      "currentCanonicalSha256": "42eea1324ca7e7b00280ae906c785a36f73f3dc30b1e4cbe641147df8cb768a5",
+      "functionalSha256": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 773,
+        "googleDrive": 773
+      },
+      "reasons": []
+    },
+    {
+      "day": 41,
+      "slug": "employee-first-week-video",
+      "workflowId": "ZvidSeries2Day41",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 775,
+      "currentCanonicalSha256": "a37e753d97c8e5287e44a8e35084004ba801f4c46604e316e6debfcbd38d3ade",
+      "functionalSha256": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 775,
+        "googleDrive": 775
+      },
+      "reasons": []
+    },
+    {
+      "day": 42,
+      "slug": "interview-agenda-video",
+      "workflowId": "ZvidSeries2Day42",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 777,
+      "currentCanonicalSha256": "247688353fe9c6d61b1f465aa71fbf853891949022b06e4d8ac09635e0d16790",
+      "functionalSha256": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 777,
+        "googleDrive": 777
+      },
+      "reasons": []
+    },
+    {
+      "day": 43,
+      "slug": "course-roadmap-video",
+      "workflowId": "ZvidSeries2Day43",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 779,
+      "currentCanonicalSha256": "198bafeaeeb8e4ff6ab0839d7091fa1467d266265034810335897689d5a33450",
+      "functionalSha256": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 779,
+        "googleDrive": 779
+      },
+      "reasons": []
+    },
+    {
+      "day": 44,
+      "slug": "safety-briefing-video",
+      "workflowId": "ZvidSeries2Day44",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 781,
+      "currentCanonicalSha256": "81da5104b5f999b3efa59e0f5de043d2dd015bb7f1de471e231417af29c306ce",
+      "functionalSha256": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 781,
+        "googleDrive": 781
+      },
+      "reasons": []
+    },
+    {
+      "day": 45,
+      "slug": "training-completion-video",
+      "workflowId": "ZvidSeries2Day45",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 783,
+      "currentCanonicalSha256": "d62a76490fd08b8412177be44bdbe51c551884effabb96cc8904067b0a0496b3",
+      "functionalSha256": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 783,
+        "googleDrive": 783
+      },
+      "reasons": []
+    },
+    {
+      "day": 46,
+      "slug": "meeting-action-brief-video",
+      "workflowId": "ZvidSeries2Day46",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 785,
+      "currentCanonicalSha256": "c721499525bdc49d9d27e9317a71f86dacbab07b86af92337f3383eb553e336d",
+      "functionalSha256": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 785,
+        "googleDrive": 785
+      },
+      "reasons": []
+    },
+    {
+      "day": 47,
+      "slug": "equipment-maintenance-video",
+      "workflowId": "ZvidSeries2Day47",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 787,
+      "currentCanonicalSha256": "89290359e635ef09bc4923702e41a4d47b79e198ac51d137eee555edf4a60375",
+      "functionalSha256": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 787,
+        "googleDrive": 787
+      },
+      "reasons": []
+    },
+    {
+      "day": 48,
+      "slug": "inventory-replenishment-video",
+      "workflowId": "ZvidSeries2Day48",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 789,
+      "currentCanonicalSha256": "ee90f1e5cfcc31a844613de0490ca4df1ed07a7d04f70cee34cb5f28ad7964dc",
+      "functionalSha256": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 789,
+        "googleDrive": 789
+      },
+      "reasons": []
+    },
+    {
+      "day": 49,
+      "slug": "delivery-route-brief-video",
+      "workflowId": "ZvidSeries2Day49",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 791,
+      "currentCanonicalSha256": "a770c1f2052005086541d5f350fa08b1d9c3ee844038439cb2e650f24187bde0",
+      "functionalSha256": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 791,
+        "googleDrive": 791
+      },
+      "reasons": []
+    },
+    {
+      "day": 50,
+      "slug": "tender-checklist-video",
+      "workflowId": "ZvidSeries2Day50",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 805,
+      "currentCanonicalSha256": "96e01847b72f86472bc861f6c69fbf469f6dd37cd37c75b6dbba24c39c124ba7",
+      "functionalSha256": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 805,
+        "googleDrive": 805
+      },
+      "reasons": []
+    },
+    {
+      "day": 51,
+      "slug": "travel-itinerary-video",
+      "workflowId": "ZvidSeries2Day51",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 800,
+      "currentCanonicalSha256": "25ce7708ee194d1973c95293a9d248357a307e153b8488d4c5a8cc2421e6fd63",
+      "functionalSha256": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 800,
+        "googleDrive": 800
+      },
+      "reasons": []
+    },
+    {
+      "day": 52,
+      "slug": "hotel-arrival-guide-video",
+      "workflowId": "ZvidSeries2Day52",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 797,
+      "currentCanonicalSha256": "8e9a8ec6e85fa3a4be32d1321406bb3e37049f8799e107fda45012c180d35675",
+      "functionalSha256": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 797,
+        "googleDrive": 797
+      },
+      "reasons": []
+    },
+    {
+      "day": 53,
+      "slug": "pet-adoption-video",
+      "workflowId": "ZvidSeries2Day53",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 802,
+      "currentCanonicalSha256": "86527fcf6089a9aab855bffb46e057e3dbbd926db0f54b45dd775a2ef1d892d7",
+      "functionalSha256": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 802,
+        "googleDrive": 802
+      },
+      "reasons": []
+    },
+    {
+      "day": 54,
+      "slug": "volunteer-shift-video",
+      "workflowId": "ZvidSeries2Day54",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 807,
+      "currentCanonicalSha256": "b85cc72d0f79d4718ae96366c95375a6c0387391683ab407e91f35759dba2c6a",
+      "functionalSha256": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 807,
+        "googleDrive": 807
+      },
+      "reasons": []
+    },
+    {
+      "day": 55,
+      "slug": "donation-impact-video",
+      "workflowId": "ZvidSeries2Day55",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 809,
+      "currentCanonicalSha256": "a8e6318f00f5544ce18f427deb06000f6f72a849a6173191b295b7c26e6ff248",
+      "functionalSha256": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 809,
+        "googleDrive": 809
+      },
+      "reasons": []
+    },
+    {
+      "day": 56,
+      "slug": "survey-results-video",
+      "workflowId": "ZvidSeries2Day56",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 811,
+      "currentCanonicalSha256": "c42c1eb089721c0dc28af3494603abc18ab47410c2c908df3c604d8333ca7b88",
+      "functionalSha256": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 811,
+        "googleDrive": 811
+      },
+      "reasons": []
+    },
+    {
+      "day": 57,
+      "slug": "fundraiser-progress-video",
+      "workflowId": "ZvidSeries2Day57",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 813,
+      "currentCanonicalSha256": "ab9a0d6004e3ee38f428f3d2ef311eea54cd230e2273186afd18155c2f2ee13b",
+      "functionalSha256": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 813,
+        "googleDrive": 813
+      },
+      "reasons": []
+    },
+    {
+      "day": 58,
+      "slug": "before-after-case-study-video",
+      "workflowId": "ZvidSeries2Day58",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 815,
+      "currentCanonicalSha256": "3464a8da36792edf1434a9520bfe931b0327624e53af162ada634f2c9ead5354",
+      "functionalSha256": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 815,
+        "googleDrive": 815
+      },
+      "reasons": []
+    },
+    {
+      "day": 59,
+      "slug": "milestone-roadmap-video",
+      "workflowId": "ZvidSeries2Day59",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 817,
+      "currentCanonicalSha256": "03930f9f5504a93625e9bbbf9d4a4f4640489ba36cc740dac479d1f4de656067",
+      "functionalSha256": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 817,
+        "googleDrive": 817
+      },
+      "reasons": []
+    },
+    {
+      "day": 60,
+      "slug": "recipe-cooking-guide-video",
+      "workflowId": "ZvidSeries2Day60",
+      "buildReady": true,
+      "assetReady": true,
+      "executionId": 819,
+      "currentCanonicalSha256": "a625b376372f7214d8dd5448534612f2749ed7983d3194d63f17d68694ff4f87",
+      "functionalSha256": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648",
+      "nativeIntegrationSuccesses": {
+        "googleSheets": 819,
+        "googleDrive": 819
+      },
+      "reasons": []
+    }
+  ]
+}

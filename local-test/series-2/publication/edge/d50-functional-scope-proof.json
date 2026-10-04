@@ -1,0 +1,157 @@
+{
+  "generatedAt": "2026-10-01T13:18:27.032Z",
+  "onlyD50Changed": true,
+  "other29Preserved": true,
+  "rows": [
+    {
+      "day": 31,
+      "before": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa",
+      "after": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa"
+    },
+    {
+      "day": 32,
+      "before": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4",
+      "after": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4"
+    },
+    {
+      "day": 33,
+      "before": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775",
+      "after": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775"
+    },
+    {
+      "day": 34,
+      "before": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47",
+      "after": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47"
+    },
+    {
+      "day": 35,
+      "before": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+      "after": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02"
+    },
+    {
+      "day": 36,
+      "before": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1",
+      "after": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1"
+    },
+    {
+      "day": 37,
+      "before": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd",
+      "after": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd"
+    },
+    {
+      "day": 38,
+      "before": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5",
+      "after": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5"
+    },
+    {
+      "day": 39,
+      "before": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07",
+      "after": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07"
+    },
+    {
+      "day": 40,
+      "before": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9",
+      "after": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9"
+    },
+    {
+      "day": 41,
+      "before": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f",
+      "after": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f"
+    },
+    {
+      "day": 42,
+      "before": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685",
+      "after": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685"
+    },
+    {
+      "day": 43,
+      "before": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f",
+      "after": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f"
+    },
+    {
+      "day": 44,
+      "before": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911",
+      "after": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911"
+    },
+    {
+      "day": 45,
+      "before": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e",
+      "after": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e"
+    },
+    {
+      "day": 46,
+      "before": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062",
+      "after": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062"
+    },
+    {
+      "day": 47,
+      "before": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162",
+      "after": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162"
+    },
+    {
+      "day": 48,
+      "before": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d",
+      "after": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d"
+    },
+    {
+      "day": 49,
+      "before": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a",
+      "after": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a"
+    },
+    {
+      "day": 50,
+      "before": "deee411482221022d83ba0e344389fbc41670407ec9ea10cd502e98f14d3f7d4",
+      "after": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa"
+    },
+    {
+      "day": 51,
+      "before": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+      "after": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1"
+    },
+    {
+      "day": 52,
+      "before": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d",
+      "after": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d"
+    },
+    {
+      "day": 53,
+      "before": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e",
+      "after": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e"
+    },
+    {
+      "day": 54,
+      "before": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad",
+      "after": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad"
+    },
+    {
+      "day": 55,
+      "before": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757",
+      "after": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757"
+    },
+    {
+      "day": 56,
+      "before": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7",
+      "after": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7"
+    },
+    {
+      "day": 57,
+      "before": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+      "after": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a"
+    },
+    {
+      "day": 58,
+      "before": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f",
+      "after": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f"
+    },
+    {
+      "day": 59,
+      "before": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83",
+      "after": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83"
+    },
+    {
+      "day": 60,
+      "before": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648",
+      "after": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648"
+    }
+  ]
+}

@@ -1,0 +1,286 @@
+{
+  "inspectedAt": "2026-10-01",
+  "scope": "Read-only inspection of installed Docker n8n 2.29.10 source and credential metadata. No credentials were decrypted; no remote API calls or data writes were performed.",
+  "credentials": [
+    {"id": "4brcFt0P3EihgxJb", "name": "Google Sheets account", "type": "googleSheetsOAuth2Api"},
+    {"id": "UH2cKTIIc4ymModq", "name": "Google Drive account", "type": "googleDriveOAuth2Api"},
+    {"id": "e3b494f287402c80c13bf080", "name": "Zvid workflow series", "type": "zvidApi"}
+  ],
+  "nodes": {
+    "dataTable": {
+      "type": "n8n-nodes-base.dataTable",
+      "version": 1.1,
+      "create": {
+        "resource": "table",
+        "operation": "create",
+        "tableName": "Zvid publication ledger",
+        "columns": {"column": [
+          {"name": "request_key", "type": "string"},
+          {"name": "workflow_slug", "type": "string"},
+          {"name": "source_id", "type": "string"},
+          {"name": "revision", "type": "string"},
+          {"name": "input_hash", "type": "string"},
+          {"name": "input_json", "type": "string"},
+          {"name": "project_json", "type": "string"},
+          {"name": "status", "type": "string"},
+          {"name": "job_id", "type": "string"},
+          {"name": "video_url", "type": "string"},
+          {"name": "drive_file_id", "type": "string"},
+          {"name": "drive_url", "type": "string"},
+          {"name": "quoted_credits", "type": "number"},
+          {"name": "execution_id", "type": "string"},
+          {"name": "last_error", "type": "string"},
+          {"name": "updated_at", "type": "date"}
+        ]},
+        "options": {"createIfNotExists": true}
+      },
+      "get": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {"__rl": true, "mode": "id", "value": "={{ $('Ensure publication ledger').first().json.id }}"},
+        "matchType": "allConditions",
+        "filters": {"conditions": [{"keyName": "request_key", "condition": "eq", "keyValue": "={{ $('Prepare request').first().json.request_key }}"}]},
+        "returnAll": false,
+        "limit": 2
+      },
+      "getNodeSetting": {"alwaysOutputData": true},
+      "upsert": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {"__rl": true, "mode": "id", "value": "={{ $('Ensure publication ledger').first().json.id }}"},
+        "matchType": "allConditions",
+        "filters": {"conditions": [{"keyName": "request_key", "condition": "eq", "keyValue": "={{ $json.request_key }}"}]},
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "request_key": "={{ $json.request_key }}",
+            "workflow_slug": "={{ $json.workflow_slug }}",
+            "source_id": "={{ $json.source_id }}",
+            "revision": "={{ $json.revision }}",
+            "input_hash": "={{ $json.input_hash }}",
+            "input_json": "={{ $json.input_json }}",
+            "project_json": "={{ $json.project_json }}",
+            "status": "={{ $json.status }}",
+            "job_id": "={{ $json.job_id || '' }}",
+            "video_url": "={{ $json.video_url || '' }}",
+            "drive_file_id": "={{ $json.drive_file_id || '' }}",
+            "drive_url": "={{ $json.drive_url || '' }}",
+            "quoted_credits": "={{ $json.quoted_credits || 0 }}",
+            "execution_id": "={{ $execution.id }}",
+            "last_error": "={{ $json.last_error || '' }}",
+            "updated_at": "={{ $now.toISO() }}"
+          }
+        },
+        "options": {"dryRun": false}
+      },
+      "mappingSchemaExample": {"id": "request_key", "displayName": "request_key", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true},
+      "notes": [
+        "Create reuses an exact existing table name but does not migrate or validate its columns. Add a schema check if a table might already exist with a different contract.",
+        "Use the created table ID instead of a name lookup: name mode performs a lowercased filter and takes the first result.",
+        "A built-in id is generated automatically. Never create a user-defined id column.",
+        "Arrays and objects in columns are rejected. Store input and project as JSON strings.",
+        "Get returns no items if no row matches. Set alwaysOutputData on the node so the new-request branch continues, and explicitly interpret the empty object as missing.",
+        "Get limit 2 is intentional: more than one request-key row indicates corruption and must stop rather than picking an arbitrary job.",
+        "Upsert runs update-or-insert in a database transaction, but it offers no user-column unique constraint or compare-and-swap claim. A separate read/claim/render sequence is still subject to concurrent execution races.",
+        "Native DataTable outputs omit pairedItem metadata in inspected actions. Carry context in the stored columns, or select exactly one source record per execution; do not assume item linking survives arbitrary multi-record joins."
+      ]
+    },
+    "googleSheets": {
+      "type": "n8n-nodes-base.googleSheets",
+      "version": 4.7,
+      "credentialType": "googleSheetsOAuth2Api",
+      "read": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {"__rl": true, "mode": "id", "value": "={{ $('Configuration').first().json.spreadsheetId }}"},
+        "sheetName": {"__rl": true, "mode": "name", "value": "={{ $('Configuration').first().json.sourceSheet }}"},
+        "filtersUI": {"values": [{"lookupColumn": "status", "lookupValue": "ready"}]},
+        "combineFilters": "AND",
+        "options": {
+          "returnFirstMatch": false,
+          "outputFormatting": {"values": {"general": "UNFORMATTED_VALUE", "date": "FORMATTED_STRING"}},
+          "dataLocationOnSheet": {"values": {"rangeDefinition": "detectAutomatically", "readRowsUntil": "lastRowInSheet"}}
+        }
+      },
+      "lookup": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {"__rl": true, "mode": "id", "value": "={{ $('Configuration').first().json.spreadsheetId }}"},
+        "sheetName": {"__rl": true, "mode": "name", "value": "={{ $('Configuration').first().json.sourceSheet }}"},
+        "filtersUI": {"values": [{"lookupColumn": "source_id", "lookupValue": "={{ $json.source_id }}"}]},
+        "combineFilters": "AND",
+        "options": {"returnFirstMatch": false}
+      },
+      "writeback": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "appendOrUpdate",
+        "documentId": {"__rl": true, "mode": "id", "value": "={{ $('Configuration').first().json.spreadsheetId }}"},
+        "sheetName": {"__rl": true, "mode": "name", "value": "={{ $('Configuration').first().json.sourceSheet }}"},
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": ["source_id"],
+          "value": {
+            "source_id": "={{ $json.source_id }}",
+            "status": "delivered",
+            "job_id": "={{ $json.job_id }}",
+            "video_url": "={{ $json.video_url }}",
+            "drive_file_id": "={{ $json.drive_file_id }}",
+            "drive_url": "={{ $json.drive_url }}",
+            "last_error": "",
+            "completed_at": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {"id": "source_id", "displayName": "source_id", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true},
+            {"id": "status", "displayName": "status", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true},
+            {"id": "job_id", "displayName": "job_id", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true},
+            {"id": "video_url", "displayName": "video_url", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true},
+            {"id": "drive_file_id", "displayName": "drive_file_id", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true},
+            {"id": "drive_url", "displayName": "drive_url", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true},
+            {"id": "last_error", "displayName": "last_error", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true},
+            {"id": "completed_at", "displayName": "completed_at", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true}
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {"cellFormat": "RAW", "handlingExtraData": "error"}
+      },
+      "notes": [
+        "Source/writeback headers must be seeded exactly before running. Sheets >=4.4 checks schema against live headers; explicit mapping does not automatically manufacture a missing header.",
+        "AppendOrUpdate requires matchingColumns as a nonempty array, and only its first element is used. Choose a single stable source_id unique within the configured sheet.",
+        "Use operation update instead of appendOrUpdate if missing-source rows must never be added. Otherwise explicitly check the source row is unique and exists before writeback.",
+        "Read returns no items for an empty sheet or unmatched filters. Use a no-work branch and avoid calling paid nodes.",
+        "Do not filter only ready rows for a retrying dispatcher: include accepted/completed/uploaded recovery states or consult pending ledger entries independently.",
+        "No spreadsheet ID or OAuth health is established by credential metadata inspection. Remote preflight is still necessary."
+      ]
+    },
+    "googleDrive": {
+      "type": "n8n-nodes-base.googleDrive",
+      "version": 3,
+      "credentialType": "googleDriveOAuth2Api",
+      "folderCreate": {
+        "authentication": "oAuth2", "resource": "folder", "operation": "create",
+        "name": "Zvid publication test outputs",
+        "driveId": {"__rl": true, "mode": "list", "value": "My Drive"},
+        "folderId": {"__rl": true, "mode": "list", "value": "root"},
+        "options": {"simplifyOutput": false}
+      },
+      "fileSearch": {
+        "authentication": "oAuth2", "resource": "fileFolder", "operation": "search",
+        "searchMethod": "query",
+        "queryString": "={{ \"name = '\" + $json.delivery_filename.split(String.fromCharCode(92)).join(String.fromCharCode(92,92)).split(String.fromCharCode(39)).join(String.fromCharCode(92,39)) + \"'\" }}",
+        "returnAll": false, "limit": 2,
+        "filter": {
+          "driveId": {"__rl": true, "mode": "list", "value": "My Drive"},
+          "folderId": {"__rl": true, "mode": "id", "value": "={{ $('Configuration').first().json.driveFolderId }}"},
+          "whatToSearch": "files", "includeTrashed": false
+        },
+        "options": {"fields": ["id", "name", "mimeType", "webViewLink"]}
+      },
+      "upload": {
+        "authentication": "oAuth2", "resource": "file", "operation": "upload",
+        "inputDataFieldName": "data",
+        "name": "={{ $json.delivery_filename }}",
+        "driveId": {"__rl": true, "mode": "list", "value": "My Drive"},
+        "folderId": {"__rl": true, "mode": "id", "value": "={{ $('Configuration').first().json.driveFolderId }}"},
+        "options": {
+          "simplifyOutput": false,
+          "appPropertiesUi": {"appPropertyValues": [{"key": "zvid_request_key", "value": "={{ $json.request_key }}"}]}
+        }
+      },
+      "notes": [
+        "File name must be deterministic for the request revision, and search must be restricted to the configured folder. More than one match must stop for review.",
+        "Native upload requires an actual binary data item; a JSON URL is insufficient. Download the completed HTTPS MP4, verify data mime/size, and then upload.",
+        "simplifyOutput:false fetches all metadata including webViewLink. Persist id and webViewLink after upload.",
+        "The installed upload action performs a create POST followed by a metadata PATCH. appProperties are applied only in the latter request. If PATCH fails, a file might already exist; recover it by deterministic name and folder before another upload.",
+        "Do not enable retryOnFail for uploads without a search-before-upload/reconciliation branch, because a lost response can create duplicate files.",
+        "Folder create is not idempotent. Search/reuse first for automatic setup, or create a single dedicated test folder once and configure its ID.",
+        "Keep default private Drive permissions. Sharing or notifications would be separate external actions needing explicit user authorization.",
+        "Source and response context should be restored from the persisted ledger, since file upload output is metadata and does not forward the input binary."
+      ]
+    },
+    "formTrigger": {
+      "type": "n8n-nodes-base.formTrigger", "version": 2.6,
+      "parameters": {
+        "authentication": "n8nUserAuth",
+        "formTitle": "Request a business video",
+        "formDescription": "Choose an existing approved source record. The workflow returns a request acknowledgement and saves the completed asset to the configured destination.",
+        "formFields": {"values": [
+          {"fieldName": "source_id", "fieldLabel": "Source record ID", "fieldType": "text", "requiredField": true},
+          {"fieldName": "revision", "fieldLabel": "Revision", "fieldType": "text", "requiredField": true}
+        ]},
+        "responseMode": "onReceived",
+        "options": {"path": "zvid-business-video-request", "respondWithOptions": {"values": {"respondWith": "text", "formSubmittedText": "Request received. Check the configured source record for delivery status."}}, "useWorkflowTimezone": true}
+      },
+      "notes": ["n8nUserAuth is available only in the installed 2.6 version. Choose none/basicAuth deliberately for broader-version compatibility.", "Versions >=2.2 support only onReceived/lastNode response modes; do not connect RespondToWebhook to a modern FormTrigger."]
+    },
+    "scheduleTrigger": {
+      "type": "n8n-nodes-base.scheduleTrigger", "version": 1.3,
+      "parameters": {"rule": {"interval": [{"field": "days", "daysInterval": 1, "triggerAtHour": 9, "triggerAtMinute": 0}]}},
+      "notes": ["Set workflow settings.timezone explicitly for due-date calculations. Schedules execute only for active workflows.", "A sample Manual Trigger can share the live source read and business logic; fixed sample-only JSON must not be the only production input."]
+    },
+    "webhook": {
+      "type": "n8n-nodes-base.webhook", "version": 2.1,
+      "parameters": {"httpMethod": "POST", "path": "zvid-business-video-request", "authentication": "none", "responseMode": "responseNode", "options": {}},
+      "notes": ["Use authentication explicitly if the upstream system supplies a shared credential; do not embed credential data in a template.", "Acknowledge after input validation and durable request state, then continue processing. Return a request_key/status link, not a video_url before delivery."]
+    },
+    "respondToWebhook": {
+      "type": "n8n-nodes-base.respondToWebhook", "version": 1.5,
+      "parameters": {"respondWith": "json", "responseBody": "={{ JSON.stringify({ request_key: $json.request_key, status: 'accepted' }) }}", "options": {"responseCode": 202, "responseHeaders": {"entries": [{"name": "Content-Type", "value": "application/json"}]}}},
+      "notes": ["Requires a Webhook with responseMode:responseNode. The default main output continues the incoming items after the response.", "Return rejection branches using an appropriate 4xx code before running any paid step."]
+    }
+  },
+  "resumeContract": {
+    "requestKey": "workflow_slug + stable source_id + explicit immutable revision or canonical input hash",
+    "beforeSubmit": "Persist the frozen input/project and status submitting before the nonretrying paid Submit render node.",
+    "afterAcceptance": "Persist returned job_id immediately as accepted before any polling, downloads, destination writes, or preview work.",
+    "resumeAccepted": "If job_id exists, call native Zvid render get on that exact ID. Never call native render create again for the same revision.",
+    "resumeCompleted": "If video_url is present, skip render submission and completion polling; retry delivery only.",
+    "resumeUploaded": "If drive_file_id exists, skip upload and perform source writeback. If upload returned ambiguously, search deterministic name+folder before upload.",
+    "delivered": "No-op with existing Drive and video URLs; do not render or upload again.",
+    "ambiguousSubmission": "If status submitting has no job_id after failure, stop for reconciliation. Native Zvid create has no inspected idempotency parameter/header support; do not blindly retry a possibly accepted paid request.",
+    "payloadChanged": "If the same explicit revision has a different input hash, reject instead of silently reusing stale media; the user must increment revision.",
+    "untrustedInputs": "Validate source IDs/revisions and business requirements before setting eligibility. Canonical URLs and escaped text should be used in the generated video."
+  },
+  "testingPlan": [
+    "One read-only remote auth preflight per credential: native Sheets read in a dedicated test spreadsheet and native Drive search in a dedicated test folder. Credential name/type metadata alone does not prove OAuth validity.",
+    "Create dedicated test ledger and test sources; keep generated workflows inactive and use manual runs. Do not mutate business production sheets.",
+    "For each workflow test the real upstream source read, eligibility/approval/time gating, domain transformation, and the actual Drive upload plus source writeback.",
+    "Reuse the 30 existing completed accepted job IDs for delivery and resume tests, matching them to their frozen original inputs. Do not use an old job as proof that changed scene content has rendered correctly.",
+    "After delivered, manually rerun the same source_id/revision and assert zero additional Submit render and Upload executions, same job_id and drive_file_id, and no duplicate ledger/source/file rows.",
+    "Seed accepted status with a known completed job ID and no video_url; prove the workflow polls the existing ID and delivers without resubmitting.",
+    "Seed completed status/video_url with missing delivery ID; prove delivery retry works without a paid render.",
+    "Simulate source writeback failure after upload, then rerun and prove the same Drive file is reused.",
+    "Simulate a missing destination, empty source list, invalid business inputs, duplicate source ID, revision/content conflict, missing accepted job URL, and ambiguous submission; assert clear states with no unintended paid retry.",
+    "Run dryRun true and credit-cap rejection with no Submit render node executed. Record whether draft save or ledger/source writes are part of dry-run semantics.",
+    "Review actual canvas at readable zoom; download final MP4 and inspect every scene; retain execution IDs and destination/writeback evidence."
+  ],
+  "fundamentalRisks": [
+    "A high node count does not make a workflow publishable. Every additional node must implement a genuine input, business decision, persistence, recovery, or delivery need.",
+    "Data Table/Sheets check-then-act dedup cannot guarantee exactly once under concurrent manual and production executions; a serialized dispatcher or external atomic unique claim is needed for that promise.",
+    "Zvid acceptance and local state save are not one transaction. Lost create responses leave a paid submission ambiguous; fail closed and reconcile instead of automatic resubmission.",
+    "A source status filtered to ready alone can hide accepted requests after a crash; resume queues must include pending ledger rows or recoverable source statuses.",
+    "Drive upload itself is two remote writes. Save/reconcile its deterministic delivery name before retrying so a failed metadata patch or source writeback does not duplicate files.",
+    "Hourly accepted-render quotas persist after jobs complete. Sequential rendering avoids simultaneous jobs but does not bypass hourly slots; obey account retry-after evidence.",
+    "New input data, changed layout, or changed render parameters requires new video validation, even if an earlier completed render can verify delivery plumbing.",
+    "Do not claim external end-to-end tests passed if OAuth, source reads, Drive uploads, or final source updates were mocked or not executed."
+  ],
+  "installedSourceEvidence": [
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/DataTable/DataTable.node.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/DataTable/actions/table/create.operation.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/DataTable/actions/row/get.operation.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/DataTable/actions/row/upsert.operation.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/DataTable/common/utils.js",
+    "/usr/local/lib/node_modules/n8n/dist/modules/data-table/data-table.service.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Google/Sheet/v2/actions/sheet/appendOrUpdate.operation.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Google/Sheet/v2/actions/utils/readOperation.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Google/Drive/v2/actions/file/upload.operation.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Google/Drive/v2/actions/fileFolder/search.operation.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Form/v2/FormTriggerV2.node.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Schedule/ScheduleTrigger.node.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Webhook/Webhook.node.js",
+    "/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/RespondToWebhook/RespondToWebhook.node.js"
+  ]
+}

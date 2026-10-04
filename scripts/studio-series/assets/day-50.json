@@ -1,0 +1,393 @@
+{
+  "name": "S2 D50 - Signature Salmon Kitchen Story",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "durationMode": "fixed",
+  "duration": 22.9,
+  "backgroundColor": "#10100F",
+  "variables": {
+    "paper": "#10100F",
+    "ink": "#FFF7E8",
+    "accent": "#DCC6A3",
+    "headlineFont": "DM Serif Display",
+    "bodyFont": "Inter",
+    "brand": "EMBER KITCHEN",
+    "dishName": "Pan-seared salmon",
+    "kitchenVideo": "https://videos.pexels.com/video-files/10432097/10432097-hd_1920_1080_30fps.mp4",
+    "prepVideo": "https://cdn.pixabay.com/video/2017/08/29/11606-231571862_large.mp4",
+    "cookVideo": "https://videos.pexels.com/video-files/10432093/10432093-hd_1920_1080_30fps.mp4",
+    "dishImage": "https://images.pexels.com/photos/6297198/pexels-photo-6297198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "opening": "A story from the pan",
+    "prepCaption": "Begin with fresh prep",
+    "cookCaption": "Heat. Sizzle. Patience.",
+    "dishStory": "Salmon, vegetables and a plate worth slowing down for.",
+    "chefCredit": "Prepared by the kitchen team",
+    "cta": "Explore tonight’s menu",
+    "destination": "ember.example/menu",
+    "mediaNote": "Illustrative footage · replace with footage of the actual dish",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943384/zvid-series2-unique-music-20261002/day-50-music.mp3",
+    "musicVolume": 0.8
+  },
+  "scenes": [
+    {
+      "id": "salmon-kitchen-open",
+      "duration": 4.9,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "VIDEO",
+          "src": "{{kitchenVideo}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "videoBegin": 0,
+          "videoEnd": 4.9,
+          "videoDuration": 4.9,
+          "volume": 0,
+          "hasAudio": false,
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.5,
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.78),rgba(7,10,13,0.02) 82%)"
+          },
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:67px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{opening}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 430,
+          "width": 820,
+          "height": 230,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.9
+        }
+      ]
+    },
+    {
+      "id": "fresh-garlic-preparation",
+      "duration": 4.9,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "VIDEO",
+          "src": "{{prepVideo}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "videoBegin": 0,
+          "videoEnd": 4.9,
+          "videoDuration": 4.9,
+          "volume": 0,
+          "hasAudio": false,
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.5,
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.78),rgba(7,10,13,0.02) 82%)"
+          },
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">01 / PREPARATION</div><div style=\"font-family:{{headlineFont}};font-size:67px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{prepCaption}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 430,
+          "width": 820,
+          "height": 230,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.9
+        }
+      ]
+    },
+    {
+      "id": "salmon-pan-cooking",
+      "duration": 4.9,
+      "backgroundColor": "{{paper}}",
+      "transition": "dissolve",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "VIDEO",
+          "src": "{{cookVideo}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "videoBegin": 0,
+          "videoEnd": 4.9,
+          "videoDuration": 4.9,
+          "volume": 0,
+          "hasAudio": false,
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.5,
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.78),rgba(7,10,13,0.02) 82%)"
+          },
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">02 / IN THE PAN</div><div style=\"font-family:{{headlineFont}};font-size:67px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{cookCaption}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 430,
+          "width": 820,
+          "height": 230,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "fade",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.9
+        }
+      ]
+    },
+    {
+      "id": "salmon-plate-reveal",
+      "duration": 4.9,
+      "backgroundColor": "{{paper}}",
+      "transition": "fade",
+      "transitionDuration": 0.4,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{dishImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.09
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.78),rgba(7,10,13,0.02) 82%)"
+          },
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{brand}}</div><div style=\"font-family:{{headlineFont}};font-size:76px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{dishName}}</div><div style=\"font-family:{{bodyFont}};font-size:29px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{ink}};margin-top:24px\">{{dishStory}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 367,
+          "width": 825,
+          "height": 285,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.9
+        }
+      ]
+    },
+    {
+      "id": "salmon-menu-handoff",
+      "duration": 4.9,
+      "backgroundColor": "{{paper}}",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{dishImage}}",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "zoom": {
+            "depth": 1.03
+          },
+          "enterAnimation": "fade",
+          "enterBegin": 0,
+          "enterEnd": 0.55,
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div></div>",
+          "position": "custom",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "anchor": "top-left",
+          "track": 1,
+          "style": {
+            "background": "linear-gradient(90deg,rgba(7,10,13,0.78),rgba(7,10,13,0.02) 82%)"
+          },
+          "exitEnd": 4.9
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-family:{{bodyFont}};font-size:27px;line-height:1.13;font-weight:700;letter-spacing:4px;color:{{accent}};margin-top:0px\">{{chefCredit}}</div><div style=\"font-family:{{headlineFont}};font-size:71px;line-height:1.13;font-weight:500;letter-spacing:0px;color:{{ink}};margin-top:0px\">{{cta}}</div><div style=\"font-family:{{bodyFont}};font-size:30px;line-height:1.13;font-weight:600;letter-spacing:0px;color:{{ink}};margin-top:24px\">{{destination}}</div><div style=\"font-family:{{bodyFont}};font-size:19px;line-height:1.13;font-weight:400;letter-spacing:0px;color:{{accent}};margin-top:24px\">{{mediaNote}}</div>",
+          "position": "custom",
+          "x": 64,
+          "y": 235,
+          "width": 930,
+          "height": 415,
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterAnimation": "smoothup",
+          "enterBegin": 0.35,
+          "enterEnd": 0.95,
+          "style": {
+            "fontFamily": "{{bodyFont}}",
+            "color": "{{ink}}",
+            "textAlign": "left",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "alignItems": "stretch"
+          },
+          "exitEnd": 4.9
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 22.9,
+      "audioBegin": 0,
+      "audioEnd": 22.9,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

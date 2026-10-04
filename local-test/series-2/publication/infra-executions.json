@@ -1,0 +1,1974 @@
+{
+  "capturedAt": "2026-10-01T11:59:13.319Z",
+  "afterExecutionId": 737,
+  "manualDeliveredDays": 0,
+  "totalDays": 30,
+  "attempts": [
+    {
+      "id": 740,
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "status": "error",
+      "mode": "manual",
+      "startedAt": "2026-10-01 11:50:24.543",
+      "stoppedAt": "2026-10-01 11:50:57.299",
+      "lastNode": "Delivery context",
+      "error": {
+        "message": "Unexpected token '}' ",
+        "node": null
+      },
+      "canonicalPath": "workflows/zvid-release-notes-video.json",
+      "canonicalFunctionalHash": "64a0432dfd9d072f7bb9c2d41cb64d7d3927a5b72e36c401864da6ba34acad72",
+      "executionFunctionalHash": "0c8afffa163e2078f2e7351280980f845096276d5491d7b2aeac15606661acb8",
+      "functionalMatch": false,
+      "nodes": {
+        "Test manually": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855424562,
+            "executionTimeMs": 0,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Config": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855424563,
+            "executionTimeMs": 0,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Check source configuration": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855424564,
+            "executionTimeMs": 9,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Ensure publication ledger": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855424574,
+            "executionTimeMs": 15,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read saved requests": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855424590,
+            "executionTimeMs": 12,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read source register": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855424602,
+            "executionTimeMs": 1198,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read related records": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855425801,
+            "executionTimeMs": 957,
+            "outputItemsByBranch": [
+              3
+            ],
+            "totalOutputItems": 3,
+            "error": null
+          }
+        ],
+        "Apply release notes policy": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426758,
+            "executionTimeMs": 57,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Fingerprint approved content": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426816,
+            "executionTimeMs": 4,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Choose one pending revision": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426820,
+            "executionTimeMs": 12,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Eligible work found?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426833,
+            "executionTimeMs": 1,
+            "outputItemsByBranch": [
+              1,
+              0
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Prepare durable request": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426834,
+            "executionTimeMs": 30,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Look up saved request": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426864,
+            "executionTimeMs": 15,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Decide recovery": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426880,
+            "executionTimeMs": 10,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Inspect saved request only?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426891,
+            "executionTimeMs": 8,
+            "outputItemsByBranch": [
+              0,
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Completed media saved?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426900,
+            "executionTimeMs": 6,
+            "outputItemsByBranch": [
+              0,
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Accepted job saved?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426907,
+            "executionTimeMs": 5,
+            "outputItemsByBranch": [
+              0,
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Validate project (free)": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855426912,
+            "executionTimeMs": 530,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Check validation and credit cap": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855427443,
+            "executionTimeMs": 13,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Dry run?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855427456,
+            "executionTimeMs": 1,
+            "outputItemsByBranch": [
+              0,
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Mark submission pending": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855427457,
+            "executionTimeMs": 7,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Persist submission intent": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855427465,
+            "executionTimeMs": 82,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Submit render once": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855427548,
+            "executionTimeMs": 405,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Capture accepted job": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855427954,
+            "executionTimeMs": 8,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Persist accepted job": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855427963,
+            "executionTimeMs": 28,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Poll saved job context": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855427992,
+            "executionTimeMs": 8,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Wait for completed render": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855428001,
+            "executionTimeMs": 29147,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Video result": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855457151,
+            "executionTimeMs": 32,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Persist completed media": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855457184,
+            "executionTimeMs": 49,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Delivery context": [
+          {
+            "run": 0,
+            "status": "error",
+            "startedAtMs": 1790855457234,
+            "executionTimeMs": 64,
+            "outputItemsByBranch": [],
+            "totalOutputItems": 0,
+            "error": {
+              "message": "Unexpected token '}' "
+            }
+          }
+        ]
+      },
+      "selected": {
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "requestPeriod": null,
+        "status": "ready",
+        "jobId": null,
+        "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+        "projectSha256": null,
+        "quotedCredits": null,
+        "videoUrl": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "lastError": null
+      },
+      "prepared": {
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "requestPeriod": null,
+        "status": "new",
+        "jobId": null,
+        "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+        "projectSha256": "e5d300ad10aac49abf918cea417bd6d521df954fe5dfe395b2ae01bf37add895",
+        "quotedCredits": null,
+        "videoUrl": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "lastError": null
+      },
+      "checkpoints": [
+        {
+          "node": "Persist submission intent",
+          "run": 0,
+          "state": {
+            "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+            "sourceId": "qa-d31-record-001",
+            "revision": "r1",
+            "requestPeriod": null,
+            "status": "submitting",
+            "jobId": null,
+            "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+            "projectSha256": "bce87acb7bf2772eb7c1044e4c30f53b170ebffd6f17e221c3d1a9ea679f587d",
+            "quotedCredits": 18,
+            "videoUrl": null,
+            "driveFileId": null,
+            "driveUrl": null,
+            "lastError": null
+          },
+          "status": "success"
+        },
+        {
+          "node": "Persist accepted job",
+          "run": 0,
+          "state": {
+            "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+            "sourceId": "qa-d31-record-001",
+            "revision": "r1",
+            "requestPeriod": null,
+            "status": "accepted",
+            "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+            "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+            "projectSha256": "bce87acb7bf2772eb7c1044e4c30f53b170ebffd6f17e221c3d1a9ea679f587d",
+            "quotedCredits": 18,
+            "videoUrl": null,
+            "driveFileId": null,
+            "driveUrl": null,
+            "lastError": null
+          },
+          "status": "success"
+        },
+        {
+          "node": "Persist completed media",
+          "run": 0,
+          "state": {
+            "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+            "sourceId": "qa-d31-record-001",
+            "revision": "r1",
+            "requestPeriod": null,
+            "status": "completed",
+            "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+            "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+            "projectSha256": "bce87acb7bf2772eb7c1044e4c30f53b170ebffd6f17e221c3d1a9ea679f587d",
+            "quotedCredits": 18,
+            "videoUrl": "https://cdn.zvid.io/videos/1/release-notes-video-1790855438485.mp4",
+            "driveFileId": null,
+            "driveUrl": null,
+            "lastError": null
+          },
+          "status": "success"
+        }
+      ],
+      "acceptedSubmission": {
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "requestPeriod": null,
+        "status": "accepted",
+        "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+        "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+        "projectSha256": "bce87acb7bf2772eb7c1044e4c30f53b170ebffd6f17e221c3d1a9ea679f587d",
+        "quotedCredits": 18,
+        "videoUrl": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "lastError": null
+      },
+      "submissionExecuted": true,
+      "uploadExecuted": false,
+      "finalState": null,
+      "outcome": null,
+      "receipt": null,
+      "syntheticFixture": true,
+      "brief": {
+        "title": "Acme Desk 2.4",
+        "subtitle": "3 release changes",
+        "cards": [
+          {
+            "label": "ADDED",
+            "value": "1 change",
+            "detail": "Shared inbox: Assign customer conversations to a team."
+          },
+          {
+            "label": "IMPROVED",
+            "value": "1 change",
+            "detail": "Faster search: Find past conversations with clearer filters."
+          },
+          {
+            "label": "FIXED",
+            "value": "1 fix",
+            "detail": "Export dates: CSV exports now keep UTC dates consistent."
+          }
+        ],
+        "footer": "Explore the latest release",
+        "sourceKey": "Acme Desk:2.4",
+        "meta": {
+          "changeCount": 3,
+          "counts": {
+            "added": 1,
+            "improved": 1,
+            "fixed": 1
+          }
+        }
+      },
+      "context": {
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "sourceUrl": "https://example.com/qa/day-31/record-001",
+        "sourceTab": "D31Source",
+        "detailsTab": "D31Details",
+        "updatedAt": "2026-10-01T09:38:06.982Z",
+        "audience": "Product marketing",
+        "need": "Hand off an approved customer-facing release recap with traceable changes.",
+        "policy": "A published release must be approved, dated and not a prerelease; internal changes are excluded.",
+        "outcome": "A private Drive MP4, with full source records retained in Sheets and the n8n ledger, plus asset links, revision, job ID and handoff summary written back to D31Source for product marketing.",
+        "record": {
+          "source_id": "qa-d31-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "published",
+          "source_url": "https://example.com/qa/day-31/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "product": "Acme Desk",
+          "version": "2.4",
+          "publishedAt": "2026-10-01T08:38:06.982Z",
+          "isPrerelease": false
+        },
+        "details": [
+          {
+            "parent_id": "qa-d31-record-001",
+            "revision": "r1",
+            "kind": "change",
+            "position": 1,
+            "type": "added",
+            "title": "Shared inbox",
+            "detail": "Assign customer conversations to a team.",
+            "audience": "public"
+          },
+          {
+            "parent_id": "qa-d31-record-001",
+            "revision": "r1",
+            "kind": "change",
+            "position": 2,
+            "type": "improved",
+            "title": "Faster search",
+            "detail": "Find past conversations with clearer filters.",
+            "audience": "public"
+          },
+          {
+            "parent_id": "qa-d31-record-001",
+            "revision": "r1",
+            "kind": "change",
+            "position": 3,
+            "type": "fixed",
+            "title": "Export dates",
+            "detail": "CSV exports now keep UTC dates consistent.",
+            "audience": "public"
+          }
+        ],
+        "joinedDetailCount": 3,
+        "selectedInput": {
+          "product": "Acme Desk",
+          "version": "2.4",
+          "changes": [
+            {
+              "type": "added",
+              "title": "Shared inbox",
+              "detail": "Assign customer conversations to a team."
+            },
+            {
+              "type": "improved",
+              "title": "Faster search",
+              "detail": "Find past conversations with clearer filters."
+            },
+            {
+              "type": "fixed",
+              "title": "Export dates",
+              "detail": "CSV exports now keep UTC dates consistent."
+            }
+          ]
+        }
+      },
+      "expectedMedia": {
+        "frameRate": 30,
+        "seconds": 18,
+        "sceneCount": 3
+      },
+      "preview": null,
+      "downloadBinary": []
+    },
+    {
+      "id": 742,
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "status": "success",
+      "mode": "manual",
+      "startedAt": "2026-10-01 11:56:11.005",
+      "stoppedAt": "2026-10-01 11:56:24.117",
+      "lastNode": "Watch video",
+      "error": null,
+      "canonicalPath": "workflows/zvid-release-notes-video.json",
+      "canonicalFunctionalHash": "64a0432dfd9d072f7bb9c2d41cb64d7d3927a5b72e36c401864da6ba34acad72",
+      "executionFunctionalHash": "b470d0ab0b6f6418eef4ca4e7cdddeb49279e12371567d0e76791f7d6163d6fd",
+      "functionalMatch": false,
+      "nodes": {
+        "Test manually": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855771026,
+            "executionTimeMs": 0,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Config": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855771026,
+            "executionTimeMs": 1,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Check source configuration": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855771027,
+            "executionTimeMs": 11,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Ensure publication ledger": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855771039,
+            "executionTimeMs": 4,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read saved requests": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855771044,
+            "executionTimeMs": 4,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read source register": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855771048,
+            "executionTimeMs": 1034,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read related records": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855772082,
+            "executionTimeMs": 909,
+            "outputItemsByBranch": [
+              3
+            ],
+            "totalOutputItems": 3,
+            "error": null
+          }
+        ],
+        "Apply release notes policy": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855772992,
+            "executionTimeMs": 21,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Fingerprint approved content": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773014,
+            "executionTimeMs": 1,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Choose one pending revision": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773015,
+            "executionTimeMs": 12,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Eligible work found?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773028,
+            "executionTimeMs": 0,
+            "outputItemsByBranch": [
+              1,
+              0
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Prepare durable request": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773029,
+            "executionTimeMs": 19,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Look up saved request": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773048,
+            "executionTimeMs": 7,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Decide recovery": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773055,
+            "executionTimeMs": 10,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Inspect saved request only?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773065,
+            "executionTimeMs": 1,
+            "outputItemsByBranch": [
+              0,
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Completed media saved?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773066,
+            "executionTimeMs": 0,
+            "outputItemsByBranch": [
+              1,
+              0
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Delivery context": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773067,
+            "executionTimeMs": 8,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Find existing delivery": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773075,
+            "executionTimeMs": 446,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Reconcile delivery file": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773521,
+            "executionTimeMs": 13,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Delivery file exists?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773534,
+            "executionTimeMs": 3,
+            "outputItemsByBranch": [
+              0,
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Download delivery media": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855773537,
+            "executionTimeMs": 470,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Check downloaded media": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855774008,
+            "executionTimeMs": 11,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Upload private review video": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855774019,
+            "executionTimeMs": 3927,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Remember delivery": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855777946,
+            "executionTimeMs": 9,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Persist delivery file": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855777956,
+            "executionTimeMs": 26,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Recheck source revision": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855777982,
+            "executionTimeMs": 1305,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Recheck related content": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855779288,
+            "executionTimeMs": 1307,
+            "outputItemsByBranch": [
+              3
+            ],
+            "totalOutputItems": 3,
+            "error": null
+          }
+        ],
+        "Prepare writeback check": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855780595,
+            "executionTimeMs": 27,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Fingerprint source before writeback": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855780622,
+            "executionTimeMs": 1,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Protect source writeback": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855780623,
+            "executionTimeMs": 9,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Update business register": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855780632,
+            "executionTimeMs": 1358,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read back delivery receipt": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855781991,
+            "executionTimeMs": 870,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read related receipt content": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855782861,
+            "executionTimeMs": 867,
+            "outputItemsByBranch": [
+              3
+            ],
+            "totalOutputItems": 3,
+            "error": null
+          }
+        ],
+        "Prepare receipt check": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855783729,
+            "executionTimeMs": 44,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Fingerprint delivery receipt": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855783774,
+            "executionTimeMs": 0,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Mark delivered": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855783775,
+            "executionTimeMs": 10,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Persist delivered outcome": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855783785,
+            "executionTimeMs": 18,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Business outcome": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855783804,
+            "executionTimeMs": 11,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Completed video available?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855783815,
+            "executionTimeMs": 4,
+            "outputItemsByBranch": [
+              1,
+              0
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Watch video": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855783819,
+            "executionTimeMs": 298,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ]
+      },
+      "selected": {
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "requestPeriod": null,
+        "status": "ready",
+        "jobId": null,
+        "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+        "projectSha256": null,
+        "quotedCredits": null,
+        "videoUrl": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "lastError": null
+      },
+      "prepared": {
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "requestPeriod": null,
+        "status": "new",
+        "jobId": null,
+        "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+        "projectSha256": "e5d300ad10aac49abf918cea417bd6d521df954fe5dfe395b2ae01bf37add895",
+        "quotedCredits": null,
+        "videoUrl": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "lastError": null
+      },
+      "checkpoints": [
+        {
+          "node": "Persist delivery file",
+          "run": 0,
+          "state": {
+            "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+            "sourceId": "qa-d31-record-001",
+            "revision": "r1",
+            "requestPeriod": null,
+            "status": "uploaded",
+            "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+            "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+            "projectSha256": "bce87acb7bf2772eb7c1044e4c30f53b170ebffd6f17e221c3d1a9ea679f587d",
+            "quotedCredits": 18,
+            "videoUrl": "https://cdn.zvid.io/videos/1/release-notes-video-1790855438485.mp4",
+            "driveFileId": "1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ",
+            "driveUrl": "https://drive.google.com/file/d/1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ/view?usp=drivesdk",
+            "lastError": null
+          },
+          "status": "success"
+        },
+        {
+          "node": "Persist delivered outcome",
+          "run": 0,
+          "state": {
+            "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+            "sourceId": "qa-d31-record-001",
+            "revision": "r1",
+            "requestPeriod": null,
+            "status": "delivered",
+            "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+            "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+            "projectSha256": "bce87acb7bf2772eb7c1044e4c30f53b170ebffd6f17e221c3d1a9ea679f587d",
+            "quotedCredits": 18,
+            "videoUrl": "https://cdn.zvid.io/videos/1/release-notes-video-1790855438485.mp4",
+            "driveFileId": "1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ",
+            "driveUrl": "https://drive.google.com/file/d/1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ/view?usp=drivesdk",
+            "lastError": null
+          },
+          "status": "success"
+        }
+      ],
+      "acceptedSubmission": null,
+      "submissionExecuted": false,
+      "uploadExecuted": true,
+      "finalState": {
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "requestPeriod": null,
+        "status": "delivered",
+        "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+        "inputHash": null,
+        "projectSha256": null,
+        "quotedCredits": 18,
+        "videoUrl": "https://cdn.zvid.io/videos/1/release-notes-video-1790855438485.mp4",
+        "driveFileId": "1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ",
+        "driveUrl": "https://drive.google.com/file/d/1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ/view?usp=drivesdk",
+        "lastError": null
+      },
+      "outcome": {
+        "status": "delivered",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+        "videoUrl": "https://cdn.zvid.io/videos/1/release-notes-video-1790855438485.mp4",
+        "driveFileId": "1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ",
+        "driveUrl": "https://drive.google.com/file/d/1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ/view?usp=drivesdk",
+        "quotedCredits": 18,
+        "dryRun": false,
+        "renderSubmitted": null,
+        "reason": null,
+        "outcome": "A private Drive MP4, with full source records retained in Sheets and the n8n ledger, plus asset links, revision, job ID and handoff summary written back to D31Source for product marketing.",
+        "report": null
+      },
+      "receipt": {
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "status": "delivered",
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+        "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+        "videoUrl": "https://cdn.zvid.io/videos/1/release-notes-video-1790855438485.mp4",
+        "driveFileId": "1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ",
+        "driveUrl": "https://drive.google.com/file/d/1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ/view?usp=drivesdk",
+        "completedAt": "2026-10-01T11:56:21.510Z",
+        "automationError": null
+      },
+      "syntheticFixture": true,
+      "brief": {
+        "title": "Acme Desk 2.4",
+        "subtitle": "3 release changes",
+        "cards": [
+          {
+            "label": "ADDED",
+            "value": "1 change",
+            "detail": "Shared inbox: Assign customer conversations to a team."
+          },
+          {
+            "label": "IMPROVED",
+            "value": "1 change",
+            "detail": "Faster search: Find past conversations with clearer filters."
+          },
+          {
+            "label": "FIXED",
+            "value": "1 fix",
+            "detail": "Export dates: CSV exports now keep UTC dates consistent."
+          }
+        ],
+        "footer": "Explore the latest release",
+        "sourceKey": "Acme Desk:2.4",
+        "meta": {
+          "changeCount": 3,
+          "counts": {
+            "added": 1,
+            "improved": 1,
+            "fixed": 1
+          }
+        }
+      },
+      "context": {
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "sourceUrl": "https://example.com/qa/day-31/record-001",
+        "sourceTab": "D31Source",
+        "detailsTab": "D31Details",
+        "updatedAt": "2026-10-01T09:38:06.982Z",
+        "audience": "Product marketing",
+        "need": "Hand off an approved customer-facing release recap with traceable changes.",
+        "policy": "A published release must be approved, dated and not a prerelease; internal changes are excluded.",
+        "outcome": "A private Drive MP4, with full source records retained in Sheets and the n8n ledger, plus asset links, revision, job ID and handoff summary written back to D31Source for product marketing.",
+        "record": {
+          "source_id": "qa-d31-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "published",
+          "source_url": "https://example.com/qa/day-31/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "product": "Acme Desk",
+          "version": "2.4",
+          "publishedAt": "2026-10-01T08:38:06.982Z",
+          "isPrerelease": false
+        },
+        "details": [
+          {
+            "parent_id": "qa-d31-record-001",
+            "revision": "r1",
+            "kind": "change",
+            "position": 1,
+            "type": "added",
+            "title": "Shared inbox",
+            "detail": "Assign customer conversations to a team.",
+            "audience": "public"
+          },
+          {
+            "parent_id": "qa-d31-record-001",
+            "revision": "r1",
+            "kind": "change",
+            "position": 2,
+            "type": "improved",
+            "title": "Faster search",
+            "detail": "Find past conversations with clearer filters.",
+            "audience": "public"
+          },
+          {
+            "parent_id": "qa-d31-record-001",
+            "revision": "r1",
+            "kind": "change",
+            "position": 3,
+            "type": "fixed",
+            "title": "Export dates",
+            "detail": "CSV exports now keep UTC dates consistent.",
+            "audience": "public"
+          }
+        ],
+        "joinedDetailCount": 3,
+        "selectedInput": {
+          "product": "Acme Desk",
+          "version": "2.4",
+          "changes": [
+            {
+              "type": "added",
+              "title": "Shared inbox",
+              "detail": "Assign customer conversations to a team."
+            },
+            {
+              "type": "improved",
+              "title": "Faster search",
+              "detail": "Find past conversations with clearer filters."
+            },
+            {
+              "type": "fixed",
+              "title": "Export dates",
+              "detail": "CSV exports now keep UTC dates consistent."
+            }
+          ]
+        }
+      },
+      "expectedMedia": {
+        "frameRate": 30,
+        "seconds": 18,
+        "sceneCount": 3
+      },
+      "preview": {
+        "property": "data",
+        "mimeType": "video/mp4",
+        "fileName": "release-notes-video-1790855438485.mp4",
+        "fileSize": "148 kB",
+        "id": "filesystem-v2:workflows/ZvidSeries2Day31/executions/742/binary_data/d05430eb-ab81-43b6-b2fb-87e8fcc9053e",
+        "dataPresent": true
+      },
+      "downloadBinary": [
+        {
+          "property": "data",
+          "mimeType": "video/mp4",
+          "fileName": "release-notes-video-1790855438485.mp4",
+          "fileSize": "148 kB",
+          "id": "filesystem-v2:workflows/ZvidSeries2Day31/executions/742/binary_data/f4281b5e-bdbc-4175-83ec-4ef5764ded80",
+          "dataPresent": true
+        }
+      ]
+    },
+    {
+      "id": 743,
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "status": "success",
+      "mode": "manual",
+      "startedAt": "2026-10-01 11:57:57.863",
+      "stoppedAt": "2026-10-01 11:57:59.778",
+      "lastNode": "No work report",
+      "error": null,
+      "canonicalPath": "workflows/zvid-release-notes-video.json",
+      "canonicalFunctionalHash": "64a0432dfd9d072f7bb9c2d41cb64d7d3927a5b72e36c401864da6ba34acad72",
+      "executionFunctionalHash": "b470d0ab0b6f6418eef4ca4e7cdddeb49279e12371567d0e76791f7d6163d6fd",
+      "functionalMatch": false,
+      "nodes": {
+        "Test manually": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855877882,
+            "executionTimeMs": 0,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Config": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855877883,
+            "executionTimeMs": 0,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Check source configuration": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855877883,
+            "executionTimeMs": 11,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Ensure publication ledger": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855877895,
+            "executionTimeMs": 3,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read saved requests": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855877898,
+            "executionTimeMs": 4,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read source register": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855877903,
+            "executionTimeMs": 929,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Read related records": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855878832,
+            "executionTimeMs": 889,
+            "outputItemsByBranch": [
+              3
+            ],
+            "totalOutputItems": 3,
+            "error": null
+          }
+        ],
+        "Apply release notes policy": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855879721,
+            "executionTimeMs": 28,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Fingerprint approved content": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855879749,
+            "executionTimeMs": 1,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Choose one pending revision": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855879751,
+            "executionTimeMs": 12,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "Eligible work found?": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855879764,
+            "executionTimeMs": 1,
+            "outputItemsByBranch": [
+              0,
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ],
+        "No work report": [
+          {
+            "run": 0,
+            "status": "success",
+            "startedAtMs": 1790855879765,
+            "executionTimeMs": 12,
+            "outputItemsByBranch": [
+              1
+            ],
+            "totalOutputItems": 1,
+            "error": null
+          }
+        ]
+      },
+      "selected": {
+        "requestKey": null,
+        "sourceId": null,
+        "revision": null,
+        "requestPeriod": null,
+        "status": "nothing_to_render",
+        "jobId": null,
+        "inputHash": null,
+        "projectSha256": null,
+        "quotedCredits": null,
+        "videoUrl": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "lastError": null
+      },
+      "prepared": null,
+      "checkpoints": [],
+      "acceptedSubmission": null,
+      "submissionExecuted": false,
+      "uploadExecuted": false,
+      "finalState": null,
+      "outcome": {
+        "status": "nothing_to_render",
+        "sourceId": null,
+        "revision": null,
+        "requestKey": null,
+        "jobId": null,
+        "videoUrl": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "quotedCredits": null,
+        "dryRun": null,
+        "renderSubmitted": false,
+        "reason": "No approved, eligible, undelivered revision.",
+        "outcome": null,
+        "report": {
+          "examined": 1,
+          "skipped": [],
+          "alreadyDelivered": 1
+        }
+      },
+      "receipt": null,
+      "syntheticFixture": false,
+      "brief": null,
+      "context": null,
+      "expectedMedia": null,
+      "preview": null,
+      "downloadBinary": []
+    }
+  ],
+  "days": [
+    {
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "attemptCount": 3,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": 743,
+      "latestAttemptStatus": "success",
+      "noWorkAttemptIds": [
+        743
+      ],
+      "errorAttemptIds": [
+        740
+      ]
+    },
+    {
+      "day": 32,
+      "workflowId": "ZvidSeries2Day32",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 33,
+      "workflowId": "ZvidSeries2Day33",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 34,
+      "workflowId": "ZvidSeries2Day34",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 35,
+      "workflowId": "ZvidSeries2Day35",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 36,
+      "workflowId": "ZvidSeries2Day36",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 37,
+      "workflowId": "ZvidSeries2Day37",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 38,
+      "workflowId": "ZvidSeries2Day38",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 39,
+      "workflowId": "ZvidSeries2Day39",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 40,
+      "workflowId": "ZvidSeries2Day40",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 41,
+      "workflowId": "ZvidSeries2Day41",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 42,
+      "workflowId": "ZvidSeries2Day42",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 43,
+      "workflowId": "ZvidSeries2Day43",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 44,
+      "workflowId": "ZvidSeries2Day44",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 45,
+      "workflowId": "ZvidSeries2Day45",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 46,
+      "workflowId": "ZvidSeries2Day46",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 47,
+      "workflowId": "ZvidSeries2Day47",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 48,
+      "workflowId": "ZvidSeries2Day48",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 49,
+      "workflowId": "ZvidSeries2Day49",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 50,
+      "workflowId": "ZvidSeries2Day50",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 51,
+      "workflowId": "ZvidSeries2Day51",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 52,
+      "workflowId": "ZvidSeries2Day52",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 53,
+      "workflowId": "ZvidSeries2Day53",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 54,
+      "workflowId": "ZvidSeries2Day54",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 55,
+      "workflowId": "ZvidSeries2Day55",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 56,
+      "workflowId": "ZvidSeries2Day56",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 57,
+      "workflowId": "ZvidSeries2Day57",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 58,
+      "workflowId": "ZvidSeries2Day58",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 59,
+      "workflowId": "ZvidSeries2Day59",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    },
+    {
+      "day": 60,
+      "workflowId": "ZvidSeries2Day60",
+      "attemptCount": 0,
+      "manualDeliveredPassIds": [],
+      "latestAttemptId": null,
+      "latestAttemptStatus": null,
+      "noWorkAttemptIds": [],
+      "errorAttemptIds": []
+    }
+  ]
+}

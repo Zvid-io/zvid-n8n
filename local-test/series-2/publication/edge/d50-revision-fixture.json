@@ -1,0 +1,521 @@
+[
+  {
+    "id": "ZvidSeries2PubQARevisionD50",
+    "name": "QA D50 prepare revision r2 for corrected tender cards",
+    "active": false,
+    "nodes": [
+      {
+        "id": "ZvidSeries2PubQARevisionD50-1",
+        "name": "Test manually",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          170
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-2",
+        "name": "Read current D50 source",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          270,
+          170
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "read",
+          "documentId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "D50Source"
+          },
+          "filtersUI": {
+            "values": [
+              {
+                "lookupColumn": "source_id",
+                "lookupValue": "qa-d50-record-001"
+              }
+            ]
+          },
+          "combineFilters": "AND",
+          "options": {
+            "returnFirstMatch": false,
+            "outputFormatting": {
+              "values": {
+                "general": "UNFORMATTED_VALUE",
+                "date": "FORMATTED_STRING"
+              }
+            }
+          }
+        },
+        "executeOnce": true,
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "4brcFt0P3EihgxJb",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-3",
+        "name": "Read current D50 details",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          540,
+          170
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "read",
+          "documentId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "D50Details"
+          },
+          "options": {
+            "returnFirstMatch": false,
+            "outputFormatting": {
+              "values": {
+                "general": "UNFORMATTED_VALUE",
+                "date": "FORMATTED_STRING"
+              }
+            }
+          }
+        },
+        "executeOnce": true,
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "4brcFt0P3EihgxJb",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-4",
+        "name": "Guard exact r1 and absent r2",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          810,
+          170
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const sources=$(\"Read current D50 source\").all().map(item=>item.json).filter(row=>row.source_id);if(sources.length!==1)throw new Error('D50 requires exactly one synthetic source; no changes made');const primary=sources[0];if(primary.source_id!==\"qa-d50-record-001\"||primary.revision!=='r1'||primary.automation_status!=='delivered'||!primary.job_id||!primary.drive_file_id||!primary.video_url||!primary.drive_url||!primary.request_key.includes('|r1|')||!primary.request_key.endsWith('|'+\"1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh\"))throw new Error('Expected the exact delivered r1 QA source; no changes made');const details=$input.all().map(item=>item.json).filter(row=>row.parent_id===primary.source_id);if(details.some(row=>row.revision==='r2'))throw new Error('D50 r2 detail rows already exist: complete or partial prior run. Reconcile manually; no changes made');const previous=details.filter(row=>row.revision==='r1');if(previous.length!==5||previous.filter(row=>row.kind==='eligibility').length!==2||previous.filter(row=>row.kind==='document').length!==3)throw new Error('Expected all five existing r1 QA details');const identities=new Set(previous.map(row=>row.kind+'|'+row.position));if(identities.size!==previous.length)throw new Error('Duplicate r1 detail positions');const headers=[\"parent_id\",\"revision\",\"kind\",\"position\",\"requirement\",\"verified\",\"name\",\"owner\",\"ready\"];const rows=previous.map(row=>Object.fromEntries(headers.map(key=>[key,key==='revision'?'r2':row[key]??''])));return [{json:{originalPrimary:primary,originalDetails:previous,newRows:rows,newUpdatedAt:new Date().toISOString()}}];"
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-5",
+        "name": "Expand cloned r2 details",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          0,
+          420
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "return $(\"Guard exact r1 and absent r2\").first().json.newRows.map(json=>({json}));"
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-6",
+        "name": "Append D50 r2 details",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          270,
+          420
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "D50Details"
+          },
+          "columns": {
+            "mappingMode": "autoMapInputData",
+            "value": {},
+            "schema": []
+          },
+          "options": {
+            "cellFormat": "RAW",
+            "handlingExtraData": "insertInNewColumn",
+            "useAppend": true
+          }
+        },
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "4brcFt0P3EihgxJb",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-7",
+        "name": "Prepare r2 primary update",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          540,
+          420
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const guard=$(\"Guard exact r1 and absent r2\").first().json;if($input.all().length!==guard.newRows.length)throw new Error(\"Partial detail append response; reconcile before any retry\");return [{json:{source_id:guard.originalPrimary.source_id,revision:\"r2\",updated_at:guard.newUpdatedAt}}];"
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-8",
+        "name": "Advance only primary revision and timestamp",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          810,
+          420
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "update",
+          "documentId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "D50Source"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "matchingColumns": [
+              "source_id"
+            ],
+            "value": {
+              "source_id": "={{ $json.source_id }}",
+              "revision": "r2",
+              "updated_at": "={{ $json.updated_at }}"
+            },
+            "schema": [
+              {
+                "id": "source_id",
+                "displayName": "source_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "revision",
+                "displayName": "revision",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "updated_at",
+                "displayName": "updated_at",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {
+            "cellFormat": "RAW"
+          }
+        },
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "4brcFt0P3EihgxJb",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-9",
+        "name": "Read back D50 r2 source",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          0,
+          670
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "read",
+          "documentId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "D50Source"
+          },
+          "filtersUI": {
+            "values": [
+              {
+                "lookupColumn": "source_id",
+                "lookupValue": "qa-d50-record-001"
+              }
+            ]
+          },
+          "combineFilters": "AND",
+          "options": {
+            "returnFirstMatch": false,
+            "outputFormatting": {
+              "values": {
+                "general": "UNFORMATTED_VALUE",
+                "date": "FORMATTED_STRING"
+              }
+            }
+          }
+        },
+        "executeOnce": true,
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "4brcFt0P3EihgxJb",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-10",
+        "name": "Read back D50 revision details",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          270,
+          670
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "read",
+          "documentId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "D50Details"
+          },
+          "options": {
+            "returnFirstMatch": false,
+            "outputFormatting": {
+              "values": {
+                "general": "UNFORMATTED_VALUE",
+                "date": "FORMATTED_STRING"
+              }
+            }
+          }
+        },
+        "executeOnce": true,
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "4brcFt0P3EihgxJb",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-11",
+        "name": "Verify r2 source and preserved r1 records",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          540,
+          670
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const guard=$(\"Guard exact r1 and absent r2\").first().json;const primaryRows=$(\"Read back D50 r2 source\").all().map(item=>item.json).filter(row=>row.source_id);if(primaryRows.length!==1)throw new Error('Source readback is ambiguous');const primary=primaryRows[0],equal=(a,b)=>String(a??'')===String(b??'');for(const field of [\"source_id\",\"revision\",\"approval\",\"status\",\"source_url\",\"updated_at\",\"title\",\"deadline\",\"bidOwner\",\"automation_status\",\"request_key\",\"input_hash\",\"job_id\",\"video_url\",\"drive_file_id\",\"drive_url\",\"completed_at\",\"outcome_summary\",\"automation_error\"]){const expected=field==='revision'?'r2':field==='updated_at'?guard.newUpdatedAt:guard.originalPrimary[field];if(!equal(primary[field],expected))throw new Error('Primary readback changed '+field+' unexpectedly');}const details=$input.all().map(item=>item.json).filter(row=>row.parent_id===primary.source_id);const old=details.filter(row=>row.revision==='r1'),fresh=details.filter(row=>row.revision==='r2');if(old.length!==guard.originalDetails.length||fresh.length!==guard.newRows.length)throw new Error('Partial or duplicate revision details. Reconcile manually');const check=(actual,expected)=>{for(const wanted of expected){const matched=actual.filter(row=>row.kind===wanted.kind&&equal(row.position,wanted.position));if(matched.length!==1)throw new Error('Missing or duplicate detail position');for(const field of [\"parent_id\",\"revision\",\"kind\",\"position\",\"requirement\",\"verified\",\"name\",\"owner\",\"ready\"])if(!equal(matched[0][field],wanted[field]))throw new Error('Detail readback changed '+field);}};check(old,guard.originalDetails);check(fresh,guard.newRows);return [{json:{status:'d50_source_revision_r2_ready',sourceId:primary.source_id,revision:primary.revision,updatedAt:primary.updated_at,r1DetailsRetained:old.length,r2DetailsCreated:fresh.length,previousJobId:guard.originalPrimary.job_id,previousDriveFileId:guard.originalPrimary.drive_file_id,previousRequestKey:guard.originalPrimary.request_key,previousReceiptRetained:true,ledgerModified:false,assetsModified:false,newRenderSubmitted:false}}];"
+        }
+      },
+      {
+        "id": "ZvidSeries2PubQARevisionD50-12",
+        "name": "Local D50 revision instructions",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -850,
+          0
+        ],
+        "parameters": {
+          "color": 1,
+          "width": 770,
+          "height": 350,
+          "content": "## Manual QA: corrected D50 tender briefing\n\nRun once after the original r1 source is delivered and before rendering the corrected canonical D50. The fixture reads the exact synthetic QA source and verifies that no r2 details exist. It clones the five r1 details as r2, then updates only primary revision and updated_at. Existing source receipt columns, r1 details, ledger, accepted job and Drive asset remain retained.\n\nNo render, Drive or Data Table nodes are present. Repeated or partial runs stop for manual reconciliation. Sheets updates are not one transaction. After the verified r2 receipt, root must run the newly imported canonical D50, review its new video and recapture its canvas. This fixture is inactive and excluded from publication."
+        }
+      }
+    ],
+    "connections": {
+      "Test manually": {
+        "main": [
+          [
+            {
+              "node": "Read current D50 source",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read current D50 source": {
+        "main": [
+          [
+            {
+              "node": "Read current D50 details",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read current D50 details": {
+        "main": [
+          [
+            {
+              "node": "Guard exact r1 and absent r2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guard exact r1 and absent r2": {
+        "main": [
+          [
+            {
+              "node": "Expand cloned r2 details",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Expand cloned r2 details": {
+        "main": [
+          [
+            {
+              "node": "Append D50 r2 details",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Append D50 r2 details": {
+        "main": [
+          [
+            {
+              "node": "Prepare r2 primary update",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare r2 primary update": {
+        "main": [
+          [
+            {
+              "node": "Advance only primary revision and timestamp",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Advance only primary revision and timestamp": {
+        "main": [
+          [
+            {
+              "node": "Read back D50 r2 source",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read back D50 r2 source": {
+        "main": [
+          [
+            {
+              "node": "Read back D50 revision details",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read back D50 revision details": {
+        "main": [
+          [
+            {
+              "node": "Verify r2 source and preserved r1 records",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {},
+    "settings": {
+      "executionOrder": "v1",
+      "timezone": "UTC"
+    },
+    "meta": {
+      "localQaFixture": {
+        "day": 50,
+        "fromRevision": "r1",
+        "toRevision": "r2",
+        "paidOperationsAbsent": true,
+        "preserveOldLedgerAndAssets": true
+      }
+    }
+  }
+]

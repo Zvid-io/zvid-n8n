@@ -1,0 +1,319 @@
+{
+  "type": "video",
+  "name": "S2 D33 - Questions to Product Demonstration",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#191510",
+  "scenes": [
+    {
+      "id": "the-question",
+      "duration": 4,
+      "backgroundColor": "#191510",
+      "transition": "fadeblack",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{machineImage}}",
+          "x": 60,
+          "y": 660,
+          "width": 960,
+          "height": 1060,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 4,
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:28px;letter-spacing:6px\">{{brand}} / YOU ASKED</div><div style=\"font-size:87px;margin-top:24px\">{{question}}</div>",
+          "x": 70,
+          "y": 110,
+          "width": 940,
+          "height": 420,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 3,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 4,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 87,
+            "color": "#F3DCB3",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "hands-on",
+      "duration": 6,
+      "backgroundColor": "#191510",
+      "transition": "fadeblack",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "VIDEO",
+          "src": "{{prepVideo}}",
+          "x": 60,
+          "y": 390,
+          "width": 960,
+          "height": 630,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "volume": 0,
+          "hasAudio": false,
+          "videoBegin": 3,
+          "videoDuration": 6,
+          "enterEnd": 0.4,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{machineImage}}",
+          "x": 70,
+          "y": 1170,
+          "width": 360,
+          "height": 560,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:28px;letter-spacing:6px\">01 / THE BREW</div><div style=\"font-size:89px;margin-top:20px\">{{firstAnswer}}</div>",
+          "x": 70,
+          "y": 120,
+          "width": 940,
+          "height": 220,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 89,
+            "color": "#F3DCB3",
+            "lineHeight": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "A closer look.<br>A clearer answer.",
+          "x": 490,
+          "y": 1260,
+          "width": 500,
+          "height": 300,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 60,
+            "color": "#F3DCB3",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-pour",
+      "duration": 6,
+      "backgroundColor": "#A46B38",
+      "transition": "fadeblack",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "VIDEO",
+          "src": "{{pourVideo}}",
+          "x": 60,
+          "y": 140,
+          "width": 960,
+          "height": 730,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "volume": 0,
+          "hasAudio": false,
+          "videoBegin": 2,
+          "videoDuration": 6,
+          "enterEnd": 0.4,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "IMAGE",
+          "src": "{{pourImage}}",
+          "x": 600,
+          "y": 1130,
+          "width": 400,
+          "height": 590,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 1,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 6
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:28px;letter-spacing:5px\">02 / THE RESULT</div><div style=\"font-size:100px;margin-top:20px\">{{secondAnswer}}</div>",
+          "x": 70,
+          "y": 970,
+          "width": 940,
+          "height": 220,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 100,
+            "color": "#FFF5DF",
+            "lineHeight": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "From question<br>to first cup.",
+          "x": 70,
+          "y": 1350,
+          "width": 480,
+          "height": 250,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 6,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 60,
+            "color": "#FFF5DF",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "try-the-ritual",
+      "duration": 5,
+      "backgroundColor": "#191510",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{pourImage}}",
+          "x": 60,
+          "y": 180,
+          "width": 960,
+          "height": 1130,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 480,
+            "tr": 480,
+            "bl": 20,
+            "br": 20
+          },
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:75px\">{{productName}}</div><div style=\"font-size:37px;margin-top:24px\">{{cta}}</div><div style=\"font-size:30px;margin-top:30px\">{{url}}</div>",
+          "x": 70,
+          "y": 1450,
+          "width": 940,
+          "height": 350,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 75,
+            "color": "#F3DCB3",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "GROUND STUDIO",
+    "question": "How does it brew?",
+    "firstAnswer": "See the first drops.",
+    "secondAnswer": "Straight to your cup.",
+    "productName": "Your daily espresso ritual",
+    "cta": "See the machine in action",
+    "url": "ground.example/demo",
+    "machineImage": "https://images.unsplash.com/photo-1620807773206-49c1f2957417?auto=format&fit=crop&w=1080&h=1600&q=85",
+    "pourImage": "https://images.unsplash.com/photo-1616388761741-a5936c6f61f6?auto=format&fit=crop&w=1080&h=1600&q=85",
+    "prepVideo": "https://videos.pexels.com/video-files/7592661/7592661-hd_1366_658_30fps.mp4",
+    "pourVideo": "https://videos.pexels.com/video-files/4957763/4957763-hd_1920_1080_25fps.mp4",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943453/zvid-series2-unique-music-20261002/day-33-music.mp3",
+    "musicVolume": 0.8
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 19.95,
+      "audioBegin": 0,
+      "audioEnd": 19.95,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

@@ -1,0 +1,666 @@
+{
+  "auditType": "publication_use_case_design_audit",
+  "createdAt": "2026-10-01T11:07:43.312Z",
+  "scope": "Days 31–60; canonical JSON, generator, deterministic specs and companion guides",
+  "conclusion": "All 30 need a functional redesign before being presented as complete business automations. The existing renderer and deterministic calculations are useful building blocks. More nodes or longer notes alone do not establish a complete use case. Publication acceptance remains n8n’s decision.",
+  "existingStrengths": [
+    "Typed validation and meaningful domain calculations",
+    "Credit quote and cap before paid submission",
+    "One accepted render followed by bounded polling",
+    "Completed media guard, retained URL and bounded preview",
+    "Real manual rendering and MP4 evidence for the existing generation paths"
+  ],
+  "sharedDeficiencies": [
+    "Every workflow uses the same manual sample/webhook-to-render graph.",
+    "No workflow fetches authoritative source records; upstream must prepare the whole video input.",
+    "No source-specific approval, stale event, cancellation or changed-record policy is implemented.",
+    "No persistent processed-record ledger or accepted-job recovery exists.",
+    "The current sourceKey is frequently a title/product/site/warehouse, not an immutable event-plus-revision deduplication key.",
+    "No mandatory destination, delivery result or source-system write-back completes the business need.",
+    "Business rules and instructions explicitly defer external messaging/publication to an extension.",
+    "The 18–24 second generic card videos sometimes omit source steps/details; they must link and retain the full authoritative record.",
+    "Existing successful manual runs prove rendering, not the proposed business source, state or delivery behavior."
+  ],
+  "nonPaddingAcceptanceGate": [
+    "A named user with a specific recurring problem and a reason a brief video helps.",
+    "A configured production trigger and an implemented source acquisition path, not only hardcoded samples.",
+    "A domain-specific eligibility/approval branch and at least one meaningful zero-work or review path.",
+    "Enrichment/calculation from real source records that materially affects the result.",
+    "Persistent state keyed by source identity, revision and destination, with the accepted render job saved before waiting.",
+    "A delivered business artifact and recorded outcome; retry delivery from the saved completed job instead of rendering again.",
+    "Manual Docker evidence for success, duplicates, changed inputs, no-work/review, and a failed-delivery resume.",
+    "Setup and submission prose accurately describes all required integrations and the actual limits; it does not promise acceptance."
+  ],
+  "stateRequirements": {
+    "identity": "Use stable upstream record/event IDs plus revision or a deterministic content fingerprint. Do not use a display title as the only key.",
+    "minimumStates": [
+      "received",
+      "skipped_or_review",
+      "claimed",
+      "render_accepted",
+      "render_completed",
+      "delivery_pending",
+      "delivered",
+      "needs_attention"
+    ],
+    "savedFields": [
+      "sourceId",
+      "sourceRevision",
+      "destinationId",
+      "sourceSnapshotReference",
+      "approvedAt",
+      "jobId",
+      "videoUrl",
+      "quote",
+      "deliveryReference",
+      "lastError",
+      "timestamps"
+    ],
+    "concurrency": "A check-then-insert flow alone can race. Use an atomic unique claim or a serialized dispatcher. Do not claim exactly-once protection if the chosen storage cannot enforce it.",
+    "manualTestCaveat": "Workflow static data is not a substitute for demonstrated persistent manual-run state. Test the actual storage behavior in Docker.",
+    "retryPolicy": "Retry safe reads and delivery according to service semantics; never automatically resubmit a known accepted paid job. A timeout must retain the accepted job and route to recovery."
+  },
+  "feasibleBuildStrategy": "Keep the proven native Zvid render module. Implement source-specific queue/joins and outcomes around it. Google Sheets can supply many operations registers with one reusable credential and isolated test workbook; GitHub, Shopify, Form or authenticated source webhooks can supply event-driven records. Use native nodes when supported. An authenticated local source/sink contract can test an unavailable service adapter, but label that as a contract test rather than claiming the external integration was verified.",
+  "recommendations": [
+    {
+      "day": 31,
+      "slug": "release-notes-video",
+      "currentTitle": "Release notes to a feature announcement video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day31",
+      "status": "redesign_required",
+      "need": "Product marketing needs a consistent release recap without manually copying engineering notes.",
+      "triggerAndSource": "A published GitHub release; fetch the release and its approved change records.",
+      "eligibility": "Ignore drafts, prereleases and changes marked internal; require a product owner approval and a nonempty customer-facing change set.",
+      "enrichment": "Group added/improved/fixed changes, retain source links and all release details, and calculate the customer-facing category counts.",
+      "deduplicationKey": "repository + release ID + approved revision",
+      "completedOutcome": "Save the video URL in a release asset register and send the marketing team a review handoff with the release link.",
+      "integrationPath": "GitHub → Google Sheets asset register → Slack",
+      "negativeTests": [
+        "Draft or internal-only release skips rendering",
+        "Duplicate release revision reuses its saved job",
+        "Failed Slack handoff retries delivery only"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 32,
+      "slug": "procedure-tutorial-video",
+      "currentTitle": "A procedure to a step-by-step tutorial video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day32",
+      "status": "redesign_required",
+      "need": "Operations trainers need a short orientation to a revised procedure alongside the authoritative instructions.",
+      "triggerAndSource": "An approved procedure revision in a Google Sheets Procedures queue; join the ordered Steps and training audience tabs.",
+      "eligibility": "Only approved, effective revisions with an owner and at least two ordered steps qualify; reject gaps or duplicate step positions.",
+      "enrichment": "Assemble ordered steps, estimate reading time, include the full procedure link, and identify the requested training audience.",
+      "deduplicationKey": "procedure ID + approved revision + audience ID",
+      "completedOutcome": "Write the video URL and revision to the procedure record and create a training distribution entry for the selected audience.",
+      "integrationPath": "Google Sheets → Google Drive → Google Sheets",
+      "negativeTests": [
+        "Unapproved revision skips",
+        "Missing ordered step goes to review",
+        "Long procedure retains every step in its companion record"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 33,
+      "slug": "plan-comparison-video",
+      "currentTitle": "Pricing plans to a feature comparison video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day33",
+      "status": "redesign_required",
+      "need": "Sales enablement needs an accurate comparison asset when approved pricing or feature availability changes.",
+      "triggerAndSource": "A scheduled scan of approved Pricing Plans and Plan Features tabs.",
+      "eligibility": "Only effective approved catalog versions qualify; require distinct plan IDs, one currency and current price terms.",
+      "enrichment": "Join features to plans, deduplicate repeated features, calculate common and unique features, and retain the effective date and terms link.",
+      "deduplicationKey": "product ID + pricing catalog revision",
+      "completedOutcome": "Store the comparison asset in the sales content register and notify the owner that the new approved comparison is available.",
+      "integrationPath": "Google Sheets → Google Drive → Slack",
+      "negativeTests": [
+        "Future pricing stays queued",
+        "Mixed currencies or missing terms block the brief",
+        "Unchanged catalog causes no new render"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 34,
+      "slug": "incident-timeline-video",
+      "currentTitle": "A service incident to a status timeline video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day34",
+      "status": "redesign_required",
+      "need": "Service owners need a concise resolved-incident recap for customers and internal review.",
+      "triggerAndSource": "A resolved incident webhook; fetch authoritative incident updates from the configured status system.",
+      "eligibility": "Require resolved state, a positive incident window and approved public wording; open incidents remain pending.",
+      "enrichment": "Sort updates, validate timestamps inside the incident window, calculate duration, and link the full incident record.",
+      "deduplicationKey": "incident ID + approved public revision",
+      "completedOutcome": "Attach the recap URL to the incident communication register and send it to the service communications review channel.",
+      "integrationPath": "Authenticated Webhook / status API → Google Sheets → Slack",
+      "negativeTests": [
+        "Open incident is not presented as resolved",
+        "Out-of-window update is rejected",
+        "A repeated resolved webhook does not render twice"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 35,
+      "slug": "maintenance-notice-video",
+      "currentTitle": "A maintenance window to a customer notice video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day35",
+      "status": "redesign_required",
+      "need": "Customer success needs a timed maintenance notice that reaches the team before a real service window.",
+      "triggerAndSource": "A scheduled scan of an approved maintenance calendar in Google Sheets; join affected service records.",
+      "eligibility": "Select only upcoming windows inside a configurable notice lead time; skip cancelled, expired and already-notified revisions.",
+      "enrichment": "Calculate hours until start and window length, collect affected services and approved support instructions, and preserve the source window.",
+      "deduplicationKey": "maintenance ID + revision + notice phase",
+      "completedOutcome": "Save the completed notice and mark the notice phase delivered in the maintenance register; route late notices to an exception queue.",
+      "integrationPath": "Schedule → Google Sheets → Slack",
+      "negativeTests": [
+        "Expired and cancelled windows skip",
+        "Overlapping or invalid windows go to review",
+        "Repeated schedule does not send the same notice phase"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 36,
+      "slug": "order-progress-video",
+      "currentTitle": "An order status to a fulfillment progress video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day36",
+      "status": "redesign_required",
+      "need": "Order support needs a customer-specific progress update after a genuine fulfillment transition.",
+      "triggerAndSource": "A Shopify order/fulfillment event; fetch the current order and fulfillment records.",
+      "eligibility": "Ignore cancelled/test orders and stale or unchanged statuses; require an allowed customer notification preference.",
+      "enrichment": "Map current fulfillment progress, total purchased quantities, join the current delivery estimate and order-status link, and avoid shipping promises for delivered orders.",
+      "deduplicationKey": "order ID + fulfillment revision/status + recipient",
+      "completedOutcome": "Send the private customer update through the configured transactional email destination and write the job and delivery status to an order communication ledger.",
+      "integrationPath": "Shopify → Google Sheets ledger → Email",
+      "negativeTests": [
+        "Duplicate and out-of-order fulfillment events skip",
+        "Cancelled order does not render",
+        "Email failure resumes from the saved completed video"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 37,
+      "slug": "product-bundle-savings-video",
+      "currentTitle": "Product components to a bundle savings explainer video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day37",
+      "status": "redesign_required",
+      "need": "Merchandising needs a defensible bundle explanation when an approved offer changes.",
+      "triggerAndSource": "A scheduled scan of approved bundle offers; join component SKUs to the current product price table.",
+      "eligibility": "Require active components, matched currency, an effective offer and approved promotion wording; retired offers skip.",
+      "enrichment": "Calculate separate-product total and bundle savings in integer cents; branch to review when the bundle is a surcharge rather than advertising savings.",
+      "deduplicationKey": "bundle ID + offer revision + component price revision",
+      "completedOutcome": "Write the completed asset and verified price snapshot back to the offer register and hand it to the merchandising owner.",
+      "integrationPath": "Google Sheets → Google Drive → Slack",
+      "negativeTests": [
+        "Missing component blocks the offer",
+        "Surcharge cannot produce a savings claim",
+        "Price change creates a new revision while unchanged prices skip"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 38,
+      "slug": "delivery-delay-video",
+      "currentTitle": "A delivery delay to a revised ETA video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day38",
+      "status": "redesign_required",
+      "need": "Support needs to explain a real delivery delay and provide a current next step without repeated customer messages.",
+      "triggerAndSource": "A carrier/support delay event; fetch the current shipment and order communication record.",
+      "eligibility": "Require a strictly later confirmed estimate, a still-active shipment and a new delay revision; an unchanged estimate is a zero-work result.",
+      "enrichment": "Compare original and revised calendar dates, calculate delay days, join the approved reason, next step and tracking URL.",
+      "deduplicationKey": "shipment ID + ETA revision + customer ID",
+      "completedOutcome": "Send the private delay update and write its video URL, revised estimate and delivery status back to the shipment record.",
+      "integrationPath": "Authenticated Webhook → Google Sheets → Email",
+      "negativeTests": [
+        "Unchanged ETA skips rendering",
+        "Earlier or malformed ETA is rejected",
+        "Repeated delivery retry reuses the accepted job"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 39,
+      "slug": "appointment-preparation-video",
+      "currentTitle": "An appointment to a preparation checklist video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day39",
+      "status": "redesign_required",
+      "need": "Appointment coordinators need attendees to complete the correct preparation before an upcoming booking.",
+      "triggerAndSource": "A scheduled scan of appointment records; join appointment-type preparation tasks and attendee consent.",
+      "eligibility": "Select confirmed appointments inside the reminder window; skip cancelled, rescheduled and already-reminded booking revisions.",
+      "enrichment": "Join type-specific preparation requirements, timezone-aware appointment details and authoritative booking link; retain the full checklist.",
+      "deduplicationKey": "appointment ID + booking revision + reminder phase",
+      "completedOutcome": "Deliver the private checklist video to the attendee and write reminder completion and the asset URL to the booking register.",
+      "integrationPath": "Google Sheets / Calendar → Google Sheets → Email",
+      "negativeTests": [
+        "Cancelled appointment skips",
+        "Rescheduling creates a new reminder key",
+        "No preparation tasks routes to coordinator review"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 40,
+      "slug": "return-instructions-video",
+      "currentTitle": "A return authorization to a packing and drop-off video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day40",
+      "status": "redesign_required",
+      "need": "Returns teams need customers to pack and return an approved item correctly before its deadline.",
+      "triggerAndSource": "An approved return authorization event; fetch the return, approved items and return-policy instructions.",
+      "eligibility": "Require approved state, a usable return label/portal link and a deadline that has not expired; reject unapproved or cancelled returns.",
+      "enrichment": "Join item quantities, deadline and return steps; calculate days remaining and identify same-day urgency without extending the authorization.",
+      "deduplicationKey": "return ID + authorization revision + customer ID",
+      "completedOutcome": "Send the private return instructions and write video and delivery status back to the authorization record.",
+      "integrationPath": "Shopify / authenticated return webhook → Google Sheets → Email",
+      "negativeTests": [
+        "Expired/unapproved return never renders",
+        "Missing return destination routes to review",
+        "Delivery retry does not create another paid render"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 41,
+      "slug": "employee-first-week-video",
+      "currentTitle": "An employee start date to a first-week agenda video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day41",
+      "status": "redesign_required",
+      "need": "People operations needs each new employee to know the real first-week schedule and where to go.",
+      "triggerAndSource": "A scheduled scan of confirmed new hires; join role/location onboarding sessions and the employee contact record.",
+      "eligibility": "Require a confirmed start, complete role/location matching and a valid private destination; skip withdrawn or already-onboarded revisions.",
+      "enrichment": "Build five workdays using the configured workweek and explicit holiday table, group sessions by day, and retain the full onboarding calendar link.",
+      "deduplicationKey": "employee ID + start-date revision + onboarding-plan revision",
+      "completedOutcome": "Deliver the private first-week briefing and mark the onboarding communication delivered in the hire register.",
+      "integrationPath": "Google Sheets → Google Calendar / Email → Google Sheets",
+      "negativeTests": [
+        "Withdrawn hire skips",
+        "Holiday and weekend starts produce the documented dates",
+        "Plan revision can resend without treating it as a duplicate"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 42,
+      "slug": "interview-agenda-video",
+      "currentTitle": "An interview schedule to a candidate agenda video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day42",
+      "status": "redesign_required",
+      "need": "Recruiting coordinators need a candidate to arrive prepared for the final approved interview schedule.",
+      "triggerAndSource": "A confirmed interview-plan event; join candidate contact and interviewer calendar sessions.",
+      "eligibility": "Require candidate-confirmed state and a future appointment; reject overlapping or cancelled sessions and stale plan revisions.",
+      "enrichment": "Sort sessions, check conflicts, calculate interview and break durations, and include timezone and the authoritative invitation link.",
+      "deduplicationKey": "candidate ID + interview plan ID + schedule revision",
+      "completedOutcome": "Send the private agenda to the candidate and write the asset and delivery outcome to the recruiting communication register.",
+      "integrationPath": "Google Sheets / Calendar → Email → Google Sheets",
+      "negativeTests": [
+        "Overlapping schedule goes to coordinator review",
+        "Cancellation skips",
+        "Revised schedule sends once with the new revision"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 43,
+      "slug": "course-roadmap-video",
+      "currentTitle": "A course syllabus to a learning roadmap video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day43",
+      "status": "redesign_required",
+      "need": "Learning teams need newly enrolled learners to understand the actual course sequence and effort.",
+      "triggerAndSource": "An enrollment-confirmed webhook; fetch the approved course and ordered module records.",
+      "eligibility": "Require active enrollment and a published syllabus version; withdrawn enrollment or missing modules blocks delivery.",
+      "enrichment": "Join module learning outcomes, calculate total effort, preserve module order and link to the full syllabus and learner portal.",
+      "deduplicationKey": "enrollment ID + syllabus revision",
+      "completedOutcome": "Deliver the learner roadmap and update the enrollment orientation status and video link.",
+      "integrationPath": "Authenticated LMS webhook → Google Sheets → Email",
+      "negativeTests": [
+        "Unpublished syllabus blocks the brief",
+        "Withdrawn learner skips",
+        "Module sum uses all modules even if the video summarizes them"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 44,
+      "slug": "safety-briefing-video",
+      "currentTitle": "Workplace hazards to a safety briefing video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day44",
+      "status": "redesign_required",
+      "need": "Site supervisors need workers to review current approved hazards before a specific shift.",
+      "triggerAndSource": "A scheduled scan of approved site/shift briefings; join hazard controls, emergency instructions and roster records.",
+      "eligibility": "Require an approved risk assessment effective for the shift and a supervisor owner; absent controls are a review exception.",
+      "enrichment": "Sort hazards by severity, preserve every control in the linked assessment, and identify the shift and emergency contact details.",
+      "deduplicationKey": "site ID + assessment revision + shift ID",
+      "completedOutcome": "Post the briefing to the private shift destination and create a separate acknowledgment register linked to the assessment.",
+      "integrationPath": "Google Sheets → Slack / Email → Google Sheets",
+      "negativeTests": [
+        "Unapproved assessment never produces a briefing",
+        "Missing high-severity control blocks it",
+        "Video delivery is not claimed to prove worker acknowledgment"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 45,
+      "slug": "training-completion-video",
+      "currentTitle": "A training result to a completion video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day45",
+      "status": "redesign_required",
+      "need": "Training administrators need a trustworthy completion result with the correct next action for each learner.",
+      "triggerAndSource": "An LMS assessment-completed webhook; fetch the finalized result and source-issued certificate reference.",
+      "eligibility": "Require a finalized valid score; branch pass to completion and fail to an assigned remedial task, with no certificate claim on failure.",
+      "enrichment": "Compare score against the course threshold, attach the authoritative certificate only on pass and select the approved retake instructions on fail.",
+      "deduplicationKey": "attempt ID + finalized result revision",
+      "completedOutcome": "Deliver the private result video; write the communication outcome and create/record the remedial action for failing attempts.",
+      "integrationPath": "Authenticated LMS webhook → Google Sheets → Email",
+      "negativeTests": [
+        "Threshold boundary passes exactly",
+        "Fail path never claims a certificate",
+        "Provisional/replayed result skips"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 46,
+      "slug": "meeting-action-brief-video",
+      "currentTitle": "Meeting actions to an owner and deadline brief video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day46",
+      "status": "redesign_required",
+      "need": "Meeting owners need unresolved actions to reach the responsible people with current deadlines.",
+      "triggerAndSource": "A scheduled scan of open meeting action rows; join owner contact and action completion records.",
+      "eligibility": "Select unresolved actions due within the configured window or overdue; completed/empty lists return an explicit zero-work report.",
+      "enrichment": "Group by owner, order due dates, count overdue actions and retain each actionable task link rather than truncating the underlying record.",
+      "deduplicationKey": "meeting ID + action snapshot revision + owner ID + briefing date",
+      "completedOutcome": "Deliver an owner-specific brief and write the briefing timestamp/video URL back to each included action; route missing owners to review.",
+      "integrationPath": "Google Sheets → Email / Slack → Google Sheets",
+      "negativeTests": [
+        "Completed actions never appear",
+        "Unknown owner prevents misdelivery",
+        "Repeated scan on the same date skips the same snapshot"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 47,
+      "slug": "equipment-maintenance-video",
+      "currentTitle": "Equipment records to a maintenance-due video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day47",
+      "status": "redesign_required",
+      "need": "Maintenance planners need a useful due-service queue and briefing for the actual responsible crew.",
+      "triggerAndSource": "A scheduled scan of an equipment register; join service intervals, maintenance procedures and crew ownership.",
+      "eligibility": "Select assets due today or overdue; exclude decommissioned assets and assets with an open service ticket.",
+      "enrichment": "Calculate due dates/overdue days, group by crew, prioritize oldest due date and attach approved service procedure links.",
+      "deduplicationKey": "asset ID + service cycle/due date + crew ID",
+      "completedOutcome": "Create a maintenance review work item and crew briefing, then save its video URL and work-item reference; only an authorized service completion resets the cycle.",
+      "integrationPath": "Google Sheets → Google Sheets work queue → Slack",
+      "negativeTests": [
+        "No due equipment is explicit zero-work",
+        "Existing open ticket avoids duplicate work",
+        "Brief generation cannot mark maintenance completed"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 48,
+      "slug": "inventory-replenishment-video",
+      "currentTitle": "Stock levels to a replenishment brief video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day48",
+      "status": "redesign_required",
+      "need": "Warehouse buyers need low-stock items converted into an actionable replenishment review, not only an attractive chart.",
+      "triggerAndSource": "A scheduled scan of inventory, target stock and supplier/catalog tabs.",
+      "eligibility": "Select at/below-threshold SKUs; exclude inactive items and quantities already covered by open replenishment requests.",
+      "enrichment": "Calculate net replenishment quantities including declared pending units, group by supplier and retain all selected SKUs and source inventory timestamps.",
+      "deduplicationKey": "warehouse ID + inventory snapshot + supplier ID",
+      "completedOutcome": "Create a supplier-specific replenishment review row with quantities and video URL; notify the buyer without automatically placing an order.",
+      "integrationPath": "Google Sheets → Google Sheets requisition queue → Slack",
+      "negativeTests": [
+        "Healthy stock is zero-work",
+        "Open replenishment reduces required quantity",
+        "Duplicate SKU/missing supplier routes to review"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 49,
+      "slug": "delivery-route-brief-video",
+      "currentTitle": "A dispatch plan to a delivery-route briefing video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day49",
+      "status": "redesign_required",
+      "need": "Dispatchers need a driver to understand the approved stop sequence and handoff timing before departure.",
+      "triggerAndSource": "A scheduled scan of approved route departures; join ordered stops and driver contact records.",
+      "eligibility": "Require approved future departure, a driver and unique stop order; cancelled routes or stale revisions skip.",
+      "enrichment": "Accumulate declared travel/service durations, validate sequence and working-time bounds, include stop/dispatch links and make the estimate limitations clear.",
+      "deduplicationKey": "route ID + dispatch revision + driver ID",
+      "completedOutcome": "Deliver the private dispatch brief to the driver and save dispatch-communication status and video URL.",
+      "integrationPath": "Google Sheets → Email / Slack → Google Sheets",
+      "negativeTests": [
+        "Duplicate sequence fails",
+        "Cancelled route skips",
+        "Stop change creates a new dispatch revision"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 50,
+      "slug": "tender-checklist-video",
+      "currentTitle": "Tender requirements to a bid checklist video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day50",
+      "status": "redesign_required",
+      "need": "Bid coordinators need a team to act on a complete tender checklist before the issuer deadline.",
+      "triggerAndSource": "A scheduled scan of shortlisted tenders; join eligibility, documents, owner and internal readiness rows.",
+      "eligibility": "Select approved opportunities before the submission cutoff; incomplete mandatory eligibility or unassigned documents route to review.",
+      "enrichment": "Calculate deadline urgency, group required documents by owner, identify missing evidence and keep the issuer source link authoritative.",
+      "deduplicationKey": "tender ID + requirements revision + readiness snapshot",
+      "completedOutcome": "Create/update a bid preparation task list, attach the checklist video and notify the bid owner; no bid submission occurs.",
+      "integrationPath": "Google Sheets → Google Sheets bid task queue → Slack",
+      "negativeTests": [
+        "Expired tender skips",
+        "Missing mandatory evidence creates review tasks",
+        "Changing a document owner updates the correct revision"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 51,
+      "slug": "travel-itinerary-video",
+      "currentTitle": "Travel bookings to a day-by-day itinerary video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day51",
+      "status": "redesign_required",
+      "need": "Travel coordinators need travelers to receive a coherent final itinerary after bookings are confirmed or changed.",
+      "triggerAndSource": "A trip-confirmed/changed event; join booking, day/activity and traveler destination records.",
+      "eligibility": "Require confirmed bookings and a noncancelled trip; route missing local timezones or conflicting activities to coordinator review.",
+      "enrichment": "Sort destination-local activities, validate duplicate dates/time conflicts, retain booking/source links and group the trip by day.",
+      "deduplicationKey": "trip ID + booking revision + traveler ID",
+      "completedOutcome": "Deliver the private itinerary video and persist the itinerary revision, video URL and communication result.",
+      "integrationPath": "Google Sheets → Email → Google Sheets",
+      "negativeTests": [
+        "Cancelled/unconfirmed trip skips",
+        "Timezone/overlap gap is not guessed",
+        "Repeated unchanged booking event reuses its asset"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 52,
+      "slug": "hotel-arrival-guide-video",
+      "currentTitle": "Accommodation details to a public arrival guide video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day52",
+      "status": "redesign_required",
+      "need": "Accommodation operators need guests to receive correct public arrival guidance close to check-in.",
+      "triggerAndSource": "A scheduled scan of confirmed arriving reservations; join approved property arrival instructions and amenities.",
+      "eligibility": "Select arrivals in the notice window; require the correct property/version and skip cancelled bookings or notices already sent.",
+      "enrichment": "Combine check-in hours and public arrival steps, retain the booking/property link, and explicitly exclude private access codes from the media payload.",
+      "deduplicationKey": "reservation ID + arrival revision + public-guide revision",
+      "completedOutcome": "Send the guest a private arrival briefing and record delivery; property access secrets remain in the separate authorized booking message.",
+      "integrationPath": "Google Sheets → Email → Google Sheets",
+      "negativeTests": [
+        "Cancellation skips",
+        "Access-code fields cannot enter generated video",
+        "Property guide update creates a new qualified revision"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 53,
+      "slug": "pet-adoption-video",
+      "currentTitle": "A rescue profile to a pet adoption video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day53",
+      "status": "redesign_required",
+      "need": "Shelter coordinators need approved, currently available animals turned into usable adoption campaign assets.",
+      "triggerAndSource": "A scheduled scan of approved pet profiles; join availability, public media permissions and care records.",
+      "eligibility": "Require available-for-adoption status, approved public text, an adoption link and image permission; adopted/paused profiles skip.",
+      "enrichment": "Join species/age/traits/care needs, validate the adoption URL, include permitted profile imagery and retain the full source profile.",
+      "deduplicationKey": "animal ID + approved profile revision",
+      "completedOutcome": "Save the asset in the shelter campaign queue and notify the coordinator to review it before public posting.",
+      "integrationPath": "Google Sheets → Google Drive → Slack",
+      "negativeTests": [
+        "Adopted pet skips",
+        "No media permission blocks imagery/public handoff",
+        "Availability is rechecked before campaign handoff"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 54,
+      "slug": "volunteer-shift-video",
+      "currentTitle": "A volunteer roster to a station briefing video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day54",
+      "status": "redesign_required",
+      "need": "Volunteer coordinators need a real shift roster to produce station-specific instructions and reveal coverage gaps.",
+      "triggerAndSource": "A scheduled scan of confirmed volunteer shifts; join station staffing requirements and assigned volunteer contacts.",
+      "eligibility": "Require an approved future shift; unfilled required stations or duplicate simultaneous assignments route to coordinator review.",
+      "enrichment": "Calculate distinct coverage by station, compare required staffing and assemble station tasks with coordinator/source links.",
+      "deduplicationKey": "event ID + shift ID + roster revision + station ID",
+      "completedOutcome": "Deliver each station brief to its volunteers and create a coordinator coverage-exception record when required roles are missing.",
+      "integrationPath": "Google Sheets → Email / Slack → Google Sheets",
+      "negativeTests": [
+        "Unfilled required station produces an exception",
+        "Conflicting assignments are rejected",
+        "Repeated unchanged roster does not duplicate station messages"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 55,
+      "slug": "donation-impact-video",
+      "currentTitle": "A donation to an estimated impact thank-you video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day55",
+      "status": "redesign_required",
+      "need": "Fundraising teams need a personalized donor thank-you grounded in the approved campaign cost model.",
+      "triggerAndSource": "A completed donation webhook; fetch the donation state, donor communication consent and effective campaign unit-cost record.",
+      "eligibility": "Require settled, nonrefunded donation and permission to contact; donations without a current cost model go to review.",
+      "enrichment": "Calculate estimated whole impact units and remainder in integer cents, label the estimate, and join the approved campaign explanation.",
+      "deduplicationKey": "donation ID + settled revision + donor ID",
+      "completedOutcome": "Send a private impact thank-you and record the video and delivery outcome separately from the official receipt.",
+      "integrationPath": "Authenticated payment/donation webhook → Google Sheets → Email",
+      "negativeTests": [
+        "Refunded/unsettled donation skips",
+        "Missing consent blocks delivery",
+        "Video is never labeled a receipt or proof of delivered impact"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 56,
+      "slug": "survey-results-video",
+      "currentTitle": "Survey response counts to a results breakdown video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day56",
+      "status": "redesign_required",
+      "need": "Research owners need a reproducible summary of a closed survey that reaches the decision makers.",
+      "triggerAndSource": "A scheduled scan of closed approved surveys; read response rows and aggregate the allowed response options.",
+      "eligibility": "Require closed state, nonzero responses and an approved audience; enforce the documented uniqueness rule for response IDs.",
+      "enrichment": "Aggregate counts from the source responses, calculate percentages, preserve tied leaders and retain the survey methodology link.",
+      "deduplicationKey": "survey ID + closed response snapshot revision",
+      "completedOutcome": "Save the summary asset and aggregate snapshot to the research register and notify the decision-making channel.",
+      "integrationPath": "Google Sheets → Google Drive → Slack",
+      "negativeTests": [
+        "Zero-response survey is zero-work",
+        "Duplicate response IDs follow the stated policy",
+        "Tied winners remain tied and unchanged snapshot skips"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 57,
+      "slug": "fundraiser-progress-video",
+      "currentTitle": "Fundraiser contributions to a progress video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day57",
+      "status": "redesign_required",
+      "need": "Campaign managers need progress updates when a meaningful fundraising milestone is reached.",
+      "triggerAndSource": "A scheduled scan of settled contribution records and campaign goals.",
+      "eligibility": "Select active campaigns that crossed a new configured milestone; ignore refunded contributions and unchanged milestones.",
+      "enrichment": "Sum eligible amounts in integer cents, calculate progress/remaining/excess, and include the source campaign link and observation date.",
+      "deduplicationKey": "campaign ID + milestone + settled snapshot revision",
+      "completedOutcome": "Write the milestone asset and totals to the campaign content queue and notify the campaign owner.",
+      "integrationPath": "Google Sheets → Google Sheets campaign queue → Slack",
+      "negativeTests": [
+        "Refunds reduce eligible totals",
+        "Repeated scan of the same milestone skips",
+        "Exceeded goal is shown without negative remaining amount"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 58,
+      "slug": "before-after-case-study-video",
+      "currentTitle": "Before-and-after measurements to a case study video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day58",
+      "status": "redesign_required",
+      "need": "Customer success needs approved, traceable evidence for a case-study asset.",
+      "triggerAndSource": "A scheduled scan of approved case-study requests; join baseline/follow-up metric rows and publication permissions.",
+      "eligibility": "Require comparable units, named measurement periods and customer approval; missing baseline/permission goes to review.",
+      "enrichment": "Calculate absolute and relative changes, respect higher/lower-is-better direction and zero baselines, and retain the full measurement/source links.",
+      "deduplicationKey": "case-study ID + approved metric revision + permission revision",
+      "completedOutcome": "Save the asset and calculation snapshot to the case-study review queue and notify the account owner.",
+      "integrationPath": "Google Sheets → Google Drive → Slack",
+      "negativeTests": [
+        "Missing permission blocks public handoff",
+        "Zero baseline does not invent a percentage",
+        "Changed measurement unit/period requires review"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 59,
+      "slug": "milestone-roadmap-video",
+      "currentTitle": "Project milestones to a delivery roadmap video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day59",
+      "status": "redesign_required",
+      "need": "Project managers need a periodic roadmap briefing based on actual milestone changes and missed deadlines.",
+      "triggerAndSource": "A scheduled scan of active projects and milestone rows; join project owner and status records.",
+      "eligibility": "Select only changed project snapshots or a new overdue threshold; completed/paused projects follow the documented skip policy.",
+      "enrichment": "Sort milestones, calculate completion/overdue counts and next unfinished milestone, retain milestone task links and observation date.",
+      "deduplicationKey": "project ID + milestone snapshot revision + reporting period",
+      "completedOutcome": "Store the roadmap asset in the project record and send the owner a briefing with an explicit overdue action list.",
+      "integrationPath": "Google Sheets → Google Sheets project register → Slack",
+      "negativeTests": [
+        "No changed snapshot skips",
+        "Due today is not overdue",
+        "All complete yields no next milestone and the appropriate completion handoff"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    },
+    {
+      "day": 60,
+      "slug": "recipe-cooking-guide-video",
+      "currentTitle": "Recipe ingredients to a scaled cooking guide video",
+      "currentLocalUrl": "http://localhost:5678/workflow/ZvidSeries2Day60",
+      "status": "redesign_required",
+      "need": "Kitchen trainers need a portion-specific preparation guide from the approved recipe, with a complete shopping/prep record.",
+      "triggerAndSource": "An n8n Form portion request; look up the approved recipe, ingredients and ordered cooking steps.",
+      "eligibility": "Require an active approved recipe and allowed serving quantity; missing ingredients, steps or approved imagery route to review.",
+      "enrichment": "Scale all ingredient quantities, preserve original cooking instructions/times and generate a full preparation list linked to the recipe.",
+      "deduplicationKey": "request ID + recipe revision + target servings",
+      "completedOutcome": "Save the portion-specific ingredient checklist and video in the kitchen prep register, then return the request result or notify the requesting cook.",
+      "integrationPath": "n8n Form → Google Sheets → Google Drive / Email",
+      "negativeTests": [
+        "Inactive recipe blocks request",
+        "Fractional scaling remains accurate",
+        "Cooking times are not automatically scaled and duplicate request reuses its result"
+      ],
+      "testRequirement": "Exercise the actual revised Docker graph, including persistent state and the final delivery/write-back nodes. Use an isolated source and sink for test side effects. Passing the previous video render is not evidence for these unimplemented stages."
+    }
+  ]
+}

@@ -1,0 +1,4859 @@
+{
+  "project": {
+    "id": 6,
+    "name": "Zvid Workflow Launches",
+    "key": "ZWL",
+    "workflowId": 3
+  },
+  "scope": "30 newly created canonical second-series n8n workflows; existing templates excluded.",
+  "registeredAtClientDate": "2026-10-01",
+  "mode": "native MCP; semantic HTML; preview then confirm",
+  "stories": [
+    {
+      "day": 31,
+      "slug": "release-notes-video",
+      "title": "Release notes feature announcement",
+      "source": "zvid-integrations/n8n/workflows/zvid-release-notes-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/release-notes-video.md",
+      "storyId": 364,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 365,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-80",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 366,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-81"
+        },
+        {
+          "id": 367,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-82",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 368,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-83"
+        },
+        {
+          "id": 369,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-84",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 370,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-85",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 371,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-86"
+        },
+        {
+          "id": 372,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-87"
+        },
+        {
+          "id": 373,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-88"
+        },
+        {
+          "id": 374,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-89"
+        },
+        {
+          "id": 375,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-90"
+        },
+        {
+          "id": 376,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-91"
+        },
+        {
+          "id": 377,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-92"
+        },
+        {
+          "id": 378,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-93"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-79",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/release-notes-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "4e9f59963dbb23c5eafd072c4a9887952a065a8ae7be2d3d3ce8a9d16251d575",
+        "previousManualExecutionId": 722,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 31,
+        "slug": "release-notes-video",
+        "workflowId": "ZvidSeries2Day31",
+        "executionId": 722,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": [
+          687
+        ]
+      },
+      "manualEvidence": {
+        "day": 31,
+        "slug": "release-notes-video",
+        "workflowId": "ZvidSeries2Day31",
+        "executionId": 822,
+        "mainRenderExecutionId": 822,
+        "latestDeliveryExecutionId": 853,
+        "functionalSha256": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa",
+        "canonicalSha256": "aca8d0e3e956d02549916425ba8c2a2ecf73a8432b839db559856afa778af5b1",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 742,
+          "domainPolicy": 742,
+          "eligibility": 742,
+          "ledgerAcceptance": 822,
+          "driveFile": 742,
+          "writeback": 822,
+          "deduplication": 743,
+          "resumeAccepted": 822,
+          "deliveryRecovery": 853
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 32,
+      "slug": "procedure-tutorial-video",
+      "title": "Step-by-step procedure tutorial",
+      "source": "zvid-integrations/n8n/workflows/zvid-procedure-tutorial-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/procedure-tutorial-video.md",
+      "storyId": 379,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 380,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-95",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 381,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-96"
+        },
+        {
+          "id": 382,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-97",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 383,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-98"
+        },
+        {
+          "id": 384,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-99",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 385,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-100",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 386,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-101"
+        },
+        {
+          "id": 387,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-102"
+        },
+        {
+          "id": 388,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-103"
+        },
+        {
+          "id": 389,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-104"
+        },
+        {
+          "id": 390,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-105"
+        },
+        {
+          "id": 391,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-106"
+        },
+        {
+          "id": 392,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-107"
+        },
+        {
+          "id": 393,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-108"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-94",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/procedure-tutorial-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "4d666768ddc4e1cc34d31cc275ff27bdab25341cf4113ae1e78e16192eb0bf37",
+        "previousManualExecutionId": 689,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 32,
+        "slug": "procedure-tutorial-video",
+        "workflowId": "ZvidSeries2Day32",
+        "executionId": 689,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 32,
+        "slug": "procedure-tutorial-video",
+        "workflowId": "ZvidSeries2Day32",
+        "executionId": 744,
+        "mainRenderExecutionId": 744,
+        "latestDeliveryExecutionId": 854,
+        "functionalSha256": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4",
+        "canonicalSha256": "9a470c36ca700eb601ef3491022ade3ccf1a31454d024d573701349ac283207a",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 744,
+          "domainPolicy": 744,
+          "eligibility": 744,
+          "ledgerAcceptance": 744,
+          "driveFile": 744,
+          "writeback": 744,
+          "deduplication": 747,
+          "resumeAccepted": 823,
+          "deliveryRecovery": 854
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 33,
+      "slug": "plan-comparison-video",
+      "title": "Pricing plan feature comparison",
+      "source": "zvid-integrations/n8n/workflows/zvid-plan-comparison-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/plan-comparison-video.md",
+      "storyId": 394,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 395,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-110",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 396,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-111"
+        },
+        {
+          "id": 397,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-112",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 398,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-113"
+        },
+        {
+          "id": 399,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-114",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 400,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-115",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 401,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-116"
+        },
+        {
+          "id": 402,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-117"
+        },
+        {
+          "id": 403,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-118"
+        },
+        {
+          "id": 404,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-119"
+        },
+        {
+          "id": 405,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-120"
+        },
+        {
+          "id": 406,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-121"
+        },
+        {
+          "id": 407,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-122"
+        },
+        {
+          "id": 408,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-123"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-109",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/plan-comparison-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "941215680f9a8e675b175065f2c18a9a8f68d3b9d14fcd569eafd39ba6d6a3be",
+        "previousManualExecutionId": 692,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 33,
+        "slug": "plan-comparison-video",
+        "workflowId": "ZvidSeries2Day33",
+        "executionId": 692,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": [
+          690
+        ]
+      },
+      "manualEvidence": {
+        "day": 33,
+        "slug": "plan-comparison-video",
+        "workflowId": "ZvidSeries2Day33",
+        "executionId": 748,
+        "mainRenderExecutionId": 748,
+        "latestDeliveryExecutionId": 855,
+        "functionalSha256": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775",
+        "canonicalSha256": "92849e129a2e98d5e1b62becddc3231db7d617aee3892359fcd98f4bd613395b",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 748,
+          "domainPolicy": 748,
+          "eligibility": 748,
+          "ledgerAcceptance": 748,
+          "driveFile": 748,
+          "writeback": 748,
+          "deduplication": 749,
+          "resumeAccepted": 824,
+          "deliveryRecovery": 855
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 34,
+      "slug": "incident-timeline-video",
+      "title": "Service incident timeline",
+      "source": "zvid-integrations/n8n/workflows/zvid-incident-timeline-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/incident-timeline-video.md",
+      "storyId": 409,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 410,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-125",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 411,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-126"
+        },
+        {
+          "id": 412,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-127",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 413,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-128"
+        },
+        {
+          "id": 414,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-129",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 415,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-130",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 416,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-131"
+        },
+        {
+          "id": 417,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-132"
+        },
+        {
+          "id": 418,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-133"
+        },
+        {
+          "id": 419,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-134"
+        },
+        {
+          "id": 420,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-135"
+        },
+        {
+          "id": 421,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-136"
+        },
+        {
+          "id": 422,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-137"
+        },
+        {
+          "id": 423,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-138"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-124",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/incident-timeline-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "7e5d9d5bb29f2d8db54b31e2054c4e0ef9b3112b7e0053fa35f0053668f6b618",
+        "previousManualExecutionId": 693,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 34,
+        "slug": "incident-timeline-video",
+        "workflowId": "ZvidSeries2Day34",
+        "executionId": 693,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": [
+          691
+        ]
+      },
+      "manualEvidence": {
+        "day": 34,
+        "slug": "incident-timeline-video",
+        "workflowId": "ZvidSeries2Day34",
+        "executionId": 750,
+        "mainRenderExecutionId": 750,
+        "latestDeliveryExecutionId": 856,
+        "functionalSha256": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47",
+        "canonicalSha256": "4b153a410fade190e4fcbf06d606dc07dbe03b35aee21f3b5426ae19984985c1",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 750,
+          "domainPolicy": 750,
+          "eligibility": 750,
+          "ledgerAcceptance": 750,
+          "driveFile": 750,
+          "writeback": 750,
+          "deduplication": 752,
+          "resumeAccepted": 825,
+          "deliveryRecovery": 856
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 35,
+      "slug": "maintenance-notice-video",
+      "title": "Maintenance window customer notice",
+      "source": "zvid-integrations/n8n/workflows/zvid-maintenance-notice-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/maintenance-notice-video.md",
+      "storyId": 424,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 425,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-140",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 426,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-141"
+        },
+        {
+          "id": 427,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-142",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 428,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-143"
+        },
+        {
+          "id": 429,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-144",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 430,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-145",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 431,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-146"
+        },
+        {
+          "id": 432,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-147"
+        },
+        {
+          "id": 433,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-148"
+        },
+        {
+          "id": 434,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-149"
+        },
+        {
+          "id": 435,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-150"
+        },
+        {
+          "id": 436,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-151"
+        },
+        {
+          "id": 437,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-152"
+        },
+        {
+          "id": 438,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-153"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-139",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/maintenance-notice-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "ab1432cb1c1f9e27543d9a4831c1d4b459357ad93f884bc6b91f845859356bac",
+        "previousManualExecutionId": 720,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 35,
+        "slug": "maintenance-notice-video",
+        "workflowId": "ZvidSeries2Day35",
+        "executionId": 720,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": [
+          694
+        ]
+      },
+      "manualEvidence": {
+        "day": 35,
+        "slug": "maintenance-notice-video",
+        "workflowId": "ZvidSeries2Day35",
+        "executionId": 754,
+        "mainRenderExecutionId": 754,
+        "latestDeliveryExecutionId": 857,
+        "functionalSha256": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+        "canonicalSha256": "4a9e215aed2e6c4b264fa091ce9ff97c021a6799121b8b9bb671dada3baeb06d",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 754,
+          "domainPolicy": 754,
+          "eligibility": 754,
+          "ledgerAcceptance": 754,
+          "driveFile": 754,
+          "writeback": 754,
+          "deduplication": 756,
+          "resumeAccepted": 826,
+          "deliveryRecovery": 857
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 36,
+      "slug": "order-progress-video",
+      "title": "Order fulfillment progress",
+      "source": "zvid-integrations/n8n/workflows/zvid-order-progress-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/order-progress-video.md",
+      "storyId": 439,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 440,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-155",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 441,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-156"
+        },
+        {
+          "id": 442,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-157",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 443,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-158"
+        },
+        {
+          "id": 444,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-159",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 445,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-160",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 446,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-161"
+        },
+        {
+          "id": 447,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-162"
+        },
+        {
+          "id": 448,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-163"
+        },
+        {
+          "id": 449,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-164"
+        },
+        {
+          "id": 450,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-165"
+        },
+        {
+          "id": 451,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-166"
+        },
+        {
+          "id": 452,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-167"
+        },
+        {
+          "id": 453,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-168"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-154",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/order-progress-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "683609070ac1b621c2aa5987ecacaf854954096691ea3c8f33e54b564dd038b7",
+        "previousManualExecutionId": 699,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 36,
+        "slug": "order-progress-video",
+        "workflowId": "ZvidSeries2Day36",
+        "executionId": 699,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 36,
+        "slug": "order-progress-video",
+        "workflowId": "ZvidSeries2Day36",
+        "executionId": 758,
+        "mainRenderExecutionId": 758,
+        "latestDeliveryExecutionId": 858,
+        "functionalSha256": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1",
+        "canonicalSha256": "18f620685b0f27ac2ce20ed208d5f71fdee377f0087359390341cb89986e864c",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 758,
+          "domainPolicy": 758,
+          "eligibility": 758,
+          "ledgerAcceptance": 758,
+          "driveFile": 758,
+          "writeback": 758,
+          "deduplication": 760,
+          "resumeAccepted": 827,
+          "deliveryRecovery": 858
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 37,
+      "slug": "product-bundle-savings-video",
+      "title": "Product bundle savings comparison",
+      "source": "zvid-integrations/n8n/workflows/zvid-product-bundle-savings-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/product-bundle-savings-video.md",
+      "storyId": 454,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 455,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-170",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 456,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-171"
+        },
+        {
+          "id": 457,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-172",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 458,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-173"
+        },
+        {
+          "id": 459,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-174",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 460,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-175",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 461,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-176"
+        },
+        {
+          "id": 462,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-177"
+        },
+        {
+          "id": 463,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-178"
+        },
+        {
+          "id": 464,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-179"
+        },
+        {
+          "id": 465,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-180"
+        },
+        {
+          "id": 466,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-181"
+        },
+        {
+          "id": 467,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-182"
+        },
+        {
+          "id": 468,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-183"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-169",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/product-bundle-savings-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "f9d2b518f34754b7c2162a8e7b13ed28e141add6b28aadaa81852907c6960403",
+        "previousManualExecutionId": 701,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 37,
+        "slug": "product-bundle-savings-video",
+        "workflowId": "ZvidSeries2Day37",
+        "executionId": 701,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 37,
+        "slug": "product-bundle-savings-video",
+        "workflowId": "ZvidSeries2Day37",
+        "executionId": 762,
+        "mainRenderExecutionId": 762,
+        "latestDeliveryExecutionId": 859,
+        "functionalSha256": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd",
+        "canonicalSha256": "55160336207f74757c10ec59415f0419304154b65ea0a418881cb03e387f56ee",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 762,
+          "domainPolicy": 762,
+          "eligibility": 762,
+          "ledgerAcceptance": 762,
+          "driveFile": 762,
+          "writeback": 762,
+          "deduplication": 764,
+          "resumeAccepted": 828,
+          "deliveryRecovery": 859
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 38,
+      "slug": "delivery-delay-video",
+      "title": "Delivery delay revised ETA",
+      "source": "zvid-integrations/n8n/workflows/zvid-delivery-delay-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/delivery-delay-video.md",
+      "storyId": 469,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 470,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-185",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 471,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-186"
+        },
+        {
+          "id": 472,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-187",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 473,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-188"
+        },
+        {
+          "id": 474,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-189",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 475,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-190",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 476,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-191"
+        },
+        {
+          "id": 477,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-192"
+        },
+        {
+          "id": 478,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-193"
+        },
+        {
+          "id": 479,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-194"
+        },
+        {
+          "id": 480,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-195"
+        },
+        {
+          "id": 481,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-196"
+        },
+        {
+          "id": 482,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-197"
+        },
+        {
+          "id": 483,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-198"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-184",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/delivery-delay-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "bd3fb2672a9526265dfb3bbc762c48fcf11241af14b320c19768234c20d1afd1",
+        "previousManualExecutionId": 702,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 38,
+        "slug": "delivery-delay-video",
+        "workflowId": "ZvidSeries2Day38",
+        "executionId": 702,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 38,
+        "slug": "delivery-delay-video",
+        "workflowId": "ZvidSeries2Day38",
+        "executionId": 766,
+        "mainRenderExecutionId": 766,
+        "latestDeliveryExecutionId": 860,
+        "functionalSha256": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5",
+        "canonicalSha256": "244ca708f64f63790f0b31ba5e65234fcaf7d9a5b03f05fb46c19340615bd3e7",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 766,
+          "domainPolicy": 766,
+          "eligibility": 766,
+          "ledgerAcceptance": 766,
+          "driveFile": 766,
+          "writeback": 766,
+          "deduplication": 767,
+          "resumeAccepted": 829,
+          "deliveryRecovery": 860
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 39,
+      "slug": "appointment-preparation-video",
+      "title": "Appointment preparation checklist",
+      "source": "zvid-integrations/n8n/workflows/zvid-appointment-preparation-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/appointment-preparation-video.md",
+      "storyId": 484,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 485,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-200",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 486,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-201"
+        },
+        {
+          "id": 487,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-202",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 488,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-203"
+        },
+        {
+          "id": 489,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-204",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 490,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-205",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 491,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-206"
+        },
+        {
+          "id": 492,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-207"
+        },
+        {
+          "id": 493,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-208"
+        },
+        {
+          "id": 494,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-209"
+        },
+        {
+          "id": 495,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-210"
+        },
+        {
+          "id": 496,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-211"
+        },
+        {
+          "id": 497,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-212"
+        },
+        {
+          "id": 498,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-213"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-199",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/appointment-preparation-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "06548f352defa445453301ad681a9f0c2ac1a81ade83c68fbe5918788dcfeb02",
+        "previousManualExecutionId": 703,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 39,
+        "slug": "appointment-preparation-video",
+        "workflowId": "ZvidSeries2Day39",
+        "executionId": 703,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 39,
+        "slug": "appointment-preparation-video",
+        "workflowId": "ZvidSeries2Day39",
+        "executionId": 769,
+        "mainRenderExecutionId": 769,
+        "latestDeliveryExecutionId": 861,
+        "functionalSha256": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07",
+        "canonicalSha256": "6be20691af4e9d4e73550c844740b8c605863fa36c83c30d4eb809cc450c6e25",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 769,
+          "domainPolicy": 769,
+          "eligibility": 769,
+          "ledgerAcceptance": 769,
+          "driveFile": 769,
+          "writeback": 769,
+          "deduplication": 771,
+          "resumeAccepted": 830,
+          "deliveryRecovery": 861
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 40,
+      "slug": "return-instructions-video",
+      "title": "Return authorization instructions",
+      "source": "zvid-integrations/n8n/workflows/zvid-return-instructions-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/return-instructions-video.md",
+      "storyId": 499,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 500,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-215",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 501,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-216"
+        },
+        {
+          "id": 502,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-217",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 503,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-218"
+        },
+        {
+          "id": 504,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-219",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 505,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-220",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 506,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-221"
+        },
+        {
+          "id": 507,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-222"
+        },
+        {
+          "id": 508,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-223"
+        },
+        {
+          "id": 509,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-224"
+        },
+        {
+          "id": 510,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-225"
+        },
+        {
+          "id": 511,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-226"
+        },
+        {
+          "id": 512,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-227"
+        },
+        {
+          "id": 513,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-228"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-214",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/return-instructions-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "559d97a7092db48e966465fc295d0c39677d056e51d1b65dd19f3dc39964f24f",
+        "previousManualExecutionId": 704,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 40,
+        "slug": "return-instructions-video",
+        "workflowId": "ZvidSeries2Day40",
+        "executionId": 704,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 40,
+        "slug": "return-instructions-video",
+        "workflowId": "ZvidSeries2Day40",
+        "executionId": 773,
+        "mainRenderExecutionId": 773,
+        "latestDeliveryExecutionId": 862,
+        "functionalSha256": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9",
+        "canonicalSha256": "42eea1324ca7e7b00280ae906c785a36f73f3dc30b1e4cbe641147df8cb768a5",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 773,
+          "domainPolicy": 773,
+          "eligibility": 773,
+          "ledgerAcceptance": 773,
+          "driveFile": 773,
+          "writeback": 773,
+          "deduplication": 774,
+          "resumeAccepted": 831,
+          "deliveryRecovery": 862
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 41,
+      "slug": "employee-first-week-video",
+      "title": "Employee first-week agenda",
+      "source": "zvid-integrations/n8n/workflows/zvid-employee-first-week-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/employee-first-week-video.md",
+      "storyId": 514,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 515,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-230",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 516,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-231"
+        },
+        {
+          "id": 517,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-232",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 518,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-233"
+        },
+        {
+          "id": 519,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-234",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 520,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-235",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 521,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-236"
+        },
+        {
+          "id": 522,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-237"
+        },
+        {
+          "id": 523,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-238"
+        },
+        {
+          "id": 524,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-239"
+        },
+        {
+          "id": 525,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-240"
+        },
+        {
+          "id": 526,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-241"
+        },
+        {
+          "id": 527,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-242"
+        },
+        {
+          "id": 528,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-243"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-229",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/employee-first-week-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "88bc3eeeddd6ce82ad8e751ff367ab153e8c9f458e690a92585574813e35dd06",
+        "previousManualExecutionId": 705,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 41,
+        "slug": "employee-first-week-video",
+        "workflowId": "ZvidSeries2Day41",
+        "executionId": 705,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 41,
+        "slug": "employee-first-week-video",
+        "workflowId": "ZvidSeries2Day41",
+        "executionId": 775,
+        "mainRenderExecutionId": 775,
+        "latestDeliveryExecutionId": 863,
+        "functionalSha256": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f",
+        "canonicalSha256": "a37e753d97c8e5287e44a8e35084004ba801f4c46604e316e6debfcbd38d3ade",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 775,
+          "domainPolicy": 775,
+          "eligibility": 775,
+          "ledgerAcceptance": 775,
+          "driveFile": 775,
+          "writeback": 775,
+          "deduplication": 776,
+          "resumeAccepted": 832,
+          "deliveryRecovery": 863
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 42,
+      "slug": "interview-agenda-video",
+      "title": "Candidate interview agenda",
+      "source": "zvid-integrations/n8n/workflows/zvid-interview-agenda-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/interview-agenda-video.md",
+      "storyId": 529,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 530,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-245",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 531,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-246"
+        },
+        {
+          "id": 532,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-247",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 533,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-248"
+        },
+        {
+          "id": 534,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-249",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 535,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-250",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 536,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-251"
+        },
+        {
+          "id": 537,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-252"
+        },
+        {
+          "id": 538,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-253"
+        },
+        {
+          "id": 539,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-254"
+        },
+        {
+          "id": 540,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-255"
+        },
+        {
+          "id": 541,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-256"
+        },
+        {
+          "id": 542,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-257"
+        },
+        {
+          "id": 543,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-258"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-244",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/interview-agenda-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "225f23ad67c0038d3105e99e630350b18d8b8e48dc961cf3e94774c61374b011",
+        "previousManualExecutionId": 706,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 42,
+        "slug": "interview-agenda-video",
+        "workflowId": "ZvidSeries2Day42",
+        "executionId": 706,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 42,
+        "slug": "interview-agenda-video",
+        "workflowId": "ZvidSeries2Day42",
+        "executionId": 777,
+        "mainRenderExecutionId": 777,
+        "latestDeliveryExecutionId": 864,
+        "functionalSha256": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685",
+        "canonicalSha256": "247688353fe9c6d61b1f465aa71fbf853891949022b06e4d8ac09635e0d16790",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 777,
+          "domainPolicy": 777,
+          "eligibility": 777,
+          "ledgerAcceptance": 777,
+          "driveFile": 777,
+          "writeback": 777,
+          "deduplication": 778,
+          "resumeAccepted": 833,
+          "deliveryRecovery": 864
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 43,
+      "slug": "course-roadmap-video",
+      "title": "Course learning roadmap",
+      "source": "zvid-integrations/n8n/workflows/zvid-course-roadmap-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/course-roadmap-video.md",
+      "storyId": 544,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 545,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-260",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 546,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-261"
+        },
+        {
+          "id": 547,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-262",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 548,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-263"
+        },
+        {
+          "id": 549,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-264",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 550,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-265",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 551,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-266"
+        },
+        {
+          "id": 552,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-267"
+        },
+        {
+          "id": 553,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-268"
+        },
+        {
+          "id": 554,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-269"
+        },
+        {
+          "id": 555,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-270"
+        },
+        {
+          "id": 556,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-271"
+        },
+        {
+          "id": 557,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-272"
+        },
+        {
+          "id": 558,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-273"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-259",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/course-roadmap-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "579c686d9364eda432914fbd620ae7dd0c1c17c0c35ebca636ae79416cd4bf6e",
+        "previousManualExecutionId": 707,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 43,
+        "slug": "course-roadmap-video",
+        "workflowId": "ZvidSeries2Day43",
+        "executionId": 707,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 43,
+        "slug": "course-roadmap-video",
+        "workflowId": "ZvidSeries2Day43",
+        "executionId": 779,
+        "mainRenderExecutionId": 779,
+        "latestDeliveryExecutionId": 865,
+        "functionalSha256": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f",
+        "canonicalSha256": "198bafeaeeb8e4ff6ab0839d7091fa1467d266265034810335897689d5a33450",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 779,
+          "domainPolicy": 779,
+          "eligibility": 779,
+          "ledgerAcceptance": 779,
+          "driveFile": 779,
+          "writeback": 779,
+          "deduplication": 780,
+          "resumeAccepted": 834,
+          "deliveryRecovery": 865
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 44,
+      "slug": "safety-briefing-video",
+      "title": "Workplace safety briefing",
+      "source": "zvid-integrations/n8n/workflows/zvid-safety-briefing-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/safety-briefing-video.md",
+      "storyId": 559,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 560,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-275",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 561,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-276"
+        },
+        {
+          "id": 562,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-277",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 563,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-278"
+        },
+        {
+          "id": 564,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-279",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 565,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-280",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 566,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-281"
+        },
+        {
+          "id": 567,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-282"
+        },
+        {
+          "id": 568,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-283"
+        },
+        {
+          "id": 569,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-284"
+        },
+        {
+          "id": 570,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-285"
+        },
+        {
+          "id": 571,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-286"
+        },
+        {
+          "id": 572,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-287"
+        },
+        {
+          "id": 573,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-288"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-274",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/safety-briefing-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "c63ebd8b0b5a66f7e771fa8fcc6bbf70eee735a1690af114b07019325dd566d7",
+        "previousManualExecutionId": 708,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 44,
+        "slug": "safety-briefing-video",
+        "workflowId": "ZvidSeries2Day44",
+        "executionId": 708,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 44,
+        "slug": "safety-briefing-video",
+        "workflowId": "ZvidSeries2Day44",
+        "executionId": 781,
+        "mainRenderExecutionId": 781,
+        "latestDeliveryExecutionId": 866,
+        "functionalSha256": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911",
+        "canonicalSha256": "81da5104b5f999b3efa59e0f5de043d2dd015bb7f1de471e231417af29c306ce",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 781,
+          "domainPolicy": 781,
+          "eligibility": 781,
+          "ledgerAcceptance": 781,
+          "driveFile": 781,
+          "writeback": 781,
+          "deduplication": 782,
+          "resumeAccepted": 835,
+          "deliveryRecovery": 866
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 45,
+      "slug": "training-completion-video",
+      "title": "Training completion certificate",
+      "source": "zvid-integrations/n8n/workflows/zvid-training-completion-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/training-completion-video.md",
+      "storyId": 574,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 575,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-290",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 576,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-291"
+        },
+        {
+          "id": 577,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-292",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 578,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-293"
+        },
+        {
+          "id": 579,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-294",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 580,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-295",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 581,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-296"
+        },
+        {
+          "id": 582,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-297"
+        },
+        {
+          "id": 583,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-298"
+        },
+        {
+          "id": 584,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-299"
+        },
+        {
+          "id": 585,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-300"
+        },
+        {
+          "id": 586,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-301"
+        },
+        {
+          "id": 587,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-302"
+        },
+        {
+          "id": 588,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-303"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-289",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/training-completion-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "b216046f7aa6b519a936814fb7a270b8e8a84a6dc72ac78487c202814295afb3",
+        "previousManualExecutionId": 710,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 45,
+        "slug": "training-completion-video",
+        "workflowId": "ZvidSeries2Day45",
+        "executionId": 710,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 45,
+        "slug": "training-completion-video",
+        "workflowId": "ZvidSeries2Day45",
+        "executionId": 783,
+        "mainRenderExecutionId": 783,
+        "latestDeliveryExecutionId": 867,
+        "functionalSha256": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e",
+        "canonicalSha256": "d62a76490fd08b8412177be44bdbe51c551884effabb96cc8904067b0a0496b3",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 783,
+          "domainPolicy": 783,
+          "eligibility": 783,
+          "ledgerAcceptance": 783,
+          "driveFile": 783,
+          "writeback": 783,
+          "deduplication": 784,
+          "resumeAccepted": 836,
+          "deliveryRecovery": 867
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 46,
+      "slug": "meeting-action-brief-video",
+      "title": "Meeting decisions action brief",
+      "source": "zvid-integrations/n8n/workflows/zvid-meeting-action-brief-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/meeting-action-brief-video.md",
+      "storyId": 589,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 590,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-305",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 591,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-306"
+        },
+        {
+          "id": 592,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-307",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 593,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-308"
+        },
+        {
+          "id": 594,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-309",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 595,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-310",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 596,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-311"
+        },
+        {
+          "id": 597,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-312"
+        },
+        {
+          "id": 598,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-313"
+        },
+        {
+          "id": 599,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-314"
+        },
+        {
+          "id": 600,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-315"
+        },
+        {
+          "id": 601,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-316"
+        },
+        {
+          "id": 602,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-317"
+        },
+        {
+          "id": 603,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-318"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-304",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/meeting-action-brief-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "1fd71d1e22d34829c55de7e5424e1891d02ca480099d636816822c47929533fc",
+        "previousManualExecutionId": 711,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 46,
+        "slug": "meeting-action-brief-video",
+        "workflowId": "ZvidSeries2Day46",
+        "executionId": 711,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 46,
+        "slug": "meeting-action-brief-video",
+        "workflowId": "ZvidSeries2Day46",
+        "executionId": 785,
+        "mainRenderExecutionId": 785,
+        "latestDeliveryExecutionId": 868,
+        "functionalSha256": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062",
+        "canonicalSha256": "c721499525bdc49d9d27e9317a71f86dacbab07b86af92337f3383eb553e336d",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 785,
+          "domainPolicy": 785,
+          "eligibility": 785,
+          "ledgerAcceptance": 785,
+          "driveFile": 785,
+          "writeback": 785,
+          "deduplication": 786,
+          "resumeAccepted": 837,
+          "deliveryRecovery": 868
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 47,
+      "slug": "equipment-maintenance-video",
+      "title": "Equipment maintenance due",
+      "source": "zvid-integrations/n8n/workflows/zvid-equipment-maintenance-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/equipment-maintenance-video.md",
+      "storyId": 604,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 605,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-320",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 606,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-321"
+        },
+        {
+          "id": 607,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-322",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 608,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-323"
+        },
+        {
+          "id": 609,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-324",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 610,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-325",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 611,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-326"
+        },
+        {
+          "id": 612,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-327"
+        },
+        {
+          "id": 613,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-328"
+        },
+        {
+          "id": 614,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-329"
+        },
+        {
+          "id": 615,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-330"
+        },
+        {
+          "id": 616,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-331"
+        },
+        {
+          "id": 617,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-332"
+        },
+        {
+          "id": 618,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-333"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-319",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/equipment-maintenance-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "61cf4fb0fde135fd4e44b51e4185fe0696eb63597ae0cb118c64bbd28e24aea2",
+        "previousManualExecutionId": 712,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 47,
+        "slug": "equipment-maintenance-video",
+        "workflowId": "ZvidSeries2Day47",
+        "executionId": 712,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 47,
+        "slug": "equipment-maintenance-video",
+        "workflowId": "ZvidSeries2Day47",
+        "executionId": 787,
+        "mainRenderExecutionId": 787,
+        "latestDeliveryExecutionId": 869,
+        "functionalSha256": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162",
+        "canonicalSha256": "89290359e635ef09bc4923702e41a4d47b79e198ac51d137eee555edf4a60375",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 787,
+          "domainPolicy": 787,
+          "eligibility": 787,
+          "ledgerAcceptance": 787,
+          "driveFile": 787,
+          "writeback": 787,
+          "deduplication": 788,
+          "resumeAccepted": 838,
+          "deliveryRecovery": 869
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 48,
+      "slug": "inventory-replenishment-video",
+      "title": "Inventory replenishment brief",
+      "source": "zvid-integrations/n8n/workflows/zvid-inventory-replenishment-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/inventory-replenishment-video.md",
+      "storyId": 619,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 620,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-335",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 621,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-336"
+        },
+        {
+          "id": 622,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-337",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 623,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-338"
+        },
+        {
+          "id": 624,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-339",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 625,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-340",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 626,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-341"
+        },
+        {
+          "id": 627,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-342"
+        },
+        {
+          "id": 628,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-343"
+        },
+        {
+          "id": 629,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-344"
+        },
+        {
+          "id": 630,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-345"
+        },
+        {
+          "id": 631,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-346"
+        },
+        {
+          "id": 632,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-347"
+        },
+        {
+          "id": 633,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-348"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-334",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/inventory-replenishment-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "1880afb09240634df082c5f373d6e02acd4c0d67f2d90e31d3edb8202b97b8dd",
+        "previousManualExecutionId": 713,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 48,
+        "slug": "inventory-replenishment-video",
+        "workflowId": "ZvidSeries2Day48",
+        "executionId": 713,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 48,
+        "slug": "inventory-replenishment-video",
+        "workflowId": "ZvidSeries2Day48",
+        "executionId": 789,
+        "mainRenderExecutionId": 789,
+        "latestDeliveryExecutionId": 870,
+        "functionalSha256": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d",
+        "canonicalSha256": "ee90f1e5cfcc31a844613de0490ca4df1ed07a7d04f70cee34cb5f28ad7964dc",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 789,
+          "domainPolicy": 789,
+          "eligibility": 789,
+          "ledgerAcceptance": 789,
+          "driveFile": 789,
+          "writeback": 789,
+          "deduplication": 790,
+          "resumeAccepted": 839,
+          "deliveryRecovery": 870
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 49,
+      "slug": "delivery-route-brief-video",
+      "title": "Delivery route briefing",
+      "source": "zvid-integrations/n8n/workflows/zvid-delivery-route-brief-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/delivery-route-brief-video.md",
+      "storyId": 634,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 635,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-350",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 636,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-351"
+        },
+        {
+          "id": 637,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-352",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 638,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-353"
+        },
+        {
+          "id": 639,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-354",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 640,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-355",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 641,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-356"
+        },
+        {
+          "id": 642,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-357"
+        },
+        {
+          "id": 643,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-358"
+        },
+        {
+          "id": 644,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-359"
+        },
+        {
+          "id": 645,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-360"
+        },
+        {
+          "id": 646,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-361"
+        },
+        {
+          "id": 647,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-362"
+        },
+        {
+          "id": 648,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-363"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-349",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/delivery-route-brief-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "19d4008f8733e5ce620ff7cd2a048064e67c19f5fbdb69434c82d1498f23d085",
+        "previousManualExecutionId": 721,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 49,
+        "slug": "delivery-route-brief-video",
+        "workflowId": "ZvidSeries2Day49",
+        "executionId": 721,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": [
+          714
+        ]
+      },
+      "manualEvidence": {
+        "day": 49,
+        "slug": "delivery-route-brief-video",
+        "workflowId": "ZvidSeries2Day49",
+        "executionId": 791,
+        "mainRenderExecutionId": 791,
+        "latestDeliveryExecutionId": 871,
+        "functionalSha256": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a",
+        "canonicalSha256": "a770c1f2052005086541d5f350fa08b1d9c3ee844038439cb2e650f24187bde0",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 791,
+          "domainPolicy": 791,
+          "eligibility": 791,
+          "ledgerAcceptance": 791,
+          "driveFile": 791,
+          "writeback": 791,
+          "deduplication": 792,
+          "resumeAccepted": 840,
+          "deliveryRecovery": 871
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 50,
+      "slug": "tender-checklist-video",
+      "title": "Tender submission checklist",
+      "source": "zvid-integrations/n8n/workflows/zvid-tender-checklist-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/tender-checklist-video.md",
+      "storyId": 649,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 650,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-365",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 651,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-366"
+        },
+        {
+          "id": 652,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-367",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 653,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-368"
+        },
+        {
+          "id": 654,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-369",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 655,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-370",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 656,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-371"
+        },
+        {
+          "id": 657,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-372"
+        },
+        {
+          "id": 658,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-373"
+        },
+        {
+          "id": 659,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-374"
+        },
+        {
+          "id": 660,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-375"
+        },
+        {
+          "id": 661,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-376"
+        },
+        {
+          "id": 662,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-377"
+        },
+        {
+          "id": 663,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-378"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-364",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/tender-checklist-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "4ca9e5ec3cc3e06fb391a55714896c8e5f001bb10df22601d0afa718b11859ba",
+        "previousManualExecutionId": 715,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 50,
+        "slug": "tender-checklist-video",
+        "workflowId": "ZvidSeries2Day50",
+        "executionId": 715,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 50,
+        "slug": "tender-checklist-video",
+        "workflowId": "ZvidSeries2Day50",
+        "executionId": 805,
+        "mainRenderExecutionId": 805,
+        "latestDeliveryExecutionId": 872,
+        "functionalSha256": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa",
+        "canonicalSha256": "96e01847b72f86472bc861f6c69fbf469f6dd37cd37c75b6dbba24c39c124ba7",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 805,
+          "domainPolicy": 805,
+          "eligibility": 805,
+          "ledgerAcceptance": 805,
+          "driveFile": 805,
+          "writeback": 805,
+          "deduplication": 806,
+          "resumeAccepted": 841,
+          "deliveryRecovery": 872
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 51,
+      "slug": "travel-itinerary-video",
+      "title": "Travel itinerary",
+      "source": "zvid-integrations/n8n/workflows/zvid-travel-itinerary-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/travel-itinerary-video.md",
+      "storyId": 664,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 665,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-380",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 666,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-381"
+        },
+        {
+          "id": 667,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-382",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 668,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-383"
+        },
+        {
+          "id": 669,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-384",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 670,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-385",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 671,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-386"
+        },
+        {
+          "id": 672,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-387"
+        },
+        {
+          "id": 673,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-388"
+        },
+        {
+          "id": 674,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-389"
+        },
+        {
+          "id": 675,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-390"
+        },
+        {
+          "id": 676,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-391"
+        },
+        {
+          "id": 677,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-392"
+        },
+        {
+          "id": 678,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-393"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-379",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/travel-itinerary-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "172904793e99921212248556dc4d72877580a81d68d58ac1fdb5349451248780",
+        "previousManualExecutionId": 723,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 51,
+        "slug": "travel-itinerary-video",
+        "workflowId": "ZvidSeries2Day51",
+        "executionId": 723,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": [
+          716
+        ]
+      },
+      "manualEvidence": {
+        "day": 51,
+        "slug": "travel-itinerary-video",
+        "workflowId": "ZvidSeries2Day51",
+        "executionId": 800,
+        "mainRenderExecutionId": 800,
+        "latestDeliveryExecutionId": 873,
+        "functionalSha256": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+        "canonicalSha256": "25ce7708ee194d1973c95293a9d248357a307e153b8488d4c5a8cc2421e6fd63",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 800,
+          "domainPolicy": 800,
+          "eligibility": 800,
+          "ledgerAcceptance": 800,
+          "driveFile": 800,
+          "writeback": 800,
+          "deduplication": 801,
+          "resumeAccepted": 842,
+          "deliveryRecovery": 873
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 52,
+      "slug": "hotel-arrival-guide-video",
+      "title": "Hotel arrival guide",
+      "source": "zvid-integrations/n8n/workflows/zvid-hotel-arrival-guide-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/hotel-arrival-guide-video.md",
+      "storyId": 679,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 680,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-395",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 681,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-396"
+        },
+        {
+          "id": 682,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-397",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 683,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-398"
+        },
+        {
+          "id": 684,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-399",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 685,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-400",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 686,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-401"
+        },
+        {
+          "id": 687,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-402"
+        },
+        {
+          "id": 688,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-403"
+        },
+        {
+          "id": 689,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-404"
+        },
+        {
+          "id": 690,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-405"
+        },
+        {
+          "id": 691,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-406"
+        },
+        {
+          "id": 692,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-407"
+        },
+        {
+          "id": 693,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-408"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-394",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/hotel-arrival-guide-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "905a936b5b5e40f636f99786edd062c94c12fa54d3ebe80711a7cefd91dd5bdc",
+        "previousManualExecutionId": 724,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 52,
+        "slug": "hotel-arrival-guide-video",
+        "workflowId": "ZvidSeries2Day52",
+        "executionId": 724,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": [
+          717
+        ]
+      },
+      "manualEvidence": {
+        "day": 52,
+        "slug": "hotel-arrival-guide-video",
+        "workflowId": "ZvidSeries2Day52",
+        "executionId": 797,
+        "mainRenderExecutionId": 797,
+        "latestDeliveryExecutionId": 874,
+        "functionalSha256": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d",
+        "canonicalSha256": "8e9a8ec6e85fa3a4be32d1321406bb3e37049f8799e107fda45012c180d35675",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 797,
+          "domainPolicy": 797,
+          "eligibility": 797,
+          "ledgerAcceptance": 797,
+          "driveFile": 797,
+          "writeback": 797,
+          "deduplication": 799,
+          "resumeAccepted": 843,
+          "deliveryRecovery": 874
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 53,
+      "slug": "pet-adoption-video",
+      "title": "Pet adoption profile",
+      "source": "zvid-integrations/n8n/workflows/zvid-pet-adoption-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/pet-adoption-video.md",
+      "storyId": 694,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 695,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-410",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 696,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-411"
+        },
+        {
+          "id": 697,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-412",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 698,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-413"
+        },
+        {
+          "id": 699,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-414",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 700,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-415",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 701,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-416"
+        },
+        {
+          "id": 702,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-417"
+        },
+        {
+          "id": 703,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-418"
+        },
+        {
+          "id": 704,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-419"
+        },
+        {
+          "id": 705,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-420"
+        },
+        {
+          "id": 706,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-421"
+        },
+        {
+          "id": 707,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-422"
+        },
+        {
+          "id": 708,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-423"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-409",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/pet-adoption-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "876d73edd5d8dccb0d6414abbfaf881e5eb9819eb86f38541641d46e3bfd692c",
+        "previousManualExecutionId": 725,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 53,
+        "slug": "pet-adoption-video",
+        "workflowId": "ZvidSeries2Day53",
+        "executionId": 725,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 53,
+        "slug": "pet-adoption-video",
+        "workflowId": "ZvidSeries2Day53",
+        "executionId": 802,
+        "mainRenderExecutionId": 802,
+        "latestDeliveryExecutionId": 875,
+        "functionalSha256": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e",
+        "canonicalSha256": "86527fcf6089a9aab855bffb46e057e3dbbd926db0f54b45dd775a2ef1d892d7",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 802,
+          "domainPolicy": 802,
+          "eligibility": 802,
+          "ledgerAcceptance": 802,
+          "driveFile": 802,
+          "writeback": 802,
+          "deduplication": 804,
+          "resumeAccepted": 844,
+          "deliveryRecovery": 875
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 54,
+      "slug": "volunteer-shift-video",
+      "title": "Volunteer shift briefing",
+      "source": "zvid-integrations/n8n/workflows/zvid-volunteer-shift-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/volunteer-shift-video.md",
+      "storyId": 709,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 710,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-425",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 711,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-426"
+        },
+        {
+          "id": 712,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-427",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 713,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-428"
+        },
+        {
+          "id": 714,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-429",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 715,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-430",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 716,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-431"
+        },
+        {
+          "id": 717,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-432"
+        },
+        {
+          "id": 718,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-433"
+        },
+        {
+          "id": 719,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-434"
+        },
+        {
+          "id": 720,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-435"
+        },
+        {
+          "id": 721,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-436"
+        },
+        {
+          "id": 722,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-437"
+        },
+        {
+          "id": 723,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-438"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-424",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/volunteer-shift-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "6c77ff165687b33a576ad902b85bf4d755186730bc765289e4233534e66c0727",
+        "previousManualExecutionId": 726,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 54,
+        "slug": "volunteer-shift-video",
+        "workflowId": "ZvidSeries2Day54",
+        "executionId": 726,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 54,
+        "slug": "volunteer-shift-video",
+        "workflowId": "ZvidSeries2Day54",
+        "executionId": 807,
+        "mainRenderExecutionId": 807,
+        "latestDeliveryExecutionId": 876,
+        "functionalSha256": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad",
+        "canonicalSha256": "b85cc72d0f79d4718ae96366c95375a6c0387391683ab407e91f35759dba2c6a",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 807,
+          "domainPolicy": 807,
+          "eligibility": 807,
+          "ledgerAcceptance": 807,
+          "driveFile": 807,
+          "writeback": 807,
+          "deduplication": 808,
+          "resumeAccepted": 845,
+          "deliveryRecovery": 876
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 55,
+      "slug": "donation-impact-video",
+      "title": "Donation impact thank-you",
+      "source": "zvid-integrations/n8n/workflows/zvid-donation-impact-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/donation-impact-video.md",
+      "storyId": 724,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 725,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-440",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 726,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-441"
+        },
+        {
+          "id": 727,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-442",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 728,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-443"
+        },
+        {
+          "id": 729,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-444",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 730,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-445",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 731,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-446"
+        },
+        {
+          "id": 732,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-447"
+        },
+        {
+          "id": 733,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-448"
+        },
+        {
+          "id": 734,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-449"
+        },
+        {
+          "id": 735,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-450"
+        },
+        {
+          "id": 736,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-451"
+        },
+        {
+          "id": 737,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-452"
+        },
+        {
+          "id": 738,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-453"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-439",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/donation-impact-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "23f080800f1120c4220ad3d614c561ec85230d0e05d61a93bec812a1fb7c9763",
+        "previousManualExecutionId": 727,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 55,
+        "slug": "donation-impact-video",
+        "workflowId": "ZvidSeries2Day55",
+        "executionId": 727,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 55,
+        "slug": "donation-impact-video",
+        "workflowId": "ZvidSeries2Day55",
+        "executionId": 809,
+        "mainRenderExecutionId": 809,
+        "latestDeliveryExecutionId": 877,
+        "functionalSha256": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757",
+        "canonicalSha256": "a8e6318f00f5544ce18f427deb06000f6f72a849a6173191b295b7c26e6ff248",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 809,
+          "domainPolicy": 809,
+          "eligibility": 809,
+          "ledgerAcceptance": 809,
+          "driveFile": 809,
+          "writeback": 809,
+          "deduplication": 810,
+          "resumeAccepted": 846,
+          "deliveryRecovery": 877
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 56,
+      "slug": "survey-results-video",
+      "title": "Survey result breakdown",
+      "source": "zvid-integrations/n8n/workflows/zvid-survey-results-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/survey-results-video.md",
+      "storyId": 739,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 740,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-455",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 741,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-456"
+        },
+        {
+          "id": 742,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-457",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 743,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-458"
+        },
+        {
+          "id": 744,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-459",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 745,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-460",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 746,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-461"
+        },
+        {
+          "id": 747,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-462"
+        },
+        {
+          "id": 748,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-463"
+        },
+        {
+          "id": 749,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-464"
+        },
+        {
+          "id": 750,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-465"
+        },
+        {
+          "id": 751,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-466"
+        },
+        {
+          "id": 752,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-467"
+        },
+        {
+          "id": 753,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-468"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-454",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/survey-results-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "ce5e99bc2e201543218b8b890b32b880c1035e8a7a0a0845f702c46bd2ffb51a",
+        "previousManualExecutionId": 728,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 56,
+        "slug": "survey-results-video",
+        "workflowId": "ZvidSeries2Day56",
+        "executionId": 728,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 56,
+        "slug": "survey-results-video",
+        "workflowId": "ZvidSeries2Day56",
+        "executionId": 811,
+        "mainRenderExecutionId": 811,
+        "latestDeliveryExecutionId": 878,
+        "functionalSha256": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7",
+        "canonicalSha256": "c42c1eb089721c0dc28af3494603abc18ab47410c2c908df3c604d8333ca7b88",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 811,
+          "domainPolicy": 811,
+          "eligibility": 811,
+          "ledgerAcceptance": 811,
+          "driveFile": 811,
+          "writeback": 811,
+          "deduplication": 812,
+          "resumeAccepted": 847,
+          "deliveryRecovery": 878
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 57,
+      "slug": "fundraiser-progress-video",
+      "title": "Fundraiser progress",
+      "source": "zvid-integrations/n8n/workflows/zvid-fundraiser-progress-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/fundraiser-progress-video.md",
+      "storyId": 754,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 755,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-470",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 756,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-471"
+        },
+        {
+          "id": 757,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-472",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 758,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-473"
+        },
+        {
+          "id": 759,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-474",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 760,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-475",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 761,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-476"
+        },
+        {
+          "id": 762,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-477"
+        },
+        {
+          "id": 763,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-478"
+        },
+        {
+          "id": 764,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-479"
+        },
+        {
+          "id": 765,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-480"
+        },
+        {
+          "id": 766,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-481"
+        },
+        {
+          "id": 767,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-482"
+        },
+        {
+          "id": 768,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-483"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-469",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/fundraiser-progress-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "890acd7005161c6e5e85e7a2b1cfd0d2b7a0e25246463d147ba6173e703e9c33",
+        "previousManualExecutionId": 729,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 57,
+        "slug": "fundraiser-progress-video",
+        "workflowId": "ZvidSeries2Day57",
+        "executionId": 729,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 57,
+        "slug": "fundraiser-progress-video",
+        "workflowId": "ZvidSeries2Day57",
+        "executionId": 813,
+        "mainRenderExecutionId": 813,
+        "latestDeliveryExecutionId": 879,
+        "functionalSha256": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+        "canonicalSha256": "ab9a0d6004e3ee38f428f3d2ef311eea54cd230e2273186afd18155c2f2ee13b",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 813,
+          "domainPolicy": 813,
+          "eligibility": 813,
+          "ledgerAcceptance": 813,
+          "driveFile": 813,
+          "writeback": 813,
+          "deduplication": 814,
+          "resumeAccepted": 848,
+          "deliveryRecovery": 879
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 58,
+      "slug": "before-after-case-study-video",
+      "title": "Before and after improvement case study",
+      "source": "zvid-integrations/n8n/workflows/zvid-before-after-case-study-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/before-after-case-study-video.md",
+      "storyId": 769,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 770,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-485",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 771,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-486"
+        },
+        {
+          "id": 772,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-487",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 773,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-488"
+        },
+        {
+          "id": 774,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-489",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 775,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-490",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 776,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-491"
+        },
+        {
+          "id": 777,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-492"
+        },
+        {
+          "id": 778,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-493"
+        },
+        {
+          "id": 779,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-494"
+        },
+        {
+          "id": 780,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-495"
+        },
+        {
+          "id": 781,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-496"
+        },
+        {
+          "id": 782,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-497"
+        },
+        {
+          "id": 783,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-498"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-484",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/before-after-case-study-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "cbc2f6e4516cf07d02bb7576e89329eb8a4eaeb58129c7f3e5670b1eb2b11e47",
+        "previousManualExecutionId": 730,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 58,
+        "slug": "before-after-case-study-video",
+        "workflowId": "ZvidSeries2Day58",
+        "executionId": 730,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 58,
+        "slug": "before-after-case-study-video",
+        "workflowId": "ZvidSeries2Day58",
+        "executionId": 815,
+        "mainRenderExecutionId": 815,
+        "latestDeliveryExecutionId": 880,
+        "functionalSha256": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f",
+        "canonicalSha256": "3464a8da36792edf1434a9520bfe931b0327624e53af162ada634f2c9ead5354",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 815,
+          "domainPolicy": 815,
+          "eligibility": 815,
+          "ledgerAcceptance": 815,
+          "driveFile": 815,
+          "writeback": 815,
+          "deduplication": 816,
+          "resumeAccepted": 849,
+          "deliveryRecovery": 880
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 59,
+      "slug": "milestone-roadmap-video",
+      "title": "Project milestone roadmap",
+      "source": "zvid-integrations/n8n/workflows/zvid-milestone-roadmap-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/milestone-roadmap-video.md",
+      "storyId": 784,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 785,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-500",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 786,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-501"
+        },
+        {
+          "id": 787,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-502",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 788,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-503"
+        },
+        {
+          "id": 789,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-504",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 790,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-505",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 791,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-506"
+        },
+        {
+          "id": 792,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-507"
+        },
+        {
+          "id": 793,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-508"
+        },
+        {
+          "id": 794,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-509"
+        },
+        {
+          "id": 795,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-510"
+        },
+        {
+          "id": 796,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-511"
+        },
+        {
+          "id": 797,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-512"
+        },
+        {
+          "id": 798,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-513"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-499",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/milestone-roadmap-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "774e63d27d2b2ce44cb09e7f16af667077009a66819a8bb12c870effb5947f0b",
+        "previousManualExecutionId": 731,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 59,
+        "slug": "milestone-roadmap-video",
+        "workflowId": "ZvidSeries2Day59",
+        "executionId": 731,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": []
+      },
+      "manualEvidence": {
+        "day": 59,
+        "slug": "milestone-roadmap-video",
+        "workflowId": "ZvidSeries2Day59",
+        "executionId": 817,
+        "mainRenderExecutionId": 817,
+        "latestDeliveryExecutionId": 881,
+        "functionalSha256": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83",
+        "canonicalSha256": "03930f9f5504a93625e9bbbf9d4a4f4640489ba36cc740dac479d1f4de656067",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 817,
+          "domainPolicy": 817,
+          "eligibility": 817,
+          "ledgerAcceptance": 817,
+          "driveFile": 817,
+          "writeback": 817,
+          "deduplication": 818,
+          "resumeAccepted": 850,
+          "deliveryRecovery": 881
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    },
+    {
+      "day": 60,
+      "slug": "recipe-cooking-guide-video",
+      "title": "Scaled recipe cooking guide",
+      "source": "zvid-integrations/n8n/workflows/zvid-recipe-cooking-guide-video.json",
+      "companionGuide": "zvid-integrations/n8n/workflows/recipe-cooking-guide-video.md",
+      "storyId": 799,
+      "stage": "In Progress",
+      "children": [
+        {
+          "id": 800,
+          "title": "[Build] Create n8n workflow",
+          "stage": "Done",
+          "numberLabel": "ZWL-515",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 801,
+          "title": "[Build] Create Make workflow",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-516"
+        },
+        {
+          "id": 802,
+          "title": "[Release] Publish/verify in n8n Cloud",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-517",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 803,
+          "title": "[Release] Publish/verify in Make",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-518"
+        },
+        {
+          "id": 804,
+          "title": "[Community] Publish to n8n community",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-519",
+          "evidenceRecorded": true,
+          "evidencePhase": "Public companion guide prerequisite; no publication performed"
+        },
+        {
+          "id": 805,
+          "title": "[Asset] Capture n8n workflow screenshot",
+          "stage": "Done",
+          "numberLabel": "ZWL-520",
+          "evidenceRecorded": true,
+          "evidencePhase": "Expanded source-to-private-delivery workflow completion; root-confirmed current manual and recovery evidence"
+        },
+        {
+          "id": 806,
+          "title": "[Asset] Capture Make workflow screenshot",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-521"
+        },
+        {
+          "id": 807,
+          "title": "[Example] Create and test Node.js script",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-522"
+        },
+        {
+          "id": 808,
+          "title": "[YouTube] Produce video",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-523"
+        },
+        {
+          "id": 809,
+          "title": "[YouTube] Create thumbnail",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-524"
+        },
+        {
+          "id": 810,
+          "title": "[Social] Write LinkedIn post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-525"
+        },
+        {
+          "id": 811,
+          "title": "[Social] Write Reddit post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-526"
+        },
+        {
+          "id": 812,
+          "title": "[Article] Write Hashnode post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-527"
+        },
+        {
+          "id": 813,
+          "title": "[Article] Write dev.to post",
+          "stage": "Backlog",
+          "numberLabel": "ZWL-528"
+        }
+      ],
+      "remainingChildren": 12,
+      "blockedChildren": 0,
+      "numberLabel": "ZWL-514",
+      "guidePublicationPrerequisite": {
+        "localGuide": "zvid-integrations/n8n/workflows/recipe-cooking-guide-video.md",
+        "state": "Local companion only; public guide not published",
+        "nextAction": "Publish the companion guide, verify its public URL, and replace the inline filename in the workflow overview before public template/community release."
+      },
+      "upgradeBaseline": {
+        "sourceSha256": "61f0ffb6c6a5e59d9e4f6c7a71f540ea6869954de76458b240dce878a002321e",
+        "previousManualExecutionId": 733,
+        "recordedAt": "2026-10-01 11:11:11 UTC"
+      },
+      "previousRevisionEvidence": {
+        "day": 60,
+        "slug": "recipe-cooking-guide-video",
+        "workflowId": "ZvidSeries2Day60",
+        "executionId": 733,
+        "manualStatus": "success",
+        "lastNode": "Watch video",
+        "mediaPassed": true,
+        "mediaReview": "passed",
+        "buildStage": "Done",
+        "assetStage": "Done",
+        "requiredChildrenRemaining": 12,
+        "failedExecutionIds": [],
+        "failedMediaExecutionIds": [
+          732
+        ]
+      },
+      "manualEvidence": {
+        "day": 60,
+        "slug": "recipe-cooking-guide-video",
+        "workflowId": "ZvidSeries2Day60",
+        "executionId": 819,
+        "mainRenderExecutionId": 819,
+        "latestDeliveryExecutionId": 882,
+        "functionalSha256": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648",
+        "canonicalSha256": "a625b376372f7214d8dd5448534612f2749ed7983d3194d63f17d68694ff4f87",
+        "manualStatus": "success",
+        "mediaPassed": true,
+        "canvasPassed": true,
+        "automatedChecksPassed": 620,
+        "roleExecutionIds": {
+          "sourceRead": 819,
+          "domainPolicy": 819,
+          "eligibility": 819,
+          "ledgerAcceptance": 819,
+          "driveFile": 819,
+          "writeback": 819,
+          "deduplication": 820,
+          "resumeAccepted": 851,
+          "deliveryRecovery": 882
+        },
+        "remainingChildren": 12,
+        "publicationPerformed": false
+      }
+    }
+  ],
+  "totals": {
+    "stories": 30,
+    "children": 420,
+    "remaining": 360,
+    "blocked": 0
+  },
+  "status": "Current business workflow builds and matching canvas assets verified; launch publication tasks remain Backlog",
+  "verification": {
+    "projectIssueTotal": 528,
+    "newStories": 30,
+    "newChildren": 420,
+    "storySlugUniqueness": true,
+    "exactContractChildTitles": true,
+    "semanticHtmlDescriptions": true,
+    "originalRecordsUnchanged": true,
+    "originalRecordCount": 78,
+    "writeMode": "Native MCP: inspected preview then confirm",
+    "activeChild": null,
+    "activeChildStage": null,
+    "localRequestedPhaseComplete": true,
+    "manualExecutionAndMediaPairsVerified": 30,
+    "screenshotPngPairsVerified": 30,
+    "buildTasksDone": 30,
+    "canvasTasksDone": 30,
+    "futureTasksBacklog": 360,
+    "automatedChecksPassed": 620,
+    "automatedChecksFailed": 0,
+    "priorRevisionManualPairsVerified": 30,
+    "priorRevisionScreenshotPairsVerified": 30,
+    "priorRevisionAutomatedChecksPassed": 272,
+    "priorAuditPath": "zvid-integrations/n8n/local-test/series-2/flowlu-native-audit.json",
+    "currentAuditPath": "zvid-integrations/n8n/local-test/series-2/flowlu-upgrade-final-native-audit.json",
+    "currentAuditCheckedAt": "2026-10-01T14:50:09.003Z",
+    "expandedRevisionChecksCompleted": 30,
+    "rootReportConfirmed": true,
+    "acceptedResumeChecksPassed": 30,
+    "uploadedDeliveryRecoveryChecksPassed": 30,
+    "updatesVerified": 90,
+    "publicationPerformed": false
+  },
+  "upgrade": {
+    "startedAt": "2026-10-01 11:11:11 UTC",
+    "scope": "Complete use-case workflow with real source, eligibility, durable deduplication/resume, actual delivery and confirmed write-back",
+    "baselinePath": "zvid-integrations/n8n/local-test/series-2/flowlu-upgrade-plan.json",
+    "previousVerification": {
+      "projectIssueTotal": 528,
+      "newStories": 30,
+      "newChildren": 420,
+      "storySlugUniqueness": true,
+      "exactContractChildTitles": true,
+      "semanticHtmlDescriptions": true,
+      "originalRecordsUnchanged": true,
+      "originalRecordCount": 78,
+      "writeMode": "Native MCP: inspected preview then confirm",
+      "activeChild": null,
+      "activeChildStage": "Done",
+      "localRequestedPhaseComplete": true,
+      "finalAuditPath": "zvid-integrations/n8n/local-test/series-2/flowlu-native-audit.json",
+      "finalAuditCheckedAt": "2026-10-01 10:39:08 UTC",
+      "manualExecutionAndMediaPairsVerified": 30,
+      "screenshotPngPairsVerified": 30,
+      "buildTasksDone": 30,
+      "canvasTasksDone": 30,
+      "futureTasksBacklog": 360,
+      "automatedChecksPassed": 272,
+      "automatedChecksFailed": 0
+    },
+    "currentRevisionManuallyVerified": true,
+    "userInstruction": "Each video must have a clear use case and need, and each template must be a complete workflow with justified complexity rather than simple video generation. Templates are intended for future n8n template publication; no actual submission is authorized.",
+    "selectedArchitecture": {
+      "source": "Google Sheets source rows and business reference joins",
+      "state": "Persistent n8n Data Tables job recovery and duplicate suppression",
+      "delivery": "Private Google Drive artifact handoff and Google Sheets source write-back"
+    },
+    "nativeChildrenReopenedAt": "2026-10-01 11:17:35 UTC",
+    "nativeAuditCheckedAt": "2026-10-01T14:50:09.003Z",
+    "nativeReconciliationVerified": true,
+    "integrationStatus": {
+      "observedAt": "2026-10-01T11:46:32.586Z",
+      "current": {
+        "googleSheets": {
+          "executionId": 737,
+          "status": "success",
+          "reason": "Native setup succeeded"
+        },
+        "googleDrive": {
+          "executionId": 736,
+          "status": "success",
+          "reason": "Native setup succeeded"
+        }
+      },
+      "priorFailedExecutions": [
+        734,
+        735
+      ],
+      "historyPath": "zvid-integrations/n8n/local-test/series-2/flowlu-integration-history.json",
+      "currentEvidencePath": "zvid-integrations/n8n/local-test/series-2/publication/infra-scaffold-evidence.json",
+      "scopeVerified": "Native private workbook/folder setup only",
+      "fullBusinessWorkflowVerified": true,
+      "expandedWorkflowEvidencePath": "zvid-integrations/n8n/local-test/series-2/publication/upgraded-role-evidence.json",
+      "sourceEligibilityPrivateDeliveryWritebackVerified": 30,
+      "acceptedResumeVerified": 30,
+      "uploadedRecoveryVerified": 30
+    },
+    "readinessHelper": {
+      "path": "zvid-integrations/n8n/local-test/series-2/flowlu-upgrade-readiness.mjs",
+      "documentationPath": "zvid-integrations/n8n/local-test/series-2/flowlu-upgrade-readiness.md",
+      "testsPassed": 13,
+      "testsFailed": 0,
+      "buildReadyDays": [],
+      "assetReadyDays": [],
+      "automaticFlowluMutations": false
+    },
+    "completedAt": "2026-10-01T14:50:09.003Z",
+    "rootReportConfirmed": true,
+    "rootReviewPath": "zvid-integrations/n8n/local-test/series-2/publication/root-review-audit.json",
+    "completionPlanPath": "zvid-integrations/n8n/local-test/series-2/flowlu-upgrade-finalize-plan.json",
+    "finalNativeAuditPath": "zvid-integrations/n8n/local-test/series-2/flowlu-upgrade-final-native-audit.json"
+  }
+}

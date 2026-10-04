@@ -1,0 +1,108 @@
+{
+  "generatedAt": "2026-10-01T12:21:12.243Z",
+  "sourceConfiguredImports": "D:\\Nodejs\\Projects\\zvid-cline\\zvid-integrations\\n8n\\local-test\\series-2\\publication\\infra-configured-imports.json",
+  "frameworkSha256": "27f6f2166fcb3c65461b0eddff1082b3b25d8c64be977f63911bdc013686d161",
+  "originalSpreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+  "privateDriveFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+  "edgeSpreadsheetId": "1YI036cLhdg1FaKxa9Y4yz3nua8QNFZkrzf-mhcf37Nc",
+  "ready": [
+    {
+      "workflowId": "ZvidSeries2PubEdgeCopyWorkbook",
+      "name": "EDGE setup: copy the private publication QA workbook",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeCopyWorkbook",
+      "testType": "native_google_drive_integration",
+      "expected": "A distinct private native spreadsheet copy, or its existing receipt; baseline workbook unchanged",
+      "sequence": "Run once, read edgeSpreadsheetId from Copied workbook receipt, then rebuild using --spreadsheet=<ID>."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeSetupRows",
+      "name": "EDGE setup: append isolated multi-row approval fixtures",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeSetupRows",
+      "testType": "native_google_sheets_qa_setup",
+      "expected": "Copied D31Source has three synthetic records, D31Details has nine joined rows; baseline untouched",
+      "sequence": "Run once after workbook copy, before MultiRead/Unapproved/CapZero."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeMultiRead",
+      "name": "EDGE MultiRead: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeMultiRead",
+      "testType": "native_google_sheets_and_datatable_integration",
+      "expected": "Three primary, nine detail and two saved rows pass qualification without duplicate fetches or any render",
+      "sequence": "Run after SetupRows. The graph ends at Assert native multi-row intake."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeUnapproved",
+      "name": "EDGE Unapproved: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeUnapproved",
+      "testType": "native_google_sheets_approval_integration",
+      "expected": "No work report has one unapproved source and no paid/Drive/delivery nodes",
+      "sequence": "Run after SetupRows."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeCapZero",
+      "name": "EDGE CapZero: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeCapZero",
+      "testType": "native_google_sheets_and_zvid_validation_integration",
+      "expected": "Native free validation succeeds, then Check validation and credit cap rejects the positive quote at maxRenderCredits=0; no paid or Drive nodes",
+      "sequence": "Run after SetupRows. A stopped execution is the expected result."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeAcceptedDryRun",
+      "name": "EDGE AcceptedDryRun: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeAcceptedDryRun",
+      "testType": "native_saved_state_integration",
+      "expected": "saved_request_inspection; no Drive, writeback or paid submission nodes execute",
+      "sequence": "Run once after the upgraded job seed and copied workbook exist."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeAmbiguousSubmission",
+      "name": "EDGE AmbiguousSubmission: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeAmbiguousSubmission",
+      "testType": "native_saved_state_integration",
+      "expected": "Decide recovery rejects ambiguous submission; no Zvid render or Drive nodes execute",
+      "sequence": "Run once after the upgraded job seed and copied workbook exist."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeSourceReadRace",
+      "name": "EDGE SourceReadRace: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeSourceReadRace",
+      "testType": "simulated_read_race_contract_with_native_delivery",
+      "expected": "Protect source writeback rejects changed primary content; copied source receipt is not overwritten",
+      "sequence": "Run once after the upgraded job seed and copied workbook exist."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeDetailsReadRace",
+      "name": "EDGE DetailsReadRace: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeDetailsReadRace",
+      "testType": "simulated_read_race_contract_with_native_delivery",
+      "expected": "Protect source writeback rejects changed related content; copied source receipt is not overwritten",
+      "sequence": "Run once after the upgraded job seed and copied workbook exist."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeLostUploadResponse",
+      "name": "EDGE LostUploadResponse: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeLostUploadResponse",
+      "testType": "native_google_drive_lost_response_recovery",
+      "expected": "Native Upload succeeds, then the intentional Stop and Error prevents remembering its response; saved completed media remains",
+      "sequence": "Run once; the intentional error is expected. Then run LostUploadReplay."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeLostUploadReplay",
+      "name": "EDGE LostUploadReplay: D31 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeLostUploadReplay",
+      "testType": "native_google_drive_lost_response_recovery",
+      "expected": "Find existing delivery reuses the EDGE MP4; Upload and paid submission do not execute; copied register receives verified receipt",
+      "sequence": "Run immediately after LostUploadResponse; both use one edge ledger and one EDGE filename."
+    },
+    {
+      "workflowId": "ZvidSeries2PubEdgeExpiredNoticeRecovery",
+      "name": "EDGE ExpiredNoticeRecovery: D35 private publication QA",
+      "url": "http://localhost:5678/workflow/ZvidSeries2PubEdgeExpiredNoticeRecovery",
+      "testType": "simulated_clock_contract_with_native_job_recovery",
+      "expected": "The notice is ineligible at the simulated clock, but the saved accepted job is polled and delivered without paid resubmission",
+      "sequence": "Run once after the upgraded job seed and copied workbook exist."
+    }
+  ],
+  "blocked": [],
+  "neverRunsPaidSubmissions": true
+}

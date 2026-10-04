@@ -1,0 +1,86 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-59",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "What causes the seasons: distance from the Sun, or Earth’s tilt? The tilt is the key. Earth’s axis is tilted about twenty-three and a half degrees. When the northern hemisphere tilts toward the Sun, it receives more direct sunlight and longer days. Six months later, it tilts away. The hemispheres have opposite seasons. The diagrams show the mechanism, not the true scale.",
+    "concept": "earth-seasons",
+    "diagram_hemisphere": "north",
+    "minimum_responses": 10,
+    "question": "WHAT CAUSES THE SEASONS?",
+    "credit": "Scientific source: NASA Space Place, What Causes the Seasons?\nOriginal schematic illustrations, not to scale."
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-59",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Editor reviewed the exact supplied lesson and cited its underlying source.",
+      "url": "https://spaceplace.nasa.gov/seasons/en/"
+    },
+    {
+      "parent_id": "qa-studio-59",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "prediction",
+      "position": 2,
+      "approval": "approved",
+      "cause": "distance",
+      "count": 18
+    },
+    {
+      "parent_id": "qa-studio-59",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "prediction",
+      "position": 3,
+      "approval": "approved",
+      "cause": "tilt",
+      "count": 12
+    },
+    {
+      "parent_id": "qa-studio-59",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "science_fact",
+      "position": 4,
+      "approval": "approved",
+      "fact": "axial_tilt",
+      "value": 23.5
+    },
+    {
+      "parent_id": "qa-studio-59",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "science_fact",
+      "position": 5,
+      "approval": "approved",
+      "fact": "hemispheres",
+      "value": "opposite"
+    },
+    {
+      "parent_id": "qa-studio-59",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "narration",
+      "position": 6,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790930053/zvid-series2-design-review-20261001/d59-narration-timed-r2.mp3",
+      "seconds": 34,
+      "content_fingerprint": "74531ec4c97aadb2880b4b9175530a751985c6e10851fa2af7ecd6508f61be55",
+      "script": "What causes the seasons: distance from the Sun, or Earth’s tilt? The tilt is the key. Earth’s axis is tilted about twenty-three and a half degrees. When the northern hemisphere tilts toward the Sun, it receives more direct sunlight and longer days. Six months later, it tilts away. The hemispheres have opposite seasons. The diagrams show the mechanism, not the true scale.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

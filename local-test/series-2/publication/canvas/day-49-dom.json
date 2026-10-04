@@ -1,0 +1,1645 @@
+{
+  "nodes": [
+    {
+      "id": "zvid-business-49-01",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76923561096191,
+        "x": 269.0384521484375,
+        "y": 267.05047607421875
+      },
+      "name": "Test manually",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(80px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.88460922241211,
+        "x": 276.48077392578125,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.manualTrigger",
+      "labelText": "Test manually"
+    },
+    {
+      "id": "zvid-business-49-02",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76921844482422,
+        "x": 306.25,
+        "y": 267.05047607421875
+      },
+      "name": "Check register hourly",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(320px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 313.69232177734375,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "labelText": "Check register hourly"
+    },
+    {
+      "id": "zvid-business-49-03",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76921844482422,
+        "x": 345.94232177734375,
+        "y": 267.05047607421875
+      },
+      "name": "Config",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(576px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884592056274414,
+        "x": 353.3846435546875,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.set",
+      "labelText": "Config"
+    },
+    {
+      "id": "zvid-business-49-04",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.76923561096191,
+        "x": 269.0384521484375,
+        "y": 301.78125
+      },
+      "name": "Check source configuration",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(80px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.88460922241211,
+        "x": 276.48077392578125,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Check source configuration"
+    },
+    {
+      "id": "zvid-business-49-05",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 422.84613037109375,
+        "y": 267.05047607421875
+      },
+      "name": "Read source register",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1072px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 430.2884521484375,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleSheets",
+      "labelText": "Read source register"
+    },
+    {
+      "id": "zvid-business-49-06",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 462.5384521484375,
+        "y": 267.05047607421875
+      },
+      "name": "Read related records",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1328px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 469.9807739257813,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleSheets",
+      "labelText": "Read related records"
+    },
+    {
+      "id": "zvid-business-49-07",
+      "labelRect": {
+        "height": 6.2019219398498535,
+        "width": 29.76921844482422,
+        "x": 499.7500305175781,
+        "y": 267.05047607421875
+      },
+      "name": "Apply delivery route policy",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1568px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 507.19232177734375,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Apply delivery route policy"
+    },
+    {
+      "id": "zvid-business-49-08",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.76925277709961,
+        "x": 422.84613037109375,
+        "y": 301.78125
+      },
+      "name": "Fingerprint approved content",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1072px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 430.2884521484375,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.crypto",
+      "labelText": "Fingerprint approved content"
+    },
+    {
+      "id": "zvid-business-49-09",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.76925277709961,
+        "x": 462.5384521484375,
+        "y": 301.78125
+      },
+      "name": "Choose one pending revision",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1328px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 469.9807739257813,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Choose one pending revision"
+    },
+    {
+      "id": "zvid-business-49-10",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76921844482422,
+        "x": 499.7500305175781,
+        "y": 301.78125
+      },
+      "name": "Eligible work found?",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1568px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 507.19232177734375,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.if",
+      "labelText": "Eligible work found?"
+    },
+    {
+      "id": "zvid-business-49-11",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 422.84613037109375,
+        "y": 338.9927978515625
+      },
+      "name": "No work report",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1072px, 640px); pointer-events: all;",
+      "rect": {
+        "height": 14.884592056274414,
+        "width": 14.884626388549805,
+        "x": 430.2884521484375,
+        "y": 323.0450134277344
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "No work report"
+    },
+    {
+      "id": "zvid-business-49-12",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 462.5384521484375,
+        "y": 338.9927978515625
+      },
+      "name": "Prepare durable request",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1328px, 640px); pointer-events: all;",
+      "rect": {
+        "height": 14.884592056274414,
+        "width": 14.884626388549805,
+        "x": 469.9807739257813,
+        "y": 323.0450134277344
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Prepare durable request"
+    },
+    {
+      "id": "zvid-business-49-13",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.76921844482422,
+        "x": 306.25,
+        "y": 301.78125
+      },
+      "name": "Ensure publication ledger",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(320px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 313.69232177734375,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.dataTable",
+      "labelText": "Ensure publication ledger"
+    },
+    {
+      "id": "zvid-business-49-14",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76921844482422,
+        "x": 345.94232177734375,
+        "y": 301.78125
+      },
+      "name": "Read saved requests",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(576px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884592056274414,
+        "x": 353.3846435546875,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.dataTable",
+      "labelText": "Read saved requests"
+    },
+    {
+      "id": "zvid-business-49-15",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.769184112548828,
+        "x": 579.1346435546875,
+        "y": 267.05047607421875
+      },
+      "name": "Look up saved request",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2080px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884556770324709,
+        "x": 586.5769653320312,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.dataTable",
+      "labelText": "Look up saved request"
+    },
+    {
+      "id": "zvid-business-49-16",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 616.3461303710938,
+        "y": 267.05047607421875
+      },
+      "name": "Decide recovery",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2320px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 623.7884521484375,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Decide recovery"
+    },
+    {
+      "id": "zvid-business-49-17",
+      "labelRect": {
+        "height": 6.2019219398498535,
+        "width": 29.769184112548828,
+        "x": 732.9423217773438,
+        "y": 267.05047607421875
+      },
+      "name": "Inspect saved request only?",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3072px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884556770324709,
+        "x": 740.3846435546875,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.if",
+      "labelText": "Inspect saved request only?"
+    },
+    {
+      "id": "zvid-business-49-18",
+      "labelRect": {
+        "height": 6.2019219398498535,
+        "width": 29.769184112548828,
+        "x": 772.6346435546875,
+        "y": 267.05047607421875
+      },
+      "name": "Saved request inspection",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3328px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884556770324709,
+        "x": 780.0769653320312,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Saved request inspection"
+    },
+    {
+      "id": "zvid-business-49-19",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 656.0384521484375,
+        "y": 267.05047607421875
+      },
+      "name": "Completed media saved?",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2576px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 663.4807739257812,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.if",
+      "labelText": "Completed media saved?"
+    },
+    {
+      "id": "zvid-business-49-20",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.769184112548828,
+        "x": 579.1346435546875,
+        "y": 301.78125
+      },
+      "name": "Accepted job saved?",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2080px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884556770324709,
+        "x": 586.5769653320312,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.if",
+      "labelText": "Accepted job saved?"
+    },
+    {
+      "id": "zvid-business-49-21",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 809.8461303710938,
+        "y": 267.05047607421875
+      },
+      "name": "Validate project (free)",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3568px, 176px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 817.2884521484375,
+        "y": 251.10269165039065
+      },
+      "sticky": null,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "labelText": "Validate project (free)"
+    },
+    {
+      "id": "zvid-business-49-22",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.769184112548828,
+        "x": 732.9423217773438,
+        "y": 301.78125
+      },
+      "name": "Check validation and credit cap",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3072px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884556770324709,
+        "x": 740.3846435546875,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Check validation and credit cap"
+    },
+    {
+      "id": "zvid-business-49-23",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.769184112548828,
+        "x": 772.6346435546875,
+        "y": 301.78125
+      },
+      "name": "Dry run?",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3328px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884556770324709,
+        "x": 780.0769653320312,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.if",
+      "labelText": "Dry run?"
+    },
+    {
+      "id": "zvid-business-49-24",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76925277709961,
+        "x": 809.8461303710938,
+        "y": 301.78125
+      },
+      "name": "Save draft to editor",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3568px, 400px); pointer-events: all;",
+      "rect": {
+        "height": 14.88460922241211,
+        "width": 14.884626388549805,
+        "x": 817.2884521484375,
+        "y": 285.8334655761719
+      },
+      "sticky": null,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "labelText": "Save draft to editor"
+    },
+    {
+      "id": "zvid-business-49-25",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.769184112548828,
+        "x": 732.9423217773438,
+        "y": 338.9927978515625
+      },
+      "name": "Draft and credit quote",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3072px, 640px); pointer-events: all;",
+      "rect": {
+        "height": 14.884592056274414,
+        "width": 14.884556770324709,
+        "x": 740.3846435546875,
+        "y": 323.0450134277344
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Draft and credit quote"
+    },
+    {
+      "id": "zvid-business-49-26",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.76923561096191,
+        "x": 269.0384521484375,
+        "y": 438.22357177734375
+      },
+      "name": "Mark submission pending",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(80px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.88460922241211,
+        "x": 276.48077392578125,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Mark submission pending"
+    },
+    {
+      "id": "zvid-business-49-27",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76921844482422,
+        "x": 306.25,
+        "y": 438.22357177734375
+      },
+      "name": "Persist submission intent",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(320px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 313.69232177734375,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.dataTable",
+      "labelText": "Persist submission intent"
+    },
+    {
+      "id": "zvid-business-49-28",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76921844482422,
+        "x": 345.94232177734375,
+        "y": 438.22357177734375
+      },
+      "name": "Submit render once",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(576px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884592056274414,
+        "x": 353.3846435546875,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "labelText": "Submit render once"
+    },
+    {
+      "id": "zvid-business-49-29",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76923561096191,
+        "x": 269.0384521484375,
+        "y": 472.954345703125
+      },
+      "name": "Capture accepted job",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(80px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.88460922241211,
+        "x": 276.48077392578125,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Capture accepted job"
+    },
+    {
+      "id": "zvid-business-49-30",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76921844482422,
+        "x": 306.25,
+        "y": 472.954345703125
+      },
+      "name": "Persist accepted job",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(320px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 313.69232177734375,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.dataTable",
+      "labelText": "Persist accepted job"
+    },
+    {
+      "id": "zvid-business-49-31",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76921844482422,
+        "x": 345.94232177734375,
+        "y": 472.954345703125
+      },
+      "name": "Poll saved job context",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(576px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884592056274414,
+        "x": 353.3846435546875,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Poll saved job context"
+    },
+    {
+      "id": "zvid-business-49-32",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.76925277709961,
+        "x": 422.84613037109375,
+        "y": 438.22357177734375
+      },
+      "name": "Wait for completed render",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1072px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 430.2884521484375,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "labelText": "Wait for completed render"
+    },
+    {
+      "id": "zvid-business-49-33",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76925277709961,
+        "x": 462.5384521484375,
+        "y": 438.22357177734375
+      },
+      "name": "Video result",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1328px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 469.9807739257813,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Video result"
+    },
+    {
+      "id": "zvid-business-49-34",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76921844482422,
+        "x": 499.7500305175781,
+        "y": 438.22357177734375
+      },
+      "name": "Persist completed media",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1568px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 507.19232177734375,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.dataTable",
+      "labelText": "Persist completed media"
+    },
+    {
+      "id": "zvid-business-49-35",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 422.84613037109375,
+        "y": 472.954345703125
+      },
+      "name": "Delivery context",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(1072px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 430.2884521484375,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Delivery context"
+    },
+    {
+      "id": "zvid-business-49-36",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.769184112548828,
+        "x": 579.1346435546875,
+        "y": 438.22357177734375
+      },
+      "name": "Find existing delivery",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2080px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884556770324709,
+        "x": 586.5769653320312,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleDrive",
+      "labelText": "Find existing delivery"
+    },
+    {
+      "id": "zvid-business-49-37",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76925277709961,
+        "x": 616.3461303710938,
+        "y": 438.22357177734375
+      },
+      "name": "Reconcile delivery file",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2320px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 623.7884521484375,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Reconcile delivery file"
+    },
+    {
+      "id": "zvid-business-49-38",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76925277709961,
+        "x": 656.0384521484375,
+        "y": 438.22357177734375
+      },
+      "name": "Delivery file exists?",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2576px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 663.4807739257812,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.if",
+      "labelText": "Delivery file exists?"
+    },
+    {
+      "id": "zvid-business-49-39",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.769184112548828,
+        "x": 579.1346435546875,
+        "y": 472.954345703125
+      },
+      "name": "Download delivery media",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2080px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884556770324709,
+        "x": 586.5769653320312,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.httpRequest",
+      "labelText": "Download delivery media"
+    },
+    {
+      "id": "zvid-business-49-40",
+      "labelRect": {
+        "height": 6.201939582824707,
+        "width": 29.76925277709961,
+        "x": 616.3461303710938,
+        "y": 472.954345703125
+      },
+      "name": "Check downloaded media",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2320px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 623.7884521484375,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Check downloaded media"
+    },
+    {
+      "id": "zvid-business-49-41",
+      "labelRect": {
+        "height": 6.201939582824707,
+        "width": 29.76925277709961,
+        "x": 656.0384521484375,
+        "y": 472.954345703125
+      },
+      "name": "Upload private review video",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(2576px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 663.4807739257812,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleDrive",
+      "labelText": "Upload private review video"
+    },
+    {
+      "id": "zvid-business-49-42",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.769184112548828,
+        "x": 732.9423217773438,
+        "y": 438.22357177734375
+      },
+      "name": "Remember delivery",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3072px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884556770324709,
+        "x": 740.3846435546875,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Remember delivery"
+    },
+    {
+      "id": "zvid-business-49-43",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.769184112548828,
+        "x": 772.6346435546875,
+        "y": 438.22357177734375
+      },
+      "name": "Persist delivery file",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3328px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884556770324709,
+        "x": 780.0769653320312,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.dataTable",
+      "labelText": "Persist delivery file"
+    },
+    {
+      "id": "zvid-business-49-44",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76925277709961,
+        "x": 809.8461303710938,
+        "y": 438.22357177734375
+      },
+      "name": "Recheck source revision",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3568px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 817.2884521484375,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleSheets",
+      "labelText": "Recheck source revision"
+    },
+    {
+      "id": "zvid-business-49-45",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.769184112548828,
+        "x": 732.9423217773438,
+        "y": 472.954345703125
+      },
+      "name": "Recheck related content",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3072px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884556770324709,
+        "x": 740.3846435546875,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleSheets",
+      "labelText": "Recheck related content"
+    },
+    {
+      "id": "zvid-business-49-46",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.769184112548828,
+        "x": 772.6346435546875,
+        "y": 472.954345703125
+      },
+      "name": "Prepare writeback check",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3328px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884556770324709,
+        "x": 780.0769653320312,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Prepare writeback check"
+    },
+    {
+      "id": "zvid-business-49-47",
+      "labelRect": {
+        "height": 6.201939582824707,
+        "width": 29.76925277709961,
+        "x": 809.8461303710938,
+        "y": 472.954345703125
+      },
+      "name": "Fingerprint source before writeback",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3568px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 817.2884521484375,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.crypto",
+      "labelText": "Fingerprint source before writeback"
+    },
+    {
+      "id": "zvid-business-49-48",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.769184112548828,
+        "x": 732.9423217773438,
+        "y": 510.1658630371094
+      },
+      "name": "Protect source writeback",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(3072px, 1744px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884556770324709,
+        "x": 740.3846435546875,
+        "y": 494.2180786132813
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Protect source writeback"
+    },
+    {
+      "id": "zvid-business-49-49",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76925277709961,
+        "x": 889.2307739257812,
+        "y": 438.22357177734375
+      },
+      "name": "Update business register",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(4080px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 896.673095703125,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleSheets",
+      "labelText": "Update business register"
+    },
+    {
+      "id": "zvid-business-49-50",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.76925277709961,
+        "x": 926.4423828125,
+        "y": 438.22357177734375
+      },
+      "name": "Read back delivery receipt",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(4320px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 933.8846435546876,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleSheets",
+      "labelText": "Read back delivery receipt"
+    },
+    {
+      "id": "zvid-business-49-51",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.769184112548828,
+        "x": 966.1346435546876,
+        "y": 438.22357177734375
+      },
+      "name": "Read related receipt content",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(4576px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 973.5769653320312,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.googleSheets",
+      "labelText": "Read related receipt content"
+    },
+    {
+      "id": "zvid-business-49-52",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 889.2307739257812,
+        "y": 472.954345703125
+      },
+      "name": "Prepare receipt check",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(4080px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 896.673095703125,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Prepare receipt check"
+    },
+    {
+      "id": "zvid-business-49-53",
+      "labelRect": {
+        "height": 6.201939582824707,
+        "width": 29.76925277709961,
+        "x": 926.4423828125,
+        "y": 472.954345703125
+      },
+      "name": "Fingerprint delivery receipt",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(4320px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 933.8846435546876,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.crypto",
+      "labelText": "Fingerprint delivery receipt"
+    },
+    {
+      "id": "zvid-business-49-54",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.769184112548828,
+        "x": 966.1346435546876,
+        "y": 472.954345703125
+      },
+      "name": "Mark delivered",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(4576px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 973.5769653320312,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Mark delivered"
+    },
+    {
+      "id": "zvid-business-49-55",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.76925277709961,
+        "x": 1043.0384521484375,
+        "y": 438.22357177734375
+      },
+      "name": "Persist delivered outcome",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(5072px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 1050.4808349609375,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.dataTable",
+      "labelText": "Persist delivered outcome"
+    },
+    {
+      "id": "zvid-business-49-56",
+      "labelRect": {
+        "height": 3.1009347438812256,
+        "width": 29.76925277709961,
+        "x": 1082.7308349609375,
+        "y": 438.22357177734375
+      },
+      "name": "Business outcome",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(5328px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 1090.173095703125,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.code",
+      "labelText": "Business outcome"
+    },
+    {
+      "id": "zvid-business-49-57",
+      "labelRect": {
+        "height": 6.201904773712158,
+        "width": 29.769184112548828,
+        "x": 1119.9423828125,
+        "y": 438.22357177734375
+      },
+      "name": "Completed video available?",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(5568px, 1280px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 1127.3846435546875,
+        "y": 422.2757568359375
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.if",
+      "labelText": "Completed video available?"
+    },
+    {
+      "id": "zvid-business-49-58",
+      "labelRect": {
+        "height": 3.1009697914123535,
+        "width": 29.76925277709961,
+        "x": 1043.0384521484375,
+        "y": 472.954345703125
+      },
+      "name": "Watch video",
+      "positionStyle": "visibility: visible; z-index: 0; transform: translate(5072px, 1504px); pointer-events: all;",
+      "rect": {
+        "height": 14.884626388549805,
+        "width": 14.884626388549805,
+        "x": 1050.4808349609375,
+        "y": 457.0065002441406
+      },
+      "sticky": null,
+      "type": "n8n-nodes-base.httpRequest",
+      "labelText": "Watch video"
+    },
+    {
+      "id": "zvid-business-49-59",
+      "labelRect": null,
+      "name": "1. Configure and read saved state",
+      "positionStyle": "visibility: visible; z-index: -96; transform: translate(0px, 0px); pointer-events: all;",
+      "rect": {
+        "height": 97.68028259277344,
+        "width": 136.4423065185547,
+        "x": 264.0769348144531,
+        "y": 223.8142242431641
+      },
+      "sticky": {
+        "clientHeight": 111,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 17.271240234375,
+          "width": 132.54393005371094,
+          "x": 266.026123046875,
+          "y": 230.1047515869141
+        },
+        "height": "630px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>1. Configure and read saved state</h2>\n<p>Manual and staggered hourly runs use the same private source and destination. Check configuration, create the Data Table when needed, and read saved requests before choosing new work. One record is processed per execution.</p>\n</div>",
+        "rect": {
+          "height": 97.68028259277344,
+          "width": 136.4423065185547,
+          "x": 264.0769348144531,
+          "y": 223.8142242431641
+        },
+        "scrollHeight": 111,
+        "scrollWidth": 855,
+        "text": "1. Configure and read saved state\nManual and staggered hourly runs use the same private source and destination. Check configuration, create the Data Table when needed, and read saved requests before choosing new work. One record is processed per execution.\n",
+        "textRect": {
+          "height": 17.271240234375,
+          "width": 132.54393005371094,
+          "x": 266.026123046875,
+          "y": 230.1047515869141
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-60",
+      "labelRect": null,
+      "name": "2. Join and qualify a useful brief",
+      "positionStyle": "visibility: visible; z-index: -100; transform: translate(1008px, 0px); pointer-events: all;",
+      "rect": {
+        "height": 133.3413543701172,
+        "width": 136.44232177734375,
+        "x": 420.3653869628906,
+        "y": 223.8142242431641
+      },
+      "sticky": {
+        "clientHeight": 87,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 13.550084114074709,
+          "width": 132.5439453125,
+          "x": 422.3145751953125,
+          "y": 230.1047515869141
+        },
+        "height": "860px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>2. Join and qualify a useful brief</h2>\n<p>Only approved future dispatches within the lead window qualify; a named driver and unique stop sequence are mandatory.</p>\n</div>",
+        "rect": {
+          "height": 133.3413543701172,
+          "width": 136.44232177734375,
+          "x": 420.3653869628906,
+          "y": 223.8142242431641
+        },
+        "scrollHeight": 87,
+        "scrollWidth": 855,
+        "text": "2. Join and qualify a useful brief\nOnly approved future dispatches within the lead window qualify; a named driver and unique stop sequence are mandatory.\n",
+        "textRect": {
+          "height": 13.550084114074709,
+          "width": 132.5439453125,
+          "x": 422.3145751953125,
+          "y": 230.1047515869141
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-61",
+      "labelRect": null,
+      "name": "3. Recover durable state",
+      "positionStyle": "visibility: visible; z-index: -95; transform: translate(2000px, 0px); pointer-events: all;",
+      "rect": {
+        "height": 97.68028259277344,
+        "width": 136.44232177734375,
+        "x": 574.173095703125,
+        "y": 223.8142242431641
+      },
+      "sticky": {
+        "clientHeight": 111,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 17.271240234375,
+          "width": 132.5440216064453,
+          "x": 576.1222534179688,
+          "y": 230.1047515869141
+        },
+        "height": "630px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>3. Recover durable state</h2>\n<p>Use frozen inputs and accepted jobs from the Data Table. Resume pending work even after its notice window expires. Changed content needs a new revision. Ambiguous paid responses stop for reconciliation. Saved media retries delivery; saved job IDs resume polling.</p>\n</div>",
+        "rect": {
+          "height": 97.68028259277344,
+          "width": 136.44232177734375,
+          "x": 574.173095703125,
+          "y": 223.8142242431641
+        },
+        "scrollHeight": 111,
+        "scrollWidth": 855,
+        "text": "3. Recover durable state\nUse frozen inputs and accepted jobs from the Data Table. Resume pending work even after its notice window expires. Changed content needs a new revision. Ambiguous paid responses stop for reconciliation. Saved media retries delivery; saved job IDs resume polling.\n",
+        "textRect": {
+          "height": 17.271240234375,
+          "width": 132.5440216064453,
+          "x": 576.1222534179688,
+          "y": 230.1047515869141
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-62",
+      "labelRect": null,
+      "name": "4. Validate and preview a draft",
+      "positionStyle": "visibility: visible; z-index: -99; transform: translate(3008px, 0px); pointer-events: all;",
+      "rect": {
+        "height": 133.3413543701172,
+        "width": 136.4423828125,
+        "x": 730.4615478515625,
+        "y": 223.8142242431641
+      },
+      "sticky": {
+        "clientHeight": 87,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 13.550084114074709,
+          "width": 132.5439453125,
+          "x": 732.4107666015625,
+          "y": 230.1047515869141
+        },
+        "height": "860px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>4. Validate and preview a draft</h2>\n<p>Free validation supplies the quote and enforces the credit cap. dryRun=true attempts a fresh editor draft or inspects saved state, without submitting paid work, uploading files or marking delivery.</p>\n</div>",
+        "rect": {
+          "height": 133.3413543701172,
+          "width": 136.4423828125,
+          "x": 730.4615478515625,
+          "y": 223.8142242431641
+        },
+        "scrollHeight": 87,
+        "scrollWidth": 855,
+        "text": "4. Validate and preview a draft\nFree validation supplies the quote and enforces the credit cap. dryRun=true attempts a fresh editor draft or inspects saved state, without submitting paid work, uploading files or marking delivery.\n",
+        "textRect": {
+          "height": 13.550084114074709,
+          "width": 132.5439453125,
+          "x": 732.4107666015625,
+          "y": 230.1047515869141
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-63",
+      "labelRect": null,
+      "name": "5. Submit and checkpoint",
+      "positionStyle": "visibility: visible; z-index: -94; transform: translate(0px, 1104px); pointer-events: all;",
+      "rect": {
+        "height": 97.68025207519533,
+        "width": 136.4423065185547,
+        "x": 264.0769348144531,
+        "y": 394.9873352050781
+      },
+      "sticky": {
+        "clientHeight": 87,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 13.550119400024414,
+          "width": 132.54393005371094,
+          "x": 266.026123046875,
+          "y": 401.2778015136719
+        },
+        "height": "630px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>5. Submit and checkpoint</h2>\n<p>Save intent before the nonretrying paid request, then persist the accepted job immediately. A lost acceptance response requires reconciliation. Polling retries reuse the saved job instead of paying for another render.</p>\n</div>",
+        "rect": {
+          "height": 97.68025207519533,
+          "width": 136.4423065185547,
+          "x": 264.0769348144531,
+          "y": 394.9873352050781
+        },
+        "scrollHeight": 87,
+        "scrollWidth": 855,
+        "text": "5. Submit and checkpoint\nSave intent before the nonretrying paid request, then persist the accepted job immediately. A lost acceptance response requires reconciliation. Polling retries reuse the saved job instead of paying for another render.\n",
+        "textRect": {
+          "height": 13.550119400024414,
+          "width": 132.54393005371094,
+          "x": 266.026123046875,
+          "y": 401.2778015136719
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-64",
+      "labelRect": null,
+      "name": "6. Retain completed media",
+      "positionStyle": "visibility: visible; z-index: -93; transform: translate(1008px, 1104px); pointer-events: all;",
+      "rect": {
+        "height": 97.68025207519533,
+        "width": 136.44232177734375,
+        "x": 420.3653869628906,
+        "y": 394.9873352050781
+      },
+      "sticky": {
+        "clientHeight": 87,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 13.550119400024414,
+          "width": 132.5439453125,
+          "x": 422.3145751953125,
+          "y": 401.2778015136719
+        },
+        "height": "630px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>6. Retain completed media</h2>\n<p>Poll within the configured budget. A timeout or missing upload retains the job for investigation. Only completed HTTPS media enters delivery, and its URL is saved before any file operation.</p>\n</div>",
+        "rect": {
+          "height": 97.68025207519533,
+          "width": 136.44232177734375,
+          "x": 420.3653869628906,
+          "y": 394.9873352050781
+        },
+        "scrollHeight": 87,
+        "scrollWidth": 855,
+        "text": "6. Retain completed media\nPoll within the configured budget. A timeout or missing upload retains the job for investigation. Only completed HTTPS media enters delivery, and its URL is saved before any file operation.\n",
+        "textRect": {
+          "height": 13.550119400024414,
+          "width": 132.5439453125,
+          "x": 422.3145751953125,
+          "y": 401.2778015136719
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-65",
+      "labelRect": null,
+      "name": "7. Deliver a private asset",
+      "positionStyle": "visibility: visible; z-index: -92; transform: translate(2000px, 1104px); pointer-events: all;",
+      "rect": {
+        "height": 97.68025207519533,
+        "width": 136.44232177734375,
+        "x": 574.173095703125,
+        "y": 394.9873352050781
+      },
+      "sticky": {
+        "clientHeight": 111,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 17.271240234375,
+          "width": 132.5440216064453,
+          "x": 576.1222534179688,
+          "y": 401.2778015136719
+        },
+        "height": "630px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>7. Deliver a private asset</h2>\n<p>Search by deterministic filename and folder before uploading. Reuse an MP4 only when its saved content hash matches. Downloads are ordinary media GETs; supported Zvid operations use native nodes. Failed uploads are reconciled on the next run.</p>\n</div>",
+        "rect": {
+          "height": 97.68025207519533,
+          "width": 136.44232177734375,
+          "x": 574.173095703125,
+          "y": 394.9873352050781
+        },
+        "scrollHeight": 111,
+        "scrollWidth": 855,
+        "text": "7. Deliver a private asset\nSearch by deterministic filename and folder before uploading. Reuse an MP4 only when its saved content hash matches. Downloads are ordinary media GETs; supported Zvid operations use native nodes. Failed uploads are reconciled on the next run.\n",
+        "textRect": {
+          "height": 17.271240234375,
+          "width": 132.5440216064453,
+          "x": 576.1222534179688,
+          "y": 401.2778015136719
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-66",
+      "labelRect": null,
+      "name": "8. Protect the business source",
+      "positionStyle": "visibility: visible; z-index: -98; transform: translate(3008px, 1104px); pointer-events: all;",
+      "rect": {
+        "height": 133.34130859375,
+        "width": 136.4423828125,
+        "x": 730.4615478515625,
+        "y": 394.9873352050781
+      },
+      "sticky": {
+        "clientHeight": 87,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 13.550119400024414,
+          "width": 132.5439453125,
+          "x": 732.4107666015625,
+          "y": 401.2778015136719
+        },
+        "height": "860px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>8. Protect the business source</h2>\n<p>Persist the Drive ID and reread both registers. Compare their content fingerprint with the frozen request before writeback. Deleted, revised or edited sources stop with the uploaded asset retained.</p>\n</div>",
+        "rect": {
+          "height": 133.34130859375,
+          "width": 136.4423828125,
+          "x": 730.4615478515625,
+          "y": 394.9873352050781
+        },
+        "scrollHeight": 87,
+        "scrollWidth": 855,
+        "text": "8. Protect the business source\nPersist the Drive ID and reread both registers. Compare their content fingerprint with the frozen request before writeback. Deleted, revised or edited sources stop with the uploaded asset retained.\n",
+        "textRect": {
+          "height": 13.550119400024414,
+          "width": 132.5439453125,
+          "x": 732.4107666015625,
+          "y": 401.2778015136719
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-67",
+      "labelRect": null,
+      "name": "9. Verify the handoff receipt",
+      "positionStyle": "visibility: visible; z-index: -91; transform: translate(4000px, 1104px); pointer-events: all;",
+      "rect": {
+        "height": 97.68025207519533,
+        "width": 136.44232177734375,
+        "x": 884.269287109375,
+        "y": 394.9873352050781
+      },
+      "sticky": {
+        "clientHeight": 87,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 13.550119400024414,
+          "width": 132.5439453125,
+          "x": 886.2184448242188,
+          "y": 401.2778015136719
+        },
+        "height": "630px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>9. Verify the handoff receipt</h2>\n<p>Write delivery columns, then reread the source and related rows. Only a matching revision, content fingerprint, job and file receipt marks the ledger delivered. Failed verification retains the upload for retry.</p>\n</div>",
+        "rect": {
+          "height": 97.68025207519533,
+          "width": 136.44232177734375,
+          "x": 884.269287109375,
+          "y": 394.9873352050781
+        },
+        "scrollHeight": 87,
+        "scrollWidth": 855,
+        "text": "9. Verify the handoff receipt\nWrite delivery columns, then reread the source and related rows. Only a matching revision, content fingerprint, job and file receipt marks the ledger delivered. Failed verification retains the upload for retry.\n",
+        "textRect": {
+          "height": 13.550119400024414,
+          "width": 132.5439453125,
+          "x": 886.2184448242188,
+          "y": 401.2778015136719
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-68",
+      "labelRect": null,
+      "name": "10. Review the recorded outcome",
+      "positionStyle": "visibility: visible; z-index: -90; transform: translate(5008px, 1104px); pointer-events: all;",
+      "rect": {
+        "height": 97.68025207519533,
+        "width": 136.44232177734375,
+        "x": 1040.5577392578125,
+        "y": 394.9873352050781
+      },
+      "sticky": {
+        "clientHeight": 87,
+        "clientWidth": 855,
+        "contentRect": {
+          "height": 13.550119400024414,
+          "width": 132.5439453125,
+          "x": 1042.5068359375,
+          "y": 401.2778015136719
+        },
+        "height": "630px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>10. Review the recorded outcome</h2>\n<p>The ledger and source register retain the result and private Drive link. Review Watch video → Binary → data → View. Preview retries are bounded; a failed preview leaves the completed delivery intact.</p>\n</div>",
+        "rect": {
+          "height": 97.68025207519533,
+          "width": 136.44232177734375,
+          "x": 1040.5577392578125,
+          "y": 394.9873352050781
+        },
+        "scrollHeight": 87,
+        "scrollWidth": 855,
+        "text": "10. Review the recorded outcome\nThe ledger and source register retain the result and private Drive link. Review Watch video → Binary → data → View. Preview retries are bounded; a failed preview leaves the completed delivery intact.\n",
+        "textRect": {
+          "height": 13.550119400024414,
+          "width": 132.5439453125,
+          "x": 1042.5068359375,
+          "y": 401.2778015136719
+        },
+        "width": "880px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    },
+    {
+      "id": "zvid-business-49-69",
+      "labelRect": null,
+      "name": "Overview — day 49",
+      "positionStyle": "visibility: visible; z-index: -97; transform: translate(-768px, 0px); pointer-events: all;",
+      "rect": {
+        "height": 176.75479125976562,
+        "width": 102.3317413330078,
+        "x": 145,
+        "y": 223.8142242431641
+      },
+      "sticky": {
+        "clientHeight": 673,
+        "clientWidth": 635,
+        "contentRect": {
+          "height": 104.35013580322266,
+          "width": 98.4333724975586,
+          "x": 146.94918823242188,
+          "y": 230.1047515869141
+        },
+        "height": "1140px",
+        "html": "<div class=\"_sticky_8tq3j_188\"><h2>A dispatch plan to a delivery-route briefing video</h2>\n<h3>How it works</h3>\n<p>Prepare a driver-specific approved route briefing and preserve every stop and declared duration. A private Drive MP4, with full source records retained in Sheets and the n8n ledger, plus asset links, revision, job ID and handoff summary written back to D49Source for dispatchers. The workflow reads a source register and related rows, applies its approval and eligibility rules, and creates a concise review video. Fingerprints suppress completed revisions; a Data Table retains accepted jobs and delivery checkpoints. Retries resume polling or delivery. An ambiguous paid response requires reconciliation. Each execution handles one record.</p>\n<h3>Setup</h3>\n<ol>\n<li>Install <strong><code>@zvid/n8n-nodes-zvid</code></strong> from <strong>Settings → Community nodes</strong> before Zvid credentials; a workspace owner/admin may need to install it.</li>\n<li>Create <strong>Zvid API</strong> credentials at <a href=\"https://app.zvid.io/api-keys\" target=\"_blank\">https://app.zvid.io/api-keys</a>, Base URL <code>https://api.zvid.io</code>; select them on all Zvid nodes. Connect <strong>Google Sheets</strong> and <strong>Google Drive OAuth2</strong>.</li>\n<li>In <strong>Config</strong>, set spreadsheetId, sourceSheet, detailsSheet and driveFolderId. Create the domain columns and delivery headers from the included <code>delivery-route-brief-video.md</code> guide. Keep source_id unique and increment revision for changed content.</li>\n<li><strong><code>dryRun: false</code> renders and spends credits</strong> within maxRenderCredits. True returns an editor draft attempt and quote.</li>\n<li>Run manually once, inspect the Drive asset and register update, then enable the hourly trigger. Avoid parallel manual runs. <strong>Watch video → Binary → data → View</strong> previews completed media.</li>\n</ol>\n<p><a href=\"https://docs.zvid.io\" target=\"_blank\">Zvid setup reference</a>. Support: <a href=\"https://zvid.io/contact\" target=\"_blank\">https://zvid.io/contact</a></p>\n</div>",
+        "rect": {
+          "height": 176.75479125976562,
+          "width": 102.3317413330078,
+          "x": 145,
+          "y": 223.8142242431641
+        },
+        "scrollHeight": 673,
+        "scrollWidth": 635,
+        "text": "A dispatch plan to a delivery-route briefing video\nHow it works\nPrepare a driver-specific approved route briefing and preserve every stop and declared duration. A private Drive MP4, with full source records retained in Sheets and the n8n ledger, plus asset links, revision, job ID and handoff summary written back to D49Source for dispatchers. The workflow reads a source register and related rows, applies its approval and eligibility rules, and creates a concise review video. Fingerprints suppress completed revisions; a Data Table retains accepted jobs and delivery checkpoints. Retries resume polling or delivery. An ambiguous paid response requires reconciliation. Each execution handles one record.\nSetup\n\nInstall @zvid/n8n-nodes-zvid from Settings → Community nodes before Zvid credentials; a workspace owner/admin may need to install it.\nCreate Zvid API credentials at https://app.zvid.io/api-keys, Base URL https://api.zvid.io; select them on all Zvid nodes. Connect Google Sheets and Google Drive OAuth2.\nIn Config, set spreadsheetId, sourceSheet, detailsSheet and driveFolderId. Create the domain columns and delivery headers from the included delivery-route-brief-video.md guide. Keep source_id unique and increment revision for changed content.\ndryRun: false renders and spends credits within maxRenderCredits. True returns an editor draft attempt and quote.\nRun manually once, inspect the Drive asset and register update, then enable the hourly trigger. Avoid parallel manual runs. Watch video → Binary → data → View previews completed media.\n\nZvid setup reference. Support: https://zvid.io/contact\n",
+        "textRect": {
+          "height": 104.35013580322266,
+          "width": 98.4333724975586,
+          "x": 146.94918823242188,
+          "y": 230.1047515869141
+        },
+        "width": "660px"
+      },
+      "type": "n8n-nodes-base.stickyNote"
+    }
+  ],
+  "viewportTransform": null,
+  "day": 49,
+  "workflowId": "ZvidSeries2Day49",
+  "url": "http://localhost:5678/workflow/ZvidSeries2Day49",
+  "title": "▶️ D49 A dispatch plan to a delivery-route briefing video (Zvid) - n8n",
+  "capturedAt": "2026-10-01T12:41:02.084Z",
+  "fitPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-49-fit.png",
+  "overviewPng": "D:/Nodejs/Projects/zvid-cline/zvid-integrations/n8n/local-test/series-2/publication/canvas/day-49-overview.png",
+  "overviewView": {
+    "rect": {
+      "bottom": 871.6666641235352,
+      "height": 791.6666259765625,
+      "left": 299.9999694824219,
+      "right": 758.3333129882812,
+      "top": 80.00003814697266,
+      "width": 458.3333435058594,
+      "x": 299.9999694824219,
+      "y": 80.00003814697266
+    },
+    "textRect": {
+      "bottom": 575.5481719970703,
+      "height": 467.37353515625,
+      "left": 308.7301330566406,
+      "right": 749.6031188964844,
+      "top": 108.17463684082033,
+      "width": 440.87298583984375,
+      "x": 308.7301330566406,
+      "y": 108.17463684082033
+    }
+  }
+}

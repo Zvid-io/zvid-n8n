@@ -1,0 +1,117 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-property-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "FIELDHOUSE",
+    "as_of": "2026-10-03T09:00:00Z",
+    "buyer_brief": "Space for your next chapter.",
+    "budget_minor": 75000000,
+    "currency": "USD",
+    "minimum_bedrooms": 2,
+    "minimum_bathrooms": 2,
+    "areas": [
+      "West Grove",
+      "Parkside"
+    ],
+    "must_have": [
+      "parking"
+    ],
+    "preferred": [
+      "outdoor",
+      "light",
+      "privacy"
+    ],
+    "shortlist_url": "https://example.com/property/shortlist"
+  },
+  "records": [
+    {
+      "kind": "listing",
+      "record_id": "A",
+      "listing_id": "A",
+      "name": "Cedar House",
+      "price_minor": 72500000,
+      "currency": "USD",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "area": "West Grove",
+      "features": [
+        "parking",
+        "outdoor",
+        "light",
+        "privacy"
+      ],
+      "status": "available",
+      "image": "https://images.pexels.com/photos/30580640/pexels-photo-30580640.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop",
+      "listing_url": "https://example.com/property/A",
+      "updated_at": "2026-10-03T08:00:00Z",
+      "viewing_contact": "Demo property team"
+    },
+    {
+      "kind": "listing",
+      "record_id": "B",
+      "listing_id": "B",
+      "name": "The Courtyard",
+      "price_minor": 74900000,
+      "currency": "USD",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "area": "West Grove",
+      "features": [
+        "parking",
+        "outdoor",
+        "light",
+        "privacy"
+      ],
+      "status": "available",
+      "image": "https://images.unsplash.com/photo-1628012209120-d9db7abf7eab?auto=format&fit=crop&w=1600&h=1000&q=85",
+      "listing_url": "https://example.com/property/B",
+      "updated_at": "2026-10-03T08:00:00Z",
+      "viewing_contact": "Demo property team"
+    },
+    {
+      "kind": "listing",
+      "record_id": "C",
+      "listing_id": "C",
+      "name": "Parkside",
+      "price_minor": 68000000,
+      "currency": "USD",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": "Parkside",
+      "features": [
+        "parking",
+        "outdoor",
+        "light"
+      ],
+      "status": "available",
+      "image": "https://images.unsplash.com/photo-1721815693498-cc28507c0ba2?auto=format&fit=crop&w=1600&h=1000&q=85",
+      "listing_url": "https://example.com/property/C",
+      "updated_at": "2026-10-03T08:00:00Z",
+      "viewing_contact": "Demo property team"
+    },
+    {
+      "kind": "reason",
+      "record_id": "reason0",
+      "feature": "outdoor",
+      "approved_copy": "For the outdoor days",
+      "priority": 0
+    },
+    {
+      "kind": "reason",
+      "record_id": "reason1",
+      "feature": "light",
+      "approved_copy": "For the light-filled mornings",
+      "priority": 1
+    },
+    {
+      "kind": "reason",
+      "record_id": "reason2",
+      "feature": "privacy",
+      "approved_copy": "For a private retreat",
+      "priority": 2
+    }
+  ]
+}

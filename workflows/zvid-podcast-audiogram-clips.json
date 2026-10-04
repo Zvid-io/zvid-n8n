@@ -362,29 +362,30 @@
         "operation": "create",
         "source": "json",
         "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}",
-        "renderType": "video",
+        "renderType": "={{ $json.payload.type === \"image\" ? \"image\" : \"video\" }}",
         "waitForCompletion": false
       },
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        50,
+        570,
         1600
       ],
       "id": "zvid-pa-0018",
       "name": "Submit render",
-      "retryOnFail": true,
+      "retryOnFail": false,
       "maxTries": 3,
-      "waitBetweenTries": 5000
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "jsCode": "// The render response replaces the item, so glue the jobId back onto the clip.\n// An index zip is safe here: same items, same order, no loop yet.\nconst checked = $('Check validation').all();\nreturn $input.all().map((res, i) => {\n  const jobId = res.json.jobId || res.json.id;\n  if (!jobId) {\n    throw new Error('Render submission returned no jobId: ' + JSON.stringify(res.json).slice(0, 300));\n  }\n  const { payload, ...rest } = checked[i].json;\n  return { json: { ...rest, jobId: jobId }, pairedItem: { item: i } };\n});"
+        "jsCode": "const response = $input.first().json;\nconst jobId = response.jobId || response.id;\nif (!jobId) throw new Error('Render submission returned no jobId. Check https://app.zvid.io before retrying.');\nconst { payload, ...asset } = $('Prepare render attempt').first().json;\nreturn [{ json: { ...asset, jobId, renderStartedAt: Date.now() }, pairedItem: { item: 0 } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        310,
+        1310,
         1600
       ],
       "id": "zvid-pa-0019",
@@ -398,7 +399,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        570,
+        1570,
         1600
       ],
       "id": "zvid-pa-0020",
@@ -415,7 +416,7 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        830,
+        1830,
         1600
       ],
       "id": "zvid-pa-0021",
@@ -426,13 +427,13 @@
     },
     {
       "parameters": {
-        "jsCode": "// The status response replaces the item again - zip it back with what entered\n// this poll iteration. Wait passes items through unchanged and the status node\n// runs once per item in order, so index i pairs correctly on every lap.\nconst carried = $('Wait').all();\nreturn $input.all().map((res, i) => {\n  const job = res.json;\n  return {\n    json: {\n      ...carried[i].json,\n      state: job.state,\n      failedReason: job.failedReason || null,\n      result: job.result || null,\n    },\n    pairedItem: { item: i },\n  };\n});"
+        "jsCode": "const carried = $('Attach job to clip').first().json;\nconst job = $input.first().json;\nreturn [{ json: { ...carried, state: job.state, failedReason: job.failedReason || null, result: job.result || null }, pairedItem: { item: 0 } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        830,
-        1840
+        2090,
+        1600
       ],
       "id": "zvid-pa-0022",
       "name": "Merge job status"
@@ -466,7 +467,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        570,
+        2090,
         1840
       ],
       "id": "zvid-pa-0023",
@@ -474,12 +475,12 @@
     },
     {
       "parameters": {
-        "jsCode": "// Fails fast on a failed render and stops the poll loop at the timeout.\n// Clips that finished have already moved on down the true branch, so this\n// only ever sees the ones still in the queue.\nconst cfg = $('Config').first().json;\nfor (const item of $input.all()) {\n  if (item.json.state === 'failed') {\n    throw new Error('Render failed for clip ' + item.json.meta.clipIndex + ' (\"' + item.json.meta.hook + '\"): ' + (item.json.failedReason || 'no reason given'));\n  }\n}\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('Renders did not finish within ' + cfg.timeoutMinutes + ' minutes. Raise timeoutMinutes in Config, or cut clipCount / clipSeconds.');\n}\nreturn $input.all();"
+        "jsCode": "const item = $input.first().json;\nif (item.state === 'failed') throw new Error('The ' + item.kind + ' render failed: ' + (item.failedReason || 'no reason given'));\nconst timeoutMs = Number($('Config').first().json.timeoutMinutes || 20) * 60000;\nif (Date.now() - Number(item.renderStartedAt) >= timeoutMs) {\n  throw new Error('Render ' + item.jobId + ' timed out. It may still finish on Zvid; check https://app.zvid.io before retrying.');\n}\nreturn $input.all();"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        310,
+        1830,
         1840
       ],
       "id": "zvid-pa-0024",
@@ -493,7 +494,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1310,
+        2570,
         1600
       ],
       "id": "zvid-pa-0025",
@@ -501,20 +502,20 @@
     },
     {
       "parameters": {
+        "authentication": "none",
+        "requestMethod": "GET",
         "url": "={{ $json.videoUrl }}",
+        "responseFormat": "file",
+        "dataPropertyName": "data",
+        "jsonParameters": false,
         "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file",
-              "outputPropertyName": "data"
-            }
-          }
+          "timeout": 30000
         }
       },
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "typeVersion": 2,
       "position": [
-        1830,
+        3090,
         1600
       ],
       "id": "zvid-pa-0026",
@@ -531,7 +532,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1570,
+        2830,
         1600
       ],
       "parameters": {
@@ -571,6 +572,61 @@
       "parameters": {
         "jsCode": "// Check actual bytes before paid transcription. Some hosts ignore Range.\nconst items = $input.all();\nconst maxBytes = Number($('Pick latest episode').first().json.maxBytes);\nif (!Number.isFinite(maxBytes) || maxBytes < 1) throw new Error('Invalid audio sample size limit. Check Config.');\nfor (let i = 0; i < items.length; i++) {\n  if (!items[i].binary?.data) throw new Error('The episode download returned no audio file.');\n  const buffer = await this.helpers.getBinaryDataBuffer(i, 'data');\n  if (!buffer.length) throw new Error('The episode download returned an empty audio file.');\n  if (buffer.length > maxBytes) {\n    throw new Error('Downloaded audio is ' + buffer.length + ' bytes, above the ' + maxBytes + '-byte sample limit. The source may have ignored Range. Use a smaller audio file or a host that supports byte ranges. No transcription or render request has been made.');\n  }\n}\nreturn items;"
       }
+    },
+    {
+      "position": [
+        50,
+        1600
+      ],
+      "id": "zvid-pa-asset-loop",
+      "name": "Render one asset at a time",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "position": [
+        310,
+        1600
+      ],
+      "id": "zvid-pa-prepare-attempt",
+      "name": "Prepare render attempt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Each deliverable owns its retry deadline; an accepted job is never resubmitted.\nreturn $input.all().map((item, i) => ({\n  json: { ...item.json, submitStartedAt: Date.now(), submitAttempts: 0 },\n  pairedItem: { item: i },\n}));"
+      }
+    },
+    {
+      "position": [
+        830,
+        1600
+      ],
+      "id": "zvid-pa-retry-rejection",
+      "name": "Check submission rejection",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Retry only an explicit HTTP 429 rejection. Timeouts/5xx may have accepted\n// a paid job already, so they stop for inspection instead of creating duplicates.\nconst item = $input.first();\nconst error = item.error || item.json.error || {};\nconst previous = $('Prepare render attempt').first().json;\nconst carried = item.json.payload ? item.json : previous;\nconst status = Number(error.httpCode || error.statusCode || error.response?.status || error.cause?.statusCode || error.cause?.response?.status);\n// n8n's task-runner serialization drops httpCode but retains its exact,\n// status-specific NodeApiError message and the API response in context.data.\nconst serialized429 = !status && error.name === 'NodeApiError' && error.message === 'The service is receiving too many requests from you';\nif (status !== 429 && !serialized429) {\n  throw new Error('Render submission failed: ' + (error.description || error.message || String(error)) + '. Check https://app.zvid.io before retrying; the request may already have created a job.');\n}\nlet body = error.response?.data || error.context?.data || error.cause?.response?.data || error.cause?.error || {};\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }\nconst headers = error.response?.headers || error.cause?.response?.headers || {};\nconst rawRetry = headers['retry-after'] ?? body.retryAfter;\nconst retrySeconds = Number(rawRetry) || Math.ceil((Date.parse(rawRetry) - Date.now()) / 1000) || 30;\nconst waitSeconds = Math.max(30, retrySeconds);\nconst deadline = Number(previous.submitStartedAt) + Number($('Config').first().json.timeoutMinutes || 20) * 60000;\nif (Date.now() + waitSeconds * 1000 >= deadline) {\n  throw new Error('Render capacity stayed full until the submission deadline. Check https://app.zvid.io; completed assets from this run remain in Render one asset at a time.');\n}\nreturn [{ json: { ...carried, submitStartedAt: previous.submitStartedAt, submitAttempts: Number(carried.submitAttempts || 0) + 1, retrySeconds: waitSeconds }, pairedItem: { item: 0 } }];"
+      }
+    },
+    {
+      "position": [
+        830,
+        1840
+      ],
+      "id": "zvid-pa-capacity-wait",
+      "name": "Wait for render capacity",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "parameters": {
+        "amount": "={{ $json.retrySeconds }}",
+        "unit": "seconds"
+      },
+      "webhookId": "zvid-pa-capacity-wait"
     },
     {
       "id": "publication-overview-podcast-audiogram-clips",
@@ -685,8 +741,8 @@
       }
     },
     {
-      "id": "publication-section-podcast-audiogram-clips-render",
-      "name": "7. Render and wait for completion",
+      "id": "publication-section-podcast-audiogram-clips-capacity",
+      "name": "7. Submit one asset safely",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -694,15 +750,15 @@
         1360
       ],
       "parameters": {
-        "content": "## 7. Render and wait for completion\n\nSubmit the render, then check its status until completion or timeout. Keep each result paired with its source item. Check Zvid before retrying a timed-out job.",
+        "content": "## 7. Submit one asset safely\n\nRender one asset at a time. Retry only explicit HTTP 429 rejections after at least 30 seconds, up to timeoutMinutes. Other submission errors stop for inspection; an accepted job is never automatically resubmitted.",
         "color": 7,
         "width": 1140,
         "height": 760
       }
     },
     {
-      "id": "zvid-watch-instructions",
-      "name": "8. Review the finished media",
+      "id": "publication-section-podcast-audiogram-clips-render",
+      "name": "8. Render and wait for completion",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -710,7 +766,23 @@
         1360
       ],
       "parameters": {
-        "content": "## 8. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.",
+        "content": "## 8. Render and wait for completion\n\nSubmit the render, then check its status until completion or timeout. Keep each result paired with its source item. Check Zvid before retrying a timed-out job.",
+        "color": 7,
+        "width": 1140,
+        "height": 760
+      }
+    },
+    {
+      "id": "zvid-watch-instructions",
+      "name": "9. Review the finished media",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2520,
+        1360
+      ],
+      "parameters": {
+        "content": "## 9. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download. Each request times out after 30 seconds; completed links remain available.",
         "color": 7,
         "width": 880,
         "height": 520
@@ -884,7 +956,7 @@
         ],
         [
           {
-            "node": "Submit render",
+            "node": "Render one asset at a time",
             "type": "main",
             "index": 0
           }
@@ -907,6 +979,13 @@
         [
           {
             "node": "Attach job to clip",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check submission rejection",
             "type": "main",
             "index": 0
           }
@@ -961,7 +1040,7 @@
       "main": [
         [
           {
-            "node": "Run summary",
+            "node": "Render one asset at a time",
             "type": "main",
             "index": 0
           }
@@ -1014,6 +1093,57 @@
         [
           {
             "node": "Transcribe (Scribe)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render one asset at a time": {
+      "main": [
+        [
+          {
+            "node": "Run summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare render attempt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare render attempt": {
+      "main": [
+        [
+          {
+            "node": "Submit render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check submission rejection": {
+      "main": [
+        [
+          {
+            "node": "Wait for render capacity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for render capacity": {
+      "main": [
+        [
+          {
+            "node": "Submit render",
             "type": "main",
             "index": 0
           }

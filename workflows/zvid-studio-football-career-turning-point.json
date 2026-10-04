@@ -1,0 +1,3890 @@
+{
+  "name": "D51 Turn verified player milestones into a career story (Zvid Studio)",
+  "nodes": [
+    {
+      "id": "zvid-business-51-01",
+      "name": "Test manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        65,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "zvid-business-51-02",
+      "name": "Check register hourly",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        65,
+        585
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1,
+              "triggerAtMinute": 40
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "zvid-business-51-03",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        325,
+        300
+      ],
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"spreadsheetId\": \"\",\n  \"sourceSheet\": \"D51Requests\",\n  \"detailsSheet\": \"D51Records\",\n  \"driveFolderId\": \"\",\n  \"dryRun\": false,\n  \"maxRenderCredits\": 100,\n  \"pollSeconds\": 10,\n  \"maxWaitSeconds\": 900,\n  \"maxSourceRows\": 100,\n  \"designRevision\": \"b0f7b647ac7271411b01073db6f98a8f04bed6eb72389c882092d358b83a40ad\"\n}",
+        "includeOtherFields": false,
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-04",
+      "name": "Check source configuration",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        325,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const c=$(\"Config\").first().json;for(const k of [\"spreadsheetId\",\"sourceSheet\",\"detailsSheet\",\"driveFolderId\"])if(typeof c[k]!==\"string\"||!c[k].trim())throw Error(k+\" must be configured\");if(typeof c.dryRun!==\"boolean\"||!Number.isFinite(c.maxRenderCredits)||c.maxRenderCredits<=0||c.maxRenderCredits>1000)throw Error(\"Check dryRun and maxRenderCredits\");return [{json:c}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-05",
+      "name": "Read source register",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        845,
+        300
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Config\").first().json.spreadsheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $(\"Config\").first().json.sourceSheet }}"
+        },
+        "options": {
+          "returnFirstMatch": false,
+          "outputFormatting": {
+            "values": {
+              "general": "UNFORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          }
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "id": "zvid-business-51-06",
+      "name": "Read related records",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        845,
+        585
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Config\").first().json.spreadsheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $(\"Config\").first().json.detailsSheet }}"
+        },
+        "options": {
+          "returnFirstMatch": false,
+          "outputFormatting": {
+            "values": {
+              "general": "UNFORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          }
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "id": "zvid-business-51-07",
+      "name": "Join approved request data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1330,
+        300
+      ],
+      "parameters": {
+        "jsCode": "function stable(value){return JSON.stringify(value===null||typeof value!=='object'?value:Array.isArray(value)?value.map(x=>JSON.parse(stable(x))):Object.fromEntries(Object.keys(value).sort().map(k=>[k,JSON.parse(stable(value[k]))])));}\nfunction intake(rows,details,saved,cfg,info,template){\n const ids=new Set(),results=[];\n if(rows.length>cfg.maxSourceRows||details.length>5000||saved.length>2000)throw Error('Source/ledger bounds exceeded; archive completed records or narrow the source.');\n const history=saved.filter(x=>x.status==='delivered').map(x=>{try{return {...x,...JSON.parse(x.context_json)};}catch{return x;}});\n const unfinished=saved.filter(x=>x.workflow_slug===info.slug&&x.status!=='delivered'&&typeof x.request_key==='string'&&x.request_key.endsWith('|'+cfg.driveFolderId));\n const retained=x=>({request_key:x.request_key,source_id:x.source_id,revision:x.revision,savedStatus:x.status,jobId:x.job_id||null,videoUrl:x.video_url||null,driveFileId:x.drive_file_id||null,driveUrl:x.drive_url||null});\n // Deleted or revised source rows must not hide accepted or ambiguous work.\n // Include every orphan, not only the first one, so batch cleanup is reviewable.\n for(const savedRow of unfinished){\n  if(rows.some(row=>String(row.source_id)===String(savedRow.source_id)&&String(row.revision)===String(savedRow.revision)))continue;\n  const reference=retained(savedRow);\n  results.push({source_id:savedRow.source_id,revision:savedRow.revision,workflow_slug:info.slug,status:'review',ready:false,fingerprint:'',reason:'An unfinished saved request has a deleted or revised source. Reconcile its retained paid work before retiring this request.',retainedRequests:[reference],decision:{retainedRequests:[reference]},artifacts:[]});\n }\n for(const row of rows){\n  if(!row.source_id)continue;\n  const id=String(row.source_id);if(ids.has(id))throw Error('Duplicate source_id '+id);ids.add(id);\n  const pending=unfinished.filter(x=>String(x.source_id)===id);\n  const state={source_id:id,revision:String(row.revision||''),sourceRow:row,workflow_slug:info.slug,config:{...cfg,nowISO:new Date().toISOString()},template:JSON.parse(JSON.stringify(template)),defaults:{...template.variables},variables:{},decision:{},artifacts:[],history,status:'pending',retainedRequests:pending.map(retained)};\n  try{\n   if(!/^[A-Za-z0-9_-]{1,80}$/.test(id)||!/^[A-Za-z0-9_-]{1,40}$/.test(state.revision))throw Error('source_id and revision must be stable letters, numbers, underscores or dashes.');\n   if(row.approval!=='approved'){results.push({...state,status:pending.length?'review':'skip',ready:false,reason:pending.length?'The request approval was withdrawn while paid work remains unfinished. Reconcile the retained job before delivery.':'The request is not approved.',fingerprint:'',decision:pending.length?{retainedRequests:pending.map(retained)}:{}});continue;}\n   state.request=JSON.parse(row.brief_json);if(!state.request||typeof state.request!=='object'||Array.isArray(state.request))throw Error('brief_json must contain one JSON object.');\n   for(const field of ['source_id','request_id'])if(Object.prototype.hasOwnProperty.call(state.request,field)&&String(state.request[field])!==id)throw Error('brief_json '+field+' disagrees with the request sheet source_id.');\n   if(Object.prototype.hasOwnProperty.call(state.request,'revision')&&String(state.request.revision)!==state.revision)throw Error('brief_json revision disagrees with the request sheet revision.');\n   if(Object.prototype.hasOwnProperty.call(state.request,'approval')&&state.request.approval!==row.approval)throw Error('brief_json approval disagrees with the request sheet approval.');\n   const selected=details.filter(d=>String(d.parent_id)===id&&String(d.revision)===state.revision);\n   const recordIds=new Set();state.records=selected.map(d=>{const key=String(d.record_id||'');if(!key||recordIds.has(key))throw Error('Related records need unique record_id values.');recordIds.add(key);const data=JSON.parse(d.data_json);if(!data||typeof data!=='object'||Array.isArray(data))throw Error('data_json must contain an object.');for(const [field,expected]of Object.entries({kind:String(d.kind),record_id:key,parent_id:id,revision:state.revision}))if(Object.prototype.hasOwnProperty.call(data,field)&&String(data[field])!==expected)throw Error('data_json '+field+' disagrees with its record sheet envelope.');return {...data,kind:String(d.kind),record_id:key,parent_id:id,revision:state.revision};});\n   state.records.sort((a,b)=>a.record_id.localeCompare(b.record_id));\n   state.fingerprint=stable({request:state.request,records:state.records,source_id:id,revision:state.revision,approval:row.approval,designRevision:cfg.designRevision,driveFolderId:cfg.driveFolderId});\n   const key=[info.slug,id,state.revision,cfg.driveFolderId].join('|');\n   const prior=saved.filter(r=>r.request_key===key);if(prior.length>1)throw Error('Duplicate request ledger key; reconcile before running.');\n   const otherPending=pending.filter(r=>r.request_key!==key);\n   if(otherPending.length)throw Error('An earlier revision has unfinished paid work. Reconcile its retained job before approving a new revision.');\n   if(prior[0]){state.saved=prior[0];state.savedStatus=prior[0].status;state.status='ready';state.ready=true;}\n  }catch(error){state.status='review';state.ready=false;state.reason=error.message;state.fingerprint='';if(state.retainedRequests.length)state.decision.retainedRequests=state.retainedRequests;}\n  results.push(state);\n }\n return results.length?results:[{status:'skip',ready:false,reason:'The request sheet contains no source rows.',fingerprint:'',artifacts:[]}];\n}\nreturn intake($(\"Read source register\").all().map(i=>i.json),$(\"Read related records\").all().map(i=>i.json),$(\"Read saved requests\").all().map(i=>i.json).filter(x=>x.request_key),$(\"Config\").first().json,{\"day\":51,\"slug\":\"studio-football-career-turning-point\"},{\"name\":\"S2 D51 Harry Kane Career Turning Point\",\"type\":\"video\",\"resolution\":\"custom\",\"width\":1080,\"height\":1920,\"frameRate\":30,\"outputFormat\":\"mp4\",\"backgroundColor\":\"#142332\",\"variables\":{\"playerPhoto\":\"https://upload.wikimedia.org/wikipedia/commons/0/0b/England_striker_Harry_Kane_and_France_midfielder_Morgan_Schneiderlin_(22721788819).jpg\",\"stadiumPhoto\":\"https://images.pexels.com/photos/30651230/pexels-photo-30651230.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\"player\":\"HARRY KANE\",\"hook\":\"FOUR LOANS.\\nTHEN THE\\nBREAKTHROUGH.\",\"loanYears\":\"2011–2013\",\"startYear\":\"APRIL 2014\",\"startHeadline\":\"FIRST LEAGUE\\nSTART FOR SPURS.\",\"startDetail\":\"A goal against Sunderland.\\nThe opportunity had arrived.\",\"breakoutYear\":\"2014 / 15\",\"goals\":\"31\",\"goalsLabel\":\"GOALS IN ALL COMPETITIONS\",\"closing\":\"The loan years were the route.\\n2014/15 was the breakthrough.\",\"credit\":\"Kane photo: Ben Sutherland · CC BY 2.0\\nPhoto captured November 2015; cropped for this edit.\\nFacts: Tottenham Hotspur club history.\\nStadium atmosphere: Zvid’s stock library.\",\"narrationUrl\":\"https://res.cloudinary.com/kwrkkfol/video/upload/v1790883822/zvid-series2-design-review-20261001/d51-narration.mp3\",\"narrationSeconds\":26.784,\"leagueGoals\":\"21 IN THE PREMIER LEAGUE\",\"loanClub1\":\"LEYTON ORIENT\",\"loanClub2\":\"MILLWALL\",\"loanClub3\":\"NORWICH CITY\",\"loanClub4\":\"LEICESTER CITY\"},\"scenes\":[{\"id\":\"hook\",\"duration\":2.65,\"backgroundColor\":\"#142332\",\"visuals\":[{\"type\":\"IMAGE\",\"src\":\"{{playerPhoto}}\",\"width\":1080,\"height\":1320,\"x\":0,\"y\":0,\"position\":\"custom\",\"anchor\":\"top-left\",\"resize\":\"cover\",\"track\":0,\"zoom\":{\"depth\":1.06},\"cropParams\":{\"x\":0,\"y\":0,\"width\":1100,\"height\":1500}},{\"type\":\"TEXT\",\"position\":\"custom\",\"anchor\":\"top-left\",\"x\":0,\"y\":0,\"width\":1080,\"height\":1920,\"html\":\"<div style=\\\"position:relative;width:1080px;height:1920px\\\"><div style=\\\"position:absolute;left:0px;top:1050px;width:1080px;height:870px;background:linear-gradient(transparent,#142332 35%)\\\"></div><div style=\\\"position:absolute;left:75px;top:85px;width:920px;height:55px;font-family:Inter;font-size:27px;letter-spacing:6px;color:#fff\\\">CAREER TURNING POINT</div><div style=\\\"position:absolute;left:75px;top:1250px;width:930px;height:80px;font-family:Inter;font-size:44px;letter-spacing:6px;color:#e6bb6a\\\">{{player}}</div><div style=\\\"position:absolute;left:75px;top:1390px;width:930px;height:410px;white-space:pre-line\\\"><div class=\\\"dochead rise\\\">{{hook}}</div></div></div>\",\"style\":{\"fontFamily\":\"Inter\",\"fontSize\":\"40px\",\"color\":\"#ffffff\",\"backgroundColor\":\"transparent\"},\"customCode\":{\"css\":\".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.dochead{font-family:Inter;font-size:96px;font-weight:800;line-height:1.04;letter-spacing:-3px}.fact{font-family:Inter;font-size:42px;line-height:1.3}.year{font-family:Playfair Display;font-size:174px;font-weight:700;line-height:1;color:#e6bb6a}.rail{font-family:Inter;font-size:25px;letter-spacing:5px;color:#e6bb6a}.roll{animation:roll 1s .4s both}@keyframes roll{from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:translateX(0)}}\",\"animationDuration\":2.65},\"track\":2}]},{\"id\":\"loan-route\",\"duration\":4.15,\"backgroundColor\":\"#ece8df\",\"visuals\":[{\"type\":\"IMAGE\",\"src\":\"{{stadiumPhoto}}\",\"width\":1080,\"height\":800,\"x\":0,\"y\":0,\"position\":\"custom\",\"anchor\":\"top-left\",\"resize\":\"cover\",\"track\":0,\"zoom\":{\"depth\":1.06}},{\"type\":\"TEXT\",\"position\":\"custom\",\"anchor\":\"top-left\",\"x\":0,\"y\":0,\"width\":1080,\"height\":1920,\"html\":\"<div style=\\\"position:relative;width:1080px;height:1920px\\\"><div style=\\\"position:absolute;left:0px;top:0px;width:1080px;height:1920px;background:linear-gradient(transparent 20%,#142332 49%)\\\"></div><div style=\\\"position:absolute;left:75px;top:950px;width:930px;height:70px;font-family:Inter;font-size:32px;letter-spacing:6px;color:#e6bb6a\\\">THE LOAN YEARS</div><div style=\\\"position:absolute;left:75px;top:1080px;width:930px;height:160px;font-size:110px\\\"><div class=\\\"year\\\">{{loanYears}}</div></div><div style=\\\"position:absolute;left:80px;top:1310px;width:125px;height:460px;\\\"><svg width=\\\"125\\\" height=\\\"460\\\" viewBox=\\\"0 0 125 460\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\"><path class=\\\"draw\\\" d=\\\"M60 20 V420\\\" stroke=\\\"#e6bb6a\\\" stroke-width=\\\"6\\\"/><circle cx=\\\"60\\\" cy=\\\"35\\\" r=\\\"14\\\" fill=\\\"#e6bb6a\\\"/><circle cx=\\\"60\\\" cy=\\\"155\\\" r=\\\"14\\\" fill=\\\"#e6bb6a\\\"/><circle cx=\\\"60\\\" cy=\\\"275\\\" r=\\\"14\\\" fill=\\\"#e6bb6a\\\"/><circle cx=\\\"60\\\" cy=\\\"395\\\" r=\\\"14\\\" fill=\\\"#e6bb6a\\\"/></svg></div><div style=\\\"position:absolute;left:250px;top:1310px;width:750px;height:70px;display:flex;align-items:center;font-family:Inter;font-size:42px;line-height:1.2;color:#ffffff\\\"><div class=\\\"roll\\\">{{loanClub1}}</div></div><div style=\\\"position:absolute;left:250px;top:1430px;width:750px;height:70px;display:flex;align-items:center;font-family:Inter;font-size:42px;line-height:1.2;color:#ffffff\\\"><div class=\\\"roll\\\">{{loanClub2}}</div></div><div style=\\\"position:absolute;left:250px;top:1550px;width:750px;height:70px;display:flex;align-items:center;font-family:Inter;font-size:42px;line-height:1.2;color:#ffffff\\\"><div class=\\\"roll\\\">{{loanClub3}}</div></div><div style=\\\"position:absolute;left:250px;top:1670px;width:750px;height:70px;display:flex;align-items:center;font-family:Inter;font-size:42px;line-height:1.2;color:#ffffff\\\"><div class=\\\"roll\\\">{{loanClub4}}</div></div></div>\",\"style\":{\"fontFamily\":\"Inter\",\"fontSize\":\"40px\",\"color\":\"#ffffff\",\"backgroundColor\":\"transparent\"},\"customCode\":{\"css\":\".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.dochead{font-family:Inter;font-size:96px;font-weight:800;line-height:1.04;letter-spacing:-3px}.fact{font-family:Inter;font-size:42px;line-height:1.3}.year{font-family:Playfair Display;font-size:174px;font-weight:700;line-height:1;color:#e6bb6a}.rail{font-family:Inter;font-size:25px;letter-spacing:5px;color:#e6bb6a}.roll{animation:roll 1s .4s both}@keyframes roll{from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:translateX(0)}}\",\"animationDuration\":4.15},\"track\":2}]},{\"id\":\"first-start\",\"duration\":6.4,\"backgroundColor\":\"#ece8df\",\"visuals\":[{\"type\":\"IMAGE\",\"src\":\"{{playerPhoto}}\",\"width\":1080,\"height\":1160,\"x\":0,\"y\":0,\"position\":\"custom\",\"anchor\":\"top-left\",\"resize\":\"cover\",\"track\":0,\"zoom\":{\"depth\":1.06},\"cropParams\":{\"x\":0,\"y\":0,\"width\":1000,\"height\":1500}},{\"type\":\"TEXT\",\"position\":\"custom\",\"anchor\":\"top-left\",\"x\":0,\"y\":0,\"width\":1080,\"height\":1920,\"html\":\"<div style=\\\"position:relative;width:1080px;height:1920px\\\"><div style=\\\"position:absolute;left:0px;top:900px;width:1080px;height:1020px;background:linear-gradient(transparent,#ece8df 25%)\\\"></div><div style=\\\"position:absolute;left:70px;top:1120px;width:940px;height:90px;font-family:Inter;font-size:40px;color:#8c542d;letter-spacing:4px\\\">{{startYear}}</div><div style=\\\"position:absolute;left:70px;top:1270px;width:940px;height:230px;white-space:pre-line;color:#142332;font-size:85px\\\"><div class=\\\"dochead\\\">{{startHeadline}}</div></div><div style=\\\"position:absolute;left:70px;top:1620px;width:940px;height:180px;white-space:pre-line;color:#142332\\\"><div class=\\\"fact\\\">{{startDetail}}</div></div></div>\",\"style\":{\"fontFamily\":\"Inter\",\"fontSize\":\"40px\",\"color\":\"#ffffff\",\"backgroundColor\":\"transparent\"},\"customCode\":{\"css\":\".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.dochead{font-family:Inter;font-size:96px;font-weight:800;line-height:1.04;letter-spacing:-3px}.fact{font-family:Inter;font-size:42px;line-height:1.3}.year{font-family:Playfair Display;font-size:174px;font-weight:700;line-height:1;color:#e6bb6a}.rail{font-family:Inter;font-size:25px;letter-spacing:5px;color:#e6bb6a}.roll{animation:roll 1s .4s both}@keyframes roll{from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:translateX(0)}}\",\"animationDuration\":6.4},\"track\":2}]},{\"id\":\"breakthrough\",\"duration\":13.6,\"backgroundColor\":\"#142332\",\"visuals\":[{\"type\":\"IMAGE\",\"src\":\"{{stadiumPhoto}}\",\"width\":1080,\"height\":1920,\"x\":0,\"y\":0,\"position\":\"custom\",\"anchor\":\"top-left\",\"resize\":\"cover\",\"track\":0,\"zoom\":{\"depth\":1.06}},{\"type\":\"TEXT\",\"position\":\"custom\",\"anchor\":\"top-left\",\"x\":0,\"y\":0,\"width\":1080,\"height\":1920,\"html\":\"<div style=\\\"position:relative;width:1080px;height:1920px\\\"><div style=\\\"position:absolute;left:0px;top:0px;width:1080px;height:1920px;background:rgba(9,20,36,0.57)\\\"></div><div style=\\\"position:absolute;left:75px;top:160px;width:930px;height:160px;font-size:150px\\\"><div class=\\\"year\\\">{{breakoutYear}}</div></div><div style=\\\"position:absolute;left:75px;top:600px;width:930px;height:400px;font-family:Inter;font-size:400px;font-weight:800;line-height:1;color:#fff\\\">{{goals}}</div><div style=\\\"position:absolute;left:75px;top:1080px;width:930px;height:170px;font-family:Inter;font-size:50px;line-height:1.3;color:#e6bb6a\\\">{{goalsLabel}}</div><div style=\\\"position:absolute;left:75px;top:1340px;width:930px;height:120px;font-family:Inter;font-size:40px;line-height:1.3;color:#ffffff\\\">{{leagueGoals}}</div><div style=\\\"position:absolute;left:75px;top:1580px;width:930px;height:200px;white-space:pre-line\\\"><div class=\\\"fact\\\">{{closing}}</div></div></div>\",\"style\":{\"fontFamily\":\"Inter\",\"fontSize\":\"40px\",\"color\":\"#ffffff\",\"backgroundColor\":\"transparent\"},\"customCode\":{\"css\":\".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.dochead{font-family:Inter;font-size:96px;font-weight:800;line-height:1.04;letter-spacing:-3px}.fact{font-family:Inter;font-size:42px;line-height:1.3}.year{font-family:Playfair Display;font-size:174px;font-weight:700;line-height:1;color:#e6bb6a}.rail{font-family:Inter;font-size:25px;letter-spacing:5px;color:#e6bb6a}.roll{animation:roll 1s .4s both}@keyframes roll{from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:translateX(0)}}\",\"animationDuration\":13.6},\"track\":2}]},{\"id\":\"credits\",\"duration\":5,\"backgroundColor\":\"#ece8df\",\"visuals\":[{\"type\":\"TEXT\",\"position\":\"custom\",\"anchor\":\"top-left\",\"x\":0,\"y\":0,\"width\":1080,\"height\":1920,\"html\":\"<div style=\\\"position:relative;width:1080px;height:1920px\\\"><div style=\\\"position:absolute;left:70px;top:250px;width:940px;height:140px;font-family:Playfair Display;font-size:92px;line-height:1.1;white-space:pre-line;color:#142332\\\">THE ROAD TO\\nTHE FIRST TEAM</div><div style=\\\"position:absolute;left:70px;top:900px;width:940px;height:420px;font-family:Inter;font-size:31px;line-height:1.65;white-space:pre-line;color:#142332\\\">{{credit}}</div><div style=\\\"position:absolute;left:70px;top:1570px;width:940px;height:110px;font-family:Inter;font-size:32px;line-height:1.4;color:#8c542d\\\">NEXT: ANOTHER CAREER TURNING POINT</div></div>\",\"style\":{\"fontFamily\":\"Inter\",\"fontSize\":\"40px\",\"color\":\"#142332\",\"backgroundColor\":\"transparent\"},\"customCode\":{\"css\":\".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.dochead{font-family:Inter;font-size:96px;font-weight:800;line-height:1.04;letter-spacing:-3px}.fact{font-family:Inter;font-size:42px;line-height:1.3}.year{font-family:Playfair Display;font-size:174px;font-weight:700;line-height:1;color:#e6bb6a}.rail{font-family:Inter;font-size:25px;letter-spacing:5px;color:#e6bb6a}.roll{animation:roll 1s .4s both}@keyframes roll{from{opacity:0;transform:translateX(-70px)}to{opacity:1;transform:translateX(0)}}\",\"animationDuration\":5},\"track\":2}]}],\"audios\":[{\"src\":\"{{narrationUrl}}\",\"enter\":0,\"exit\":\"{{narrationSeconds}}\",\"audioBegin\":0,\"audioEnd\":\"{{narrationSeconds}}\",\"volume\":1,\"speed\":1}]}).map(json=>({json}));"
+      }
+    },
+    {
+      "id": "zvid-business-51-08",
+      "name": "Fingerprint approved content",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        2075,
+        300
+      ],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{ $json.fingerprint }}",
+        "dataPropertyName": "input_hash",
+        "encoding": "hex"
+      }
+    },
+    {
+      "id": "zvid-business-51-09",
+      "name": "Choose one pending revision",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2075,
+        585
+      ],
+      "parameters": {
+        "jsCode": "function decide(candidates,cfg){\n const report={examined:candidates.length,review:[],skipped:[],alreadyDelivered:0},ready=[];\n for(const c of candidates){\n  if(!c.ready){report[c.status==='review'?'review':'skipped'].push({source_id:c.source_id,revision:c.revision,status:c.status,reason:c.reason,retainedRequests:c.retainedRequests||[],decision:c.decision,artifacts:c.artifacts});continue;}\n  if(c.saved&&c.saved.input_hash!==c.input_hash){report.review.push({source_id:c.source_id,revision:c.revision,reason:'Approved content changed for an existing revision; increment revision and reconcile any accepted job.',retainedRequests:[{request_key:c.saved.request_key,savedStatus:c.saved.status,jobId:c.saved.job_id||null,videoUrl:c.saved.video_url||null,driveFileId:c.saved.drive_file_id||null,driveUrl:c.saved.drive_url||null}]});continue;}\n  if(c.saved?.status==='delivered'&&c.sourceRow.automation_status==='delivered'&&c.sourceRow.input_hash===c.input_hash){report.alreadyDelivered++;continue;}\n  ready.push(c);\n }\n ready.sort((a,b)=>Number(Boolean(b.saved))-Number(Boolean(a.saved))||a.source_id.localeCompare(b.source_id));\n if(!ready.length)return {ready:false,status:report.review.length?'needs_review':'nothing_to_render',report,renderSubmitted:false};\n const selected=ready[0];return {...selected,request_key:[selected.workflow_slug,selected.source_id,selected.revision,cfg.driveFolderId].join('|'),report,remaining:ready.length-1};\n}\nreturn [{json:decide($input.all().map(i=>i.json),$(\"Config\").first().json)}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-10",
+      "name": "Eligible work found?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2335,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "eligible-51",
+              "leftValue": "={{ $json.ready === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-11",
+      "name": "No work report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2335,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const value=$input.first().json;const file=await this.helpers.prepareBinaryData(Buffer.from(JSON.stringify(value,null,2)),\"review-decisions.json\",\"application/json\");return [{json:value,binary:{data:file}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-12",
+      "name": "Prepare durable request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2820,
+        300
+      ],
+      "parameters": {
+        "jsCode": "function resolveDesign(state){\n const raw=JSON.parse(JSON.stringify(state.project||state.template)),values={...raw.variables,...state.defaults,...state.variables};\n const escape=s=>String(s).replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]));\n function walk(value,key){\n  if(Array.isArray(value))return value.map(v=>walk(v,key));\n  if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).filter(([k])=>k!=='variables').map(([k,v])=>[k,walk(v,k)]));\n  if(typeof value!=='string')return value;\n  const exact=/^\\{\\{\\s*(\\w+)\\s*\\}\\}$/.exec(value);\n  if(exact){if(!(exact[1]in values))throw Error('Missing design variable '+exact[1]);return values[exact[1]];}\n  return value.replace(/\\{\\{\\s*(\\w+)\\s*\\}\\}/g,(_,name)=>{if(!(name in values))throw Error('Missing design variable '+name);const v=values[name];if(v!==null&&typeof v==='object')throw Error('Design variable '+name+' must be scalar.');if((state.trustedMarkupVariables||[]).includes(name)){if(!/^\\s*<svg[\\s>]/i.test(v)||/<\\s*(script|foreignObject|iframe|image|use|a)\\b|\\bon\\w+\\s*=|(?:href|url)\\s*[=(]/i.test(v))throw Error('Unsafe generated diagram '+name);return v;}return ['html','svg','customCode'].includes(key)?escape(v):String(v);});\n }\n const project=walk(raw,'');\n if(/\\{\\{/.test(JSON.stringify(project)))throw Error('Unresolved project placeholders.');\n return project;\n}\nfunction prepare(state){\n if(state.saved)return {...state.saved};\n const payload=resolveDesign(state);\n return {request_key:state.request_key,workflow_slug:state.workflow_slug,source_id:state.source_id,revision:state.revision,request_period:'',input_hash:state.input_hash,input_json:JSON.stringify({request:state.request,records:state.records}),project_json:JSON.stringify(payload),brief_json:JSON.stringify({title:payload.name||state.workflow_slug,decision:state.decision}),context_json:JSON.stringify({decision:state.decision,artifacts:state.artifacts,report:state.report,variables:state.variables}),delivery_filename:state.workflow_slug+'-'+state.source_id+'-'+state.input_hash.slice(0,24)+'.mp4',status:'new',last_error:''};\n}\nreturn [{json:prepare($input.first().json)}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-13",
+      "name": "Ensure publication ledger",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        585,
+        300
+      ],
+      "parameters": {
+        "resource": "table",
+        "operation": "create",
+        "tableName": "Zvid Studio D51 decision ledger",
+        "columns": {
+          "column": [
+            {
+              "name": "request_key",
+              "type": "string"
+            },
+            {
+              "name": "workflow_slug",
+              "type": "string"
+            },
+            {
+              "name": "source_id",
+              "type": "string"
+            },
+            {
+              "name": "revision",
+              "type": "string"
+            },
+            {
+              "name": "request_period",
+              "type": "string"
+            },
+            {
+              "name": "input_hash",
+              "type": "string"
+            },
+            {
+              "name": "input_json",
+              "type": "string"
+            },
+            {
+              "name": "project_json",
+              "type": "string"
+            },
+            {
+              "name": "brief_json",
+              "type": "string"
+            },
+            {
+              "name": "context_json",
+              "type": "string"
+            },
+            {
+              "name": "delivery_filename",
+              "type": "string"
+            },
+            {
+              "name": "status",
+              "type": "string"
+            },
+            {
+              "name": "job_id",
+              "type": "string"
+            },
+            {
+              "name": "video_url",
+              "type": "string"
+            },
+            {
+              "name": "drive_file_id",
+              "type": "string"
+            },
+            {
+              "name": "drive_url",
+              "type": "string"
+            },
+            {
+              "name": "quoted_credits",
+              "type": "number"
+            },
+            {
+              "name": "last_error",
+              "type": "string"
+            },
+            {
+              "name": "execution_id",
+              "type": "string"
+            },
+            {
+              "name": "updated_at",
+              "type": "date"
+            }
+          ]
+        },
+        "options": {
+          "createIfNotExists": true
+        }
+      }
+    },
+    {
+      "id": "zvid-business-51-14",
+      "name": "Read saved requests",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        585,
+        585
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Ensure publication ledger\").first().json.id }}"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": []
+        },
+        "returnAll": true
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "zvid-business-51-15",
+      "name": "Look up saved request",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2820,
+        585
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Ensure publication ledger\").first().json.id }}"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_key",
+              "condition": "eq",
+              "keyValue": "={{ $(\"Prepare durable request\").first().json.request_key }}"
+            }
+          ]
+        },
+        "returnAll": false,
+        "limit": 2
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "zvid-business-51-16",
+      "name": "Decide recovery",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3080,
+        300
+      ],
+      "parameters": {
+        "jsCode": "function recoverSubmission(prepared,rows,nowISO,executionMode){\n const found=rows.filter(r=>r.request_key);if(found.length>1)throw Error('Duplicate ledger request_key. Reconcile the ledger before rendering.');\n if(!found.length)return {...prepared,status:'new',job_id:'',video_url:'',drive_file_id:'',drive_url:'',quoted_credits:0};\n const saved=found[0];if(saved.input_hash!==prepared.input_hash)throw Error('The saved request has different content for this revision. Increment revision; do not overwrite its accepted job.');\n if(saved.status==='submitting'&&!saved.job_id)throw Error('Paid submission is ambiguous for '+saved.request_key+'. Reconcile it in https://app.zvid.io and save the accepted job_id before retrying. Automatic resubmission is blocked.');\n if(saved.status==='rejected'&&!saved.job_id&&!saved.video_url){\n  let rejection;try{rejection=JSON.parse(saved.last_error);}catch{throw Error('Rejected request has no verified HTTP evidence; reconcile before retrying.');}\n  const retryAt=Date.parse(rejection.retryAfter),rejectedAt=Date.parse(rejection.rejectedAt),now=Date.parse(nowISO);\n  if(rejection.kind!=='rate_limit_rejected'||rejection.httpStatus!==429||!Number.isInteger(rejection.attempts)||rejection.attempts<1||rejection.maxAttempts!==3||!Number.isFinite(retryAt)||!Number.isFinite(rejectedAt)||retryAt<rejectedAt+30000||!Number.isFinite(now))throw Error('Rejected request has invalid HTTP evidence; reconcile before retrying.');\n  if(rejection.attempts>=3)throw Error('Three explicit rate-limit rejections reached the manual retry bound. Reconcile account capacity before resetting this request.');\n  if(now<retryAt)throw Error('Rate-limit cooldown has not expired. Retry manually after '+rejection.retryAfter+'.');\n  // n8n get-additional-keys maps its internal manual mode to $execution.mode='test'; every other mode is production.\n  if(executionMode!=='test')throw Error('An explicitly rejected request can be retried only by a manual execution after its cooldown.');\n  return {...prepared,...saved};\n }\n if(!saved.video_url&&!saved.job_id&&saved.status!=='new')throw Error('Incomplete ledger state '+saved.status+'. Reconcile the existing request before retrying.');\n return {...prepared,...saved};\n}\nreturn [{json:recoverSubmission($(\"Prepare durable request\").first().json,$input.all().map(i=>i.json),new Date().toISOString(),$execution.mode)}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-17",
+      "name": "Inspect saved request only?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3080,
+        585
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "inspect-51",
+              "leftValue": "={{ $(\"Config\").first().json.dryRun === true && $json.status !== \"new\" }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-18",
+      "name": "Saved request inspection",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3340,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const state=$input.first().json;return [{json:{status:\"saved_request_inspection\",dryRun:true,renderSubmitted:false,deliveryAttempted:false,savedStatus:state.status,jobId:state.job_id||null,videoUrl:state.video_url||null,driveUrl:state.drive_url||null,source_id:state.source_id,revision:state.revision,quotedCredits:state.quoted_credits,brief:JSON.parse(state.brief_json)}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-19",
+      "name": "Completed media saved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3340,
+        585
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "completed-51",
+              "leftValue": "={{ typeof $json.video_url === \"string\" && $json.video_url.startsWith(\"https://\") }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-20",
+      "name": "Accepted job saved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3600,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "accepted-51",
+              "leftValue": "={{ Boolean($json.job_id) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-21",
+      "name": "Validate project (free)",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        4085,
+        300
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "validate",
+        "source": "json",
+        "projectJson": "={{ $json.project_json }}",
+        "additionalFields": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-22",
+      "name": "Check validation and credit cap",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4085,
+        585
+      ],
+      "parameters": {
+        "jsCode": "function req(value, label = 'value') {\n  if (value === undefined || value === null || (typeof value === 'string' && !value.trim())) throw new Error(label + ' is required.');\n  return value;\n}\nfunction str(value, max = 100) {\n  return String(value === undefined || value === null ? '' : value).replace(/[\\u0000-\\u001f\\u007f]/g, ' ').replace(/\\s+/g, ' ').trim().slice(0, max);\n}\nfunction num(value, label = 'number', min = 0, max = 1e12) {\n  req(value, label);\n  if (typeof value === 'boolean' || typeof value === 'object') throw new Error(label + ' must be a finite number.');\n  const n = Number(value);\n  if (!Number.isFinite(n) || n < min || n > max) throw new Error(label + ' must be a finite number from ' + min + ' to ' + max + '.');\n  return n;\n}\nfunction list(value, label = 'items') {\n  if (!Array.isArray(value)) throw new Error(label + ' must be an array.');\n  if (value.length > 1000) throw new Error(label + ' is limited to 1,000 input records per run.');\n  return value;\n}\nfunction escapeHtml(value) {\n  return String(value).replace(/[&<>\"'{}]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;', '{': '&#123;', '}': '&#125;' }[c]));\n}\nfunction normalizeBrief(brief) {\n  if (!brief || typeof brief !== 'object' || Array.isArray(brief)) throw new Error('The transformation must return a video brief or explicit skip result.');\n  if (brief.skip === true) return { skip: true, reason: str(req(brief.reason, 'Skip reason'), 250), meta: brief.meta || {} };\n  const cards = list(brief.cards, 'cards');\n  if (!cards.length || cards.length > 6) throw new Error('The video brief must contain one to six cards.');\n  return {\n    title: str(req(brief.title, 'Video title'), 100),\n    subtitle: str(brief.subtitle, 180),\n    cards: cards.map((card, i) => {\n      if (!card || typeof card !== 'object') throw new Error('Card ' + (i + 1) + ' must be an object.');\n      return { label: str(req(card.label, 'Card label'), 60), value: str(req(card.value, 'Card value'), 80), detail: str(card.detail, 140) };\n    }),\n    footer: str(brief.footer || 'Review the result before sharing.', 160),\n    sourceKey: str(req(brief.sourceKey, 'sourceKey'), 160),\n    meta: brief.meta && typeof brief.meta === 'object' ? brief.meta : {},\n  };\n}\nfunction normalizeConfig(cfg = {}) {\n  if (typeof cfg.dryRun !== 'boolean') throw new Error('Config dryRun must be a boolean.');\n  const color = String(cfg.accentColor || '#D8F17C');\n  if (!/^#[0-9a-f]{6}$/i.test(color)) throw new Error('accentColor must use six hexadecimal digits.');\n  return {\n    dryRun: cfg.dryRun,\n    brandName: str(cfg.brandName || 'Zvid', 45),\n    accentColor: color,\n    maxRenderCredits: num(cfg.maxRenderCredits ?? 30, 'maxRenderCredits', 0, 1000),\n    sceneSeconds: num(cfg.sceneSeconds ?? 6, 'sceneSeconds', 2, 8),\n    pollSeconds: num(cfg.pollSeconds ?? 5, 'pollSeconds', 1, 30),\n    maxWaitSeconds: num(cfg.maxWaitSeconds ?? 600, 'maxWaitSeconds', 10, 1200),\n  };\n}\nfunction buildPayload(inputBrief, inputCfg = {}, spec = {}) {\n  const brief = normalizeBrief(inputBrief);\n  if (brief.skip) return null;\n  const cfg = normalizeConfig({ dryRun: false, maxRenderCredits: 30, ...inputCfg });\n  const duration = cfg.sceneSeconds;\n  const accent = cfg.accentColor;\n  const ink = '#102026';\n  const cream = '#F5F2E8';\n  const text = (html, x, y, width, track = 2, size = 32) => ({ type: 'TEXT', x, y, width, anchor: 'top-left', track, enterBegin: 0.15, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: duration, style: { fontFamily: 'Arial', color: cream, fontSize: size }, html });\n  const svg = (markup) => ({ type: 'SVG', width: 1280, height: 720, track: 0, enterBegin: 0, exitEnd: duration, svg: '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1280\" height=\"720\" viewBox=\"0 0 1280 720\">' + markup + '</svg>' });\n  const limited = (value, style, lines) => {\n    const size = Number((style.match(/font-size:(\\d+)px/) || [0, 32])[1]);\n    const leading = Number((style.match(/line-height:([\\d.]+)/) || [0, 1.3])[1]);\n    const height = Math.ceil(size * leading * lines) + 2;\n    return '<div style=\"overflow:hidden;max-height:' + height + 'px;overflow-wrap:anywhere;' + style + '\">' + escapeHtml(value) + '</div>';\n  };\n  const smallHeader = (label, dark = false) => text('<div style=\"font-size:20px;font-weight:700;letter-spacing:3px;color:' + (dark ? ink : accent) + ';\">' + escapeHtml(label) + '</div>', 74, 54, 1110, 3);\n  const scenes = [{ id: 'opening', duration, backgroundColor: ink, visuals: [\n    svg('<rect width=\"1280\" height=\"720\" fill=\"' + ink + '\"/><circle cx=\"1170\" cy=\"130\" r=\"280\" fill=\"' + accent + '\" opacity=\".12\"/><path d=\"M900 0V720 M1060 0V720 M1220 0V720\" stroke=\"' + cream + '\" opacity=\".08\"/><rect x=\"74\" y=\"143\" width=\"94\" height=\"7\" rx=\"3\" fill=\"' + accent + '\"/>'),\n    smallHeader(cfg.brandName + ' / ' + String(spec.day || 'BRIEF')),\n    text(limited(brief.title, 'font-size:' + (brief.title.length > 70 ? 54 : 66) + 'px;line-height:1.09;font-weight:800;color:' + cream + ';', 3), 74, 192, 1030, 2),\n    text(limited(brief.subtitle, 'font-size:27px;line-height:1.4;color:#BBD0CE;', 3), 78, 460, 1020, 2),\n    text('<div style=\"font-size:17px;color:#BBD0CE;letter-spacing:2px;\">' + escapeHtml(brief.sourceKey) + '</div>', 78, 645, 1110, 3),\n  ] }];\n  for (let start = 0; start < brief.cards.length; start += 3) {\n    const cards = brief.cards.slice(start, start + 3);\n    const count = cards.length;\n    const gap = 24;\n    const width = Math.floor((1132 - gap * (count - 1)) / count);\n    const visuals = [svg('<rect width=\"1280\" height=\"720\" fill=\"' + cream + '\"/><rect x=\"74\" y=\"139\" width=\"1132\" height=\"2\" fill=\"' + ink + '\" opacity=\".16\"/>'), smallHeader(cfg.brandName + ' / THE DETAILS', true)];\n    cards.forEach((card, i) => {\n      const left = 74 + i * (width + gap);\n      visuals.push({ ...svg('<rect x=\"' + left + '\" y=\"192\" width=\"' + width + '\" height=\"407\" rx=\"22\" fill=\"' + ink + '\"/><circle cx=\"' + (left + width - 35) + '\" cy=\"226\" r=\"8\" fill=\"' + accent + '\"/>'), track: 1 });\n      visuals.push(text(limited(card.label, 'font-size:20px;line-height:1.35;letter-spacing:1px;font-weight:700;color:' + accent + ';', 2), left + 26, 237, width - 52, 2));\n      const valueSize = card.value.length > 42 ? 28 : card.value.length > 22 ? 36 : 48;\n      visuals.push(text(limited(card.value, 'font-size:' + valueSize + 'px;line-height:1.1;font-weight:800;color:' + cream + ';', 3), left + 26, 324, width - 52, 2));\n      visuals.push(text(limited(card.detail, 'font-size:19px;line-height:1.35;color:#C3D3D0;', 4), left + 26, 482, width - 52, 2));\n    });\n    visuals.push(text('<div style=\"font-size:18px;color:' + ink + ';\">' + (start + 1) + '–' + (start + cards.length) + ' / ' + brief.cards.length + '</div>', 74, 650, 1110, 3));\n    scenes.push({ id: 'details-' + (start / 3 + 1), duration, backgroundColor: cream, visuals });\n  }\n  scenes.push({ id: 'closing', duration, backgroundColor: accent, visuals: [\n    svg('<rect width=\"1280\" height=\"720\" fill=\"' + accent + '\"/><circle cx=\"1140\" cy=\"560\" r=\"230\" fill=\"none\" stroke=\"' + ink + '\" stroke-width=\"2\" opacity=\".2\"/><circle cx=\"1140\" cy=\"560\" r=\"180\" fill=\"none\" stroke=\"' + ink + '\" stroke-width=\"2\" opacity=\".2\"/><path d=\"M78 181h100\" stroke=\"' + ink + '\" stroke-width=\"8\"/>'),\n    smallHeader(cfg.brandName + ' / NEXT STEP', true),\n    text(limited(brief.footer, 'font-size:51px;line-height:1.17;font-weight:800;color:' + ink + ';', 4), 74, 248, 1000, 2),\n    text('<div style=\"font-size:19px;color:' + ink + ';\">' + escapeHtml(brief.sourceKey) + '</div>', 78, 645, 1080, 3),\n  ] });\n  return { name: String(spec.slug || 'zvid-business-brief').replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, 100), resolution: 'hd', frameRate: 30, backgroundColor: ink, outputFormat: 'mp4', scenes, audios: [] };\n}\nfunction checkValidationResult(result, build, cfg) {\n  if (!result || result.valid !== true) {\n    const errors = Array.isArray(result && result.errors) ? result.errors.map(e => (e.field || 'project') + ': ' + e.message).join('; ') : 'Project did not validate.';\n    throw new Error('Zvid validation failed: ' + errors.slice(0, 1000));\n  }\n  const credits = num(result.creditsRequired, 'Validation creditsRequired', 0, 1000);\n  if (credits > cfg.maxRenderCredits) throw new Error('Render requires ' + credits + ' credits; maxRenderCredits is ' + cfg.maxRenderCredits + '. Increase the configured cap deliberately.');\n  return { ...build, quotedCredits: credits, warnings: result.warnings || [], payload: result.payload || build.payload };\n}\nconst state=$(\"Decide recovery\").first().json;const checked=checkValidationResult($input.first().json,{payload:JSON.parse(state.project_json)},normalizeConfig($(\"Config\").first().json));return [{json:{...state,quoted_credits:checked.quotedCredits,project_json:JSON.stringify(checked.payload)}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-23",
+      "name": "Dry run?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4345,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dry-51",
+              "leftValue": "={{ $(\"Config\").first().json.dryRun === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-25",
+      "name": "Draft and credit quote",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4345,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const s=$(\"Check validation and credit cap\").first().json;return [{json:{status:\"validated_preview\",dryRun:true,renderSubmitted:false,editorDraftSaved:false,quotedCredits:s.quoted_credits,project:JSON.parse(s.project_json),decision:JSON.parse(s.context_json),source_id:s.source_id,revision:s.revision}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-26",
+      "name": "Mark submission pending",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4830,
+        300
+      ],
+      "parameters": {
+        "jsCode": "return [{json:{...$input.first().json,status:\"submitting\"}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-27",
+      "name": "Persist submission intent",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        4830,
+        585
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Ensure publication ledger\").first().json.id }}"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_key",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_key }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "request_key": "={{ $json.request_key || \"\" }}",
+            "workflow_slug": "={{ $json.workflow_slug || \"\" }}",
+            "source_id": "={{ $json.source_id || \"\" }}",
+            "revision": "={{ $json.revision || \"\" }}",
+            "request_period": "={{ $json.request_period || \"\" }}",
+            "input_hash": "={{ $json.input_hash || \"\" }}",
+            "input_json": "={{ $json.input_json || \"\" }}",
+            "project_json": "={{ $json.project_json || \"\" }}",
+            "brief_json": "={{ $json.brief_json || \"\" }}",
+            "context_json": "={{ $json.context_json || \"\" }}",
+            "delivery_filename": "={{ $json.delivery_filename || \"\" }}",
+            "status": "={{ $json.status || \"\" }}",
+            "job_id": "={{ $json.job_id || \"\" }}",
+            "video_url": "={{ $json.video_url || \"\" }}",
+            "drive_file_id": "={{ $json.drive_file_id || \"\" }}",
+            "drive_url": "={{ $json.drive_url || \"\" }}",
+            "quoted_credits": "={{ Number($json.quoted_credits || 0) }}",
+            "execution_id": "={{ $execution.id }}",
+            "last_error": "={{ $json.last_error || \"\" }}",
+            "updated_at": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "request_key",
+              "displayName": "request_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflow_slug",
+              "displayName": "workflow_slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "revision",
+              "displayName": "revision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request_period",
+              "displayName": "request_period",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_hash",
+              "displayName": "input_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_json",
+              "displayName": "input_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "project_json",
+              "displayName": "project_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "brief_json",
+              "displayName": "brief_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "context_json",
+              "displayName": "context_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "delivery_filename",
+              "displayName": "delivery_filename",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "job_id",
+              "displayName": "job_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_file_id",
+              "displayName": "drive_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_url",
+              "displayName": "drive_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quoted_credits",
+              "displayName": "quoted_credits",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "execution_id",
+              "displayName": "execution_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_error",
+              "displayName": "last_error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-28",
+      "name": "Submit render once",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        5090,
+        300
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "create",
+        "renderType": "video",
+        "source": "json",
+        "projectJson": "={{ $json.project_json }}",
+        "waitForCompletion": false,
+        "additionalFields": {}
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "zvid-business-51-29",
+      "name": "Capture accepted job",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5090,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const result=$input.first().json;const job_id=result.jobId||result.id;if(typeof job_id!==\"string\"||!job_id)throw new Error(\"Paid response has no job ID. Reconcile the persisted submitting request before retrying.\");return [{json:{...$(\"Persist submission intent\").first().json,status:\"accepted\",job_id}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-30",
+      "name": "Persist accepted job",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        5350,
+        300
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Ensure publication ledger\").first().json.id }}"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_key",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_key }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "request_key": "={{ $json.request_key || \"\" }}",
+            "workflow_slug": "={{ $json.workflow_slug || \"\" }}",
+            "source_id": "={{ $json.source_id || \"\" }}",
+            "revision": "={{ $json.revision || \"\" }}",
+            "request_period": "={{ $json.request_period || \"\" }}",
+            "input_hash": "={{ $json.input_hash || \"\" }}",
+            "input_json": "={{ $json.input_json || \"\" }}",
+            "project_json": "={{ $json.project_json || \"\" }}",
+            "brief_json": "={{ $json.brief_json || \"\" }}",
+            "context_json": "={{ $json.context_json || \"\" }}",
+            "delivery_filename": "={{ $json.delivery_filename || \"\" }}",
+            "status": "={{ $json.status || \"\" }}",
+            "job_id": "={{ $json.job_id || \"\" }}",
+            "video_url": "={{ $json.video_url || \"\" }}",
+            "drive_file_id": "={{ $json.drive_file_id || \"\" }}",
+            "drive_url": "={{ $json.drive_url || \"\" }}",
+            "quoted_credits": "={{ Number($json.quoted_credits || 0) }}",
+            "execution_id": "={{ $execution.id }}",
+            "last_error": "={{ $json.last_error || \"\" }}",
+            "updated_at": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "request_key",
+              "displayName": "request_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflow_slug",
+              "displayName": "workflow_slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "revision",
+              "displayName": "revision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request_period",
+              "displayName": "request_period",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_hash",
+              "displayName": "input_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_json",
+              "displayName": "input_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "project_json",
+              "displayName": "project_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "brief_json",
+              "displayName": "brief_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "context_json",
+              "displayName": "context_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "delivery_filename",
+              "displayName": "delivery_filename",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "job_id",
+              "displayName": "job_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_file_id",
+              "displayName": "drive_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_url",
+              "displayName": "drive_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quoted_credits",
+              "displayName": "quoted_credits",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "execution_id",
+              "displayName": "execution_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_error",
+              "displayName": "last_error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-31",
+      "name": "Poll saved job context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5350,
+        585
+      ],
+      "parameters": {
+        "jsCode": "return [{json:$input.first().json}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-32",
+      "name": "Wait for completed render",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        5610,
+        300
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "get",
+        "jobId": "={{ $json.job_id }}",
+        "waitForCompletion": true,
+        "waitOptions": {
+          "pollInterval": "={{ $(\"Config\").first().json.pollSeconds }}",
+          "maxWaitTime": "={{ $(\"Config\").first().json.maxWaitSeconds }}"
+        }
+      }
+    },
+    {
+      "id": "zvid-business-51-33",
+      "name": "Video result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5610,
+        585
+      ],
+      "parameters": {
+        "jsCode": "function completedState(job, context) {\n  const result=job.result||job.output||job.returnvalue||{};\n  const url=job.outputUrl||job.videoUrl||(typeof result==='string'?result:result.url||result.outputUrl||result.videoUrl);\n  const status=String(job.state||job.status||'');\n  if(status!=='completed') throw new Error('Accepted job '+context.job_id+' is '+status+'. Retry this saved job; do not resubmit.');\n  if(typeof url!=='string'||!/^https:\\/\\//i.test(url)) throw new Error('Completed job '+context.job_id+' has no HTTPS media URL. Reconcile its upload in https://app.zvid.io; the accepted job is retained.');\n  return {...context,status:'completed',video_url:url,last_error:''};\n}\nreturn [{json:completedState($input.first().json,$(\"Poll saved job context\").first().json)}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-34",
+      "name": "Persist completed media",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        5870,
+        300
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Ensure publication ledger\").first().json.id }}"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_key",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_key }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "request_key": "={{ $json.request_key || \"\" }}",
+            "workflow_slug": "={{ $json.workflow_slug || \"\" }}",
+            "source_id": "={{ $json.source_id || \"\" }}",
+            "revision": "={{ $json.revision || \"\" }}",
+            "request_period": "={{ $json.request_period || \"\" }}",
+            "input_hash": "={{ $json.input_hash || \"\" }}",
+            "input_json": "={{ $json.input_json || \"\" }}",
+            "project_json": "={{ $json.project_json || \"\" }}",
+            "brief_json": "={{ $json.brief_json || \"\" }}",
+            "context_json": "={{ $json.context_json || \"\" }}",
+            "delivery_filename": "={{ $json.delivery_filename || \"\" }}",
+            "status": "={{ $json.status || \"\" }}",
+            "job_id": "={{ $json.job_id || \"\" }}",
+            "video_url": "={{ $json.video_url || \"\" }}",
+            "drive_file_id": "={{ $json.drive_file_id || \"\" }}",
+            "drive_url": "={{ $json.drive_url || \"\" }}",
+            "quoted_credits": "={{ Number($json.quoted_credits || 0) }}",
+            "execution_id": "={{ $execution.id }}",
+            "last_error": "={{ $json.last_error || \"\" }}",
+            "updated_at": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "request_key",
+              "displayName": "request_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflow_slug",
+              "displayName": "workflow_slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "revision",
+              "displayName": "revision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request_period",
+              "displayName": "request_period",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_hash",
+              "displayName": "input_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_json",
+              "displayName": "input_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "project_json",
+              "displayName": "project_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "brief_json",
+              "displayName": "brief_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "context_json",
+              "displayName": "context_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "delivery_filename",
+              "displayName": "delivery_filename",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "job_id",
+              "displayName": "job_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_file_id",
+              "displayName": "drive_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_url",
+              "displayName": "drive_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quoted_credits",
+              "displayName": "quoted_credits",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "execution_id",
+              "displayName": "execution_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_error",
+              "displayName": "last_error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-35",
+      "name": "Delivery context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7100,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const state=$input.first().json;if(typeof state.video_url!==\"string\"||!state.video_url.startsWith(\"https://\"))throw new Error(\"A completed HTTPS video is required for delivery\");return [{json:state}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-36",
+      "name": "Find existing delivery",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        7100,
+        585
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "fileFolder",
+        "operation": "search",
+        "searchMethod": "query",
+        "queryString": "={{ \"name = \"+String.fromCharCode(39)+$(\"Delivery context\").first().json.delivery_filename+String.fromCharCode(39) }}",
+        "returnAll": false,
+        "limit": 2,
+        "filter": {
+          "driveId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $(\"Config\").first().json.driveFolderId }}"
+          },
+          "whatToSearch": "files",
+          "includeTrashed": false
+        },
+        "options": {
+          "fields": [
+            "id",
+            "name",
+            "mimeType",
+            "webViewLink",
+            "appProperties"
+          ]
+        }
+      },
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "id": "zvid-business-51-37",
+      "name": "Reconcile delivery file",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7360,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const matches=$input.all().map(i=>i.json).filter(r=>r.id);if(matches.length>1)throw new Error(\"Multiple delivery files match this request. Reconcile before uploading.\");const state=$(\"Delivery context\").first().json;if(matches[0]&&matches[0].mimeType!==\"video/mp4\")throw new Error(\"Existing delivery is not an MP4\");if(matches[0]&&(!matches[0].appProperties||matches[0].appProperties.zvid_request_hash!==state.input_hash))throw new Error(\"Existing delivery has missing or different request metadata. Verify the file and reconcile its zvid_request_hash before retrying; automatic upload is blocked.\");return [{json:{...state,existingDelivery:!!matches.length,...(matches[0]?{drive_file_id:matches[0].id,drive_url:matches[0].webViewLink||\"https://drive.google.com/file/d/\"+matches[0].id+\"/view\"}:{drive_file_id:\"\",drive_url:\"\"})}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-38",
+      "name": "Delivery file exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        7360,
+        585
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "file-51",
+              "leftValue": "={{ $json.existingDelivery === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-39",
+      "name": "Download delivery media",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        7620,
+        300
+      ],
+      "parameters": {
+        "url": "={{ $json.video_url }}",
+        "responseFormat": "file",
+        "dataPropertyName": "data",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "zvid-business-51-40",
+      "name": "Check downloaded media",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7620,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const item=$input.first();const data=item.binary&&item.binary.data;if(!data||String(data.mimeType||\"\").split(\";\")[0]!==\"video/mp4\")throw new Error(\"Delivery download did not produce MP4 binary data. The completed URL is retained in the ledger.\");return [{json:$(\"Delivery context\").first().json,binary:item.binary}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-41",
+      "name": "Upload private review video",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        7880,
+        300
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "upload",
+        "inputDataFieldName": "data",
+        "name": "={{ $json.delivery_filename }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Config\").first().json.driveFolderId }}"
+        },
+        "options": {
+          "simplifyOutput": false,
+          "appPropertiesUi": {
+            "appPropertyValues": [
+              {
+                "key": "zvid_request_hash",
+                "value": "={{ $json.input_hash }}"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "zvid-business-51-42",
+      "name": "Remember delivery",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7880,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const current=$input.first().json;const state=current.request_key?current:$(\"Delivery context\").first().json;const id=current.drive_file_id||current.id;if(typeof id!==\"string\"||!id)throw new Error(\"Drive returned no file ID; search the saved deterministic filename before retrying.\");return [{json:{...state,status:\"uploaded\",drive_file_id:id,drive_url:current.drive_url||current.webViewLink||\"https://drive.google.com/file/d/\"+id+\"/view\",last_error:\"\"}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-43",
+      "name": "Persist delivery file",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        8140,
+        300
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Ensure publication ledger\").first().json.id }}"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_key",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_key }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "request_key": "={{ $json.request_key || \"\" }}",
+            "workflow_slug": "={{ $json.workflow_slug || \"\" }}",
+            "source_id": "={{ $json.source_id || \"\" }}",
+            "revision": "={{ $json.revision || \"\" }}",
+            "request_period": "={{ $json.request_period || \"\" }}",
+            "input_hash": "={{ $json.input_hash || \"\" }}",
+            "input_json": "={{ $json.input_json || \"\" }}",
+            "project_json": "={{ $json.project_json || \"\" }}",
+            "brief_json": "={{ $json.brief_json || \"\" }}",
+            "context_json": "={{ $json.context_json || \"\" }}",
+            "delivery_filename": "={{ $json.delivery_filename || \"\" }}",
+            "status": "={{ $json.status || \"\" }}",
+            "job_id": "={{ $json.job_id || \"\" }}",
+            "video_url": "={{ $json.video_url || \"\" }}",
+            "drive_file_id": "={{ $json.drive_file_id || \"\" }}",
+            "drive_url": "={{ $json.drive_url || \"\" }}",
+            "quoted_credits": "={{ Number($json.quoted_credits || 0) }}",
+            "execution_id": "={{ $execution.id }}",
+            "last_error": "={{ $json.last_error || \"\" }}",
+            "updated_at": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "request_key",
+              "displayName": "request_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflow_slug",
+              "displayName": "workflow_slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "revision",
+              "displayName": "revision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request_period",
+              "displayName": "request_period",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_hash",
+              "displayName": "input_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_json",
+              "displayName": "input_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "project_json",
+              "displayName": "project_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "brief_json",
+              "displayName": "brief_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "context_json",
+              "displayName": "context_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "delivery_filename",
+              "displayName": "delivery_filename",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "job_id",
+              "displayName": "job_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_file_id",
+              "displayName": "drive_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_url",
+              "displayName": "drive_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quoted_credits",
+              "displayName": "quoted_credits",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "execution_id",
+              "displayName": "execution_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_error",
+              "displayName": "last_error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-44",
+      "name": "Recheck source revision",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8625,
+        300
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Config\").first().json.spreadsheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $(\"Config\").first().json.sourceSheet }}"
+        },
+        "options": {
+          "returnFirstMatch": false,
+          "outputFormatting": {
+            "values": {
+              "general": "UNFORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          }
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "source_id",
+              "lookupValue": "={{ $(\"Persist delivery file\").first().json.source_id }}"
+            }
+          ]
+        },
+        "combineFilters": "AND"
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "id": "zvid-business-51-45",
+      "name": "Recheck related content",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8625,
+        585
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Config\").first().json.spreadsheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $(\"Config\").first().json.detailsSheet }}"
+        },
+        "options": {
+          "returnFirstMatch": false,
+          "outputFormatting": {
+            "values": {
+              "general": "UNFORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          }
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "id": "zvid-business-51-46",
+      "name": "Prepare writeback check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8885,
+        300
+      ],
+      "parameters": {
+        "jsCode": "function stable(value){return JSON.stringify(value===null||typeof value!=='object'?value:Array.isArray(value)?value.map(x=>JSON.parse(stable(x))):Object.fromEntries(Object.keys(value).sort().map(k=>[k,JSON.parse(stable(value[k]))])));}\nfunction checkSource(rows,details,state,cfg){\n const row=rows.find(r=>String(r.source_id)===state.source_id);\n if(rows.filter(r=>String(r.source_id)===state.source_id).length!==1||String(row?.revision)!==state.revision||row.approval!=='approved')throw Error('Request approval or revision changed; the completed asset is retained for review.');\n const records=details.filter(d=>String(d.parent_id)===state.source_id&&String(d.revision)===state.revision).map(d=>({...JSON.parse(d.data_json),kind:String(d.kind),record_id:String(d.record_id),parent_id:state.source_id,revision:state.revision})).sort((a,b)=>a.record_id.localeCompare(b.record_id));\n const fingerprint=stable({request:JSON.parse(row.brief_json),records,source_id:state.source_id,revision:state.revision,approval:row.approval,designRevision:cfg.designRevision,driveFolderId:cfg.driveFolderId});\n return {fingerprint,sourceRow:row};\n}\nreturn [{json:checkSource($(\"Recheck source revision\").all().map(i=>i.json),$input.all().map(i=>i.json),$(\"Persist delivery file\").first().json,$(\"Config\").first().json)}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-47",
+      "name": "Fingerprint source before writeback",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        8885,
+        585
+      ],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{ $json.fingerprint }}",
+        "dataPropertyName": "input_hash",
+        "encoding": "hex"
+      }
+    },
+    {
+      "id": "zvid-business-51-48",
+      "name": "Protect source writeback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9145,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const state=$(\"Persist delivery file\").first().json;const current=$input.first().json;if(current.input_hash!==state.input_hash)throw new Error(\"Source business content changed during rendering. The uploaded asset is retained; increment revision and reconcile the old request.\");return [{json:state}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-49",
+      "name": "Update business register",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        9145,
+        585
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Config\").first().json.spreadsheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $(\"Config\").first().json.sourceSheet }}"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "source_id"
+          ],
+          "value": {
+            "source_id": "={{ $json.source_id }}",
+            "automation_status": "delivered",
+            "request_key": "={{ $json.request_key }}",
+            "input_hash": "={{ $json.input_hash }}",
+            "job_id": "={{ $json.job_id }}",
+            "video_url": "={{ $json.video_url }}",
+            "drive_file_id": "={{ $json.drive_file_id }}",
+            "drive_url": "={{ $json.drive_url }}",
+            "completed_at": "={{ $now.toISO() }}",
+            "outcome_summary": "={{ JSON.parse($json.context_json).decision.summary || \"Decision report and video ready for review\" }}",
+            "automation_error": ""
+          },
+          "schema": [
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "automation_status",
+              "displayName": "automation_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request_key",
+              "displayName": "request_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_hash",
+              "displayName": "input_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "job_id",
+              "displayName": "job_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_file_id",
+              "displayName": "drive_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_url",
+              "displayName": "drive_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "completed_at",
+              "displayName": "completed_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "outcome_summary",
+              "displayName": "outcome_summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "automation_error",
+              "displayName": "automation_error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "id": "zvid-business-51-50",
+      "name": "Read back delivery receipt",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        9405,
+        300
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Config\").first().json.spreadsheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $(\"Config\").first().json.sourceSheet }}"
+        },
+        "options": {
+          "returnFirstMatch": false,
+          "outputFormatting": {
+            "values": {
+              "general": "UNFORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          }
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "source_id",
+              "lookupValue": "={{ $(\"Persist delivery file\").first().json.source_id }}"
+            }
+          ]
+        },
+        "combineFilters": "AND"
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "id": "zvid-business-51-51",
+      "name": "Read related receipt content",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        9405,
+        585
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Config\").first().json.spreadsheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $(\"Config\").first().json.detailsSheet }}"
+        },
+        "options": {
+          "returnFirstMatch": false,
+          "outputFormatting": {
+            "values": {
+              "general": "UNFORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          }
+        }
+      },
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 1000
+    },
+    {
+      "id": "zvid-business-51-52",
+      "name": "Prepare receipt check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9665,
+        300
+      ],
+      "parameters": {
+        "jsCode": "function stable(value){return JSON.stringify(value===null||typeof value!=='object'?value:Array.isArray(value)?value.map(x=>JSON.parse(stable(x))):Object.fromEntries(Object.keys(value).sort().map(k=>[k,JSON.parse(stable(value[k]))])));}\nfunction checkSource(rows,details,state,cfg){\n const row=rows.find(r=>String(r.source_id)===state.source_id);\n if(rows.filter(r=>String(r.source_id)===state.source_id).length!==1||String(row?.revision)!==state.revision||row.approval!=='approved')throw Error('Request approval or revision changed; the completed asset is retained for review.');\n const records=details.filter(d=>String(d.parent_id)===state.source_id&&String(d.revision)===state.revision).map(d=>({...JSON.parse(d.data_json),kind:String(d.kind),record_id:String(d.record_id),parent_id:state.source_id,revision:state.revision})).sort((a,b)=>a.record_id.localeCompare(b.record_id));\n const fingerprint=stable({request:JSON.parse(row.brief_json),records,source_id:state.source_id,revision:state.revision,approval:row.approval,designRevision:cfg.designRevision,driveFolderId:cfg.driveFolderId});\n return {fingerprint,sourceRow:row};\n}\nreturn [{json:checkSource($(\"Read back delivery receipt\").all().map(i=>i.json),$input.all().map(i=>i.json),$(\"Persist delivery file\").first().json,$(\"Config\").first().json)}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-53",
+      "name": "Fingerprint delivery receipt",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        9665,
+        585
+      ],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{ $json.fingerprint }}",
+        "dataPropertyName": "input_hash",
+        "encoding": "hex"
+      }
+    },
+    {
+      "id": "zvid-business-51-54",
+      "name": "Mark delivered",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9925,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const state=$(\"Protect source writeback\").first().json;const current=$input.first().json;const row=current.sourceRow||{};if(current.input_hash!==state.input_hash||String(row.revision)!==String(state.revision)||row.automation_status!==\"delivered\"||row.request_key!==state.request_key||row.input_hash!==state.input_hash||row.video_url!==state.video_url||row.drive_url!==state.drive_url||row.drive_file_id!==state.drive_file_id||row.job_id!==state.job_id)throw new Error(\"Source delivery receipt did not match the saved request and frozen content. The uploaded asset is retained for retry.\");return [{json:{...state,status:\"delivered\",last_error:\"\"}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-55",
+      "name": "Persist delivered outcome",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        9925,
+        585
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Ensure publication ledger\").first().json.id }}"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_key",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_key }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "request_key": "={{ $json.request_key || \"\" }}",
+            "workflow_slug": "={{ $json.workflow_slug || \"\" }}",
+            "source_id": "={{ $json.source_id || \"\" }}",
+            "revision": "={{ $json.revision || \"\" }}",
+            "request_period": "={{ $json.request_period || \"\" }}",
+            "input_hash": "={{ $json.input_hash || \"\" }}",
+            "input_json": "={{ $json.input_json || \"\" }}",
+            "project_json": "={{ $json.project_json || \"\" }}",
+            "brief_json": "={{ $json.brief_json || \"\" }}",
+            "context_json": "={{ $json.context_json || \"\" }}",
+            "delivery_filename": "={{ $json.delivery_filename || \"\" }}",
+            "status": "={{ $json.status || \"\" }}",
+            "job_id": "={{ $json.job_id || \"\" }}",
+            "video_url": "={{ $json.video_url || \"\" }}",
+            "drive_file_id": "={{ $json.drive_file_id || \"\" }}",
+            "drive_url": "={{ $json.drive_url || \"\" }}",
+            "quoted_credits": "={{ Number($json.quoted_credits || 0) }}",
+            "execution_id": "={{ $execution.id }}",
+            "last_error": "={{ $json.last_error || \"\" }}",
+            "updated_at": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "request_key",
+              "displayName": "request_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflow_slug",
+              "displayName": "workflow_slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "revision",
+              "displayName": "revision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request_period",
+              "displayName": "request_period",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_hash",
+              "displayName": "input_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_json",
+              "displayName": "input_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "project_json",
+              "displayName": "project_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "brief_json",
+              "displayName": "brief_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "context_json",
+              "displayName": "context_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "delivery_filename",
+              "displayName": "delivery_filename",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "job_id",
+              "displayName": "job_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_file_id",
+              "displayName": "drive_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_url",
+              "displayName": "drive_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quoted_credits",
+              "displayName": "quoted_credits",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "execution_id",
+              "displayName": "execution_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_error",
+              "displayName": "last_error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-56",
+      "name": "Business outcome",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        10410,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const s=$input.first().json;return [{json:{status:\"delivered\",source_id:s.source_id,revision:s.revision,request_key:s.request_key,jobId:s.job_id,videoUrl:s.video_url,driveFileId:s.drive_file_id,driveUrl:s.drive_url,quotedCredits:s.quoted_credits,decisionReport:JSON.parse(s.context_json),outcome:\"Private career video, fact trail, competition-total reconciliation and an approved narration handoff.\",dryRun:false}}];"
+      }
+    },
+    {
+      "id": "zvid-business-51-57",
+      "name": "Completed video available?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        10670,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "watch-51",
+              "leftValue": "={{ $json.status === \"delivered\" && $json.dryRun === false && typeof $json.videoUrl === \"string\" && $json.videoUrl.startsWith(\"https://\") }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "zvid-business-51-58",
+      "name": "Watch video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        10670,
+        585
+      ],
+      "parameters": {
+        "url": "={{ $json.videoUrl }}",
+        "responseFormat": "file",
+        "dataPropertyName": "data",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "studio-51-submission-failure",
+      "name": "Classify submission failure",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6355,
+        300
+      ],
+      "parameters": {
+        "jsCode": "function submissionFailure(item,state,nowISO){\n const now=Date.parse(nowISO);if(!Number.isFinite(now))throw Error('A valid rejection timestamp is required.');\n const error=item?.error&&typeof item.error==='object'?item.error:item?.json?.error&&typeof item.json.error==='object'?item.json.error:null;\n const explicit=error?[error.httpCode,error.statusCode,error.response?.status].filter(v=>v!==undefined&&v!==null):[];\n const status=explicit.length&&explicit.every(v=>String(v)==='429')?429:null;\n if(status!==429||state.job_id||item?.json?.jobId||item?.json?.id)return {...state,status:'submitting',last_error:JSON.stringify({kind:'ambiguous_submission',at:nowISO,message:'Submission outcome is not positively identified as HTTP 429. Reconcile the accepted job before another paid request.'})};\n let previous;try{previous=JSON.parse(state.last_error||'{}');}catch{previous={};}\n const attempts=previous.kind==='rate_limit_rejected'&&Number.isInteger(previous.attempts)?previous.attempts+1:1;\n const headers=error.response?.headers||error.headers||{},raw=headers['retry-after']??headers['Retry-After'];\n const delay=raw!==undefined&&/^\\d+(?:\\.\\d+)?$/.test(String(raw).trim())?Number(raw)*1000:0;\n const date=typeof raw==='string'&&!delay?Date.parse(raw):NaN;\n const retryAt=Math.max(now+30000,now+delay,Number.isFinite(date)?date:0);\n return {...state,status:'rejected',last_error:JSON.stringify({kind:'rate_limit_rejected',httpStatus:429,rejectedAt:nowISO,retryAfter:new Date(retryAt).toISOString(),attempts,maxAttempts:3,message:'The service rejected this request before accepting a job. Run manually after retryAfter; automatic paid retries are disabled.'})};\n}\nreturn [{json:submissionFailure($input.first(),$(\"Persist submission intent\").first().json,new Date().toISOString())}];"
+      }
+    },
+    {
+      "id": "studio-51-persist-submission-failure",
+      "name": "Persist submission failure",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6355,
+        585
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $(\"Ensure publication ledger\").first().json.id }}"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_key",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_key }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "request_key": "={{ $json.request_key || \"\" }}",
+            "workflow_slug": "={{ $json.workflow_slug || \"\" }}",
+            "source_id": "={{ $json.source_id || \"\" }}",
+            "revision": "={{ $json.revision || \"\" }}",
+            "request_period": "={{ $json.request_period || \"\" }}",
+            "input_hash": "={{ $json.input_hash || \"\" }}",
+            "input_json": "={{ $json.input_json || \"\" }}",
+            "project_json": "={{ $json.project_json || \"\" }}",
+            "brief_json": "={{ $json.brief_json || \"\" }}",
+            "context_json": "={{ $json.context_json || \"\" }}",
+            "delivery_filename": "={{ $json.delivery_filename || \"\" }}",
+            "status": "={{ $json.status || \"\" }}",
+            "job_id": "={{ $json.job_id || \"\" }}",
+            "video_url": "={{ $json.video_url || \"\" }}",
+            "drive_file_id": "={{ $json.drive_file_id || \"\" }}",
+            "drive_url": "={{ $json.drive_url || \"\" }}",
+            "quoted_credits": "={{ Number($json.quoted_credits || 0) }}",
+            "execution_id": "={{ $execution.id }}",
+            "last_error": "={{ $json.last_error || \"\" }}",
+            "updated_at": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "request_key",
+              "displayName": "request_key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflow_slug",
+              "displayName": "workflow_slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_id",
+              "displayName": "source_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "revision",
+              "displayName": "revision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "request_period",
+              "displayName": "request_period",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_hash",
+              "displayName": "input_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "input_json",
+              "displayName": "input_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "project_json",
+              "displayName": "project_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "brief_json",
+              "displayName": "brief_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "context_json",
+              "displayName": "context_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "delivery_filename",
+              "displayName": "delivery_filename",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "job_id",
+              "displayName": "job_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_file_id",
+              "displayName": "drive_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_url",
+              "displayName": "drive_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quoted_credits",
+              "displayName": "quoted_credits",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "execution_id",
+              "displayName": "execution_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_error",
+              "displayName": "last_error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "studio-51-submission-failure-report",
+      "name": "Submission failure report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6615,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const s=$input.first().json;return [{json:{status:s.status===\"rejected\"?\"rate_limit_rejected\":\"ambiguous_submission\",source_id:s.source_id,revision:s.revision,request_key:s.request_key,renderSubmitted:s.status===\"rejected\"?false:null,acceptedJobId:s.job_id||null,recovery:JSON.parse(s.last_error)}}];"
+      }
+    },
+    {
+      "id": "studio-51-domain-0",
+      "name": "Verify career source records",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1330,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const stage=function reviewSource(state) {\n  const r=state.request,now=Date.parse(state.config.nowISO||new Date().toISOString());\n  const fail=reason=>({...state,status:'review',reason});\n  if(!r||!/^[-a-zA-Z0-9_]{3,100}$/.test(String(r.source_id||''))||!/^[-a-zA-Z0-9_.]{1,40}$/.test(String(r.revision||'')))return fail('An immutable source_id and revision are required.');\n  if(r.approval!=='approved')return {...state,status:'skip',reason:'The editor or teacher has not approved this revision.'};\n  if(['cancelled','withdrawn'].includes(r.status))return {...state,status:'skip',reason:'The source request has been withdrawn.'};\n  if(!Number.isFinite(now)||!Number.isFinite(Date.parse(r.updated_at))||Date.parse(r.updated_at)>now)return fail('The source update date is missing, invalid or in the future.');\n  if(r.publish_at&&(!Number.isFinite(Date.parse(r.publish_at))||Date.parse(r.publish_at)>now))return {...state,status:'skip',reason:'The editorial slot is not due.'};\n  if(r.expires_at&&(!Number.isFinite(Date.parse(r.expires_at))||Date.parse(r.expires_at)<=now))return {...state,status:'skip',reason:'This lesson or editorial slot has expired.'};\n  if(!/^https:\\/\\//.test(String(r.source_url||'')))return fail('A source or teacher-approved reference URL is required.');\n  const rows=state.records.filter(x=>String(x.parent_id)===String(r.source_id)&&String(x.revision)===String(r.revision));\n  const keys=new Set();\n  for(const x of rows){if(!x.record_id||keys.has(x.record_id))return fail('Joined records need unique record_id values.');keys.add(x.record_id);}\n  const evidence=rows.filter(x=>x.kind==='evidence');\n  if(!evidence.length||evidence.some(x=>x.approval!=='approved'||!x.claim||!/^https:\\/\\//.test(String(x.url||''))))return fail('Every editorial source needs an approved claim and HTTPS evidence URL.');\n  const media=rows.filter(x=>x.kind==='media');\n  if(media.some(x=>x.approval!=='approved'||!x.rights||!/^https:\\/\\//.test(String(x.url||''))))return fail('Media rights and approval must be recorded for every supplied photograph or audio.');\n  if(state.history.some(x=>x.source_id===r.source_id&&x.revision===r.revision&&x.status==='delivered'))return {...state,status:'skip',reason:'This editorial revision has already been delivered.'};\n  return {...state,records:rows,status:'ready',reason:'',decision:{...state.decision,sourceCount:evidence.length,sourceUrls:evidence.map(x=>x.url),mediaCredits:media.map(x=>x.rights),editorialRevision:r.revision}};\n};return $input.all().map(item=>{const s=item.json;if(s.saved||[\"review\",\"skip\"].includes(s.status))return item;try{const result=stage(s);result.ready=result.status===\"ready\";return {json:result};}catch(e){return {json:{...s,status:\"review\",ready:false,reason:e.message}};}});"
+      }
+    },
+    {
+      "id": "studio-51-domain-1",
+      "name": "Reconcile loans and breakthrough statistics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1815,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const stage=function anonymous(state\n) {\n\n  if(state.status!=='ready')return state;\n  const r=state.request,rows=state.records,day=51;\n  const v={},proof={family:day};\n  const pick=kind=>rows.filter(x=>x.kind===kind).sort((a,b)=>Number(a.position||0)-Number(b.position||0));\n  const text=(value,label,max=180)=>{if(typeof value!=='string'||!value.trim()||value.length>max||/[<>]|\\{\\{/.test(value))throw Error(label+' must be plain text within '+max+' characters.');return value.trim();};\n  const num=(value,label,min=0,max=10000)=>{if(value===undefined||value===null||typeof value==='boolean'||(typeof value==='string'&&!value.trim())||!['number','string'].includes(typeof value))throw Error(label+' requires a number.');const n=Number(value);if(!Number.isFinite(n)||n<min||n>max)throw Error(label+' is out of range.');return n;};\n  const integer=(value,label,min=0,max=10000)=>{const n=num(value,label,min,max);if(!Number.isInteger(n))throw Error(label+' must be an integer.');return n;};\n  const exact=(xs,n,label)=>{if(xs.length!==n)throw Error(label+' requires exactly '+n+' source records.');return xs;};\n  const unique=(xs,field)=>{if(new Set(xs.map(x=>String(x[field]))).size!==xs.length)throw Error('Duplicate '+field+' values are ambiguous.');};\n  const upper=x=>text(x,'Display name',60).toUpperCase();\n  const optional=(key,max=180)=>{if(r[key]!==undefined&&String(r[key]).trim())v[key]=text(r[key],key,max);};\n  try {\n    if(day===51){\n      const loans=exact(pick('loan'),4,'Four-loan career story');unique(loans,'club');\n      const starts=loans.map(x=>integer(x.start_year,'Loan year',1850,2200)),ends=loans.map(x=>integer(x.end_year,'Loan end year',1850,2200));\n      if(starts.some((n,i)=>n>ends[i]||(i&&n<starts[i-1])))throw Error('Loan chronology is inconsistent.');\n      const season=exact(pick('season'),1,'Breakthrough season')[0];\n      const total=integer(season.all_goals,'All-competition goals'),league=integer(season.league_goals,'League goals');\n      if(league>total)throw Error('League goals cannot exceed all-competition goals.');\n      if(integer(r.breakthrough_year,'Breakthrough year',1850,2200)<Math.max(...ends))throw Error('Breakthrough must follow the loan sequence.');\n      Object.assign(v,{player:upper(r.player),loanYears:Math.min(...starts)+'–'+Math.max(...ends),breakoutYear:text(season.label,'Season',30),goals:String(total),leagueGoals:league+' IN THE PREMIER LEAGUE'});\n      loans.forEach((x,i)=>v['loanClub'+(i+1)]=upper(x.club));\n      for(const k of ['hook','startYear','startHeadline','startDetail','closing','credit'])optional(k,k==='credit'?600:180);\n      Object.assign(proof,{loans:loans.map(x=>({club:x.club,start:x.start_year,end:x.end_year})),allGoals:total,leagueGoals:league,otherCompetitionGoals:total-league});\n    } else if(day===52){\n      const goals=exact(pick('goal'),3,'Three-goal comeback');\n      let home=integer(r.half_home,'Half-time home goals',0,20),away=integer(r.half_away,'Half-time away goals',0,20);\n      if(home-away!==3)throw Error('This three-goal comeback family requires a three-goal half-time deficit.');\n      const minutes=goals.map(x=>integer(x.minute,'Goal minute',46,120));\n      if(minutes.some((n,i)=>i&&n<=minutes[i-1]))throw Error('Goal minutes must be strictly increasing.');\n      Object.assign(v,{teamOne:upper(r.team_one),teamTwo:upper(r.team_two),match:upper(r.team_one)+' vs '+upper(r.team_two),halfTime:home+' – '+away,hook:(minutes[2]-minutes[0])+' MINUTES.\\nTHREE GOALS.'});\n      const words=['One','Two','Three'];goals.forEach((x,i)=>{if(x.team!==r.team_two)throw Error('Every comeback goal must belong to the trailing team.');away++;v['minute'+words[i]]=minutes[i]+'′';v['player'+words[i]]=upper(x.player);v['moment'+words[i]]=text(x.description,'Goal description',100);v['score'+words[i]]=home+' – '+away;});\n      if(home!==away||Number(r.final_home)!==home||Number(r.final_away)!==away)throw Error('Final score and event-derived equalizer disagree.');\n      const ph=integer(r.shootout_home,'Shoot-out home score',0,20),pa=integer(r.shootout_away,'Shoot-out away score',0,20);if(pa<=ph)throw Error('The trailing team must be the verified shoot-out winner.');\n      Object.assign(v,{fullTime:home+' – '+away,shootoutScore:pa+' – '+ph,final:upper(r.team_two)+' WIN'});\n      for(const k of ['date','credit','finalDetail','halfTimeDetail'])optional(k,k==='credit'?600:180);\n      Object.assign(proof,{elapsedMinutes:minutes[2]-minutes[0],scoreProgression:goals.map((_,i)=>home+'-'+(Number(r.half_away)+i+1)),finalScore:[home,away],shootoutWinner:r.team_two});\n    } else if(day===53){\n      if(r.topic_id!=='merseyside-origins')throw Error('The approved location diagram is for the Merseyside origins family.');\n      const events=exact(pick('historical_event'),4,'Origins chronology');\n      const expected=['formed','anfield_move','goodison_move','liverpool_formed'];\n      if(events.some((x,i)=>x.event!==expected[i]))throw Error('Founding, shared ground, departure and successor club must be sourced separately.');\n      const years=events.map(x=>integer(x.year,'Event year',1800,2100));\n      if(years.some((x,i)=>i&&x<years[i-1])||years[2]!==years[3])throw Error('Origin chronology or shared split year is inconsistent.');\n      if(new Set(pick('evidence').map(x=>String(x.url).match(/^https:\\/\\/([^/]+)/)[1].toLowerCase())).size<2)throw Error('Both clubs must be represented by independent primary source domains.');\n      Object.assign(v,{originYear:String(years[0]),sharedYear:String(years[1]),splitYear:String(years[2])});\n      for(const k of ['hook','origin','sharedGround','split','newClub','closing','credit'])optional(k,k==='credit'?650:180);\n      Object.assign(proof,{chronology:events.map(x=>({event:x.event,year:x.year})),sharedGroundYears:years[2]-years[1],twoClubEvidence:true});\n    } else if(day===54){\n      if(r.pattern!=='third-man-return-pass')throw Error('This choreography supports the third-man return-pass family.');\n      const players=exact(pick('player'),3,'Three-player combination');unique(players,'number');\n      const phases=exact(pick('phase'),3,'Pass, set and run phases');\n      const [a,b,c]=players.map(x=>String(integer(x.number,'Shirt number',1,99)));\n      const expected=[[a,b],[b,a],[a,c]];\n      if(phases.some((x,i)=>String(x.from)!==expected[i][0]||String(x.to)!==expected[i][1]))throw Error('The pass graph must be A→B, B→A, A→C.');\n      const distance=Number(r.runner_end_x)-Number(r.runner_start_x);if(Number(r.runner_start_x)!==40||Number(r.runner_end_x)!==75)throw Error('This reviewed schematic uses the 40-to-75 forward channel. New coordinates require a matching diagram revision.');\n      Object.assign(v,{playerA:a,playerB:b,playerC:c,setup:'A defender steps toward '+b+'. A third player attacks the space behind.',pass:a+' finds '+b+' between the lines. Defender 4 steps toward the receiver.',layoff:b+' sets it back to '+a+'. The first passer can now face forward.',run:c+' attacks the vacated channel. '+a+' passes into the run.'});\n      optional('title',60);optional('lesson');\n      Object.assign(proof,{passGraph:expected,runnerAdvance:distance,geometry:'Approved schematic positions; not live match tracking.'});\n    } else if(day===55){\n      const clubs=exact(pick('standing'),4,'Title and survival analysis');unique(clubs,'role');\n      const by=Object.fromEntries(clubs.map(x=>[x.role,x]));for(const k of ['leader','chaser','safe','danger'])if(!by[k])throw Error('Missing '+k+' standing.');\n      if(clubs.some(x=>integer(x.remaining,'Remaining fixtures',0,38)!==1))throw Error('The approved layout compares one remaining match per club.');\n      const p=Object.fromEntries(clubs.map(x=>[x.role,integer(x.points,'Points',0,150)]));if(p.leader<p.chaser||p.safe<p.danger)throw Error('The supplied standings roles contradict their points.');\n      const verdict=(points,ceiling)=>points>ceiling?'GUARANTEED':points===ceiling?'TIE-BREAK POSSIBLE':'OTHER RESULT NEEDED';\n      Object.assign(v,{leader:upper(by.leader.club),chaser:upper(by.chaser.club),leaderPoints:String(p.leader),chaserPoints:String(p.chaser),chaserMax:String(p.chaser+3),winPoints:String(p.leader+3),drawPoints:String(p.leader+1),lossPoints:String(p.leader),safeClub:upper(by.safe.club),dangerClub:upper(by.danger.club),safePoints:String(p.safe),dangerPoints:String(p.danger),dangerMax:String(p.danger+3),safeWin:String(p.safe+3),safeDraw:String(p.safe+1),safeLoss:String(p.safe)});\n      const title=[3,1,0].map(delta=>verdict(p.leader+delta,p.chaser+3)),survival=[3,1,0].map(delta=>verdict(p.safe+delta,p.danger+3));\n      const gap=p.leader-p.chaser;\n      const lossText=gap===0?'RIVAL LOSS + TIE-BREAK NEEDED':gap===1?'RIVAL DRAW NEEDS TIE-BREAK':gap===2?'NEED '+upper(by.chaser.club)+' NOT TO WIN':gap===3?'RIVAL WIN NEEDS TIE-BREAK':'TITLE GUARANTEED';\n      v.winText='WIN → '+(title[0]==='GUARANTEED'?'TITLE GUARANTEED':title[0]);v.drawText='DRAW → '+title[1];v.lossText='LOSS → '+lossText;\n      v.survivalText=survival[0]==='GUARANTEED'?'A win puts '+text(by.safe.club,'Club',35)+\" beyond \"+text(by.danger.club,'Club',35)+\"'s maximum.\":'A win does not alone guarantee survival; check the other result and tie-break rules.';\n      const resultGrid=[3,1,0].flatMap(leaderDelta=>[3,1,0].map(chaserDelta=>({leaderDelta,chaserDelta,leaderPoints:p.leader+leaderDelta,chaserPoints:p.chaser+chaserDelta,result:p.leader+leaderDelta>p.chaser+chaserDelta?'leader ahead':p.leader+leaderDelta===p.chaser+chaserDelta?'tie-break required':'chaser ahead'})));\n      optional('league',100);optional('rules',180);Object.assign(proof,{points:p,titleVerdicts:title,survivalVerdicts:survival,resultGrid,scope:'Two specified title contenders and one specified survival boundary pair.',pointsSystem:{win:3,draw:1,loss:0},tieBreaks:'Equal points never imply a guaranteed position.'});\n    } else if(day===56){\n      const attempts=pick('assessment');if(!attempts.length)throw Error('Aggregate assessment counts are required to justify a targeted revision lesson.');\n      const total=attempts.reduce((s,x)=>s+integer(x.count,'Attempt count',0,100000),0);if(!total)throw Error('An empty assessment cohort has no misconception signal.');\n      const mistaken=attempts.filter(x=>x.error_type==='add_denominators').reduce((s,x)=>s+Number(x.count),0);\n      const threshold=num(r.minimum_error_rate,'Minimum error rate',0,1);if(mistaken/total<threshold)return {...state,status:'skip',reason:'Denominator-addition errors are below the teacher threshold.',decision:{...state.decision,totalAttempts:total,misconceptionRate:mistaken/total}};\n      // This worked-example family deliberately keeps its explanatory sixth strips.\n      const fractions=exact(pick('fraction_problem'),2,'Worked and transfer examples');\n      const expected=[[1,2,1,3],[1,4,1,2]];\n      if(fractions.some((x,i)=>['a','b','c','d'].some((key,j)=>Number(x[key])!==expected[i][j])))throw Error('This diagram family uses 1/2+1/3 and transfer 1/4+1/2. A different problem needs a matching diagram revision.');\n      const gcd=(a,b)=>{while(b){const t=b;b=a%b;a=t;}return a;};\n      const answers=fractions.map(x=>{const n=Number(x.a)*Number(x.d)+Number(x.c)*Number(x.b),d=Number(x.b)*Number(x.d),g=gcd(n,d);return n/g+'/'+d/g;});\n      Object.assign(v,{question:'1/2 + 1/3',wrongAnswer:'2/5',commonForm:'3/6 + 2/6',answer:answers[0],transfer:'1/4 + 1/2',transferAnswer:answers[1]});\n      optional('prompt',120);Object.assign(proof,{totalAttempts:total,misconceptionAttempts:mistaken,misconceptionRate:mistaken/total,answers,teacherThreshold:threshold});\n    } else if(day===57){\n      const clues=exact(pick('clue'),3,'Progressive-clue quiz');\n      const scores=clues.map(x=>num(x.specificity,'Clue specificity',0,100));if(scores.some((x,i)=>i&&x<=scores[i-1]))throw Error('Each clue must become more specific.');\n      const answer=upper(r.country);if(clues.some(x=>String(x.text).toUpperCase().includes(answer)))throw Error('A clue leaks the country answer before the reveal.');\n      const cooldown=integer(r.repeat_after_days,'Country repeat cooldown',1,365);\n      if(state.history.some(x=>(x.country_code||x.decision?.countryCode)===r.country_code&&x.status==='delivered'&&Date.parse(x.completed_at||x.updated_at)>Date.parse(state.config.nowISO)-cooldown*86400000))return {...state,status:'skip',reason:'This country is still inside the quiz rotation cooldown.'};\n      const shapes=exact(pick('map'),1,'Country outline')[0];\n      if(shapes.approval!=='approved'||!/^https:\\/\\/[^\\s/@<>]+(?:\\/[^\\s<>]*)?$/.test(String(shapes.url||'')))throw Error('Country outline requires approved map provenance with an HTTPS source URL.');\n      const mapRights=text(shapes.rights,'Map rights',300);\n      let polygons;try{polygons=JSON.parse(shapes.polygons_json);}catch{throw Error('Map coordinates must be a numeric polygon array.');}\n      if(!Array.isArray(polygons)||!polygons.length||polygons.length>25)throw Error('Country outline polygon count is invalid.');\n      let count=0;for(const polygon of polygons){if(!Array.isArray(polygon)||polygon.length<3)throw Error('Invalid country polygon.');for(const point of polygon){if(!Array.isArray(point)||point.length!==2)throw Error('Invalid map point.');num(point[0],'Map x',0,980);num(point[1],'Map y',0,900);if(++count>1500)throw Error('Map has too many points.');}}\n      const paths=polygons.map(poly=>'<path d=\"M'+poly.map(p=>p.map(n=>Number(n).toFixed(1)).join(',')).join(' L')+' Z\" fill=\"#e79d55\" stroke=\"#552e1b\" stroke-width=\"3\"/>').join('');\n      const marker='<circle cx=\"'+num(shapes.capital_x,'Capital x',0,980)+'\" cy=\"'+num(shapes.capital_y,'Capital y',0,900)+'\" r=\"18\" fill=\"#efede1\" stroke=\"#552e1b\" stroke-width=\"6\"/>';\n      Object.assign(v,{clueOne:text(clues[0].text,'Clue',120),clueTwo:text(clues[1].text,'Clue',120),clueThree:text(clues[2].text,'Clue',120),answer,location:upper(r.location),countryMap:'<svg width=\"980\" height=\"900\" viewBox=\"0 0 980 900\" xmlns=\"http://www.w3.org/2000/svg\">'+paths+'</svg>',markedMap:'<svg width=\"980\" height=\"900\" viewBox=\"0 0 980 900\" xmlns=\"http://www.w3.org/2000/svg\">'+paths+marker+'</svg>'});\n      optional('credit',500);Object.assign(proof,{countryCode:text(r.country_code,'Country code',3),clueSpecificity:scores,mapPoints:count,mapSourceUrl:shapes.url,mapRights,answerHiddenUntilReveal:true});\n    } else if(day===58){\n      const choices=exact(pick('choice'),3,'Listening answers');unique(choices,'label');\n      const correct=choices.filter(x=>x.correct===true||x.correct==='true');if(correct.length!==1)throw Error('Exactly one listening answer must be marked correct.');\n      const transcript=text(r.transcript,'Transcript',280),start=text(r.transcriptStart,'Opening transcript',140),turn=text(r.transcriptTurn,'Changed-plan transcript',140);\n      if((start+' '+turn).replace(/\\s+/g,' ')!==transcript.replace(/\\s+/g,' '))throw Error('Transcript segments must reproduce the reviewed recording exactly.');\n      if(!/but|instead|however/i.test(turn))throw Error('This challenge requires an explicit change-of-plan cue.');\n      Object.assign(v,{prompt:upper(r.prompt),firstChoice:upper(choices[0].label),secondChoice:upper(choices[1].label),thirdChoice:upper(choices[2].label),answer:upper(correct[0].label),transcriptStart:start,transcriptTurn:turn,explanation:text(r.explanation,'Explanation',180),closing:text(r.closing,'Closing',100)});\n      const signal=exact(pick('recording'),1,'Reviewed listening recording')[0];let bins;try{bins=JSON.parse(signal.rms_bins_json);}catch{throw Error('Measured RMS bins are required.');}\n      if(!Array.isArray(bins)||bins.length!==64||bins.some(x=>!Number.isFinite(Number(x))||Number(x)<0||Number(x)>1))throw Error('Waveform must have 64 measured normalized RMS bins.');\n      const seconds=num(signal.seconds,'Recording duration',1,5.5);if(signal.transcript!==transcript||signal.approval!=='approved'||!signal.rights||!/^https:\\/\\//.test(String(signal.url)))throw Error('Approved recording, rights and exact transcript do not match.');\n      v.audioUrl=signal.url;v.audioLabel=text(signal.voice_label,'Voice label',100);v.waveform='<svg width=\"1140\" height=\"180\" viewBox=\"0 0 1140 180\" xmlns=\"http://www.w3.org/2000/svg\">'+bins.map((value,i)=>{const h=Math.max(8,Number(value)*160);return '<rect x=\"'+(7+i*17.5)+'\" y=\"'+((180-h)/2).toFixed(1)+'\" width=\"10\" height=\"'+h.toFixed(1)+'\" rx=\"5\" fill=\"#44685f\"/>';}).join('')+'</svg>';\n      // Both plays must use the approved file's full duration. Keep the quiz\n      // scene boundaries unchanged, retaining at least half a second after each\n      // recording and the complete intervening answer-selection interval.\n      const project=JSON.parse(JSON.stringify(state.template)),playbackCues=[];\n      project.scenes.forEach((scene,sceneIndex)=>{for(const audio of scene.audios||[]){if(audio.src!=='{{audioUrl}}')continue;const enter=Number(audio.enter);if(!Number.isFinite(enter)||enter<0||enter+seconds>Number(scene.duration)-0.5)throw Error('Listening recording leaves too little time before the next scene.');audio.audioBegin=0;audio.audioEnd=seconds;audio.exit=Number((enter+seconds).toFixed(6));playbackCues.push({sceneIndex,enter,exit:audio.exit,audioBegin:0,audioEnd:seconds});}});\n      if(playbackCues.length!==2||playbackCues[0].sceneIndex!==0||playbackCues[1].sceneIndex!==2)throw Error('This listening design requires the two approved playback scenes.');\n      state.project=project;\n      Object.assign(proof,{transcript,recordingSeconds:seconds,correctChoice:correct[0].label,choiceCount:3,plays:2,playbackCues,answerRevealAtSeconds:project.scenes.slice(0,3).reduce((sum,x)=>sum+Number(x.duration),0)});\n    } else if(day===59){\n      if(r.concept!=='earth-seasons'||r.diagram_hemisphere!=='north')throw Error('This diagram family explains Earth seasons from the northern-hemisphere view.');\n      const votes=exact(pick('prediction'),2,'Prediction choices');unique(votes,'cause');const tilt=votes.find(x=>x.cause==='tilt'),distance=votes.find(x=>x.cause==='distance');if(!tilt||!distance)throw Error('Collect both tilt and distance predictions.');\n      const tiltCount=integer(tilt.count,'Tilt predictions',0,100000),distanceCount=integer(distance.count,'Distance predictions',0,100000),total=tiltCount+distanceCount;\n      if(total<integer(r.minimum_responses,'Minimum responses',1,100000))return {...state,status:'skip',reason:'Wait for enough learner predictions before generating the explanation.'};\n      const facts=exact(pick('science_fact'),2,'Mechanism evidence');\n      if(!facts.some(x=>x.fact==='axial_tilt'&&Math.abs(Number(x.value)-23.5)<0.1)||!facts.some(x=>x.fact==='hemispheres'&&x.value==='opposite'))throw Error('The source must verify 23.5-degree tilt and opposite hemisphere seasons.');\n      optional('question',80);optional('credit',500);\n      Object.assign(proof,{totalResponses:total,distanceMisconceptionRate:distanceCount/total,teachingFocus:distanceCount>tiltCount?'Correct the distance misconception':'Explain why the tilt mechanism works',mechanism:['sunlight angle','day length'],diagramNotToScale:true});\n    } else if(day===60){\n      const a=integer(r.rows,'Rows',2,10),b=integer(r.columns,'Columns',2,10),split=integer(r.split_rows,'Split rows',1,9);\n      if(a%2||split>=a)throw Error('Two methods require an even row count and a smaller positive split.');\n      const assessments=pick('mastery');if(!assessments.length)throw Error('Mastery observations are required to choose a useful model.');\n      const needed=assessments.some(x=>x.skill==='explain_multiplication'&&num(x.accuracy,'Accuracy',0,1)<num(r.mastery_threshold,'Mastery threshold',0,1));\n      if(!needed)return {...state,status:'skip',reason:'The cohort already meets the explanation mastery threshold.'};\n      const product=a*b,left=split*b,right=(a-split)*b,half=(a/2)*b;\n      const svg=mode=>{const gap=10,w=Math.min(88,(710-(b-1)*gap)/b),h=Math.min(56,(400-(a-1)*12)/a);let cells='';for(let y=0;y<a;y++)for(let x=0;x<b;x++){const color=mode==='split'&&y>=split?'#dd8b5b':mode==='double'&&y>=a/2?'#9369aa':'#468fa3';cells+='<rect class=\"cell\" x=\"'+(15+x*(w+gap)).toFixed(1)+'\" y=\"'+(12+y*(h+12)).toFixed(1)+'\" width=\"'+w.toFixed(1)+'\" height=\"'+h.toFixed(1)+'\" rx=\"9\" fill=\"'+color+'\" style=\"animation-delay:'+(y*.14+x*.05).toFixed(2)+'s\"/>';}return '<svg width=\"740\" height=\"450\" viewBox=\"0 0 740 450\" xmlns=\"http://www.w3.org/2000/svg\">'+cells+'</svg>';};\n      Object.assign(v,{problem:a+' × '+b,methodOne:'SPLIT '+a+' INTO '+split+' + '+(a-split),methodOneEquation:left+' + '+right+' = '+product,methodOneExplanation:split+' rows of '+b+',\\nplus '+(a-split)+' more '+(a-split===1?'row.':'rows.'),methodTwo:'DOUBLE '+(a/2)+' × '+b,methodTwoEquation:half+' + '+half+' = '+product,methodTwoExplanation:'Two equal groups.\\nSame total.',answer:String(product),arrayModel:svg('all'),decomposedModel:svg('split'),doubledModel:svg('double')});\n      Object.assign(proof,{rows:a,columns:b,product,distributive:[left,right],doubling:[half,half],cellsPerModel:a*b});\n    }\n    // A media register supplies approved replacement images rather than allowing\n    // arbitrary URL fields to leak into a finished project.\n    for(const row of pick('media'))if(Object.hasOwn(state.defaults,row.variable))v[row.variable]=row.url;\n    const trustedMarkupVariables=day===57?['countryMap','markedMap']:day===58?['waveform']:day===60?['arrayModel','decomposedModel','doubledModel']:[];\n    return {...state,variables:{...state.variables,...v},trustedMarkupVariables,decision:{...state.decision,...proof}};\n  }catch(error){return {...state,status:'review',reason:error.message};}\n\n};return $input.all().map(item=>{const s=item.json;if(s.saved||[\"review\",\"skip\"].includes(s.status))return item;try{const result=stage(s);result.ready=result.status===\"ready\";return {json:result};}catch(e){return {json:{...s,status:\"review\",ready:false,reason:e.message}};}});"
+      }
+    },
+    {
+      "id": "studio-51-domain-2",
+      "name": "Bind the approved career narration",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1815,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const stage=function anonymous(state\n) {\n\n  if(state.status!=='ready')return state;\n  // Pure SHA-256 permits identical fingerprinting in module-free n8n Code nodes.\n  function sha256(value){const bytes=unescape(encodeURIComponent(value)),words=[],K=[],H=[];let count=0;for(let candidate=2;count<64;candidate++){let prime=true;for(let divisor=2;divisor*divisor<=candidate;divisor++)if(candidate%divisor===0){prime=false;break;}if(prime){if(count<8)H[count]=(Math.sqrt(candidate)%1*4294967296)|0;K[count++]=(Math.cbrt(candidate)%1*4294967296)|0;}}for(let i=0;i<bytes.length;i++)words[i>>2]=(words[i>>2]||0)|bytes.charCodeAt(i)<<(24-(i%4)*8);words[bytes.length>>2]=(words[bytes.length>>2]||0)|128<<(24-(bytes.length%4)*8);words[(((bytes.length+8)>>6)+1)*16-1]=bytes.length*8;const rr=(x,n)=>(x>>>n)|(x<<(32-n));for(let offset=0;offset<words.length;offset+=16){const w=[],h=H.slice();for(let i=0;i<64;i++){if(i<16)w[i]=words[offset+i]|0;else{const a=w[i-15],b=w[i-2];w[i]=((rr(a,7)^rr(a,18)^(a>>>3))+w[i-16]+(rr(b,17)^rr(b,19)^(b>>>10))+w[i-7])|0;}const t1=(h[7]+(rr(h[4],6)^rr(h[4],11)^rr(h[4],25))+((h[4]&h[5])^(~h[4]&h[6]))+K[i]+w[i])|0,t2=((rr(h[0],2)^rr(h[0],13)^rr(h[0],22))+((h[0]&h[1])^(h[0]&h[2])^(h[1]&h[2])))|0;h.pop();h.unshift((t1+t2)|0);h[4]=(h[4]+t1)|0;}for(let i=0;i<8;i++)H[i]=(H[i]+h[i])|0;}return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('');}\n  const canonical=value=>{if(Array.isArray(value))return value.map(canonical);if(value&&typeof value==='object')return Object.fromEntries(Object.keys(value).sort().map(k=>[k,canonical(value[k])]));return value;};\n  const day=51,variables={...state.defaults,...state.variables};\n  const content=Object.fromEntries(Object.entries(variables).filter(([k])=>!/(?:AudioBegin|AudioEnd|narrationUrl|narrationSeconds)$/.test(k)));\n  const script=String(state.request.approved_script||'').trim();\n  const design=state.project||state.template;\n  const timeline=design.scenes.map(x=>Number(x.duration));\n  const designGeometry=sha256(JSON.stringify(design.scenes.map(({audios,...scene})=>scene)));\n  const binding={content:canonical(content),script,sceneSeconds:timeline,designGeometry};\n  if(day===58)binding.listeningAudio={url:variables.audioUrl,seconds:state.decision.recordingSeconds,cues:state.decision.playbackCues};\n  const fingerprint=sha256(JSON.stringify(binding));\n  const artifact={kind:'editorial-script',contentFingerprint:fingerprint,sourceId:state.request.source_id,revision:state.request.revision,script,sceneSeconds:timeline,variables:state.variables,proof:state.decision,requires:'An editor-approved recording, exact source revision and matching content fingerprint. Preserve the approved scene cues and intentional quiz pauses.'};\n  if(!script)return {...state,status:'review',reason:'An editor-approved narration script is required.',artifacts:[...state.artifacts,artifact]};\n  const recordings=state.records.filter(x=>x.kind==='narration');\n  const record=recordings.length===1?recordings[0]:null;\n  if(!record||record.approval!=='approved'||record.content_fingerprint!==fingerprint||record.script!==script||!/^https:\\/\\//.test(String(record.url||''))||!record.rights||record.cues_verified!==true&&record.cues_verified!=='true')return {...state,status:'review',reason:'Narration approval does not match this exact content and timeline. Review the script artifact and supply its matching recording.',artifacts:[...state.artifacts,artifact],decision:{...state.decision,contentFingerprint:fingerprint}};\n  const duration=Number(record.seconds),total=timeline.reduce((a,b)=>a+b,0);\n  if(!Number.isFinite(duration)||duration<=0||duration>total+1.5)return {...state,status:'review',reason:'The approved recording duration does not fit the scene timeline.',artifacts:[...state.artifacts,artifact]};\n  if(day===58&&(record.url!==variables.audioUrl||duration!==state.decision.recordingSeconds||script!==state.decision.transcript))return {...state,status:'review',reason:'Listening audio approval must match the exact played file, full duration and transcript.',artifacts:[...state.artifacts,artifact]};\n  if(day!==58)variables.narrationUrl=record.url;\n  if(Object.hasOwn(variables,'narrationSeconds'))variables.narrationSeconds=duration;\n  return {...state,variables,status:'ready',reason:'Approved source content, calculations and matched audio are ready.',decision:{...state.decision,contentFingerprint:fingerprint,narrationBound:true,narrationSeconds:duration},artifacts:[...state.artifacts,artifact]};\n\n};return $input.all().map(item=>{const s=item.json;if(s.saved||[\"review\",\"skip\"].includes(s.status))return item;try{const result=stage(s);result.ready=result.status===\"ready\";return {json:result};}catch(e){return {json:{...s,status:\"review\",ready:false,reason:e.message}};}});"
+      }
+    },
+    {
+      "id": "studio-51-decision-file",
+      "name": "Decision report file",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        10410,
+        585
+      ],
+      "parameters": {
+        "jsCode": "const value=$input.first().json;const file=await this.helpers.prepareBinaryData(Buffer.from(JSON.stringify(value,null,2)),\"decision-\"+value.source_id+\"-\"+value.revision+\".json\",\"application/json\");return [{json:value,binary:{report:file}}];"
+      }
+    },
+    {
+      "id": "studio-51-section-0",
+      "name": "1. Configure the source and recovery ledger",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 1170,
+        "height": 930,
+        "content": "## 1. Configure the source and recovery ledger\nRead approved request rows, related records and saved outcomes. One request is rendered per execution; run each workflow serially."
+      }
+    },
+    {
+      "id": "studio-51-section-1",
+      "name": "2. Verify career source records",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1265,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 390,
+        "height": 930,
+        "content": "## 2. Verify career source records\nFootball editors need sourced career stories without mixing statistics from different seasons."
+      }
+    },
+    {
+      "id": "studio-51-section-2",
+      "name": "3. Reconcile loans and breakthrough statistics",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1750,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 910,
+        "height": 930,
+        "content": "## 3. Reconcile loans and breakthrough statistics\nPrivate career video, fact trail, competition-total reconciliation and an approved narration handoff."
+      }
+    },
+    {
+      "id": "studio-51-section-3",
+      "name": "4. Freeze the decision and recover paid work",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2755,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 1170,
+        "height": 930,
+        "content": "## 4. Freeze the decision and recover paid work\nFreeze the business decision and finished design. Recover accepted jobs and completed deliveries. Changed revisions and unknown paid outcomes require reconciliation."
+      }
+    },
+    {
+      "id": "studio-51-section-4",
+      "name": "5. Validate the designed video and credit ceiling",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4020,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 650,
+        "height": 930,
+        "content": "## 5. Validate the designed video and credit ceiling\nNative Zvid validation checks the project and quote. Preview returns resolved JSON and the quote without rendering or writing tracking rows."
+      }
+    },
+    {
+      "id": "studio-51-section-5",
+      "name": "6. Submit once and retain the accepted job",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4765,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 1430,
+        "height": 930,
+        "content": "## 6. Submit once and retain the accepted job\nPersist intent before the paid request. Uncertain outcomes stop. Explicit HTTP 429 rejections allow at most two manual retries after cooldown. Save accepted jobs and completed media for recovery."
+      }
+    },
+    {
+      "id": "studio-51-section-6",
+      "name": "7. Retain rejected or uncertain submissions",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6290,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 650,
+        "height": 930,
+        "content": "## 7. Retain rejected or uncertain submissions\nCapture only structured HTTP evidence. A definite 429 stores a minimum 30-second cooldown and bounded manual retry count. Unknown failures remain ambiguous; inspect the saved job before retrying."
+      }
+    },
+    {
+      "id": "studio-51-section-7",
+      "name": "8. Deliver the video privately",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        7035,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 1430,
+        "height": 930,
+        "content": "## 8. Deliver the video privately\nCheck deterministic filenames and content hashes before uploading. Preserve completed video URLs when download or delivery fails. No public-sharing action is configured."
+      }
+    },
+    {
+      "id": "studio-51-section-8",
+      "name": "9. Verify the source and record the handoff",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        8560,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 1690,
+        "height": 930,
+        "content": "## 9. Verify the source and record the handoff\nRecheck approval, revision and content before writing output columns. Read the receipt back before marking the delivery complete."
+      }
+    },
+    {
+      "id": "studio-51-section-9",
+      "name": "10. Review the decision report and video",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        10345,
+        0
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 650,
+        "height": 930,
+        "content": "## 10. Review the decision report and video\nThe output includes business decisions and review artifacts as downloadable JSON. Watch video → Binary → data → View plays completed media; failed previews retain the delivered video URL."
+      }
+    },
+    {
+      "id": "studio-51-overview",
+      "name": "Overview — day 51",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -760,
+        0
+      ],
+      "parameters": {
+        "color": 1,
+        "width": 660,
+        "height": 1180,
+        "content": "## Turn verified player milestones into a career story\n\n### How it works\nFootball editors need sourced career stories without mixing statistics from different seasons. Private career video, fact trail, competition-total reconciliation and an approved narration handoff. Three named domain stages qualify the source, calculate the business decision and prepare the approved design. The output includes a private video, decision report and a verified source receipt. Saved snapshots recover accepted jobs without paying for a duplicate. Review cases return reasons and draft artifacts.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before Zvid credentials. A workspace owner/admin may need to install it.\n2. Create **Zvid API** credentials at https://app.zvid.io/api-keys, Base URL `https://api.zvid.io`; assign them to all Zvid nodes. Connect Google Sheets and Google Drive OAuth2.\n3. Configure the workbook, Requests/Records tabs and private Drive folder in **Config**. Requests require source_id, revision, approval and brief_json; Records require parent_id, revision, kind, record_id and data_json. Use the companion `studio-football-career-turning-point.md` and sample JSON.\n4. **dryRun: false renders and spends credits** within maxRenderCredits. True returns validated JSON and a quote, not an editor draft. Run serially; reconcile ambiguous submissions.\n5. Inspect **Decision report file** and **Watch video → Binary → data → View** before enabling the schedule.\n\n[Zvid setup reference](https://docs.zvid.io). Support: https://zvid.io/contact"
+      }
+    }
+  ],
+  "connections": {
+    "Test manually": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Check source configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check source configuration": {
+      "main": [
+        [
+          {
+            "node": "Ensure publication ledger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ensure publication ledger": {
+      "main": [
+        [
+          {
+            "node": "Read saved requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read saved requests": {
+      "main": [
+        [
+          {
+            "node": "Read source register",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read source register": {
+      "main": [
+        [
+          {
+            "node": "Read related records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read related records": {
+      "main": [
+        [
+          {
+            "node": "Join approved request data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fingerprint approved content": {
+      "main": [
+        [
+          {
+            "node": "Choose one pending revision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Choose one pending revision": {
+      "main": [
+        [
+          {
+            "node": "Eligible work found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check register hourly": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eligible work found?": {
+      "main": [
+        [
+          {
+            "node": "Prepare durable request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No work report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare durable request": {
+      "main": [
+        [
+          {
+            "node": "Look up saved request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Look up saved request": {
+      "main": [
+        [
+          {
+            "node": "Decide recovery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decide recovery": {
+      "main": [
+        [
+          {
+            "node": "Inspect saved request only?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inspect saved request only?": {
+      "main": [
+        [
+          {
+            "node": "Saved request inspection",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Completed media saved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completed media saved?": {
+      "main": [
+        [
+          {
+            "node": "Delivery context",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Accepted job saved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accepted job saved?": {
+      "main": [
+        [
+          {
+            "node": "Poll saved job context",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validate project (free)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate project (free)": {
+      "main": [
+        [
+          {
+            "node": "Check validation and credit cap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check validation and credit cap": {
+      "main": [
+        [
+          {
+            "node": "Dry run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dry run?": {
+      "main": [
+        [
+          {
+            "node": "Draft and credit quote",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark submission pending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark submission pending": {
+      "main": [
+        [
+          {
+            "node": "Persist submission intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist submission intent": {
+      "main": [
+        [
+          {
+            "node": "Submit render once",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit render once": {
+      "main": [
+        [
+          {
+            "node": "Capture accepted job",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Classify submission failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capture accepted job": {
+      "main": [
+        [
+          {
+            "node": "Persist accepted job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist accepted job": {
+      "main": [
+        [
+          {
+            "node": "Poll saved job context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Poll saved job context": {
+      "main": [
+        [
+          {
+            "node": "Wait for completed render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for completed render": {
+      "main": [
+        [
+          {
+            "node": "Video result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video result": {
+      "main": [
+        [
+          {
+            "node": "Persist completed media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist completed media": {
+      "main": [
+        [
+          {
+            "node": "Delivery context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delivery context": {
+      "main": [
+        [
+          {
+            "node": "Find existing delivery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find existing delivery": {
+      "main": [
+        [
+          {
+            "node": "Reconcile delivery file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reconcile delivery file": {
+      "main": [
+        [
+          {
+            "node": "Delivery file exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delivery file exists?": {
+      "main": [
+        [
+          {
+            "node": "Remember delivery",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download delivery media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download delivery media": {
+      "main": [
+        [
+          {
+            "node": "Check downloaded media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check downloaded media": {
+      "main": [
+        [
+          {
+            "node": "Upload private review video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload private review video": {
+      "main": [
+        [
+          {
+            "node": "Remember delivery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remember delivery": {
+      "main": [
+        [
+          {
+            "node": "Persist delivery file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist delivery file": {
+      "main": [
+        [
+          {
+            "node": "Recheck source revision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recheck source revision": {
+      "main": [
+        [
+          {
+            "node": "Recheck related content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recheck related content": {
+      "main": [
+        [
+          {
+            "node": "Prepare writeback check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare writeback check": {
+      "main": [
+        [
+          {
+            "node": "Fingerprint source before writeback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fingerprint source before writeback": {
+      "main": [
+        [
+          {
+            "node": "Protect source writeback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Protect source writeback": {
+      "main": [
+        [
+          {
+            "node": "Update business register",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update business register": {
+      "main": [
+        [
+          {
+            "node": "Read back delivery receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read back delivery receipt": {
+      "main": [
+        [
+          {
+            "node": "Read related receipt content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read related receipt content": {
+      "main": [
+        [
+          {
+            "node": "Prepare receipt check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare receipt check": {
+      "main": [
+        [
+          {
+            "node": "Fingerprint delivery receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fingerprint delivery receipt": {
+      "main": [
+        [
+          {
+            "node": "Mark delivered",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark delivered": {
+      "main": [
+        [
+          {
+            "node": "Persist delivered outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist delivered outcome": {
+      "main": [
+        [
+          {
+            "node": "Business outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Business outcome": {
+      "main": [
+        [
+          {
+            "node": "Decision report file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completed video available?": {
+      "main": [
+        [
+          {
+            "node": "Watch video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Join approved request data": {
+      "main": [
+        [
+          {
+            "node": "Verify career source records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify submission failure": {
+      "main": [
+        [
+          {
+            "node": "Persist submission failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist submission failure": {
+      "main": [
+        [
+          {
+            "node": "Submission failure report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify career source records": {
+      "main": [
+        [
+          {
+            "node": "Reconcile loans and breakthrough statistics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reconcile loans and breakthrough statistics": {
+      "main": [
+        [
+          {
+            "node": "Bind the approved career narration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bind the approved career narration": {
+      "main": [
+        [
+          {
+            "node": "Fingerprint approved content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decision report file": {
+      "main": [
+        [
+          {
+            "node": "Completed video available?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "executionTimeout": 1500,
+    "timezone": "Africa/Cairo"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "seriesTwo": {
+      "day": 51,
+      "slug": "studio-football-career-turning-point",
+      "groups": [
+        {
+          "note": "1. Configure the source and recovery ledger",
+          "nodes": [
+            "Test manually",
+            "Check register hourly",
+            "Config",
+            "Check source configuration",
+            "Ensure publication ledger",
+            "Read saved requests",
+            "Read source register",
+            "Read related records"
+          ]
+        },
+        {
+          "note": "2. Verify career source records",
+          "nodes": [
+            "Join approved request data",
+            "Verify career source records"
+          ]
+        },
+        {
+          "note": "3. Reconcile loans and breakthrough statistics",
+          "nodes": [
+            "Reconcile loans and breakthrough statistics",
+            "Bind the approved career narration",
+            "Fingerprint approved content",
+            "Choose one pending revision",
+            "Eligible work found?",
+            "No work report"
+          ]
+        },
+        {
+          "note": "4. Freeze the decision and recover paid work",
+          "nodes": [
+            "Prepare durable request",
+            "Look up saved request",
+            "Decide recovery",
+            "Inspect saved request only?",
+            "Saved request inspection",
+            "Completed media saved?",
+            "Accepted job saved?"
+          ]
+        },
+        {
+          "note": "5. Validate the designed video and credit ceiling",
+          "nodes": [
+            "Validate project (free)",
+            "Check validation and credit cap",
+            "Dry run?",
+            "Draft and credit quote"
+          ]
+        },
+        {
+          "note": "6. Submit once and retain the accepted job",
+          "nodes": [
+            "Mark submission pending",
+            "Persist submission intent",
+            "Submit render once",
+            "Capture accepted job",
+            "Persist accepted job",
+            "Poll saved job context",
+            "Wait for completed render",
+            "Video result",
+            "Persist completed media"
+          ]
+        },
+        {
+          "note": "7. Retain rejected or uncertain submissions",
+          "nodes": [
+            "Classify submission failure",
+            "Persist submission failure",
+            "Submission failure report"
+          ]
+        },
+        {
+          "note": "8. Deliver the video privately",
+          "nodes": [
+            "Delivery context",
+            "Find existing delivery",
+            "Reconcile delivery file",
+            "Delivery file exists?",
+            "Download delivery media",
+            "Check downloaded media",
+            "Upload private review video",
+            "Remember delivery",
+            "Persist delivery file"
+          ]
+        },
+        {
+          "note": "9. Verify the source and record the handoff",
+          "nodes": [
+            "Recheck source revision",
+            "Recheck related content",
+            "Prepare writeback check",
+            "Fingerprint source before writeback",
+            "Protect source writeback",
+            "Update business register",
+            "Read back delivery receipt",
+            "Read related receipt content",
+            "Prepare receipt check",
+            "Fingerprint delivery receipt",
+            "Mark delivered",
+            "Persist delivered outcome"
+          ]
+        },
+        {
+          "note": "10. Review the decision report and video",
+          "nodes": [
+            "Business outcome",
+            "Decision report file",
+            "Completed video available?",
+            "Watch video"
+          ]
+        }
+      ]
+    },
+    "studioSeries": {
+      "designHash": "b0f7b647ac7271411b01073db6f98a8f04bed6eb72389c882092d358b83a40ad",
+      "domainStages": [
+        "Verify career source records",
+        "Reconcile loans and breakthrough statistics",
+        "Bind the approved career narration"
+      ]
+    }
+  }
+}

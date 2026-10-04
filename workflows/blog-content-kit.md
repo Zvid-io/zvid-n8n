@@ -118,7 +118,7 @@ Everything lives in the `Config` node.
 | `musicVolume` | `0.16` | The bed sits low by design. 0–1. |
 | `maxMusicBytes` | `5242880` | *Check music* HEADs `musicUrl` first; anything unreachable or larger than this is dropped and the videos render without music rather than failing. |
 | `dryRun` | `false` | `false` (default) renders all three pieces for real. `true` gives a free pass: validate, quote credits per piece plus `kitCreditsTotal`, and save each as a draft with an `editorLink`. |
-| `pollSeconds` / `timeoutMinutes` | `10` / `20` | Render poll loop. All three jobs are polled together. |
+| `pollSeconds` / `timeoutMinutes` | `10` / `20` | Poll interval and per-piece timeout. Pieces render one at a time; capacity retries have their own deadline. |
 
 ## Cost per video
 
@@ -157,11 +157,12 @@ its cost. Set `dryRun: true` to see the quote *without* the render.
 | **Dry run?** | Routes on `Config.dryRun`. It is `false` by default, so the normal path goes straight to *Submit render*. |
 | **Save draft to editor** | **Only when `dryRun: true`.** Saves each piece as a free draft and returns its `editorLink`. Best-effort — a hiccup here never hides the dry-run report. |
 | **Dry run summary** | **Only when `dryRun: true`.** One item per piece with its quote, dimensions, `editorLink` and `kitCreditsTotal`. Nothing is spent and the feed position is not advanced. |
-| **Submit render** | Three paid render submissions, one per piece. |
+| **Render one asset at a time / Prepare render attempt / Submit render** | Render one piece at a time, waiting for completion before submitting the next. The OG image uses the image operation. Accepted jobs are never automatically resubmitted. |
+| **Check submission rejection / Wait for render capacity** | Retry only explicit HTTP 429 rejections after at least 30 seconds (honoring a longer server retry delay), bounded by `timeoutMinutes`. Other submission failures stop for inspection because the request may already have created a job. |
 | **Attach job to piece** | The render response replaces the item, so this glues each `jobId` back onto the piece it belongs to. |
-| **Wait / Get render status / Merge job status** | One poll loop for all three jobs. *Merge job status* re-pairs each status response with the piece that entered the lap. |
-| **Render finished?** | Finished pieces leave the loop immediately and flow to *Run summary* — which therefore **runs more than once in a single execution**, once per batch of pieces that completed together. Each batch still reports the whole kit's `kitCreditsTotal`. |
-| **Still rendering?** | Throws with the piece's name and `failedReason` on a failed render, and stops the loop at `timeoutMinutes` (counted with `$runIndex`). |
+| **Wait / Get render status / Merge job status** | Poll the current accepted job and carry its original piece metadata with every status response. |
+| **Render finished?** | Return the completed piece to the batch loop. Once every piece completes, all results flow to *Run summary* together. |
+| **Still rendering?** | Stop on a failed job or when that job's elapsed render time reaches `timeoutMinutes`. A timed-out job may still finish; check the Zvid dashboard before retrying. |
 | **Run summary** | One item per finished piece: `kind`, `label`, `dimensions`, `format`, `seconds`, `videoUrl`, `creditsCharged`, `kitCreditsTotal`, `piece` ("2 of 3"), the post title and link. Advances the feed marker only after the last piece. |
 | **▶ Watch video** | Downloads each finished asset as binary so n8n renders it inline by mime type — the two MP4s become players, the PNG shows as a picture, each with a download button. Retries a few times (the CDN can 404 for a moment right after a render completes) and then continues regardless. |
 

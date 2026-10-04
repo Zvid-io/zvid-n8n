@@ -1,0 +1,19 @@
+✔ all real phases are independently required and automatic evidence stays unconfirmed (13.5498ms)
+✔ D38 records a real empty related tab without inventing a child join (1.9869ms)
+✔ D50 requires the corrected r2 delivery and never reuses r1 as current render proof (1.4488ms)
+✔ D31 current accepted recovery proves the frozen job without rebadging its older submission (1.0794ms)
+✔ different canonical hashes, failed runs and partial-node executions cannot supply roles (1.363ms)
+✔ final source receipt must agree with its complete frozen ledger identity (1.299ms)
+✔ media bytes bind the actual original job, request hash and Drive file across replays (0.6248ms)
+✔ uploaded retry cannot stand in for accepted resume and the accepted job must match frozen content (0.8625ms)
+✔ duplicate source and ledger rows or mismatching Drive metadata do not become dedup evidence (2.1222ms)
+✔ native source approval, required related rows, policy validation and private upload are material (1.2413ms)
+✔ binary and exact-file artifact hashes match independent byte validators (17.5467ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 173.4536

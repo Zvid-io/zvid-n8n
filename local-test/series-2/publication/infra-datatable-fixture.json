@@ -1,0 +1,841 @@
+[
+  {
+    "id": "ZvidSeries2PublicationDataTableQA",
+    "name": "QA verify publication durable state locally",
+    "active": false,
+    "nodes": [
+      {
+        "id": "infra-datatable-1",
+        "name": "Test infrastructure manually",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          250
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "infra-datatable-2",
+        "name": "Ensure isolated QA ledger",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          250,
+          250
+        ],
+        "parameters": {
+          "resource": "table",
+          "operation": "create",
+          "tableName": "Zvid publication infrastructure QA ledger",
+          "columns": {
+            "column": [
+              {
+                "name": "request_key",
+                "type": "string"
+              },
+              {
+                "name": "workflow_slug",
+                "type": "string"
+              },
+              {
+                "name": "source_id",
+                "type": "string"
+              },
+              {
+                "name": "revision",
+                "type": "string"
+              },
+              {
+                "name": "request_period",
+                "type": "string"
+              },
+              {
+                "name": "input_hash",
+                "type": "string"
+              },
+              {
+                "name": "input_json",
+                "type": "string"
+              },
+              {
+                "name": "project_json",
+                "type": "string"
+              },
+              {
+                "name": "brief_json",
+                "type": "string"
+              },
+              {
+                "name": "context_json",
+                "type": "string"
+              },
+              {
+                "name": "delivery_filename",
+                "type": "string"
+              },
+              {
+                "name": "status",
+                "type": "string"
+              },
+              {
+                "name": "job_id",
+                "type": "string"
+              },
+              {
+                "name": "video_url",
+                "type": "string"
+              },
+              {
+                "name": "drive_file_id",
+                "type": "string"
+              },
+              {
+                "name": "drive_url",
+                "type": "string"
+              },
+              {
+                "name": "quoted_credits",
+                "type": "number"
+              },
+              {
+                "name": "execution_id",
+                "type": "string"
+              },
+              {
+                "name": "last_error",
+                "type": "string"
+              },
+              {
+                "name": "updated_at",
+                "type": "date"
+              }
+            ]
+          },
+          "options": {
+            "createIfNotExists": true
+          }
+        }
+      },
+      {
+        "id": "infra-datatable-3",
+        "name": "Look up absent request",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          500,
+          250
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $(\"Ensure isolated QA ledger\").first().json.id }}"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "request_key",
+                "condition": "eq",
+                "keyValue": "infra-never-inserted-request"
+              }
+            ]
+          },
+          "returnAll": false,
+          "limit": 2
+        },
+        "alwaysOutputData": true
+      },
+      {
+        "id": "infra-datatable-4",
+        "name": "Verify empty lookup",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          750,
+          250
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const rows=$input.all().filter(i=>i.json.request_key);if(rows.length)throw new Error('The isolated absent lookup unexpectedly found a row.');return [{json:{emptyLookupPassed:true}}];"
+        }
+      },
+      {
+        "id": "infra-datatable-5",
+        "name": "Prepare QA row",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1000,
+          250
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const row={\"request_key\":\"\",\"workflow_slug\":\"\",\"source_id\":\"\",\"revision\":\"\",\"request_period\":\"\",\"input_hash\":\"\",\"input_json\":\"\",\"project_json\":\"\",\"brief_json\":\"\",\"context_json\":\"\",\"delivery_filename\":\"\",\"status\":\"\",\"job_id\":\"\",\"video_url\":\"\",\"drive_file_id\":\"\",\"drive_url\":\"\",\"quoted_credits\":0,\"execution_id\":\"\",\"last_error\":\"\",\"updated_at\":\"\"};Object.assign(row,{request_key:'infra-qa-recovery-v1',workflow_slug:'isolated-infrastructure-qa',source_id:'qa-only-record',revision:'r1',request_period:'qa-single-revision',input_hash:'local-only-infrastructure-hash',input_json:JSON.stringify({synthetic:true}),project_json:'{}',brief_json:'{}',context_json:'{}',delivery_filename:'infrastructure-qa.mp4',status:'accepted',job_id:'not-a-real-render-job',execution_id:String($execution.id),updated_at:new Date().toISOString()});return [{json:row}];"
+        }
+      },
+      {
+        "id": "infra-datatable-6",
+        "name": "Persist accepted state",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          1250,
+          250
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "upsert",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $(\"Ensure isolated QA ledger\").first().json.id }}"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "request_key",
+                "condition": "eq",
+                "keyValue": "={{ $json.request_key }}"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "request_key": "={{ $json.request_key }}",
+              "workflow_slug": "={{ $json.workflow_slug }}",
+              "source_id": "={{ $json.source_id }}",
+              "revision": "={{ $json.revision }}",
+              "request_period": "={{ $json.request_period }}",
+              "input_hash": "={{ $json.input_hash }}",
+              "input_json": "={{ $json.input_json }}",
+              "project_json": "={{ $json.project_json }}",
+              "brief_json": "={{ $json.brief_json }}",
+              "context_json": "={{ $json.context_json }}",
+              "delivery_filename": "={{ $json.delivery_filename }}",
+              "status": "={{ $json.status }}",
+              "job_id": "={{ $json.job_id }}",
+              "video_url": "={{ $json.video_url }}",
+              "drive_file_id": "={{ $json.drive_file_id }}",
+              "drive_url": "={{ $json.drive_url }}",
+              "quoted_credits": "={{ $json.quoted_credits }}",
+              "execution_id": "={{ $json.execution_id }}",
+              "last_error": "={{ $json.last_error }}",
+              "updated_at": "={{ $json.updated_at }}"
+            },
+            "schema": [
+              {
+                "id": "request_key",
+                "displayName": "request_key",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "workflow_slug",
+                "displayName": "workflow_slug",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "source_id",
+                "displayName": "source_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "revision",
+                "displayName": "revision",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "request_period",
+                "displayName": "request_period",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "input_hash",
+                "displayName": "input_hash",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "input_json",
+                "displayName": "input_json",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "project_json",
+                "displayName": "project_json",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "brief_json",
+                "displayName": "brief_json",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "context_json",
+                "displayName": "context_json",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "delivery_filename",
+                "displayName": "delivery_filename",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "status",
+                "displayName": "status",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "job_id",
+                "displayName": "job_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "video_url",
+                "displayName": "video_url",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "drive_file_id",
+                "displayName": "drive_file_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "drive_url",
+                "displayName": "drive_url",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "quoted_credits",
+                "displayName": "quoted_credits",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "execution_id",
+                "displayName": "execution_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "last_error",
+                "displayName": "last_error",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "updated_at",
+                "displayName": "updated_at",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              }
+            ]
+          },
+          "options": {
+            "dryRun": false
+          }
+        }
+      },
+      {
+        "id": "infra-datatable-7",
+        "name": "Advance saved state",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1500,
+          250
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const row=$input.first().json;return [{json:{...row,status:'completed',last_error:'',updated_at:new Date().toISOString()}}];"
+        }
+      },
+      {
+        "id": "infra-datatable-8",
+        "name": "Update the same request",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          1750,
+          250
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "upsert",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $(\"Ensure isolated QA ledger\").first().json.id }}"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "request_key",
+                "condition": "eq",
+                "keyValue": "={{ $json.request_key }}"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "request_key": "={{ $json.request_key }}",
+              "workflow_slug": "={{ $json.workflow_slug }}",
+              "source_id": "={{ $json.source_id }}",
+              "revision": "={{ $json.revision }}",
+              "request_period": "={{ $json.request_period }}",
+              "input_hash": "={{ $json.input_hash }}",
+              "input_json": "={{ $json.input_json }}",
+              "project_json": "={{ $json.project_json }}",
+              "brief_json": "={{ $json.brief_json }}",
+              "context_json": "={{ $json.context_json }}",
+              "delivery_filename": "={{ $json.delivery_filename }}",
+              "status": "={{ $json.status }}",
+              "job_id": "={{ $json.job_id }}",
+              "video_url": "={{ $json.video_url }}",
+              "drive_file_id": "={{ $json.drive_file_id }}",
+              "drive_url": "={{ $json.drive_url }}",
+              "quoted_credits": "={{ $json.quoted_credits }}",
+              "execution_id": "={{ $json.execution_id }}",
+              "last_error": "={{ $json.last_error }}",
+              "updated_at": "={{ $json.updated_at }}"
+            },
+            "schema": [
+              {
+                "id": "request_key",
+                "displayName": "request_key",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "workflow_slug",
+                "displayName": "workflow_slug",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "source_id",
+                "displayName": "source_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "revision",
+                "displayName": "revision",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "request_period",
+                "displayName": "request_period",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "input_hash",
+                "displayName": "input_hash",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "input_json",
+                "displayName": "input_json",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "project_json",
+                "displayName": "project_json",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "brief_json",
+                "displayName": "brief_json",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "context_json",
+                "displayName": "context_json",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "delivery_filename",
+                "displayName": "delivery_filename",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "status",
+                "displayName": "status",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "job_id",
+                "displayName": "job_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "video_url",
+                "displayName": "video_url",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "drive_file_id",
+                "displayName": "drive_file_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "drive_url",
+                "displayName": "drive_url",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "quoted_credits",
+                "displayName": "quoted_credits",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "execution_id",
+                "displayName": "execution_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "last_error",
+                "displayName": "last_error",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "updated_at",
+                "displayName": "updated_at",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              }
+            ]
+          },
+          "options": {
+            "dryRun": false
+          }
+        }
+      },
+      {
+        "id": "infra-datatable-9",
+        "name": "Read persisted state",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          2000,
+          250
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $(\"Ensure isolated QA ledger\").first().json.id }}"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "request_key",
+                "condition": "eq",
+                "keyValue": "infra-qa-recovery-v1"
+              }
+            ]
+          },
+          "returnAll": false,
+          "limit": 2
+        },
+        "alwaysOutputData": true
+      },
+      {
+        "id": "infra-datatable-10",
+        "name": "Verify infrastructure evidence",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2250,
+          250
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const rows=$input.all().map(i=>i.json).filter(r=>r.request_key);if(rows.length!==1)throw new Error('Upsert must leave exactly one persisted request.');const row=rows[0];if(row.status!=='completed'||row.job_id!=='not-a-real-render-job'||row.quoted_credits!==0||typeof row.updated_at!=='string'||!Number.isFinite(Date.parse(row.updated_at)))throw new Error('Typed state recovery failed.');if(JSON.parse(row.input_json).synthetic!==true)throw new Error('Frozen input was not retained.');return [{json:{resource:'isolated_local_datatable_qa',dataTableId:$(\"Ensure isolated QA ledger\").first().json.id,rowId:row.id,requestKey:row.request_key,rowCount:rows.length,status:row.status,emptyLookupPassed:$(\"Verify empty lookup\").first().json.emptyLookupPassed,typedCreditsPassed:row.quoted_credits===0,dateSerializationPassed:true,storedJsonPassed:true,paidNodesExecuted:[]}}];"
+        }
+      },
+      {
+        "id": "infra-datatable-note",
+        "name": "Local persistence QA instructions",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          -100
+        ],
+        "parameters": {
+          "color": 5,
+          "width": 1000,
+          "height": 300,
+          "content": "### Local durable-state QA\n\nThis isolated fixture tests native Data Table create, empty lookup, insert/update through upsert, typed columns, and frozen JSON recovery. It creates or reuses one QA table and one synthetic state row. No Google services, paid render, or sharing node is present.\n\nRun manually. Success means one row remains after both state saves, with the accepted synthetic ID retained and an ISO date returned. The synthetic ID must never be used as a real render job."
+        }
+      }
+    ],
+    "connections": {
+      "Test infrastructure manually": {
+        "main": [
+          [
+            {
+              "node": "Ensure isolated QA ledger",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Ensure isolated QA ledger": {
+        "main": [
+          [
+            {
+              "node": "Look up absent request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Look up absent request": {
+        "main": [
+          [
+            {
+              "node": "Verify empty lookup",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Verify empty lookup": {
+        "main": [
+          [
+            {
+              "node": "Prepare QA row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare QA row": {
+        "main": [
+          [
+            {
+              "node": "Persist accepted state",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Persist accepted state": {
+        "main": [
+          [
+            {
+              "node": "Advance saved state",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Advance saved state": {
+        "main": [
+          [
+            {
+              "node": "Update the same request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update the same request": {
+        "main": [
+          [
+            {
+              "node": "Read persisted state",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read persisted state": {
+        "main": [
+          [
+            {
+              "node": "Verify infrastructure evidence",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "timezone": "Africa/Cairo"
+    }
+  }
+]

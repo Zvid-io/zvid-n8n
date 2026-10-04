@@ -101,6 +101,12 @@ music bed, and it is optional.
 7. **Activate.** The schedule polls the sheet every 15 minutes and consumes one
    deal per run.
 
+The gated **Watch video** step downloads only a completed MP4 into binary `data`.
+Its request timeout is 30 seconds, with at most three attempts five seconds apart.
+The built-in HTTP Request v2 downloader avoids the manual-preview serialization
+issue observed on n8n 2.29.10. A preview download failure leaves the completed
+video URL in **Run summary**; it does not submit another render.
+
 ### Switching to the HubSpot webhook (production path)
 
 The sheet is the demo path so the template works the minute it is imported. To

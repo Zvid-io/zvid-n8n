@@ -1,0 +1,531 @@
+{
+  "buildsDone": 0,
+  "readyDays": [],
+  "assetReadyDays": [],
+  "pending": [
+    {
+      "day": 31,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 32,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 33,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 34,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 35,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 36,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 37,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 38,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 39,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 40,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 41,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 42,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 43,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 44,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 45,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 46,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 47,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 48,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 49,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 50,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 51,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 52,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 53,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 54,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 55,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 56,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 57,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 58,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 59,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 60,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    }
+  ],
+  "integrationStatus": {
+    "googleSheets": {
+      "executionId": 737,
+      "status": "success",
+      "reason": "Native setup succeeded"
+    },
+    "googleDrive": {
+      "executionId": 736,
+      "status": "success",
+      "reason": "Native setup succeeded"
+    }
+  },
+  "all": [
+    {
+      "day": 31,
+      "slug": "release-notes-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 32,
+      "slug": "procedure-tutorial-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 33,
+      "slug": "plan-comparison-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 34,
+      "slug": "incident-timeline-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 35,
+      "slug": "maintenance-notice-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 36,
+      "slug": "order-progress-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 37,
+      "slug": "product-bundle-savings-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 38,
+      "slug": "delivery-delay-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 39,
+      "slug": "appointment-preparation-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 40,
+      "slug": "return-instructions-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 41,
+      "slug": "employee-first-week-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 42,
+      "slug": "interview-agenda-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 43,
+      "slug": "course-roadmap-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 44,
+      "slug": "safety-briefing-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 45,
+      "slug": "training-completion-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 46,
+      "slug": "meeting-action-brief-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 47,
+      "slug": "equipment-maintenance-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 48,
+      "slug": "inventory-replenishment-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 49,
+      "slug": "delivery-route-brief-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 50,
+      "slug": "tender-checklist-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 51,
+      "slug": "travel-itinerary-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 52,
+      "slug": "hotel-arrival-guide-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 53,
+      "slug": "pet-adoption-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 54,
+      "slug": "volunteer-shift-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 55,
+      "slug": "donation-impact-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 56,
+      "slug": "survey-results-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 57,
+      "slug": "fundraiser-progress-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 58,
+      "slug": "before-after-case-study-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 59,
+      "slug": "milestone-roadmap-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    },
+    {
+      "day": 60,
+      "slug": "recipe-cooking-guide-video",
+      "buildReady": false,
+      "assetReady": false,
+      "reasons": [
+        "Root completion report not confirmed",
+        "Upgraded completion report absent"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2408 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-01T14:37:25.661Z",
+  "rootReportConfirmed": true,
+  "workflows": [
+    {
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "rootConfirmed": true,
+      "functionalSha256": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa",
+      "sourceId": "qa-d31-record-001",
+      "revision": "r1",
+      "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+      "driveFileId": "1oIUxpQTzDNroor3ILUHfGoBYWip3odEQ",
+      "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5",
+      "acceptedProjectSha256": "bce87acb7bf2772eb7c1044e4c30f53b170ebffd6f17e221c3d1a9ea679f587d",
+      "mainRenderExecutionId": 822,
+      "latestDeliveryExecutionId": 853,
+      "videoSha256": "9415743cab013071fc63bb85f1855ec4c495427683b71076755e63b52b10cd72",
+      "mediaExecutionId": 742,
+      "manual": {
+        "executionId": 822,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 742,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 743,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 822,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 853,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-31.json",
+        "sha256": "47b8c1f222c86573507674904ec6850b2f81fd7b23c08b705c087f96acb27ddd"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-31-proof.json",
+        "sha256": "8422ca76211d442ade23989291b133972729f97abe83468de8ef1e7c9a12c94d"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          742,
+          822,
+          853
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa",
+      "artifactSha256": "aca8d0e3e956d02549916425ba8c2a2ecf73a8432b839db559856afa778af5b1",
+      "executionId": 822
+    },
+    {
+      "day": 32,
+      "workflowId": "ZvidSeries2Day32",
+      "rootConfirmed": true,
+      "functionalSha256": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4",
+      "sourceId": "qa-d32-record-001",
+      "revision": "r1",
+      "requestKey": "procedure-tutorial-video|qa-d32-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "cc02f5f1-340a-4635-a99a-a3884aa38387",
+      "driveFileId": "17BYMOCxjn7GfwYg4GVnVnR7DjW6M0oQw",
+      "inputHash": "7ff90cd78e636bd604e3d909194d38f378d2dedad9deb6195ed1a46ee4485a28",
+      "acceptedProjectSha256": "2949df167832a9b965e957a9af2dac872525e9b3f1075181dd61cd1e22099307",
+      "mainRenderExecutionId": 744,
+      "latestDeliveryExecutionId": 854,
+      "videoSha256": "76676a36955f1ec7a5411815db13521a7a19b9a1780c8d1f5f2ec6da4c828f4f",
+      "mediaExecutionId": 744,
+      "manual": {
+        "executionId": 744,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 744,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 747,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 823,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 854,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-32.json",
+        "sha256": "29fe0a3691df531ca5b68c3090113c14180f3e022228760173f37f7e39c11f9a"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-32-proof.json",
+        "sha256": "4e54ad804f08129a5846cd09c045e2ad171c9c11cda9ebf7981f8b4c07a65d77"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          744,
+          823,
+          854
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4",
+      "artifactSha256": "9a470c36ca700eb601ef3491022ade3ccf1a31454d024d573701349ac283207a",
+      "executionId": 744
+    },
+    {
+      "day": 33,
+      "workflowId": "ZvidSeries2Day33",
+      "rootConfirmed": true,
+      "functionalSha256": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775",
+      "sourceId": "qa-d33-record-001",
+      "revision": "r1",
+      "requestKey": "plan-comparison-video|qa-d33-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "e502a7b9-8120-4b8a-847e-a12f6d1b1877",
+      "driveFileId": "1ouYsln-6oW4rdvi7toHb9_Gs4JUCE6dN",
+      "inputHash": "ecd7b340cc9c7a7d1493d66e7e3df99223f59abfad28641fd3dfe775b83934a0",
+      "acceptedProjectSha256": "6011b1f2dfb86a7cf4148a4ff21c5297a15cd289aa7f720fc322ed1709b14f72",
+      "mainRenderExecutionId": 748,
+      "latestDeliveryExecutionId": 855,
+      "videoSha256": "c68e8cd45e193db92303d65eaddf79ad2ee4c5558fd8ff774d1f07c436731a31",
+      "mediaExecutionId": 748,
+      "manual": {
+        "executionId": 748,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 748,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 749,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 824,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 855,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-33.json",
+        "sha256": "39582c536a0434de0ee2b6c08c2883a594ff650e1d4e63694ce7dc9152d34eef"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-33-proof.json",
+        "sha256": "6fe2568a6d8f72289ecbbc617852f05a41113fe8ca3267f856eeff325127052e"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          748,
+          824,
+          855
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775",
+      "artifactSha256": "92849e129a2e98d5e1b62becddc3231db7d617aee3892359fcd98f4bd613395b",
+      "executionId": 748
+    },
+    {
+      "day": 34,
+      "workflowId": "ZvidSeries2Day34",
+      "rootConfirmed": true,
+      "functionalSha256": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47",
+      "sourceId": "qa-d34-record-001",
+      "revision": "r1",
+      "requestKey": "incident-timeline-video|qa-d34-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "18c4d4f5-45b1-4350-b155-d33dbdfb4e6f",
+      "driveFileId": "13xqRHqmlIwBHRq1h2vlbL8rcX9CPCbuU",
+      "inputHash": "511abe60b46de17ec551df38f9dc7a05a9b6b15d6874974c04717187b9b05084",
+      "acceptedProjectSha256": "628da8ceaa8973d5cad67a4a527cd8f7bf4db82d5499216e2dd3d9892f8f0a8c",
+      "mainRenderExecutionId": 750,
+      "latestDeliveryExecutionId": 856,
+      "videoSha256": "48247fe0c0031e371dd39e4e3ebe8124017024380d7f01082e56c4727e207c1c",
+      "mediaExecutionId": 750,
+      "manual": {
+        "executionId": 750,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 750,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 752,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 825,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 856,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-34.json",
+        "sha256": "19ab44674ae554890664ecacb4d47f780cdd6954e7ea0645ccfdba38b1a623e0"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-34-proof.json",
+        "sha256": "e25802417e182a8e60aac80c67f77c574b58413a83b61abe1846cb57f34b3628"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          750,
+          825,
+          856
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47",
+      "artifactSha256": "4b153a410fade190e4fcbf06d606dc07dbe03b35aee21f3b5426ae19984985c1",
+      "executionId": 750
+    },
+    {
+      "day": 35,
+      "workflowId": "ZvidSeries2Day35",
+      "rootConfirmed": true,
+      "functionalSha256": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+      "sourceId": "qa-d35-record-001",
+      "revision": "r1",
+      "requestKey": "maintenance-notice-video|qa-d35-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "bdbef051-2132-496f-9899-b76a3525e898",
+      "driveFileId": "1litoVTnM7HEypSKoxw1y2AC3ENJJAVcz",
+      "inputHash": "533d33a3d53a262ee89ca68dc78144b8105d02a72a0312a3dff15db9edad309d",
+      "acceptedProjectSha256": "1fe1b0f135fb158b15256293f979d5feeb8b0da9b0c44b3908cf3aac58479e2b",
+      "mainRenderExecutionId": 754,
+      "latestDeliveryExecutionId": 857,
+      "videoSha256": "743fb4e77339665dc6cd7657e0281688c431a41ae541a56aa907c484098bee41",
+      "mediaExecutionId": 754,
+      "manual": {
+        "executionId": 754,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 754,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 756,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 826,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 857,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-35.json",
+        "sha256": "5937c8cc03140a8c4d33112262699213eb10a3d9582d8dac821aa876523a8795"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-35-proof.json",
+        "sha256": "38aed61c51646f41560bb7c91f466f76c5f07a3b639ccf319d3de7dac4c58fad"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          754,
+          826,
+          857
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02",
+      "artifactSha256": "4a9e215aed2e6c4b264fa091ce9ff97c021a6799121b8b9bb671dada3baeb06d",
+      "executionId": 754
+    },
+    {
+      "day": 36,
+      "workflowId": "ZvidSeries2Day36",
+      "rootConfirmed": true,
+      "functionalSha256": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1",
+      "sourceId": "qa-d36-record-001",
+      "revision": "r1",
+      "requestKey": "order-progress-video|qa-d36-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "3bd51248-6c6c-476f-a031-797eb1766723",
+      "driveFileId": "1022LkxTfYrGifYlF7CPTWsVtwdOoFiFB",
+      "inputHash": "d3b1ff4da3405899951d32fb23b6f4882d47d12fbc783b2712f08100e7f7377a",
+      "acceptedProjectSha256": "5474c23010d1199c599b5e24427eed3b6eed74ba62bb9945af8fe9594bb58286",
+      "mainRenderExecutionId": 758,
+      "latestDeliveryExecutionId": 858,
+      "videoSha256": "84037bb317d8b8ff9286184863ed9ee0568aea3dbb9f4ac75e5d3189f2a99cc2",
+      "mediaExecutionId": 758,
+      "manual": {
+        "executionId": 758,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 758,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 760,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 827,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 858,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-36.json",
+        "sha256": "997886be5474e05e0b36fba84872d2e077b11ccaab3243a2f8433944583a401a"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-36-proof.json",
+        "sha256": "e2c9f8042d0816229d4b8abc67eda88190986b3da2bac04451a528346913747f"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          758,
+          827,
+          858
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1",
+      "artifactSha256": "18f620685b0f27ac2ce20ed208d5f71fdee377f0087359390341cb89986e864c",
+      "executionId": 758
+    },
+    {
+      "day": 37,
+      "workflowId": "ZvidSeries2Day37",
+      "rootConfirmed": true,
+      "functionalSha256": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd",
+      "sourceId": "qa-d37-record-001",
+      "revision": "r1",
+      "requestKey": "product-bundle-savings-video|qa-d37-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "3db6bab9-3869-4256-b1e8-871d1c816a83",
+      "driveFileId": "1ow9T3EN3CV98nijDcob3O8S0lR5eAhu9",
+      "inputHash": "34850c1b58cc51b07746d1d46e48f8d076f6b25d7100799d9188cc9fd450287a",
+      "acceptedProjectSha256": "50dea970813483b1ce9c3a4f2bb109ed3c7839d6da8af30ed578cf3d5146942a",
+      "mainRenderExecutionId": 762,
+      "latestDeliveryExecutionId": 859,
+      "videoSha256": "25ff5a4cdd461d3dc438aa8ce2eee5b1d0c9bd5e58769aef8b6a6380340b6538",
+      "mediaExecutionId": 762,
+      "manual": {
+        "executionId": 762,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 762,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 764,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 828,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 859,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-37.json",
+        "sha256": "241f68431f89a98c0426fd47631cfa6c864510afc303a5405855cb759879c2d2"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-37-proof.json",
+        "sha256": "20530d824af3aa2b7938bfa050944984e92b2ae4bc9f15a8f1daa0c8d9a31afc"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          762,
+          828,
+          859
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd",
+      "artifactSha256": "55160336207f74757c10ec59415f0419304154b65ea0a418881cb03e387f56ee",
+      "executionId": 762
+    },
+    {
+      "day": 38,
+      "workflowId": "ZvidSeries2Day38",
+      "rootConfirmed": true,
+      "functionalSha256": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5",
+      "sourceId": "qa-d38-record-001",
+      "revision": "r1",
+      "requestKey": "delivery-delay-video|qa-d38-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "90b29c7b-8974-452d-9601-53bb8599e982",
+      "driveFileId": "1w3a6nQ58TNZCtE_RyL7xij0Pl-akhmdF",
+      "inputHash": "f5bd5b16998b16f61fa24d8a7df33e02f73ca788d25146dbace46c5b15eb4f35",
+      "acceptedProjectSha256": "c7da6a9d937a9bf7974f49d39c014faa175bbf2f837bbd1a6a76dbe48608718b",
+      "mainRenderExecutionId": 766,
+      "latestDeliveryExecutionId": 860,
+      "videoSha256": "1684cc98071bfdcf31227bcd2b056585b855c49f27d2c51586a69ec8fef6907b",
+      "mediaExecutionId": 766,
+      "manual": {
+        "executionId": 766,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 766,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 767,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 829,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 860,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-38.json",
+        "sha256": "2840b0b6aaec979e1c91884d36369a96924d91dc8e14de918105b643631205e0"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-38-proof.json",
+        "sha256": "f132209c74daa23f248c278de5988af80d348d149e1cbf8fecc37a5f13c319e4"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          766,
+          829,
+          860
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5",
+      "artifactSha256": "244ca708f64f63790f0b31ba5e65234fcaf7d9a5b03f05fb46c19340615bd3e7",
+      "executionId": 766
+    },
+    {
+      "day": 39,
+      "workflowId": "ZvidSeries2Day39",
+      "rootConfirmed": true,
+      "functionalSha256": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07",
+      "sourceId": "qa-d39-record-001",
+      "revision": "r1",
+      "requestKey": "appointment-preparation-video|qa-d39-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "40c4837d-e64e-4ae7-9730-d34247669bd5",
+      "driveFileId": "1SSO3zjlC5sJl4NH5d1e3-yLxJP3dHZuf",
+      "inputHash": "4a219d23afb4e5e17f773b4947b915c3ae3ede2e0cc3160d29c640dd7a748dea",
+      "acceptedProjectSha256": "17e8ebb82457c06fb8244ba8c07bd0a2ebcf91f6134c952371f3bd3eb3129fb2",
+      "mainRenderExecutionId": 769,
+      "latestDeliveryExecutionId": 861,
+      "videoSha256": "5034d03515bcdd60039013ec0ca54627e2e3a4d134075bfeeccfb16ae25e6140",
+      "mediaExecutionId": 769,
+      "manual": {
+        "executionId": 769,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 769,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 771,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 830,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 861,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-39.json",
+        "sha256": "30858e235cb1b8fba514c44b1646a3d2145614fd1d9e28503d165323f7d3894b"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-39-proof.json",
+        "sha256": "7ede068b92b75ec99a9e7d68d9bac1447df2e60e4ade42a34b9d3c0a069de44a"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          769,
+          830,
+          861
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07",
+      "artifactSha256": "6be20691af4e9d4e73550c844740b8c605863fa36c83c30d4eb809cc450c6e25",
+      "executionId": 769
+    },
+    {
+      "day": 40,
+      "workflowId": "ZvidSeries2Day40",
+      "rootConfirmed": true,
+      "functionalSha256": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9",
+      "sourceId": "qa-d40-record-001",
+      "revision": "r1",
+      "requestKey": "return-instructions-video|qa-d40-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "54c0cc5b-b3ed-4ee8-b34c-2f2ec30da7e9",
+      "driveFileId": "1EyYZO9rkcs-JzauLorNwhc873IUeMiWr",
+      "inputHash": "e00972ee170c153ccdd7911f3882ac1fefe9d91cf802513453d60c03a04c62da",
+      "acceptedProjectSha256": "527099b3668cfc9dc66e98e6854a327535243069fef176b66edcd86316a7bb57",
+      "mainRenderExecutionId": 773,
+      "latestDeliveryExecutionId": 862,
+      "videoSha256": "197bb2aba18321f3ae9970d010dda9a5df59984791dbc72ac51012ef97cd2e49",
+      "mediaExecutionId": 773,
+      "manual": {
+        "executionId": 773,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 773,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 774,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 831,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 862,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-40.json",
+        "sha256": "9832975300320d5f117f9f159d015b62c70fb37b109b702fa1f457860bc9c39c"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-40-proof.json",
+        "sha256": "197fab1f9a53707677159b1c0944843831a774f1d01b9d96aeb314d7193cdc71"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          773,
+          831,
+          862
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9",
+      "artifactSha256": "42eea1324ca7e7b00280ae906c785a36f73f3dc30b1e4cbe641147df8cb768a5",
+      "executionId": 773
+    },
+    {
+      "day": 41,
+      "workflowId": "ZvidSeries2Day41",
+      "rootConfirmed": true,
+      "functionalSha256": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f",
+      "sourceId": "qa-d41-record-001",
+      "revision": "r1",
+      "requestKey": "employee-first-week-video|qa-d41-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "2970bd23-456e-4883-bbfb-16efacac7980",
+      "driveFileId": "1HWbVFC6J_yW9nERgy7-3oBBo9d1WWpKc",
+      "inputHash": "785777ea0e2f607a3885ea1e0dfe7a486cfb771d3e963ffd31e9e102ab47ee6d",
+      "acceptedProjectSha256": "83b6a5cc930d3ae7ce9284f95275af9d77ef6a7602d02d0f6deb9fd38afa5ea9",
+      "mainRenderExecutionId": 775,
+      "latestDeliveryExecutionId": 863,
+      "videoSha256": "e07944c52182edd0af09d099a6260e68c0c7d5267f5759e8b2f9f49e0f0ce9bf",
+      "mediaExecutionId": 775,
+      "manual": {
+        "executionId": 775,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 775,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 776,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 832,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 863,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-41.json",
+        "sha256": "f36e71e821a6b283ec13a4ac8fe0b33a6cb0348512c81bdec328fc1e6790d10e"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-41-proof.json",
+        "sha256": "6df2b226d1b0caa007445f461c4aefaea76c8caf997f43ade0d8d46b991f45ae"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          775,
+          832,
+          863
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f",
+      "artifactSha256": "a37e753d97c8e5287e44a8e35084004ba801f4c46604e316e6debfcbd38d3ade",
+      "executionId": 775
+    },
+    {
+      "day": 42,
+      "workflowId": "ZvidSeries2Day42",
+      "rootConfirmed": true,
+      "functionalSha256": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685",
+      "sourceId": "qa-d42-record-001",
+      "revision": "r1",
+      "requestKey": "interview-agenda-video|qa-d42-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "2e7cd157-1e0b-4281-9057-3cea03d0e5d1",
+      "driveFileId": "114It6RR4aXaCtqsqi72WFRo_sIo8E-gs",
+      "inputHash": "6129e54ef43adcb2d440bde1aaa80edbb0fc728842ea4ab9b418220aaf9b9e14",
+      "acceptedProjectSha256": "a274c725d5135cf25289c20160a972f1e51245651a39e2dc3d8d4912d367bb53",
+      "mainRenderExecutionId": 777,
+      "latestDeliveryExecutionId": 864,
+      "videoSha256": "c6c8934081d2d061f3e11bf7a8180be4790690022bdaf372c16c52f6311ab51d",
+      "mediaExecutionId": 777,
+      "manual": {
+        "executionId": 777,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 777,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 778,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 833,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 864,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-42.json",
+        "sha256": "2b397d8ff8fca9c2238dd8a2814954827173234f066e90a19f224318bc080790"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-42-proof.json",
+        "sha256": "b6af359ba55061f1a25f5bb97c53af82a320ccdfcb89ddf2e1063dde8b0573d1"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          777,
+          833,
+          864
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685",
+      "artifactSha256": "247688353fe9c6d61b1f465aa71fbf853891949022b06e4d8ac09635e0d16790",
+      "executionId": 777
+    },
+    {
+      "day": 43,
+      "workflowId": "ZvidSeries2Day43",
+      "rootConfirmed": true,
+      "functionalSha256": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f",
+      "sourceId": "qa-d43-record-001",
+      "revision": "r1",
+      "requestKey": "course-roadmap-video|qa-d43-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "052a9a6f-b5fc-46db-90ec-59f167cad66b",
+      "driveFileId": "14QcRJTMMLppTVY_bpBDk5DHeYVB37vRW",
+      "inputHash": "e75daa4e420790d94fce78cf8e9d5cbb7caf8a9cc093836a69920eeb5160cbb8",
+      "acceptedProjectSha256": "ddb770bbbbf7287599936f6e857655e682cbf47a33ee6f8f5a4fd968967c4e0b",
+      "mainRenderExecutionId": 779,
+      "latestDeliveryExecutionId": 865,
+      "videoSha256": "d2605e09c4344a63c008406f71d3e6cb2b21469cbdd75ff1a0c1ba6307cca80d",
+      "mediaExecutionId": 779,
+      "manual": {
+        "executionId": 779,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 779,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 780,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 834,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 865,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-43.json",
+        "sha256": "02271b2640091f7641f2053606af805f57dd28e4ec3815d957b1019e7cd505b8"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-43-proof.json",
+        "sha256": "27698fe2c35c4239cb49c76b8041394fee02746f73f267dd3f3ec5e72e4fc2dc"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          779,
+          834,
+          865
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f",
+      "artifactSha256": "198bafeaeeb8e4ff6ab0839d7091fa1467d266265034810335897689d5a33450",
+      "executionId": 779
+    },
+    {
+      "day": 44,
+      "workflowId": "ZvidSeries2Day44",
+      "rootConfirmed": true,
+      "functionalSha256": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911",
+      "sourceId": "qa-d44-record-001",
+      "revision": "r1",
+      "requestKey": "safety-briefing-video|qa-d44-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "6c4ba7da-c25b-4aee-8e95-3ae57bb8e134",
+      "driveFileId": "1rxGEy_AU4K7B3Pivvw1svUh2uT9RbLvK",
+      "inputHash": "a6cf1048fb37ac4279ea89112cd7f7b097049e791ba09005190bedd31e2e3c22",
+      "acceptedProjectSha256": "dbc9c9753c9cae20baea2acb52d3ac44e03f49cf908a098efb179b9c4dc0cdbb",
+      "mainRenderExecutionId": 781,
+      "latestDeliveryExecutionId": 866,
+      "videoSha256": "41aa3d5d792115bfab001d4ea0bb5c223a038b15f34ca88ed6f5249845457e57",
+      "mediaExecutionId": 781,
+      "manual": {
+        "executionId": 781,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 781,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 782,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 835,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 866,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-44.json",
+        "sha256": "d9e6626add2df437cd7ca6a483d2573a0cf1d26bea8bc83f9a8b62380c6e5210"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-44-proof.json",
+        "sha256": "c9e58e37d76f4604ab20fa51aa27fae441dae3438d13a41dea82fd2e10c17028"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          781,
+          835,
+          866
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911",
+      "artifactSha256": "81da5104b5f999b3efa59e0f5de043d2dd015bb7f1de471e231417af29c306ce",
+      "executionId": 781
+    },
+    {
+      "day": 45,
+      "workflowId": "ZvidSeries2Day45",
+      "rootConfirmed": true,
+      "functionalSha256": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e",
+      "sourceId": "qa-d45-record-001",
+      "revision": "r1",
+      "requestKey": "training-completion-video|qa-d45-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "fdff49cf-ad78-46bf-b90d-df1cd294f081",
+      "driveFileId": "1gLO3TtfK6deOVjbAJiPI54zoHbgMkeZo",
+      "inputHash": "08b4485e94a99dac23776df4897333edad6c6825bd7269d1ec537cd0e9c09086",
+      "acceptedProjectSha256": "bfe80e4ed8d22f28304145abc4e16d0524ec2ffdd9d0265ef53467d5f8a76934",
+      "mainRenderExecutionId": 783,
+      "latestDeliveryExecutionId": 867,
+      "videoSha256": "9b551ac8f026500e7232704004e813204ab37d4d9148aa9c2adc0c796536d8c3",
+      "mediaExecutionId": 783,
+      "manual": {
+        "executionId": 783,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 783,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 784,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 836,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 867,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-45.json",
+        "sha256": "b60f5badf586b55210a5cc39e65bc86f54541fc0dd0a8b3a190333c1ab334f50"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-45-proof.json",
+        "sha256": "091034fcdb890a7798f140db87a2227d343f24b0cb403b9446e99f4855e43067"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          783,
+          836,
+          867
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e",
+      "artifactSha256": "d62a76490fd08b8412177be44bdbe51c551884effabb96cc8904067b0a0496b3",
+      "executionId": 783
+    },
+    {
+      "day": 46,
+      "workflowId": "ZvidSeries2Day46",
+      "rootConfirmed": true,
+      "functionalSha256": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062",
+      "sourceId": "qa-d46-record-001",
+      "revision": "r1",
+      "requestKey": "meeting-action-brief-video|qa-d46-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "255fb563-2bd4-4c90-868f-f9e0e2f6fa60",
+      "driveFileId": "1oUHLApOGd_xKiEZKpJqKVhAt0BL5VrM0",
+      "inputHash": "8e93203a795b9f5583b16b791331bb716934658e508d6f5c9d76a71043df15c4",
+      "acceptedProjectSha256": "3ef975691d4a2e119c5550bf075c47c59aac09d81007237e95cd3849f26c1ce4",
+      "mainRenderExecutionId": 785,
+      "latestDeliveryExecutionId": 868,
+      "videoSha256": "bbadd5b1ea84cfbfaac8511feee1ef63cde7c8701ffc0f471d1812f4c0f4ce8a",
+      "mediaExecutionId": 785,
+      "manual": {
+        "executionId": 785,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 785,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 786,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 837,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 868,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-46.json",
+        "sha256": "cbfd9afd81d534fb0e09ff7c1043ce89a15a4574d46957163cf0885d9fb4e225"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-46-proof.json",
+        "sha256": "e153ac380b2f6b6f11f6ae4f965baa5db20cdec34045e4b78cba506610a75aaa"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          785,
+          837,
+          868
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062",
+      "artifactSha256": "c721499525bdc49d9d27e9317a71f86dacbab07b86af92337f3383eb553e336d",
+      "executionId": 785
+    },
+    {
+      "day": 47,
+      "workflowId": "ZvidSeries2Day47",
+      "rootConfirmed": true,
+      "functionalSha256": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162",
+      "sourceId": "qa-d47-record-001",
+      "revision": "r1",
+      "requestKey": "equipment-maintenance-video|qa-d47-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "0156dda7-0ec9-4f38-a6ad-27ea4c062858",
+      "driveFileId": "151qFe-2bjJoiLpdWt3PxqrtxYpcMO-9S",
+      "inputHash": "5c4b6f0e40e6a5382cb046f022c791a17f004d1d12ad5d53747b4d92f2ab6e95",
+      "acceptedProjectSha256": "35d3c5c887e9d3adc2c14e563c6db17ba21af9081d0905edbb7a6a48d659488b",
+      "mainRenderExecutionId": 787,
+      "latestDeliveryExecutionId": 869,
+      "videoSha256": "969cd8ef32ac7316fef44d112021141ba9cdb5495c3d1893c4322548f90c19a7",
+      "mediaExecutionId": 787,
+      "manual": {
+        "executionId": 787,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 787,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 788,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 838,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 869,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-47.json",
+        "sha256": "6d6a8b8636237ba2710cd40b224b832eced77140a4bf95af7d9d558c86c340b7"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-47-proof.json",
+        "sha256": "a6a4faa90e775f07bf47bb410d34a8604f09d8aaa03eb216acab99f8c8fe9c61"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          787,
+          838,
+          869
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162",
+      "artifactSha256": "89290359e635ef09bc4923702e41a4d47b79e198ac51d137eee555edf4a60375",
+      "executionId": 787
+    },
+    {
+      "day": 48,
+      "workflowId": "ZvidSeries2Day48",
+      "rootConfirmed": true,
+      "functionalSha256": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d",
+      "sourceId": "qa-d48-record-001",
+      "revision": "r1",
+      "requestKey": "inventory-replenishment-video|qa-d48-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "090bcf03-bc7b-48f7-a7a9-0f046b2fc01f",
+      "driveFileId": "19sY4sBNpl0iofZZ0JnTuqSa9WE-Ie6cB",
+      "inputHash": "9a0d0dd56b03dafa5e2e1e6a3530614c16c9befe61fe39fce55a02d21a66ff6b",
+      "acceptedProjectSha256": "f67a6fb4b33e1f9d19f8a2c18d456b0596d3a6d1ef40340a3cd4b68012cf82dd",
+      "mainRenderExecutionId": 789,
+      "latestDeliveryExecutionId": 870,
+      "videoSha256": "1aedc0140a6daa804a730e0f3f55f1ce104c7ea29c7ea50da3ab85c6bb54a40a",
+      "mediaExecutionId": 789,
+      "manual": {
+        "executionId": 789,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 789,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 790,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 839,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 870,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-48.json",
+        "sha256": "270312c066a0aa3322c13b65d2a8a9ee1822e43c8c85bd2cb06ea3f376c77b76"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-48-proof.json",
+        "sha256": "988ba2712c4a0add778f9bf81a508ed2cea9a28beb375a8566f5cc99eae5c72c"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          789,
+          839,
+          870
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d",
+      "artifactSha256": "ee90f1e5cfcc31a844613de0490ca4df1ed07a7d04f70cee34cb5f28ad7964dc",
+      "executionId": 789
+    },
+    {
+      "day": 49,
+      "workflowId": "ZvidSeries2Day49",
+      "rootConfirmed": true,
+      "functionalSha256": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a",
+      "sourceId": "qa-d49-record-001",
+      "revision": "r1",
+      "requestKey": "delivery-route-brief-video|qa-d49-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "eca8eb7c-9ef8-4e7e-bc8d-aee7451fe713",
+      "driveFileId": "1aP2tP9Sqcefc3ujy_JuA5eDF0mJzxZs5",
+      "inputHash": "f33dc34eee4a820c5ea653df1709afbe340e622a6640b25cf69e9e8bc1e2979d",
+      "acceptedProjectSha256": "978d8424064233067ebbb2ee13ed384a1f0f7042d2ecfe95fc047985250e6505",
+      "mainRenderExecutionId": 791,
+      "latestDeliveryExecutionId": 871,
+      "videoSha256": "e77acd5569c53a87479fa8d1d19bb8266c8e2fcf176a0ca2a8adb40c446b5e37",
+      "mediaExecutionId": 791,
+      "manual": {
+        "executionId": 791,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 791,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 792,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 840,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 871,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-49.json",
+        "sha256": "197d00962fc5c59a534593f9d8338ef9b11a1b3be883f3127456c8e254bd2355"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-49-proof.json",
+        "sha256": "cb3c9a0612c5b33a833ae0b1acf6df1fb0e29014c77a3a9cd79f8659f2d2cef0"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          791,
+          840,
+          871
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a",
+      "artifactSha256": "a770c1f2052005086541d5f350fa08b1d9c3ee844038439cb2e650f24187bde0",
+      "executionId": 791
+    },
+    {
+      "day": 50,
+      "workflowId": "ZvidSeries2Day50",
+      "rootConfirmed": true,
+      "functionalSha256": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa",
+      "sourceId": "qa-d50-record-001",
+      "revision": "r2",
+      "requestKey": "tender-checklist-video|qa-d50-record-001|r2|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "8862babc-a6ef-4825-9c60-082720bd7d69",
+      "driveFileId": "1Xa_y6BiI3nJ39CrqAcgvmoXb1VniUGEO",
+      "inputHash": "d82a414e8d997ec73260c953daf88396152455478002b051dcd6eb366aef8f94",
+      "acceptedProjectSha256": "7e204379f2799b486216531d152cbe39c981fdd6150a5c10603a6bacaf4fa91e",
+      "mainRenderExecutionId": 805,
+      "latestDeliveryExecutionId": 872,
+      "videoSha256": "a6c10edc731578d88c56290cfac84dee5c1de52dfcd05bacd248ce4a0fe79f89",
+      "mediaExecutionId": 805,
+      "manual": {
+        "executionId": 805,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 805,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 806,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 841,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 872,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-50.json",
+        "sha256": "f3a0afc767a3f031141cb416ed845ae91fe344ad6f5972939b5d269ce1c6bd5c"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-50-proof.json",
+        "sha256": "930fc27461e8e5f7dde29f49fba655174df0e00e0874b379e5d3bebde9fdaf0e"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          805,
+          841,
+          872
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa",
+      "artifactSha256": "96e01847b72f86472bc861f6c69fbf469f6dd37cd37c75b6dbba24c39c124ba7",
+      "executionId": 805
+    },
+    {
+      "day": 51,
+      "workflowId": "ZvidSeries2Day51",
+      "rootConfirmed": true,
+      "functionalSha256": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+      "sourceId": "qa-d51-record-001",
+      "revision": "r1",
+      "requestKey": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "7797cb1d-f316-492d-8c8a-7950a5a0c2b4",
+      "driveFileId": "1zmPX2A0F8hCaTxJUqR49-HKTqi2eg4Uz",
+      "inputHash": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8",
+      "acceptedProjectSha256": "a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836",
+      "mainRenderExecutionId": 800,
+      "latestDeliveryExecutionId": 873,
+      "videoSha256": "f95de0d9f62485ba78c78a143d5e18ee14fdf3533f4f0f120e6cac88c44a724d",
+      "mediaExecutionId": 800,
+      "manual": {
+        "executionId": 800,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 800,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 801,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 842,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 873,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-51.json",
+        "sha256": "ea3d571cf8257b75aa999b9d05885ba4d2c5140817405d01bded79eadecce939"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-51-proof.json",
+        "sha256": "0c4dadf9f883cdfc92254448d7d0e725cc2187634d944851b11ddd7975b7c0e8"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          800,
+          842,
+          873
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1",
+      "artifactSha256": "25ce7708ee194d1973c95293a9d248357a307e153b8488d4c5a8cc2421e6fd63",
+      "executionId": 800
+    },
+    {
+      "day": 52,
+      "workflowId": "ZvidSeries2Day52",
+      "rootConfirmed": true,
+      "functionalSha256": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d",
+      "sourceId": "qa-d52-record-001",
+      "revision": "r1",
+      "requestKey": "hotel-arrival-guide-video|qa-d52-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "b6933876-873a-4aa5-8f0b-b08d04866d2c",
+      "driveFileId": "1SSVInKazpay8k_D2bILMYU7KRoVxsDf2",
+      "inputHash": "1c7bcbc317e6dc51f8ad42cf46107cb36a9a356af50f8c910f67699e46809bbc",
+      "acceptedProjectSha256": "ae1f89f9d91a581429aa7fb56c75ad4ff20442e290ae518a5f055ff93787e0f6",
+      "mainRenderExecutionId": 797,
+      "latestDeliveryExecutionId": 874,
+      "videoSha256": "271004eee28b3d4662b23d3aa37a22f7b8fdbc5d16c1402cd9f921fcac876cb7",
+      "mediaExecutionId": 797,
+      "manual": {
+        "executionId": 797,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 797,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 799,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 843,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 874,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-52.json",
+        "sha256": "fe4eb94f7ec27119538aa0bbfbf02b9b5b231cb7f080237d87dfe5725f41db89"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-52-proof.json",
+        "sha256": "c71a2e77d180be3d87e54e98292ed8e377f37cdd507599b298c79eb9194cb4b1"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          797,
+          843,
+          874
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d",
+      "artifactSha256": "8e9a8ec6e85fa3a4be32d1321406bb3e37049f8799e107fda45012c180d35675",
+      "executionId": 797
+    },
+    {
+      "day": 53,
+      "workflowId": "ZvidSeries2Day53",
+      "rootConfirmed": true,
+      "functionalSha256": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e",
+      "sourceId": "qa-d53-record-001",
+      "revision": "r1",
+      "requestKey": "pet-adoption-video|qa-d53-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "96c5fbf9-bc3f-4aea-afbf-05b56e6c9fb0",
+      "driveFileId": "176NRLx6AvBiC602tfX4rxqya3UR9DVNS",
+      "inputHash": "a2b4dbe8c41b882b06f260441fabe181da01be005e4406d32b6c414216422f19",
+      "acceptedProjectSha256": "b27ddbccad08ab3a3abc391403bb8fb8b2fd179e2df4b7245149ac0d3f3a12e8",
+      "mainRenderExecutionId": 802,
+      "latestDeliveryExecutionId": 875,
+      "videoSha256": "39c899e09780f12a4d4becd4835f3f267b996b50926577ba0543413bf51c742a",
+      "mediaExecutionId": 802,
+      "manual": {
+        "executionId": 802,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 802,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 804,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 844,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 875,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-53.json",
+        "sha256": "fbc574f3c746f498983b46f398fb61375cc8e763216dcd8a97f9ffd7f26431cb"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-53-proof.json",
+        "sha256": "91cd4e6c754f16f8e70e289f44a1e483fb9452b459e2415889c05af5e969f643"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          802,
+          844,
+          875
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e",
+      "artifactSha256": "86527fcf6089a9aab855bffb46e057e3dbbd926db0f54b45dd775a2ef1d892d7",
+      "executionId": 802
+    },
+    {
+      "day": 54,
+      "workflowId": "ZvidSeries2Day54",
+      "rootConfirmed": true,
+      "functionalSha256": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad",
+      "sourceId": "qa-d54-record-001",
+      "revision": "r1",
+      "requestKey": "volunteer-shift-video|qa-d54-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "b0f3410c-13a0-4c0c-becb-81849b1c48e7",
+      "driveFileId": "1Xf_dXBVatn1lO6Wlhcjou1Gj9kHh6pDa",
+      "inputHash": "0a07370c057b1011e56699410f785da77ee2cc821ed51d23953b57e520999769",
+      "acceptedProjectSha256": "046b86dd065f04bd01b1e444db4edb7d49a1856c7bc9dc77f15d806d975b3642",
+      "mainRenderExecutionId": 807,
+      "latestDeliveryExecutionId": 876,
+      "videoSha256": "41119de3b25e3ddd3c0e1419b621eb8e1eb084f124b2e520dfe729b947494648",
+      "mediaExecutionId": 807,
+      "manual": {
+        "executionId": 807,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 807,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 808,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 845,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 876,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-54.json",
+        "sha256": "cbeb29f4eb5e56af3bf3d73ab01beb5025d7e5e5951c5b41d062e0e0b95aba7d"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-54-proof.json",
+        "sha256": "658f739955bc9529d92a23319fb016382af7dac176a998172e7315c69a8781ee"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          807,
+          845,
+          876
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad",
+      "artifactSha256": "b85cc72d0f79d4718ae96366c95375a6c0387391683ab407e91f35759dba2c6a",
+      "executionId": 807
+    },
+    {
+      "day": 55,
+      "workflowId": "ZvidSeries2Day55",
+      "rootConfirmed": true,
+      "functionalSha256": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757",
+      "sourceId": "qa-d55-record-001",
+      "revision": "r1",
+      "requestKey": "donation-impact-video|qa-d55-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "e49bb090-2a49-4dcd-a0eb-1467d7c7384b",
+      "driveFileId": "12FYIA9xozp8UQAIEfnyMQYc0dnRJ86Xs",
+      "inputHash": "6031641c20831806b0481f3c5d949947b30952b584025b394bc9f15ccc1558c1",
+      "acceptedProjectSha256": "b46209b9ec18c8ffe51588a11f48d3bdbcf10dc5dfa9736cad9d7f24892addd2",
+      "mainRenderExecutionId": 809,
+      "latestDeliveryExecutionId": 877,
+      "videoSha256": "662122c958d268f4241535edb4c90424bee88d513b4b9bf954e243de0e861fa3",
+      "mediaExecutionId": 809,
+      "manual": {
+        "executionId": 809,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 809,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 810,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 846,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 877,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-55.json",
+        "sha256": "1fead08f7bdc45a232b67547bbbfc475ae7609d55a031617da9dbe897b370932"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-55-proof.json",
+        "sha256": "c6c340560dbb535564b5f01dbe18021ee48f02e9538e1fe1c6335c8d10c64aba"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          809,
+          846,
+          877
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757",
+      "artifactSha256": "a8e6318f00f5544ce18f427deb06000f6f72a849a6173191b295b7c26e6ff248",
+      "executionId": 809
+    },
+    {
+      "day": 56,
+      "workflowId": "ZvidSeries2Day56",
+      "rootConfirmed": true,
+      "functionalSha256": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7",
+      "sourceId": "qa-d56-record-001",
+      "revision": "r1",
+      "requestKey": "survey-results-video|qa-d56-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "de1eb00d-30f2-4752-b72e-87241d3d2300",
+      "driveFileId": "1RYkqBgxt4vj8Softk21VrTgDv4LwoQZV",
+      "inputHash": "96afda9f2274fd22dc310ed8c89a401720316452c7d77305dfe51219c7b904c7",
+      "acceptedProjectSha256": "485932e43788c738cb2a17ca994a7ce5ee9dbe5100b25780faa9e6706317d2d7",
+      "mainRenderExecutionId": 811,
+      "latestDeliveryExecutionId": 878,
+      "videoSha256": "8312bd1b6643800799551d533cefce6231f5ecc869da053e624ab66c314b69af",
+      "mediaExecutionId": 811,
+      "manual": {
+        "executionId": 811,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 811,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 812,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 847,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 878,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-56.json",
+        "sha256": "9f6b3dc9f32eaa223597dbd78a525033b8d3819f92d298e5db089489c5da23e4"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-56-proof.json",
+        "sha256": "e49449657d2987d5e2b1a0625d228b4258bf6e3082f41da5c49f03a834754d04"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          811,
+          847,
+          878
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7",
+      "artifactSha256": "c42c1eb089721c0dc28af3494603abc18ab47410c2c908df3c604d8333ca7b88",
+      "executionId": 811
+    },
+    {
+      "day": 57,
+      "workflowId": "ZvidSeries2Day57",
+      "rootConfirmed": true,
+      "functionalSha256": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+      "sourceId": "qa-d57-record-001",
+      "revision": "r1",
+      "requestKey": "fundraiser-progress-video|qa-d57-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "3c319c9c-42e7-4bcb-8347-6cc77d830f76",
+      "driveFileId": "1cQaKK7jup5ccCx9WhYYBejEVioQR-bfW",
+      "inputHash": "26354701fdd56cdbb2bdc0dca2bc2eb0a64a4c3852c82a3f4730718b7a29a340",
+      "acceptedProjectSha256": "a97364afe7eff6da2ad36dc589a44c056bf77fe876f68e2a080c79aa2e359c87",
+      "mainRenderExecutionId": 813,
+      "latestDeliveryExecutionId": 879,
+      "videoSha256": "edcb29758155845392370feb780ea46e1c67204c09f6ac686033323e7e185914",
+      "mediaExecutionId": 813,
+      "manual": {
+        "executionId": 813,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 813,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 814,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 848,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 879,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-57.json",
+        "sha256": "4632160b73bd69f2c18f8af4680152344d13ed5fb9cd6e1b879b4a9e0b78bae4"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-57-proof.json",
+        "sha256": "6bd9694479af5547575fa91eb8a711a8ec55ba3321af3a5910efa71ceda4e99d"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          813,
+          848,
+          879
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+      "artifactSha256": "ab9a0d6004e3ee38f428f3d2ef311eea54cd230e2273186afd18155c2f2ee13b",
+      "executionId": 813
+    },
+    {
+      "day": 58,
+      "workflowId": "ZvidSeries2Day58",
+      "rootConfirmed": true,
+      "functionalSha256": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f",
+      "sourceId": "qa-d58-record-001",
+      "revision": "r1",
+      "requestKey": "before-after-case-study-video|qa-d58-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "8be386ad-f68e-4846-840d-30856ca328c4",
+      "driveFileId": "1mrJFQyELjf1Mw92iZgBayXtn0J5_rtjC",
+      "inputHash": "b32b9f06d648e1e1b2da46536c774de37b3eda1093688480a17808e02f7b0839",
+      "acceptedProjectSha256": "74d8aa746874a162a6fe1be3aef2d5af53843d8f9885fd4e48b66d1c45ae7b30",
+      "mainRenderExecutionId": 815,
+      "latestDeliveryExecutionId": 880,
+      "videoSha256": "977205d24847828c3d03561320286509d520feed35fedf9a3392911293202ab7",
+      "mediaExecutionId": 815,
+      "manual": {
+        "executionId": 815,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 815,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 816,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 849,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 880,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-58.json",
+        "sha256": "8bee2e333855417aed0d15b71a9f4a49f3e81d94e29b2c2f8252e10079a34460"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-58-proof.json",
+        "sha256": "be2de5d030db226501aecff38fda93b70ad09fb9973ea3441b1d8258162a2fa0"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          815,
+          849,
+          880
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f",
+      "artifactSha256": "3464a8da36792edf1434a9520bfe931b0327624e53af162ada634f2c9ead5354",
+      "executionId": 815
+    },
+    {
+      "day": 59,
+      "workflowId": "ZvidSeries2Day59",
+      "rootConfirmed": true,
+      "functionalSha256": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83",
+      "sourceId": "qa-d59-record-001",
+      "revision": "r1",
+      "requestKey": "milestone-roadmap-video|qa-d59-record-001|r1|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "766e80a1-561d-4ff9-b84b-8f42bbb70377",
+      "driveFileId": "1u7adekXTonmxuOlMDXGQynZ3ED7LkF_Y",
+      "inputHash": "41f57599cf47ff8b67db26d88ee153a0b6a972c7911c9a8e3414cc5669d0266d",
+      "acceptedProjectSha256": "0c3376033e05df0cd5ca9d8d5c6a59d006a0fab39decf2932bb6bc43349adacb",
+      "mainRenderExecutionId": 817,
+      "latestDeliveryExecutionId": 881,
+      "videoSha256": "7416909e7793001a551beb8ef23c7e030bfe26626f619fe7a9446ec20d04f3f8",
+      "mediaExecutionId": 817,
+      "manual": {
+        "executionId": 817,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 817,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 818,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 850,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 881,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-59.json",
+        "sha256": "277485325d00eea70b96dbb7b1fca44d210d35c2fc1478442dac9be78a402f67"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-59-proof.json",
+        "sha256": "75b984a1652bc56fd94722c0ef42b6e564b080c931cbc6adadf4518e0e53aabc"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          817,
+          850,
+          881
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83",
+      "artifactSha256": "03930f9f5504a93625e9bbbf9d4a4f4640489ba36cc740dac479d1f4de656067",
+      "executionId": 817
+    },
+    {
+      "day": 60,
+      "workflowId": "ZvidSeries2Day60",
+      "rootConfirmed": true,
+      "functionalSha256": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648",
+      "sourceId": "qa-d60-record-001",
+      "revision": "r1",
+      "requestKey": "recipe-cooking-guide-video|qa-d60-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+      "jobId": "596ce330-07e1-47b6-9628-b89ac4fa11b7",
+      "driveFileId": "1CB-7tHRk7X9HA3iebTwM-hyItbgg91gB",
+      "inputHash": "d6bc6f262582141f0df44a24d3c24d212d2196632f346ff455d4bd47ab8b88ef",
+      "acceptedProjectSha256": "f873569030a61c3cec7aad6149ea79f027c645f9befd8abb4332fde8f7aab9cc",
+      "mainRenderExecutionId": 819,
+      "latestDeliveryExecutionId": 882,
+      "videoSha256": "249870be755b5ba6bb0240c6187837d494037d7184e16cd3ba02e31e1b1cb467",
+      "mediaExecutionId": 819,
+      "manual": {
+        "executionId": 819,
+        "artifact": {
+          "path": "publication/upgraded-role-evidence.json",
+          "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+        }
+      },
+      "checks": {
+        "eligibility": {
+          "passed": true,
+          "executionId": 819,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deduplication": {
+          "passed": true,
+          "executionId": 820,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "resumeAccepted": {
+          "passed": true,
+          "executionId": 851,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        },
+        "deliveryRecovery": {
+          "passed": true,
+          "executionId": 882,
+          "artifact": {
+            "path": "publication/upgraded-role-evidence.json",
+            "sha256": "ca132f9ef0b30704c54a8fb42bce375d22e6a590ed6469ceb0e5fd1c5f8b427f"
+          }
+        }
+      },
+      "mediaQa": {
+        "path": "publication/upgraded-role-media-day-60.json",
+        "sha256": "ebc63ffed7033f00959202274e047d6a1383cdf0391a25456c45cb95ba0c5592"
+      },
+      "canvas": {
+        "path": "publication/canvas/day-60-proof.json",
+        "sha256": "4aa75c7d473197a7e0357e441de02e2482f9585313f2b3c70328da2abed75eba"
+      },
+      "diagnostics": {
+        "missingRoles": [],
+        "observedRolesComplete": true,
+        "deliveryExecutionIds": [
+          819,
+          851,
+          882
+        ],
+        "mediaMissing": false,
+        "canvasMissing": false
+      },
+      "functionalHash": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648",
+      "artifactSha256": "a625b376372f7214d8dd5448534612f2749ed7983d3194d63f17d68694ff4f87",
+      "executionId": 819
+    }
+  ],
+  "rootReviewedAt": "2026-10-01T14:39:48.328Z"
+}

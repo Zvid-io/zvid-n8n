@@ -1,0 +1,79 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-customer-story-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "DAILY FORM",
+    "as_of": "2026-10-03T09:00:00Z",
+    "story_id": "STORY1",
+    "sku": "CARE1",
+    "territory": "US",
+    "channel": "organic_social",
+    "campaign_start": "2026-10-04T00:00:00Z",
+    "campaign_end": "2026-10-31T00:00:00Z",
+    "product_name": "The daily care edit",
+    "product_image": "https://images.pexels.com/photos/8102129/pexels-photo-8102129.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "product_url": "https://example.com/shop/care",
+    "hook": "A little moment for yourself.",
+    "cta": "Make room for your routine",
+    "demo": true
+  },
+  "records": [
+    {
+      "kind": "clip",
+      "record_id": "routineA",
+      "clip_id": "routineA",
+      "contributor_id": "DEMO-A",
+      "sku": "CARE1",
+      "role": "routine",
+      "url": "https://videos.pexels.com/video-files/7314356/7314356-hd_1366_720_25fps.mp4",
+      "duration_seconds": 10,
+      "orientation": "portrait",
+      "quality_score": 80,
+      "release_id": "REL-A",
+      "received_at": "2026-10-01T08:00:00Z"
+    },
+    {
+      "kind": "clip",
+      "record_id": "applicationA",
+      "clip_id": "applicationA",
+      "contributor_id": "DEMO-A",
+      "sku": "CARE1",
+      "role": "application",
+      "url": "https://videos.pexels.com/video-files/7390091/7390091-hd_1920_1080_25fps.mp4",
+      "duration_seconds": 10,
+      "orientation": "landscape",
+      "quality_score": 85,
+      "release_id": "REL-A",
+      "received_at": "2026-10-01T09:00:00Z"
+    },
+    {
+      "kind": "release",
+      "record_id": "REL-A",
+      "release_id": "REL-A",
+      "contributor_id": "DEMO-A",
+      "sku": "CARE1",
+      "territories": [
+        "US"
+      ],
+      "channels": [
+        "organic_social"
+      ],
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_until": "2027-01-01T00:00:00Z",
+      "revoked": false,
+      "evidence_url": "https://example.com/demo-release"
+    },
+    {
+      "kind": "caption",
+      "record_id": "quoteA",
+      "contributor_id": "DEMO-A",
+      "sku": "CARE1",
+      "caption": "A simple step in my routine.",
+      "approval": "approved",
+      "claim_evidence": "https://example.com/demo-quote"
+    }
+  ]
+}

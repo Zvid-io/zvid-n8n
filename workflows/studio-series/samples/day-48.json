@@ -1,0 +1,58 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-48-demo",
+    "revision": "1",
+    "brand": "JUNIPER CATERING",
+    "eventLabel": "Private autumn reception",
+    "eventDate": "2026-10-24",
+    "guests": 40,
+    "package_id": "autumn",
+    "deliveryZone": "central",
+    "excludedAllergens": [],
+    "currency": "USD",
+    "quoteValidUntil": "2026-10-15",
+    "cta": "Review the menu. Confirm your event.",
+    "destination": "https://juniper.example/quotes/QT-1042"
+  },
+  "records": [
+    {
+      "kind": "package",
+      "record_id": "autumn",
+      "name": "Autumn reception",
+      "perGuestCents": 3200,
+      "currency": "USD",
+      "minGuests": 20,
+      "maxGuests": 100,
+      "allergens": [
+        "gluten",
+        "milk"
+      ],
+      "menuOne": "Grazing and seasonal bites",
+      "menuTwo": "Pastry and dessert selection",
+      "heroImage": "https://images.pexels.com/photos/29086309/pexels-photo-29086309.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "menuOneImage": "https://images.pexels.com/photos/29086309/pexels-photo-29086309.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "menuTwoImage": "https://images.pexels.com/photos/2337843/pexels-photo-2337843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "serviceCents": 12000,
+      "taxBasisPoints": 0,
+      "approved": true
+    },
+    {
+      "kind": "capacity",
+      "record_id": "cap1024",
+      "date": "2026-10-24",
+      "maxGuests": 200,
+      "bookedGuests": 80,
+      "updatedAt": "2026-10-03T10:00:00Z"
+    },
+    {
+      "kind": "delivery",
+      "record_id": "central",
+      "zone": "central",
+      "feeCents": 6000,
+      "currency": "USD",
+      "approved": true
+    }
+  ]
+}

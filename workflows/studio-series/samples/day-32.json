@@ -1,0 +1,106 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T09:00:00Z",
+  "request": {
+    "request_id": "demo-look-001",
+    "revision": 1,
+    "approval": "approved",
+    "brand": "FORM & FIELD",
+    "as_of": "2026-10-03T09:00:00Z",
+    "look_id": "weekend",
+    "look_name": "The weekend edit",
+    "anchor_sku": "LOOK1",
+    "shoe_size": "40",
+    "palette": [
+      "neutral"
+    ],
+    "max_bundle_minor": 23000,
+    "currency": "USD",
+    "market": "US",
+    "outfit_image": "https://images.pexels.com/photos/5352628/pexels-photo-5352628.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "look_url": "https://example.com/shop/weekend"
+  },
+  "records": [
+    {
+      "kind": "accessory",
+      "record_id": "B1",
+      "sku": "B1",
+      "category": "bag",
+      "name": "Sunshine carry",
+      "price_minor": 6800,
+      "stock": 8,
+      "available_sizes": [],
+      "palette": [
+        "neutral"
+      ],
+      "primary_image": "https://images.unsplash.com/photo-1640901555383-7335ec5a6476?auto=format&fit=crop&w=1080&h=1600&q=85",
+      "product_url": "https://example.com/shop/B1",
+      "currency": "USD",
+      "market": "US",
+      "active": true
+    },
+    {
+      "kind": "accessory",
+      "record_id": "S1",
+      "sku": "S1",
+      "category": "shoe",
+      "name": "City sneaker",
+      "price_minor": 9500,
+      "stock": 8,
+      "available_sizes": [
+        "40",
+        "41"
+      ],
+      "palette": [
+        "neutral"
+      ],
+      "primary_image": "https://images.pexels.com/photos/27503504/pexels-photo-27503504.png?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+      "product_url": "https://example.com/shop/S1",
+      "currency": "USD",
+      "market": "US",
+      "active": true
+    },
+    {
+      "kind": "accessory",
+      "record_id": "G1",
+      "sku": "G1",
+      "category": "glasses",
+      "name": "Everyday frames",
+      "price_minor": 4200,
+      "stock": 8,
+      "available_sizes": [],
+      "palette": [
+        "neutral"
+      ],
+      "primary_image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1080&h=700&q=85",
+      "product_url": "https://example.com/shop/G1",
+      "currency": "USD",
+      "market": "US",
+      "active": true
+    },
+    {
+      "kind": "compatibility",
+      "record_id": "e0",
+      "anchor_sku": "LOOK1",
+      "accessory_sku": "B1",
+      "approved": true,
+      "style_score": 80
+    },
+    {
+      "kind": "compatibility",
+      "record_id": "e1",
+      "anchor_sku": "LOOK1",
+      "accessory_sku": "S1",
+      "approved": true,
+      "style_score": 81
+    },
+    {
+      "kind": "compatibility",
+      "record_id": "e2",
+      "anchor_sku": "LOOK1",
+      "accessory_sku": "G1",
+      "approved": true,
+      "style_score": 82
+    }
+  ]
+}

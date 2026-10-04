@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-01 10:39:08 UTC",
+  "projectId": 6,
+  "totalNativeIssues": 528,
+  "originalIssuesVerified": 78,
+  "originalIssuesUnchanged": true,
+  "newStoriesVerified": 30,
+  "newChildrenVerified": 420,
+  "buildTasksDone": 30,
+  "canvasTasksDone": 30,
+  "futureTasksBacklog": 360,
+  "remainingChildren": 360,
+  "blockedChildren": 0,
+  "childStageCounts": {
+    "Done": 60,
+    "Backlog": 360
+  },
+  "storiesInProgress": 30,
+  "manualExecutionAndMediaPairsVerified": 30,
+  "automatedChecksPassed": 272,
+  "automatedChecksFailed": 0,
+  "finalSuiteNote": "272 checks passed after one added cooking-card regression test. Other 29 rendered outputs unchanged; their previously recorded 271-check evidence remains valid.",
+  "scope": "Local Docker n8n builds and screenshot assets complete. Cloud releases, Make work, examples and distribution remain Backlog.",
+  "errors": []
+}

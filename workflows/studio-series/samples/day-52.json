@@ -1,0 +1,100 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-52",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "Istanbul, 2005. Liverpool trail Milan three-nil at half-time. Then six minutes change everything. Fifty-four: Steven Gerrard heads in. Fifty-six: Vladimír Šmicer drives in the second. Sixty: Xabi Alonso converts the rebound, and it’s three-three. Extra time cannot separate them. Liverpool win the shoot-out three-two. The comeback kept the final alive. Penalties decided the trophy.",
+    "team_one": "Milan",
+    "team_two": "Liverpool",
+    "half_home": 3,
+    "half_away": 0,
+    "final_home": 3,
+    "final_away": 3,
+    "shootout_home": 2,
+    "shootout_away": 3,
+    "date": "ISTANBUL · 25 MAY 2005",
+    "credit": "Facts: UEFA match report, Milan–Liverpool 2005.\nVenue photo: Валерий Дед · CC BY 3.0\nLater stadium context photograph; cropped and graded.",
+    "finalDetail": "FROM THREE DOWN TO EUROPEAN CHAMPIONS",
+    "halfTimeDetail": "THREE DOWN AT THE BREAK"
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-52",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Editor reviewed the exact supplied lesson and cited its underlying source.",
+      "url": "https://www.uefa.com/uefachampionsleague/match/80813--milan-vs-liverpool/"
+    },
+    {
+      "parent_id": "qa-studio-52",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "goal",
+      "position": 2,
+      "approval": "approved",
+      "minute": 54,
+      "team": "Liverpool",
+      "player": "STEVEN GERRARD",
+      "description": "A header starts the recovery."
+    },
+    {
+      "parent_id": "qa-studio-52",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "goal",
+      "position": 3,
+      "approval": "approved",
+      "minute": 56,
+      "team": "Liverpool",
+      "player": "VLADIMÍR ŠMICER",
+      "description": "A low drive brings Liverpool closer."
+    },
+    {
+      "parent_id": "qa-studio-52",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "goal",
+      "position": 4,
+      "approval": "approved",
+      "minute": 60,
+      "team": "Liverpool",
+      "player": "XABI ALONSO",
+      "description": "The rebound makes it level."
+    },
+    {
+      "parent_id": "qa-studio-52",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "media",
+      "position": 5,
+      "approval": "approved",
+      "variable": "stadiumPhoto",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Istanbul_Atat%C3%BCrk_Olympic_Stadium_1.jpg/1280px-Istanbul_Atat%C3%BCrk_Olympic_Stadium_1.jpg",
+      "rights": "Facts: UEFA match report, Milan–Liverpool 2005.\nVenue photo: Валерий Дед · CC BY 3.0\nLater stadium context photograph; cropped and graded."
+    },
+    {
+      "parent_id": "qa-studio-52",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "narration",
+      "position": 6,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790883829/zvid-series2-design-review-20261001/d52-narration.mp3",
+      "seconds": 32.64,
+      "content_fingerprint": "7b73c914e6458a76ac67dace107578fff49d69c98ab6a7184c0a07fe6901bdc6",
+      "script": "Istanbul, 2005. Liverpool trail Milan three-nil at half-time. Then six minutes change everything. Fifty-four: Steven Gerrard heads in. Fifty-six: Vladimír Šmicer drives in the second. Sixty: Xabi Alonso converts the rebound, and it’s three-three. Extra time cannot separate them. Liverpool win the shoot-out three-two. The comeback kept the final alive. Penalties decided the trophy.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

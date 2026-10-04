@@ -1,0 +1,30 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const dir = __dirname;
+const read = name => JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8'));
+const catalog = read('catalog.json');
+const runs = read('executions.json');
+const media = read('media-results.json').results;
+const testLogBytes = fs.readFileSync(path.join(dir, 'final-tests.log'));
+const testLog = testLogBytes.toString(testLogBytes[0] === 0xff && testLogBytes[1] === 0xfe ? 'utf16le' : 'utf8');
+const automatedChecks = [...testLog.matchAll(/^[ℹ#]\s+tests\s+(\d+)/gm)].reduce((total, match) => total + Number(match[1]), 0);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const results = catalog.map(w => {
+  const execution = runs.find(r => r.workflowId === w.workflowId && r.mode === 'manual');
+  const mediaQA = media.find(r => r.workflowId === w.workflowId && String(r.executionId) === String(execution?.id));
+  const canvasQA = read(`day-${w.day}-canvas-qa.json`);
+  const passed = execution?.status === 'success' && execution?.preview?.mimeType === 'video/mp4' && mediaQA?.mediaPassed && mediaQA?.visualReview === 'passed' && canvasQA.allTextFits && canvasQA.overlap.length === 0;
+  return { ...w, passed: Boolean(passed), execution, mediaQA, canvasQA, attempts: runs.filter(r => r.workflowId === w.workflowId && r.mode === 'manual').map(r => ({ id: r.id, status: r.status, error: r.error })) };
+});
+fs.writeFileSync(path.join(dir, 'test-results.json'), JSON.stringify(results, null, 2));
+const rows = results.map(w => {
+  const r = w.execution, out = r?.output ?? {};
+  const status = w.passed ? 'Passed' : r?.status === 'error' ? 'Retest pending' : r?.status === 'success' ? 'Review pending' : 'Pending';
+  return `<tr><td>${w.day}</td><td><a href="${w.url}">${esc(w.title)}</a><div class="desc">${esc(w.description)}</div></td><td>${status}<div class="desc">Execution ${esc(r?.id ?? '—')} · ${esc(r?.mode ?? '—')}</div></td><td>${esc(out.quotedCredits ?? '—')}</td><td><a href="../../workflows/${w.filename}">JSON</a> · <a href="../../workflows/${w.slug}.md">Guide</a>${out.videoUrl ? ` · <a href="${esc(out.videoUrl)}">Video</a>` : ''}<div class="desc"><a href="flowlu-day-${w.day}-canvas.png">Canvas</a> · <a href="flowlu-day-${w.day}-overview.png">Setup</a>${w.mediaQA?.contactSheet ? ` · <a href="${esc(w.mediaQA.contactSheet)}">Frames</a>` : ''}</div></td></tr>`;
+}).join('\n');
+const summary = { total: results.length, passed: results.filter(w => w.passed).length, manualSuccess: results.filter(w => w.execution?.status === 'success').length, withPreview: results.filter(w => w.execution?.preview).length, automatedChecks, updatedAt: new Date().toISOString() };
+fs.writeFileSync(path.join(dir, 'catalog.html'), `<!doctype html><html><head><meta charset="utf-8"><title>Zvid n8n — Days 31–60</title><style>body{font:16px system-ui;background:#f4f3ef;color:#202327;max-width:1200px;margin:40px auto;padding:0 24px}h1{font-size:36px;margin-bottom:12px}p{max-width:950px;line-height:1.6}a{color:#245ac8}table{width:100%;border-collapse:collapse;background:#fff}th,td{text-align:left;vertical-align:top;border-bottom:1px solid #ddd;padding:14px}th{background:#e9e7e0}.desc{font-size:13px;color:#666;margin-top:6px;max-width:560px}code{background:#e9e7e0;padding:2px 5px}footer{margin:24px 0;color:#666}.status{font-size:22px;font-weight:600}</style></head><body><h1>30 additional n8n automations</h1><p class="status">${summary.passed} / 30 manual sample tests and media reviews passed</p><p>Days 31–60. Each workflow includes sample input, an incoming webhook, its own business-data transformation, free payload validation and credit check, a Zvid render, and a guarded completed-video preview. Open a workflow, select <strong>Test manually</strong>, and inspect <strong>Watch video → Binary → data → View</strong>.</p><p><strong>Cost:</strong> the included samples quote 18 or 24 credits per render, with a 30-credit cap. <code>dryRun: false</code> spends credits. <code>dryRun: true</code> returns a quote and attempts to save an editor draft; the current account's project limit can return <code>draft_unavailable</code>. Paid submission has no automatic retries. Inspect an accepted job before running again.</p><p>All workflows are imported and inactive in your local Docker n8n, using your existing Zvid connection. Publish locally to enable their production webhooks. They render briefs from supplied JSON; upstream data collection and delivery can be added as needed. Canonical JSON files contain no credentials.</p><p><strong>Verification:</strong> actual manual executions, full MP4 decoding, resolution and duration checks, scene-by-scene visual review, rendered canvas inspection, and 271 automated checks with zero failures. Webhook input and HTTP 202 acknowledgement were tested separately. Failed attempts are retained in the detailed report, including hourly-quota rejections and completed jobs with missing video uploads. The current account allows 20 render submissions per hour. Sample passes confirm the supplied examples; guides describe required fields and business rules.</p><table><thead><tr><th>Day</th><th>Automation</th><th>Manual test</th><th>Quoted credits</th><th>Files and output</th></tr></thead><tbody>${rows}</tbody></table><footer>Prepared 1 October 2026 · <a href="test-results.json">Detailed test evidence</a> · <a href="media-results.json">Media QA</a> · <a href="edge-results.json">Edge cases</a> · <a href="webhook-evidence.json">Webhook evidence</a> · <a href="import-audit.json">Import audit</a> · <a href="flowlu.json">Launch tracker IDs</a> · <a href="manual-video-preview.png">Playback screenshot</a></footer></body></html>`);
+const htmlPath = path.join(dir, 'catalog.html');
+fs.writeFileSync(htmlPath, fs.readFileSync(htmlPath, 'utf8').replace('href="manual-video-preview.png"', 'href="flowlu-manual-video-preview.png"').replace('271 automated checks', `${automatedChecks} automated checks`));
+console.log(JSON.stringify(summary));

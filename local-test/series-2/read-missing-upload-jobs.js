@@ -1,0 +1,9 @@
+'use strict';
+const sqlite3=require('/usr/local/lib/node_modules/n8n/node_modules/sqlite3');const{parse}=require('/usr/local/lib/node_modules/n8n/node_modules/flatted');
+const db=new sqlite3.Database('/home/node/.n8n/database.sqlite',sqlite3.OPEN_READONLY);
+db.all('SELECT e.id,e.workflowId,e.status,e.mode,e.startedAt,e.stoppedAt,d.data FROM execution_entity e JOIN execution_data d ON d.executionId=e.id WHERE e.id IN (?,?) ORDER BY CAST(e.id AS INTEGER)',[694,714],(error,rows)=>{
+  if(error){console.error(error.message);process.exitCode=1;db.close();return;}
+  const incidents=rows.map(row=>{const parsed=parse(row.data);const result=parsed.resultData||parsed.data?.resultData||{};const runs=result.runData||{};const json=name=>runs[name]?.at(-1)?.data?.main?.[0]?.[0]?.json;const submitted=json('Submit render once')||{};const completed=json('Wait for completed render')||{};const media=completed.result||completed.output||completed.returnvalue||{};
+    return{day:Number(row.workflowId.replace('ZvidSeries2Day','')),executionId:row.id,status:row.status,mode:row.mode,startedAt:row.startedAt,stoppedAt:row.stoppedAt,lastNode:result.lastNodeExecuted,acceptedJobId:submitted.jobId||submitted.id||completed.id||completed.jobId,completedState:completed.state||completed.status,outputUrl:completed.outputUrl||completed.videoUrl||(typeof media==='string'?media:media.url||media.outputUrl||media.videoUrl)||null,thumbnailUrl:typeof media==='object'?media.thumbnailUrl||null:null,fileName:typeof media==='object'?media.fileName||null:null,duration:typeof media==='object'?media.duration||null:null,errorMessage:result.error?.message||null,paidSubmitSucceeded:runs['Submit render once']?.at(-1)?.executionStatus==='success',noAutomaticSubmissionRetry:runs['Submit render once']?.length===1};});
+  console.log(JSON.stringify(incidents));db.close();
+});

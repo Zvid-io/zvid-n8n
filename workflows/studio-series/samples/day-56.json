@@ -1,0 +1,87 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-56",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "One-half plus one-third equals two-fifths. Is that right? Pause and spot the mistake. Adding denominators changes the size of the pieces. Instead, use sixths. One-half is three sixths. One-third is two sixths. Add those equal pieces: five sixths. Try one-quarter plus one-half. The answer is three-quarters. Same unit size, then add the pieces.",
+    "minimum_error_rate": 0.25,
+    "prompt": "Can you explain what went wrong?"
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-56",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Teacher verified exact rational arithmetic and anonymized cohort counts.",
+      "url": "https://docs.zvid.io"
+    },
+    {
+      "parent_id": "qa-studio-56",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "assessment",
+      "position": 2,
+      "approval": "approved",
+      "error_type": "add_denominators",
+      "count": 18
+    },
+    {
+      "parent_id": "qa-studio-56",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "assessment",
+      "position": 3,
+      "approval": "approved",
+      "error_type": "correct",
+      "count": 12
+    },
+    {
+      "parent_id": "qa-studio-56",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "fraction_problem",
+      "position": 4,
+      "approval": "approved",
+      "a": 1,
+      "b": 2,
+      "c": 1,
+      "d": 3
+    },
+    {
+      "parent_id": "qa-studio-56",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "fraction_problem",
+      "position": 5,
+      "approval": "approved",
+      "a": 1,
+      "b": 4,
+      "c": 1,
+      "d": 2
+    },
+    {
+      "parent_id": "qa-studio-56",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "narration",
+      "position": 6,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790884194/zvid-series2-design-review-20261001/d56-narration.mp3",
+      "seconds": 30.792,
+      "content_fingerprint": "45171c5511df4d15ba961edf3cecce1e56aa1a26c14b28be7c4d5488e1a6734b",
+      "script": "One-half plus one-third equals two-fifths. Is that right? Pause and spot the mistake. Adding denominators changes the size of the pieces. Instead, use sixths. One-half is three sixths. One-third is two sixths. Add those equal pieces: five sixths. Try one-quarter plus one-half. The answer is three-quarters. Same unit size, then add the pieces.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

@@ -5,6 +5,7 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const { normalizeNodeGroups } = require('./zvid-native-workflows');
 const { applyPublicationNotes, publicationKind } = require('./publication-sticky-notes');
+const { repairWorkflowRuntime } = require('./workflow-runtime-repairs');
 
 const STICKY = 'n8n-nodes-base.stickyNote';
 const WATCH = '▶ Watch video';
@@ -55,7 +56,7 @@ function noteCategory(note, overviewId) {
 }
 
 function organizeWorkflow(original) {
-  const workflow = structuredClone(original);
+  const workflow = repairWorkflowRuntime(structuredClone(original));
   if ('nodeGroups' in workflow) workflow.nodeGroups = normalizeNodeGroups(workflow.nodeGroups);
   const existingWatch = workflow.nodes.filter(n => n.type !== STICKY && /watch video/i.test(n.name));
   assert.ok(existingWatch.length <= 1, 'Multiple watch steps require a workflow-specific review');

@@ -1,0 +1,459 @@
+[
+  {
+    "id": "ZvidSeries2PublicationRequeueRejectedD51",
+    "name": "QA requeue only definitively rejected D51 intent",
+    "active": false,
+    "nodes": [
+      {
+        "id": "infra-d51-requeue-1",
+        "name": "Reconcile rejected D51 manually",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          200
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "infra-d51-requeue-2",
+        "name": "Audit native recent jobs again",
+        "type": "@zvid/n8n-nodes-zvid.zvid",
+        "typeVersion": 1,
+        "position": [
+          260,
+          200
+        ],
+        "parameters": {
+          "resource": "render",
+          "operation": "getAll",
+          "limit": 100,
+          "page": 1,
+          "filterType": "all"
+        },
+        "credentials": {
+          "zvidApi": {
+            "id": "e3b494f287402c80c13bf080",
+            "name": "Zvid workflow series"
+          }
+        },
+        "executeOnce": true,
+        "alwaysOutputData": true
+      },
+      {
+        "id": "infra-d51-requeue-3",
+        "name": "Require proven rejection and no accepted job",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          520,
+          200
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const expected={\"ledgerTableId\":\"LQgWxc1qaXzfNqlx\",\"ledgerRowId\":1,\"requestKey\":\"travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh\",\"sourceId\":\"qa-d51-record-001\",\"revision\":\"r1\",\"status\":\"submitting\",\"jobId\":null,\"inputHash\":\"214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8\",\"projectSha256\":\"a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836\",\"inputJsonSha256\":\"93a38620bf1fb61468a7c3f50110930a2fb51abf7804b5a564eade994f18710a\",\"briefJsonSha256\":\"9fe131d16bf5bd3518ecd8992f2898756ca43a01392be22295608ac6aa83b978\",\"contextJsonSha256\":\"86fc69b27caa06e50b870fcaf5b18d4e87c5ea0588e68259682356f6b85f2f0b\",\"attemptedProjectName\":\"travel-itinerary-video\",\"quotedCredits\":18,\"updatedAt\":\"2026-10-01T12:57:48.240Z\"},proof={\"failedExecutionId\":794,\"httpCode\":429,\"reason\":\"concurrent_limit_exceeded\",\"current\":3,\"limit\":3,\"noAcceptanceCheckpoints\":true,\"routeSha256\":\"27a64ec5f0652eb34cc227cd3bb83f3186d10b80ce44ec329f286bd13d633276\",\"middlewareSha256\":\"574e8f47c7a9c7b3a99f8e39075e9ca70521ceb5d431858b59a644a316e0ce9b\",\"middlewareRejectedBeforeController\":true};\nif(proof.failedExecutionId!==794||proof.httpCode!==429||proof.reason!=='concurrent_limit_exceeded'||proof.current!==3||proof.limit!==3||proof.noAcceptanceCheckpoints!==true||proof.middlewareRejectedBeforeController!==true)throw new Error('Rejection proof failed.');\nconst jobs=$input.all().flatMap(item=>Array.isArray(item.json)?item.json:Array.isArray(item.json.jobs)?item.json.jobs:[item.json]).filter(job=>job.id||job.jobId||job.job_id);\nconst failedAt=Date.parse(\"2026-10-01 12:57:45.857\".replace(' ','T')+'Z');\nconst timestamps=jobs.map(job=>Date.parse(job.created_at||job.createdAt||job.ts?.created));\nif(!jobs.length||timestamps.some(value=>!Number.isFinite(value))||Math.min(...timestamps)>failedAt-10000)throw new Error('Acceptance audit does not cover the rejected request.');\nconst candidates=jobs.filter((job,index)=>job.name===expected.attemptedProjectName&&timestamps[index]>=failedAt-10000);\nif(candidates.length)throw new Error('A matching D51 job exists; never requeue it.');\nreturn [{json:{proof,expected,auditedAt:new Date().toISOString(),recentJobCount:jobs.length,noAcceptedD51Job:true}}];"
+        }
+      },
+      {
+        "id": "infra-d51-requeue-4",
+        "name": "Read exact rejected D51 ledger row",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          780,
+          200
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "LQgWxc1qaXzfNqlx"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "request_key",
+                "condition": "eq",
+                "keyValue": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh"
+              }
+            ]
+          },
+          "returnAll": false,
+          "limit": 2
+        },
+        "alwaysOutputData": true,
+        "executeOnce": true
+      },
+      {
+        "id": "infra-d51-requeue-5",
+        "name": "Require exact unchanged submitting row",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1040,
+          200
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const expected={\"ledgerTableId\":\"LQgWxc1qaXzfNqlx\",\"ledgerRowId\":1,\"requestKey\":\"travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh\",\"sourceId\":\"qa-d51-record-001\",\"revision\":\"r1\",\"status\":\"submitting\",\"jobId\":null,\"inputHash\":\"214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8\",\"projectSha256\":\"a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836\",\"inputJsonSha256\":\"93a38620bf1fb61468a7c3f50110930a2fb51abf7804b5a564eade994f18710a\",\"briefJsonSha256\":\"9fe131d16bf5bd3518ecd8992f2898756ca43a01392be22295608ac6aa83b978\",\"contextJsonSha256\":\"86fc69b27caa06e50b870fcaf5b18d4e87c5ea0588e68259682356f6b85f2f0b\",\"attemptedProjectName\":\"travel-itinerary-video\",\"quotedCredits\":18,\"updatedAt\":\"2026-10-01T12:57:48.240Z\"},rows=$input.all().map(item=>item.json).filter(row=>row.request_key);\nif(rows.length!==1)throw new Error('Exactly one rejected QA row is required.');\nconst row=rows[0];\nif(row.id!==expected.ledgerRowId||row.request_key!==expected.requestKey||row.workflow_slug!=='travel-itinerary-video'||row.source_id!==expected.sourceId||row.revision!==expected.revision||row.status!=='submitting'||row.job_id||row.video_url||row.drive_file_id||row.drive_url||row.input_hash!==expected.inputHash||row.quoted_credits!==expected.quotedCredits||row.updated_at!==expected.updatedAt)throw new Error('The rejected ledger row changed; stop reconciliation.');\nif($('Require proven rejection and no accepted job').first().json.noAcceptedD51Job!==true)throw new Error('Fresh acceptance audit is missing.');\nreturn [{json:row}];"
+        }
+      },
+      {
+        "id": "infra-d51-requeue-6",
+        "name": "Hash frozen project_json",
+        "type": "n8n-nodes-base.crypto",
+        "typeVersion": 1,
+        "position": [
+          1300,
+          200
+        ],
+        "parameters": {
+          "action": "hash",
+          "type": "SHA256",
+          "value": "={{ $json.project_json }}",
+          "dataPropertyName": "qa_project_sha",
+          "encoding": "hex"
+        }
+      },
+      {
+        "id": "infra-d51-requeue-7",
+        "name": "Hash frozen input_json",
+        "type": "n8n-nodes-base.crypto",
+        "typeVersion": 1,
+        "position": [
+          1560,
+          200
+        ],
+        "parameters": {
+          "action": "hash",
+          "type": "SHA256",
+          "value": "={{ $json.input_json }}",
+          "dataPropertyName": "qa_input_sha",
+          "encoding": "hex"
+        }
+      },
+      {
+        "id": "infra-d51-requeue-8",
+        "name": "Hash frozen brief_json",
+        "type": "n8n-nodes-base.crypto",
+        "typeVersion": 1,
+        "position": [
+          1820,
+          200
+        ],
+        "parameters": {
+          "action": "hash",
+          "type": "SHA256",
+          "value": "={{ $json.brief_json }}",
+          "dataPropertyName": "qa_brief_sha",
+          "encoding": "hex"
+        }
+      },
+      {
+        "id": "infra-d51-requeue-9",
+        "name": "Hash frozen context_json",
+        "type": "n8n-nodes-base.crypto",
+        "typeVersion": 1,
+        "position": [
+          2080,
+          200
+        ],
+        "parameters": {
+          "action": "hash",
+          "type": "SHA256",
+          "value": "={{ $json.context_json }}",
+          "dataPropertyName": "qa_context_sha",
+          "encoding": "hex"
+        }
+      },
+      {
+        "id": "infra-d51-requeue-10",
+        "name": "Approve only this rejected QA row for requeue",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2340,
+          200
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const expected={\"ledgerTableId\":\"LQgWxc1qaXzfNqlx\",\"ledgerRowId\":1,\"requestKey\":\"travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh\",\"sourceId\":\"qa-d51-record-001\",\"revision\":\"r1\",\"status\":\"submitting\",\"jobId\":null,\"inputHash\":\"214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8\",\"projectSha256\":\"a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836\",\"inputJsonSha256\":\"93a38620bf1fb61468a7c3f50110930a2fb51abf7804b5a564eade994f18710a\",\"briefJsonSha256\":\"9fe131d16bf5bd3518ecd8992f2898756ca43a01392be22295608ac6aa83b978\",\"contextJsonSha256\":\"86fc69b27caa06e50b870fcaf5b18d4e87c5ea0588e68259682356f6b85f2f0b\",\"attemptedProjectName\":\"travel-itinerary-video\",\"quotedCredits\":18,\"updatedAt\":\"2026-10-01T12:57:48.240Z\"},row=$input.first().json;\nif(row.qa_project_sha!==expected.projectSha256||row.qa_input_sha!==expected.inputJsonSha256||row.qa_brief_sha!==expected.briefJsonSha256||row.qa_context_sha!==expected.contextJsonSha256)throw new Error('Frozen request content changed; stop reconciliation.');\nreturn [{json:{...row,status:'new',last_error:'Manual QA reconciliation: execution794 was rejected HTTP429 concurrent_limit_exceeded (current3/limit3) before job creation; native job audit found no matching job since rejection. Requeued only this unchanged QA intent; no account counters changed.'}}];"
+        }
+      },
+      {
+        "id": "infra-d51-requeue-11",
+        "name": "Requeue only rejected D51 status and error",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          2600,
+          200
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "update",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "LQgWxc1qaXzfNqlx"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "request_key",
+                "condition": "eq",
+                "keyValue": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh"
+              },
+              {
+                "keyName": "status",
+                "condition": "eq",
+                "keyValue": "submitting"
+              },
+              {
+                "keyName": "input_hash",
+                "condition": "eq",
+                "keyValue": "214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "status": "={{ $json.status }}",
+              "last_error": "={{ $json.last_error }}"
+            },
+            "schema": [
+              {
+                "id": "status",
+                "displayName": "status",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "last_error",
+                "displayName": "last_error",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ]
+          },
+          "options": {
+            "dryRun": false
+          }
+        },
+        "executeOnce": true
+      },
+      {
+        "id": "infra-d51-requeue-12",
+        "name": "Read back rejected D51 reconciliation",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          2860,
+          200
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "LQgWxc1qaXzfNqlx"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "request_key",
+                "condition": "eq",
+                "keyValue": "travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh"
+              }
+            ]
+          },
+          "returnAll": false,
+          "limit": 2
+        },
+        "alwaysOutputData": true,
+        "executeOnce": true
+      },
+      {
+        "id": "infra-d51-requeue-13",
+        "name": "Verify only status and error changed",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3120,
+          200
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const expected={\"ledgerTableId\":\"LQgWxc1qaXzfNqlx\",\"ledgerRowId\":1,\"requestKey\":\"travel-itinerary-video|qa-d51-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh\",\"sourceId\":\"qa-d51-record-001\",\"revision\":\"r1\",\"status\":\"submitting\",\"jobId\":null,\"inputHash\":\"214c5e898b495993cd4afc4e048d689c56288c3b6d239e186839730f9592bad8\",\"projectSha256\":\"a31b1221e95f86ab082b1f60620270613520bc46e42d1d89fefbe2f9fd140836\",\"inputJsonSha256\":\"93a38620bf1fb61468a7c3f50110930a2fb51abf7804b5a564eade994f18710a\",\"briefJsonSha256\":\"9fe131d16bf5bd3518ecd8992f2898756ca43a01392be22295608ac6aa83b978\",\"contextJsonSha256\":\"86fc69b27caa06e50b870fcaf5b18d4e87c5ea0588e68259682356f6b85f2f0b\",\"attemptedProjectName\":\"travel-itinerary-video\",\"quotedCredits\":18,\"updatedAt\":\"2026-10-01T12:57:48.240Z\"},rows=$input.all().map(item=>item.json).filter(row=>row.request_key),before=$('Read exact rejected D51 ledger row').first().json;\nif(rows.length!==1)throw new Error('Reconciliation readback is ambiguous.');\nconst row=rows[0];if(row.id!==expected.ledgerRowId||row.status!=='new'||!String(row.last_error).includes('execution794')||row.job_id)throw new Error('D51 requeue readback failed.');\nfor(const key of Object.keys(before))if(!['status','last_error','updatedAt'].includes(key)&&JSON.stringify(before[key])!==JSON.stringify(row[key]))throw new Error('Unexpected ledger field change: '+key);\nreturn [{json:{resource:'isolated_D51_concurrent_rejection_reconciliation',failedExecutionId:794,ledgerTableId:expected.ledgerTableId,ledgerRowId:row.id,requestKey:row.request_key,status:row.status,jobId:row.job_id||null,inputHash:row.input_hash,projectSha256:expected.projectSha256,frozenFieldsPreserved:true,onlyChangedFields:['status','last_error'],paidNodesExecuted:[],accountCountersModified:false,reconciledAt:new Date().toISOString()}}];"
+        }
+      },
+      {
+        "id": "infra-d51-requeue-note",
+        "name": "Guarded local QA reconciliation instructions",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          -220
+        ],
+        "parameters": {
+          "color": 5,
+          "width": 1050,
+          "height": 350,
+          "content": "### Requeue one definitively rejected QA intent\n\nRun manually only after the read-only account job audit is reviewed. Execution794 received HTTP429 concurrent_limit_exceeded,current3/limit3 from middleware that returns before job creation. No accepted ID was captured.\n\nThis fixture audits recent jobs again, checks exactly D51 QA row1/source-r1 and every frozen request digest, then updates only status and last_error. A matching job, changed content, duplicate/missing row or incomplete time coverage stops it. It does not render, modify source Sheets, change counters or bypass plan limits. Source/other ledger rows remain intact. A second run stops because the intent is no longer submitting."
+        }
+      }
+    ],
+    "connections": {
+      "Reconcile rejected D51 manually": {
+        "main": [
+          [
+            {
+              "node": "Audit native recent jobs again",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Audit native recent jobs again": {
+        "main": [
+          [
+            {
+              "node": "Require proven rejection and no accepted job",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Require proven rejection and no accepted job": {
+        "main": [
+          [
+            {
+              "node": "Read exact rejected D51 ledger row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read exact rejected D51 ledger row": {
+        "main": [
+          [
+            {
+              "node": "Require exact unchanged submitting row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Require exact unchanged submitting row": {
+        "main": [
+          [
+            {
+              "node": "Hash frozen project_json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Hash frozen project_json": {
+        "main": [
+          [
+            {
+              "node": "Hash frozen input_json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Hash frozen input_json": {
+        "main": [
+          [
+            {
+              "node": "Hash frozen brief_json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Hash frozen brief_json": {
+        "main": [
+          [
+            {
+              "node": "Hash frozen context_json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Hash frozen context_json": {
+        "main": [
+          [
+            {
+              "node": "Approve only this rejected QA row for requeue",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Approve only this rejected QA row for requeue": {
+        "main": [
+          [
+            {
+              "node": "Requeue only rejected D51 status and error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Requeue only rejected D51 status and error": {
+        "main": [
+          [
+            {
+              "node": "Read back rejected D51 reconciliation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read back rejected D51 reconciliation": {
+        "main": [
+          [
+            {
+              "node": "Verify only status and error changed",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "timezone": "Africa/Cairo"
+    }
+  }
+]

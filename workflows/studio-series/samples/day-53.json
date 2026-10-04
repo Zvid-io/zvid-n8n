@@ -1,0 +1,121 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": null,
+  "request": {
+    "source_id": "qa-studio-53",
+    "revision": "r1",
+    "approval": "approved",
+    "status": "ready",
+    "updated_at": "2026-10-02T09:00:00Z",
+    "source_url": "https://docs.zvid.io",
+    "publish_at": "",
+    "expires_at": "",
+    "approved_script": "Everton once called Anfield home. The club was formed in 1878, and moved to Anfield in 1884. But in 1892, a dispute with the ground’s owner changed the city’s football story. Everton moved across Stanley Park to Goodison. Liverpool was formed to play at the empty Anfield. Before the derby had a scoreline, it had a shared address.",
+    "topic_id": "merseyside-origins",
+    "hook": "EVERTON ONCE\nCALLED ANFIELD HOME.",
+    "origin": "Everton is formed.",
+    "sharedGround": "Everton move to Anfield.",
+    "split": "A dispute brings a move to Goodison Park.",
+    "newClub": "Liverpool FC is formed to play at Anfield.",
+    "closing": "Two clubs.\nOne shared origin story.",
+    "credit": "History: Liverpool FC and Everton FC.\nAnfield photo: Ian Wilson · CC BY 2.0 · 2009\nGoodison photo: Daniel · CC BY 2.0 · 2022\nLater venue photographs, cropped for this edit.\nMap is an original schematic, not to scale."
+  },
+  "records": [
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r1",
+      "kind": "evidence",
+      "position": 1,
+      "approval": "approved",
+      "claim": "Editor reviewed the exact supplied lesson and cited its underlying source.",
+      "url": "https://www.liverpoolfc.com/info/1892-1959"
+    },
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r2",
+      "kind": "historical_event",
+      "position": 2,
+      "approval": "approved",
+      "event": "formed",
+      "year": 1878
+    },
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r3",
+      "kind": "historical_event",
+      "position": 3,
+      "approval": "approved",
+      "event": "anfield_move",
+      "year": 1884
+    },
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r4",
+      "kind": "historical_event",
+      "position": 4,
+      "approval": "approved",
+      "event": "goodison_move",
+      "year": 1892
+    },
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r5",
+      "kind": "historical_event",
+      "position": 5,
+      "approval": "approved",
+      "event": "liverpool_formed",
+      "year": 1892
+    },
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r6",
+      "kind": "evidence",
+      "position": 6,
+      "approval": "approved",
+      "claim": "Everton founding and Anfield to Goodison history.",
+      "url": "https://www.evertonfc.com/club/history"
+    },
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r7",
+      "kind": "media",
+      "position": 7,
+      "approval": "approved",
+      "variable": "anfieldPhoto",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/The_Kop_end.jpg/1280px-The_Kop_end.jpg",
+      "rights": "History: Liverpool FC and Everton FC.\nAnfield photo: Ian Wilson · CC BY 2.0 · 2009\nGoodison photo: Daniel · CC BY 2.0 · 2022\nLater venue photographs, cropped for this edit.\nMap is an original schematic, not to scale."
+    },
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r8",
+      "kind": "media",
+      "position": 8,
+      "approval": "approved",
+      "variable": "goodisonPhoto",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Outside_Goodison_Park_%2851930122219%29.jpg/1280px-Outside_Goodison_Park_%2851930122219%29.jpg",
+      "rights": "History: Liverpool FC and Everton FC.\nAnfield photo: Ian Wilson · CC BY 2.0 · 2009\nGoodison photo: Daniel · CC BY 2.0 · 2022\nLater venue photographs, cropped for this edit.\nMap is an original schematic, not to scale."
+    },
+    {
+      "parent_id": "qa-studio-53",
+      "revision": "r1",
+      "record_id": "r9",
+      "kind": "narration",
+      "position": 9,
+      "approval": "approved",
+      "url": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790883836/zvid-series2-design-review-20261001/d53-narration.mp3",
+      "seconds": 24.72,
+      "content_fingerprint": "376681bce0319f130f7c13ae34dad8c3eaf9a503b561bc6cad3941da32a41dd6",
+      "script": "Everton once called Anfield home. The club was formed in 1878, and moved to Anfield in 1884. But in 1892, a dispute with the ground’s owner changed the city’s football story. Everton moved across Stanley Park to Goodison. Liverpool was formed to play at the empty Anfield. Before the derby had a scoreline, it had a shared address.",
+      "rights": "Approved synthetic narration supplied with the reviewed Zvid design",
+      "cues_verified": true
+    }
+  ]
+}

@@ -6,6 +6,23 @@ Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before 
 
 [`zvid-flash-sale-alert.json`](zvid-flash-sale-alert.json)
 
+## Render capacity and preview downloads
+
+The video and banner now render **one at a time**. An explicit HTTP 429 rejection
+waits at least 30 seconds (or the API's longer retry delay) before retrying that
+asset, bounded by `timeoutMinutes`. Once a job is accepted, the workflow polls
+that job; it does not submit it again. Other submission errors stop so you can
+check https://app.zvid.io before retrying an uncertain request. The sheet is
+updated only after both assets complete. If a run stops after one asset succeeds,
+inspect its saved job and URL before starting the whole workflow again.
+
+**Watch video** and **View banner** use a 30-second request timeout and up to three
+download attempts. A preview error does not undo a completed render or its sheet
+update. Open the links in **Run summary**, or retry only the preview step.
+Both previews use the built-in HTTP Request v2 node to avoid a manual-run
+serialization error in n8n 2.29.10 that can leave newer download nodes spinning.
+`dryRun: false` remains the default and rendering spends credits.
+
 Drop a price, get both creatives. One run turns a single price change into a
 1080×1920 flash-sale video for socials **and** a 1200×628 still banner for the
 email blast — same Zvid key, same run, both written back to your sheet. Sales are

@@ -163,8 +163,10 @@ OpenRouter bill separately, per their own pricing.
 | **Check validation** | Turns a rejection into a per-clip field list instead of a generic HTTP error, and carries `payload`, `creditsRequired` and `meta` forward. |
 | **Dry run?** | Routes on `Config.dryRun`. It is `false` by default, so the normal path is straight to *Submit render*. |
 | **Save draft to editor** / **Dry run summary** | **Only when `dryRun: true`.** Saves a free draft per clip and reports the quoted credits plus an `editorLink` for each. Best-effort: a hiccup saving the draft never hides the report. |
-| **Submit render → Attach job to clip → Wait → Get render status → Merge job status → Render finished?** | The multi-job poll loop: one render per clip, jobs re-attached to their clip by index, finished clips move forward while the rest keep polling. |
-| **Still rendering?** | Fails fast when a job reports `failed` (naming the clip and its hook) and stops the loop at `timeoutMinutes`. |
+| **Render one asset at a time / Prepare render attempt** | Process one clip at a time. Each clip has its own submission deadline and preserves its metadata through retries. Completed clips accumulate until all clips are ready for the summary. |
+| **Check submission rejection / Wait for render capacity** | Retry only explicit HTTP 429 rejections after at least 30 seconds (honoring longer server delays), up to `timeoutMinutes`. Other errors stop for inspection; accepted jobs are never automatically resubmitted. |
+| **Submit render → Attach job to clip → Wait → Get render status → Merge job status → Render finished?** | Submit the current clip once, then poll that job until completion before starting the next clip. Keep the original clip metadata alongside each status response. |
+| **Still rendering?** | Stop when the current job fails or its elapsed render time reaches `timeoutMinutes`. A timed-out job may still finish; check the Zvid dashboard before retrying. |
 | **Run summary** | One item per finished clip: `videoUrl`, `hook`, `whyItSlaps`, `startsAt`, `clipSeconds`, `creditsCharged`. |
 | **▶ Watch video** | Downloads each finished MP4 as binary so n8n plays it inline — one player per clip, each with a download button. Never fails the run: it retries a few times (the CDN can 404 for a moment right after a render completes) and then continues regardless. |
 

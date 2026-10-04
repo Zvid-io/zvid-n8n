@@ -1,0 +1,94 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-50-demo",
+    "revision": "1",
+    "dish_id": "salmon",
+    "recipeRevision": "1",
+    "brand": "EMBER KITCHEN",
+    "cta": "Explore tonight’s menu",
+    "destination": "https://ember.example/menu"
+  },
+  "records": [
+    {
+      "kind": "dish",
+      "record_id": "salmon",
+      "name": "Pan-seared salmon",
+      "recipeRevision": "1",
+      "approved": true,
+      "approvedBy": "Demo head chef",
+      "ingredientIds": [
+        "salmon-batch",
+        "vegetables-batch"
+      ],
+      "opening": "A story from the pan",
+      "prepCaption": "Begin with fresh prep",
+      "cookCaption": "Heat. Sizzle. Patience.",
+      "story": "Salmon, vegetables and a plate worth slowing down for.",
+      "chefCredit": "Prepared by the kitchen team",
+      "claimIds": [],
+      "mediaDisclosure": "Illustrative footage · replace with footage of the actual dish"
+    },
+    {
+      "kind": "media",
+      "record_id": "salmon-kitchen",
+      "dish_id": "salmon",
+      "recipeRevision": "1",
+      "role": "kitchen",
+      "url": "https://videos.pexels.com/video-files/10432097/10432097-hd_1920_1080_30fps.mp4",
+      "rightsApproved": true,
+      "minUsableSeconds": 10,
+      "disclosure": "Illustrative footage; approved only for this demonstration"
+    },
+    {
+      "kind": "media",
+      "record_id": "salmon-prep",
+      "dish_id": "salmon",
+      "recipeRevision": "1",
+      "role": "prep",
+      "url": "https://cdn.pixabay.com/video/2017/08/29/11606-231571862_large.mp4",
+      "rightsApproved": true,
+      "minUsableSeconds": 10,
+      "disclosure": "Illustrative footage; approved only for this demonstration"
+    },
+    {
+      "kind": "media",
+      "record_id": "salmon-cook",
+      "dish_id": "salmon",
+      "recipeRevision": "1",
+      "role": "cook",
+      "url": "https://videos.pexels.com/video-files/10432093/10432093-hd_1920_1080_30fps.mp4",
+      "rightsApproved": true,
+      "minUsableSeconds": 10,
+      "disclosure": "Illustrative footage; approved only for this demonstration"
+    },
+    {
+      "kind": "media",
+      "record_id": "salmon-dish",
+      "dish_id": "salmon",
+      "recipeRevision": "1",
+      "role": "dish",
+      "url": "https://images.pexels.com/photos/6297198/pexels-photo-6297198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "rightsApproved": true,
+      "minUsableSeconds": 10,
+      "disclosure": "Illustrative footage; approved only for this demonstration"
+    },
+    {
+      "kind": "ingredient",
+      "record_id": "salmon-batch",
+      "name": "Salmon",
+      "batchRef": "DEMO-SAL-01",
+      "supplierRef": "Demo supplier",
+      "traceabilityApproved": true
+    },
+    {
+      "kind": "ingredient",
+      "record_id": "vegetables-batch",
+      "name": "Vegetables",
+      "batchRef": "DEMO-VEG-01",
+      "supplierRef": "Demo supplier",
+      "traceabilityApproved": true
+    }
+  ]
+}

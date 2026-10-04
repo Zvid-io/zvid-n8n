@@ -1,0 +1,84 @@
+{
+  "day": 39,
+  "allTextFits": true,
+  "cards": [
+    {
+      "bounds": {
+        "bottom": 487.56500244140625,
+        "left": 146,
+        "right": 275.0978088378906,
+        "top": 264.577880859375
+      },
+      "text": "An appointment to a preparation checklist video\nHow it works\n\nTurn appointment details and preparation requirements into a numbered reminder video. Run the included sample manually or POST the required JSON to the webhook. The workflow applies deterministic business rules and creates a branded 1280×720 MP4 with vector graphics and text. The output contains the source key, calculated metadata, credit quote and completed video URL. Delivery and social publishing can be added after reviewing the result.\n\nSetup\nInstall @zvid/n8n-nodes-zvid from Settings → Community nodes before configuring Zvid credentials. A workspace owner/admin may need to install it.\nCreate a Zvid API credential at https://app.zvid.io/api-keys with Base URL https://api.zvid.io. Select it on all four Zvid nodes.\nRequired input: appointmentType, appointmentAt, location, preparation. Edit Sample input or send the same shape to Receive event.\nEdit Config. The default dryRun: false renders and spends credits after checking maxRenderCredits. Set dryRun: true for an editor draft and quote.\nReview Watch video → Binary → data → View. The webhook returns an immediate 202 acknowledgement; open its execution for the result.\nCustomization\n\nChange brandName, accentColor, sceneSeconds and the bounded polling controls in Config. Exact input rules are in the included appointment-preparation-video.md companion; Zvid documentation covers API setup. Support: https://zvid.io/contact",
+      "textFits": true,
+      "title": "An appointment to a preparation checklist video"
+    },
+    {
+      "bounds": {
+        "bottom": 401.4998245239258,
+        "left": 289.963623046875,
+        "right": 456.2259521484375,
+        "top": 295.87432861328125
+      },
+      "text": "1. Choose input\n\nRun the included sample manually, or POST JSON to Receive event. The webhook acknowledges immediately; its execution contains the eventual result. Edit Config before rendering.",
+      "textFits": true,
+      "title": "1. Choose input"
+    },
+    {
+      "bounds": {
+        "bottom": 401.4998245239258,
+        "left": 474.6126098632813,
+        "right": 640.8749694824219,
+        "top": 295.87432861328125
+      },
+      "text": "2. Apply the business rules\n\nNormalize required fields and calculate the actual brief. Empty eligible input produces a visible zero-work result and skips validation and rendering.",
+      "textFits": true,
+      "title": "2. Apply the business rules"
+    },
+    {
+      "bounds": {
+        "bottom": 374.1154022216797,
+        "left": 662.3912353515625,
+        "right": 828.6535949707031,
+        "top": 295.87432861328125
+      },
+      "text": "3. Validate and control credits\n\nZvid checks the project free of render charges. Reject invalid input, unavailable quotes and quotes above maxRenderCredits before choosing draft or paid rendering.",
+      "textFits": true,
+      "title": "3. Validate and control credits"
+    },
+    {
+      "bounds": {
+        "bottom": 334.99485778808594,
+        "left": 853.2994995117188,
+        "right": 974.5732192993164,
+        "top": 264.577880859375
+      },
+      "text": "4. Optional editor draft\n\nOnly dryRun=true enters this branch. Open editorLink and inspect the quoted credits. A draft-save error remains visible in editorDraftError.",
+      "textFits": true,
+      "title": "4. Optional editor draft"
+    },
+    {
+      "bounds": {
+        "bottom": 435.92586517333984,
+        "left": 853.2994995117188,
+        "right": 1033.2540283203125,
+        "top": 361.5968322753906
+      },
+      "text": "5. Render once and retain the URL\n\nPaid submission has no automatic retries. Poll the accepted job within the configured wait budget; Video result keeps its completed URL and source metadata.",
+      "textFits": true,
+      "title": "5. Render once and retain the URL"
+    },
+    {
+      "bounds": {
+        "bottom": 435.92586517333984,
+        "left": 1056.726318359375,
+        "right": 1178.0000381469729,
+        "top": 361.5968322753906
+      },
+      "text": "6. Watch the completed MP4\n\nCompleted media only: Watch video → Binary → data → View. Downloads have a 30-second timeout and at most three attempts. The result URL survives a failed preview.",
+      "textFits": true,
+      "title": "6. Watch the completed MP4"
+    }
+  ],
+  "overlap": []
+}

@@ -1,0 +1,2313 @@
+{
+  "capturedAt": "2026-10-01T12:34:59.020Z",
+  "scope": "Sanitized manual local Docker edge evidence. Native integrations and simulated read/clock contracts are distinguished; no credentials or raw projects are emitted.",
+  "totalTests": 12,
+  "passedTests": 12,
+  "tests": [
+    {
+      "name": "CopyWorkbook",
+      "workflowId": "ZvidSeries2PubEdgeCopyWorkbook",
+      "evidenceClass": "native_google_drive_integration",
+      "passedExecutionIds": [
+        745
+      ],
+      "latestExecutionId": 745,
+      "latestPassed": true
+    },
+    {
+      "name": "SetupRows",
+      "workflowId": "ZvidSeries2PubEdgeSetupRows",
+      "evidenceClass": "native_google_sheets_qa_setup",
+      "passedExecutionIds": [
+        751
+      ],
+      "latestExecutionId": 751,
+      "latestPassed": true
+    },
+    {
+      "name": "MultiRead",
+      "workflowId": "ZvidSeries2PubEdgeMultiRead",
+      "evidenceClass": "native_google_sheets_and_datatable_integration",
+      "passedExecutionIds": [
+        753
+      ],
+      "latestExecutionId": 753,
+      "latestPassed": true
+    },
+    {
+      "name": "Unapproved",
+      "workflowId": "ZvidSeries2PubEdgeUnapproved",
+      "evidenceClass": "native_google_sheets_approval_integration",
+      "passedExecutionIds": [
+        755
+      ],
+      "latestExecutionId": 755,
+      "latestPassed": true
+    },
+    {
+      "name": "CapZero",
+      "workflowId": "ZvidSeries2PubEdgeCapZero",
+      "evidenceClass": "native_google_sheets_and_zvid_validation_integration",
+      "passedExecutionIds": [
+        757
+      ],
+      "latestExecutionId": 757,
+      "latestPassed": true
+    },
+    {
+      "name": "AcceptedDryRun",
+      "workflowId": "ZvidSeries2PubEdgeAcceptedDryRun",
+      "evidenceClass": "native_saved_state_integration",
+      "passedExecutionIds": [
+        759
+      ],
+      "latestExecutionId": 759,
+      "latestPassed": true
+    },
+    {
+      "name": "AmbiguousSubmission",
+      "workflowId": "ZvidSeries2PubEdgeAmbiguousSubmission",
+      "evidenceClass": "native_saved_state_integration",
+      "passedExecutionIds": [
+        761
+      ],
+      "latestExecutionId": 761,
+      "latestPassed": true
+    },
+    {
+      "name": "SourceReadRace",
+      "workflowId": "ZvidSeries2PubEdgeSourceReadRace",
+      "evidenceClass": "simulated_read_race_contract_with_native_delivery",
+      "passedExecutionIds": [
+        763
+      ],
+      "latestExecutionId": 763,
+      "latestPassed": true
+    },
+    {
+      "name": "DetailsReadRace",
+      "workflowId": "ZvidSeries2PubEdgeDetailsReadRace",
+      "evidenceClass": "simulated_read_race_contract_with_native_delivery",
+      "passedExecutionIds": [
+        765
+      ],
+      "latestExecutionId": 765,
+      "latestPassed": true
+    },
+    {
+      "name": "LostUploadResponse",
+      "workflowId": "ZvidSeries2PubEdgeLostUploadResponse",
+      "evidenceClass": "native_google_drive_lost_response_recovery",
+      "passedExecutionIds": [
+        768
+      ],
+      "latestExecutionId": 768,
+      "latestPassed": true
+    },
+    {
+      "name": "LostUploadReplay",
+      "workflowId": "ZvidSeries2PubEdgeLostUploadReplay",
+      "evidenceClass": "native_google_drive_lost_response_recovery",
+      "passedExecutionIds": [
+        770
+      ],
+      "latestExecutionId": 770,
+      "latestPassed": true
+    },
+    {
+      "name": "ExpiredNoticeRecovery",
+      "workflowId": "ZvidSeries2PubEdgeExpiredNoticeRecovery",
+      "evidenceClass": "simulated_clock_contract_with_native_job_recovery",
+      "passedExecutionIds": [
+        772
+      ],
+      "latestExecutionId": 772,
+      "latestPassed": true
+    }
+  ],
+  "attempts": [
+    {
+      "executionId": 745,
+      "workflowId": "ZvidSeries2PubEdgeCopyWorkbook",
+      "name": "CopyWorkbook",
+      "mode": "manual",
+      "status": "success",
+      "startedAt": "2026-10-01 12:08:16.940",
+      "stoppedAt": "2026-10-01 12:08:22.300",
+      "evidenceClass": "native_google_drive_integration",
+      "simulatedContract": false,
+      "expectedError": null,
+      "error": null,
+      "lastNode": "Copied workbook receipt",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "privateNativeCopyReceipt": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge copy configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Find existing edge workbook": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose existing copy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Copy needed?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Copy QA workbook privately": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Copied workbook receipt": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        }
+      },
+      "output": {
+        "status": "edge_workbook_ready",
+        "sourceId": null,
+        "revision": null,
+        "jobId": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "edgeSpreadsheetId": "1YI036cLhdg1FaKxa9Y4yz3nua8QNFZkrzf-mhcf37Nc",
+        "dryRun": null,
+        "deliveryAttempted": null,
+        "reason": null
+      },
+      "receipt": null
+    },
+    {
+      "executionId": 751,
+      "workflowId": "ZvidSeries2PubEdgeSetupRows",
+      "name": "SetupRows",
+      "mode": "manual",
+      "status": "success",
+      "startedAt": "2026-10-01 12:11:42.408",
+      "stoppedAt": "2026-10-01 12:11:49.140",
+      "evidenceClass": "native_google_sheets_qa_setup",
+      "simulatedContract": false,
+      "expectedError": null,
+      "error": null,
+      "lastNode": "Edge source setup receipt",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "nativeSetupCompleted": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Protect copied QA workbook": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read copied D31 sources": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare additional source rows": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Additional sources needed?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Expand additional source rows": {
+          "runs": 1,
+          "totalItems": 2,
+          "successful": true,
+          "error": null
+        },
+        "Append additional D31 sources": {
+          "runs": 1,
+          "totalItems": 2,
+          "successful": true,
+          "error": null
+        },
+        "Continue after primary seeding": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read copied D31 details": {
+          "runs": 1,
+          "totalItems": 3,
+          "successful": true,
+          "error": null
+        },
+        "Prepare additional detail rows": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Additional details needed?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Expand additional detail rows": {
+          "runs": 1,
+          "totalItems": 6,
+          "successful": true,
+          "error": null
+        },
+        "Append additional D31 details": {
+          "runs": 1,
+          "totalItems": 6,
+          "successful": true,
+          "error": null
+        },
+        "Edge source setup receipt": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        }
+      },
+      "output": null,
+      "receipt": null
+    },
+    {
+      "executionId": 753,
+      "workflowId": "ZvidSeries2PubEdgeMultiRead",
+      "name": "MultiRead",
+      "mode": "manual",
+      "status": "success",
+      "startedAt": "2026-10-01 12:14:22.312",
+      "stoppedAt": "2026-10-01 12:14:25.929",
+      "evidenceClass": "native_google_sheets_and_datatable_integration",
+      "simulatedContract": false,
+      "expectedError": null,
+      "error": null,
+      "lastNode": "Assert native multi-row intake",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "sourceRowsExactly3": true,
+        "detailRowsExactly9": true,
+        "savedRowsExactly2": true,
+        "nativeReadsOnce": true,
+        "intakeAsserted": true,
+        "noDrive": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge find existing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge prepare missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seed required?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge missing seed rows": {
+          "runs": 1,
+          "totalItems": 2,
+          "successful": true,
+          "error": null
+        },
+        "Edge persist missing seeds": {
+          "runs": 1,
+          "totalItems": 2,
+          "successful": true,
+          "error": null
+        },
+        "Edge seeding complete": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 2,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 3,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 3,
+          "successful": true,
+          "error": null
+        },
+        "Assert native multi-row intake": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        }
+      },
+      "output": {
+        "status": "multi_row_intake_verified",
+        "sourceId": null,
+        "revision": null,
+        "jobId": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "edgeSpreadsheetId": null,
+        "dryRun": null,
+        "deliveryAttempted": null,
+        "reason": null
+      },
+      "receipt": null
+    },
+    {
+      "executionId": 755,
+      "workflowId": "ZvidSeries2PubEdgeUnapproved",
+      "name": "Unapproved",
+      "mode": "manual",
+      "status": "success",
+      "startedAt": "2026-10-01 12:14:57.008",
+      "stoppedAt": "2026-10-01 12:14:58.986",
+      "evidenceClass": "native_google_sheets_approval_integration",
+      "simulatedContract": false,
+      "expectedError": null,
+      "error": null,
+      "lastNode": "No work report",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "noWorkReported": true,
+        "noDrive": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "No work report": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        }
+      },
+      "output": {
+        "status": "nothing_to_render",
+        "sourceId": null,
+        "revision": null,
+        "jobId": null,
+        "driveFileId": null,
+        "driveUrl": null,
+        "edgeSpreadsheetId": null,
+        "dryRun": null,
+        "deliveryAttempted": null,
+        "reason": "No approved, eligible, undelivered revision."
+      },
+      "receipt": null
+    },
+    {
+      "executionId": 757,
+      "workflowId": "ZvidSeries2PubEdgeCapZero",
+      "name": "CapZero",
+      "mode": "manual",
+      "status": "error",
+      "startedAt": "2026-10-01 12:16:44.837",
+      "stoppedAt": "2026-10-01 12:16:47.805",
+      "evidenceClass": "native_google_sheets_and_zvid_validation_integration",
+      "simulatedContract": false,
+      "expectedError": "credit cap",
+      "error": "Render requires 18 credits; maxRenderCredits is 0. Increase the configured cap deliberately. [line 109]",
+      "lastNode": "Check validation and credit cap",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "freeNativeValidation": true,
+        "creditCapRejected": true,
+        "noDrive": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare durable request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Look up saved request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Decide recovery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Inspect saved request only?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Completed media saved?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Accepted job saved?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Validate project (free)": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check validation and credit cap": {
+          "runs": 1,
+          "totalItems": 0,
+          "successful": false,
+          "error": "Render requires 18 credits; maxRenderCredits is 0. Increase the configured cap deliberately. [line 109]"
+        }
+      },
+      "output": null,
+      "receipt": null
+    },
+    {
+      "executionId": 759,
+      "workflowId": "ZvidSeries2PubEdgeAcceptedDryRun",
+      "name": "AcceptedDryRun",
+      "mode": "manual",
+      "status": "success",
+      "startedAt": "2026-10-01 12:17:32.163",
+      "stoppedAt": "2026-10-01 12:17:34.609",
+      "evidenceClass": "native_saved_state_integration",
+      "simulatedContract": false,
+      "expectedError": null,
+      "error": null,
+      "lastNode": "Saved request inspection",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "savedInspection": true,
+        "noPollOrDrive": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge find existing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge prepare missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seed required?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge missing seed rows": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge persist missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seeding complete": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare durable request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Look up saved request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Decide recovery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Inspect saved request only?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Saved request inspection": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        }
+      },
+      "output": {
+        "status": "saved_request_inspection",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+        "driveFileId": null,
+        "driveUrl": null,
+        "edgeSpreadsheetId": null,
+        "dryRun": true,
+        "deliveryAttempted": false,
+        "reason": null
+      },
+      "receipt": null
+    },
+    {
+      "executionId": 761,
+      "workflowId": "ZvidSeries2PubEdgeAmbiguousSubmission",
+      "name": "AmbiguousSubmission",
+      "mode": "manual",
+      "status": "error",
+      "startedAt": "2026-10-01 12:18:44.018",
+      "stoppedAt": "2026-10-01 12:18:46.671",
+      "evidenceClass": "native_saved_state_integration",
+      "simulatedContract": false,
+      "expectedError": "ambiguous",
+      "error": "//app.zvid.io and save the accepted job_id before retrying. Automatic resubmission is blocked. [line 7]",
+      "lastNode": "Decide recovery",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "failedClosed": true,
+        "noPollOrDrive": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge find existing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge prepare missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seed required?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge missing seed rows": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge persist missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seeding complete": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare durable request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Look up saved request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Decide recovery": {
+          "runs": 1,
+          "totalItems": 0,
+          "successful": false,
+          "error": "//app.zvid.io and save the accepted job_id before retrying. Automatic resubmission is blocked. [line 7]"
+        }
+      },
+      "output": null,
+      "receipt": null
+    },
+    {
+      "executionId": 763,
+      "workflowId": "ZvidSeries2PubEdgeSourceReadRace",
+      "name": "SourceReadRace",
+      "mode": "manual",
+      "status": "error",
+      "startedAt": "2026-10-01 12:20:39.966",
+      "stoppedAt": "2026-10-01 12:20:45.032",
+      "evidenceClass": "simulated_read_race_contract_with_native_delivery",
+      "simulatedContract": true,
+      "expectedError": "changed during rendering",
+      "error": "Source business content changed during rendering. The uploaded asset is retained; increment revision and reconcile the old request. [line 1]",
+      "lastNode": "Protect source writeback",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "readRaceContractRejected": true,
+        "nativeExistingAssetReused": true,
+        "noSourceWriteback": true,
+        "noDuplicateUpload": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge find existing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge prepare missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seed required?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge missing seed rows": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge persist missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seeding complete": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare durable request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Look up saved request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Decide recovery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Inspect saved request only?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Completed media saved?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery context": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Find existing delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Reconcile delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery file exists?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Remember delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Persist delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Native Recheck source revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Recheck source revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Recheck related content": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Prepare writeback check": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint source before writeback": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Protect source writeback": {
+          "runs": 1,
+          "totalItems": 0,
+          "successful": false,
+          "error": "Source business content changed during rendering. The uploaded asset is retained; increment revision and reconcile the old request. [line 1]"
+        }
+      },
+      "output": null,
+      "receipt": null
+    },
+    {
+      "executionId": 765,
+      "workflowId": "ZvidSeries2PubEdgeDetailsReadRace",
+      "name": "DetailsReadRace",
+      "mode": "manual",
+      "status": "error",
+      "startedAt": "2026-10-01 12:22:47.378",
+      "stoppedAt": "2026-10-01 12:22:52.064",
+      "evidenceClass": "simulated_read_race_contract_with_native_delivery",
+      "simulatedContract": true,
+      "expectedError": "changed during rendering",
+      "error": "Source business content changed during rendering. The uploaded asset is retained; increment revision and reconcile the old request. [line 1]",
+      "lastNode": "Protect source writeback",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "readRaceContractRejected": true,
+        "nativeExistingAssetReused": true,
+        "noSourceWriteback": true,
+        "noDuplicateUpload": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge find existing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge prepare missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seed required?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge missing seed rows": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge persist missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seeding complete": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare durable request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Look up saved request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Decide recovery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Inspect saved request only?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Completed media saved?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery context": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Find existing delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Reconcile delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery file exists?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Remember delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Persist delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Recheck source revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Native Recheck related content": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Recheck related content": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Prepare writeback check": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint source before writeback": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Protect source writeback": {
+          "runs": 1,
+          "totalItems": 0,
+          "successful": false,
+          "error": "Source business content changed during rendering. The uploaded asset is retained; increment revision and reconcile the old request. [line 1]"
+        }
+      },
+      "output": null,
+      "receipt": null
+    },
+    {
+      "executionId": 768,
+      "workflowId": "ZvidSeries2PubEdgeLostUploadResponse",
+      "name": "LostUploadResponse",
+      "mode": "manual",
+      "status": "error",
+      "startedAt": "2026-10-01 12:25:39.975",
+      "stoppedAt": "2026-10-01 12:25:47.103",
+      "evidenceClass": "native_google_drive_lost_response_recovery",
+      "simulatedContract": false,
+      "expectedError": "deliberate lost upload response",
+      "error": "EDGE deliberate lost upload response. The MP4 was uploaded; run LostUploadReplay to search and reuse the saved deterministic filename.",
+      "lastNode": "Deliberately lose upload response",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "nativeUploadCompleted": true,
+        "deliberateResponseLoss": true,
+        "noUploadReceiptCheckpoint": true,
+        "noSourceWriteback": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge find existing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge prepare missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seed required?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge missing seed rows": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge persist missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seeding complete": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare durable request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Look up saved request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Decide recovery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Inspect saved request only?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Completed media saved?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery context": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Find existing delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Reconcile delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery file exists?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Download delivery media": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check downloaded media": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Upload private review video": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Deliberately lose upload response": {
+          "runs": 1,
+          "totalItems": 0,
+          "successful": false,
+          "error": "EDGE deliberate lost upload response. The MP4 was uploaded; run LostUploadReplay to search and reuse the saved deterministic filename."
+        }
+      },
+      "output": null,
+      "receipt": null
+    },
+    {
+      "executionId": 770,
+      "workflowId": "ZvidSeries2PubEdgeLostUploadReplay",
+      "name": "LostUploadReplay",
+      "mode": "manual",
+      "status": "success",
+      "startedAt": "2026-10-01 12:31:15.187",
+      "stoppedAt": "2026-10-01 12:31:28.451",
+      "evidenceClass": "native_google_drive_lost_response_recovery",
+      "simulatedContract": false,
+      "expectedError": null,
+      "error": null,
+      "lastNode": "Watch video",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "existingAssetReused": true,
+        "noDuplicateUpload": true,
+        "nativeWritebackVerified": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge find existing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge prepare missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seed required?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Apply release notes policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare durable request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Look up saved request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Decide recovery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Inspect saved request only?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Completed media saved?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery context": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Find existing delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Reconcile delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery file exists?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Remember delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Persist delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Recheck source revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Recheck related content": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Prepare writeback check": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint source before writeback": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Protect source writeback": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Update business register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read back delivery receipt": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related receipt content": {
+          "runs": 1,
+          "totalItems": 9,
+          "successful": true,
+          "error": null
+        },
+        "Prepare receipt check": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint delivery receipt": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Mark delivered": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Persist delivered outcome": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Business outcome": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Completed video available?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Watch video": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        }
+      },
+      "output": {
+        "status": "delivered",
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+        "driveFileId": "104u_urb1nDkwdrQAp5mevwNxU7HEQYi_",
+        "driveUrl": "https://drive.google.com/file/d/104u_urb1nDkwdrQAp5mevwNxU7HEQYi_/view?usp=drivesdk",
+        "edgeSpreadsheetId": null,
+        "dryRun": false,
+        "deliveryAttempted": null,
+        "reason": null
+      },
+      "receipt": {
+        "sourceId": "qa-d31-record-001",
+        "revision": "r1",
+        "automationStatus": "delivered",
+        "jobId": "29b9c4d1-b4bb-4e32-b3b1-dceece2805ba",
+        "driveFileId": "104u_urb1nDkwdrQAp5mevwNxU7HEQYi_",
+        "requestKey": "release-notes-video|qa-d31-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "inputHash": "5f1a543cbbc8f796e4453cacb7347a22b01f10b3bed0f0ac5e2cc9d2681381f5"
+      }
+    },
+    {
+      "executionId": 772,
+      "workflowId": "ZvidSeries2PubEdgeExpiredNoticeRecovery",
+      "name": "ExpiredNoticeRecovery",
+      "mode": "manual",
+      "status": "success",
+      "startedAt": "2026-10-01 12:33:42.471",
+      "stoppedAt": "2026-10-01 12:33:51.927",
+      "evidenceClass": "simulated_clock_contract_with_native_job_recovery",
+      "simulatedContract": true,
+      "expectedError": null,
+      "error": null,
+      "lastNode": "Watch video",
+      "checks": {
+        "manualMode": true,
+        "noPaidSubmission": true,
+        "noPaidGuard": true,
+        "nativeSavedJobPolled": true,
+        "noDuplicateUpload": true,
+        "existingAssetReused": true,
+        "nativeWritebackVerified": true,
+        "expiredPolicyRecovered": true
+      },
+      "passed": true,
+      "nodes": {
+        "Test manually": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Config": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Check source configuration": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Ensure publication ledger": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge find existing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge prepare missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seed required?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge missing seed rows": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge persist missing seeds": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Edge seeding complete": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read saved requests": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read source register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related records": {
+          "runs": 1,
+          "totalItems": 2,
+          "successful": true,
+          "error": null
+        },
+        "Apply maintenance notice policy": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint approved content": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Choose one pending revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Eligible work found?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Prepare durable request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Look up saved request": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Decide recovery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Inspect saved request only?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Completed media saved?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Accepted job saved?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Poll saved job context": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Wait for completed render": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Video result": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Persist completed media": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery context": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Find existing delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Reconcile delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Delivery file exists?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Remember delivery": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Persist delivery file": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Recheck source revision": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Recheck related content": {
+          "runs": 1,
+          "totalItems": 2,
+          "successful": true,
+          "error": null
+        },
+        "Prepare writeback check": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint source before writeback": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Protect source writeback": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Update business register": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read back delivery receipt": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Read related receipt content": {
+          "runs": 1,
+          "totalItems": 2,
+          "successful": true,
+          "error": null
+        },
+        "Prepare receipt check": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Fingerprint delivery receipt": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Mark delivered": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Persist delivered outcome": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Business outcome": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Completed video available?": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        },
+        "Watch video": {
+          "runs": 1,
+          "totalItems": 1,
+          "successful": true,
+          "error": null
+        }
+      },
+      "output": {
+        "status": "delivered",
+        "sourceId": "qa-d35-record-001",
+        "revision": "r1",
+        "jobId": "bdbef051-2132-496f-9899-b76a3525e898",
+        "driveFileId": "1litoVTnM7HEypSKoxw1y2AC3ENJJAVcz",
+        "driveUrl": "https://drive.google.com/file/d/1litoVTnM7HEypSKoxw1y2AC3ENJJAVcz/view?usp=drivesdk",
+        "edgeSpreadsheetId": null,
+        "dryRun": false,
+        "deliveryAttempted": null,
+        "reason": null
+      },
+      "receipt": {
+        "sourceId": "qa-d35-record-001",
+        "revision": "r1",
+        "automationStatus": "delivered",
+        "jobId": "bdbef051-2132-496f-9899-b76a3525e898",
+        "driveFileId": "1litoVTnM7HEypSKoxw1y2AC3ENJJAVcz",
+        "requestKey": "maintenance-notice-video|qa-d35-record-001|r1|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "inputHash": "533d33a3d53a262ee89ca68dc78144b8105d02a72a0312a3dff15db9edad309d"
+      }
+    }
+  ]
+}

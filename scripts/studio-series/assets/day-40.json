@@ -1,0 +1,321 @@
+{
+  "type": "video",
+  "name": "S2 D40 - Open House Invitation",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "backgroundColor": "#EEE9DD",
+  "scenes": [
+    {
+      "id": "an-invitation",
+      "duration": 5,
+      "backgroundColor": "#EEE9DD",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{exteriorImage}}",
+          "x": 70,
+          "y": 430,
+          "width": 940,
+          "height": 1240,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 470,
+            "tr": 470,
+            "bl": 0,
+            "br": 0
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:27px;letter-spacing:5px\">{{brand}} / OPEN HOUSE</div><div style=\"font-size:89px;margin-top:28px\">{{address}}</div><div style=\"font-size:35px;margin-top:20px\">{{area}}</div>",
+          "x": 70,
+          "y": 100,
+          "width": 940,
+          "height": 280,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 89,
+            "color": "#263E32",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-living-space",
+      "duration": 5,
+      "backgroundColor": "#263E32",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{interiorImage}}",
+          "x": 70,
+          "y": 140,
+          "width": 940,
+          "height": 1160,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "zoom": {
+            "depth": 1.05
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:85px\">{{firstFeature}}</div><div style=\"font-size:32px;margin-top:26px\">{{specs}}</div>",
+          "x": 70,
+          "y": 1450,
+          "width": 940,
+          "height": 350,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 85,
+            "color": "#EEE9DD",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "outdoors",
+      "duration": 5,
+      "backgroundColor": "#EEE9DD",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{gardenImage}}",
+          "x": 70,
+          "y": 430,
+          "width": 940,
+          "height": 1250,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 470,
+            "tr": 470,
+            "bl": 0,
+            "br": 0
+          },
+          "zoom": {
+            "depth": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "{{secondFeature}}",
+          "x": 70,
+          "y": 100,
+          "width": 940,
+          "height": 260,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 100,
+            "color": "#263E32",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "save-the-time",
+      "duration": 5,
+      "backgroundColor": "#263E32",
+      "transition": "fade",
+      "transitionDuration": 0.35,
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{exteriorImage}}",
+          "x": 70,
+          "y": 110,
+          "width": 940,
+          "height": 940,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5,
+          "radius": {
+            "tl": 470,
+            "tr": 470,
+            "bl": 470,
+            "br": 470
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:29px;letter-spacing:5px\">YOU ARE INVITED</div><div style=\"font-size:100px;margin-top:24px\">{{eventDate}}</div><div style=\"font-size:63px;margin-top:22px\">{{eventTime}}</div>",
+          "x": 70,
+          "y": 1220,
+          "width": 940,
+          "height": 450,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 100,
+            "color": "#EEE9DD",
+            "lineHeight": 1.04
+          }
+        }
+      ]
+    },
+    {
+      "id": "step-inside",
+      "duration": 5,
+      "backgroundColor": "#EEE9DD",
+      "visuals": [
+        {
+          "type": "IMAGE",
+          "src": "{{interiorImage}}",
+          "x": 70,
+          "y": 540,
+          "width": 940,
+          "height": 1000,
+          "position": "custom",
+          "anchor": "top-left",
+          "resize": "cover",
+          "track": 0,
+          "enterBegin": 0,
+          "enterEnd": 0.6,
+          "enterAnimation": "fade",
+          "exitEnd": 5
+        },
+        {
+          "type": "TEXT",
+          "html": "{{cta}}",
+          "x": 70,
+          "y": 100,
+          "width": 940,
+          "height": 350,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "DM Serif Display",
+            "fontSize": 106,
+            "color": "#263E32",
+            "lineHeight": 1.04
+          }
+        },
+        {
+          "type": "TEXT",
+          "html": "<div style=\"font-size:37px\">{{address}} / {{area}}</div><div style=\"font-size:30px;margin-top:20px\">{{url}}</div>",
+          "x": 70,
+          "y": 1680,
+          "width": 940,
+          "height": 160,
+          "position": "custom",
+          "anchor": "top-left",
+          "track": 4,
+          "fitToBox": true,
+          "enterBegin": 0.15,
+          "enterEnd": 0.65,
+          "enterAnimation": "smoothup",
+          "exitEnd": 5,
+          "style": {
+            "fontFamily": "Inter",
+            "fontSize": 37,
+            "color": "#263E32",
+            "lineHeight": 1.12,
+            "fontWeight": "600"
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "brand": "FIELDHOUSE",
+    "exteriorImage": "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "interiorImage": "https://images.pexels.com/photos/29012619/pexels-photo-29012619.jpeg?auto=compress&cs=tinysrgb&w=1080&h=1600&fit=crop",
+    "gardenImage": "https://images.unsplash.com/photo-1636301587190-88cbb412fea0?auto=format&fit=crop&w=1080&h=1600&q=85",
+    "address": "18 Cedar Lane",
+    "area": "West Grove",
+    "eventDate": "Saturday 17 October",
+    "eventTime": "11 AM – 1 PM",
+    "firstFeature": "Rooms that welcome the light.",
+    "secondFeature": "A little room to breathe.",
+    "specs": "3 bedrooms · 2 bathrooms",
+    "cta": "Step inside this Saturday",
+    "url": "fieldhouse.example/open-house",
+    "musicUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790943524/zvid-series2-unique-music-20261002/day-40-music.mp3",
+    "musicVolume": 0.5
+  },
+  "audios": [
+    {
+      "src": "{{musicUrl}}",
+      "enter": 0,
+      "exit": 23.6,
+      "audioBegin": 0,
+      "audioEnd": 23.6,
+      "volume": "{{musicVolume}}",
+      "speed": 1,
+      "track": 0
+    }
+  ]
+}

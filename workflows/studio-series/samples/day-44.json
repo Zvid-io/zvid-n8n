@@ -1,0 +1,51 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-44-demo",
+    "revision": "1",
+    "dealer": "NORTHLINE MOTORS",
+    "budgetCents": 3200000,
+    "currency": "USD",
+    "minSeats": 5,
+    "minCargoLitres": 400,
+    "usage": "City + weekend trips",
+    "priceWeight": 0.6,
+    "cargoWeight": 0.4,
+    "maxAgeHours": 24,
+    "cta": "Request both test drives",
+    "destination": "https://northline.example/match"
+  },
+  "records": [
+    {
+      "kind": "vehicle",
+      "record_id": "NL1042",
+      "name": "Touring SUV",
+      "priceCents": 2990000,
+      "currency": "USD",
+      "seats": 5,
+      "cargoLitres": 610,
+      "lengthMm": 4650,
+      "image": "https://images.pexels.com/photos/27497571/pexels-photo-27497571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z",
+      "specSource": "https://northline.example/specs/NL1042",
+      "marketingApproved": true
+    },
+    {
+      "kind": "vehicle",
+      "record_id": "NL1098",
+      "name": "Sport sedan",
+      "priceCents": 2450000,
+      "currency": "USD",
+      "seats": 5,
+      "cargoLitres": 440,
+      "lengthMm": 4700,
+      "image": "https://images.pexels.com/photos/12920621/pexels-photo-12920621.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z",
+      "specSource": "https://northline.example/specs/NL1098",
+      "marketingApproved": true
+    }
+  ]
+}

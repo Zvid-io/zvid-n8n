@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs');
+const path=require('node:path');
+const {functionalHash}=require('../infra-functional-fingerprint');
+const imports=JSON.parse(fs.readFileSync(path.join(__dirname,'../infra-configured-imports.json'),'utf8'));
+const helpers=JSON.parse(fs.readFileSync(path.join(__dirname,'checkpoint-helpers.json'),'utf8'));
+const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'checkpoint-helpers-manifest.json'),'utf8'));
+const config=JSON.parse(imports[0].nodes.find(node=>node.name==='Config').parameters.jsonOutput);
+const expected=JSON.parse(helpers[0].nodes.find(node=>node.name==='Verify all 30 delivered frozen requests').parameters.jsCode.match(/^const expected=(.*?);const columns=/)[1]);
+const reference={qaSpreadsheetId:config.spreadsheetId,qaFolderId:config.driveFolderId,dailyRequestPeriod:manifest.dailyRequestPeriod,d50RequestKey:expected.find(row=>row.day===50).requestKey,helpers:helpers.map(workflow=>({workflowId:workflow.id,targetStatus:workflow.meta.localCheckpointHelper.targetStatus,functionalSha256:functionalHash(workflow)})),canonicals:imports.map(workflow=>{const config=JSON.parse(workflow.nodes.find(node=>node.name==='Config').parameters.jsonOutput);return {day:Number(workflow.id.replace('ZvidSeries2Day','')),workflowId:workflow.id,sourceSheet:config.sourceSheet,detailsSheet:config.detailsSheet,functionalSha256:functionalHash(workflow)};})};
+fs.writeFileSync(path.join(__dirname,'checkpoint-audit-reference.json'),JSON.stringify(reference,null,2)+'\n');
+process.stdout.write(JSON.stringify({helpers:reference.helpers.length,canonicals:reference.canonicals.length,noCredentialsExported:true})+'\n');

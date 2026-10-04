@@ -706,18 +706,18 @@
     },
     {
       "parameters": {
+        "authentication": "none",
+        "requestMethod": "GET",
         "url": "={{ $json.videoUrl }}",
+        "responseFormat": "file",
+        "dataPropertyName": "data",
+        "jsonParameters": false,
         "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file",
-              "outputPropertyName": "data"
-            }
-          }
+          "timeout": 30000
         }
       },
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "typeVersion": 2,
       "position": [
         570,
         3000
@@ -934,7 +934,7 @@
         2760
       ],
       "parameters": {
-        "content": "## 10. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.",
+        "content": "## 10. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download. Each request times out after 30 seconds; completed links remain available.",
         "color": 7,
         "width": 880,
         "height": 520

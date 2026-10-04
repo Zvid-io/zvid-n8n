@@ -189,7 +189,7 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 
 | Symptom | Cause |
 | --- | --- |
-| Run says `nothing to compile` | Fewer than `minQuotes` rows are `Featured` with an empty `Status`. The summary reports how many it found and how many it skipped, and why. Tick more rows, clear their `Status`, or lower `minQuotes`. |
+| Run says `nothing to compile` | Fewer than `minQuotes` rows are `Featured` with an empty `Status`. The summary reports counts and skip reasons. For a repeat test, clear only `Status` on the test rows you want to reuse; keep the quotes, `Featured`, and prior video links. A successful run marks them `compiled` again. Do not reset production rows unless you intend to include them in another paid compilation. |
 | Only some of my featured rows made it in | `maxQuotes` (5) caps the cut, taken top to bottom in sheet order. Raise it, or reorder the sheet. |
 | A quote ends in `…` | It was longer than `maxQuoteChars` (260) and was trimmed on a word boundary. Raise `maxQuoteChars` or shorten the quote — the type ramp only goes down to 34 px. |
 | A scene shows a `Verified customer` chip instead of stars | That row's `Rating` is empty or not a number `1`–`5`. Intentional — mixed sheets are fine. |

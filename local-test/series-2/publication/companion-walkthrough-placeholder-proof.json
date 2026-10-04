@@ -1,0 +1,219 @@
+{
+  "generatedAt": "2026-10-01T13:58:14.351Z",
+  "changedGuides": 30,
+  "walkthroughPlaceholderRetained": true,
+  "canonicalJsonWrites": 0,
+  "allCanonicalJsonByteIdentical": true,
+  "canonicals": [
+    {
+      "day": 31,
+      "file": "workflows/zvid-release-notes-video.json",
+      "beforeSha256": "aca8d0e3e956d02549916425ba8c2a2ecf73a8432b839db559856afa778af5b1",
+      "afterSha256": "aca8d0e3e956d02549916425ba8c2a2ecf73a8432b839db559856afa778af5b1",
+      "byteIdentical": true
+    },
+    {
+      "day": 32,
+      "file": "workflows/zvid-procedure-tutorial-video.json",
+      "beforeSha256": "9a470c36ca700eb601ef3491022ade3ccf1a31454d024d573701349ac283207a",
+      "afterSha256": "9a470c36ca700eb601ef3491022ade3ccf1a31454d024d573701349ac283207a",
+      "byteIdentical": true
+    },
+    {
+      "day": 33,
+      "file": "workflows/zvid-plan-comparison-video.json",
+      "beforeSha256": "92849e129a2e98d5e1b62becddc3231db7d617aee3892359fcd98f4bd613395b",
+      "afterSha256": "92849e129a2e98d5e1b62becddc3231db7d617aee3892359fcd98f4bd613395b",
+      "byteIdentical": true
+    },
+    {
+      "day": 34,
+      "file": "workflows/zvid-incident-timeline-video.json",
+      "beforeSha256": "4b153a410fade190e4fcbf06d606dc07dbe03b35aee21f3b5426ae19984985c1",
+      "afterSha256": "4b153a410fade190e4fcbf06d606dc07dbe03b35aee21f3b5426ae19984985c1",
+      "byteIdentical": true
+    },
+    {
+      "day": 35,
+      "file": "workflows/zvid-maintenance-notice-video.json",
+      "beforeSha256": "4a9e215aed2e6c4b264fa091ce9ff97c021a6799121b8b9bb671dada3baeb06d",
+      "afterSha256": "4a9e215aed2e6c4b264fa091ce9ff97c021a6799121b8b9bb671dada3baeb06d",
+      "byteIdentical": true
+    },
+    {
+      "day": 36,
+      "file": "workflows/zvid-order-progress-video.json",
+      "beforeSha256": "18f620685b0f27ac2ce20ed208d5f71fdee377f0087359390341cb89986e864c",
+      "afterSha256": "18f620685b0f27ac2ce20ed208d5f71fdee377f0087359390341cb89986e864c",
+      "byteIdentical": true
+    },
+    {
+      "day": 37,
+      "file": "workflows/zvid-product-bundle-savings-video.json",
+      "beforeSha256": "55160336207f74757c10ec59415f0419304154b65ea0a418881cb03e387f56ee",
+      "afterSha256": "55160336207f74757c10ec59415f0419304154b65ea0a418881cb03e387f56ee",
+      "byteIdentical": true
+    },
+    {
+      "day": 38,
+      "file": "workflows/zvid-delivery-delay-video.json",
+      "beforeSha256": "244ca708f64f63790f0b31ba5e65234fcaf7d9a5b03f05fb46c19340615bd3e7",
+      "afterSha256": "244ca708f64f63790f0b31ba5e65234fcaf7d9a5b03f05fb46c19340615bd3e7",
+      "byteIdentical": true
+    },
+    {
+      "day": 39,
+      "file": "workflows/zvid-appointment-preparation-video.json",
+      "beforeSha256": "6be20691af4e9d4e73550c844740b8c605863fa36c83c30d4eb809cc450c6e25",
+      "afterSha256": "6be20691af4e9d4e73550c844740b8c605863fa36c83c30d4eb809cc450c6e25",
+      "byteIdentical": true
+    },
+    {
+      "day": 40,
+      "file": "workflows/zvid-return-instructions-video.json",
+      "beforeSha256": "42eea1324ca7e7b00280ae906c785a36f73f3dc30b1e4cbe641147df8cb768a5",
+      "afterSha256": "42eea1324ca7e7b00280ae906c785a36f73f3dc30b1e4cbe641147df8cb768a5",
+      "byteIdentical": true
+    },
+    {
+      "day": 41,
+      "file": "workflows/zvid-employee-first-week-video.json",
+      "beforeSha256": "a37e753d97c8e5287e44a8e35084004ba801f4c46604e316e6debfcbd38d3ade",
+      "afterSha256": "a37e753d97c8e5287e44a8e35084004ba801f4c46604e316e6debfcbd38d3ade",
+      "byteIdentical": true
+    },
+    {
+      "day": 42,
+      "file": "workflows/zvid-interview-agenda-video.json",
+      "beforeSha256": "247688353fe9c6d61b1f465aa71fbf853891949022b06e4d8ac09635e0d16790",
+      "afterSha256": "247688353fe9c6d61b1f465aa71fbf853891949022b06e4d8ac09635e0d16790",
+      "byteIdentical": true
+    },
+    {
+      "day": 43,
+      "file": "workflows/zvid-course-roadmap-video.json",
+      "beforeSha256": "198bafeaeeb8e4ff6ab0839d7091fa1467d266265034810335897689d5a33450",
+      "afterSha256": "198bafeaeeb8e4ff6ab0839d7091fa1467d266265034810335897689d5a33450",
+      "byteIdentical": true
+    },
+    {
+      "day": 44,
+      "file": "workflows/zvid-safety-briefing-video.json",
+      "beforeSha256": "81da5104b5f999b3efa59e0f5de043d2dd015bb7f1de471e231417af29c306ce",
+      "afterSha256": "81da5104b5f999b3efa59e0f5de043d2dd015bb7f1de471e231417af29c306ce",
+      "byteIdentical": true
+    },
+    {
+      "day": 45,
+      "file": "workflows/zvid-training-completion-video.json",
+      "beforeSha256": "d62a76490fd08b8412177be44bdbe51c551884effabb96cc8904067b0a0496b3",
+      "afterSha256": "d62a76490fd08b8412177be44bdbe51c551884effabb96cc8904067b0a0496b3",
+      "byteIdentical": true
+    },
+    {
+      "day": 46,
+      "file": "workflows/zvid-meeting-action-brief-video.json",
+      "beforeSha256": "c721499525bdc49d9d27e9317a71f86dacbab07b86af92337f3383eb553e336d",
+      "afterSha256": "c721499525bdc49d9d27e9317a71f86dacbab07b86af92337f3383eb553e336d",
+      "byteIdentical": true
+    },
+    {
+      "day": 47,
+      "file": "workflows/zvid-equipment-maintenance-video.json",
+      "beforeSha256": "89290359e635ef09bc4923702e41a4d47b79e198ac51d137eee555edf4a60375",
+      "afterSha256": "89290359e635ef09bc4923702e41a4d47b79e198ac51d137eee555edf4a60375",
+      "byteIdentical": true
+    },
+    {
+      "day": 48,
+      "file": "workflows/zvid-inventory-replenishment-video.json",
+      "beforeSha256": "ee90f1e5cfcc31a844613de0490ca4df1ed07a7d04f70cee34cb5f28ad7964dc",
+      "afterSha256": "ee90f1e5cfcc31a844613de0490ca4df1ed07a7d04f70cee34cb5f28ad7964dc",
+      "byteIdentical": true
+    },
+    {
+      "day": 49,
+      "file": "workflows/zvid-delivery-route-brief-video.json",
+      "beforeSha256": "a770c1f2052005086541d5f350fa08b1d9c3ee844038439cb2e650f24187bde0",
+      "afterSha256": "a770c1f2052005086541d5f350fa08b1d9c3ee844038439cb2e650f24187bde0",
+      "byteIdentical": true
+    },
+    {
+      "day": 50,
+      "file": "workflows/zvid-tender-checklist-video.json",
+      "beforeSha256": "96e01847b72f86472bc861f6c69fbf469f6dd37cd37c75b6dbba24c39c124ba7",
+      "afterSha256": "96e01847b72f86472bc861f6c69fbf469f6dd37cd37c75b6dbba24c39c124ba7",
+      "byteIdentical": true
+    },
+    {
+      "day": 51,
+      "file": "workflows/zvid-travel-itinerary-video.json",
+      "beforeSha256": "25ce7708ee194d1973c95293a9d248357a307e153b8488d4c5a8cc2421e6fd63",
+      "afterSha256": "25ce7708ee194d1973c95293a9d248357a307e153b8488d4c5a8cc2421e6fd63",
+      "byteIdentical": true
+    },
+    {
+      "day": 52,
+      "file": "workflows/zvid-hotel-arrival-guide-video.json",
+      "beforeSha256": "8e9a8ec6e85fa3a4be32d1321406bb3e37049f8799e107fda45012c180d35675",
+      "afterSha256": "8e9a8ec6e85fa3a4be32d1321406bb3e37049f8799e107fda45012c180d35675",
+      "byteIdentical": true
+    },
+    {
+      "day": 53,
+      "file": "workflows/zvid-pet-adoption-video.json",
+      "beforeSha256": "86527fcf6089a9aab855bffb46e057e3dbbd926db0f54b45dd775a2ef1d892d7",
+      "afterSha256": "86527fcf6089a9aab855bffb46e057e3dbbd926db0f54b45dd775a2ef1d892d7",
+      "byteIdentical": true
+    },
+    {
+      "day": 54,
+      "file": "workflows/zvid-volunteer-shift-video.json",
+      "beforeSha256": "b85cc72d0f79d4718ae96366c95375a6c0387391683ab407e91f35759dba2c6a",
+      "afterSha256": "b85cc72d0f79d4718ae96366c95375a6c0387391683ab407e91f35759dba2c6a",
+      "byteIdentical": true
+    },
+    {
+      "day": 55,
+      "file": "workflows/zvid-donation-impact-video.json",
+      "beforeSha256": "a8e6318f00f5544ce18f427deb06000f6f72a849a6173191b295b7c26e6ff248",
+      "afterSha256": "a8e6318f00f5544ce18f427deb06000f6f72a849a6173191b295b7c26e6ff248",
+      "byteIdentical": true
+    },
+    {
+      "day": 56,
+      "file": "workflows/zvid-survey-results-video.json",
+      "beforeSha256": "c42c1eb089721c0dc28af3494603abc18ab47410c2c908df3c604d8333ca7b88",
+      "afterSha256": "c42c1eb089721c0dc28af3494603abc18ab47410c2c908df3c604d8333ca7b88",
+      "byteIdentical": true
+    },
+    {
+      "day": 57,
+      "file": "workflows/zvid-fundraiser-progress-video.json",
+      "beforeSha256": "ab9a0d6004e3ee38f428f3d2ef311eea54cd230e2273186afd18155c2f2ee13b",
+      "afterSha256": "ab9a0d6004e3ee38f428f3d2ef311eea54cd230e2273186afd18155c2f2ee13b",
+      "byteIdentical": true
+    },
+    {
+      "day": 58,
+      "file": "workflows/zvid-before-after-case-study-video.json",
+      "beforeSha256": "3464a8da36792edf1434a9520bfe931b0327624e53af162ada634f2c9ead5354",
+      "afterSha256": "3464a8da36792edf1434a9520bfe931b0327624e53af162ada634f2c9ead5354",
+      "byteIdentical": true
+    },
+    {
+      "day": 59,
+      "file": "workflows/zvid-milestone-roadmap-video.json",
+      "beforeSha256": "03930f9f5504a93625e9bbbf9d4a4f4640489ba36cc740dac479d1f4de656067",
+      "afterSha256": "03930f9f5504a93625e9bbbf9d4a4f4640489ba36cc740dac479d1f4de656067",
+      "byteIdentical": true
+    },
+    {
+      "day": 60,
+      "file": "workflows/zvid-recipe-cooking-guide-video.json",
+      "beforeSha256": "a625b376372f7214d8dd5448534612f2749ed7983d3194d63f17d68694ff4f87",
+      "afterSha256": "a625b376372f7214d8dd5448534612f2749ed7983d3194d63f17d68694ff4f87",
+      "byteIdentical": true
+    }
+  ]
+}

@@ -35,7 +35,7 @@ const specs = {
   },
   'flash-sale-alert': {
     match: 'Poll price drops', title: 'Create a flash-sale video and banner',
-    how: 'Read a sale from Google Sheets or Shopify and create two assets: a vertical video and an email banner. Sheet mode saves both URLs; optional SMTP delivery sends the banner when configured.',
+    how: 'Read a sale from Google Sheets or Shopify and render a vertical video and email banner, one at a time. Wait when render capacity is full. Sheet mode saves both URLs; optional SMTP delivery sends the banner when configured.',
     setup: ['Connect Google Sheets and select the same spreadsheet and tab in both sheet nodes.', 'Set source, brandName, storeUrl and ctaText in Config. Shopify mode needs its credential; optional email needs SMTP and emailTo.'],
     groups: [['source','Find the next sale','Select sheet or Shopify in Config. Shopify mode compares prices between runs; sheet mode takes the next eligible row.','Source?|Poll price drops|Find price drops|Read sale sheet|Pick next sale'],['eligible','Check the sale details','Headers: Product, OldPrice, NewPrice, ImageUrl, EndsAt, Status, VideoUrl, BannerUrl. The first four are required. NewPrice must be lower than OldPrice; leave output columns empty.','Sale found?|Nothing to announce'],['deliver','Save both assets and optionally email','Write the video and banner links back in sheet mode. SMTP delivery runs only when emailTo is configured.','Collect outputs|Sheet mode?|Mark sale done|Email the banner?|Email the banner']],
   },
@@ -121,13 +121,13 @@ const specs = {
     match: 'Read job openings', title: 'Create videos for job openings',
     how: 'Read job openings without a video URL and process them one at a time. Zvid renders a vertical hiring video with the role, perks and application link, then writes the result to the matching row.',
     setup: ['Connect Read job openings and Write VideoUrl to sheet to the same spreadsheet and tab.', 'Set company details, logo, hero footage, branding and maxPerRun in Company Config. Use accurate role, salary and application information.'],
-    groups: [['queue','Prepare the hiring queue','Headers: Role, Team, Location, SalaryRange, Perk1, Perk2, Perk3, ApplyUrl, VideoUrl. Role and ApplyUrl are required; leave VideoUrl empty. maxPerRun limits each run.','Read job openings|Rows to render|One row at a time'],['record','Save each completed hiring video','Write the video URL to its source row and return a row report before the next opening is processed.','Write VideoUrl to sheet|Rendered row report']],
+    groups: [['queue','Prepare the hiring queue','Headers: Role, Team, Location, SalaryRange, Perk1, Perk2, Perk3, ApplyUrl, VideoUrl. Require Role and ApplyUrl; leave VideoUrl empty. maxPerRun caps each run. Completed openings produce a no-work report; clear their VideoUrl only when intentionally rerendering.','Read job openings|Rows to render|Jobs need videos?|No pending job openings|One row at a time'],['record','Save each completed hiring video','Write the video URL to its source row and return a row report before the next opening is processed.','Write VideoUrl to sheet|Rendered row report']],
   },
   'restaurant-weekly-specials': {
     match: 'Read menu sheet', title: 'Create a weekly restaurant specials video',
     how: 'Read the menu rows marked for this week and render a vertical reel with a photo, description and price for each dish. A branded booking call to action closes the video for your review.',
     setup: ['Connect Google Sheets to Read menu sheet and select your spreadsheet and tab.', 'Set the restaurant name, handle, address, branding and timings in Config. Replace fallback media with your own dish photos where possible.'],
-    groups: [['menu','Choose this week’s menu','Headers: Dish, Description, Price, PhotoUrl, ThisWeek. Mark ThisWeek=true for featured dishes. The first five marked rows are used; review any fallback photos before publishing.','Read menu sheet|Pick weekly dishes']],
+    groups: [['menu','Choose this week’s menu','Headers: Dish, Description, Price, PhotoUrl, ThisWeek. Mark ThisWeek=true; the first five marked rows are used. Bundled image URLs fit within 1920×1920 without distortion. Supply appropriately sized custom photos and review fallback photos before publishing.','Read menu sheet|Pick weekly dishes']],
   },
   'workout-of-the-day': {
     match: 'Read workout sheet', title: 'Create the workout-of-the-day video',

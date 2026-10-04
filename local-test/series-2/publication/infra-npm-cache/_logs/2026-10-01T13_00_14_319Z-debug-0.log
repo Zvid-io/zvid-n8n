@@ -1,0 +1,25 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.3.0
+2 info using node@v24.0.2
+3 silly config load:file:C:\Users\menan\AppData\Roaming\nvm\v24.0.2\node_modules\npm\npmrc
+4 silly config load:file:D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n\.npmrc
+5 silly config load:file:C:\Users\menan\.npmrc
+6 silly config load:file:C:\Program Files\nodejs\etc\npmrc
+7 verbose title npm pack
+8 verbose argv "pack" "--dry-run" "--json" "--ignore-scripts" "--cache" "local-test/series-2/publication/infra-npm-cache"
+9 verbose logfile logs-max:10 dir:D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n\local-test\series-2\publication\infra-npm-cache\_logs\2026-10-01T13_00_14_319Z-
+10 verbose logfile D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n\local-test\series-2\publication\infra-npm-cache\_logs\2026-10-01T13_00_14_319Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 http fetch GET 200 https://registry.npmjs.org/npm 495ms
+14 verbose cwd D:\Nodejs\Projects\zvid-cline\zvid-integrations\n8n
+15 verbose os Windows_NT 10.0.26200
+16 verbose node v24.0.2
+17 verbose npm  v11.3.0
+18 notice
+18 notice New minor version of npm available! 11.3.0 -> 11.21.0
+18 notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.0
+18 notice To update run: npm install -g npm@11.21.0
+18 notice  { force: true, Symbol(proc-log.meta): true }
+19 verbose exit 0
+20 info ok

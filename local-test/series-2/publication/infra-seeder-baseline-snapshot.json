@@ -1,0 +1,3461 @@
+{
+  "sourceExecutionId": 738,
+  "sourceWorkflowId": "ZvidSeries2PublicationSeedSources",
+  "seededAt": "2026-10-01T11:38:06.982Z",
+  "tabs": {
+    "D31Source": {
+      "day": 31,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "product",
+        "version",
+        "publishedAt",
+        "isPrerelease",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d31-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "published",
+          "source_url": "https://example.com/qa/day-31/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "product": "Acme Desk",
+          "version": "2.4",
+          "publishedAt": "2026-10-01T08:38:06.982Z",
+          "isPrerelease": false,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D31Details": {
+      "day": 31,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "type",
+        "title",
+        "detail",
+        "audience"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d31-record-001",
+          "revision": "r1",
+          "kind": "change",
+          "position": 1,
+          "type": "added",
+          "title": "Shared inbox",
+          "detail": "Assign customer conversations to a team.",
+          "audience": "public"
+        },
+        {
+          "parent_id": "qa-d31-record-001",
+          "revision": "r1",
+          "kind": "change",
+          "position": 2,
+          "type": "improved",
+          "title": "Faster search",
+          "detail": "Find past conversations with clearer filters.",
+          "audience": "public"
+        },
+        {
+          "parent_id": "qa-d31-record-001",
+          "revision": "r1",
+          "kind": "change",
+          "position": 3,
+          "type": "fixed",
+          "title": "Export dates",
+          "detail": "CSV exports now keep UTC dates consistent.",
+          "audience": "public"
+        }
+      ]
+    },
+    "D32Source": {
+      "day": 32,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "title",
+        "outcome",
+        "effectiveDate",
+        "procedureOwner",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d32-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-32/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "title": "Set up a shared workspace",
+          "outcome": "Your team has a workspace and an owned project.",
+          "effectiveDate": "2026-09-29",
+          "procedureOwner": "Operations QA",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D32Details": {
+      "day": 32,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "title",
+        "instruction"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d32-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 1,
+          "title": "Create the workspace",
+          "instruction": "Choose a workspace name and select Create."
+        },
+        {
+          "parent_id": "qa-d32-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 2,
+          "title": "Invite your team",
+          "instruction": "Add teammates from the Members page."
+        },
+        {
+          "parent_id": "qa-d32-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 3,
+          "title": "Choose a project",
+          "instruction": "Create your first project and assign its owner."
+        }
+      ]
+    },
+    "D33Source": {
+      "day": 33,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "product",
+        "currency",
+        "effectiveDate",
+        "expiresAt",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d33-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-33/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "product": "Acme Desk",
+          "currency": "USD",
+          "effectiveDate": "2026-09-29",
+          "expiresAt": "2026-12-30",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D33Details": {
+      "day": 33,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "plan_id",
+        "name",
+        "price",
+        "currency",
+        "feature"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "plan",
+          "position": 1,
+          "plan_id": "plan-1",
+          "name": "Starter",
+          "price": "USD 12 / month",
+          "currency": "USD",
+          "feature": ""
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "plan",
+          "position": 2,
+          "plan_id": "plan-2",
+          "name": "Team",
+          "price": "USD 29 / month",
+          "currency": "USD",
+          "feature": ""
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "plan",
+          "position": 3,
+          "plan_id": "plan-3",
+          "name": "Scale",
+          "price": "USD 59 / month",
+          "currency": "USD",
+          "feature": ""
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 1,
+          "plan_id": "plan-1",
+          "name": "",
+          "price": "",
+          "currency": "",
+          "feature": "Shared inbox"
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 2,
+          "plan_id": "plan-1",
+          "name": "",
+          "price": "",
+          "currency": "",
+          "feature": "Email support"
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 3,
+          "plan_id": "plan-2",
+          "name": "",
+          "price": "",
+          "currency": "",
+          "feature": "Shared inbox"
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 4,
+          "plan_id": "plan-2",
+          "name": "",
+          "price": "",
+          "currency": "",
+          "feature": "Email support"
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 5,
+          "plan_id": "plan-2",
+          "name": "",
+          "price": "",
+          "currency": "",
+          "feature": "Team analytics"
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 6,
+          "plan_id": "plan-3",
+          "name": "",
+          "price": "",
+          "currency": "",
+          "feature": "Shared inbox"
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 7,
+          "plan_id": "plan-3",
+          "name": "",
+          "price": "",
+          "currency": "",
+          "feature": "Email support"
+        },
+        {
+          "parent_id": "qa-d33-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 8,
+          "plan_id": "plan-3",
+          "name": "",
+          "price": "",
+          "currency": "",
+          "feature": "Dedicated onboarding"
+        }
+      ]
+    },
+    "D34Source": {
+      "day": 34,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "service",
+        "startedAt",
+        "resolvedAt",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d34-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "resolved",
+          "source_url": "https://example.com/qa/day-34/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "service": "Acme File Sync",
+          "startedAt": "2026-10-01T07:38:06.982Z",
+          "resolvedAt": "2026-10-01T08:53:06.982Z",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D34Details": {
+      "day": 34,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "at",
+        "eventStatus",
+        "detail"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d34-record-001",
+          "revision": "r1",
+          "kind": "event",
+          "position": 1,
+          "at": "2026-10-01T07:38:06.982Z",
+          "eventStatus": "Investigating",
+          "detail": "Some file sync requests are delayed."
+        },
+        {
+          "parent_id": "qa-d34-record-001",
+          "revision": "r1",
+          "kind": "event",
+          "position": 2,
+          "at": "2026-10-01T08:08:06.982Z",
+          "eventStatus": "Mitigating",
+          "detail": "Traffic is moving to healthy workers."
+        },
+        {
+          "parent_id": "qa-d34-record-001",
+          "revision": "r1",
+          "kind": "event",
+          "position": 3,
+          "at": "2026-10-01T08:53:06.982Z",
+          "eventStatus": "Resolved",
+          "detail": "File sync is operating normally."
+        }
+      ]
+    },
+    "D35Source": {
+      "day": 35,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "service",
+        "startsAt",
+        "endsAt",
+        "noticeLeadHours",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d35-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "scheduled",
+          "source_url": "https://example.com/qa/day-35/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "service": "Acme Desk",
+          "startsAt": "2026-10-02T11:38:06.982Z",
+          "endsAt": "2026-10-02T13:08:06.982Z",
+          "noticeLeadHours": 48,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D35Details": {
+      "day": 35,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "name"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d35-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 1,
+          "name": "Report exports"
+        },
+        {
+          "parent_id": "qa-d35-record-001",
+          "revision": "r1",
+          "kind": "feature",
+          "position": 2,
+          "name": "Workspace analytics"
+        }
+      ]
+    },
+    "D36Source": {
+      "day": 36,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "orderNumber",
+        "fulfillmentStatus",
+        "estimatedDelivery",
+        "notificationAllowed",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d36-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-36/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "orderNumber": "DEMO-1042",
+          "fulfillmentStatus": "shipped",
+          "estimatedDelivery": "2026-10-04",
+          "notificationAllowed": true,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D36Details": {
+      "day": 36,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "name",
+        "quantity"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d36-record-001",
+          "revision": "r1",
+          "kind": "item",
+          "position": 1,
+          "name": "Desk organizer",
+          "quantity": 2
+        },
+        {
+          "parent_id": "qa-d36-record-001",
+          "revision": "r1",
+          "kind": "item",
+          "position": 2,
+          "name": "Notebook",
+          "quantity": 1
+        }
+      ]
+    },
+    "D37Source": {
+      "day": 37,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "product",
+        "bundlePrice",
+        "currency",
+        "effectiveDate",
+        "expiresAt",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d37-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-37/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "product": "Workspace starter bundle",
+          "bundlePrice": 40,
+          "currency": "USD",
+          "effectiveDate": "2026-09-29",
+          "expiresAt": "2026-12-30",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D37Details": {
+      "day": 37,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "sku",
+        "name",
+        "price",
+        "currency",
+        "active"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d37-record-001",
+          "revision": "r1",
+          "kind": "component",
+          "position": 1,
+          "sku": "QA-COMP-1",
+          "name": "Desk mat",
+          "price": 24,
+          "currency": "USD",
+          "active": true
+        },
+        {
+          "parent_id": "qa-d37-record-001",
+          "revision": "r1",
+          "kind": "component",
+          "position": 2,
+          "sku": "QA-COMP-2",
+          "name": "Organizer",
+          "price": 18,
+          "currency": "USD",
+          "active": true
+        },
+        {
+          "parent_id": "qa-d37-record-001",
+          "revision": "r1",
+          "kind": "component",
+          "position": 3,
+          "sku": "QA-COMP-3",
+          "name": "Notebook",
+          "price": 8,
+          "currency": "USD",
+          "active": true
+        }
+      ]
+    },
+    "D38Source": {
+      "day": 38,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "orderNumber",
+        "originalDeliveryDate",
+        "revisedDeliveryDate",
+        "reason",
+        "nextStep",
+        "shipmentStatus",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d38-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-38/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "orderNumber": "DEMO-1042",
+          "originalDeliveryDate": "2026-10-02",
+          "revisedDeliveryDate": "2026-10-04",
+          "reason": "A carrier sorting delay affected this shipment.",
+          "nextStep": "Check tracking for the next carrier scan.",
+          "shipmentStatus": "shipped",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D38Details": {
+      "day": 38,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position"
+      ],
+      "rows": []
+    },
+    "D39Source": {
+      "day": 39,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "appointmentType",
+        "appointmentAt",
+        "location",
+        "reminderLeadHours",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d39-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-39/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "appointmentType": "Design consultation",
+          "appointmentAt": "2026-10-03T11:38:06.982Z",
+          "location": "Acme Studio reception",
+          "reminderLeadHours": 72,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D39Details": {
+      "day": 39,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "instruction"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d39-record-001",
+          "revision": "r1",
+          "kind": "preparation",
+          "position": 1,
+          "instruction": "Bring room measurements."
+        },
+        {
+          "parent_id": "qa-d39-record-001",
+          "revision": "r1",
+          "kind": "preparation",
+          "position": 2,
+          "instruction": "Choose three reference photos."
+        },
+        {
+          "parent_id": "qa-d39-record-001",
+          "revision": "r1",
+          "kind": "preparation",
+          "position": 3,
+          "instruction": "Write down your main design goals."
+        }
+      ]
+    },
+    "D40Source": {
+      "day": 40,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "returnNumber",
+        "deadline",
+        "labelUrl",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d40-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "authorized",
+          "source_url": "https://example.com/qa/day-40/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "returnNumber": "DEMO-RET-208",
+          "deadline": "2026-10-14",
+          "labelUrl": "https://example.com/qa/return-label",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D40Details": {
+      "day": 40,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "name",
+        "instruction"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d40-record-001",
+          "revision": "r1",
+          "kind": "item",
+          "position": 1,
+          "name": "Desk organizer",
+          "instruction": ""
+        },
+        {
+          "parent_id": "qa-d40-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 1,
+          "name": "",
+          "instruction": "Pack the authorized item securely."
+        },
+        {
+          "parent_id": "qa-d40-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 2,
+          "name": "",
+          "instruction": "Include the return reference."
+        },
+        {
+          "parent_id": "qa-d40-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 3,
+          "name": "",
+          "instruction": "Use the return label from your order portal."
+        }
+      ]
+    },
+    "D41Source": {
+      "day": 41,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "employeeName",
+        "role",
+        "startDate",
+        "onboardingLeadDays",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d41-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-41/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "employeeName": "Jordan Demo",
+          "role": "Customer success specialist",
+          "startDate": "2026-10-04",
+          "onboardingLeadDays": 14,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D41Details": {
+      "day": 41,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "day",
+        "title",
+        "location"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d41-record-001",
+          "revision": "r1",
+          "kind": "session",
+          "position": 1,
+          "day": 1,
+          "title": "Team welcome",
+          "location": "Main office"
+        },
+        {
+          "parent_id": "qa-d41-record-001",
+          "revision": "r1",
+          "kind": "session",
+          "position": 2,
+          "day": 2,
+          "title": "Product orientation",
+          "location": "Training room"
+        },
+        {
+          "parent_id": "qa-d41-record-001",
+          "revision": "r1",
+          "kind": "session",
+          "position": 3,
+          "day": 5,
+          "title": "First-week check-in",
+          "location": "Team meeting room"
+        }
+      ]
+    },
+    "D42Source": {
+      "day": 42,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "candidateName",
+        "role",
+        "agendaLeadHours",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d42-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-42/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "candidateName": "Taylor Demo",
+          "role": "Product designer",
+          "agendaLeadHours": 168,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D42Details": {
+      "day": 42,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "startsAt",
+        "endsAt",
+        "topic",
+        "interviewer"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d42-record-001",
+          "revision": "r1",
+          "kind": "session",
+          "position": 1,
+          "startsAt": "2026-10-07T08:38:06.982Z",
+          "endsAt": "2026-10-07T09:08:06.982Z",
+          "topic": "Portfolio discussion",
+          "interviewer": "Design panel"
+        },
+        {
+          "parent_id": "qa-d42-record-001",
+          "revision": "r1",
+          "kind": "session",
+          "position": 2,
+          "startsAt": "2026-10-07T09:23:06.982Z",
+          "endsAt": "2026-10-07T09:53:06.982Z",
+          "topic": "Collaboration discussion",
+          "interviewer": "Product panel"
+        }
+      ]
+    },
+    "D43Source": {
+      "day": 43,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "course",
+        "enrollmentStatus",
+        "syllabusStatus",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d43-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-43/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "course": "Practical workflow foundations",
+          "enrollmentStatus": "active",
+          "syllabusStatus": "published",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D43Details": {
+      "day": 43,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "title",
+        "minutes",
+        "outcome"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d43-record-001",
+          "revision": "r1",
+          "kind": "module",
+          "position": 1,
+          "title": "Inputs and triggers",
+          "minutes": 20,
+          "outcome": "Identify the right trigger for a task."
+        },
+        {
+          "parent_id": "qa-d43-record-001",
+          "revision": "r1",
+          "kind": "module",
+          "position": 2,
+          "title": "Validation and branching",
+          "minutes": 25,
+          "outcome": "Check inputs before an action."
+        },
+        {
+          "parent_id": "qa-d43-record-001",
+          "revision": "r1",
+          "kind": "module",
+          "position": 3,
+          "title": "Results and monitoring",
+          "minutes": 15,
+          "outcome": "Understand successful and skipped runs."
+        }
+      ]
+    },
+    "D44Source": {
+      "day": 44,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "site",
+        "emergencyInstruction",
+        "effectiveDate",
+        "expiresAt",
+        "supervisor",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d44-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-44/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "site": "Acme Workshop",
+          "emergencyInstruction": "Follow the posted evacuation plan and meet at the marked assembly point.",
+          "effectiveDate": "2026-09-29",
+          "expiresAt": "2026-12-30",
+          "supervisor": "Workshop QA supervisor",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D44Details": {
+      "day": 44,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "title",
+        "severity",
+        "control"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d44-record-001",
+          "revision": "r1",
+          "kind": "hazard",
+          "position": 1,
+          "title": "Moving equipment",
+          "severity": "high",
+          "control": "Stay within marked pedestrian routes."
+        },
+        {
+          "parent_id": "qa-d44-record-001",
+          "revision": "r1",
+          "kind": "hazard",
+          "position": 2,
+          "title": "Loose packaging",
+          "severity": "medium",
+          "control": "Keep walkways clear during unpacking."
+        },
+        {
+          "parent_id": "qa-d44-record-001",
+          "revision": "r1",
+          "kind": "hazard",
+          "position": 3,
+          "title": "Workstation clutter",
+          "severity": "low",
+          "control": "Store tools after each task."
+        }
+      ]
+    },
+    "D45Source": {
+      "day": 45,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "recipient",
+        "course",
+        "completedAt",
+        "score",
+        "certificateId",
+        "remedialInstruction",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d45-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "finalized",
+          "source_url": "https://example.com/qa/day-45/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "recipient": "Morgan Demo",
+          "course": "Customer support foundations",
+          "completedAt": "2026-09-29",
+          "score": 92,
+          "certificateId": "DEMO-CERT-2026-014",
+          "remedialInstruction": "Review the failed topics and arrange a supervised retake.",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D45Details": {
+      "day": 45,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "passingScore",
+        "policyStatus"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d45-record-001",
+          "revision": "r1",
+          "kind": "policy",
+          "position": 1,
+          "passingScore": 80,
+          "policyStatus": "approved"
+        }
+      ]
+    },
+    "D46Source": {
+      "day": 46,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "meeting",
+        "reportWindowDays",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d46-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-46/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "meeting": "Launch readiness review",
+          "reportWindowDays": 7,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D46Details": {
+      "day": 46,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "action_id",
+        "task",
+        "owner",
+        "dueDate",
+        "actionStatus"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d46-record-001",
+          "revision": "r1",
+          "kind": "action",
+          "position": 1,
+          "action_id": "QA-ACTION-1",
+          "task": "Confirm the support checklist",
+          "owner": "Support team",
+          "dueDate": "2026-09-29",
+          "actionStatus": "open"
+        },
+        {
+          "parent_id": "qa-d46-record-001",
+          "revision": "r1",
+          "kind": "action",
+          "position": 2,
+          "action_id": "QA-ACTION-2",
+          "task": "Approve the release notes",
+          "owner": "Product team",
+          "dueDate": "2026-10-01",
+          "actionStatus": "open"
+        },
+        {
+          "parent_id": "qa-d46-record-001",
+          "revision": "r1",
+          "kind": "action",
+          "position": 3,
+          "action_id": "QA-ACTION-3",
+          "task": "Schedule the onboarding walkthrough",
+          "owner": "Support team",
+          "dueDate": "2026-10-02",
+          "actionStatus": "open"
+        }
+      ]
+    },
+    "D47Source": {
+      "day": 47,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "crew",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d47-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-47/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "crew": "Maintenance QA team",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D47Details": {
+      "day": 47,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "asset_id",
+        "name",
+        "lastServicedAt",
+        "intervalDays",
+        "instruction",
+        "assetStatus",
+        "openWorkItem"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d47-record-001",
+          "revision": "r1",
+          "kind": "equipment",
+          "position": 1,
+          "asset_id": "QA-ASSET-1",
+          "name": "Packing station A",
+          "lastServicedAt": "2026-08-24",
+          "intervalDays": 30,
+          "instruction": "Book the approved inspection checklist with the maintenance team.",
+          "assetStatus": "active",
+          "openWorkItem": ""
+        },
+        {
+          "parent_id": "qa-d47-record-001",
+          "revision": "r1",
+          "kind": "equipment",
+          "position": 2,
+          "asset_id": "QA-ASSET-2",
+          "name": "Label printer B",
+          "lastServicedAt": "2026-09-19",
+          "intervalDays": 30,
+          "instruction": "Arrange the standard cleaning and alignment check.",
+          "assetStatus": "active",
+          "openWorkItem": ""
+        }
+      ]
+    },
+    "D48Source": {
+      "day": 48,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "warehouse",
+        "buyer",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d48-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-48/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "warehouse": "North demo warehouse",
+          "buyer": "Warehouse QA buyer",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D48Details": {
+      "day": 48,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "sku",
+        "name",
+        "onHand",
+        "reorderPoint",
+        "targetStock",
+        "itemStatus",
+        "openReplenishment"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d48-record-001",
+          "revision": "r1",
+          "kind": "item",
+          "position": 1,
+          "sku": "DEMO-MAT",
+          "name": "Desk mat",
+          "onHand": 8,
+          "reorderPoint": 10,
+          "targetStock": 30,
+          "itemStatus": "active",
+          "openReplenishment": ""
+        },
+        {
+          "parent_id": "qa-d48-record-001",
+          "revision": "r1",
+          "kind": "item",
+          "position": 2,
+          "sku": "DEMO-PEN",
+          "name": "Pen pack",
+          "onHand": 15,
+          "reorderPoint": 15,
+          "targetStock": 40,
+          "itemStatus": "active",
+          "openReplenishment": ""
+        },
+        {
+          "parent_id": "qa-d48-record-001",
+          "revision": "r1",
+          "kind": "item",
+          "position": 3,
+          "sku": "DEMO-NOTE",
+          "name": "Notebook",
+          "onHand": 35,
+          "reorderPoint": 10,
+          "targetStock": 30,
+          "itemStatus": "active",
+          "openReplenishment": ""
+        }
+      ]
+    },
+    "D49Source": {
+      "day": 49,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "route",
+        "departureAt",
+        "driver",
+        "dispatchLeadHours",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d49-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "approved",
+          "source_url": "https://example.com/qa/day-49/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "route": "Demo route A",
+          "departureAt": "2026-10-02T07:38:06.982Z",
+          "driver": "Dispatch QA driver",
+          "dispatchLeadHours": 48,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D49Details": {
+      "day": 49,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "sequence",
+        "address",
+        "travelMinutes",
+        "serviceMinutes"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d49-record-001",
+          "revision": "r1",
+          "kind": "stop",
+          "position": 1,
+          "sequence": 1,
+          "address": "Demo North Depot",
+          "travelMinutes": 20,
+          "serviceMinutes": 10
+        },
+        {
+          "parent_id": "qa-d49-record-001",
+          "revision": "r1",
+          "kind": "stop",
+          "position": 2,
+          "sequence": 2,
+          "address": "Demo Central Workshop",
+          "travelMinutes": 15,
+          "serviceMinutes": 5
+        },
+        {
+          "parent_id": "qa-d49-record-001",
+          "revision": "r1",
+          "kind": "stop",
+          "position": 3,
+          "sequence": 3,
+          "address": "Demo South Studio",
+          "travelMinutes": 25,
+          "serviceMinutes": 10
+        }
+      ]
+    },
+    "D50Source": {
+      "day": 50,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "title",
+        "deadline",
+        "bidOwner",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d50-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "shortlisted",
+          "source_url": "https://example.com/qa/day-50/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "title": "Demo office fit-out tender",
+          "deadline": "2026-10-19",
+          "bidOwner": "Bid QA owner",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D50Details": {
+      "day": 50,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "requirement",
+        "verified",
+        "name",
+        "owner",
+        "ready"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d50-record-001",
+          "revision": "r1",
+          "kind": "eligibility",
+          "position": 1,
+          "requirement": "Registered business",
+          "verified": true,
+          "name": "",
+          "owner": "",
+          "ready": ""
+        },
+        {
+          "parent_id": "qa-d50-record-001",
+          "revision": "r1",
+          "kind": "eligibility",
+          "position": 2,
+          "requirement": "Relevant project experience",
+          "verified": true,
+          "name": "",
+          "owner": "",
+          "ready": ""
+        },
+        {
+          "parent_id": "qa-d50-record-001",
+          "revision": "r1",
+          "kind": "document",
+          "position": 1,
+          "requirement": "",
+          "verified": "",
+          "name": "Scope response",
+          "owner": "Bid QA owner",
+          "ready": true
+        },
+        {
+          "parent_id": "qa-d50-record-001",
+          "revision": "r1",
+          "kind": "document",
+          "position": 2,
+          "requirement": "",
+          "verified": "",
+          "name": "Pricing schedule",
+          "owner": "Bid QA owner",
+          "ready": true
+        },
+        {
+          "parent_id": "qa-d50-record-001",
+          "revision": "r1",
+          "kind": "document",
+          "position": 3,
+          "requirement": "",
+          "verified": "",
+          "name": "Delivery timeline",
+          "owner": "Bid QA owner",
+          "ready": true
+        }
+      ]
+    },
+    "D51Source": {
+      "day": 51,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "trip",
+        "bookingStatus",
+        "destinationTimezone",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d51-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-51/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "trip": "Demo coastal weekend",
+          "bookingStatus": "confirmed",
+          "destinationTimezone": "Europe/London",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D51Details": {
+      "day": 51,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "date",
+        "time",
+        "title",
+        "location",
+        "bookingStatus"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d51-record-001",
+          "revision": "r1",
+          "kind": "activity",
+          "position": 1,
+          "date": "2026-10-09",
+          "time": "09:00",
+          "title": "Harbor walk",
+          "location": "Demo Harbor",
+          "bookingStatus": "confirmed"
+        },
+        {
+          "parent_id": "qa-d51-record-001",
+          "revision": "r1",
+          "kind": "activity",
+          "position": 2,
+          "date": "2026-10-09",
+          "time": "13:30",
+          "title": "Museum visit",
+          "location": "Demo Maritime Museum",
+          "bookingStatus": "confirmed"
+        },
+        {
+          "parent_id": "qa-d51-record-001",
+          "revision": "r1",
+          "kind": "activity",
+          "position": 3,
+          "date": "2026-10-10",
+          "time": "10:00",
+          "title": "Old-town tour",
+          "location": "Demo Visitor Center",
+          "bookingStatus": "confirmed"
+        }
+      ]
+    },
+    "D52Source": {
+      "day": 52,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "property",
+        "checkInTime",
+        "address",
+        "arrivalDate",
+        "noticeLeadDays",
+        "publicOnly",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d52-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-52/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "property": "Demo Harbor Stay",
+          "checkInTime": "15:00",
+          "address": "Demo Harbor reception",
+          "arrivalDate": "2026-10-02",
+          "noticeLeadDays": 3,
+          "publicOnly": true,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D52Details": {
+      "day": 52,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "instruction",
+        "publicOnly",
+        "name"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d52-record-001",
+          "revision": "r1",
+          "kind": "arrival",
+          "position": 1,
+          "instruction": "Enter through the main reception.",
+          "publicOnly": true,
+          "name": ""
+        },
+        {
+          "parent_id": "qa-d52-record-001",
+          "revision": "r1",
+          "kind": "arrival",
+          "position": 2,
+          "instruction": "Show your booking confirmation to the reception team.",
+          "publicOnly": true,
+          "name": ""
+        },
+        {
+          "parent_id": "qa-d52-record-001",
+          "revision": "r1",
+          "kind": "arrival",
+          "position": 3,
+          "instruction": "Ask reception for your room directions.",
+          "publicOnly": true,
+          "name": ""
+        },
+        {
+          "parent_id": "qa-d52-record-001",
+          "revision": "r1",
+          "kind": "amenity",
+          "position": 1,
+          "instruction": "",
+          "publicOnly": "",
+          "name": "Breakfast lounge"
+        },
+        {
+          "parent_id": "qa-d52-record-001",
+          "revision": "r1",
+          "kind": "amenity",
+          "position": 2,
+          "instruction": "",
+          "publicOnly": "",
+          "name": "Luggage storage"
+        },
+        {
+          "parent_id": "qa-d52-record-001",
+          "revision": "r1",
+          "kind": "amenity",
+          "position": 3,
+          "instruction": "",
+          "publicOnly": "",
+          "name": "Guest workspace"
+        }
+      ]
+    },
+    "D53Source": {
+      "day": 53,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "name",
+        "species",
+        "age",
+        "adoptionUrl",
+        "availability",
+        "publicPermission",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d53-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-53/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "name": "Milo Demo",
+          "species": "Cat",
+          "age": "3 years",
+          "adoptionUrl": "https://example.com/adopt/milo-demo",
+          "availability": "available",
+          "publicPermission": true,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D53Details": {
+      "day": 53,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "value"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d53-record-001",
+          "revision": "r1",
+          "kind": "trait",
+          "position": 1,
+          "value": "Calm companion"
+        },
+        {
+          "parent_id": "qa-d53-record-001",
+          "revision": "r1",
+          "kind": "trait",
+          "position": 2,
+          "value": "Enjoys quiet play"
+        },
+        {
+          "parent_id": "qa-d53-record-001",
+          "revision": "r1",
+          "kind": "care",
+          "position": 1,
+          "value": "Indoor home"
+        },
+        {
+          "parent_id": "qa-d53-record-001",
+          "revision": "r1",
+          "kind": "care",
+          "position": 2,
+          "value": "Gradual introductions to other pets"
+        }
+      ]
+    },
+    "D54Source": {
+      "day": 54,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "event",
+        "startsAt",
+        "endsAt",
+        "coordinator",
+        "shiftLeadHours",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d54-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-54/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "event": "Demo community cleanup",
+          "startsAt": "2026-10-03T07:38:06.982Z",
+          "endsAt": "2026-10-03T10:38:06.982Z",
+          "coordinator": "Volunteer QA coordinator",
+          "shiftLeadHours": 72,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D54Details": {
+      "day": 54,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "person",
+        "station",
+        "task",
+        "minimumPeople"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d54-record-001",
+          "revision": "r1",
+          "kind": "assignment",
+          "position": 1,
+          "person": "Alex Demo",
+          "station": "Welcome desk",
+          "task": "Hand out the route sheet.",
+          "minimumPeople": ""
+        },
+        {
+          "parent_id": "qa-d54-record-001",
+          "revision": "r1",
+          "kind": "assignment",
+          "position": 2,
+          "person": "Sam Demo",
+          "station": "Welcome desk",
+          "task": "Record volunteer arrivals.",
+          "minimumPeople": ""
+        },
+        {
+          "parent_id": "qa-d54-record-001",
+          "revision": "r1",
+          "kind": "assignment",
+          "position": 3,
+          "person": "Robin Demo",
+          "station": "Equipment point",
+          "task": "Distribute approved cleanup equipment.",
+          "minimumPeople": ""
+        },
+        {
+          "parent_id": "qa-d54-record-001",
+          "revision": "r1",
+          "kind": "requirement",
+          "position": 1,
+          "person": "",
+          "station": "Welcome desk",
+          "task": "",
+          "minimumPeople": 2
+        },
+        {
+          "parent_id": "qa-d54-record-001",
+          "revision": "r1",
+          "kind": "requirement",
+          "position": 2,
+          "person": "",
+          "station": "Equipment point",
+          "task": "",
+          "minimumPeople": 1
+        }
+      ]
+    },
+    "D55Source": {
+      "day": 55,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "donor",
+        "amount",
+        "currency",
+        "campaign",
+        "donationStatus",
+        "communicationAllowed",
+        "settledAt",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d55-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "confirmed",
+          "source_url": "https://example.com/qa/day-55/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "donor": "Community Demo Fund",
+          "amount": 125,
+          "currency": "USD",
+          "campaign": "School supply drive",
+          "donationStatus": "settled",
+          "communicationAllowed": true,
+          "settledAt": "2026-10-01T08:38:06.982Z",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D55Details": {
+      "day": 55,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "unitCost",
+        "impactUnit",
+        "currency",
+        "effectiveDate",
+        "costStatus"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d55-record-001",
+          "revision": "r1",
+          "kind": "cost",
+          "position": 1,
+          "unitCost": 12,
+          "impactUnit": "school supply kits",
+          "currency": "USD",
+          "effectiveDate": "2026-09-29",
+          "costStatus": "approved"
+        }
+      ]
+    },
+    "D56Source": {
+      "day": 56,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "question",
+        "closesAt",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d56-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "closed",
+          "source_url": "https://example.com/qa/day-56/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "question": "Which workshop should we run next?",
+          "closesAt": "2026-10-01T09:38:06.982Z",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D56Details": {
+      "day": 56,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "option_id",
+        "label",
+        "response_id"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "option",
+          "position": 1,
+          "option_id": "QA-OPTION-1",
+          "label": "Workflow basics",
+          "response_id": ""
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "option",
+          "position": 2,
+          "option_id": "QA-OPTION-2",
+          "label": "Data cleanup",
+          "response_id": ""
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "option",
+          "position": 3,
+          "option_id": "QA-OPTION-3",
+          "label": "Video reporting",
+          "response_id": ""
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 1,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-1"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 2,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-2"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 3,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-3"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 4,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-4"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 5,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-5"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 6,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-6"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 7,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-7"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 8,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-8"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 9,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-9"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 10,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-10"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 11,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-11"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 12,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-12"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 13,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-13"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 14,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-14"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 15,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-15"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 16,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-16"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 17,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-17"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 18,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-18"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 19,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-19"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 20,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-20"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 21,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-21"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 22,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-22"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 23,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-23"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 24,
+          "option_id": "QA-OPTION-1",
+          "label": "",
+          "response_id": "QA-RESPONSE-1-24"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 25,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-1"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 26,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-2"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 27,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-3"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 28,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-4"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 29,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-5"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 30,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-6"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 31,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-7"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 32,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-8"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 33,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-9"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 34,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-10"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 35,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-11"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 36,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-12"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 37,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-13"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 38,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-14"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 39,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-15"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 40,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-16"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 41,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-17"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 42,
+          "option_id": "QA-OPTION-2",
+          "label": "",
+          "response_id": "QA-RESPONSE-2-18"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 43,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-1"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 44,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-2"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 45,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-3"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 46,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-4"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 47,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-5"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 48,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-6"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 49,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-7"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 50,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-8"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 51,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-9"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 52,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-10"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 53,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-11"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 54,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-12"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 55,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-13"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 56,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-14"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 57,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-15"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 58,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-16"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 59,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-17"
+        },
+        {
+          "parent_id": "qa-d56-record-001",
+          "revision": "r1",
+          "kind": "response",
+          "position": 60,
+          "option_id": "QA-OPTION-3",
+          "label": "",
+          "response_id": "QA-RESPONSE-3-18"
+        }
+      ]
+    },
+    "D57Source": {
+      "day": 57,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "campaign",
+        "goal",
+        "currency",
+        "minimumMilestonePercent",
+        "lastBriefedMilestone",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d57-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-57/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "campaign": "Demo community garden",
+          "goal": 1000,
+          "currency": "USD",
+          "minimumMilestonePercent": 10,
+          "lastBriefedMilestone": 0,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D57Details": {
+      "day": 57,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "contribution_id",
+        "amount",
+        "currency",
+        "paymentStatus"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d57-record-001",
+          "revision": "r1",
+          "kind": "contribution",
+          "position": 1,
+          "contribution_id": "QA-CONTRIB-1",
+          "amount": 250,
+          "currency": "USD",
+          "paymentStatus": "settled"
+        },
+        {
+          "parent_id": "qa-d57-record-001",
+          "revision": "r1",
+          "kind": "contribution",
+          "position": 2,
+          "contribution_id": "QA-CONTRIB-2",
+          "amount": 175,
+          "currency": "USD",
+          "paymentStatus": "settled"
+        },
+        {
+          "parent_id": "qa-d57-record-001",
+          "revision": "r1",
+          "kind": "contribution",
+          "position": 3,
+          "contribution_id": "QA-CONTRIB-3",
+          "amount": 125,
+          "currency": "USD",
+          "paymentStatus": "settled"
+        }
+      ]
+    },
+    "D58Source": {
+      "day": 58,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "project",
+        "baselinePeriod",
+        "followupPeriod",
+        "publicPermission",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d58-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "approved",
+          "source_url": "https://example.com/qa/day-58/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "project": "Demo onboarding improvement",
+          "baselinePeriod": "2026-08",
+          "followupPeriod": "2026-09",
+          "publicPermission": true,
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D58Details": {
+      "day": 58,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "name",
+        "before",
+        "after",
+        "unit",
+        "direction"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d58-record-001",
+          "revision": "r1",
+          "kind": "metric",
+          "position": 1,
+          "name": "Setup time",
+          "before": 40,
+          "after": 25,
+          "unit": "minutes",
+          "direction": "lower"
+        },
+        {
+          "parent_id": "qa-d58-record-001",
+          "revision": "r1",
+          "kind": "metric",
+          "position": 2,
+          "name": "Completed onboarding",
+          "before": 60,
+          "after": 78,
+          "unit": "people",
+          "direction": "higher"
+        }
+      ]
+    },
+    "D59Source": {
+      "day": 59,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "project",
+        "reportingPeriod",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d59-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "active",
+          "source_url": "https://example.com/qa/day-59/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "project": "Demo workspace launch",
+          "reportingPeriod": "2026-10-01 daily review",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D59Details": {
+      "day": 59,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "title",
+        "dueDate",
+        "milestoneStatus"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d59-record-001",
+          "revision": "r1",
+          "kind": "milestone",
+          "position": 1,
+          "title": "Requirements approved",
+          "dueDate": "2026-09-24",
+          "milestoneStatus": "complete"
+        },
+        {
+          "parent_id": "qa-d59-record-001",
+          "revision": "r1",
+          "kind": "milestone",
+          "position": 2,
+          "title": "Pilot workspace",
+          "dueDate": "2026-09-29",
+          "milestoneStatus": "in_progress"
+        },
+        {
+          "parent_id": "qa-d59-record-001",
+          "revision": "r1",
+          "kind": "milestone",
+          "position": 3,
+          "title": "Team rollout",
+          "dueDate": "2026-10-06",
+          "milestoneStatus": "planned"
+        }
+      ]
+    },
+    "D60Source": {
+      "day": 60,
+      "kind": "source",
+      "headers": [
+        "source_id",
+        "revision",
+        "approval",
+        "status",
+        "source_url",
+        "updated_at",
+        "recipe",
+        "baseServings",
+        "targetServings",
+        "recipeStatus",
+        "requestedAt",
+        "automation_status",
+        "request_key",
+        "input_hash",
+        "job_id",
+        "video_url",
+        "drive_file_id",
+        "drive_url",
+        "completed_at",
+        "outcome_summary",
+        "automation_error"
+      ],
+      "rows": [
+        {
+          "source_id": "qa-d60-record-001",
+          "revision": "r1",
+          "approval": "approved",
+          "status": "pending",
+          "source_url": "https://example.com/qa/day-60/record-001",
+          "updated_at": "2026-10-01T09:38:06.982Z",
+          "recipe": "Demo roasted vegetable bowl",
+          "baseServings": 2,
+          "targetServings": 4,
+          "recipeStatus": "active",
+          "requestedAt": "2026-10-01T09:38:06.982Z",
+          "automation_status": "",
+          "request_key": "",
+          "input_hash": "",
+          "job_id": "",
+          "video_url": "",
+          "drive_file_id": "",
+          "drive_url": "",
+          "completed_at": "",
+          "outcome_summary": "",
+          "automation_error": ""
+        }
+      ]
+    },
+    "D60Details": {
+      "day": 60,
+      "kind": "details",
+      "headers": [
+        "parent_id",
+        "revision",
+        "kind",
+        "position",
+        "name",
+        "quantity",
+        "unit",
+        "instruction"
+      ],
+      "rows": [
+        {
+          "parent_id": "qa-d60-record-001",
+          "revision": "r1",
+          "kind": "ingredient",
+          "position": 1,
+          "name": "Cooked rice",
+          "quantity": 200,
+          "unit": "g",
+          "instruction": ""
+        },
+        {
+          "parent_id": "qa-d60-record-001",
+          "revision": "r1",
+          "kind": "ingredient",
+          "position": 2,
+          "name": "Mixed vegetables",
+          "quantity": 300,
+          "unit": "g",
+          "instruction": ""
+        },
+        {
+          "parent_id": "qa-d60-record-001",
+          "revision": "r1",
+          "kind": "ingredient",
+          "position": 3,
+          "name": "Olive oil",
+          "quantity": 1,
+          "unit": "tbsp",
+          "instruction": ""
+        },
+        {
+          "parent_id": "qa-d60-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 1,
+          "name": "",
+          "quantity": "",
+          "unit": "",
+          "instruction": "Prepare the ingredients as described in your full recipe."
+        },
+        {
+          "parent_id": "qa-d60-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 2,
+          "name": "",
+          "quantity": "",
+          "unit": "",
+          "instruction": "Roast the vegetables using the recipe’s temperature and timing."
+        },
+        {
+          "parent_id": "qa-d60-record-001",
+          "revision": "r1",
+          "kind": "step",
+          "position": 3,
+          "name": "",
+          "quantity": "",
+          "unit": "",
+          "instruction": "Serve the vegetables with the rice and dressing."
+        }
+      ]
+    }
+  }
+}

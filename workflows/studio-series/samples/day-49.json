@@ -1,0 +1,51 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-49-demo",
+    "revision": "1",
+    "brand": "THE AMBER ROOM",
+    "serviceStart": "2026-10-03T16:30:00Z",
+    "serviceEnd": "2026-10-03T21:00:00Z",
+    "slotMinutes": 30,
+    "diningMinutes": 90,
+    "turnoverMinutes": 15,
+    "partySize": 2,
+    "minLeadMinutes": 30,
+    "snapshotAt": "2026-10-03T10:00:00Z",
+    "interiorImage": "https://images.pexels.com/photos/36029879/pexels-photo-36029879.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "tableImage": "https://images.pexels.com/photos/29190272/pexels-photo-29190272.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "cta": "Choose your time. Reserve your table.",
+    "destination": "https://amber.example/reservations"
+  },
+  "records": [
+    {
+      "kind": "table",
+      "record_id": "T1",
+      "capacity": 2,
+      "active": true
+    },
+    {
+      "kind": "table",
+      "record_id": "T2",
+      "capacity": 4,
+      "active": true
+    },
+    {
+      "kind": "reservation",
+      "record_id": "R1",
+      "table_id": "T1",
+      "startsAt": "2026-10-03T16:30:00Z",
+      "endsAt": "2026-10-03T18:00:00Z",
+      "status": "confirmed"
+    },
+    {
+      "kind": "reservation",
+      "record_id": "R2",
+      "table_id": "T2",
+      "startsAt": "2026-10-03T19:30:00Z",
+      "endsAt": "2026-10-03T21:00:00Z",
+      "status": "confirmed"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "day": 60,
+  "executionId": 732,
+  "workflowId": "ZvidSeries2Day60",
+  "jobId": "f6b71dfe-3113-4fdb-a55c-9fca5252f4f8",
+  "file": "media/day-60.mp4",
+  "bytes": 290675,
+  "sha256": "919022e0e2835c018e324587660d035274b667dc7b99e93354331067689bb83a",
+  "mediaSource": "n8n-watch-binary",
+  "codec": "h264",
+  "width": 1280,
+  "height": 720,
+  "expectedSeconds": 24,
+  "actualSeconds": 24.0,
+  "resolutionPassed": true,
+  "durationPassed": true,
+  "fullDecodePassed": true,
+  "sceneCount": 4,
+  "frames": [
+    {
+      "scene": "opening",
+      "seconds": 3.0,
+      "file": "day-60-opening.png",
+      "lumaStdDev": 30.58
+    },
+    {
+      "scene": "details-1",
+      "seconds": 9.0,
+      "file": "day-60-details-1.png",
+      "lumaStdDev": 105.66
+    },
+    {
+      "scene": "details-2",
+      "seconds": 15.0,
+      "file": "day-60-details-2.png",
+      "lumaStdDev": 106.62
+    },
+    {
+      "scene": "closing",
+      "seconds": 21.0,
+      "file": "day-60-closing.png",
+      "lumaStdDev": 27.58
+    }
+  ],
+  "contactSheet": "media/day-60-contact.png",
+  "mediaPassed": true,
+  "visualReview": "failed",
+  "checkedAt": "2026-10-01T10:25:29.940067+00:00",
+  "visualNotes": "All four scene frames inspected. Ingredient scaling is correct, but three-column cooking cards clip the final words: Cook 1 hides recipe and Cook 2 hides timing. Requires layout correction or shorter sample text followed by a new manual render."
+}

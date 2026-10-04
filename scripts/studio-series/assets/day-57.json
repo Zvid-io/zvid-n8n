@@ -1,0 +1,170 @@
+{
+  "name": "S2 D57 Geography Progressive Clues",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1080,
+  "height": 1920,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "variables": {
+    "countryMap": "<svg width=\"980\" height=\"900\" viewBox=\"0 0 980 900\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M736.2,390.4 L685.3,445.8 L686.2,502.5 L665.5,546.4 L675.1,574.0 L646.5,612.7 L576.2,638.6 L479.5,642.0 L401.1,704.8 L364.2,683.6 L361.9,642.5 L266.3,654.7 L201.2,680.6 L136.8,681.6 L192.5,722.1 L155.8,815.6 L120.3,838.7 L93.7,817.3 L107.2,767.8 L72.3,751.8 L50.0,714.0 L102.0,697.1 L130.8,662.5 L186.2,634.1 L226.5,596.5 L336.0,580.1 L394.8,591.3 L452.3,493.6 L489.0,519.8 L569.7,464.8 L601.0,443.5 L635.5,376.2 L626.1,314.3 L649.4,279.6 L707.8,269.5 L737.8,345.8 L736.2,390.4 Z\" fill=\"#e79d55\" stroke=\"#552e1b\" stroke-width=\"3\"/><path d=\"M886.3,127.5 L925.2,104.2 L937.4,165.9 L855.8,181.0 L807.6,235.6 L721.2,198.0 L691.2,258.2 L630.1,259.0 L622.5,204.3 L649.7,162.0 L708.5,158.9 L724.5,82.9 L740.8,40.0 L805.4,97.3 L847.6,115.8 L886.3,127.5 Z\" fill=\"#e79d55\" stroke=\"#552e1b\" stroke-width=\"3\"/><path d=\"M212.9,704.8 L243.4,672.0 L274.6,678.4 L297.3,655.3 L337.6,667.1 L344.7,686.0 L313.7,719.3 L291.1,701.6 L262.9,714.4 L248.4,746.6 L212.5,730.9 L212.9,704.8 Z\" fill=\"#e79d55\" stroke=\"#552e1b\" stroke-width=\"3\"/></svg>",
+    "markedMap": "<svg width=\"980\" height=\"900\" viewBox=\"0 0 980 900\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M736.2,390.4 L685.3,445.8 L686.2,502.5 L665.5,546.4 L675.1,574.0 L646.5,612.7 L576.2,638.6 L479.5,642.0 L401.1,704.8 L364.2,683.6 L361.9,642.5 L266.3,654.7 L201.2,680.6 L136.8,681.6 L192.5,722.1 L155.8,815.6 L120.3,838.7 L93.7,817.3 L107.2,767.8 L72.3,751.8 L50.0,714.0 L102.0,697.1 L130.8,662.5 L186.2,634.1 L226.5,596.5 L336.0,580.1 L394.8,591.3 L452.3,493.6 L489.0,519.8 L569.7,464.8 L601.0,443.5 L635.5,376.2 L626.1,314.3 L649.4,279.6 L707.8,269.5 L737.8,345.8 L736.2,390.4 Z\" fill=\"#e79d55\" stroke=\"#552e1b\" stroke-width=\"3\"/><path d=\"M886.3,127.5 L925.2,104.2 L937.4,165.9 L855.8,181.0 L807.6,235.6 L721.2,198.0 L691.2,258.2 L630.1,259.0 L622.5,204.3 L649.7,162.0 L708.5,158.9 L724.5,82.9 L740.8,40.0 L805.4,97.3 L847.6,115.8 L886.3,127.5 Z\" fill=\"#e79d55\" stroke=\"#552e1b\" stroke-width=\"3\"/><path d=\"M212.9,704.8 L243.4,672.0 L274.6,678.4 L297.3,655.3 L337.6,667.1 L344.7,686.0 L313.7,719.3 L291.1,701.6 L262.9,714.4 L248.4,746.6 L212.5,730.9 L212.9,704.8 Z\" fill=\"#e79d55\" stroke=\"#552e1b\" stroke-width=\"3\"/><circle cx=\"615.6\" cy=\"582.4\" r=\"18\" fill=\"#efede1\" stroke=\"#552e1b\" stroke-width=\"6\"/><circle class=\"pulse\" cx=\"615.6\" cy=\"582.4\" r=\"40\" fill=\"none\" stroke=\"#552e1b\" stroke-width=\"3\"/></svg>",
+    "hook": "NAME THIS\nCOUNTRY.",
+    "clueOne": "An archipelago on the western edge of the Pacific.",
+    "clueTwo": "Its neighbors include Korea, China and Russia.",
+    "clueThree": "Its capital is Tokyo.",
+    "answer": "JAPAN",
+    "location": "NORTHERN HEMISPHERE / EAST ASIA",
+    "takeaway": "Which clue gave it away?",
+    "credit": "Map geometry: Natural Earth, public domain.\nCountry facts: Government of Japan.\nProjection is simplified for this quiz.",
+    "narrationUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790930325/zvid-series2-design-review-20261001/d57-narration-timed-r2.mp3"
+  },
+  "scenes": [
+    {
+      "id": "silhouette",
+      "duration": 4.5,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "html": "<div style=\"position:relative;width:1080px;height:1920px;background:#efe8d7\"><div style=\"position:absolute;left:75px;top:80px;width:930px;height:55px;\"><div class=\"tag\">ATLAS / PROGRESSIVE CLUES</div></div><div style=\"position:absolute;left:75px;top:230px;width:930px;height:230px;white-space:pre-line\"><div class=\"headline\">{{hook}}</div></div><div style=\"position:absolute;left:40px;top:560px;width:980px;height:900px;\"><div class=\"reveal\">{{countryMap}}</div></div><div style=\"position:absolute;left:75px;top:1600px;width:930px;height:120px;font-family:Inter;font-size:35px;letter-spacing:3px;color:#765b3c\">THREE CLUES. ONE ANSWER.</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Montserrat;font-size:90px;font-weight:800;line-height:1.1;color:#442d22}.clue{font-family:Inter;font-size:43px;line-height:1.4;color:#442d22}.tag{font-family:Inter;font-size:28px;letter-spacing:6px;color:#765b3c}.reveal{animation:mapreveal 3s .4s both}.pulse{transform-origin:615px 582px;animation:pulse 2s infinite}@keyframes mapreveal{from{clip-path:inset(0 0 100% 0);transform:translateY(35px)}to{clip-path:inset(0);transform:translateY(0)}}@keyframes pulse{0%{opacity:1;transform:scale(.6)}100%{opacity:0;transform:scale(1.4)}}",
+            "animationDuration": 4.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "clue-one",
+      "duration": 6,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "html": "<div style=\"position:relative;width:1080px;height:1920px;background:#efe8d7\"><div style=\"position:absolute;left:75px;top:80px;width:930px;height:55px;\"><div class=\"tag\">ATLAS / PROGRESSIVE CLUES</div></div><div style=\"position:absolute;left:75px;top:210px;width:930px;height:100px;font-family:Montserrat;font-size:55px;font-weight:800;color:#765b3c\">CLUE 01</div><div style=\"position:absolute;left:75px;top:370px;width:930px;height:230px;\"><div class=\"clue\">{{clueOne}}</div></div><div style=\"position:absolute;left:40px;top:650px;width:980px;height:900px;\"><div class=\"reveal\">{{countryMap}}</div></div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Montserrat;font-size:90px;font-weight:800;line-height:1.1;color:#442d22}.clue{font-family:Inter;font-size:43px;line-height:1.4;color:#442d22}.tag{font-family:Inter;font-size:28px;letter-spacing:6px;color:#765b3c}.reveal{animation:mapreveal 3s .4s both}.pulse{transform-origin:615px 582px;animation:pulse 2s infinite}@keyframes mapreveal{from{clip-path:inset(0 0 100% 0);transform:translateY(35px)}to{clip-path:inset(0);transform:translateY(0)}}@keyframes pulse{0%{opacity:1;transform:scale(.6)}100%{opacity:0;transform:scale(1.4)}}",
+            "animationDuration": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "clue-two",
+      "duration": 6.7,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "html": "<div style=\"position:relative;width:1080px;height:1920px;background:#efe8d7\"><div style=\"position:absolute;left:75px;top:80px;width:930px;height:55px;\"><div class=\"tag\">ATLAS / PROGRESSIVE CLUES</div></div><div style=\"position:absolute;left:75px;top:210px;width:930px;height:100px;font-family:Montserrat;font-size:55px;font-weight:800;color:#765b3c\">CLUE 02</div><div style=\"position:absolute;left:75px;top:370px;width:930px;height:230px;\"><div class=\"clue\">{{clueTwo}}</div></div><div style=\"position:absolute;left:40px;top:650px;width:980px;height:900px;\">{{countryMap}}</div><div style=\"position:absolute;left:75px;top:1600px;width:930px;height:100px;font-family:Inter;font-size:30px;letter-spacing:3px;color:#765b3c\">{{location}}</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Montserrat;font-size:90px;font-weight:800;line-height:1.1;color:#442d22}.clue{font-family:Inter;font-size:43px;line-height:1.4;color:#442d22}.tag{font-family:Inter;font-size:28px;letter-spacing:6px;color:#765b3c}.reveal{animation:mapreveal 3s .4s both}.pulse{transform-origin:615px 582px;animation:pulse 2s infinite}@keyframes mapreveal{from{clip-path:inset(0 0 100% 0);transform:translateY(35px)}to{clip-path:inset(0);transform:translateY(0)}}@keyframes pulse{0%{opacity:1;transform:scale(.6)}100%{opacity:0;transform:scale(1.4)}}",
+            "animationDuration": 6.7
+          }
+        }
+      ]
+    },
+    {
+      "id": "capital",
+      "duration": 5.7,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "html": "<div style=\"position:relative;width:1080px;height:1920px;background:#efe8d7\"><div style=\"position:absolute;left:75px;top:80px;width:930px;height:55px;\"><div class=\"tag\">ATLAS / PROGRESSIVE CLUES</div></div><div style=\"position:absolute;left:75px;top:210px;width:930px;height:100px;font-family:Montserrat;font-size:55px;font-weight:800;color:#765b3c\">CLUE 03</div><div style=\"position:absolute;left:75px;top:370px;width:930px;height:200px;\"><div class=\"clue\">{{clueThree}}</div></div><div style=\"position:absolute;left:40px;top:650px;width:980px;height:900px;\">{{markedMap}}</div><div style=\"position:absolute;left:730px;top:1170px;width:260px;height:90px;font-family:Inter;font-size:37px;font-weight:700;color:#442d22\">TOKYO</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Montserrat;font-size:90px;font-weight:800;line-height:1.1;color:#442d22}.clue{font-family:Inter;font-size:43px;line-height:1.4;color:#442d22}.tag{font-family:Inter;font-size:28px;letter-spacing:6px;color:#765b3c}.reveal{animation:mapreveal 3s .4s both}.pulse{transform-origin:615px 582px;animation:pulse 2s infinite}@keyframes mapreveal{from{clip-path:inset(0 0 100% 0);transform:translateY(35px)}to{clip-path:inset(0);transform:translateY(0)}}@keyframes pulse{0%{opacity:1;transform:scale(.6)}100%{opacity:0;transform:scale(1.4)}}",
+            "animationDuration": 5.7
+          }
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "duration": 8.3,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920,
+          "html": "<div style=\"position:relative;width:1080px;height:1920px;background:#efe8d7\"><div style=\"position:absolute;left:75px;top:80px;width:930px;height:55px;\"><div class=\"tag\">ATLAS / PROGRESSIVE CLUES</div></div><div style=\"position:absolute;left:75px;top:230px;width:930px;height:200px;font-size:160px\"><div class=\"headline rise\">{{answer}}</div></div><div style=\"position:absolute;left:40px;top:560px;width:980px;height:900px;\">{{markedMap}}</div><div style=\"position:absolute;left:75px;top:1560px;width:930px;height:130px;\"><div class=\"clue\">{{takeaway}}</div></div><div style=\"position:absolute;left:75px;top:1750px;width:930px;height:130px;font-family:Inter;font-size:24px;line-height:1.35;white-space:pre-line;color:#765b3c\">{{credit}}</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.headline{font-family:Montserrat;font-size:90px;font-weight:800;line-height:1.1;color:#442d22}.clue{font-family:Inter;font-size:43px;line-height:1.4;color:#442d22}.tag{font-family:Inter;font-size:28px;letter-spacing:6px;color:#765b3c}.reveal{animation:mapreveal 3s .4s both}.pulse{transform-origin:615px 582px;animation:pulse 2s infinite}@keyframes mapreveal{from{clip-path:inset(0 0 100% 0);transform:translateY(35px)}to{clip-path:inset(0);transform:translateY(0)}}@keyframes pulse{0%{opacity:1;transform:scale(.6)}100%{opacity:0;transform:scale(1.4)}}",
+            "animationDuration": 8.3
+          }
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{narrationUrl}}",
+      "enter": 0,
+      "exit": 31.2,
+      "audioBegin": 0,
+      "audioEnd": 31.2,
+      "volume": 1,
+      "speed": 1
+    }
+  ]
+}

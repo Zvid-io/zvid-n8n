@@ -1,0 +1,489 @@
+{
+  "capturedAt": "2026-10-01T12:30:39.122Z",
+  "expectedTabs": 60,
+  "passedTabs": 60,
+  "allPassed": true,
+  "method": "At least one successful native Append per tab across all recorded manual fixtures; requires exactly one successful execution per tab. This does not replace native source-row inspection in each workflow.",
+  "records": [
+    {
+      "day": 31,
+      "title": "D31Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 31,
+      "title": "D31Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 32,
+      "title": "D32Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 32,
+      "title": "D32Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 33,
+      "title": "D33Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 33,
+      "title": "D33Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 34,
+      "title": "D34Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 34,
+      "title": "D34Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 35,
+      "title": "D35Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 35,
+      "title": "D35Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 36,
+      "title": "D36Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 36,
+      "title": "D36Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 37,
+      "title": "D37Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 37,
+      "title": "D37Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 38,
+      "title": "D38Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 38,
+      "title": "D38Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 39,
+      "title": "D39Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 39,
+      "title": "D39Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 40,
+      "title": "D40Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 40,
+      "title": "D40Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 41,
+      "title": "D41Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 41,
+      "title": "D41Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 42,
+      "title": "D42Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 42,
+      "title": "D42Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 43,
+      "title": "D43Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 43,
+      "title": "D43Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 44,
+      "title": "D44Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 44,
+      "title": "D44Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 45,
+      "title": "D45Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 45,
+      "title": "D45Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 46,
+      "title": "D46Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 46,
+      "title": "D46Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 47,
+      "title": "D47Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 47,
+      "title": "D47Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 48,
+      "title": "D48Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 48,
+      "title": "D48Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 49,
+      "title": "D49Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 49,
+      "title": "D49Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 50,
+      "title": "D50Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 50,
+      "title": "D50Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 51,
+      "title": "D51Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 51,
+      "title": "D51Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 52,
+      "title": "D52Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 52,
+      "title": "D52Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 53,
+      "title": "D53Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 53,
+      "title": "D53Details",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 54,
+      "title": "D54Source",
+      "successfulAppendExecutionIds": [
+        738
+      ],
+      "passed": true
+    },
+    {
+      "day": 54,
+      "title": "D54Details",
+      "successfulAppendExecutionIds": [
+        741
+      ],
+      "passed": true
+    },
+    {
+      "day": 55,
+      "title": "D55Source",
+      "successfulAppendExecutionIds": [
+        741
+      ],
+      "passed": true
+    },
+    {
+      "day": 55,
+      "title": "D55Details",
+      "successfulAppendExecutionIds": [
+        741
+      ],
+      "passed": true
+    },
+    {
+      "day": 56,
+      "title": "D56Source",
+      "successfulAppendExecutionIds": [
+        741
+      ],
+      "passed": true
+    },
+    {
+      "day": 56,
+      "title": "D56Details",
+      "successfulAppendExecutionIds": [
+        741
+      ],
+      "passed": true
+    },
+    {
+      "day": 57,
+      "title": "D57Source",
+      "successfulAppendExecutionIds": [
+        741
+      ],
+      "passed": true
+    },
+    {
+      "day": 57,
+      "title": "D57Details",
+      "successfulAppendExecutionIds": [
+        741
+      ],
+      "passed": true
+    },
+    {
+      "day": 58,
+      "title": "D58Source",
+      "successfulAppendExecutionIds": [
+        746
+      ],
+      "passed": true
+    },
+    {
+      "day": 58,
+      "title": "D58Details",
+      "successfulAppendExecutionIds": [
+        746
+      ],
+      "passed": true
+    },
+    {
+      "day": 59,
+      "title": "D59Source",
+      "successfulAppendExecutionIds": [
+        746
+      ],
+      "passed": true
+    },
+    {
+      "day": 59,
+      "title": "D59Details",
+      "successfulAppendExecutionIds": [
+        746
+      ],
+      "passed": true
+    },
+    {
+      "day": 60,
+      "title": "D60Source",
+      "successfulAppendExecutionIds": [
+        746
+      ],
+      "passed": true
+    },
+    {
+      "day": 60,
+      "title": "D60Details",
+      "successfulAppendExecutionIds": [
+        746
+      ],
+      "passed": true
+    }
+  ]
+}

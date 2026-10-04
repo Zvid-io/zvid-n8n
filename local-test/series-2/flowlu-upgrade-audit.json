@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-01 11:21:46 UTC",
+  "projectId": 6,
+  "totalNativeIssues": 528,
+  "noNewIssuesCreated": true,
+  "existingStoriesReconciled": 30,
+  "contractChildrenReconciled": 420,
+  "buildTasksInProgress": 30,
+  "screenshotTasksInProgress": 30,
+  "remainingChildren": 420,
+  "futureChildrenBacklog": 360,
+  "blockedChildren": 0,
+  "parentsInProgress": 30,
+  "original78Unchanged": true,
+  "other360ChildrenUnchanged": true,
+  "sourceBaselinesCaptured": 30,
+  "priorRevisionAutomatedChecksPassed": 272,
+  "priorRevisionManualRenderMediaPairs": 30,
+  "expandedRevisionChecksCompleted": 0,
+  "renderOnlyCompletionGuardVerified": true,
+  "scope": "Complete use-case workflows with Google Sheets source joins, durable Data Tables recovery, private Google Drive handoff and confirmed source write-back. Public submissions remain future work.",
+  "errors": []
+}

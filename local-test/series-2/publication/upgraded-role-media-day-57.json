@@ -1,0 +1,19 @@
+{
+  "day": 57,
+  "workflowId": "ZvidSeries2Day57",
+  "executionId": 813,
+  "functionalSha256": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a",
+  "mediaPassed": true,
+  "visualReview": "passed",
+  "jobId": "3c319c9c-42e7-4bcb-8347-6cc77d830f76",
+  "projectSha256": "a97364afe7eff6da2ad36dc589a44c056bf77fe876f68e2a080c79aa2e359c87",
+  "video": {
+    "path": "publication/upgraded-media/day-57-execution-813.mp4",
+    "sha256": "edcb29758155845392370feb780ea46e1c67204c09f6ac686033323e7e185914"
+  },
+  "originalMediaQa": {
+    "path": "publication/upgraded-media-results.json",
+    "sha256": "f69cd3c964616cb7399265ec5e1dd099a93701ad7f27e573fe69bb74a82a158d"
+  },
+  "visualReviewedAt": "2026-10-01T13:50:11.094682+00:00"
+}

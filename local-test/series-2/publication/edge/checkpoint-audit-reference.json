@@ -1,0 +1,230 @@
+{
+  "qaSpreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+  "qaFolderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+  "dailyRequestPeriod": "2026-10-01",
+  "d50RequestKey": "tender-checklist-video|qa-d50-record-001|r2|2026-10-01|1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+  "helpers": [
+    {
+      "workflowId": "ZvidSeries2PubCheckpointAccepted",
+      "targetStatus": "accepted",
+      "functionalSha256": "acd58aa7fe0fd7ba42fa74856d795dad4a23fef2263551b852e8a52ee10c09b9"
+    },
+    {
+      "workflowId": "ZvidSeries2PubCheckpointUploaded",
+      "targetStatus": "uploaded",
+      "functionalSha256": "96eb70f983054c278cc5aef3e420d0481fc276941928b0a326c615208e1ccdfa"
+    }
+  ],
+  "canonicals": [
+    {
+      "day": 31,
+      "workflowId": "ZvidSeries2Day31",
+      "sourceSheet": "D31Source",
+      "detailsSheet": "D31Details",
+      "functionalSha256": "52fa32db3e939312f77a92cfb924cabc9992fdd8ee6328bdbd3be395d01aebaa"
+    },
+    {
+      "day": 32,
+      "workflowId": "ZvidSeries2Day32",
+      "sourceSheet": "D32Source",
+      "detailsSheet": "D32Details",
+      "functionalSha256": "322129fd6e52cc44766924bb864d086d6aaaf79a9db2670328efb9ecfe97a7e4"
+    },
+    {
+      "day": 33,
+      "workflowId": "ZvidSeries2Day33",
+      "sourceSheet": "D33Source",
+      "detailsSheet": "D33Details",
+      "functionalSha256": "faed42d30fead02318d8ea51809903e057c62feebfe440887aec00db3e863775"
+    },
+    {
+      "day": 34,
+      "workflowId": "ZvidSeries2Day34",
+      "sourceSheet": "D34Source",
+      "detailsSheet": "D34Details",
+      "functionalSha256": "d7e1793090b8cd1855f44d430b1aa64b349f8c030908a75051114a5e5b7f9a47"
+    },
+    {
+      "day": 35,
+      "workflowId": "ZvidSeries2Day35",
+      "sourceSheet": "D35Source",
+      "detailsSheet": "D35Details",
+      "functionalSha256": "bb965132a2bd21fa1ab4e27546ea0b2b84e50370d6f0af8d9445b812d8b86f02"
+    },
+    {
+      "day": 36,
+      "workflowId": "ZvidSeries2Day36",
+      "sourceSheet": "D36Source",
+      "detailsSheet": "D36Details",
+      "functionalSha256": "2f4a14feed98ad586a95a11a9d1948f9711921783f4d3b9d12cb6c573f687cb1"
+    },
+    {
+      "day": 37,
+      "workflowId": "ZvidSeries2Day37",
+      "sourceSheet": "D37Source",
+      "detailsSheet": "D37Details",
+      "functionalSha256": "73a77d4e1b4837b278f2482478eac107db9c6d81fb840c59c5a8fd4f236ffdfd"
+    },
+    {
+      "day": 38,
+      "workflowId": "ZvidSeries2Day38",
+      "sourceSheet": "D38Source",
+      "detailsSheet": "D38Details",
+      "functionalSha256": "367136b706a889e7387ae2bbd93b84b031cdf56e9ed91f36feabe4e7da8374b5"
+    },
+    {
+      "day": 39,
+      "workflowId": "ZvidSeries2Day39",
+      "sourceSheet": "D39Source",
+      "detailsSheet": "D39Details",
+      "functionalSha256": "2ec607b557f6f0e5f0a20b72d0d7bb9a0340837a2c77249b0fa1e7d864238a07"
+    },
+    {
+      "day": 40,
+      "workflowId": "ZvidSeries2Day40",
+      "sourceSheet": "D40Source",
+      "detailsSheet": "D40Details",
+      "functionalSha256": "9b65419e582e2f3cf36e354bc723190ad25a6d9570af6ef172f493a56ee72dd9"
+    },
+    {
+      "day": 41,
+      "workflowId": "ZvidSeries2Day41",
+      "sourceSheet": "D41Source",
+      "detailsSheet": "D41Details",
+      "functionalSha256": "6501b8f60de4dc25a718a740be91c5d5cf34957c8ed133df4d090b1e93a7444f"
+    },
+    {
+      "day": 42,
+      "workflowId": "ZvidSeries2Day42",
+      "sourceSheet": "D42Source",
+      "detailsSheet": "D42Details",
+      "functionalSha256": "efda6bfc2ca0203c66cddbb9c60befeb0136105a7878e265c29031311afa8685"
+    },
+    {
+      "day": 43,
+      "workflowId": "ZvidSeries2Day43",
+      "sourceSheet": "D43Source",
+      "detailsSheet": "D43Details",
+      "functionalSha256": "daa0824d85cc5f13499e996d0a9739e72d585db1c12aa025337f44580f89dd6f"
+    },
+    {
+      "day": 44,
+      "workflowId": "ZvidSeries2Day44",
+      "sourceSheet": "D44Source",
+      "detailsSheet": "D44Details",
+      "functionalSha256": "2a34021f5f79f9cfab4ca1dff3414cd83e913dc0fff5067b6527fa1dc760c911"
+    },
+    {
+      "day": 45,
+      "workflowId": "ZvidSeries2Day45",
+      "sourceSheet": "D45Source",
+      "detailsSheet": "D45Details",
+      "functionalSha256": "0318536428dd00c046fe5becb8e6c7e60a6315b7fa3a7457fa7562dc8dc69f3e"
+    },
+    {
+      "day": 46,
+      "workflowId": "ZvidSeries2Day46",
+      "sourceSheet": "D46Source",
+      "detailsSheet": "D46Details",
+      "functionalSha256": "aa974395ecf52fa86bf426b8615a1c668de71a04d90ecd4076cedca23eb79062"
+    },
+    {
+      "day": 47,
+      "workflowId": "ZvidSeries2Day47",
+      "sourceSheet": "D47Source",
+      "detailsSheet": "D47Details",
+      "functionalSha256": "f51bc697e583c71481cda454ab34f43974004a30c152d3a5096dd669e5528162"
+    },
+    {
+      "day": 48,
+      "workflowId": "ZvidSeries2Day48",
+      "sourceSheet": "D48Source",
+      "detailsSheet": "D48Details",
+      "functionalSha256": "930537c8bcc9132243d73118b765b0b4f0d506b1355479d974bd94c6ed50688d"
+    },
+    {
+      "day": 49,
+      "workflowId": "ZvidSeries2Day49",
+      "sourceSheet": "D49Source",
+      "detailsSheet": "D49Details",
+      "functionalSha256": "f65e4d7d91c2711bb5b8095e5d6cafe2965f8d7f4868c20c057738274e252f2a"
+    },
+    {
+      "day": 50,
+      "workflowId": "ZvidSeries2Day50",
+      "sourceSheet": "D50Source",
+      "detailsSheet": "D50Details",
+      "functionalSha256": "b3a81bcdbca4ff743e1e5bd961166763633d0f433ffc3f5fb818cdb826fe28fa"
+    },
+    {
+      "day": 51,
+      "workflowId": "ZvidSeries2Day51",
+      "sourceSheet": "D51Source",
+      "detailsSheet": "D51Details",
+      "functionalSha256": "8aa33a4c9758a6746c32508a0e11d0033d233b1ecf02f62c07722e9b55f866c1"
+    },
+    {
+      "day": 52,
+      "workflowId": "ZvidSeries2Day52",
+      "sourceSheet": "D52Source",
+      "detailsSheet": "D52Details",
+      "functionalSha256": "6102ab4432b706911074895f19c79e2702ca5bb72d7af265bbb94d7444f4e50d"
+    },
+    {
+      "day": 53,
+      "workflowId": "ZvidSeries2Day53",
+      "sourceSheet": "D53Source",
+      "detailsSheet": "D53Details",
+      "functionalSha256": "0e04f17819130cc7447b99c312b5e5f37971d9cd529a266b043a07b13d4b293e"
+    },
+    {
+      "day": 54,
+      "workflowId": "ZvidSeries2Day54",
+      "sourceSheet": "D54Source",
+      "detailsSheet": "D54Details",
+      "functionalSha256": "8158e5c662dece7b427676970da26281503c5d8bc06bf8d932788be7ef4936ad"
+    },
+    {
+      "day": 55,
+      "workflowId": "ZvidSeries2Day55",
+      "sourceSheet": "D55Source",
+      "detailsSheet": "D55Details",
+      "functionalSha256": "171d4747b26528aa24f4c43ba00f871ba7eed21f6c356dce4d57b2e1f917a757"
+    },
+    {
+      "day": 56,
+      "workflowId": "ZvidSeries2Day56",
+      "sourceSheet": "D56Source",
+      "detailsSheet": "D56Details",
+      "functionalSha256": "7514131a3999223bc914ad8659a8364c76b8c7d97ced56f6fbfefe4d39291ee7"
+    },
+    {
+      "day": 57,
+      "workflowId": "ZvidSeries2Day57",
+      "sourceSheet": "D57Source",
+      "detailsSheet": "D57Details",
+      "functionalSha256": "0c8d565b66a3ccffdfdd9da94a37b5e0b32125a90f369bd827616a587042ff6a"
+    },
+    {
+      "day": 58,
+      "workflowId": "ZvidSeries2Day58",
+      "sourceSheet": "D58Source",
+      "detailsSheet": "D58Details",
+      "functionalSha256": "2e1ec4211d1d70ad080c0b6ca88077ea027eed14a695a15e28512a31deaa4d7f"
+    },
+    {
+      "day": 59,
+      "workflowId": "ZvidSeries2Day59",
+      "sourceSheet": "D59Source",
+      "detailsSheet": "D59Details",
+      "functionalSha256": "43061cfbf42fd04597cb503c75adae8ab333fe7e3f61b78ec159343e27cd9c83"
+    },
+    {
+      "day": 60,
+      "workflowId": "ZvidSeries2Day60",
+      "sourceSheet": "D60Source",
+      "detailsSheet": "D60Details",
+      "functionalSha256": "328aaa65cd995ba49a4b3447c72ed05bb63ce8a6be1ab25c6535052a8b67a648"
+    }
+  ]
+}

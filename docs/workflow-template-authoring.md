@@ -73,12 +73,63 @@ it so missing media URLs, draft-only outputs and dry runs skip the download.
 The step downloads the completed file into binary `data`; it must not start
 another render. Preserve any URL allow-list used by an agent.
 
+Bound preview downloads with a 30,000 ms request timeout and at most three
+attempts, five seconds apart. Keep `onError: continueRegularOutput`, so a
+download failure does not invalidate a completed render; the preceding result
+node retains its video URL. On the tested local n8n 2.29.10 runtime, HTTP Request
+v4 can retain a response stream in manual-run context and fail to serialize its
+TLS socket when saving an execution. The affected templates use the built-in
+HTTP Request v2 file downloader (`responseFormat: file`, `dataPropertyName: data`)
+through `workflow-runtime-repairs.js`. Verify manual execution and actual MP4
+playback before changing this compatibility setting. Preview downloads are
+ordinary media GET requests; supported Zvid API operations still use Zvid nodes.
+
+For local download failures, inspect saved execution errors and compare CDN
+reachability from the n8n container before changing workflow logic. A bounded
+timeout is not a connectivity fix. Diagnose resolver-dependent routes without
+pinning CDN IPs or disabling TLS/SSRF protection, then verify repeated downloads
+and a manual editor run with inline playback. Reuse completed media to avoid
+unnecessary paid renders during preview testing.
+
 The nearby section note should explain **Watch video → Binary → data → View**.
 For batches, explain selecting the output item; for mixed output, explain that
 images open as images. Document any existing optional publishing branch without
 enabling it as part of note generation.
 
 ## Integrate the standard into generation
+
+For multi-asset workflows using individual render operations, submit one asset,
+wait for that accepted job to complete, then submit the next. Never enable
+whole-node retries on a multi-item paid submission: a later rejection can replay
+earlier accepted requests. Retry only explicit HTTP 429 rejections, honor server
+retry delays with a minimum 30-second wait, and bound submission retries and
+render polling separately using per-item timestamps. Keep each asset's metadata
+with its job and collect completed results before the final summary. The podcast,
+blog content-kit and flash-sale templates implement this in
+`workflow-runtime-repairs.js`; the integration smoke test must simulate a rejected
+submission and prove accepted jobs are not duplicated.
+
+Podcast sampling must also cap downloaded audio to the configured render asset
+limit, then check actual binary size before paid transcription. A Range request
+alone is insufficient because a source host may ignore it. Repeated sheet tests
+should reset only the intended test rows' completion status after verifying
+write-back; retain production deduplication and the original input data.
+
+Sheet queues must return an explicit zero-work report when all eligible rows
+are complete; do not let an empty output look like a failed music check. For
+intentional reruns, clear only the selected completion markers (`Status` and
+`VideoUrl` for listings, `VideoUrl` for hiring), after saving their old values.
+Daily dated templates should explain their fallback option and show the selected
+row's original date when reusing past content. Do not change sheet dates to make
+old sample data appear current.
+
+Verify the downloaded source-media dimensions as well as the project canvas.
+A width-only photo resize may exceed the input limit on its height. For known
+stock-library hosts that support it, bound both dimensions with an
+aspect-preserving fit; leave arbitrary customer and signed URLs unchanged.
+Test both sheet-provided photos and configured fallbacks, and use a video
+rendition within the account's input limit. Free schema validation alone does
+not prove that remote media can be downloaded and rendered.
 
 The current implementation is split across:
 
@@ -110,6 +161,56 @@ overview marker and Watch-note IDs if using the shared implementation, so later
 maintenance recognizes the layout and does not add duplicate setup notes.
 
 ## Verify before delivery
+
+### Review lessons: structure and distinct use cases
+
+Do not treat additional validation, polling or sheet updates as sufficient
+originality. The hiring template now combines recruiter-requested role spotlight
+and multi-role roundup in one submission, including tracked application links
+and a referral handoff. The restaurant template plans a category-balanced weekly
+menu using availability, approval and prior-week history, then produces three
+dated caption drafts. Domain decisions and useful outputs distinguish templates;
+swapping source rows or video labels does not.
+
+For complex canvases, keep the principal stages on a continuous left-to-right
+line, with local branches above/below their decisions. Keep the batch return in
+a clear lane beneath the stages. Do not wrap an arbitrary four-node grid across
+rows when that causes long diagonal connections through unrelated sections.
+Number notes in execution order, including the batch entry. Inspect both the
+whole flow and readable zoom. The workout revision preserves all functional
+nodes and connections while applying this layout.
+
+`build-review-campaigns.js`, `review-campaign-runtime.js`, and
+`review-campaign-layouts.js` generate the domain campaigns and their layouts.
+Campaigns persist one snapshot per campaign key, not one video per source row.
+Document required source and log tabs, real booking/application links, protected
+form credentials when used, and migration from prior row-based templates.
+Test source selection, incomplete briefs, category coverage, historical rotation,
+CSV output, duplicate runs, snapshot recovery, previews and credit ceilings.
+Validate representative default designs against the published native node;
+schema success with a quote over the default cap is not a usable default.
+
+For reviewer feedback that a template is too basic, add useful domain behavior
+rather than increasing node count. The workout template implements content
+approval, stable sheet keys, quoted credit ceilings, persisted render recovery,
+and separately tracked coach-authored standard and scaled versions.
+`upgrade-reviewed-templates.js` generates its revision and publication layout,
+with embedded functions in `review-template-runtime.js`.
+The exported-graph tests cover service boundaries, and isolated n8n executions
+verify the loop, expressions and branch behavior without paid renders.
+
+Describe every node's action and its object, including configuration, validation,
+polling and summaries. When renaming, rewrite expression references and connection
+keys/targets together. The earlier restaurant naming revision used `renameNodes`;
+its subsequent campaign-planning revision changes functionality too. Updating
+notes later must retain the descriptive names of the current graph.
+
+Persist `submitting` before a paid request and the accepted job ID afterward.
+Never auto-retry an uncertain paid request. Document that Sheets is not an atomic
+lock, retain failed/timed-out IDs for inspection, and distinguish quoted credits
+from actual charges. A preview must not write tracking cells or resume saved jobs.
+When the published Zvid node lacks Project → Create, a validation-only preview
+must explicitly say it returns JSON and a quote, not an editor draft.
 
 1. Generate the canonical, credential-free JSON. For registered series templates,
    run `npm run workflows:organize` from this repository. Check the diff because

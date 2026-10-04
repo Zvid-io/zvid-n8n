@@ -1,0 +1,70 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-41-demo",
+    "revision": "1",
+    "development_id": "alder",
+    "development": "The Alder Residences",
+    "heroTitle": "Choose the space that fits",
+    "heroImage": "https://images.pexels.com/photos/39214892/pexels-photo-39214892.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "currency": "USD",
+    "maxAgeHours": 24,
+    "cta": "Request a private viewing",
+    "destination": "https://alder.example/viewings",
+    "terms": "Demonstration inventory. Confirm current availability."
+  },
+  "records": [
+    {
+      "kind": "unit",
+      "record_id": "A204",
+      "development_id": "alder",
+      "label": "Unit A 204",
+      "bedrooms": 2,
+      "areaM2": 92,
+      "priceCents": 42000000,
+      "currency": "USD",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z",
+      "image": "https://images.pexels.com/photos/8089172/pexels-photo-8089172.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "floorPlan": "https://images.pexels.com/photos/4792507/pexels-photo-4792507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "floorPlanApproved": true,
+      "floorPlanLabel": "Illustrative approved layout",
+      "marketingApproved": true
+    },
+    {
+      "kind": "unit",
+      "record_id": "B508",
+      "development_id": "alder",
+      "label": "Unit B 508",
+      "bedrooms": 3,
+      "areaM2": 126,
+      "priceCents": 56000000,
+      "currency": "USD",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z",
+      "image": "https://images.pexels.com/photos/7745929/pexels-photo-7745929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "floorPlan": "https://images.pexels.com/photos/4792507/pexels-photo-4792507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "floorPlanApproved": true,
+      "floorPlanLabel": "Illustrative approved layout",
+      "marketingApproved": true
+    },
+    {
+      "kind": "unit",
+      "record_id": "C701",
+      "development_id": "alder",
+      "label": "Unit C 701",
+      "bedrooms": 3,
+      "areaM2": 158,
+      "priceCents": 72000000,
+      "currency": "USD",
+      "status": "available",
+      "updatedAt": "2026-10-03T10:00:00Z",
+      "image": "https://images.pexels.com/photos/18470969/pexels-photo-18470969.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "floorPlan": "https://images.pexels.com/photos/4792507/pexels-photo-4792507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "floorPlanApproved": true,
+      "floorPlanLabel": "Illustrative approved layout",
+      "marketingApproved": true
+    }
+  ]
+}

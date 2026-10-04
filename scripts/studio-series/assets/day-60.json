@@ -1,0 +1,174 @@
+{
+  "name": "S2 D60 Visual Multiplication Two Methods",
+  "type": "video",
+  "resolution": "custom",
+  "width": 1280,
+  "height": 720,
+  "frameRate": 30,
+  "outputFormat": "mp4",
+  "variables": {
+    "problem": "6 × 7",
+    "arrayModel": "<svg width=\"740\" height=\"450\" viewBox=\"0 0 740 450\" xmlns=\"http://www.w3.org/2000/svg\"><rect class=\"cell\" x=\"15\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.00s\"/><rect class=\"cell\" x=\"115\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.05s\"/><rect class=\"cell\" x=\"215\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.10s\"/><rect class=\"cell\" x=\"315\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.15s\"/><rect class=\"cell\" x=\"415\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.20s\"/><rect class=\"cell\" x=\"515\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.25s\"/><rect class=\"cell\" x=\"615\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.30s\"/><rect class=\"cell\" x=\"15\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.14s\"/><rect class=\"cell\" x=\"115\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.19s\"/><rect class=\"cell\" x=\"215\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.24s\"/><rect class=\"cell\" x=\"315\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.29s\"/><rect class=\"cell\" x=\"415\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.34s\"/><rect class=\"cell\" x=\"515\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.39s\"/><rect class=\"cell\" x=\"615\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.44s\"/><rect class=\"cell\" x=\"15\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.28s\"/><rect class=\"cell\" x=\"115\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.33s\"/><rect class=\"cell\" x=\"215\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.38s\"/><rect class=\"cell\" x=\"315\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.43s\"/><rect class=\"cell\" x=\"415\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.48s\"/><rect class=\"cell\" x=\"515\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.53s\"/><rect class=\"cell\" x=\"615\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.58s\"/><rect class=\"cell\" x=\"15\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.42s\"/><rect class=\"cell\" x=\"115\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.47s\"/><rect class=\"cell\" x=\"215\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.52s\"/><rect class=\"cell\" x=\"315\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.57s\"/><rect class=\"cell\" x=\"415\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.62s\"/><rect class=\"cell\" x=\"515\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.67s\"/><rect class=\"cell\" x=\"615\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.72s\"/><rect class=\"cell\" x=\"15\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.56s\"/><rect class=\"cell\" x=\"115\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.61s\"/><rect class=\"cell\" x=\"215\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.66s\"/><rect class=\"cell\" x=\"315\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.71s\"/><rect class=\"cell\" x=\"415\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.76s\"/><rect class=\"cell\" x=\"515\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.81s\"/><rect class=\"cell\" x=\"615\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.86s\"/><rect class=\"cell\" x=\"15\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.70s\"/><rect class=\"cell\" x=\"115\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.75s\"/><rect class=\"cell\" x=\"215\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.80s\"/><rect class=\"cell\" x=\"315\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.85s\"/><rect class=\"cell\" x=\"415\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.90s\"/><rect class=\"cell\" x=\"515\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.95s\"/><rect class=\"cell\" x=\"615\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:1.00s\"/></svg>",
+    "decomposedModel": "<svg width=\"740\" height=\"450\" viewBox=\"0 0 740 450\" xmlns=\"http://www.w3.org/2000/svg\"><rect class=\"cell\" x=\"15\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.00s\"/><rect class=\"cell\" x=\"115\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.05s\"/><rect class=\"cell\" x=\"215\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.10s\"/><rect class=\"cell\" x=\"315\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.15s\"/><rect class=\"cell\" x=\"415\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.20s\"/><rect class=\"cell\" x=\"515\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.25s\"/><rect class=\"cell\" x=\"615\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.30s\"/><rect class=\"cell\" x=\"15\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.14s\"/><rect class=\"cell\" x=\"115\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.19s\"/><rect class=\"cell\" x=\"215\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.24s\"/><rect class=\"cell\" x=\"315\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.29s\"/><rect class=\"cell\" x=\"415\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.34s\"/><rect class=\"cell\" x=\"515\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.39s\"/><rect class=\"cell\" x=\"615\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.44s\"/><rect class=\"cell\" x=\"15\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.28s\"/><rect class=\"cell\" x=\"115\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.33s\"/><rect class=\"cell\" x=\"215\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.38s\"/><rect class=\"cell\" x=\"315\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.43s\"/><rect class=\"cell\" x=\"415\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.48s\"/><rect class=\"cell\" x=\"515\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.53s\"/><rect class=\"cell\" x=\"615\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.58s\"/><rect class=\"cell\" x=\"15\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.42s\"/><rect class=\"cell\" x=\"115\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.47s\"/><rect class=\"cell\" x=\"215\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.52s\"/><rect class=\"cell\" x=\"315\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.57s\"/><rect class=\"cell\" x=\"415\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.62s\"/><rect class=\"cell\" x=\"515\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.67s\"/><rect class=\"cell\" x=\"615\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.72s\"/><rect class=\"cell\" x=\"15\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.56s\"/><rect class=\"cell\" x=\"115\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.61s\"/><rect class=\"cell\" x=\"215\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.66s\"/><rect class=\"cell\" x=\"315\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.71s\"/><rect class=\"cell\" x=\"415\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.76s\"/><rect class=\"cell\" x=\"515\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.81s\"/><rect class=\"cell\" x=\"615\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.86s\"/><rect class=\"cell\" x=\"15\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#dd8b5b\" style=\"animation-delay:0.70s\"/><rect class=\"cell\" x=\"115\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#dd8b5b\" style=\"animation-delay:0.75s\"/><rect class=\"cell\" x=\"215\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#dd8b5b\" style=\"animation-delay:0.80s\"/><rect class=\"cell\" x=\"315\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#dd8b5b\" style=\"animation-delay:0.85s\"/><rect class=\"cell\" x=\"415\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#dd8b5b\" style=\"animation-delay:0.90s\"/><rect class=\"cell\" x=\"515\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#dd8b5b\" style=\"animation-delay:0.95s\"/><rect class=\"cell\" x=\"615\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#dd8b5b\" style=\"animation-delay:1.00s\"/></svg>",
+    "doubledModel": "<svg width=\"740\" height=\"450\" viewBox=\"0 0 740 450\" xmlns=\"http://www.w3.org/2000/svg\"><rect class=\"cell\" x=\"15\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.00s\"/><rect class=\"cell\" x=\"115\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.05s\"/><rect class=\"cell\" x=\"215\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.10s\"/><rect class=\"cell\" x=\"315\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.15s\"/><rect class=\"cell\" x=\"415\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.20s\"/><rect class=\"cell\" x=\"515\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.25s\"/><rect class=\"cell\" x=\"615\" y=\"12\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.30s\"/><rect class=\"cell\" x=\"15\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.14s\"/><rect class=\"cell\" x=\"115\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.19s\"/><rect class=\"cell\" x=\"215\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.24s\"/><rect class=\"cell\" x=\"315\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.29s\"/><rect class=\"cell\" x=\"415\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.34s\"/><rect class=\"cell\" x=\"515\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.39s\"/><rect class=\"cell\" x=\"615\" y=\"80\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.44s\"/><rect class=\"cell\" x=\"15\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.28s\"/><rect class=\"cell\" x=\"115\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.33s\"/><rect class=\"cell\" x=\"215\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.38s\"/><rect class=\"cell\" x=\"315\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.43s\"/><rect class=\"cell\" x=\"415\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.48s\"/><rect class=\"cell\" x=\"515\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.53s\"/><rect class=\"cell\" x=\"615\" y=\"148\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#468fa3\" style=\"animation-delay:0.58s\"/><rect class=\"cell\" x=\"15\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.42s\"/><rect class=\"cell\" x=\"115\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.47s\"/><rect class=\"cell\" x=\"215\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.52s\"/><rect class=\"cell\" x=\"315\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.57s\"/><rect class=\"cell\" x=\"415\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.62s\"/><rect class=\"cell\" x=\"515\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.67s\"/><rect class=\"cell\" x=\"615\" y=\"216\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.72s\"/><rect class=\"cell\" x=\"15\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.56s\"/><rect class=\"cell\" x=\"115\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.61s\"/><rect class=\"cell\" x=\"215\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.66s\"/><rect class=\"cell\" x=\"315\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.71s\"/><rect class=\"cell\" x=\"415\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.76s\"/><rect class=\"cell\" x=\"515\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.81s\"/><rect class=\"cell\" x=\"615\" y=\"284\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.86s\"/><rect class=\"cell\" x=\"15\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.70s\"/><rect class=\"cell\" x=\"115\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.75s\"/><rect class=\"cell\" x=\"215\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.80s\"/><rect class=\"cell\" x=\"315\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.85s\"/><rect class=\"cell\" x=\"415\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.90s\"/><rect class=\"cell\" x=\"515\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:0.95s\"/><rect class=\"cell\" x=\"615\" y=\"352\" width=\"88\" height=\"56\" rx=\"9\" fill=\"#9369aa\" style=\"animation-delay:1.00s\"/></svg>",
+    "hook": "ONE PRODUCT.\nTWO WAYS TO SEE IT.",
+    "methodOne": "SPLIT 6 INTO 5 + 1",
+    "methodOneEquation": "35 + 7 = 42",
+    "methodOneExplanation": "Five rows of seven,\nplus one more row.",
+    "methodTwo": "DOUBLE 3 × 7",
+    "methodTwoEquation": "21 + 21 = 42",
+    "methodTwoExplanation": "Two equal groups.\nSame total.",
+    "answer": "42",
+    "closing": "Choose the method\nyou can explain.",
+    "narrationUrl": "https://res.cloudinary.com/kwrkkfol/video/upload/v1790884215/zvid-series2-design-review-20261001/d60-narration.mp3",
+    "narrationSeconds": 29.16
+  },
+  "scenes": [
+    {
+      "id": "problem",
+      "duration": 1.9,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eef1e9;background-image:linear-gradient(#dce3da 1px,transparent 1px),linear-gradient(90deg,#dce3da 1px,transparent 1px);background-size:32px 32px\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#315d6b\">VISUAL MATH / TWO METHODS</div><div style=\"position:absolute;left:55px;top:125px;width:700px;height:140px;white-space:pre-line\"><div class=\"title rise\">{{hook}}</div></div><div style=\"position:absolute;left:55px;top:335px;width:680px;height:140px;\"><div class=\"equation\">{{problem}}</div></div><div style=\"position:absolute;left:780px;top:140px;width:360px;height:390px;\"><svg width=\"360\" height=\"390\" viewBox=\"0 0 360 390\" xmlns=\"http://www.w3.org/2000/svg\"><path class=\"outline\" d=\"M45 90 H285 V330 H45Z\" fill=\"none\" stroke=\"#468fa3\" stroke-width=\"12\"/><path d=\"M45 170 H285 M45 250 H285 M125 90 V330 M205 90 V330\" stroke=\"#b2c5c6\" stroke-width=\"5\"/></svg></div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.title{font-family:Montserrat;font-size:65px;font-weight:800;line-height:1.1;color:#204555}.equation{font-family:Montserrat;font-size:88px;font-weight:700;line-height:1.1;color:#204555}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#315d6b}.cell{animation:cell .6s both;transform-origin:center}@keyframes cell{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}.outline{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.5s .5s forwards}",
+            "animationDuration": 1.9
+          }
+        }
+      ]
+    },
+    {
+      "id": "array",
+      "duration": 3.5,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eef1e9;background-image:linear-gradient(#dce3da 1px,transparent 1px),linear-gradient(90deg,#dce3da 1px,transparent 1px);background-size:32px 32px\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#315d6b\">VISUAL MATH / TWO METHODS</div><div style=\"position:absolute;left:55px;top:105px;width:1170px;height:80px;\"><div class=\"title\">SIX ROWS. SEVEN IN EACH.</div></div><div style=\"position:absolute;left:85px;top:230px;width:740px;height:450px;\">{{arrayModel}}</div><div style=\"position:absolute;left:930px;top:300px;width:270px;height:170px;\"><div class=\"equation\">{{problem}}</div></div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.title{font-family:Montserrat;font-size:65px;font-weight:800;line-height:1.1;color:#204555}.equation{font-family:Montserrat;font-size:88px;font-weight:700;line-height:1.1;color:#204555}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#315d6b}.cell{animation:cell .6s both;transform-origin:center}@keyframes cell{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}.outline{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.5s .5s forwards}",
+            "animationDuration": 3.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "duration": 10.9,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eef1e9;background-image:linear-gradient(#dce3da 1px,transparent 1px),linear-gradient(90deg,#dce3da 1px,transparent 1px);background-size:32px 32px\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#315d6b\">VISUAL MATH / TWO METHODS</div><div style=\"position:absolute;left:55px;top:105px;width:1170px;height:80px;\"><div class=\"title\">{{methodOne}}</div></div><div style=\"position:absolute;left:85px;top:230px;width:740px;height:450px;\">{{decomposedModel}}</div><div style=\"position:absolute;left:900px;top:255px;width:300px;height:130px;white-space:pre-line\"><div class=\"body\">{{methodOneExplanation}}</div></div><div style=\"position:absolute;left:900px;top:470px;width:300px;height:140px;font-family:Montserrat;font-size:49px;font-weight:700;color:#204555\">{{methodOneEquation}}</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.title{font-family:Montserrat;font-size:65px;font-weight:800;line-height:1.1;color:#204555}.equation{font-family:Montserrat;font-size:88px;font-weight:700;line-height:1.1;color:#204555}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#315d6b}.cell{animation:cell .6s both;transform-origin:center}@keyframes cell{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}.outline{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.5s .5s forwards}",
+            "animationDuration": 10.9
+          }
+        }
+      ]
+    },
+    {
+      "id": "double",
+      "duration": 6.9,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eef1e9;background-image:linear-gradient(#dce3da 1px,transparent 1px),linear-gradient(90deg,#dce3da 1px,transparent 1px);background-size:32px 32px\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#315d6b\">VISUAL MATH / TWO METHODS</div><div style=\"position:absolute;left:55px;top:105px;width:1170px;height:80px;\"><div class=\"title\">{{methodTwo}}</div></div><div style=\"position:absolute;left:85px;top:230px;width:740px;height:450px;\">{{doubledModel}}</div><div style=\"position:absolute;left:900px;top:255px;width:300px;height:130px;white-space:pre-line\"><div class=\"body\">{{methodTwoExplanation}}</div></div><div style=\"position:absolute;left:900px;top:470px;width:300px;height:140px;font-family:Montserrat;font-size:49px;font-weight:700;color:#204555\">{{methodTwoEquation}}</div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.title{font-family:Montserrat;font-size:65px;font-weight:800;line-height:1.1;color:#204555}.equation{font-family:Montserrat;font-size:88px;font-weight:700;line-height:1.1;color:#204555}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#315d6b}.cell{animation:cell .6s both;transform-origin:center}@keyframes cell{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}.outline{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.5s .5s forwards}",
+            "animationDuration": 6.9
+          }
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "duration": 6.5,
+      "backgroundColor": "#10181d",
+      "visuals": [
+        {
+          "type": "TEXT",
+          "position": "custom",
+          "anchor": "top-left",
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "html": "<div style=\"position:relative;width:1280px;height:720px;background:#eef1e9;background-image:linear-gradient(#dce3da 1px,transparent 1px),linear-gradient(90deg,#dce3da 1px,transparent 1px);background-size:32px 32px\"><div style=\"position:absolute;left:55px;top:30px;width:1170px;height:45px;font-family:Inter;font-size:22px;letter-spacing:4px;color:#315d6b\">VISUAL MATH / TWO METHODS</div><div style=\"position:absolute;left:55px;top:110px;width:620px;height:250px;font-family:Montserrat;font-size:210px;font-weight:800;color:#204555;line-height:1\">{{answer}}</div><div style=\"position:absolute;left:55px;top:445px;width:700px;height:160px;white-space:pre-line\"><div class=\"title\">{{closing}}</div></div><div style=\"position:absolute;left:850px;top:190px;width:360px;height:290px;\"><svg width=\"360\" height=\"290\" viewBox=\"0 0 360 290\" xmlns=\"http://www.w3.org/2000/svg\"><path class=\"draw\" d=\"M35 145 L135 245 L325 45\" stroke=\"#468fa3\" stroke-width=\"28\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div></div>",
+          "style": {
+            "fontFamily": "Montserrat",
+            "fontSize": "40px",
+            "color": "#ffffff",
+            "backgroundColor": "#10181d"
+          },
+          "customCode": {
+            "css": ".in{animation:in .6s both}.rise{animation:rise .7s both}.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 3s .4s forwards}.slow{animation:slow 6s linear both}@keyframes in{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes slow{from{transform:scale(1)}to{transform:scale(1.06)}}.title{font-family:Montserrat;font-size:65px;font-weight:800;line-height:1.1;color:#204555}.equation{font-family:Montserrat;font-size:88px;font-weight:700;line-height:1.1;color:#204555}.body{font-family:Inter;font-size:30px;line-height:1.4;color:#315d6b}.cell{animation:cell .6s both;transform-origin:center}@keyframes cell{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}.outline{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.5s .5s forwards}",
+            "animationDuration": 6.5
+          }
+        }
+      ]
+    }
+  ],
+  "audios": [
+    {
+      "src": "{{narrationUrl}}",
+      "enter": 0,
+      "exit": "{{narrationSeconds}}",
+      "audioBegin": 0,
+      "audioEnd": "{{narrationSeconds}}",
+      "volume": 1,
+      "speed": 1
+    }
+  ]
+}

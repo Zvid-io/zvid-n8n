@@ -1,0 +1,296 @@
+{
+  "capturedAt": "2026-10-01T11:34:40.434Z",
+  "expectedFixtures": [
+    "ZvidSeries2PublicationCreateWorkbook",
+    "ZvidSeries2PublicationCreateFolder"
+  ],
+  "results": [
+    {
+      "workflowId": "ZvidSeries2PublicationCreateWorkbook",
+      "executionId": 737,
+      "status": "success",
+      "mode": "manual",
+      "startedAt": "2026-10-01 11:31:41.911",
+      "stoppedAt": "2026-10-01 11:31:42.854",
+      "lastNode": "Workbook evidence",
+      "nodes": {
+        "Create QA scaffold manually": "success",
+        "Create private QA workbook": "success",
+        "Workbook evidence": "success"
+      },
+      "evidence": {
+        "resource": "private_qa_workbook",
+        "spreadsheetId": "1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY",
+        "spreadsheetUrl": "https://docs.google.com/spreadsheets/d/1gBrk4JqcTFhu8foSfNFzKFjsJxB-V0Qj8wvt2xmZ1IY/edit",
+        "title": "Zvid n8n Days 31-60 publication QA 2026-10-01",
+        "sheets": [
+          {
+            "title": "D31Source",
+            "sheetId": 1738416352
+          },
+          {
+            "title": "D31Details",
+            "sheetId": 939015960
+          },
+          {
+            "title": "D32Source",
+            "sheetId": 1751355015
+          },
+          {
+            "title": "D32Details",
+            "sheetId": 1286590154
+          },
+          {
+            "title": "D33Source",
+            "sheetId": 1586330255
+          },
+          {
+            "title": "D33Details",
+            "sheetId": 1139638027
+          },
+          {
+            "title": "D34Source",
+            "sheetId": 726084142
+          },
+          {
+            "title": "D34Details",
+            "sheetId": 2086204230
+          },
+          {
+            "title": "D35Source",
+            "sheetId": 1749256868
+          },
+          {
+            "title": "D35Details",
+            "sheetId": 1986761291
+          },
+          {
+            "title": "D36Source",
+            "sheetId": 1155015297
+          },
+          {
+            "title": "D36Details",
+            "sheetId": 1336523418
+          },
+          {
+            "title": "D37Source",
+            "sheetId": 541301929
+          },
+          {
+            "title": "D37Details",
+            "sheetId": 616446340
+          },
+          {
+            "title": "D38Source",
+            "sheetId": 693888742
+          },
+          {
+            "title": "D38Details",
+            "sheetId": 315985959
+          },
+          {
+            "title": "D39Source",
+            "sheetId": 157646213
+          },
+          {
+            "title": "D39Details",
+            "sheetId": 77933793
+          },
+          {
+            "title": "D40Source",
+            "sheetId": 1276452743
+          },
+          {
+            "title": "D40Details",
+            "sheetId": 434333661
+          },
+          {
+            "title": "D41Source",
+            "sheetId": 1129759775
+          },
+          {
+            "title": "D41Details",
+            "sheetId": 590849929
+          },
+          {
+            "title": "D42Source",
+            "sheetId": 2114472669
+          },
+          {
+            "title": "D42Details",
+            "sheetId": 1165409458
+          },
+          {
+            "title": "D43Source",
+            "sheetId": 319030008
+          },
+          {
+            "title": "D43Details",
+            "sheetId": 1811290791
+          },
+          {
+            "title": "D44Source",
+            "sheetId": 1027523032
+          },
+          {
+            "title": "D44Details",
+            "sheetId": 461453628
+          },
+          {
+            "title": "D45Source",
+            "sheetId": 738124220
+          },
+          {
+            "title": "D45Details",
+            "sheetId": 950470911
+          },
+          {
+            "title": "D46Source",
+            "sheetId": 250422892
+          },
+          {
+            "title": "D46Details",
+            "sheetId": 961152307
+          },
+          {
+            "title": "D47Source",
+            "sheetId": 1989549547
+          },
+          {
+            "title": "D47Details",
+            "sheetId": 2033977884
+          },
+          {
+            "title": "D48Source",
+            "sheetId": 109197450
+          },
+          {
+            "title": "D48Details",
+            "sheetId": 1154989619
+          },
+          {
+            "title": "D49Source",
+            "sheetId": 1878291554
+          },
+          {
+            "title": "D49Details",
+            "sheetId": 1302066417
+          },
+          {
+            "title": "D50Source",
+            "sheetId": 2000884354
+          },
+          {
+            "title": "D50Details",
+            "sheetId": 1483347505
+          },
+          {
+            "title": "D51Source",
+            "sheetId": 926642914
+          },
+          {
+            "title": "D51Details",
+            "sheetId": 1775186979
+          },
+          {
+            "title": "D52Source",
+            "sheetId": 2109329230
+          },
+          {
+            "title": "D52Details",
+            "sheetId": 726670016
+          },
+          {
+            "title": "D53Source",
+            "sheetId": 1680814252
+          },
+          {
+            "title": "D53Details",
+            "sheetId": 1336623294
+          },
+          {
+            "title": "D54Source",
+            "sheetId": 299603742
+          },
+          {
+            "title": "D54Details",
+            "sheetId": 2013799707
+          },
+          {
+            "title": "D55Source",
+            "sheetId": 1638395959
+          },
+          {
+            "title": "D55Details",
+            "sheetId": 1337607376
+          },
+          {
+            "title": "D56Source",
+            "sheetId": 711660765
+          },
+          {
+            "title": "D56Details",
+            "sheetId": 1345744831
+          },
+          {
+            "title": "D57Source",
+            "sheetId": 933144667
+          },
+          {
+            "title": "D57Details",
+            "sheetId": 1572595728
+          },
+          {
+            "title": "D58Source",
+            "sheetId": 633099157
+          },
+          {
+            "title": "D58Details",
+            "sheetId": 866080666
+          },
+          {
+            "title": "D59Source",
+            "sheetId": 1984525693
+          },
+          {
+            "title": "D59Details",
+            "sheetId": 331104809
+          },
+          {
+            "title": "D60Source",
+            "sheetId": 731841393
+          },
+          {
+            "title": "D60Details",
+            "sheetId": 1475494420
+          }
+        ],
+        "tabCount": 60
+      },
+      "error": null
+    },
+    {
+      "workflowId": "ZvidSeries2PublicationCreateFolder",
+      "executionId": 736,
+      "status": "success",
+      "mode": "manual",
+      "startedAt": "2026-10-01 11:30:32.418",
+      "stoppedAt": "2026-10-01 11:30:33.229",
+      "lastNode": "Folder evidence",
+      "nodes": {
+        "Create QA scaffold manually": "success",
+        "Create private QA video folder": "success",
+        "Folder evidence": "success"
+      },
+      "evidence": {
+        "resource": "private_qa_folder",
+        "folderId": "1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "name": "Zvid n8n Days 31-60 publication QA - private",
+        "folderUrl": "https://drive.google.com/drive/folders/1h6oON2cyIPATUP78tgJt6LhaFr_RB3uh",
+        "shared": false,
+        "mimeType": "application/vnd.google-apps.folder"
+      },
+      "error": null
+    }
+  ]
+}

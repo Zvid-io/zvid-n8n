@@ -1,0 +1,66 @@
+{
+  "synthetic": true,
+  "sampleAnchorISO": "2026-10-03T10:00:00Z",
+  "request": {
+    "request_id": "s2-day-46-demo",
+    "revision": "1",
+    "inspection_id": "IR1042",
+    "vehicle_id": "NL1042",
+    "maxAgeDays": 14,
+    "cta": "Review the complete inspection"
+  },
+  "records": [
+    {
+      "kind": "inspection",
+      "record_id": "IR1042",
+      "vehicle_id": "NL1042",
+      "vehicleName": "Sample used Touring SUV",
+      "inspectedAt": "2026-10-01T10:00:00Z",
+      "signedBy": "Demo inspector",
+      "signedAt": "2026-10-01T12:00:00Z",
+      "reportUrl": "https://northline.example/inspection/IR1042",
+      "vehicleImage": "https://images.pexels.com/photos/27497571/pexels-photo-27497571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "status": "signed",
+      "evidenceDisclosure": "Demonstration evidence; replace with matching vehicle photos."
+    },
+    {
+      "kind": "finding",
+      "record_id": "F0",
+      "inspection_id": "IR1042",
+      "vehicle_id": "NL1042",
+      "category": "exterior",
+      "observation": "Sample observation: minor bumper scuffs. No repair recorded.",
+      "severity": "advisory",
+      "image": "https://images.pexels.com/photos/27497571/pexels-photo-27497571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "imageApproved": true,
+      "capturedAt": "2026-10-01T10:00:00Z",
+      "measurementNote": "See signed report for measurements"
+    },
+    {
+      "kind": "finding",
+      "record_id": "F1",
+      "inspection_id": "IR1042",
+      "vehicle_id": "NL1042",
+      "category": "interior",
+      "observation": "Sample observation: cabin wear noted. Diagnostic review recorded.",
+      "severity": "advisory",
+      "image": "https://images.pexels.com/photos/4116198/pexels-photo-4116198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "imageApproved": true,
+      "capturedAt": "2026-10-01T10:00:00Z",
+      "measurementNote": "See signed report for measurements"
+    },
+    {
+      "kind": "finding",
+      "record_id": "F2",
+      "inspection_id": "IR1042",
+      "vehicle_id": "NL1042",
+      "category": "tyres",
+      "observation": "Sample observation: tyre wear noted. Measurements are in the full report.",
+      "severity": "advisory",
+      "image": "https://images.pexels.com/photos/8986177/pexels-photo-8986177.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "imageApproved": true,
+      "capturedAt": "2026-10-01T10:00:00Z",
+      "measurementNote": "See signed report for measurements"
+    }
+  ]
+}

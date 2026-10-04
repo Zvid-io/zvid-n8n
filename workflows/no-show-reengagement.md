@@ -367,3 +367,15 @@ by a second live run.
 deliberately leaves the Sheets pickers empty for the installer, a headless webhook-mode run
 aborts with `'Mark row sent': Parameter "Document" is required` until you point those pickers
 at any sheet. They are never called in webhook mode.
+
+## Preview download compatibility
+
+The gated **Watch video** step downloads the completed MP4 into binary `data`.
+Open **Binary → data → View** to play it. Each request has a 30-second timeout,
+with at most three attempts five seconds apart. If the CDN is unavailable, the
+preview returns an error and the preceding result node retains the video URL;
+the completed render is not submitted again.
+
+This template uses the built-in HTTP Request v2 file downloader to avoid an
+n8n 2.29.10 manual-execution saving error in the v4 downloader. Zvid API
+operations continue to use the Zvid node.
