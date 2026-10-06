@@ -106,7 +106,7 @@ function seriesLayout(workflow, kind) {
   const recording = 'Collect video links|Write links to sheet|Collect finished videos|Write URLs back|Sheet mode?|Mark row done|Mark listing done'.split('|').filter(n=>byName.has(n)&&!assigned.has(byName.get(n).name));
   add('record','Save the completed result','Write the completed URL back to its source row. Review the result before adding any further distribution steps.',recording);
   const watchNames = ['Run summary','Recovery run summary','Published summary','Video ready to watch?','▶ Watch video','▶ View banner',...recording];
-  const boundedPreview = ['flash-sale-alert','abandoned-cart-video','review-testimonial-video','cold-outreach-videos','podcast-audiogram-clips','video-to-shorts','blog-content-kit','testimonial-compilation'].includes(kind);
+  const boundedPreview = ['flash-sale-alert','abandoned-cart-video','review-testimonial-video','cold-outreach-videos','podcast-audiogram-clips','video-to-shorts','blog-content-kit','testimonial-compilation','chat-video-agent'].includes(kind);
   add('watch','Review the finished media','Open Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.' + (boundedPreview ? ' Each request times out after 30 seconds; completed links remain available.' : ''),watchNames);
   assert.deepEqual(functional.filter(n => !assigned.has(n.name)).map(n=>n.name), [], 'Every node needs a documented section: ' + kind);
 
@@ -148,7 +148,7 @@ function seriesLayout(workflow, kind) {
 }
 
 function applyPublicationNotes(original, kind) {
-  const spec = require('./upgrade-reviewed-templates').getReviewLayout(original, kind) || layouts[kind] || seriesLayout(original, kind);
+  const spec = require('./late-series-layouts').lateLayout(original, kind) || require('./upgrade-reviewed-templates').getReviewLayout(original, kind) || layouts[kind] || seriesLayout(original, kind);
   assert.ok(spec, 'Unknown publication layout');
   const workflow = structuredClone(original);
   const functional = workflow.nodes.filter(n => n.type !== STICKY);

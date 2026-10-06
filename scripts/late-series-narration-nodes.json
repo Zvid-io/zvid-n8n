@@ -1,0 +1,82 @@
+[
+  {
+    "parameters": {
+      "method": "POST",
+      "url": "=https://api.elevenlabs.io/v1/text-to-speech/{{ $('Config').first().json.voiceId }}/with-timestamps",
+      "authentication": "genericCredentialType",
+      "genericAuthType": "httpHeaderAuth",
+      "sendQuery": true,
+      "queryParameters": {
+        "parameters": [
+          {
+            "name": "output_format",
+            "value": "mp3_44100_128"
+          }
+        ]
+      },
+      "sendBody": true,
+      "specifyBody": "json",
+      "jsonBody": "={{ JSON.stringify({ text: $('Parse narration').first().json.narration, model_id: $('Config').first().json.elevenModel, voice_settings: { stability: $('Config').first().json.voiceStability, similarity_boost: $('Config').first().json.voiceSimilarity } }) }}",
+      "options": {
+        "timeout": 120000
+      }
+    },
+    "type": "n8n-nodes-base.httpRequest",
+    "typeVersion": 4.2,
+    "position": [
+      50,
+      920
+    ],
+    "id": "zvid-kr-0012",
+    "name": "Generate voiceover",
+    "retryOnFail": true,
+    "maxTries": 3,
+    "waitBetweenTries": 5000
+  },
+  {
+    "parameters": {
+      "jsCode": "// Turns one ElevenLabs \"with-timestamps\" response into (a) an mp3 binary ready\n// for upload and (b) word timings.\n//\n// The alignment comes from the synthesiser itself, so the timings ARE the audio\n// — there is no separate transcription step to disagree with, and nothing that\n// can drift. That is the whole reason this endpoint is used instead of plain\n// text-to-speech.\nconst res = $input.first().json;\n\nif (!res || !res.audio_base64) {\n  throw new Error(\n    'ElevenLabs returned no audio. Check the xi-api-key credential, the voiceId, and your character quota. Response: ' +\n      JSON.stringify(res).slice(0, 300)\n  );\n}\n\nconst a = res.alignment || res.normalized_alignment;\nif (!a || !Array.isArray(a.characters)) {\n  throw new Error('ElevenLabs returned audio but no alignment — make sure the URL ends in /with-timestamps.');\n}\n\nconst chars = a.characters;\nconst starts = a.character_start_times_seconds || [];\nconst ends = a.character_end_times_seconds || [];\n\n// Alignment is per CHARACTER; group runs of non-whitespace into words.\nconst words = [];\nlet cur = null;\nfor (let i = 0; i < chars.length; i += 1) {\n  const ch = chars[i];\n  if (/\\s/.test(ch)) {\n    if (cur) { words.push(cur); cur = null; }\n    continue;\n  }\n  if (!cur) cur = { text: ch, start: Number(starts[i]), end: Number(ends[i]) };\n  else { cur.text += ch; cur.end = Number(ends[i]); }\n}\nif (cur) words.push(cur);\n\nif (!words.length) throw new Error('Alignment contained no words.');\n\nconst duration = Number(ends[ends.length - 1]) || words[words.length - 1].end;\n\nreturn [{\n  json: { words, duration, wordCount: words.length },\n  // n8n binary payloads carry base64 in `data`; naming it matters because Zvid\n  // derives the media kind from the MIME type on upload.\n  binary: {\n    data: {\n      data: res.audio_base64,\n      mimeType: 'audio/mpeg',\n      fileName: 'voiceover.mp3',\n      fileExtension: 'mp3',\n    },\n  },\n}];"
+    },
+    "type": "n8n-nodes-base.code",
+    "typeVersion": 2,
+    "position": [
+      310,
+      920
+    ],
+    "id": "zvid-kr-0013",
+    "name": "Voice + timings"
+  },
+  {
+    "parameters": {
+      "method": "POST",
+      "url": "={{ $('Config').first().json.apiUrl }}/api/uploads",
+      "authentication": "predefinedCredentialType",
+      "sendBody": true,
+      "contentType": "multipart-form-data",
+      "bodyParameters": {
+        "parameters": [
+          {
+            "parameterType": "formBinaryData",
+            "name": "file",
+            "inputDataFieldName": "data"
+          }
+        ]
+      },
+      "options": {},
+      "nodeCredentialType": "zvidApi"
+    },
+    "type": "n8n-nodes-base.httpRequest",
+    "typeVersion": 4.2,
+    "position": [
+      570,
+      920
+    ],
+    "id": "zvid-kr-0014",
+    "name": "Upload voiceover",
+    "retryOnFail": true,
+    "maxTries": 3,
+    "waitBetweenTries": 5000,
+    "notes": "File upload exception: the published Zvid node does not expose multipart uploads. The upload step uses HTTP Request → `POST /api/uploads`, authenticated with the same **Zvid API** credential. All supported Zvid operations use the Zvid node.",
+    "notesInFlow": true
+  }
+]

@@ -178,10 +178,14 @@ function repairWorkflowRuntime(workflow) {
     || (names.has('On the 1st of each month') && names.has('Normalize metrics'))
     || names.has('Read listings sheet') || names.has('Read job openings') || names.has('Read workout sheet') || names.has('Read menu sheet')
     || names.has('Read hiring campaign queue') || names.has('Read dated coach workout plans') || names.has('Read specials from Google Sheets')
-    || names.has('Read approved job catalog') || names.has('Read nominated menu dishes');
+    || names.has('Read approved job catalog') || names.has('Read nominated menu dishes')
+    || (names.has('Screen request') && names.has('Chat reply'));
   if (!affected) return workflow;
   for (const node of workflow.nodes) if (/^▶ (?:Watch video|View banner)(?: — .+)?$/.test(node.name)) {
     node.parameters.options = {...node.parameters.options, timeout:PREVIEW_TIMEOUT_MS};
+    // Keep the agent's existing downloader version until a manual playback
+    // check supports changing it; bounding a request does not require that swap.
+    if (names.has('Screen request') && names.has('Chat reply')) continue;
     if (node.typeVersion !== 2) {
       // HTTP Request v4 stores the live response stream in manual-run context.
       // n8n 2.29.10 then fails to serialize its TLS socket when saving the run,

@@ -1,213 +1,48 @@
-# Daily local weather video — zero API keys
+# Create a local forecast with a ranked daytime planning window
 
-## Required Zvid node
+[Import the workflow](zvid-daily-weather-video.json).
 
-Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+Resolve one city, validate fresh current and hourly data, and rank remaining three-hour daytime windows by rain probability and wind. Branch to a qualifying window or a no-window notice, then add that planning card to the local forecast and three-day outlook.
 
-[`zvid-daily-weather-video.json`](zvid-daily-weather-video.json)
+## Install and connect
+1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring credentials. A workspace owner/admin may need to install it.
+2. Create a **Zvid API** credential with a key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`. Select it on every Zvid node.
+3. Connect Google Sheets credentials to the log nodes. Select the same document and **Weather Briefings** tab on all log reads/writes. Source rows, where used, belong to their separate existing source tab.
+4. Create exact log headers: `RenderKey,Status,JobId,CreditsQuoted,PlanJson,VideoUrl,CompletedAt`.
+5. Edit **Set the city and outdoor planning thresholds**, configure the source below, and test manually before enabling a schedule. This template has no publishing step.
 
-Every morning at 06:30: fetch your city's forecast from a keyless public API,
-design a 1080×1920 weather bulletin around it — the colour palette follows the
-sky — and render it with Zvid. **One credential total: your Zvid API key.**
+## Location and planning rules
+Set cityName, countryCode and admin1 so exactly one of the geocoder's returned candidates matches. The workflow refuses an ambiguous match. Default location is Lisbon, Portugal. All forecast and planning labels use the selected location's timezone.
 
-```
-Schedule 06:30 ─▶ Config ─▶ Find city ─▶ Get forecast ─▶ Weather look (palette)
-   ─▶ Build project ─▶ Validate (free) ─▶ Check validation ─▶ Dry run?
-        ├─ false (default) ─▶ Submit render ─▶ Poll ─▶ Run summary ─▶ ▶ Watch video
-        └─ true ────────────▶ Save draft ─▶ Dry run summary (editorLink, no render)
-```
+The Open-Meteo request retrieves current conditions, four daily forecasts and hourly precipitation probability, wind speed and weather code. Current data must be within three hours and belong to the expected local day; missing numeric readings stop before rendering.
 
-## What changed
+Only future daytime hours from 06:00 through 20:00 are considered. A candidate window contains three contiguous hourly entries. All three must meet maxRainProbability (default 30%) and maxWindKmh (default 25), with freezing precipitation, snow and thunderstorm codes excluded. Wind units are converted to km/h before comparison. Rank qualifying windows by maximum rain probability, then wind, then earliest start. If no window qualifies, show a clear no-window card instead of inventing a recommendation. If no daytime forecast remains, return a no-work report.
 
-Two things, if you used an earlier copy of this template:
+The video includes current conditions, the three-day outlook and a planning card. The CSV contains the evaluated hours and thresholds. These are configurable planning criteria, not official weather alerts or a guarantee of safe conditions. Check local advisories when planning activities.
 
-1. **It renders on the first run.** `dryRun` now defaults to `false`, so
-   importing it and hitting *Test manually* produces a real video and spends
-   credits (~12 — see [Cost](#cost)). The dry-run branch is untouched and still
-   there as an opt-in: set `dryRun: true` in `Config` for a free pass.
-2. **New `▶ Watch video` node at the end.** It downloads the finished MP4 and
-   n8n plays it inline in the node's output panel, with a download button. No
-   copying URLs out of a JSON blob to see what you made.
+Forecast source and attribution: [Open-Meteo](https://open-meteo.com/en/docs). Verify the provider's terms for your usage. Set forecastRevision deliberately when replacing the day's briefing.
 
-## Why this one is different
+## Migration
+Keep location, branding and temperature/wind units. Add countryCode/admin1 and a Weather Briefings log tab. The new daily key prevents repeated completed videos.
 
-**Zero API keys for the data.** Both weather calls are keyless public
-endpoints — the geocoder turns `cityName` into coordinates, the forecast call
-returns current conditions plus a 4-day outlook in one request. Nothing to sign
-up for, no quota to babysit. (Open-Meteo is free for non-commercial use and
-appreciates attribution; one call a day is well inside that.)
+## Costs, previews and recovery
+**dryRun=false is the default and spends Zvid credits.** Free Zvid validation quotes the actual design before the log claim or render request. maxCreditsPerVideo is 25 by default. Quotes are not actual charged credits. There is one new render per execution; set a suitable schedule and credit ceiling.
 
-**The look follows the sky.** A code node maps the WMO weather code to a
-condition label, a line-drawn icon and a palette — warm amber for clear skies,
-slate for clouds and fog, deep blue for rain, ice blue for snow, electric
-violet for thunderstorms. The entire video recolors from that palette:
-background gradient, glow, stat chips, card strokes. A stormy Tuesday genuinely
-looks different from a sunny Monday, and each outlook card keeps its own day's
-accent colour.
+**dryRun=true** returns the source plan, design JSON, review rows and quote. It writes no log rows, creates no editor draft, sends no messages, and skips existing paid jobs. The published Zvid package checked for this revision is 0.1.8; only its supported render validate/create/get operations are used.
 
-**It speaks your language.** `locale` drives the date line and weekday names
-(any language, via `Intl`), and picks the UI strings and condition labels —
-English and Spanish ship in the box; adding a language is one table edit in the
-*Weather look* node. `es-MX` gives you "Lunes, 27 de julio", "Tormenta
-eléctrica", "MÁX 19° / MÍN 12°", "PRÓXIMOS 3 DÍAS".
+Before submission, save submitting and a compact original review snapshot. Save the accepted job ID immediately afterward, then poll that job through the native Zvid node. Completed keys are skipped. Saved rendering jobs resume without a second paid request, preserving the original review context. The snapshot excludes the render payload and large raw forecasts because Sheets cells have a size limit; recovery polls the existing job and does not rebuild or resubmit it.
 
-**Watch it without leaving n8n.** The run ends on a `▶ Watch video` node that
-pulls the finished MP4 back and plays it inline in n8n's output panel — click
-the node, watch the bulletin. *Run summary* right before it still hands
-`videoUrl` and `caption` to whatever you chain on.
+Explicit HTTP 429 capacity rejections are recorded as rate_limited and retried up to three submission attempts, with at least 30 seconds between attempts and respect for a longer server Retry-After delay. An exhausted rejected key can be retried on a later run because no job was accepted. Voice generation and design are not repeated within this retry loop.
 
-**A free pass when you want one.** Set `dryRun: true` in `Config` and the
-workflow stops after validation: exact credit price, the palette it chose, the
-caption, and an `editorLink` that opens the draft in the Zvid editor — all
-without spending a credit.
+Keep submitting, failed, timed_out and needs_review records for inspection at https://app.zvid.io. An uncertain paid request is never automatically retried. A failure after acceptance but before saving its ID needs manual reconciliation. Do not clear log rows as a general retry strategy. Only reset a specific inspected record for an intentional new render. A failed accepted render now stops with its actual error after saving the outcome; it does not misleadingly finish successfully at the Watch gate.
 
-## Requirements
+Run one execution at a time. A Sheets log is not an atomic lock; concurrent runs can both observe an unused key. Preserve log history during upgrades. Source and HTTP errors stop or report no work; no invented content is used to keep a schedule running.
 
-| | |
-| --- | --- |
-| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to test. |
-| Weather data | Nothing — Open-Meteo's geocoding and forecast endpoints are keyless. |
+Optional musicUrl is checked before use; an unavailable or oversized track is omitted.
 
-## Setup
+Open **Watch video → Binary → data → View** for a completed MP4. Downloads use a 30-second timeout and at most three attempts, five seconds apart. A failed download leaves the saved URL available. **Download the source-specific review pack → Binary → data** contains a CSV with formula-like cells escaped. Check its facts before sharing.
 
-**Heads up: the first run renders for real and spends credits** — about **12**
-for the default configuration ([Cost](#cost)). If you would rather preview for
-free first, set `dryRun: true` in `Config` before step 4; it validates, quotes
-the credits and saves a draft you can watch in the editor without spending
-anything.
+## Verification
+The automated checks exercise the actual exported graph with external service boundaries replaced by fixtures: normal rendering, preview, duplicate runs, accepted-job recovery, credit limits and failed/timed-out jobs. Local n8n execution and free validation evidence are recorded separately in the revision report; fixture success does not prove live credentials or source permissions.
 
-1. **Import** `zvid-daily-weather-video.json`.
-2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
-3. **Open `Config`** and set `cityName`, `brandName`, `handle`, `locale`.
-4. **Run "Test manually"**. It geocodes, fetches the forecast, validates, then
-   renders. When it finishes, click **▶ Watch video** to play the result inside
-   n8n; *Run summary* holds `videoUrl`, the credit count, the palette it chose
-   and a ready-made social caption.
-5. **Activate the workflow.** The schedule fires at 06:30 in your n8n
-   instance's timezone.
-
-## Configuration
-
-Everything lives in the `Config` node.
-
-| Key | Default | Notes |
-| --- | --- | --- |
-| `cityName` | `Lisbon` | Any city. The geocoder matches local spellings too ("Lisboa", "München", "Ciudad de México"). |
-| `locale` | `en-US` | Date + weekday language (any locale), and picks `en`/`es` UI strings and condition labels. |
-| `units` / `windUnit` | `celsius` / `kmh` | Set `fahrenheit` / `mph` for US-style output — the on-screen unit labels follow the API response automatically. |
-| `brandName` / `handle` | `SUNRISE WEATHER` / `@sunriseweather` | Header kicker and footer watermark. |
-| `heroSeconds` / `outlookSeconds` | `6.4` / `5.8` | Scene lengths; ~11.7 s total with the transition. |
-| `transitionSeconds` | `0.5` | The smooth slide between the two scenes. |
-| `musicUrl` / `musicVolume` | a light stock bed / `0.14` | Set `musicUrl` to `""` for a silent video, or point it at any reachable MP3. |
-| `resolution` / `frameRate` | `instagram-reel` / `30` | 1080×1920. |
-| `dryRun` | `false` | Renders for real by default. Set it to `true` for a free pass: the workflow validates the payload, quotes the credits it *would* cost, and saves a draft you can watch in the Zvid editor — without spending anything. |
-| `pollSeconds` / `timeoutMinutes` | `10` / `20` | Render poll loop. |
-
-## Cost
-
-The production validator quotes **12 credits** for the default ~11.7 s
-1080×1920 video. That free *Validate project (free)* call still runs before
-every render and still returns the exact number for your configuration — it is
-reported as `creditsCharged` in *Run summary* — but the render now proceeds
-automatically from there. Set `dryRun: true` if you want the quote *instead of*
-the render. The weather data costs nothing.
-
-## How it works
-
-| Node | What it does |
-| --- | --- |
-| **Find city** | Keyless geocoding call; `language` follows `locale`, best match wins. |
-| **Check city** | Fails fast with a human message when the geocoder misses, instead of a downstream expression error. Extracts name/country/lat/lon. |
-| **Get forecast** | One keyless call: current temperature, feels-like, humidity, wind, weather code, plus 4 daily entries (today + 3) of hi/lo, precipitation probability and weather code, in your configured units. |
-| **Weather look** | WMO code → condition label + icon + palette (5 looks). Localized strings, weekday names via `Intl`, per-day accents for the outlook cards. This node is the one to edit for extra languages. |
-| **Build project JSON** | Assembles the two scenes: hero (brand, city, date, giant current temp, condition, feels-like, hi/lo + rain + wind chips) and 3-day outlook (cards with icon, weekday, precip %, hi/lo). All scenery is inline SVG driven by the palette; staggered text entrances; music bed if configured. |
-| **Validate project (free)** | Runs the exact pipeline a render submission runs — schema, plan limits, credit quote — without spending credits. Failures surface as a field list. |
-| **Dry run?** | Reads `dryRun` from `Config`. `false` (the default) → render. `true` → the two nodes below instead, and no render. |
-| **Save draft to editor** | Only runs when `dryRun: true`. Saves the project as a draft (free) and returns `editorLink` at [editor.zvid.io](https://editor.zvid.io). Best-effort: a hiccup here never hides the dry-run report. |
-| **Dry run summary** | Only runs when `dryRun: true`. The free report: `creditsRequired`, `editorLink`, palette, caption, warnings — and no video. |
-| **Still rendering?** | Fails fast on a failed render and stops the poll loop at `timeoutMinutes`. |
-| **Run summary** | `videoUrl`, `caption` (ready for socials, in your configured language), `city`, `condition`, `look`, `videoSeconds`, `creditsCharged`. |
-| **▶ Watch video** | Downloads the finished MP4 into a binary field. n8n branches its output panel on the binary's mime type and renders `video/*` inline with a player and a download button, and Zvid's CDN serves these as `Content-Type: video/mp4` — so clicking the node just plays the video. Retries 3× (the CDN can 404 for a moment right after a render completes) and is set to continue on error, so watching a video can never fail a run that already succeeded. |
-
-## Posting it somewhere
-
-*Run summary* deliberately ends the workflow's real work at a rendered,
-captioned video (`▶ Watch video` after it is just the inline player). Chain
-your own tail off *Run summary*: a YouTube upload node, Instagram/TikTok
-through your scheduler of choice, a Slack or Discord message, or an Email Send
-with the link. `caption` is pre-written from the day's data
-(`Lisbon today: Clear sky · 25°C · H 31° / L 19° · RAIN 5% #Lisbon #weather`).
-
-The workflow already uses the official Zvid node for all supported operations. Install and configure it as described above.
-
-## Troubleshooting
-
-| Symptom | Cause |
-| --- | --- |
-| `Open-Meteo could not find "…"` | Geocoder miss. Try the local spelling or more of the name. |
-| It found a namesake city instead of yours | `Find city` takes the most relevant match. Raise `count` there and pick your match by `country`/`admin1` in *Check city*. |
-| `Zvid rejected the project (HTTP 401/403)` | The Zvid API credential is missing on a Zvid node, or its API key is invalid. |
-| `Zvid rejected the project` with a field list | Payload bug — the listed fields say what to fix. |
-| `Render failed: …` | The message carries the engine's reason. If it names the audio asset, your custom `musicUrl` is unreachable or too large — set it back to the default or to `""`. |
-| `Render did not finish within 20 minutes` | The poll loop gave up. Check the job in the dashboard at [app.zvid.io](https://app.zvid.io) and your credit balance. |
-| Dates or weekdays in the wrong language | Set `locale` (e.g. `es-MX`, `de-DE`). Weekdays follow it in any language; UI strings and condition labels currently ship in `en`/`es` — other locales fall back to English strings until you add a table entry. |
-| Wrong temperatures | You are probably looking at °F output with `units: "celsius"` expectations, or vice versa. The chips label themselves from the API's own unit strings. |
-| `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
-| **▶ Watch video** shows an error instead of a player | It retries 3× and then continues rather than failing the run, so the render itself is fine and already paid for — open `videoUrl` from *Run summary* in a browser. |
-
-## Verified
-
-> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
-
-What was actually executed for this template, and what was not:
-
-- **Local renders on the production engine** (the same `@zvid-io/zvid` package
-  the render farm runs), for two captured fixtures: sunny Lisbon (`en-US`) and
-  thunderstorm Ciudad de México (`es-MX`, long weekday labels as a layout
-  stress). Every extracted frame of both videos was reviewed: no clipped or
-  overflowing text at any entrance, transition or hold; both palettes verified
-  end-to-end (amber vs violet); Spanish strings and weekday names correct;
-  per-day card accents correct.
-- **Fixtures use the real API shape.** Both Open-Meteo endpoints were fetched
-  live on 2026-07-27 and the captured response shapes were kept intact; only
-  the weather values were set to the two scripted conditions.
-- **Remote validation against production**: the default payload was submitted
-  to the live `/api/render/validate/api-key` validator — result
-  `valid: true`, `creditsRequired: 12`, `warnings: []`, schema `1.0.0`.
-- **Embedded code equivalence**: the two big code nodes are generated from the
-  same source that produced the reviewed renders, and a simulator runs the
-  actual node bodies (fake `$`/`$input`) for both fixtures and asserts the
-  output payload is byte-identical to the reviewed one.
-- **Structural checks**: JSON parses, all connections resolve, all code nodes
-  compile, node names unique, all four Zvid HTTP nodes use the Header Auth
-  credential. Node types and versions are copied unchanged from the Day 1
-  workflow, which imports cleanly on n8n Cloud.
-
-**Not executed:** nothing in the publish/delivery tail — no social platform,
-no email provider. Those nodes are documented, not exercised.
-
-### Live n8n execution (2026-07-28)
-
-Imported into **n8n 2.29.10** (self-hosted, Docker) with a Header Auth
-credential holding a real Zvid API key, `dryRun: false`, and executed for
-real. Every video below was downloaded from the CDN and reviewed frame by
-frame at 2 fps.
-
-- **Run**: green end to end on **live Open-Meteo data, no API key of any kind**.
-  Rendered `11.70 s`, 1080x1920 @30 fps, AAC audio, **12 credits**, in 22
-  seconds wall-clock from trigger to finished MP4.
-- **The video matches the API response it was built from**, field for field:
-  Lisbon, "Tuesday, July 28", 21 degrees, "Clear sky", feels-like 22, H 33 /
-  L 20, rain 0 %, wind 4 km/h, and a three-day outlook of 30/19, 29/19, 29/19.
-  The sunny palette was the one selected for a clear-sky code.
-- **The returned `videoUrl` is a valid URL.** Project names are slugged, so the
-  CDN filename carries no spaces and the link can be pasted straight into a
-  publish node or `curl` (verified: HTTP 200 on the raw URL).
-
-**Scope of that evidence after the two changes above.** That run was executed
-with `dryRun: false` — exactly the path the workflow now takes by default — so
-everything above still describes the default behaviour, unchanged. The
-`▶ Watch video` node was added *after* that run, so the node itself is not
-covered by this live evidence: its contract (binary `video/*` → n8n's inline
-player, `Content-Type: video/mp4` from the CDN) was verified directly, but it
-was not present in the end-to-end execution recorded here.
+Support: https://zvid.io/contact

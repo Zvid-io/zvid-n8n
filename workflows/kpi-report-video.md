@@ -1,313 +1,55 @@
-# Weekly KPI report video to Slack
+# Turn verified KPI snapshots into an exception briefing and action register
 
-## Required Zvid node
+[Import the workflow](zvid-kpi-report-video.json).
 
-Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
+Check the reporting snapshot is fresh and its period is complete. Calculate changes from actual current and previous values, identify target misses and adverse movements, prioritize the five most important metrics in the video, and return a full owner action register.
 
-File upload exception: the published Zvid node does not expose multipart uploads. The upload step uses HTTP Request → `POST /api/uploads`, authenticated with the same **Zvid API** credential. All supported Zvid operations use the Zvid node.
+## Install and connect
+1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring credentials. A workspace owner/admin may need to install it.
+2. Create a **Zvid API** credential with a key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`. Select it on every Zvid node.
+3. Connect Google Sheets credentials to the log nodes. Select the same document and **KPI Reports** tab on all log reads/writes. Source rows, where used, belong to their separate existing source tab.
+4. Create exact log headers: `RenderKey,Status,JobId,CreditsQuoted,PlanJson,VideoUrl,CompletedAt,DeliveryStatus`.
+5. Edit **Set reporting period and exception thresholds**, configure the source below, and test manually before enabling a schedule. This template has no publishing step.
 
-[`zvid-kpi-report-video.json`](zvid-kpi-report-video.json)
-
-Every Monday at 9am: take one week of KPIs (up to five metrics), turn them into
-a narrated 1920×1080 stats video — branded title card, one scene per metric with
-a green/red delta pill (plus a sparkline whenever you send real history), then a
-summary grid — and drop the finished video link into Slack. Dashboards go
-unopened; a forty-second video gets watched. It runs with **zero external
-data**: leave `metricsUrl` empty and a bundled demo dataset (an invented but
-realistic SaaS week) drives the video.
-
-```
-Schedule (Mon 9am) ─▶ Config ─▶ Fetch metrics (or bundled demo data) ─▶ Music guard
-   ─▶ Narrate? ──true──▶ LLM script ─▶ ElevenLabs voice + timings ─▶ Upload ─▶ Build project
-              └─false─────────────────────────────────────────────────────▶ Build project
-   ─▶ Validate (free) ─▶ Render ─▶ poll ─▶ Slack? ─▶ Run summary ─▶ ▶ Watch video
-                      └▶ (dryRun: true) draft + editorLink
-```
-
-## Why this one is different
-
-**The data decides what green means.** Every metric carries a `lowerIsBetter`
-flag, and the design respects it: churn going *down* renders a green ▼ pill;
-infrastructure spend going *up* renders red ▲ — with a small "Lower is better
-for this one." caption so nobody misreads the direction. Most stats-video
-automations color by sign; this one colors by meaning.
-
-**It never draws a chart it does not have data for.** A metric scene has exactly
-two layouts. Give a metric a `history` array (past values, oldest first) and you
-get the two-column card: the number on the left, a **real sparkline of those
-numbers** on the right, labelled `TREND · LAST N PERIODS`. Leave `history` out
-and you get **no chart at all** — a single centred column, accent rule, label,
-big number, delta pill — because a trend line would be an invention. There is no
-third state, no decorative squiggle, no "illustrative" line. Plenty of "KPI
-video" generators fill that space with a good-looking curve nobody sent them;
-this one would rather show less.
-
-**It demos with zero external anything.** `metricsUrl` empty → a bundled demo
-dataset (MRR, signups, active users, churn, NPS) renders, so your first video
-needs nothing but the credentials. An *unreachable* endpoint also falls back to
-demo data — a Monday report never silently skips — but an endpoint that answers
-200 with JSON that does not match the contract **fails the run loudly** with the
-expected shape echoed back, so real numbers can never be silently replaced by
-demo numbers.
-
-**The narration is optional, and word-accurate when on.** With `narrate: true`
-an LLM writes a calm analyst voice-over (digits spelled out as words), ElevenLabs
-speaks it **with timestamps**, and every scene cut lands exactly where its
-sentence ends — karaoke captions ride the real word timings. The model's
-closing sentence is also the line printed on the final summary card, so the
-last frame says what the voice-over just said instead of a fixed slogan. With
-`narrate: false` the whole voice branch is skipped (no OpenRouter, no
-ElevenLabs, no captions): fixed scene lengths, a music bed, `summaryLine` from
-`Config` on the closing card, and the on-screen numbers carry the video. Same
-design either way — both paths were rendered and frame-reviewed on the
-production engine.
-
-**Numbers typeset like a designed report, not a caption.** Values auto-scale
-(a 7-digit `$4,821,004` steps down from 184 px to 134 px), the card swaps to a
-vertically centred single column when a metric has no `history` to chart, and
-the summary grid re-flows for 1–5 metrics (3+2 for five, 2×2 for four, a single
-centred row for three or fewer) — every row is centred on the canvas, not just
-the odd ones. All five grid branches were rendered on the production engine and
-checked; nothing clips, including 23-character labels next to 7-digit values.
-
-## Requirements
-
-| | |
-| --- | --- |
-| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to test. |
-| OpenRouter key | Only while `narrate: true` — writes the voice-over script. Any OpenAI-compatible chat API works. |
-| ElevenLabs key | Only while `narrate: true` — text-to-speech permission is enough. |
-| Metrics endpoint | Optional — any URL returning the JSON contract below. Empty = bundled demo data. |
-| Slack webhook | Optional — an Incoming Webhook URL for the delivery step. Empty = skipped. |
-
-Set `narrate: false` and the workflow runs on a Zvid key alone.
-
-## Setup
-
-> **The first run spends credits — about 40** for the default narrated report
-> (about 28 with `narrate: false`). If you would rather preview for free first,
-> set `dryRun: true` in `Config` before running: that validates the payload,
-> quotes the exact credit cost and saves a draft you can watch in the Zvid
-> editor without spending anything. Set it back to `false` to render.
-
-1. **Import** `zvid-kpi-report-video.json`.
-2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node. Use it on the HTTP upload step too (Predefined Credential Type → Zvid API).
-3. **OpenRouter credential** — attach it to *Write narration*. (Skip when
-   `narrate: false`.)
-4. **ElevenLabs credential** — add a SECOND **Header Auth** credential, name
-   `xi-api-key`, value = your ElevenLabs key. Attach it to *Generate voiceover*.
-   (Skip when `narrate: false`.) On a FREE ElevenLabs plan only default voices
-   work — Brian (the default), George, Roger, Sarah and Bill are confirmed
-   working; Voice Library voices return 402.
-5. **Run "Test manually".** With `metricsUrl` empty the bundled demo dataset
-   drives the video, so this works before any wiring. When it finishes, click
-   **`▶ Watch video`** to play the report inside n8n.
-6. **Point it at your numbers** — set `metricsUrl` to any endpoint returning the
-   contract below, and paste a Slack **Incoming Webhook** URL into
-   `slackWebhookUrl` to deliver into a channel.
-7. **Activate.** It reports every Monday at 9am.
-
-## Metrics JSON contract
-
-`Fetch metrics` GETs `metricsUrl` and expects exactly this shape:
+## Reporting source contract
+metricsSource defaults to live. Set metricsUrl to an HTTPS endpoint from your reporting system. Missing setup produces an explicit setup error before any network call. Add authentication directly to the HTTP Request node when required; do not embed secrets in the URL. The endpoint must return HTTP 200 with this shape:
 
 ```json
-{
-  "period": "Jul 21–27",
-  "company": "Acme",
-  "metrics": [
-    { "label": "MRR", "value": 48210, "unit": "$", "delta": 4.1, "lowerIsBetter": false,
-      "history": [45990, 46311, 48210] }
-  ]
-}
+{"company":"Example","periodStart":"2026-09-21","periodEnd":"2026-09-27","generatedAt":"2026-10-04T08:00:00Z","metrics":[{"id":"revenue","label":"Revenue","value":80,"previous":100,"unit":"$","lowerIsBetter":false,"target":110,"owner":"Finance","action":"Review the revenue report","history":[110,100,80]}]}
 ```
 
-- Up to **5 metrics**, one scene each (extras are ignored).
-- `value` — number, or a preformatted string (`"3.2h"` renders as-is).
-- `unit` — `"$"` (prefix), `"%"` (suffix), `""`, or a word (suffix with a space).
-- `delta` — percent change vs the previous period. Omit it for no pill.
-- `lowerIsBetter: true` flips the colors: a falling value renders green, a
-  rising one red. Arrows always follow the sign; only the color changes.
-- `history` — **optional** past values, oldest first, ending at `value` (two or
-  more numbers, last 24 kept; the key `series` is accepted as an alias). Supply
-  it and that metric scene draws a real sparkline of exactly those numbers,
-  labelled `TREND · LAST N PERIODS`. Omit it and that scene draws **no chart at
-  all** — the number and its delta pill centre on the card instead.
-  **The workflow never invents history**: there is no state in which a line on
-  screen stands for numbers you did not send. A malformed `history`
-  (non-numbers, a single point) fails the run loudly rather than being quietly
-  dropped or quietly charted.
-- If your endpoint needs auth, attach any n8n credential to *Fetch metrics*.
+Use real current dates when testing. generatedAt is when your source generated the snapshot; the reporting period must end before today in timezone. maxDataAgeHours defaults to 36. Values must be numeric, lowerIsBetter must be a boolean, and IDs must be unique. Optional history must contain at least two numeric points and end at value.
 
-### Wiring real sources (documented, not built in)
+Changes are calculated as (value - previous) / abs(previous), expressed as a percentage. A zero previous value produces N/A, never infinity or a fabricated percentage. A metric needs review when it misses its supplied target or worsens by at least alertPercent (default 10). Per-metric alertPercent can override this. Missing owners are explicitly Unassigned; action copy comes from the source rather than being invented.
 
-- **GA4** — a `runReport` call through a service account (or the n8n Google
-  Analytics node), reduced to this JSON in a small proxy or a Code node.
-- **Stripe** — MRR/revenue from their reporting API, same reduction.
-- Anything that serves JSON over HTTPS (Metabase, Retool, a serverless
-  function over your warehouse) works as-is.
+The five most important metrics appear in the video, ordered by review status, target miss and change magnitude. Every metric appears in the action CSV. onlyExceptions=true produces no video when nothing requires attention. This version uses deterministic numbers and copy, replacing the optional AI writer with narration derived from the checked values. Optional narrate=true retains ElevenLabs voiceover and aligned captions; connect Header Auth with name xi-api-key on Generate voiceover, and the Zvid API credential on Upload voiceover. Multipart upload uses HTTP because the published Zvid node does not expose uploads. Voice synthesis may charge before the Zvid credit quote, including during dry runs. No demo data is substituted on source failure.
 
-## Configuration
+Optional Slack delivery requires sendSlack=true and slackWebhookUrl. It is off by default and only runs after completion. Inspect DeliveryStatus when a delivery is uncertain; completed reports do not resend automatically.
 
-Everything lives in the `Config` node.
+## Explicit sample mode
+Set metricsSource=sample to run built-in example metrics without a reporting endpoint. This is an explicit choice, never a fallback after live-source failure. Sample company, title, caption and CSV say SAMPLE DATA; recovery keys use a separate kpi-sample prefix, and Slack delivery is blocked. The sample dates cover the seven completed days ending yesterday. dryRun=false still renders and spends credits; narration can also charge when enabled. Switch back to live and configure metricsUrl for real reports.
 
-| Key | Default | Notes |
-| --- | --- | --- |
-| `apiUrl` | `https://api.zvid.io` | Zvid API base. Leave it alone. |
-| `editorUrl` | `https://editor.zvid.io` | Used to build the dry-run `editorLink`. |
-| `metricsUrl` | `""` | Empty = bundled demo dataset. |
-| `narrate` | `true` | `false` skips LLM + ElevenLabs entirely: music-only video, no captions. |
-| `slackWebhookUrl` | `""` | Empty = Slack step skipped. |
-| `brandName` | `Acme` | Fallback company name when the metrics JSON has none. |
-| `reportKicker` / `reportTitle` | `WEEKLY KPI REPORT` / `The week in numbers.` | Title-card copy. |
-| `summaryLine` | `Full breakdown in the dashboard.` | Closing line under the summary grid **on `narrate: false` runs only** — when narration is on, the LLM's own closing sentence is printed there instead. |
-| `brandAccent` / `brandBackground` | `#38E1FF` / `#0B1220` | Accent + canvas. |
-| `textColor` / `mutedColor` | `#FFFFFF` / `#9DB0CC` | Ink + secondary text. |
-| `goodColor` / `badColor` | `#34D399` / `#FF6B78` | Improvement / setback pills and sparklines. |
-| `font` | `Space Grotesk` | Any Google Font name. |
-| `titleVideoUrl` | a pinned, verified stock clip | Background footage on the title card. `""` = clean gradient card, no video dependency. |
-| `llmModel` | `openai/gpt-4.1-mini` | Any OpenRouter chat model. |
-| `voiceId` / `voiceLabel` | `nPczCjzI2devNBz1zQrb` (Brian) | ElevenLabs voice. |
-| `elevenModel` | `eleven_multilingual_v2` | |
-| `voiceStability` / `voiceSimilarity` | `0.4` / `0.75` | |
-| `captionAnimation` | `karaoke` | Accent-colored active word. |
-| `captionWordsPerCue` / `captionSize` / `captionStrokeWidth` | `4` / `40` / `6` | Bottom captions, narrated runs only. |
-| `sceneTransition` / `transitionSeconds` | `smoothleft` / `0.45` | The cut into the summary is always `smoothup`. `""` disables transitions. |
-| `tailSeconds` | `0.6` | Breathing room after the last spoken word. |
-| `musicUrl` | a pinned, verified bed | HEAD-checked before every render (reachability + size). |
-| `musicVolume` / `musicVolumeSolo` | `0.12` / `0.26` | Bed volume with / without narration. |
-| `maxMusicBytes` | `5242880` | Plan cap guard — an oversized bed is skipped, never fatal. |
-| `resolution` / `frameRate` | `full-hd` / `30` | 1920×1080, Slack/email-native. |
-| `dryRun` | `false` | `true` = free pass: validate, quote credits, save a draft + `editorLink`. No render, no Slack. |
-| `pollSeconds` / `timeoutMinutes` | `10` / `20` | Render poll loop. |
+## Migration
+Replace the old delta-only endpoint contract with previous, generatedAt and explicit period dates. Add a KPI Reports log tab. The optional voice chain remains available; OpenRouter is no longer required.
 
-## Cost per video
+## Costs, previews and recovery
+**dryRun=false is the default and spends Zvid credits.** Free Zvid validation quotes the actual design before the log claim or render request. Optional voice synthesis can charge before validation. maxCreditsPerVideo is 65 by default. Quotes are not actual charged credits. There is one new render per execution; set a suitable schedule and credit ceiling.
 
-The live validator quoted **40 credits** for the default narrated report
-(39.39 s), **28 credits** for the music-only 5-metric fixture (27.6 s) and
-**21 credits** for a 3-metric report (20.4 s) — the cost tracks video length,
-so fewer metrics and a shorter script cost less. *Validate project (free)* runs
-before every render and reports the exact figure as `creditsCharged` in the run
-summary. The narration itself is cheap: the script costs well under a cent on a
-small model, and a 45-second analyst voice-over is short — the 109-word script
-used by the reviewed fixture measures **625 ElevenLabs characters**, so check
-that figure against whatever character allowance your ElevenLabs plan gives you.
+**dryRun=true** returns the source plan, design JSON, review rows and quote. It writes no log rows, creates no editor draft, sends no messages, and skips existing paid jobs. Optional voice synthesis still runs when narrate=true and can charge. The published Zvid package checked for this revision is 0.1.8; only its supported render validate/create/get operations are used.
 
-## How it works
+Before submission, save submitting and a compact original review snapshot. Save the accepted job ID immediately afterward, then poll that job through the native Zvid node. Completed keys are skipped. Saved rendering jobs resume without a second paid request, preserving the original review context. The snapshot excludes the render payload and large raw forecasts because Sheets cells have a size limit; recovery polls the existing job and does not rebuild or resubmit it.
 
-| Node | What it does |
-| --- | --- |
-| **Metrics source?** | Routes on `metricsUrl`: empty goes straight to *Prepare metrics* (demo data), set fetches your endpoint. |
-| **Fetch metrics** | GET with `neverError` — HTTP failures are data, not crashes. |
-| **Prepare metrics** | Normalises the response to the contract, including the optional `history` array (2+ numbers, last 24 kept; `series` accepted as an alias). Unreachable / HTTP error → bundled demo dataset with `usingDemoData: true`. A 200 that violates the contract → loud failure with the expected shape echoed back, naming the offending field. |
-| **Check music / Music guard** | HEAD-checks `musicUrl` (status + `content-length` vs `maxMusicBytes`). A bad bed means *no music*, never a failed render. Also builds the narration prompt — with the direction AND goodness of every delta resolved (`lowerIsBetter` is decided here, not by the LLM). |
-| **Narrate?** | Routes on `narrate`. The false branch goes straight to the builder. |
-| **Write narration** | OpenRouter, JSON mode: `{opening, perMetric[], closing}` — one sentence per metric, digits spelled out as words so captions align. |
-| **Parse narration** | Normalises to ASCII, enforces exactly one sentence per metric, fails with a friendly message when the model under-delivers. |
-| **Generate voiceover** | ElevenLabs `/with-timestamps` — the timings ARE the audio; nothing can drift. |
-| **Voice + timings** | Groups character alignment into words, emits the mp3 binary. |
-| **Upload voiceover** | Multipart upload to Zvid; returns the audio URL the render uses. |
-| **Build project JSON** | The whole design lives here: adaptive value type (184→88 px), delta pills colored by `lowerIsBetter`, the two card layouts (two-column with a real sparkline when `history` is present, centred single column with no chart when it is not), the 1–5-metric summary grid, the closing line (LLM `closing` when narrating, else `summaryLine`), word-timed scene spans (or fixed lengths without narration), transition padding so cuts land on sentence ends. |
-| **Validate project (free)** | The exact pipeline a render submission runs — schema, plan limits, cost — without spending credits. |
-| **Dry run?** | `false` by default. `true` saves a free draft and reports `editorLink` instead of rendering. |
-| **Submit render / Wait / Get render status / Still rendering?** | Paid render plus the poll loop; fails fast on `failed` and stops at `timeoutMinutes`. |
-| **Slack configured?** / **Post to Slack** | Only when `slackWebhookUrl` is set. The message carries company, period, a `[demo data]` tag when applicable, and the video URL. `onError: continue` — a Slack hiccup never kills a finished render. |
-| **Run summary** | One item: `videoUrl`, `jobId`, `creditsCharged`, `usingDemoData`, `narrated`, `musicNote`, Slack status. |
-| **▶ Watch video** | Downloads the MP4 as binary so n8n plays it inline — click the node to watch the report. |
+Explicit HTTP 429 capacity rejections are recorded as rate_limited and retried up to three submission attempts, with at least 30 seconds between attempts and respect for a longer server Retry-After delay. An exhausted rejected key can be retried on a later run because no job was accepted. Voice generation and design are not repeated within this retry loop.
 
-## Delivery (optional tail)
+Keep submitting, failed, timed_out and needs_review records for inspection at https://app.zvid.io. An uncertain paid request is never automatically retried. A failure after acceptance but before saving its ID needs manual reconciliation. Do not clear log rows as a general retry strategy. Only reset a specific inspected record for an intentional new render. A failed accepted render now stops with its actual error after saving the outcome; it does not misleadingly finish successfully at the Watch gate.
 
-`slackWebhookUrl` is the built-in delivery: create an **Incoming Webhook** in
-your Slack app (api.slack.com/messaging/webhooks) and paste the URL into
-`Config`. Beyond that, extend after *Run summary*:
+Run one execution at a time. A Sheets log is not an atomic lock; concurrent runs can both observe an unused key. Preserve log history during upgrades. Source and HTTP errors stop or report no work; no invented content is used to keep a schedule running.
 
-- **Email** — an SMTP/Gmail node sending `videoUrl` to the team list.
-- **YouTube (unlisted)** — HTTP Request (GET `videoUrl`, response format
-  *File*) → native **YouTube** node, for a permanent internal archive.
-- **Notion / Confluence** — append the link to the weekly review page.
+Optional musicUrl is checked before use; an unavailable or oversized track is omitted.
 
-These stay out of the required path so the import runs with a Zvid key and
-nothing else. On self-hosted n8n you can also install
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid) and
-replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
-(render webhook), which removes the poll loop.
+Open **Watch video → Binary → data → View** for a completed MP4. Downloads use a 30-second timeout and at most three attempts, five seconds apart. A failed download leaves the saved URL available. **Download the source-specific review pack → Binary → data** contains a CSV with formula-like cells escaped. Check its facts before sharing.
 
-## Troubleshooting
+## Verification
+The automated checks exercise the actual exported graph with external service boundaries replaced by fixtures: normal rendering, preview, duplicate runs, accepted-job recovery, credit limits and failed/timed-out jobs. Local n8n execution and free validation evidence are recorded separately in the revision report; fixture success does not prove live credentials or source permissions.
 
-| Symptom | Cause |
-| --- | --- |
-| Run summary says `usingDemoData: true` | `metricsUrl` is empty, or the endpoint was unreachable / answered an HTTP error. The demo dataset keeps the Monday report alive; the reason is in *Prepare metrics* output as `demoReason`. |
-| `The metrics JSON does not match the contract` | Your endpoint answered 200 with a different shape. The error echoes the exact expected JSON — adjust your mapping. This is deliberate: real-but-broken data must never be silently replaced with demo numbers. |
-| `narrate is true but the voiceover chain produced no usable audio` | The OpenRouter or ElevenLabs credential is missing/invalid on *Write narration* / *Generate voiceover*. Fix the credentials, or set `narrate: false` for a music-only video. |
-| ElevenLabs returns 402 | Free ElevenLabs plans can only use default voices — Voice Library voices are blocked. Keep Brian or another default voice. |
-| `The model wrote N metric sentences for 5 metrics` | The LLM under-delivered. Run again, or set a stronger `llmModel`. |
-| A metric scene shows no chart | That metric carried no `history` array, so there was nothing real to plot and the card switched to the centred number layout — by design. Send two or more past values (see the contract) and that scene draws a sparkline of exactly those numbers. `Build project JSON` reports which state each metric took in `meta.metrics[].trendPanel`. |
-| Video rendered without music | The HEAD guard skipped the bed (unreachable or over `maxMusicBytes`). The run summary's `musicNote` says exactly why. |
-| Render fails on the title card | `titleVideoUrl` points at a dead clip. Restore the default pinned URL or set it to `""` for the gradient-only title card. |
-| Nothing posted to Slack | `slackWebhookUrl` empty (step skipped), or the webhook was revoked — Slack answers 404 and the step continues; the summary still carries `videoUrl` with `slackConfigured` / `slackAttempted` flags. |
-| `Zvid rejected the project` | The message lists the offending fields. If you edited the builder, note the API only allows letters, digits, spaces, `_` and `-` in `name`, and rejects `audios[].track`. |
-| `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a week never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
-
-## Verified
-
-> Historical verification note: dated runs below describe the earlier HTTP-based version. The current template uses the Zvid node for every supported operation; migration checks cover request bodies, credit quotes, validation failures, and workflow connections.
-
-Core n8n node types only — no community nodes — at the type versions a stock
-n8n **2.29.10** resolves (`httpRequest` 4.2, `code` 2, `set` 3.4, `if` 2.2,
-`wait` 1.1, `scheduleTrigger` 1.2, `manualTrigger` 1, `stickyNote` 1). What was
-actually verified, and nothing more:
-
-- **Rendered on the production engine** (the same `@zvid-io/zvid` package the
-  render farm runs) four times from the builder's real output:
-  - the default fixture (39.39 s, narrated — demo dataset, 5 metrics with real
-    `history`, word-timed cuts from synthetic timings at a realistic
-    2.8 words/sec, 28 karaoke caption cues, closing card carrying the script's
-    own closing sentence);
-  - a `narrate: false` stress fixture (27.6 s — five 7-digit values, labels up
-    to 23 characters, a −12.4% red pill, green ▼ pills on `lowerIsBetter`
-    metrics, a flat-delta neutral pill, a 26-character company name, and no
-    `history` anywhere, so all five cards use the centred no-chart layout);
-  - a 3-metric fixture (20.4 s) carrying both layouts in one video — a real
-    sparkline card, a card with a delta but no `history` (centred, no chart) and
-    a card with neither (centred, no pill, no chart);
-  - a summary-grid coverage render (16.2 s) stitched from the builder's own
-    output at 1, 2 and 4 metrics — the branches no fixture reaches. With the
-    3-metric fixture above and the two 5-metric ones, all five grid branches are
-    on film.
-- **Frames reviewed:** all **207** extracted sweep frames (2 fps across the four
-  renders) on four contact sheets, plus all **36** frames at full review
-  resolution (22 exact grabs at every transition midpoint and every final frame,
-  14 detail frames at 1600×900) — every scene type, both card layouts, all five
-  grid branches. No clipping, no overflow, no low-contrast text, no
-  `{{`/`undefined`/`NaN`, correct green/red/flat semantics on every pill (churn
-  and backlog falling → green; infrastructure spend rising → red).
-- **Remote validation against the live API** (`POST /api/render/validate/api-key`
-  through MCP `validate_project_json` with `remote: true`) on all three payload
-  shapes plus the grid-coverage payload, re-run against these exact rendered
-  payloads: `valid: true`, **0 errors, 0 warnings**, schema **1.0.0**,
-  `creditsRequired: 40` (narrated, 39.39 s), **28** (music-only 5-metric,
-  27.6 s), **21** (3-metric, 20.4 s) and **17** (grid coverage, 16.2 s). Each
-  server-resolved duration matched the rendered MP4 exactly, and for the default
-  payload the validator's echoed project was compared field-by-field against the
-  rendered `config.json` and was identical.
-- **Pinned URLs re-probed** (HTTP 200 on this pass, and all three were actually
-  downloaded by the local renders): the title-card clip (`video/mp4`,
-  3,080,531 bytes), the music bed (`audio/mpeg`, 3,695,616 bytes — under the
-  plan's 5 MB audio cap, and HEAD-guarded at runtime anyway) and the stand-in
-  narration mp3 used only by the local render (1,556,480 bytes).
-- **The embedded code node is byte-identical** to the frame-reviewed standalone
-  builder (asserted programmatically after generation), and the three payloads
-  that were rendered and validated were re-derived by executing the *shipped
-  file's own* `Build project JSON` source and matched character for character.
-  Every code node in the workflow compiles; all connections resolve; no
-  credentials blocks ship in the file.
-- **The shipped `Prepare metrics` node was unit-exercised** against the contract:
-  the demo fallback (empty `metricsUrl`, unreachable endpoint, HTTP 500), a valid
-  `history`, the `series` alias, a 26-point array (clamped to the last 24), and
-  the three malformed cases — non-array, non-numeric, single point — each of
-  which fails the run loudly naming `metrics[i].history`.
-
-**Not executed at authoring time:** the OpenRouter and ElevenLabs calls (the
-narration fixture used a hand-written script and synthetic word timings that
-match it exactly — the timing machinery is the same shape proven live in the
-faceless-shorts template), the Slack webhook post, and the n8n runtime itself.
+Support: https://zvid.io/contact

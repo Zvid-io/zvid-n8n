@@ -1,6 +1,32 @@
 {
-  "name": "Daily local weather video — zero API keys (Zvid)",
+  "name": "Create a local forecast with a ranked daytime planning window",
   "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"cityName\": \"Lisbon\",\n  \"locale\": \"en-US\",\n  \"units\": \"celsius\",\n  \"windUnit\": \"kmh\",\n  \"brandName\": \"SUNRISE WEATHER\",\n  \"handle\": \"@sunriseweather\",\n  \"heroSeconds\": 6.4,\n  \"outlookSeconds\": 5.8,\n  \"transitionSeconds\": 0.5,\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.14,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"countryCode\": \"PT\",\n  \"admin1\": \"Lisbon District\",\n  \"forecastRevision\": 1,\n  \"maxRainProbability\": 30,\n  \"maxWindKmh\": 25,\n  \"maxCreditsPerVideo\": 25\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        340,
+        500
+      ],
+      "id": "zvid-wx-0003",
+      "name": "Set the city and outdoor planning thresholds"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        60,
+        660
+      ],
+      "id": "zvid-wx-0002",
+      "name": "Test the daily weather video workflow"
+    },
     {
       "parameters": {
         "rule": {
@@ -15,37 +41,34 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        50,
-        240
+        60,
+        260
       ],
       "id": "zvid-wx-0001",
-      "name": "Every day at 6:30am"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        310,
-        240
-      ],
-      "id": "zvid-wx-0002",
-      "name": "Test manually"
+      "name": "Start the scheduled daily weather video"
     },
     {
       "parameters": {
-        "mode": "raw",
-        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"cityName\": \"Lisbon\",\n  \"locale\": \"en-US\",\n  \"units\": \"celsius\",\n  \"windUnit\": \"kmh\",\n  \"brandName\": \"SUNRISE WEATHER\",\n  \"handle\": \"@sunriseweather\",\n  \"heroSeconds\": 6.4,\n  \"outlookSeconds\": 5.8,\n  \"transitionSeconds\": 0.5,\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/04/21/audio_ed6f0ed574.mp3\",\n  \"musicVolume\": 0.14,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
-        "options": {}
+        "url": "={{ $json.videoUrl }}",
+        "responseFormat": "file",
+        "dataPropertyName": "data",
+        "options": {
+          "timeout": 30000
+        }
       },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
       "position": [
-        570,
-        240
+        11180,
+        500
       ],
-      "id": "zvid-wx-0003",
-      "name": "Config"
+      "id": "zvid-wx-0026",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
@@ -59,7 +82,7 @@
             },
             {
               "name": "count",
-              "value": "1"
+              "value": "10"
             },
             {
               "name": "language",
@@ -71,32 +94,34 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "timeout": 20000
+        }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1050,
-        240
+        820,
+        500
       ],
       "id": "zvid-wx-0004",
-      "name": "Find city",
+      "name": "Find the configured city candidates",
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 5000
     },
     {
-      "parameters": {
-        "jsCode": "// Open-Meteo's geocoder returns an empty object (no `results`) for a miss,\n// which would surface downstream as a confusing expression error — fail here\n// with a message that says what to fix instead.\nconst cfg = $('Config').first().json;\nconst res = $input.first().json;\nconst hit = res && Array.isArray(res.results) && res.results[0];\nif (!hit) {\n  throw new Error(`Open-Meteo could not find \"${cfg.cityName}\". The geocoder matches local spellings too - try \"Lisboa\", \"Ciudad de M\\u00e9xico\", or add more of the name.`);\n}\nreturn [{ json: { place: {\n  name: hit.name,\n  admin1: hit.admin1 || '',\n  country: hit.country || '',\n  latitude: hit.latitude,\n  longitude: hit.longitude,\n  timezone: hit.timezone || 'auto',\n} } }];"
-      },
+      "id": "late-place",
+      "name": "Require one matching city and region",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1310,
-        240
+        1100,
+        500
       ],
-      "id": "zvid-wx-0005",
-      "name": "Check city"
+      "parameters": {
+        "jsCode": "function helpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (\n\t\t\tv === null ||\n\t\t\tv === undefined ||\n\t\t\tv === '' ||\n\t\t\ttypeof v === 'boolean' ||\n\t\t\t!Number.isFinite(Number(v))\n\t\t)\n\t\t\tthrow Error(label + ' must be a finite number');\n\t\treturn Number(v);\n\t};\n\tconst iso = (v, label = 'Date') => {\n\t\tconst s = text(v);\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(s) ||\n\t\t\t!Number.isFinite(Date.parse(s + 'T12:00:00Z')) ||\n\t\t\tnew Date(s + 'T12:00:00Z').toISOString().slice(0, 10) !== s\n\t\t)\n\t\t\tthrow Error(label + ' must be a real YYYY-MM-DD date');\n\t\treturn s;\n\t};\n\tconst day = (now, timezone = 'UTC') =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: timezone,\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tconst shift = (s, n) =>\n\t\tnew Date(Date.parse(s + 'T12:00:00Z') + n * 86400000).toISOString().slice(0, 10);\n\tconst truth = (v) => v === true || /^(true|yes|1)$/i.test(text(v));\n\tconst https = (v, label) => {\n\t\tconst s = text(v);\n\t\tif (!/^https:\\/\\/[^\\s/]+(?:\\/\\S*)?$/i.test(s)) throw Error(label + ' must be an HTTPS URL');\n\t\treturn s;\n\t};\n\tconst unique = (rows, key) => {\n\t\tconst seen = new Set();\n\t\tfor (const r of rows) {\n\t\t\tconst s = text(r[key]);\n\t\t\tif (!s || seen.has(s)) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(s);\n\t\t}\n\t};\n\tconst noWork = (reason, extra = {}) => ({\n\t\tready: false,\n\t\tstatus: 'nothing_to_render',\n\t\tcreditsSpent: 0,\n\t\treason,\n\t\t...extra,\n\t});\n\treturn { text, number, iso, day, shift, truth, https, unique, noWork };\n}\nfunction selectPlace(cfg, response) {\n\tconst h = helpers(),\n\t\thits = (response.results || []).filter(\n\t\t\t(p) =>\n\t\t\t\t(!cfg.countryCode ||\n\t\t\t\t\th.text(p.country_code).toUpperCase() === h.text(cfg.countryCode).toUpperCase()) &&\n\t\t\t\t(!cfg.admin1 || h.text(p.admin1).toLowerCase() === h.text(cfg.admin1).toLowerCase()),\n\t\t);\n\tif (hits.length !== 1)\n\t\tthrow Error(\n\t\t\t'City selection is ' +\n\t\t\t\t(hits.length ? 'ambiguous' : 'empty') +\n\t\t\t\t'. Set countryCode and admin1; never silently choose the first city.',\n\t\t);\n\tconst p = hits[0];\n\th.number(p.latitude, 'latitude');\n\th.number(p.longitude, 'longitude');\n\treturn { place: { ...p, country: p.country || p.country_code, timezone: p.timezone || 'UTC' } };\n}\nreturn [{json:selectPlace($('Set the city and outdoor planning thresholds').first().json,$json)}];"
+      }
     },
     {
       "parameters": {
@@ -130,302 +155,82 @@
             },
             {
               "name": "temperature_unit",
-              "value": "={{ $('Config').first().json.units }}"
+              "value": "={{ $('Set the city and outdoor planning thresholds').first().json.units }}"
             },
             {
               "name": "wind_speed_unit",
-              "value": "={{ $('Config').first().json.windUnit }}"
+              "value": "={{ $('Set the city and outdoor planning thresholds').first().json.windUnit }}"
+            },
+            {
+              "name": "hourly",
+              "value": "precipitation_probability,wind_speed_10m,weather_code"
             }
           ]
         },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        1790,
-        240
-      ],
-      "id": "zvid-wx-0006",
-      "name": "Get forecast",
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
-    },
-    {
-      "parameters": {
-        "jsCode": "// Maps the raw Open-Meteo responses to everything the video needs: WMO\n// weather code -> condition label + icon glyph + palette, localized strings,\n// weekday names. The palette drives the whole design, so a rainy day\n// genuinely looks different from a sunny one.\n\n// One palette per sky. The whole video recolors from this: background gradient,\n// glow, chips, card strokes, icons. A rainy day genuinely looks different from\n// a sunny one.\nconst LOOKS = {\n  sunny: {\n    key: 'sunny',\n    bg1: '#2B1B05', bg2: '#140D03',\n    glow: '#FFB640',\n    accent: '#FFB640',\n    soft: '#EAD9B8', muted: '#A98F63',\n    panel: 'rgba(255,182,64,0.08)', panelStroke: 'rgba(255,182,64,0.38)',\n  },\n  cloudy: {\n    key: 'cloudy',\n    bg1: '#1C242E', bg2: '#0D1218',\n    glow: '#A8C3DE',\n    accent: '#A8C3DE',\n    soft: '#D4DEE9', muted: '#8697A9',\n    panel: 'rgba(168,195,222,0.08)', panelStroke: 'rgba(168,195,222,0.34)',\n  },\n  rain: {\n    key: 'rain',\n    bg1: '#0D2138', bg2: '#070F1A',\n    glow: '#4EA8FF',\n    accent: '#4EA8FF',\n    soft: '#C9DCF2', muted: '#7C93B0',\n    panel: 'rgba(78,168,255,0.09)', panelStroke: 'rgba(78,168,255,0.36)',\n  },\n  snow: {\n    key: 'snow',\n    bg1: '#182734', bg2: '#0C141C',\n    glow: '#BEE3FF',\n    accent: '#BEE3FF',\n    soft: '#E1EEF9', muted: '#8FA6BA',\n    panel: 'rgba(190,227,255,0.08)', panelStroke: 'rgba(190,227,255,0.34)',\n  },\n  storm: {\n    key: 'storm',\n    bg1: '#1E1338', bg2: '#0D081C',\n    glow: '#A98BFF',\n    accent: '#A98BFF',\n    soft: '#DCD2F2', muted: '#8D7FB5',\n    panel: 'rgba(169,139,255,0.09)', panelStroke: 'rgba(169,139,255,0.36)',\n  },\n};\n\n// WMO weather code -> icon glyph, palette, label. Labels ship in English and\n// Spanish; add a language by adding a key to each label object (and to\n// UI_STRINGS below).\nconst WMO = {\n  0:  { icon: 'sun',    look: 'sunny',  label: { en: 'Clear sky',            es: 'Cielo despejado' } },\n  1:  { icon: 'sun',    look: 'sunny',  label: { en: 'Mostly clear',         es: 'Mayormente despejado' } },\n  2:  { icon: 'partly', look: 'cloudy', label: { en: 'Partly cloudy',        es: 'Parcialmente nublado' } },\n  3:  { icon: 'cloud',  look: 'cloudy', label: { en: 'Overcast',             es: 'Nublado' } },\n  45: { icon: 'fog',    look: 'cloudy', label: { en: 'Fog',                  es: 'Niebla' } },\n  48: { icon: 'fog',    look: 'cloudy', label: { en: 'Icy fog',              es: 'Niebla helada' } },\n  51: { icon: 'rain',   look: 'rain',   label: { en: 'Light drizzle',        es: 'Llovizna ligera' } },\n  53: { icon: 'rain',   look: 'rain',   label: { en: 'Drizzle',              es: 'Llovizna' } },\n  55: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy drizzle',        es: 'Llovizna intensa' } },\n  56: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing drizzle',     es: 'Llovizna helada' } },\n  57: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing drizzle',     es: 'Llovizna helada' } },\n  61: { icon: 'rain',   look: 'rain',   label: { en: 'Light rain',           es: 'Lluvia ligera' } },\n  63: { icon: 'rain',   look: 'rain',   label: { en: 'Rain',                 es: 'Lluvia' } },\n  65: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy rain',           es: 'Lluvia intensa' } },\n  66: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing rain',        es: 'Lluvia helada' } },\n  67: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing rain',        es: 'Lluvia helada' } },\n  71: { icon: 'snow',   look: 'snow',   label: { en: 'Light snow',           es: 'Nieve ligera' } },\n  73: { icon: 'snow',   look: 'snow',   label: { en: 'Snow',                 es: 'Nieve' } },\n  75: { icon: 'snow',   look: 'snow',   label: { en: 'Heavy snow',           es: 'Nieve intensa' } },\n  77: { icon: 'snow',   look: 'snow',   label: { en: 'Snow grains',          es: 'Granos de nieve' } },\n  80: { icon: 'rain',   look: 'rain',   label: { en: 'Light showers',        es: 'Chubascos ligeros' } },\n  81: { icon: 'rain',   look: 'rain',   label: { en: 'Rain showers',         es: 'Chubascos' } },\n  82: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy showers',        es: 'Chubascos intensos' } },\n  85: { icon: 'snow',   look: 'snow',   label: { en: 'Snow showers',         es: 'Chubascos de nieve' } },\n  86: { icon: 'snow',   look: 'snow',   label: { en: 'Snow showers',         es: 'Chubascos de nieve' } },\n  95: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm',         es: 'Tormenta eléctrica' } },\n  96: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm w/ hail', es: 'Tormenta con granizo' } },\n  99: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm w/ hail', es: 'Tormenta con granizo' } },\n};\nconst WMO_FALLBACK = { icon: 'cloud', look: 'cloudy', label: { en: 'Mixed skies', es: 'Cielo variable' } };\n\n// Small UI strings, keyed by the language part of `locale`.\nconst UI_STRINGS = {\n  en: { high: 'H', low: 'L', rain: 'RAIN', wind: 'WIND', feelsLike: 'FEELS LIKE', nextDays: 'NEXT 3 DAYS', updated: 'UPDATED', today: 'today' },\n  es: { high: 'MÁX', low: 'MÍN', rain: 'LLUVIA', wind: 'VIENTO', feelsLike: 'SENSACIÓN', nextDays: 'PRÓXIMOS 3 DÍAS', updated: 'ACTUALIZADO', today: 'hoy' },\n};\n\nconst r2 = (n) => Math.round(n * 100) / 100;\nconst r4 = (n) => Math.round(n * 10000) / 10000;\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst cap = (s, locale) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);\nconst deg = (n) => (Number.isFinite(n) ? `${Math.round(n)}°` : '—');\nconst pct = (n) => (Number.isFinite(n) ? `${Math.round(n)}%` : '—');\n\n// Turns the two Open-Meteo responses into everything the video needs:\n// labels, icon keys, palette, localized strings, rounded numbers.\n\nfunction buildWeather(config, place, forecast) {\n  if (!forecast || !forecast.current || !forecast.daily) {\n    throw new Error('Open-Meteo returned no forecast. Response: ' + JSON.stringify(forecast || {}).slice(0, 300));\n  }\n  const locale = String(config.locale || 'en-US');\n  const langKey = locale.split('-')[0].toLowerCase();\n  const strings = UI_STRINGS[langKey] || UI_STRINGS.en;\n  const lang = UI_STRINGS[langKey] ? langKey : 'en';\n\n  const cur = forecast.current;\n  const daily = forecast.daily;\n  const times = daily.time || [];\n  if (times.length < 4) {\n    throw new Error(`Expected 4 daily entries (today + 3), got ${times.length}. Keep forecast_days=4 on the Get forecast node.`);\n  }\n\n  const wmo = (code) => WMO[code] || WMO_FALLBACK;\n  const label = (code) => wmo(code).label[lang] || wmo(code).label.en;\n\n  // Parse ISO dates as plain Y-M-D so the weekday never shifts across timezones.\n  const dayName = (iso) => {\n    const [y, m, d] = String(iso).split('-').map(Number);\n    return cap(new Date(y, m - 1, d).toLocaleDateString(locale, { weekday: 'long' }), locale);\n  };\n  const dateLine = (() => {\n    const [y, m, d] = String(times[0]).split('-').map(Number);\n    return cap(new Date(y, m - 1, d).toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' }), locale);\n  })();\n\n  const currentMeta = wmo(cur.weather_code);\n  const days = [1, 2, 3].map((i) => {\n    const meta = wmo(daily.weather_code[i]);\n    return {\n      date: times[i],\n      dayLabel: dayName(times[i]),\n      hi: daily.temperature_2m_max[i],\n      lo: daily.temperature_2m_min[i],\n      precip: daily.precipitation_probability_max[i],\n      code: daily.weather_code[i],\n      label: label(daily.weather_code[i]),\n      icon: meta.icon,\n      accent: LOOKS[meta.look].accent,\n    };\n  });\n\n  return {\n    place: {\n      name: place.name,\n      country: place.country || '',\n      label: place.country ? `${place.name} · ${place.country}` : place.name,\n    },\n    dateLine,\n    updatedTime: String(cur.time || '').slice(11, 16),\n    units: {\n      temp: (forecast.current_units && forecast.current_units.temperature_2m) || '°C',\n      wind: ((forecast.current_units && forecast.current_units.wind_speed_10m) || 'km/h').toUpperCase(),\n    },\n    current: {\n      temp: cur.temperature_2m,\n      feelsLike: cur.apparent_temperature,\n      humidity: cur.relative_humidity_2m,\n      wind: cur.wind_speed_10m,\n      hi: daily.temperature_2m_max[0],\n      lo: daily.temperature_2m_min[0],\n      precip: daily.precipitation_probability_max[0],\n      code: cur.weather_code,\n      label: label(cur.weather_code),\n      icon: currentMeta.icon,\n    },\n    days,\n    look: LOOKS[currentMeta.look],\n    strings,\n    lang,\n  };\n}\n\nconst cfg = $('Config').first().json;\nconst place = $('Check city').first().json.place;\nconst forecast = $input.first().json;\nreturn [{ json: { weather: buildWeather(cfg, place, forecast) } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2050,
-        240
-      ],
-      "id": "zvid-wx-0007",
-      "name": "Weather look"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Assembles the Zvid project: a hero scene (city, date, big current temp,\n// condition, hi/lo + rain + wind chips) and a 3-day outlook scene (cards\n// with icon, weekday, precip, hi/lo). All colours come from the palette\n// chosen by `Weather look`. Design language: news-local-update /\n// dataviz-project-status from the Zvid template library.\n\nconst r2 = (n) => Math.round(n * 100) / 100;\nconst r4 = (n) => Math.round(n * 10000) / 10000;\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst cap = (s, locale) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);\nconst deg = (n) => (Number.isFinite(n) ? `${Math.round(n)}°` : '—');\nconst pct = (n) => (Number.isFinite(n) ? `${Math.round(n)}%` : '—');\n\n// Line-style weather icons drawn in a 24-unit box, scaled into place.\n// Stroke-only (no <text> — SVG text gets no fonts in the renderer).\nconst ICONS = {\n  sun: [\n    \"<circle cx='12' cy='12' r='4.6'/>\",\n    \"<path d='M12 1.6v2.6'/>\", \"<path d='M12 19.8v2.6'/>\",\n    \"<path d='M4.65 4.65l1.85 1.85'/>\", \"<path d='M17.5 17.5l1.85 1.85'/>\",\n    \"<path d='M1.6 12h2.6'/>\", \"<path d='M19.8 12h2.6'/>\",\n    \"<path d='M4.65 19.35l1.85-1.85'/>\", \"<path d='M17.5 6.5l1.85-1.85'/>\",\n  ],\n  cloud: [\n    \"<path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/>\",\n  ],\n  partly: [\n    \"<circle cx='7.4' cy='7.2' r='2.7'/>\",\n    \"<path d='M7.4 2.2v1.6'/>\", \"<path d='M2.4 7.2h1.6'/>\",\n    \"<path d='M3.9 3.7l1.15 1.15'/>\", \"<path d='M10.9 3.7l-1.15 1.15'/>\",\n    \"<path d='M2.9 10.7l1.15-1.15'/>\",\n    \"<g transform='translate(4.9 5.9) scale(0.76)'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z' fill='OCCLUDE'/></g>\",\n  ],\n  fog: [\n    \"<g transform='translate(0 -2.6)'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/></g>\",\n    \"<path d='M5.5 19.6h13'/>\", \"<path d='M8 22.6h8'/>\",\n  ],\n  rain: [\n    \"<path d='M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25'/>\",\n    \"<path d='M8 14.8v4.4'/>\", \"<path d='M12 16.8v4.4'/>\", \"<path d='M16 14.8v4.4'/>\",\n  ],\n  snow: [\n    \"<path d='M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25'/>\",\n    \"<circle cx='8' cy='16' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='8' cy='20' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='12' cy='18' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='12' cy='22' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='16' cy='16' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='16' cy='20' r='1.15' fill='DOT' stroke='none'/>\",\n  ],\n  storm: [\n    \"<path d='M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9'/>\",\n    \"<polyline points='13 11 9 17 15 17 11 23'/>\",\n  ],\n};\n\nfunction iconSvg(kind, cx, cy, size, color, opts) {\n  const o = opts || {};\n  const scale = r4(size / 24);\n  const tx = r2(cx - size / 2);\n  const ty = r2(cy - size / 2);\n  const inner = (ICONS[kind] || ICONS.cloud)\n    .join('')\n    .replace(/OCCLUDE/g, o.occlude || 'none')\n    .replace(/DOT/g, color);\n  return `<g transform='translate(${tx} ${ty}) scale(${scale})' opacity='${o.opacity != null ? o.opacity : 1}' fill='none' stroke='${color}' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'>${inner}</g>`;\n}\n\n// Per-look ambient decoration for the hero, kept in the side bands so it never\n// sits under text.\nfunction heroDecor(look) {\n  const a = look.accent;\n  if (look.key === 'sunny' || look.key === 'storm') {\n    return `<circle cx='540' cy='800' r='310' fill='none' stroke='${a}' stroke-opacity='0.10' stroke-width='1.5'/>` +\n      `<circle cx='540' cy='800' r='400' fill='none' stroke='${a}' stroke-opacity='0.06' stroke-width='1.5'/>` +\n      `<circle cx='540' cy='800' r='490' fill='none' stroke='${a}' stroke-opacity='0.035' stroke-width='1.5'/>`;\n  }\n  if (look.key === 'rain') {\n    const drop = (x, y) => `<path d='M${x} ${y}l-14 42' stroke='${a}' stroke-opacity='0.16' stroke-width='3' stroke-linecap='round'/>`;\n    return drop(140, 560) + drop(215, 750) + drop(120, 980) + drop(195, 1210) +\n      drop(905, 520) + drop(960, 730) + drop(880, 950) + drop(945, 1180);\n  }\n  if (look.key === 'snow') {\n    const dot = (x, y, r) => `<circle cx='${x}' cy='${y}' r='${r}' fill='${a}' fill-opacity='0.18'/>`;\n    return dot(150, 560, 6) + dot(220, 780, 4) + dot(130, 1010, 5) + dot(205, 1230, 4) +\n      dot(910, 540, 5) + dot(950, 760, 6) + dot(880, 990, 4) + dot(935, 1200, 5);\n  }\n  // cloudy / fog: ghost cloud bands\n  return `<rect x='640' y='420' width='330' height='34' rx='17' fill='rgba(255,255,255,0.035)'/>` +\n    `<rect x='110' y='500' width='240' height='30' rx='15' fill='rgba(255,255,255,0.03)'/>` +\n    `<rect x='700' y='1180' width='260' height='30' rx='15' fill='rgba(255,255,255,0.03)'/>`;\n}\n\nfunction buildProject(config, weather) {\n  const W = weather;\n  const look = W.look;\n  const S = W.strings;\n  const heroSec = r2(Number(config.heroSeconds ?? 6.4));\n  const outSec = r2(Number(config.outlookSeconds ?? 5.8));\n  const tSec = r2(Number(config.transitionSeconds ?? 0.5));\n  const font = 'Sora';\n  const subFont = 'Outfit';\n\n  // ---- hero scene backdrop ----\n  const heroSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs>` +\n    `<linearGradient id='wxBg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${look.bg1}'/><stop offset='1' stop-color='${look.bg2}'/></linearGradient>` +\n    `<radialGradient id='wxGlow' cx='0.5' cy='0.5' r='0.5'><stop offset='0' stop-color='${look.glow}' stop-opacity='0.30'/><stop offset='0.55' stop-color='${look.glow}' stop-opacity='0.12'/><stop offset='1' stop-color='${look.glow}' stop-opacity='0'/></radialGradient>` +\n    `</defs>` +\n    `<rect width='1080' height='1920' fill='url(#wxBg)'/>` +\n    `<circle cx='540' cy='800' r='460' fill='url(#wxGlow)'/>` +\n    heroDecor(look) +\n    iconSvg(W.current.icon, 540, 780, 270, look.accent, { occlude: look.bg1 }) +\n    `</svg>`;\n\n  // ---- outlook scene backdrop (cards + per-day icons) ----\n  const cardY = [560, 920, 1280];\n  const cardH = 320;\n  let outlookSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs>` +\n    `<linearGradient id='wxBg2' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${look.bg1}'/><stop offset='1' stop-color='${look.bg2}'/></linearGradient>` +\n    `<radialGradient id='wxGlow2' cx='0.5' cy='0.5' r='0.5'><stop offset='0' stop-color='${look.glow}' stop-opacity='0.22'/><stop offset='1' stop-color='${look.glow}' stop-opacity='0'/></radialGradient>` +\n    `</defs>` +\n    `<rect width='1080' height='1920' fill='url(#wxBg2)'/>` +\n    `<circle cx='540' cy='230' r='420' fill='url(#wxGlow2)'/>`;\n  W.days.forEach((d, i) => {\n    const y = cardY[i];\n    const cy = y + cardH / 2;\n    outlookSvg +=\n      `<rect x='90' y='${y}' width='900' height='${cardH}' rx='40' fill='rgba(255,255,255,0.035)' stroke='${look.panelStroke}' stroke-width='1.5'/>` +\n      `<circle cx='225' cy='${cy}' r='92' fill='rgba(255,255,255,0.045)'/>` +\n      iconSvg(d.icon, 225, cy, 148, d.accent, { occlude: look.bg1 });\n  });\n  outlookSvg += `</svg>`;\n\n  // ---- hero text stack ----\n  const chip = (content) =>\n    `<span style='display:inline-block; background:${look.panel}; border:1.5px solid ${look.panelStroke}; border-radius:999px; padding:16px 28px; margin:0 9px 14px; font-size:28px; font-weight:700; letter-spacing:2px; color:${look.soft}; white-space:nowrap;'>${content}</span>`;\n\n  const heroVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: heroSec, svg: heroSvg },\n    {\n      type: 'TEXT', x: 540, y: 150, anchor: 'top-center', track: 1,\n      enterBegin: 0.1, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.accent },\n      html: `<div style='text-align:center; color:${look.accent}; font-size:30px; font-weight:800; letter-spacing:8px;'>${esc(config.brandName || 'DAILY WEATHER')}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 268, width: 980, anchor: 'top-center', track: 2,\n      enterBegin: 0.2, enterEnd: 0.7, enterAnimation: 'smoothup', exitEnd: heroSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='text-align:center; color:#FFFFFF; font-size:96px; line-height:1.04; font-weight:800; letter-spacing:-2px;'>${esc(W.place.name)}</div>` +\n        `<div style='margin-top:18px; text-align:center; color:${look.muted}; font-size:30px; font-weight:600; letter-spacing:5px;'>${esc(W.dateLine.toUpperCase())}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 940, width: 1000, anchor: 'top-center', track: 3,\n      enterBegin: 0.45, enterEnd: 0.95, enterAnimation: 'smoothup', exitEnd: heroSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='text-align:center; color:#FFFFFF; font-size:290px; line-height:1; font-weight:800; letter-spacing:-8px;'>${deg(W.current.temp)}</div>` +\n        `<div style='margin-top:20px; text-align:center; color:${look.accent}; font-size:46px; font-weight:700; letter-spacing:1px;'>${esc(W.current.label)}</div>` +\n        `<div style='margin-top:18px; text-align:center; color:${look.muted}; font-size:27px; font-weight:600; letter-spacing:3px;'>${esc(S.feelsLike)} ${deg(W.current.feelsLike)}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 1490, width: 1020, anchor: 'top-center', track: 4,\n      enterBegin: 0.75, enterEnd: 1.2, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.soft },\n      html: `<div style='text-align:center;'>` +\n        chip(`${esc(S.high)} ${deg(W.current.hi)} / ${esc(S.low)} ${deg(W.current.lo)}`) +\n        chip(`${esc(S.rain)} ${pct(W.current.precip)}`) +\n        chip(`${esc(S.wind)} ${Math.round(W.current.wind)} ${esc(W.units.wind)}`) +\n        `</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 1795, anchor: 'center-center', track: 5,\n      enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.muted },\n      html: `<div style='color:${look.muted}; font-size:24px; font-weight:700; letter-spacing:4px;'>${esc(config.handle || config.brandName || '')} · ${esc(S.updated)} ${esc(W.updatedTime)}</div>`,\n    },\n  ];\n\n  // ---- outlook text stack ----\n  const outlookVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: outSec, svg: outlookSvg },\n    {\n      type: 'TEXT', x: 100, y: 290, width: 880, anchor: 'top-left', track: 1,\n      enterBegin: 0.12, enterEnd: 0.55, enterAnimation: 'smoothright', exitEnd: outSec,\n      style: { fontFamily: font, color: look.accent },\n      html: `<div style='color:${look.accent}; font-size:32px; font-weight:800; letter-spacing:7px;'>${esc(S.nextDays)}</div>` +\n        `<div style='margin-top:14px; color:${look.muted}; font-size:27px; font-weight:600; letter-spacing:2px;'>${esc(W.place.label)}</div>`,\n    },\n  ];\n  W.days.forEach((d, i) => {\n    outlookVisuals.push({\n      type: 'TEXT', x: 360, y: cardY[i] + cardH / 2, width: 550, anchor: 'center-left', track: 2 + i,\n      enterBegin: r2(0.3 + i * 0.2), enterEnd: r2(0.75 + i * 0.2), enterAnimation: 'smoothleft', exitEnd: outSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='display:flex; align-items:center; justify-content:space-between; width:550px;'>` +\n        `<div>` +\n        `<div style='color:#FFFFFF; font-size:52px; font-weight:700; line-height:1.05;'>${esc(d.dayLabel)}</div>` +\n        `<div style='margin-top:12px; color:${d.accent}; font-size:26px; font-weight:700; letter-spacing:3px;'>${esc(S.rain)} ${pct(d.precip)}</div>` +\n        `</div>` +\n        `<div style='color:#FFFFFF; font-size:60px; font-weight:800; white-space:nowrap;'>${deg(d.hi)}<span style='color:${look.muted}; font-size:42px; font-weight:600;'> / ${deg(d.lo)}</span></div>` +\n        `</div>`,\n    });\n  });\n  outlookVisuals.push({\n    type: 'TEXT', x: 540, y: 1780, anchor: 'center-center', track: 5,\n    enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: outSec,\n    style: { fontFamily: subFont, color: look.muted },\n    html: `<div style='color:${look.muted}; font-size:24px; font-weight:700; letter-spacing:4px;'>${esc(config.brandName || '')} · ${esc(W.dateLine.toUpperCase())}</div>`,\n  });\n\n  const safeName = `daily-weather-${W.place.name}`.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'daily-weather';\n\n  const payload = {\n    name: safeName,\n    resolution: config.resolution || 'instagram-reel',\n    frameRate: Number(config.frameRate ?? 30),\n    backgroundColor: look.bg2,\n    outputFormat: 'mp4',\n    scenes: [\n      {\n        id: 'hero',\n        duration: heroSec,\n        backgroundColor: look.bg2,\n        transition: 'smoothup',\n        transitionId: 'outlook',\n        transitionDuration: tSec,\n        visuals: heroVisuals,\n      },\n      {\n        id: 'outlook',\n        duration: outSec,\n        backgroundColor: look.bg2,\n        visuals: outlookVisuals,\n      },\n    ],\n  };\n\n  if (config.musicUrl) {\n    // NOTE: no track field on audios — the production API rejects audios[].track.\n    payload.audios = [{ src: config.musicUrl, volume: Number(config.musicVolume ?? 0.14) }];\n  }\n\n  const caption =\n    `${W.place.name} ${S.today}: ${W.current.label} · ${deg(W.current.temp)}${W.units.temp.replace('°', '')} · ` +\n    `${S.high} ${deg(W.current.hi)} / ${S.low} ${deg(W.current.lo)} · ${S.rain} ${pct(W.current.precip)}` +\n    ` #${W.place.name.replace(/\\s+/g, '')} #weather`;\n\n  return {\n    payload,\n    meta: {\n      city: W.place.name,\n      country: W.place.country,\n      dateLine: W.dateLine,\n      condition: W.current.label,\n      lookKey: look.key,\n      tempNow: deg(W.current.temp),\n      hiLo: `${deg(W.current.hi)} / ${deg(W.current.lo)}`,\n      precip: pct(W.current.precip),\n      totalSeconds: r2(heroSec + outSec - tSec),\n      sceneCount: payload.scenes.length,\n      caption,\n    },\n  };\n}\n\nconst cfg = $('Config').first().json;\nconst weather = $('Weather look').first().json.weather;\nconst { payload, meta } = buildProject(cfg, weather);\nreturn [{ json: { payload, meta } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2530,
-        240
-      ],
-      "id": "zvid-wx-0008",
-      "name": "Build project JSON"
-    },
-    {
-      "parameters": {
-        "resource": "render",
-        "operation": "validate",
-        "source": "json",
-        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}"
-      },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
-      "position": [
-        2790,
-        240
-      ],
-      "id": "zvid-wx-0009",
-      "name": "Validate project (free)"
-    },
-    {
-      "parameters": {
-        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission\n// runs, so a failure here is a payload bug - surface the field list instead\n// of a generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode ?? (res.valid === true ? 200 : 400);\nconst body = res.body || { ...res, details: res.errors ?? res.details };\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => `  - ${d.field}: ${d.message}`).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error(`Zvid rejected the project (HTTP ${status}): ${body.message || body.error}\\n${details}`);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        3050,
-        240
-      ],
-      "id": "zvid-wx-0010",
-      "name": "Check validation"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "dry-run--cond",
-              "leftValue": "={{ $('Config').first().json.dryRun }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        50,
-        920
-      ],
-      "id": "zvid-wx-0011",
-      "name": "Dry run?"
-    },
-    {
-      "parameters": {
-        "resource": "project",
-        "operation": "create",
-        "projectName": "={{ ({ name: $json.payload.name, payload: $json.payload }).name }}",
-        "projectJson": "={{ JSON.stringify(({ name: $json.payload.name, payload: $json.payload }).payload) }}"
-      },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
-      "position": [
-        310,
-        920
-      ],
-      "id": "zvid-wx-0012",
-      "name": "Save draft to editor",
-      "onError": "continueRegularOutput",
-      "alwaysOutputData": true,
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
-    },
-    {
-      "parameters": {
-        "jsCode": "// Dry run: everything except the paid render. Open the editorLink to watch\n// the draft, then set dryRun to false in Config to go live.\nconst cfg = $('Config').first().json;\nconst d = $('Check validation').first().json;\n\n// The draft save is best-effort (onError: continue) so a hiccup there never\n// hides the rest of the dry-run report.\nlet editorLink = null;\nlet draftId = null;\ntry {\n  const project = $('Save draft to editor').first().json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = `${String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '')}/?project=${project.id}`;\n  }\n} catch (e) { /* draft step skipped or failed */ }\n\nreturn [{\n  json: {\n    dryRun: true,\n    city: d.meta.city,\n    condition: d.meta.condition,\n    look: d.meta.lookKey,\n    dateLine: d.meta.dateLine,\n    editorLink,\n    draftId,\n    creditsRequired: d.creditsRequired,\n    videoSeconds: d.meta.totalSeconds,\n    caption: d.meta.caption,\n    warnings: d.warnings,\n    nextStep: editorLink\n      ? 'Open editorLink to preview the draft, then set dryRun to false in Config to render.'\n      : 'Set dryRun to false in Config to render this for real.',\n    payload: d.payload,\n  },\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        570,
-        920
-      ],
-      "id": "zvid-wx-0013",
-      "name": "Dry run summary"
-    },
-    {
-      "parameters": {
-        "resource": "render",
-        "operation": "create",
-        "source": "json",
-        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}",
-        "renderType": "video",
-        "waitForCompletion": false
-      },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
-      "position": [
-        1050,
-        920
-      ],
-      "id": "zvid-wx-0014",
-      "name": "Submit render",
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
-    },
-    {
-      "parameters": {
-        "amount": "={{ $('Config').first().json.pollSeconds }}",
-        "unit": "seconds"
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        1310,
-        920
-      ],
-      "id": "zvid-wx-0015",
-      "name": "Wait",
-      "webhookId": "c7d2e9a1-3b58-4f6c-8a2d-5e9f1b0c7a44"
-    },
-    {
-      "parameters": {
-        "resource": "render",
-        "operation": "get",
-        "jobId": "={{ $('Submit render').first().json.jobId }}",
-        "waitForCompletion": false
-      },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
-      "position": [
-        1570,
-        920
-      ],
-      "id": "zvid-wx-0016",
-      "name": "Get render status",
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "render-finished--cond",
-              "leftValue": "={{ $json.state === 'completed' }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        1830,
-        920
-      ],
-      "id": "zvid-wx-0017",
-      "name": "Render finished?"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Fails fast on a failed render and stops the poll loop from running forever.\nconst cfg = $('Config').first().json;\nconst job = $input.first().json;\n\nif (job.state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error(`Render did not finish within ${cfg.timeoutMinutes} minutes (job ${job.id}, state ${job.state}).`);\n}\n\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1830,
-        1160
-      ],
-      "id": "zvid-wx-0018",
-      "name": "Still rendering?"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Final report. `videoUrl` + `caption` are everything a publishing tail\n// needs - see the sticky note on the right.\nconst build = $('Check validation').first().json;\nconst job = $('Get render status').first().json;\nconst url = typeof job.result === 'string' ? job.result : (job.result && job.result.url);\n\nreturn [{\n  json: {\n    videoUrl: url,\n    jobId: job.id,\n    creditsCharged: build.creditsRequired,\n    city: build.meta.city,\n    country: build.meta.country,\n    condition: build.meta.condition,\n    look: build.meta.lookKey,\n    dateLine: build.meta.dateLine,\n    videoSeconds: build.meta.totalSeconds,\n    caption: build.meta.caption,\n  },\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2310,
-        920
-      ],
-      "id": "zvid-wx-0019",
-      "name": "Run summary"
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.videoUrl }}",
         "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file",
-              "outputPropertyName": "data"
-            }
-          }
+          "timeout": 20000
         }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2830,
-        920
+        1380,
+        500
       ],
-      "id": "zvid-wx-0026",
-      "name": "▶ Watch video",
-      "onError": "continueRegularOutput",
-      "alwaysOutputData": true,
+      "id": "zvid-wx-0006",
+      "name": "Fetch local current daily and hourly weather",
       "retryOnFail": true,
       "maxTries": 3,
-      "waitBetweenTries": 5000
+      "waitBetweenTries": 2000,
+      "alwaysOutputData": true
     },
     {
-      "id": "zvid-watch-ready",
-      "name": "Video ready to watch?",
+      "id": "late-ledger",
+      "name": "Read Weather Briefings recovery log",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1660,
+        500
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Weather Briefings",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "late-plan",
+      "name": "Rank remaining three-hour weather windows",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1940,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function helpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (\n\t\t\tv === null ||\n\t\t\tv === undefined ||\n\t\t\tv === '' ||\n\t\t\ttypeof v === 'boolean' ||\n\t\t\t!Number.isFinite(Number(v))\n\t\t)\n\t\t\tthrow Error(label + ' must be a finite number');\n\t\treturn Number(v);\n\t};\n\tconst iso = (v, label = 'Date') => {\n\t\tconst s = text(v);\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(s) ||\n\t\t\t!Number.isFinite(Date.parse(s + 'T12:00:00Z')) ||\n\t\t\tnew Date(s + 'T12:00:00Z').toISOString().slice(0, 10) !== s\n\t\t)\n\t\t\tthrow Error(label + ' must be a real YYYY-MM-DD date');\n\t\treturn s;\n\t};\n\tconst day = (now, timezone = 'UTC') =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: timezone,\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tconst shift = (s, n) =>\n\t\tnew Date(Date.parse(s + 'T12:00:00Z') + n * 86400000).toISOString().slice(0, 10);\n\tconst truth = (v) => v === true || /^(true|yes|1)$/i.test(text(v));\n\tconst https = (v, label) => {\n\t\tconst s = text(v);\n\t\tif (!/^https:\\/\\/[^\\s/]+(?:\\/\\S*)?$/i.test(s)) throw Error(label + ' must be an HTTPS URL');\n\t\treturn s;\n\t};\n\tconst unique = (rows, key) => {\n\t\tconst seen = new Set();\n\t\tfor (const r of rows) {\n\t\t\tconst s = text(r[key]);\n\t\t\tif (!s || seen.has(s)) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(s);\n\t\t}\n\t};\n\tconst noWork = (reason, extra = {}) => ({\n\t\tready: false,\n\t\tstatus: 'nothing_to_render',\n\t\tcreditsSpent: 0,\n\t\treason,\n\t\t...extra,\n\t});\n\treturn { text, number, iso, day, shift, truth, https, unique, noWork };\n}\nfunction recoverPlan(cfg, key, rows) {\n\tconst matches = rows.filter((r) => String(r.RenderKey || '') === key);\n\tif (matches.length > 1) throw Error('Duplicate RenderKey in log: ' + key);\n\tconst row = matches[0];\n\tif (!row) return null;\n\t// An explicit capacity rejection accepted no paid job. It can be retried on\n\t// a later run; uncertain submissions and failed accepted jobs remain locked.\n\tif (row.Status === 'rate_limited' && !row.JobId && !row.VideoUrl) return null;\n\tif (row.Status === 'completed' || row.VideoUrl)\n\t\treturn {\n\t\t\tready: false,\n\t\t\tstatus: 'already_completed',\n\t\t\trenderKey: key,\n\t\t\tvideoUrl: row.VideoUrl || null,\n\t\t\tcreditsSpent: 0,\n\t\t};\n\tif (row.Status === 'rendering' && row.JobId && cfg.dryRun !== true) {\n\t\tlet plan;\n\t\ttry {\n\t\t\tplan = JSON.parse(row.PlanJson);\n\t\t} catch {\n\t\t\tthrow Error('Saved PlanJson is invalid for ' + key);\n\t\t}\n\t\tif (plan.renderKey !== key || plan.snapshotVersion !== 1)\n\t\t\tthrow Error('Saved snapshot does not match ' + key);\n\t\treturn { ...plan, ready: true, jobId: String(row.JobId), resumed: true };\n\t}\n\treturn {\n\t\tready: false,\n\t\tstatus: 'needs_review',\n\t\trenderKey: key,\n\t\treason:\n\t\t\tcfg.dryRun === true\n\t\t\t\t? 'Preview skips existing jobs.'\n\t\t\t\t: 'Inspect the saved ' + row.Status + ' job before resetting this key.',\n\t\tjobId: row.JobId || null,\n\t\tcreditsSpent: 0,\n\t};\n}\nfunction resumeOutstanding(cfg, logs, prefix) {\n\tif (cfg.dryRun === true) return null;\n\tconst saved = logs\n\t\t.filter(\n\t\t\t(r) => String(r.RenderKey || '').startsWith(prefix) && r.Status === 'rendering' && r.JobId,\n\t\t)\n\t\t.sort((a, b) => String(a.RenderKey).localeCompare(String(b.RenderKey)));\n\tif (!saved.length) return null;\n\t// Recover paid work even when its source changed or a date rolled over.\n\t// Delivery approval is intentionally re-reviewed after such a recovery.\n\tconst plan = recoverPlan(cfg, saved[0].RenderKey, logs);\n\treturn { ...plan, emailApproved: false, deferredSavedJobs: saved.length - 1 };\n}\nfunction planWeather(cfg, forecast, place, logs, now) {\n\tconst outstanding = resumeOutstanding(cfg, logs, 'weather-');\n\tif (outstanding) return outstanding;\n\tconst h = helpers(),\n\t\ttoday = h.day(now, place.timezone),\n\t\tkey =\n\t\t\t'weather-' +\n\t\t\tplace.latitude +\n\t\t\t'-' +\n\t\t\tplace.longitude +\n\t\t\t'-' +\n\t\t\ttoday +\n\t\t\t'-' +\n\t\t\th.text(cfg.forecastRevision || 1);\n\tconst saved = recoverPlan(cfg, key, logs);\n\tif (saved) return saved;\n\tif (!forecast.current || !forecast.daily || !forecast.hourly)\n\t\tthrow Error('Forecast lacks current, daily or hourly data');\n\tconst offset = h.number(forecast.utc_offset_seconds, 'utc_offset_seconds');\n\tconst time = Date.parse(forecast.current.time + 'Z') - offset * 1000,\n\t\tage = (now.getTime() - time) / 3600000;\n\tif (!Number.isFinite(age) || age < -0.25 || age > 3 || forecast.daily.time?.[0] !== today)\n\t\tthrow Error('Forecast is stale or belongs to a different local day');\n\tfor (const k of [\n\t\t'temperature_2m',\n\t\t'apparent_temperature',\n\t\t'relative_humidity_2m',\n\t\t'wind_speed_10m',\n\t\t'weather_code',\n\t])\n\t\th.number(forecast.current[k], 'current ' + k);\n\tfor (const k of [\n\t\t'weather_code',\n\t\t'temperature_2m_max',\n\t\t'temperature_2m_min',\n\t\t'precipitation_probability_max',\n\t]) {\n\t\tif (forecast.daily[k]?.length < 4) throw Error('Four daily forecast values are required: ' + k);\n\t\tforecast.daily[k].slice(0, 4).forEach((v) => h.number(v, k));\n\t}\n\tconst hourly = forecast.hourly,\n\t\tunit = forecast.hourly_units?.wind_speed_10m;\n\tconst multiplier = { 'km/h': 1, 'm/s': 3.6, 'mp/h': 1.609344, mph: 1.609344, kn: 1.852 }[unit];\n\tif (!multiplier) throw Error('Unrecognized hourly wind unit');\n\tconst hours = [];\n\tfor (let i = 0; i < (hourly.time || []).length; i++) {\n\t\tconst t = String(hourly.time[i]),\n\t\t\thr = Number(t.slice(11, 13));\n\t\tif (\n\t\t\t!t.startsWith(today) ||\n\t\t\thr < 6 ||\n\t\t\thr > 20 ||\n\t\t\tDate.parse(t + 'Z') - offset * 1000 < now.getTime()\n\t\t)\n\t\t\tcontinue;\n\t\tconst rain = h.number(hourly.precipitation_probability?.[i], 'hourly rain'),\n\t\t\twind = h.number(hourly.wind_speed_10m?.[i], 'hourly wind') * multiplier,\n\t\t\tcode = h.number(hourly.weather_code?.[i], 'hourly code');\n\t\tif (rain < 0 || rain > 100 || wind < 0) throw Error('Forecast values outside their ranges');\n\t\thours.push({\n\t\t\ttime: t,\n\t\t\train,\n\t\t\twind,\n\t\t\tcode,\n\t\t\tqualifies:\n\t\t\t\train <= Number(cfg.maxRainProbability ?? 30) &&\n\t\t\t\twind <= Number(cfg.maxWindKmh ?? 25) &&\n\t\t\t\t![56, 57, 66, 67, 71, 73, 75, 77, 85, 86, 95, 96, 99].includes(code),\n\t\t});\n\t}\n\tif (!hours.length) return h.noWork('No future daytime hourly data remains for today.');\n\tconst windows = [];\n\tfor (let i = 0; i <= hours.length - 3; i++) {\n\t\tconst run = hours.slice(i, i + 3);\n\t\tif (\n\t\t\trun.every((x) => x.qualifies) &&\n\t\t\tDate.parse(run[2].time + 'Z') - Date.parse(run[0].time + 'Z') === 7200000\n\t\t)\n\t\t\twindows.push({\n\t\t\t\tstart: run[0].time.slice(11, 16),\n\t\t\t\tend: String(Number(run[2].time.slice(11, 13)) + 1).padStart(2, '0') + ':00',\n\t\t\t\train: Math.max(...run.map((x) => x.rain)),\n\t\t\t\twind: Math.round(Math.max(...run.map((x) => x.wind))),\n\t\t\t});\n\t}\n\twindows.sort((a, b) => a.rain - b.rain || a.wind - b.wind || a.start.localeCompare(b.start));\n\tconst window = windows[0] || null;\n\treturn {\n\t\tready: true,\n\t\trenderKey: key,\n\t\tforecast,\n\t\tplace,\n\t\tdate: today,\n\t\twindow,\n\t\tattention: !window,\n\t\tcaption: window\n\t\t\t? 'Lowest-rain qualifying three-hour window: ' +\n\t\t\t\twindow.start +\n\t\t\t\t'–' +\n\t\t\t\twindow.end +\n\t\t\t\t' ' +\n\t\t\t\tplace.timezone +\n\t\t\t\t'.'\n\t\t\t: 'No three-hour window meets the configured rain/wind conditions today.',\n\t\thandoff: hours.map((x) => ({\n\t\t\tLocalTime: x.time,\n\t\t\tTimezone: place.timezone,\n\t\t\tRainProbability: x.rain,\n\t\t\tWindKmh: Math.round(x.wind),\n\t\t\tWeatherCode: x.code,\n\t\t\tMeetsPlanningThresholds: x.qualifies,\n\t\t})),\n\t\tsource: 'Open-Meteo',\n\t\tnote: 'Planning guidance from a forecast, not an official weather warning. Check local advisories.',\n\t};\n}\nreturn [{json:planWeather($('Set the city and outdoor planning thresholds').first().json,$('Fetch local current daily and hourly weather').first().json,$('Require one matching city and region').first().json.place,$input.all().map(i=>i.json),new Date())}];"
+      }
+    },
+    {
+      "id": "late-ready",
+      "name": "Eligible source content or saved render exists?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2570,
-        920
+        2220,
+        500
       ],
       "parameters": {
         "conditions": {
@@ -437,8 +242,949 @@
           },
           "conditions": [
             {
-              "id": "zvid-watch-ready-condition",
-              "leftValue": "={{ !$json.dryRun && /^https?:\\/\\//i.test(String(($json.videoUrl) || '')) }}",
+              "id": "ready-condition",
+              "leftValue": "={{ $json.ready === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-no-work",
+      "name": "Explain skipped content or recovery needs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        850
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "id": "late-resume",
+      "name": "Resume the accepted render job?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2700,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "resume-condition",
+              "leftValue": "={{ Boolean($json.jobId) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-resume-context",
+      "name": "Restore the saved result and handoff context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2980,
+        220
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Maps the raw Open-Meteo responses to everything the video needs: WMO\n// weather code -> condition label + icon glyph + palette, localized strings,\n// weekday names. The palette drives the whole design, so a rainy day\n// genuinely looks different from a sunny one.\n\n// One palette per sky. The whole video recolors from this: background gradient,\n// glow, chips, card strokes, icons. A rainy day genuinely looks different from\n// a sunny one.\nconst LOOKS = {\n  sunny: {\n    key: 'sunny',\n    bg1: '#2B1B05', bg2: '#140D03',\n    glow: '#FFB640',\n    accent: '#FFB640',\n    soft: '#EAD9B8', muted: '#A98F63',\n    panel: 'rgba(255,182,64,0.08)', panelStroke: 'rgba(255,182,64,0.38)',\n  },\n  cloudy: {\n    key: 'cloudy',\n    bg1: '#1C242E', bg2: '#0D1218',\n    glow: '#A8C3DE',\n    accent: '#A8C3DE',\n    soft: '#D4DEE9', muted: '#8697A9',\n    panel: 'rgba(168,195,222,0.08)', panelStroke: 'rgba(168,195,222,0.34)',\n  },\n  rain: {\n    key: 'rain',\n    bg1: '#0D2138', bg2: '#070F1A',\n    glow: '#4EA8FF',\n    accent: '#4EA8FF',\n    soft: '#C9DCF2', muted: '#7C93B0',\n    panel: 'rgba(78,168,255,0.09)', panelStroke: 'rgba(78,168,255,0.36)',\n  },\n  snow: {\n    key: 'snow',\n    bg1: '#182734', bg2: '#0C141C',\n    glow: '#BEE3FF',\n    accent: '#BEE3FF',\n    soft: '#E1EEF9', muted: '#8FA6BA',\n    panel: 'rgba(190,227,255,0.08)', panelStroke: 'rgba(190,227,255,0.34)',\n  },\n  storm: {\n    key: 'storm',\n    bg1: '#1E1338', bg2: '#0D081C',\n    glow: '#A98BFF',\n    accent: '#A98BFF',\n    soft: '#DCD2F2', muted: '#8D7FB5',\n    panel: 'rgba(169,139,255,0.09)', panelStroke: 'rgba(169,139,255,0.36)',\n  },\n};\n\n// WMO weather code -> icon glyph, palette, label. Labels ship in English and\n// Spanish; add a language by adding a key to each label object (and to\n// UI_STRINGS below).\nconst WMO = {\n  0:  { icon: 'sun',    look: 'sunny',  label: { en: 'Clear sky',            es: 'Cielo despejado' } },\n  1:  { icon: 'sun',    look: 'sunny',  label: { en: 'Mostly clear',         es: 'Mayormente despejado' } },\n  2:  { icon: 'partly', look: 'cloudy', label: { en: 'Partly cloudy',        es: 'Parcialmente nublado' } },\n  3:  { icon: 'cloud',  look: 'cloudy', label: { en: 'Overcast',             es: 'Nublado' } },\n  45: { icon: 'fog',    look: 'cloudy', label: { en: 'Fog',                  es: 'Niebla' } },\n  48: { icon: 'fog',    look: 'cloudy', label: { en: 'Icy fog',              es: 'Niebla helada' } },\n  51: { icon: 'rain',   look: 'rain',   label: { en: 'Light drizzle',        es: 'Llovizna ligera' } },\n  53: { icon: 'rain',   look: 'rain',   label: { en: 'Drizzle',              es: 'Llovizna' } },\n  55: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy drizzle',        es: 'Llovizna intensa' } },\n  56: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing drizzle',     es: 'Llovizna helada' } },\n  57: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing drizzle',     es: 'Llovizna helada' } },\n  61: { icon: 'rain',   look: 'rain',   label: { en: 'Light rain',           es: 'Lluvia ligera' } },\n  63: { icon: 'rain',   look: 'rain',   label: { en: 'Rain',                 es: 'Lluvia' } },\n  65: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy rain',           es: 'Lluvia intensa' } },\n  66: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing rain',        es: 'Lluvia helada' } },\n  67: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing rain',        es: 'Lluvia helada' } },\n  71: { icon: 'snow',   look: 'snow',   label: { en: 'Light snow',           es: 'Nieve ligera' } },\n  73: { icon: 'snow',   look: 'snow',   label: { en: 'Snow',                 es: 'Nieve' } },\n  75: { icon: 'snow',   look: 'snow',   label: { en: 'Heavy snow',           es: 'Nieve intensa' } },\n  77: { icon: 'snow',   look: 'snow',   label: { en: 'Snow grains',          es: 'Granos de nieve' } },\n  80: { icon: 'rain',   look: 'rain',   label: { en: 'Light showers',        es: 'Chubascos ligeros' } },\n  81: { icon: 'rain',   look: 'rain',   label: { en: 'Rain showers',         es: 'Chubascos' } },\n  82: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy showers',        es: 'Chubascos intensos' } },\n  85: { icon: 'snow',   look: 'snow',   label: { en: 'Snow showers',         es: 'Chubascos de nieve' } },\n  86: { icon: 'snow',   look: 'snow',   label: { en: 'Snow showers',         es: 'Chubascos de nieve' } },\n  95: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm',         es: 'Tormenta eléctrica' } },\n  96: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm w/ hail', es: 'Tormenta con granizo' } },\n  99: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm w/ hail', es: 'Tormenta con granizo' } },\n};\nconst WMO_FALLBACK = { icon: 'cloud', look: 'cloudy', label: { en: 'Mixed skies', es: 'Cielo variable' } };\n\n// Small UI strings, keyed by the language part of `locale`.\nconst UI_STRINGS = {\n  en: { high: 'H', low: 'L', rain: 'RAIN', wind: 'WIND', feelsLike: 'FEELS LIKE', nextDays: 'NEXT 3 DAYS', updated: 'UPDATED', today: 'today' },\n  es: { high: 'MÁX', low: 'MÍN', rain: 'LLUVIA', wind: 'VIENTO', feelsLike: 'SENSACIÓN', nextDays: 'PRÓXIMOS 3 DÍAS', updated: 'ACTUALIZADO', today: 'hoy' },\n};\n\nconst r2 = (n) => Math.round(n * 100) / 100;\nconst r4 = (n) => Math.round(n * 10000) / 10000;\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst cap = (s, locale) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);\nconst deg = (n) => (Number.isFinite(n) ? `${Math.round(n)}°` : '—');\nconst pct = (n) => (Number.isFinite(n) ? `${Math.round(n)}%` : '—');\n\n// Turns the two Open-Meteo responses into everything the video needs:\n// labels, icon keys, palette, localized strings, rounded numbers.\n\nfunction buildWeather(config, place, forecast) {\n  if (!forecast || !forecast.current || !forecast.daily) {\n    throw new Error('Open-Meteo returned no forecast. Response: ' + JSON.stringify(forecast || {}).slice(0, 300));\n  }\n  const locale = String(config.locale || 'en-US');\n  const langKey = locale.split('-')[0].toLowerCase();\n  const strings = UI_STRINGS[langKey] || UI_STRINGS.en;\n  const lang = UI_STRINGS[langKey] ? langKey : 'en';\n\n  const cur = forecast.current;\n  const daily = forecast.daily;\n  const times = daily.time || [];\n  if (times.length < 4) {\n    throw new Error(`Expected 4 daily entries (today + 3), got ${times.length}. Keep forecast_days=4 on the Get forecast node.`);\n  }\n\n  const wmo = (code) => WMO[code] || WMO_FALLBACK;\n  const label = (code) => wmo(code).label[lang] || wmo(code).label.en;\n\n  // Parse ISO dates as plain Y-M-D so the weekday never shifts across timezones.\n  const dayName = (iso) => {\n    const [y, m, d] = String(iso).split('-').map(Number);\n    return cap(new Date(y, m - 1, d).toLocaleDateString(locale, { weekday: 'long' }), locale);\n  };\n  const dateLine = (() => {\n    const [y, m, d] = String(times[0]).split('-').map(Number);\n    return cap(new Date(y, m - 1, d).toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' }), locale);\n  })();\n\n  const currentMeta = wmo(cur.weather_code);\n  const days = [1, 2, 3].map((i) => {\n    const meta = wmo(daily.weather_code[i]);\n    return {\n      date: times[i],\n      dayLabel: dayName(times[i]),\n      hi: daily.temperature_2m_max[i],\n      lo: daily.temperature_2m_min[i],\n      precip: daily.precipitation_probability_max[i],\n      code: daily.weather_code[i],\n      label: label(daily.weather_code[i]),\n      icon: meta.icon,\n      accent: LOOKS[meta.look].accent,\n    };\n  });\n\n  return {\n    place: {\n      name: place.name,\n      country: place.country || '',\n      label: place.country ? `${place.name} · ${place.country}` : place.name,\n    },\n    dateLine,\n    updatedTime: String(cur.time || '').slice(11, 16),\n    units: {\n      temp: (forecast.current_units && forecast.current_units.temperature_2m) || '°C',\n      wind: ((forecast.current_units && forecast.current_units.wind_speed_10m) || 'km/h').toUpperCase(),\n    },\n    current: {\n      temp: cur.temperature_2m,\n      feelsLike: cur.apparent_temperature,\n      humidity: cur.relative_humidity_2m,\n      wind: cur.wind_speed_10m,\n      hi: daily.temperature_2m_max[0],\n      lo: daily.temperature_2m_min[0],\n      precip: daily.precipitation_probability_max[0],\n      code: cur.weather_code,\n      label: label(cur.weather_code),\n      icon: currentMeta.icon,\n    },\n    days,\n    look: LOOKS[currentMeta.look],\n    strings,\n    lang,\n  };\n}\n// === late-series glue ===\nconst plan=$json;return [{json:{...plan,weather:buildWeather($('Set the city and outdoor planning thresholds').first().json,plan.place,plan.forecast)}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5340,
+        500
+      ],
+      "id": "zvid-wx-0007",
+      "name": "Map forecast conditions into the video design"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Assembles the Zvid project: a hero scene (city, date, big current temp,\n// condition, hi/lo + rain + wind chips) and a 3-day outlook scene (cards\n// with icon, weekday, precip, hi/lo). All colours come from the palette\n// chosen by `Weather look`. Design language: news-local-update /\n// dataviz-project-status from the Zvid template library.\n\nconst r2 = (n) => Math.round(n * 100) / 100;\nconst r4 = (n) => Math.round(n * 10000) / 10000;\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst cap = (s, locale) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);\nconst deg = (n) => (Number.isFinite(n) ? `${Math.round(n)}°` : '—');\nconst pct = (n) => (Number.isFinite(n) ? `${Math.round(n)}%` : '—');\n\n// Line-style weather icons drawn in a 24-unit box, scaled into place.\n// Stroke-only (no <text> — SVG text gets no fonts in the renderer).\nconst ICONS = {\n  sun: [\n    \"<circle cx='12' cy='12' r='4.6'/>\",\n    \"<path d='M12 1.6v2.6'/>\", \"<path d='M12 19.8v2.6'/>\",\n    \"<path d='M4.65 4.65l1.85 1.85'/>\", \"<path d='M17.5 17.5l1.85 1.85'/>\",\n    \"<path d='M1.6 12h2.6'/>\", \"<path d='M19.8 12h2.6'/>\",\n    \"<path d='M4.65 19.35l1.85-1.85'/>\", \"<path d='M17.5 6.5l1.85-1.85'/>\",\n  ],\n  cloud: [\n    \"<path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/>\",\n  ],\n  partly: [\n    \"<circle cx='7.4' cy='7.2' r='2.7'/>\",\n    \"<path d='M7.4 2.2v1.6'/>\", \"<path d='M2.4 7.2h1.6'/>\",\n    \"<path d='M3.9 3.7l1.15 1.15'/>\", \"<path d='M10.9 3.7l-1.15 1.15'/>\",\n    \"<path d='M2.9 10.7l1.15-1.15'/>\",\n    \"<g transform='translate(4.9 5.9) scale(0.76)'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z' fill='OCCLUDE'/></g>\",\n  ],\n  fog: [\n    \"<g transform='translate(0 -2.6)'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/></g>\",\n    \"<path d='M5.5 19.6h13'/>\", \"<path d='M8 22.6h8'/>\",\n  ],\n  rain: [\n    \"<path d='M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25'/>\",\n    \"<path d='M8 14.8v4.4'/>\", \"<path d='M12 16.8v4.4'/>\", \"<path d='M16 14.8v4.4'/>\",\n  ],\n  snow: [\n    \"<path d='M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25'/>\",\n    \"<circle cx='8' cy='16' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='8' cy='20' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='12' cy='18' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='12' cy='22' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='16' cy='16' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='16' cy='20' r='1.15' fill='DOT' stroke='none'/>\",\n  ],\n  storm: [\n    \"<path d='M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9'/>\",\n    \"<polyline points='13 11 9 17 15 17 11 23'/>\",\n  ],\n};\n\nfunction iconSvg(kind, cx, cy, size, color, opts) {\n  const o = opts || {};\n  const scale = r4(size / 24);\n  const tx = r2(cx - size / 2);\n  const ty = r2(cy - size / 2);\n  const inner = (ICONS[kind] || ICONS.cloud)\n    .join('')\n    .replace(/OCCLUDE/g, o.occlude || 'none')\n    .replace(/DOT/g, color);\n  return `<g transform='translate(${tx} ${ty}) scale(${scale})' opacity='${o.opacity != null ? o.opacity : 1}' fill='none' stroke='${color}' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'>${inner}</g>`;\n}\n\n// Per-look ambient decoration for the hero, kept in the side bands so it never\n// sits under text.\nfunction heroDecor(look) {\n  const a = look.accent;\n  if (look.key === 'sunny' || look.key === 'storm') {\n    return `<circle cx='540' cy='800' r='310' fill='none' stroke='${a}' stroke-opacity='0.10' stroke-width='1.5'/>` +\n      `<circle cx='540' cy='800' r='400' fill='none' stroke='${a}' stroke-opacity='0.06' stroke-width='1.5'/>` +\n      `<circle cx='540' cy='800' r='490' fill='none' stroke='${a}' stroke-opacity='0.035' stroke-width='1.5'/>`;\n  }\n  if (look.key === 'rain') {\n    const drop = (x, y) => `<path d='M${x} ${y}l-14 42' stroke='${a}' stroke-opacity='0.16' stroke-width='3' stroke-linecap='round'/>`;\n    return drop(140, 560) + drop(215, 750) + drop(120, 980) + drop(195, 1210) +\n      drop(905, 520) + drop(960, 730) + drop(880, 950) + drop(945, 1180);\n  }\n  if (look.key === 'snow') {\n    const dot = (x, y, r) => `<circle cx='${x}' cy='${y}' r='${r}' fill='${a}' fill-opacity='0.18'/>`;\n    return dot(150, 560, 6) + dot(220, 780, 4) + dot(130, 1010, 5) + dot(205, 1230, 4) +\n      dot(910, 540, 5) + dot(950, 760, 6) + dot(880, 990, 4) + dot(935, 1200, 5);\n  }\n  // cloudy / fog: ghost cloud bands\n  return `<rect x='640' y='420' width='330' height='34' rx='17' fill='rgba(255,255,255,0.035)'/>` +\n    `<rect x='110' y='500' width='240' height='30' rx='15' fill='rgba(255,255,255,0.03)'/>` +\n    `<rect x='700' y='1180' width='260' height='30' rx='15' fill='rgba(255,255,255,0.03)'/>`;\n}\n\nfunction buildProject(config, weather) {\n  const W = weather;\n  const look = W.look;\n  const S = W.strings;\n  const heroSec = r2(Number(config.heroSeconds ?? 6.4));\n  const outSec = r2(Number(config.outlookSeconds ?? 5.8));\n  const tSec = r2(Number(config.transitionSeconds ?? 0.5));\n  const font = 'Sora';\n  const subFont = 'Outfit';\n\n  // ---- hero scene backdrop ----\n  const heroSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs>` +\n    `<linearGradient id='wxBg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${look.bg1}'/><stop offset='1' stop-color='${look.bg2}'/></linearGradient>` +\n    `<radialGradient id='wxGlow' cx='0.5' cy='0.5' r='0.5'><stop offset='0' stop-color='${look.glow}' stop-opacity='0.30'/><stop offset='0.55' stop-color='${look.glow}' stop-opacity='0.12'/><stop offset='1' stop-color='${look.glow}' stop-opacity='0'/></radialGradient>` +\n    `</defs>` +\n    `<rect width='1080' height='1920' fill='url(#wxBg)'/>` +\n    `<circle cx='540' cy='800' r='460' fill='url(#wxGlow)'/>` +\n    heroDecor(look) +\n    iconSvg(W.current.icon, 540, 780, 270, look.accent, { occlude: look.bg1 }) +\n    `</svg>`;\n\n  // ---- outlook scene backdrop (cards + per-day icons) ----\n  const cardY = [560, 920, 1280];\n  const cardH = 320;\n  let outlookSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs>` +\n    `<linearGradient id='wxBg2' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${look.bg1}'/><stop offset='1' stop-color='${look.bg2}'/></linearGradient>` +\n    `<radialGradient id='wxGlow2' cx='0.5' cy='0.5' r='0.5'><stop offset='0' stop-color='${look.glow}' stop-opacity='0.22'/><stop offset='1' stop-color='${look.glow}' stop-opacity='0'/></radialGradient>` +\n    `</defs>` +\n    `<rect width='1080' height='1920' fill='url(#wxBg2)'/>` +\n    `<circle cx='540' cy='230' r='420' fill='url(#wxGlow2)'/>`;\n  W.days.forEach((d, i) => {\n    const y = cardY[i];\n    const cy = y + cardH / 2;\n    outlookSvg +=\n      `<rect x='90' y='${y}' width='900' height='${cardH}' rx='40' fill='rgba(255,255,255,0.035)' stroke='${look.panelStroke}' stroke-width='1.5'/>` +\n      `<circle cx='225' cy='${cy}' r='92' fill='rgba(255,255,255,0.045)'/>` +\n      iconSvg(d.icon, 225, cy, 148, d.accent, { occlude: look.bg1 });\n  });\n  outlookSvg += `</svg>`;\n\n  // ---- hero text stack ----\n  const chip = (content) =>\n    `<span style='display:inline-block; background:${look.panel}; border:1.5px solid ${look.panelStroke}; border-radius:999px; padding:16px 28px; margin:0 9px 14px; font-size:28px; font-weight:700; letter-spacing:2px; color:${look.soft}; white-space:nowrap;'>${content}</span>`;\n\n  const heroVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: heroSec, svg: heroSvg },\n    {\n      type: 'TEXT', x: 540, y: 150, anchor: 'top-center', track: 1,\n      enterBegin: 0.1, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.accent },\n      html: `<div style='text-align:center; color:${look.accent}; font-size:30px; font-weight:800; letter-spacing:8px;'>${esc(config.brandName || 'DAILY WEATHER')}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 268, width: 980, anchor: 'top-center', track: 2,\n      enterBegin: 0.2, enterEnd: 0.7, enterAnimation: 'smoothup', exitEnd: heroSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='text-align:center; color:#FFFFFF; font-size:96px; line-height:1.04; font-weight:800; letter-spacing:-2px;'>${esc(W.place.name)}</div>` +\n        `<div style='margin-top:18px; text-align:center; color:${look.muted}; font-size:30px; font-weight:600; letter-spacing:5px;'>${esc(W.dateLine.toUpperCase())}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 940, width: 1000, anchor: 'top-center', track: 3,\n      enterBegin: 0.45, enterEnd: 0.95, enterAnimation: 'smoothup', exitEnd: heroSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='text-align:center; color:#FFFFFF; font-size:290px; line-height:1; font-weight:800; letter-spacing:-8px;'>${deg(W.current.temp)}</div>` +\n        `<div style='margin-top:20px; text-align:center; color:${look.accent}; font-size:46px; font-weight:700; letter-spacing:1px;'>${esc(W.current.label)}</div>` +\n        `<div style='margin-top:18px; text-align:center; color:${look.muted}; font-size:27px; font-weight:600; letter-spacing:3px;'>${esc(S.feelsLike)} ${deg(W.current.feelsLike)}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 1490, width: 1020, anchor: 'top-center', track: 4,\n      enterBegin: 0.75, enterEnd: 1.2, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.soft },\n      html: `<div style='text-align:center;'>` +\n        chip(`${esc(S.high)} ${deg(W.current.hi)} / ${esc(S.low)} ${deg(W.current.lo)}`) +\n        chip(`${esc(S.rain)} ${pct(W.current.precip)}`) +\n        chip(`${esc(S.wind)} ${Math.round(W.current.wind)} ${esc(W.units.wind)}`) +\n        `</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 1795, anchor: 'center-center', track: 5,\n      enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.muted },\n      html: `<div style='color:${look.muted}; font-size:24px; font-weight:700; letter-spacing:4px;'>${esc(config.handle || config.brandName || '')} · ${esc(S.updated)} ${esc(W.updatedTime)}</div>`,\n    },\n  ];\n\n  // ---- outlook text stack ----\n  const outlookVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: outSec, svg: outlookSvg },\n    {\n      type: 'TEXT', x: 100, y: 290, width: 880, anchor: 'top-left', track: 1,\n      enterBegin: 0.12, enterEnd: 0.55, enterAnimation: 'smoothright', exitEnd: outSec,\n      style: { fontFamily: font, color: look.accent },\n      html: `<div style='color:${look.accent}; font-size:32px; font-weight:800; letter-spacing:7px;'>${esc(S.nextDays)}</div>` +\n        `<div style='margin-top:14px; color:${look.muted}; font-size:27px; font-weight:600; letter-spacing:2px;'>${esc(W.place.label)}</div>`,\n    },\n  ];\n  W.days.forEach((d, i) => {\n    outlookVisuals.push({\n      type: 'TEXT', x: 360, y: cardY[i] + cardH / 2, width: 550, anchor: 'center-left', track: 2 + i,\n      enterBegin: r2(0.3 + i * 0.2), enterEnd: r2(0.75 + i * 0.2), enterAnimation: 'smoothleft', exitEnd: outSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='display:flex; align-items:center; justify-content:space-between; width:550px;'>` +\n        `<div>` +\n        `<div style='color:#FFFFFF; font-size:52px; font-weight:700; line-height:1.05;'>${esc(d.dayLabel)}</div>` +\n        `<div style='margin-top:12px; color:${d.accent}; font-size:26px; font-weight:700; letter-spacing:3px;'>${esc(S.rain)} ${pct(d.precip)}</div>` +\n        `</div>` +\n        `<div style='color:#FFFFFF; font-size:60px; font-weight:800; white-space:nowrap;'>${deg(d.hi)}<span style='color:${look.muted}; font-size:42px; font-weight:600;'> / ${deg(d.lo)}</span></div>` +\n        `</div>`,\n    });\n  });\n  outlookVisuals.push({\n    type: 'TEXT', x: 540, y: 1780, anchor: 'center-center', track: 5,\n    enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: outSec,\n    style: { fontFamily: subFont, color: look.muted },\n    html: `<div style='color:${look.muted}; font-size:24px; font-weight:700; letter-spacing:4px;'>${esc(config.brandName || '')} · ${esc(W.dateLine.toUpperCase())}</div>`,\n  });\n\n  const safeName = `daily-weather-${W.place.name}`.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'daily-weather';\n\n  const payload = {\n    name: safeName,\n    resolution: config.resolution || 'instagram-reel',\n    frameRate: Number(config.frameRate ?? 30),\n    backgroundColor: look.bg2,\n    outputFormat: 'mp4',\n    scenes: [\n      {\n        id: 'hero',\n        duration: heroSec,\n        backgroundColor: look.bg2,\n        transition: 'smoothup',\n        transitionId: 'outlook',\n        transitionDuration: tSec,\n        visuals: heroVisuals,\n      },\n      {\n        id: 'outlook',\n        duration: outSec,\n        backgroundColor: look.bg2,\n        visuals: outlookVisuals,\n      },\n    ],\n  };\n\n  if (config.musicUrl) {\n    // NOTE: no track field on audios — the production API rejects audios[].track.\n    payload.audios = [{ src: config.musicUrl, volume: Number(config.musicVolume ?? 0.14) }];\n  }\n\n  const caption =\n    `${W.place.name} ${S.today}: ${W.current.label} · ${deg(W.current.temp)}${W.units.temp.replace('°', '')} · ` +\n    `${S.high} ${deg(W.current.hi)} / ${S.low} ${deg(W.current.lo)} · ${S.rain} ${pct(W.current.precip)}` +\n    ` #${W.place.name.replace(/\\s+/g, '')} #weather`;\n\n  return {\n    payload,\n    meta: {\n      city: W.place.name,\n      country: W.place.country,\n      dateLine: W.dateLine,\n      condition: W.current.label,\n      lookKey: look.key,\n      tempNow: deg(W.current.temp),\n      hiLo: `${deg(W.current.hi)} / ${deg(W.current.lo)}`,\n      precip: pct(W.current.precip),\n      totalSeconds: r2(heroSec + outSec - tSec),\n      sceneCount: payload.scenes.length,\n      caption,\n    },\n  };\n}\n// === late-series glue ===\nconst plan=$json;\nconst cfg=$('Set the city and outdoor planning thresholds').first().json;const built=buildProject({...cfg,musicUrl:plan.musicOk?cfg.musicUrl:''},plan.weather);\nconst text=plan.caption+' '+plan.note;built.payload.scenes.push({id:'planning',duration:7,backgroundColor:'#102032',visuals:[{type:'TEXT',text:plan.window?'TODAY’S PLANNING WINDOW':'NO QUALIFYING WINDOW',x:80,y:330,width:920,anchor:'top-left',style:{fontFamily:'Arial',fontSize:'52px',fontWeight:'700',color:'#FFFFFF'}},{type:'TEXT',text,x:80,y:600,width:920,anchor:'top-left',style:{fontFamily:'Arial',fontSize:'44px',color:'#DDEEFF'}},{type:'TEXT',text:'Forecast: Open-Meteo · '+plan.place.timezone,x:80,y:1500,width:920,anchor:'top-left',style:{fontFamily:'Arial',fontSize:'28px',color:'#AABBCC'}}]});\nreturn [{json:{...plan,...built}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5620,
+        500
+      ],
+      "id": "zvid-wx-0008",
+      "name": "Build the forecast and planning-window video"
+    },
+    {
+      "id": "late-window",
+      "name": "A three-hour window meets the planning thresholds?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4780,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "window-condition",
+              "leftValue": "={{ Boolean($json.window) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-window-found",
+      "name": "Prepare the qualifying outdoor window",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5060,
+        380
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "id": "late-window-none",
+      "name": "Prepare the no-window planning notice",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5060,
+        780
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "id": "late-music",
+      "name": "A background music URL is configured?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3460,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "music-condition",
+              "leftValue": "={{ Boolean($('Set the city and outdoor planning thresholds').first().json.musicUrl) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-music-probe",
+      "name": "Check the optional music file size and availability",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3740,
+        500
+      ],
+      "parameters": {
+        "method": "HEAD",
+        "url": "={{ $('Set the city and outdoor planning thresholds').first().json.musicUrl }}",
+        "options": {
+          "timeout": 8000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "id": "late-music-restore",
+      "name": "Keep the source plan and usable music only",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4020,
+        500
+      ],
+      "parameters": {
+        "jsCode": "const plan=$('Rank remaining three-hour weather windows').first().json,cfg=$('Set the city and outdoor planning thresholds').first().json,probe=$json;const bytes=Number(probe.headers?.['content-length']||0);const musicOk=Number(probe.statusCode)===200&&Number.isFinite(bytes)&&bytes>=0&&bytes<=Number(cfg.maxMusicBytes||5242880);return [{json:{...plan,musicOk,musicProbe:probe}}];"
+      }
+    },
+    {
+      "id": "late-design-context",
+      "name": "Prepare the selected source for design",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4300,
+        500
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "id": "late-validate",
+      "name": "Validate the video and request its credit quote",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        6100,
+        500
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "validate",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify($json.payload) }}"
+      }
+    },
+    {
+      "id": "late-quote",
+      "name": "Enforce the per-video credit ceiling",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6380,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function checkQuote(cfg, build, response) {\n  const body = response.body || response;\n  if (body.valid !== true) throw new Error('Zvid validation failed: '+JSON.stringify(body.errors || body.details || body).slice(0,1200));\n  const credits = Number(body.creditsRequired), ceiling = Number(cfg.maxCreditsPerVideo);\n  if (!Number.isFinite(credits) || credits < 0) throw new Error('Zvid did not return a valid credit quote.');\n  if (!Number.isFinite(ceiling) || ceiling <= 0) throw new Error('Set maxCreditsPerVideo to a positive number.');\n  if (credits > ceiling) throw new Error('Video needs '+credits+' credits; maxCreditsPerVideo is '+ceiling+'. No paid render submitted for this item.');\n  return {...build,creditsRequired:credits,warnings:body.warnings || []};\n}\nconst d=checkQuote($('Set the city and outdoor planning thresholds').first().json,$('Build the forecast and planning-window video').first().json,$json);const {payload,forecast,weather,narrationData,musicProbe,...snapshot}=d;d.checkpoint={...snapshot,snapshotVersion:1};if(JSON.stringify(d.checkpoint).length>45000)throw Error('Recovery snapshot exceeds the sheet cell limit. No render submitted.');return [{json:d}];"
+      }
+    },
+    {
+      "id": "late-preview",
+      "name": "Return a validation-only preview?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        6660,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "preview-condition",
+              "leftValue": "={{ $('Set the city and outdoor planning thresholds').first().json.dryRun === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-preview-report",
+      "name": "Return the source plan design quote and handoff",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6660,
+        850
+      ],
+      "parameters": {
+        "jsCode": "return [{json:{...$json,status:'preview',dryRun:true,videoUrl:null,note:'No log writes, editor draft, render or delivery.'}}];"
+      }
+    },
+    {
+      "id": "late-claim",
+      "name": "Reserve this render key before spending credits",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        7140,
+        500
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Weather Briefings",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RenderKey": "={{ $('Enforce the per-video credit ceiling').first().json.renderKey }}",
+            "Status": "submitting",
+            "JobId": "",
+            "VideoUrl": "",
+            "CreditsQuoted": "={{ $('Enforce the per-video credit ceiling').first().json.creditsRequired }}",
+            "PlanJson": "={{ JSON.stringify($('Enforce the per-video credit ceiling').first().json.checkpoint) }}",
+            "CompletedAt": ""
+          },
+          "matchingColumns": [
+            "RenderKey"
+          ],
+          "schema": [
+            {
+              "id": "RenderKey",
+              "displayName": "RenderKey",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "JobId",
+              "displayName": "JobId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "VideoUrl",
+              "displayName": "VideoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CreditsQuoted",
+              "displayName": "CreditsQuoted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PlanJson",
+              "displayName": "PlanJson",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CompletedAt",
+              "displayName": "CompletedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "late-attempt",
+      "name": "Prepare a bounded render submission attempt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7420,
+        500
+      ],
+      "parameters": {
+        "jsCode": "const prior=$json;const checkpoint=$('Enforce the per-video credit ceiling').first().json.checkpoint;return [{json:{...checkpoint,checkpoint,submitStartedAt:prior.submitStartedAt||Date.now(),submitAttempts:Number(prior.submitAttempts||0)+1}}];"
+      }
+    },
+    {
+      "id": "late-submit",
+      "name": "Submit this approved video to Zvid",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        7700,
+        500
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "create",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify($('Enforce the per-video credit ceiling').first().json.payload) }}",
+        "renderType": "video",
+        "waitForCompletion": false
+      },
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "late-rejection",
+      "name": "Distinguish a capacity rejection from an uncertain submission",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7700,
+        850
+      ],
+      "parameters": {
+        "jsCode": "function classifySubmissionError(context, error, now, cfg) {\n\tconst status = Number(\n\t\terror.httpCode ||\n\t\t\terror.statusCode ||\n\t\t\terror.status ||\n\t\t\terror.response?.status ||\n\t\t\terror.cause?.statusCode ||\n\t\t\terror.cause?.response?.status,\n\t);\n\tconst rejected =\n\t\tstatus === 429 ||\n\t\t(!status &&\n\t\t\terror.name === 'NodeApiError' &&\n\t\t\terror.message === 'The service is receiving too many requests from you');\n\tlet body =\n\t\terror.response?.data ||\n\t\terror.context?.data ||\n\t\terror.cause?.response?.data ||\n\t\terror.cause?.error ||\n\t\t{};\n\tif (typeof body === 'string') {\n\t\ttry {\n\t\t\tbody = JSON.parse(body);\n\t\t} catch {\n\t\t\tbody = {};\n\t\t}\n\t}\n\tconst headers = error.response?.headers || error.cause?.response?.headers || {};\n\tconst raw = headers['retry-after'] ?? body.retryAfter;\n\tconst retrySeconds = Math.max(30, Number(raw) || Math.ceil((Date.parse(raw) - now) / 1000) || 30);\n\tconst deadline = context.submitStartedAt + Number(cfg.timeoutMinutes || 20) * 60000;\n\tconst retry = rejected && context.submitAttempts < 3 && now + retrySeconds * 1000 < deadline;\n\tconst reason = rejected\n\t\t? 'Zvid render capacity is full (HTTP 429); no job was accepted. ' +\n\t\t\t(retry\n\t\t\t\t? 'Retrying after ' + retrySeconds + ' seconds.'\n\t\t\t\t: 'Retry this workflow later; the rejected key is safe to reuse.')\n\t\t: 'Render submission outcome is uncertain. Inspect https://app.zvid.io before retrying: ' +\n\t\t\tString(error.description || error.message || error);\n\treturn {\n\t\t...context,\n\t\tstatus: rejected ? 'rate_limited' : 'needs_review',\n\t\treason,\n\t\tretry,\n\t\tretrySeconds,\n\t\tvideoUrl: null,\n\t\tcheckpoint: {\n\t\t\t...context.checkpoint,\n\t\t\tsubmission: {\n\t\t\t\tstatus: rejected ? 'rate_limited' : 'needs_review',\n\t\t\t\treason,\n\t\t\t\tattemptedAt: new Date(now).toISOString(),\n\t\t\t},\n\t\t},\n\t};\n}\nconst item=$input.first();return [{json:classifySubmissionError($('Prepare a bounded render submission attempt').first().json,item.error||item.json.error||{},Date.now(),$('Set the city and outdoor planning thresholds').first().json)}];"
+      }
+    },
+    {
+      "id": "late-save-rejection",
+      "name": "Record the rejected or uncertain submission",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        7980,
+        850
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Weather Briefings",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RenderKey": "={{ $('Distinguish a capacity rejection from an uncertain submission').first().json.renderKey }}",
+            "Status": "={{ $('Distinguish a capacity rejection from an uncertain submission').first().json.status }}",
+            "JobId": "",
+            "VideoUrl": "",
+            "PlanJson": "={{ JSON.stringify($('Distinguish a capacity rejection from an uncertain submission').first().json.checkpoint) }}"
+          },
+          "matchingColumns": [
+            "RenderKey"
+          ],
+          "schema": [
+            {
+              "id": "RenderKey",
+              "displayName": "RenderKey",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "JobId",
+              "displayName": "JobId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "VideoUrl",
+              "displayName": "VideoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PlanJson",
+              "displayName": "PlanJson",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "late-rejection-context",
+      "name": "Restore the submission rejection and retry timing",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8260,
+        850
+      ],
+      "parameters": {
+        "jsCode": "return [{json:$('Distinguish a capacity rejection from an uncertain submission').first().json}];"
+      }
+    },
+    {
+      "id": "late-retry-capacity",
+      "name": "Retry this explicit capacity rejection?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        8540,
+        850
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "retry-capacity-condition",
+              "leftValue": "={{ $json.retry === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-capacity-wait",
+      "name": "Wait before retrying available render capacity",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        7420,
+        1200
+      ],
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": "={{ $json.retrySeconds }}",
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "late-submission-stop",
+      "name": "Report why the render submission stopped",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8820,
+        850
+      ],
+      "parameters": {
+        "jsCode": "throw Error($json.reason);"
+      }
+    },
+    {
+      "id": "late-accepted",
+      "name": "Capture the accepted render job ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7980,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function trackJob(context, response, now) {\n  const jobId=String(response.jobId || response.id || context.jobId || '').trim();\n  if (!jobId) throw new Error('No render job ID returned. The sheet stays submitting; inspect https://app.zvid.io before resetting it.');\n  return {...context,jobId,pollStartedAt:now};\n}\nreturn [{json:trackJob($('Enforce the per-video credit ceiling').first().json.checkpoint,$json,Date.now())}];"
+      }
+    },
+    {
+      "id": "late-save-job",
+      "name": "Persist the accepted job for recovery",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8260,
+        500
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Weather Briefings",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RenderKey": "={{ $('Capture the accepted render job ID').first().json.renderKey }}",
+            "Status": "rendering",
+            "JobId": "={{ $('Capture the accepted render job ID').first().json.jobId }}"
+          },
+          "matchingColumns": [
+            "RenderKey"
+          ],
+          "schema": [
+            {
+              "id": "RenderKey",
+              "displayName": "RenderKey",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "JobId",
+              "displayName": "JobId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "late-restore-new",
+      "name": "Restore the accepted render context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8540,
+        500
+      ],
+      "parameters": {
+        "jsCode": "return [{json:$('Capture the accepted render job ID').first().json}];"
+      }
+    },
+    {
+      "id": "late-track",
+      "name": "Track the saved job and its source context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9300,
+        220
+      ],
+      "parameters": {
+        "jsCode": "function trackJob(context, response, now) {\n  const jobId=String(response.jobId || response.id || context.jobId || '').trim();\n  if (!jobId) throw new Error('No render job ID returned. The sheet stays submitting; inspect https://app.zvid.io before resetting it.');\n  return {...context,jobId,pollStartedAt:now};\n}\nreturn [{json:trackJob($json,{},Date.now())}];"
+      }
+    },
+    {
+      "id": "late-status",
+      "name": "Wait for this accepted Zvid render",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        9580,
+        500
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "get",
+        "jobId": "={{ $json.jobId }}",
+        "waitForCompletion": true,
+        "waitOptions": {
+          "pollInterval": "={{ Number($('Set the city and outdoor planning thresholds').first().json.pollSeconds) || 10 }}",
+          "maxWaitTime": "={{ (Number($('Set the city and outdoor planning thresholds').first().json.timeoutMinutes) || 20)*60 }}"
+        }
+      },
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "late-classify",
+      "name": "Classify completion failure or uncertain status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9860,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function classifyJob(context, response, now, timeoutMinutes) {\n  const result=response.result;\n  const url=typeof result==='string'?result:result?.url || result?.videoUrl || '';\n  const state=String(response.state || response.status || '').toLowerCase();\n  if (state==='completed') {\n    if (!/^https:\\/\\/\\S+$/i.test(url)) return {...context,status:'needs_review',reason:'Completed job has no HTTPS media URL. Inspect Zvid; do not resubmit.',videoUrl:null};\n    return {...context,status:'completed',videoUrl:url,renderedAt:new Date(now).toISOString()};\n  }\n  if (['failed','cancelled','canceled'].includes(state)) return {...context,status:'failed',reason:String(response.failedReason || response.error || state),videoUrl:null};\n  if (now-context.pollStartedAt >= Number(timeoutMinutes || 20)*60000) return {...context,status:'timed_out',reason:'Polling deadline reached. Keep the job ID and check Zvid before resuming.',videoUrl:null};\n  if (!['waiting','queued','active','processing','rendering','pending'].includes(state)) return {...context,status:'needs_review',reason:'Unrecognized render state: '+state,videoUrl:null};\n  return {...context,status:'rendering',videoUrl:null};\n}\nconst context=$('Track the saved job and its source context').first().json;let response=$json;if(response.error){const error=typeof response.error==='string'?response.error:JSON.stringify(response.error);response={state:/did not finish within|timed? ?out/i.test(error)?'timed_out':/failed/i.test(error)?'failed':'needs_review',failedReason:error};}const result=classifyJob(context,response,Date.now(),$('Set the city and outdoor planning thresholds').first().json.timeoutMinutes);if(response.state==='timed_out')result.status='timed_out';const {payload,outcomeCheckpoint,...snapshot}=result;result.outcomeCheckpoint={...snapshot,renderOutcome:{status:result.status,reason:result.reason||null}};return [{json:result}];"
+      }
+    },
+    {
+      "id": "late-finish",
+      "name": "Record the render outcome and completed URL",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        10140,
+        500
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Weather Briefings",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RenderKey": "={{ $('Classify completion failure or uncertain status').first().json.renderKey }}",
+            "Status": "={{ $('Classify completion failure or uncertain status').first().json.status }}",
+            "JobId": "={{ $('Classify completion failure or uncertain status').first().json.jobId }}",
+            "VideoUrl": "={{ $('Classify completion failure or uncertain status').first().json.videoUrl || '' }}",
+            "CompletedAt": "={{ $('Classify completion failure or uncertain status').first().json.renderedAt || '' }}",
+            "PlanJson": "={{ JSON.stringify($('Classify completion failure or uncertain status').first().json.outcomeCheckpoint) }}"
+          },
+          "matchingColumns": [
+            "RenderKey"
+          ],
+          "schema": [
+            {
+              "id": "RenderKey",
+              "displayName": "RenderKey",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "JobId",
+              "displayName": "JobId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "VideoUrl",
+              "displayName": "VideoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CompletedAt",
+              "displayName": "CompletedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PlanJson",
+              "displayName": "PlanJson",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "late-report",
+      "name": "Prepare the completed result and review pack",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        10620,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function completedResult(result) {\n\tif (result.status !== 'completed' || !/^https:\\/\\/\\S+$/i.test(String(result.videoUrl || '')))\n\t\tthrow Error(\n\t\t\t'Video is not ready (' +\n\t\t\t\tresult.status +\n\t\t\t\t'): ' +\n\t\t\t\t(result.reason || 'Inspect the saved job in Zvid.') +\n\t\t\t\t' Job: ' +\n\t\t\t\t(result.jobId || 'unknown') +\n\t\t\t\t'. The tracking row was saved; no replacement render was submitted.',\n\t\t);\n\treturn { ...result, nextStep: 'Review the video and source handoff before sharing.' };\n}\nreturn [{json:completedResult($('Classify completion failure or uncertain status').first().json)}];"
+      }
+    },
+    {
+      "id": "late-handoff",
+      "name": "Download the source-specific review pack",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        10900,
+        850
+      ],
+      "parameters": {
+        "jsCode": "function csvFile(rows, fileName) {\n\tconst columns = Object.keys(rows[0] || {}),\n\t\tcell = (v) => {\n\t\t\tlet s = String(v ?? '');\n\t\t\tif (/^[=+@\\-\\t\\r]/.test(s)) s = \"'\" + s;\n\t\t\treturn '\"' + s.replace(/\"/g, '\"\"') + '\"';\n\t\t};\n\tconst csv = [\n\t\tcolumns.map(cell).join(','),\n\t\t...rows.map((r) => columns.map((k) => cell(r[k])).join(',')),\n\t].join('\\r\\n');\n\treturn { data: Buffer.from(csv, 'utf8').toString('base64'), mimeType: 'text/csv', fileName };\n}\nconst d=$json;return [{json:{renderKey:d.renderKey,status:d.status,videoUrl:d.videoUrl||null,rowCount:(d.handoff||[]).length},binary:{data:csvFile(d.handoff||[],'daily-weather-video-review.csv')}}];"
+      }
+    },
+    {
+      "id": "zvid-watch-ready",
+      "name": "Completed video is ready to watch?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        10900,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "watch-ready-condition",
+              "leftValue": "={{ $json.status === 'completed' && !$json.dryRun && /^https:\\/\\//i.test(String($json.videoUrl || '')) }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -462,7 +1208,7 @@
         0
       ],
       "parameters": {
-        "content": "## Create a local weather video\n\n### How it works\nFind your city, retrieve its forecast from Open-Meteo, and render a vertical bulletin with a weather-dependent design. The finished MP4 can be reviewed in n8n before you share it.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node.\n3. Set cityName, brandName, handle and locale in Config. Check that the geocoded city is the intended location.\n4. The weather requests need no credential in this template. Zvid rendering still needs its API credential; check the workflow timezone before scheduling.\n5. **dryRun=false** renders and spends Zvid credits. Set it to **true** for an editor draft and quote.\n6. Test manually and review the output before activating automatic runs.\n\n### Customization\nAdjust branding, media and timing in the configuration node. [Detailed setup guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/daily-weather-video.md).",
+        "content": "## Create a local forecast with a ranked daytime planning window\n\n### How it works\nResolve one city, validate fresh current and hourly data, and rank remaining three-hour daytime windows by rain probability and wind. Branch to a qualifying window or a no-window notice, then add that planning card to the local forecast and three-day outlook. A separate recovery log skips completed keys and resumes accepted jobs. Review the video and CSV before sharing.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`; select it on all Zvid nodes.\n3. Connect Google Sheets and select the **Weather Briefings** log tab. Create RenderKey, Status, JobId, CreditsQuoted, PlanJson, VideoUrl and CompletedAt headers; optional delivery also needs DeliveryStatus.\n4. Configure cityName, countryCode and admin1 for an unambiguous location; rain and wind thresholds. See the [source contract and migration guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/daily-weather-video.md).\n5. **dryRun=false spends credits.** true returns JSON and a quote only. Set maxCreditsPerVideo, then test manually before enabling the schedule.\n6. Avoid overlapping executions. Inspect submitting, failed or uncertain jobs before resetting any log row.\n\n### Customization\nAdjust branding and the domain rules in **Set the city and outdoor planning thresholds**. Watch downloads time out after 30 seconds; the saved URL remains available.",
         "color": 1,
         "width": 720,
         "height": 1160
@@ -470,7 +1216,7 @@
     },
     {
       "id": "publication-section-daily-weather-video-configure",
-      "name": "1. Choose settings and an entry point",
+      "name": "1. Choose source rules and schedule",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -478,324 +1224,627 @@
         0
       ],
       "parameters": {
-        "content": "## 1. Choose settings and an entry point\n\nComplete the overview setup first. Use the manual trigger for a test, then check the trigger settings and workflow timezone before activation.",
+        "content": "## 1. Choose source rules and schedule\n\nComplete the overview setup and source contract. Run one execution at a time. Use the manual trigger before enabling the schedule.",
         "color": 7,
-        "width": 880,
-        "height": 520
+        "width": 660,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-daily-weather-video-city",
-      "name": "2. Resolve the intended city",
+      "id": "publication-section-daily-weather-video-source",
+      "name": "2. Check the real source and plan the output",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1000,
+        760,
         0
       ],
       "parameters": {
-        "content": "## 2. Resolve the intended city\n\nCheck the geocoding result before using the forecast. A city name can match more than one location.",
+        "content": "## 2. Check the real source and plan the output\n\nRequire one city and fresh forecast data. Evaluate future daytime hours and rank contiguous three-hour windows by rain probability and wind.",
         "color": 7,
-        "width": 620,
-        "height": 520
+        "width": 1780,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-daily-weather-video-forecast",
-      "name": "3. Build the forecast design",
+      "id": "publication-section-daily-weather-video-routing",
+      "name": "3. Recover accepted work before a new render",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1740,
+        2640,
         0
       ],
       "parameters": {
-        "content": "## 3. Build the forecast design\n\nFetch the forecast and select the visual treatment from its weather code. Review the forecast date and units before sharing.",
+        "content": "## 3. Recover accepted work before a new render\n\nSaved jobs follow the upper route using their original review context. New work continues through optional media and the domain design.",
         "color": 7,
-        "width": 620,
-        "height": 520
+        "width": 660,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-daily-weather-video-validate",
-      "name": "4. Build and validate the design",
+      "id": "publication-section-daily-weather-video-music",
+      "name": "4. Check optional background music",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2480,
+        3400,
         0
       ],
       "parameters": {
-        "content": "## 4. Build and validate the design\n\nPrepare the media and video design, then validate the payload and credit quote. Resolve validation errors before submitting a render.",
+        "content": "## 4. Check optional background music\n\nA failed or oversized music file is skipped. Empty musicUrl continues without an external request. This check preserves the selected source plan.",
         "color": 7,
-        "width": 880,
-        "height": 520
+        "width": 1220,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-daily-weather-video-preview",
-      "name": "5. Choose an optional editor preview",
+      "id": "publication-section-daily-weather-video-design",
+      "name": "5. Compose the forecast and planning advice",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        0,
-        680
+        4720,
+        0
       ],
       "parameters": {
-        "content": "## 5. Choose an optional editor preview\n\ndryRun=true returns an editor draft and credit quote. The default false branch renders and spends Zvid credits; upstream AI services may charge separately.",
+        "content": "## 5. Compose the forecast and planning advice\n\nChoose a qualifying daytime planning window or explain why none meets the thresholds. Add the checked current conditions and forecast to the video.",
         "color": 7,
-        "width": 880,
-        "height": 520
+        "width": 1220,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-daily-weather-video-render",
-      "name": "6. Render and wait for completion",
+      "id": "publication-section-daily-weather-video-quote",
+      "name": "6. Build and validate the design and credit ceiling",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1000,
-        680
+        6040,
+        0
       ],
       "parameters": {
-        "content": "## 6. Render and wait for completion\n\nSubmit the render, then check its status until completion or timeout. Keep each result paired with its source item. Check Zvid before retrying a timed-out job.",
+        "content": "## 6. Build and validate the design and credit ceiling\n\ndryRun=true returns the source plan, design JSON and quote. It performs no log writes, editor draft creation, render, or delivery.",
         "color": 7,
-        "width": 1140,
-        "height": 760
+        "width": 940,
+        "height": 1160
+      }
+    },
+    {
+      "id": "publication-section-daily-weather-video-reserve",
+      "name": "7. Reserve the key and preserve the accepted job",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        7080,
+        0
+      ],
+      "parameters": {
+        "content": "## 7. Reserve the key and preserve the accepted job\n\nSave the key and accepted job ID. Retry explicit capacity rejections up to three attempts, respecting the server delay and a 30-second minimum. Uncertain submissions require inspection. Sheets is not an atomic lock.",
+        "color": 7,
+        "width": 2060,
+        "height": 1490
+      }
+    },
+    {
+      "id": "publication-section-daily-weather-video-finish",
+      "name": "8. Wait for the accepted render and record its result",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        9240,
+        0
+      ],
+      "parameters": {
+        "content": "## 8. Wait for the accepted render and record its result\n\nPoll the saved job within the deadline. Keep failed, timed-out and uncertain job IDs for inspection. Completed keys are skipped on later runs.",
+        "color": 7,
+        "width": 1220,
+        "height": 1160
       }
     },
     {
       "id": "zvid-watch-instructions",
-      "name": "7. Review the finished media",
+      "name": "9. Review the video and source-specific handoff",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2260,
-        680
+        10560,
+        0
       ],
       "parameters": {
-        "content": "## 7. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.",
+        "content": "## 9. Review the video and source-specific handoff\n\nCompleted renders reach Watch video → Binary → data → View. A failed render stops with its actual reason after saving the tracking row. Download the review CSV and check source facts before sharing.",
         "color": 7,
-        "width": 880,
-        "height": 520
+        "width": 940,
+        "height": 1160
       }
     }
   ],
   "pinData": {},
   "connections": {
-    "Every day at 6:30am": {
+    "Set the city and outdoor planning thresholds": {
       "main": [
         [
           {
-            "node": "Config",
+            "node": "Find the configured city candidates",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Test manually": {
+    "Find the configured city candidates": {
       "main": [
         [
           {
-            "node": "Config",
+            "node": "Require one matching city and region",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Config": {
+    "Require one matching city and region": {
       "main": [
         [
           {
-            "node": "Find city",
+            "node": "Fetch local current daily and hourly weather",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Find city": {
+    "A three-hour window meets the planning thresholds?": {
       "main": [
         [
           {
-            "node": "Check city",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check city": {
-      "main": [
-        [
-          {
-            "node": "Get forecast",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get forecast": {
-      "main": [
-        [
-          {
-            "node": "Weather look",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Weather look": {
-      "main": [
-        [
-          {
-            "node": "Build project JSON",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Build project JSON": {
-      "main": [
-        [
-          {
-            "node": "Validate project (free)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validate project (free)": {
-      "main": [
-        [
-          {
-            "node": "Check validation",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check validation": {
-      "main": [
-        [
-          {
-            "node": "Dry run?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Dry run?": {
-      "main": [
-        [
-          {
-            "node": "Save draft to editor",
+            "node": "Prepare the qualifying outdoor window",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Submit render",
+            "node": "Prepare the no-window planning notice",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Save draft to editor": {
+    "Prepare the qualifying outdoor window": {
       "main": [
         [
           {
-            "node": "Dry run summary",
+            "node": "Map forecast conditions into the video design",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Submit render": {
+    "Prepare the no-window planning notice": {
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "Map forecast conditions into the video design",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Wait": {
+    "Map forecast conditions into the video design": {
       "main": [
         [
           {
-            "node": "Get render status",
+            "node": "Build the forecast and planning-window video",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get render status": {
+    "A background music URL is configured?": {
       "main": [
         [
           {
-            "node": "Render finished?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Render finished?": {
-      "main": [
-        [
-          {
-            "node": "Run summary",
+            "node": "Check the optional music file size and availability",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Still rendering?",
+            "node": "Prepare the selected source for design",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Still rendering?": {
+    "Check the optional music file size and availability": {
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "Keep the source plan and usable music only",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Run summary": {
+    "Keep the source plan and usable music only": {
       "main": [
         [
           {
-            "node": "Video ready to watch?",
+            "node": "Prepare the selected source for design",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Video ready to watch?": {
+    "Prepare the selected source for design": {
+      "main": [
+        [
+          {
+            "node": "A three-hour window meets the planning thresholds?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test the daily weather video workflow": {
+      "main": [
+        [
+          {
+            "node": "Set the city and outdoor planning thresholds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start the scheduled daily weather video": {
+      "main": [
+        [
+          {
+            "node": "Set the city and outdoor planning thresholds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch local current daily and hourly weather": {
+      "main": [
+        [
+          {
+            "node": "Read Weather Briefings recovery log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Weather Briefings recovery log": {
+      "main": [
+        [
+          {
+            "node": "Rank remaining three-hour weather windows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rank remaining three-hour weather windows": {
+      "main": [
+        [
+          {
+            "node": "Eligible source content or saved render exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eligible source content or saved render exists?": {
+      "main": [
+        [
+          {
+            "node": "Resume the accepted render job?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Explain skipped content or recovery needs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resume the accepted render job?": {
+      "main": [
+        [
+          {
+            "node": "Restore the saved result and handoff context",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "A background music URL is configured?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restore the saved result and handoff context": {
+      "main": [
+        [
+          {
+            "node": "Track the saved job and its source context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build the forecast and planning-window video": {
+      "main": [
+        [
+          {
+            "node": "Validate the video and request its credit quote",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate the video and request its credit quote": {
+      "main": [
+        [
+          {
+            "node": "Enforce the per-video credit ceiling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enforce the per-video credit ceiling": {
+      "main": [
+        [
+          {
+            "node": "Return a validation-only preview?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return a validation-only preview?": {
+      "main": [
+        [
+          {
+            "node": "Return the source plan design quote and handoff",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reserve this render key before spending credits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reserve this render key before spending credits": {
+      "main": [
+        [
+          {
+            "node": "Prepare a bounded render submission attempt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare a bounded render submission attempt": {
+      "main": [
+        [
+          {
+            "node": "Submit this approved video to Zvid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit this approved video to Zvid": {
+      "main": [
+        [
+          {
+            "node": "Capture the accepted render job ID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Distinguish a capacity rejection from an uncertain submission",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Distinguish a capacity rejection from an uncertain submission": {
+      "main": [
+        [
+          {
+            "node": "Record the rejected or uncertain submission",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record the rejected or uncertain submission": {
+      "main": [
+        [
+          {
+            "node": "Restore the submission rejection and retry timing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restore the submission rejection and retry timing": {
+      "main": [
+        [
+          {
+            "node": "Retry this explicit capacity rejection?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry this explicit capacity rejection?": {
+      "main": [
+        [
+          {
+            "node": "Wait before retrying available render capacity",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Report why the render submission stopped",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait before retrying available render capacity": {
+      "main": [
+        [
+          {
+            "node": "Prepare a bounded render submission attempt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capture the accepted render job ID": {
+      "main": [
+        [
+          {
+            "node": "Persist the accepted job for recovery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist the accepted job for recovery": {
+      "main": [
+        [
+          {
+            "node": "Restore the accepted render context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restore the accepted render context": {
+      "main": [
+        [
+          {
+            "node": "Track the saved job and its source context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track the saved job and its source context": {
+      "main": [
+        [
+          {
+            "node": "Wait for this accepted Zvid render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for this accepted Zvid render": {
+      "main": [
+        [
+          {
+            "node": "Classify completion failure or uncertain status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify completion failure or uncertain status": {
+      "main": [
+        [
+          {
+            "node": "Record the render outcome and completed URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record the render outcome and completed URL": {
+      "main": [
+        [
+          {
+            "node": "Prepare the completed result and review pack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare the completed result and review pack": {
+      "main": [
+        [
+          {
+            "node": "Completed video is ready to watch?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download the source-specific review pack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completed video is ready to watch?": {
       "main": [
         [
           {
@@ -814,7 +1863,8 @@
   },
   "versionId": "f3a8b1c6-9d24-47e5-b06a-8c1d5f2e7b93",
   "meta": {
-    "templateCredsSetupCompleted": false
+    "templateCredsSetupCompleted": false,
+    "lateSeriesReview": 1
   },
   "id": "ZvidDailyWeather",
   "tags": []

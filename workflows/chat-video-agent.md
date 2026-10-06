@@ -1,5 +1,14 @@
 # Telegram chat to a finished video, with an AI agent
 
+The 2026-10-04 review retained this template's conversational design: it is
+distinct from the scheduled source-to-video workflows. The existing finished
+media guard and downloader version are preserved; Watch video now has a
+30-second request timeout, at most three attempts, and keeps the result URL
+available after a download failure. Regression checks cover unauthorized and
+empty requests, separate chat memory keys, provider failures, off-host/example
+media URLs, HTML escaping and long replies. No Telegram messages or paid agent
+renders were sent during this review.
+
 ## Zvid integration
 
 AI-agent exception: this workflow uses n8n’s built-in **MCP Client Tool** against **https://mcp.zvid.io/mcp**. Zvid’s conversational creation and approval tools are exposed through MCP, not equivalent operations in the published Zvid node. Keep the existing MCP authentication and approval settings.

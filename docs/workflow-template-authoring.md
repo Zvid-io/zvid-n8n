@@ -91,6 +91,14 @@ pinning CDN IPs or disabling TLS/SSRF protection, then verify repeated downloads
 and a manual editor run with inline playback. Reuse completed media to avoid
 unnecessary paid renders during preview testing.
 
+Distinguish a preview download problem from a render failure. Preserve the
+failed job and actual reason in the tracking log, then surface an execution
+error before Watch; never bypass the completed-media gate. Explicit HTTP 429
+submission rejections must not remain ambiguously marked submitting. Persist
+their rejected state and retry within a bounded loop that honors Retry-After,
+while never retrying uncertain submissions. Test this with real n8n error-output
+serialization, not only plain JavaScript fixtures.
+
 The nearby section note should explain **Watch video → Binary → data → View**.
 For batches, explain selecting the output item; for mixed output, explain that
 images open as images. Document any existing optional publishing branch without
@@ -122,6 +130,17 @@ intentional reruns, clear only the selected completion markers (`Status` and
 Daily dated templates should explain their fallback option and show the selected
 row's original date when reusing past content. Do not change sheet dates to make
 old sample data appear current.
+
+When an upgrade adds source fields, migrate the connected example inputs as
+part of the task and test those actual inputs through planning and free Zvid
+validation. A successful no-work execution does not prove the render path works.
+Keep completion history. Quiz keys may be derived from normalized question text
+for old sheets, never from movable row numbers; approve content only after checking
+its answer and source. Missing live KPI configuration must give a setup error.
+An explicitly selected sample mode must label the video and review outputs,
+separate its recovery keys from real reports, and block downstream publication.
+Sports fallback must be explicit, age-bounded, retain actual match dates and
+respect user-specified periods; never relabel old results as the current week.
 
 Verify the downloaded source-media dimensions as well as the project canvas.
 A width-only photo resize may exceed the input limit on its height. For known
@@ -163,6 +182,36 @@ maintenance recognizes the layout and does not add duplicate setup notes.
 ## Verify before delivery
 
 ### Review lessons: structure and distinct use cases
+
+For days 25–29, `build-late-series.js` embeds independently tested domain
+functions from `late-series-runtime.js`. Rebuild with that generator and
+`late-series-guides.js`; `late-series-layouts.js` integrates the canvas format
+with the standard organizer. These are revisions of the existing canonical
+templates, not new near-duplicate submissions.
+
+The distinct outcomes are a balanced three-round quiz and answer/source pack,
+a verified KPI exception briefing and owner action register, a weather video
+with ranked future planning windows, a verified final-score recap with optional
+club form, and a consent-aware annual celebration queue. Domain facts must
+affect selection and the actual output; extra guard nodes alone are insufficient.
+
+Never substitute invented demo metrics or historical demo sports results after
+a production source failure. Use explicit fixture data in isolated tests. Derive
+comparisons and scoreline text deterministically, distinguish missing baselines,
+and describe bounded API coverage accurately. Do not infer editorial approval,
+contact consent or permission to reveal age while migrating source sheets.
+
+Record render completion separately from delivery acknowledgement. A successful
+video must not imply that an email was sent. Keep optional delivery off by
+default, persist its pending state, and do not retry uncertain sends automatically.
+Keep the original review context with accepted jobs, recover before new paid
+work, and keep large raw forecasts and render payloads out of Sheets log cells.
+
+Day 30 already uses a distinct conversational draft/quote/render flow. Preserve
+its chat allow-list, memory isolation, server credit ceiling, guarded finished
+media paths and provider-error response. State clearly that approval is a prompt
+instruction, not a deterministic approval lock. Test existing controls before
+adding complexity merely to increase the node count.
 
 Do not treat additional validation, polling or sheet updates as sufficient
 originality. The hiring template now combines recruiter-requested role spotlight

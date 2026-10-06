@@ -1,6 +1,32 @@
 {
-  "name": "Weekly sports recap videos from TheSportsDB (Zvid)",
+  "name": "Build verified league or club recaps with a final-score fact sheet",
   "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"sportsDbKey\": \"123\",\n  \"leagueId\": \"4328\",\n  \"maxMatches\": 5,\n  \"brandName\": \"FULL TIME\",\n  \"handle\": \"@fulltime.weekly\",\n  \"ctaText\": \"Follow for every matchday\",\n  \"brandAccent\": \"#C6FF3A\",\n  \"brandBackground\": \"#08110B\",\n  \"font\": \"Archivo\",\n  \"llmModel\": \"openai/gpt-4.1-mini\",\n  \"sceneSeconds\": 3.4,\n  \"transitionSeconds\": 0.45,\n  \"coverVideoOverride\": \"\",\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.16,\n  \"maxMusicBytes\": 5242880,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"timezone\": \"UTC\",\n  \"periodStart\": \"\",\n  \"periodEnd\": \"\",\n  \"focusTeam\": \"\",\n  \"recapRevision\": 1,\n  \"maxCreditsPerVideo\": 35,\n  \"allowLatestAvailableResults\": false,\n  \"maxFallbackAgeDays\": 30\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        340,
+        500
+      ],
+      "id": "zvid-sr-0003",
+      "name": "Set the league club and completed recap period"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        60,
+        660
+      ],
+      "id": "zvid-sr-0002",
+      "name": "Test the sports recap video workflow"
+    },
     {
       "parameters": {
         "rule": {
@@ -18,41 +44,38 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        50,
-        240
+        60,
+        260
       ],
       "id": "zvid-sr-0001",
-      "name": "Every Monday 8am"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        310,
-        240
-      ],
-      "id": "zvid-sr-0002",
-      "name": "Test manually"
+      "name": "Start the scheduled sports recap video"
     },
     {
       "parameters": {
-        "mode": "raw",
-        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"sportsDbKey\": \"123\",\n  \"leagueId\": \"4328\",\n  \"maxMatches\": 5,\n  \"brandName\": \"FULL TIME\",\n  \"handle\": \"@fulltime.weekly\",\n  \"ctaText\": \"Follow for every matchday\",\n  \"brandAccent\": \"#C6FF3A\",\n  \"brandBackground\": \"#08110B\",\n  \"font\": \"Archivo\",\n  \"llmModel\": \"openai/gpt-4.1-mini\",\n  \"sceneSeconds\": 3.4,\n  \"transitionSeconds\": 0.45,\n  \"coverVideoOverride\": \"\",\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2026/02/24/audio_3f375fdf97.mp3\",\n  \"musicVolume\": 0.16,\n  \"maxMusicBytes\": 5242880,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
-        "options": {}
+        "url": "={{ $json.videoUrl }}",
+        "responseFormat": "file",
+        "dataPropertyName": "data",
+        "options": {
+          "timeout": 30000
+        }
       },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
       "position": [
-        570,
-        240
+        9580,
+        500
       ],
-      "id": "zvid-sr-0003",
-      "name": "Config"
+      "id": "zvid-sr-0021",
+      "name": "▶ Watch video",
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
-        "url": "=https://www.thesportsdb.com/api/v1/json/{{ $('Config').first().json.sportsDbKey }}/eventspastleague.php?id={{ $('Config').first().json.leagueId }}",
+        "url": "=https://www.thesportsdb.com/api/v1/json/{{ $('Set the league club and completed recap period').first().json.sportsDbKey }}/eventspastleague.php?id={{ $('Set the league club and completed recap period').first().json.leagueId }}",
         "options": {
           "response": {
             "response": {
@@ -66,352 +89,64 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1050,
-        240
+        820,
+        500
       ],
       "id": "zvid-sr-0004",
-      "name": "Fetch results",
-      "onError": "continueRegularOutput",
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "jsCode": "// Normalises TheSportsDB response into the exact contract Build project JSON\n// reads, and falls back to a bundled demo matchday whenever the API cannot\n// deliver one — the workflow renders something meaningful on a fresh import\n// with zero external accounts.\n//\n// Live response shape (captured 2026-07-28 with the public test key:\n// GET https://www.thesportsdb.com/api/v1/json/123/eventspastleague.php?id=4328):\n// { \"events\": [ { \"idEvent\": \"2267452\",\n//     \"strEvent\": \"West Ham United vs Leeds United\",\n//     \"strLeague\": \"English Premier League\", \"strSeason\": \"2025-2026\",\n//     \"strHomeTeam\": \"West Ham United\", \"strAwayTeam\": \"Leeds United\",\n//     \"intHomeScore\": \"3\", \"intAwayScore\": \"0\", \"intRound\": \"38\",\n//     \"dateEvent\": \"2026-05-24\", \"strTime\": \"15:00:00\", \"strStatus\": \"FT\", ... } ] }\n// NOTE: the public test key returned exactly ONE event (the most recent\n// finished fixture). A personal key returns the last 15, which fills a full\n// five-match recap — the builder handles 1..5 matches either way.\nconst cfg = $('Config').first().json;\nconst res = $input.first().json || {};\n\nconst clean = (v) => String(v == null ? '' : v).replace(/\\s+/g, ' ').trim();\nconst maxMatches = Math.max(1, Math.min(5, Number(cfg.maxMatches) || 5));\n\n// ---- bundled demo matchday: the real 2023-24 EPL final day ----------------\nconst DEMO = {\n  league: 'English Premier League',\n  season: '2023-2024',\n  events: [\n    { home: 'Manchester City', away: 'West Ham', homeScore: 3, awayScore: 1, dateEvent: '2024-05-19', round: '38' },\n    { home: 'Arsenal', away: 'Everton', homeScore: 2, awayScore: 1, dateEvent: '2024-05-19', round: '38' },\n    { home: 'Liverpool', away: 'Wolves', homeScore: 2, awayScore: 0, dateEvent: '2024-05-19', round: '38' },\n    { home: 'Brighton', away: 'Manchester United', homeScore: 0, awayScore: 2, dateEvent: '2024-05-19', round: '38' },\n    { home: 'Chelsea', away: 'Bournemouth', homeScore: 2, awayScore: 1, dateEvent: '2024-05-19', round: '38' },\n  ],\n};\n\n// ---- parse the live response ----------------------------------------------\nconst body = res.body;\nconst events = body && Array.isArray(body.events) ? body.events : [];\nconst finished = events\n  .filter((e) => e && e.intHomeScore != null && e.intAwayScore != null && clean(e.strHomeTeam) && clean(e.strAwayTeam))\n  .map((e) => ({\n    home: clean(e.strHomeTeam),\n    away: clean(e.strAwayTeam),\n    homeScore: Number(e.intHomeScore),\n    awayScore: Number(e.intAwayScore),\n    dateEvent: clean(e.dateEvent),\n    time: clean(e.strTime),\n    round: clean(e.intRound),\n    league: clean(e.strLeague),\n    season: clean(e.strSeason),\n  }))\n  .filter((e) => Number.isFinite(e.homeScore) && Number.isFinite(e.awayScore))\n  .sort((a, b) => (b.dateEvent + 'T' + b.time).localeCompare(a.dateEvent + 'T' + a.time));\n\nlet usingDemoData = false;\nlet matches = finished.slice(0, maxMatches);\nlet league;\nlet season;\nif (!clean(cfg.sportsDbKey) || !matches.length) {\n  usingDemoData = true;\n  matches = DEMO.events.slice(0, maxMatches);\n  league = DEMO.league;\n  season = DEMO.season;\n} else {\n  league = matches[0].league || 'League';\n  season = matches[0].season || '';\n}\n\n// ---- labels ---------------------------------------------------------------\nconst roundNum = clean(matches[0].round);\nconst roundLabel = /^\\d+$/.test(roundNum) ? 'Matchday ' + roundNum : 'Latest results';\n\nconst MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];\nconst parts = (iso) => String(iso || '').split('-').map(Number);\nconst fmt = (iso) => {\n  const [y, m, d] = parts(iso);\n  return y && m && d ? d + ' ' + MONTHS[m - 1] + ' ' + y : '';\n};\nconst newest = matches[0].dateEvent;\nconst oldest = matches[matches.length - 1].dateEvent;\nlet dateLine = fmt(newest);\nif (oldest && newest && oldest !== newest) {\n  const [oy, om, od] = parts(oldest);\n  const [ny, nm] = parts(newest);\n  dateLine = oy === ny && om === nm ? od + '-' + fmt(newest) : fmt(oldest) + ' - ' + fmt(newest);\n}\n\n// ---- writer prompt --------------------------------------------------------\n// Built here so the OpenRouter node body stays readable. The scores below are\n// ground truth — the model writes copy about them, it never outputs scores\n// that reach the screen.\nconst list = matches\n  .map((m, i) => (i + 1) + '. ' + m.home + ' ' + m.homeScore + '-' + m.awayScore + ' ' + m.away + (m.dateEvent ? ' (' + m.dateEvent + ')' : ''))\n  .join('\\n');\n\nconst promptText = 'League: ' + league + '\\nRound: ' + roundLabel + (dateLine ? ' (' + dateLine + ')' : '') + '\\nFinal scores, most recent first (ground truth — never contradict them):\\n' + list + '\\n\\nWrite the on-screen copy for a vertical results-recap video. Rules:\\n1. Return STRICT JSON only, exactly the shape shown at the end. No markdown fences.\\n2. \"title\": an energetic recap headline for the whole round, EIGHT words maximum, no team bias.\\n3. \"matchLines\": exactly ' + matches.length + ' entries, in the SAME order as the list above. Each \"line\" is a punchy caption for that match, TEN words maximum, energetic but neutral broadcast tone.\\n4. Only say what the scoreline supports (comfortable win, thriller, goalless stalemate, upset). NEVER invent player names, goalscorers, minutes, cards or incidents.\\n5. \"closing\": a sign-off for the video, TWELVE words maximum, inviting fans back for the next round.\\n6. Plain ASCII only: no emoji, no hashtags, no curly quotes, no long dashes.\\n\\n{ \"title\": \"...\", \"matchLines\": [{ \"home\": \"team\", \"away\": \"team\", \"line\": \"...\" }], \"closing\": \"...\" }';\n\nreturn [{\n  json: {\n    league,\n    season,\n    roundLabel,\n    dateLine,\n    usingDemoData,\n    matchCount: matches.length,\n    matches: matches.map((m) => ({ home: m.home, away: m.away, homeScore: m.homeScore, awayScore: m.awayScore, dateEvent: m.dateEvent })),\n    promptText,\n  },\n}];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1310,
-        240
-      ],
-      "id": "zvid-sr-0005",
-      "name": "Prepare results"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://openrouter.ai/api/v1/chat/completions",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "openRouterApi",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ model: $('Config').first().json.llmModel, response_format: { type: \"json_object\" }, messages: [ { role: \"system\", content: \"You write on-screen copy for short sports recap videos. You return JSON only.\\n\\nThe final scores you are given are ground truth from the data provider. Your copy must\\nnever contradict them, and the numbers shown on screen come from the data, not from you.\" }, { role: \"user\", content: $json.promptText } ] }) }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        1790,
-        240
-      ],
-      "id": "zvid-sr-0006",
-      "name": "Write recap",
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
-    },
-    {
-      "parameters": {
-        "jsCode": "// Parses the writer's JSON and hardens it: ASCII-normalised, word-clamped, one\n// line per match in match order. A missing or short line gets a deterministic\n// scoreline fallback instead of failing the run — the scores on screen come\n// from the API either way.\nconst prep = $('Prepare results').first().json;\nconst res = $input.first().json;\n\nconst content = res && res.choices && res.choices[0] && res.choices[0].message && res.choices[0].message.content;\nif (!content) {\n  throw new Error('The model returned no content: ' + JSON.stringify(res).slice(0, 400));\n}\n\nlet script;\ntry {\n  script = JSON.parse(content);\n} catch (e) {\n  const m = /\\{[\\s\\S]*\\}/.exec(content);\n  if (!m) throw new Error('The model did not return JSON:\\n' + String(content).slice(0, 400));\n  script = JSON.parse(m[0]);\n}\n\n// Models slip curly quotes and dashes in even when told not to.\nconst toAscii = (s) =>\n  String(s == null ? '' : s)\n    .replace(/[‘’ʼ]/g, \"'\")\n    .replace(/[“”]/g, '\"')\n    .replace(/[–—]/g, '-')\n    .replace(/…/g, '...')\n    .replace(/\\s+/g, ' ')\n    .trim();\n\nconst clampWords = (s, n) => toAscii(s).split(' ').filter(Boolean).slice(0, n).join(' ');\n\nconst fallbackLine = (m) => {\n  const hs = Number(m.homeScore);\n  const as = Number(m.awayScore);\n  if (hs === as) return 'All square at ' + hs + '-' + as;\n  const winner = hs > as ? m.home : m.away;\n  return winner + ' take it ' + Math.max(hs, as) + '-' + Math.min(hs, as);\n};\n\nconst rawLines = Array.isArray(script.matchLines) ? script.matchLines : [];\nconst lines = prep.matches.map((m, i) => {\n  const cand = rawLines[i] && clampWords(rawLines[i].line, 10);\n  return cand && cand.length >= 8 ? cand : fallbackLine(m);\n});\n\nconst title = clampWords(script.title, 8) || prep.league + ' results';\nconst closing = clampWords(script.closing, 12) || 'That is full time for this round';\n\nreturn [{ json: { title, closing, lines } }];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2050,
-        240
-      ],
-      "id": "zvid-sr-0007",
-      "name": "Parse recap"
-    },
-    {
-      "parameters": {
-        "method": "HEAD",
-        "url": "={{ $('Config').first().json.musicUrl || $('Config').first().json.apiUrl }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true,
-              "neverError": true
-            }
-          },
-          "redirect": {
-            "redirect": {}
-          },
-          "timeout": 15000
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        2530,
-        240
-      ],
-      "id": "zvid-sr-0008",
-      "name": "Check music bed",
-      "onError": "continueRegularOutput",
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "jsCode": "// === buildProject — identical to the frame-reviewed standalone builder ===\n// Scores are GROUND TRUTH from TheSportsDB (via Prepare results). The LLM only\n// writes copy: title, one caption line per match, closing. It can never change\n// a score on screen.\nfunction buildProject(config, prep, recap, probe) {\n  const cfg = config || {};\n  const clean = (v) => String(v == null ? '' : v).replace(/\\s+/g, ' ').trim();\n  const esc = (s) => String(s).replace(/[&<>\"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' }[c]));\n  const round2 = (n) => Math.round(n * 100) / 100;\n\n  // ---- brand knobs --------------------------------------------------------\n  const accent = clean(cfg.brandAccent) || '#C6FF3A';\n  const bg = clean(cfg.brandBackground) || '#08110B';\n  const font = clean(cfg.font) || 'Archivo';\n  const brandName = clean(cfg.brandName) || 'FULL TIME';\n  const handle = clean(cfg.handle) || '@yourclub';\n  const ctaText = clean(cfg.ctaText) || 'Follow for every matchday';\n\n  const hexToRgb = (hex) => {\n    const m = /^#?([0-9a-f]{6})$/i.exec(clean(hex));\n    if (!m) return null;\n    const n = parseInt(m[1], 16);\n    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];\n  };\n  const rgba = (hex, a) => {\n    const c = hexToRgb(hex) || [198, 255, 58];\n    return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')';\n  };\n  const lighten = (hex, amt) => {\n    const c = hexToRgb(hex) || [8, 17, 11];\n    const h = (v) => ('0' + Math.min(255, v + amt).toString(16)).slice(-2);\n    return '#' + h(c[0]) + h(c[1]) + h(c[2]);\n  };\n\n  // ---- data ---------------------------------------------------------------\n  const matches = (Array.isArray(prep.matches) ? prep.matches : []).slice(0, 5);\n  if (!matches.length) throw new Error('Prepare results delivered no matches — even the demo fallback is empty.');\n  for (const m of matches) {\n    if (!clean(m.home) || !clean(m.away)) throw new Error('A match is missing a team name: ' + JSON.stringify(m));\n    if (!Number.isFinite(Number(m.homeScore)) || !Number.isFinite(Number(m.awayScore))) {\n      throw new Error('A match has a non-numeric score: ' + JSON.stringify(m));\n    }\n  }\n  const lines = Array.isArray(recap.lines) ? recap.lines : [];\n  const league = clean(prep.league) || 'League';\n  const roundLabel = clean(prep.roundLabel) || 'Latest results';\n  const dateLine = clean(prep.dateLine);\n  const title = clean(recap.title) || league + ' results';\n  const closing = clean(recap.closing) || 'That is full time for this round';\n\n  // ---- timing -------------------------------------------------------------\n  // Scene transitions overlap their two scenes, so every non-last scene is\n  // padded by its transition duration and the on-screen time stays as designed.\n  const sceneBase = Math.min(6, Math.max(2.5, Number(cfg.sceneSeconds) || 3.4));\n  const tSec = Math.min(0.8, Math.max(0.2, Number(cfg.transitionSeconds) || 0.45));\n  const titleBase = 3.2;\n  const titleT = 0.5;\n  const outroBase = 3.6;\n\n  // ---- cover video --------------------------------------------------------\n  // Pinned portrait clip of a packed floodlit stadium at night, probed at\n  // authoring time: 1440x2560 (same 9:16 aspect, no crop), 13.8 s, 19.5 MB.\n  // The title scene (3.7 s) never outruns it.\n  const COVER = 'https://videos.pexels.com/video-files/34930800/14796393_1440_2560_30fps.mp4';\n  const coverVideo = clean(cfg.coverVideoOverride) || COVER;\n  const titleDur = round2(titleBase + titleT);\n  const outroDur = outroBase;\n\n  // ---- music guard --------------------------------------------------------\n  // `probe` is the full HEAD response for cfg.musicUrl. Unreachable or\n  // oversized music must never fail the render — it is simply dropped.\n  const musicUrl = clean(cfg.musicUrl);\n  const limit = Number(cfg.maxMusicBytes) > 0 ? Number(cfg.maxMusicBytes) : 5242880;\n  const headers = (probe && probe.headers) || {};\n  const musicBytes = Number(headers['content-length'] || headers['Content-Length'] || 0);\n  const musicOk = !!musicUrl && Number(probe && probe.statusCode) === 200 && (!musicBytes || musicBytes <= limit);\n  const musicSkipped = musicOk ? null : (!musicUrl ? 'musicUrl empty' : (Number(probe && probe.statusCode) !== 200 ? 'HEAD ' + (probe && probe.statusCode || 'failed') : musicBytes + ' bytes > ' + limit));\n\n  // ---- adaptive type ------------------------------------------------------\n  // Greedy word-wrap estimate. Archivo 900 uppercase runs ~0.68 em average,\n  // mixed-case 900 ~0.50 em (calibrated on the rendered design sources).\n  const wrapLines = (text, fontPx, boxPx, avgEm) => {\n    const perLine = Math.max(4, Math.floor(boxPx / (fontPx * avgEm)));\n    let n = 1;\n    let used = 0;\n    for (const w of String(text).split(' ')) {\n      const need = used === 0 ? w.length : used + 1 + w.length;\n      if (need <= perLine) { used = need; continue; }\n      n += 1;\n      used = Math.min(w.length, perLine);\n    }\n    return n;\n  };\n\n  const gradTop = lighten(bg, 12);\n  const gradMid = lighten(bg, 5);\n\n  // ---- title scene --------------------------------------------------------\n  const roundLine = (league + ' · ' + roundLabel + (dateLine ? ' · ' + dateLine : '')).toUpperCase();\n  const tLen = title.length;\n  const titleSize = tLen <= 26 ? 76 : tLen <= 42 ? 66 : 58;\n  const shadeSvg = \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='srShade' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='\" + bg + \"' stop-opacity='0.75'/><stop offset='0.4' stop-color='\" + bg + \"' stop-opacity='0.45'/><stop offset='0.72' stop-color='\" + bg + \"' stop-opacity='0.88'/><stop offset='1' stop-color='\" + bg + \"' stop-opacity='0.98'/></linearGradient></defs><rect width='1080' height='1920' fill='url(#srShade)'/><path d='M-40 1150 L1120 1070 L1120 1086 L-40 1166 Z' fill='\" + rgba(accent, 0.4) + \"'/><path d='M-40 1210 L1120 1130 L1120 1174 L-40 1254 Z' fill='\" + accent + \"'/></svg>\";\n\n  const titleScene = {\n    id: 'title',\n    duration: titleDur,\n    backgroundColor: bg,\n    transition: 'slideup',\n    transitionId: 'm1',\n    transitionDuration: titleT,\n    visuals: [\n      { type: 'VIDEO', src: coverVideo, width: 1080, height: 1920, position: 'center-center', resize: 'cover', volume: 0, track: 0, enterBegin: 0, exitEnd: titleDur },\n      { type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: titleDur, svg: shadeSvg },\n      {\n        type: 'TEXT', x: 540, y: 170, anchor: 'top-center', track: 2, enterBegin: 0.15, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: titleDur,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: \"<div style='text-align:center; color:rgba(255,255,255,0.85); font-size:23px; font-weight:700; letter-spacing:7px; text-shadow:0 2px 14px rgba(0,0,0,0.7);'>\" + esc(handle.toUpperCase()) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: 1330, width: 940, anchor: 'top-center', track: 3, enterBegin: 0.2, enterEnd: 0.6, enterAnimation: 'circleopen', exitEnd: titleDur,\n        style: { fontFamily: font, color: accent },\n        html: \"<div style='text-align:center; color:\" + accent + \"; font-size:34px; font-weight:900; letter-spacing:12px;'>\" + esc(brandName.toUpperCase()) + \"</div><div style='margin-top:14px; text-align:center; color:rgba(255,255,255,0.8); font-size:27px; font-weight:700; letter-spacing:3px;'>\" + esc(roundLine) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: 1480, width: 940, anchor: 'top-center', track: 4, enterBegin: 0.55, enterEnd: 1.0, enterAnimation: 'smoothup', exitEnd: titleDur,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: \"<div style='text-align:center; color:#FFFFFF; font-size:\" + titleSize + \"px; line-height:1.05; font-weight:900; letter-spacing:-2px;'>\" + esc(title) + '</div>',\n      },\n    ],\n  };\n\n  // ---- match scenes -------------------------------------------------------\n  const cardSvg = \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='srBg' cx='0.5' cy='0.38' r='1'><stop offset='0' stop-color='\" + gradTop + \"'/><stop offset='0.55' stop-color='\" + gradMid + \"'/><stop offset='1' stop-color='\" + bg + \"'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#srBg)'/><rect x='70' y='640' width='940' height='640' rx='36' fill='rgba(255,255,255,0.03)' stroke='\" + rgba(accent, 0.4) + \"' stroke-width='1.5'/><rect x='534' y='716' width='12' height='488' rx='6' fill='\" + rgba(accent, 0.45) + \"'/><rect x='70' y='640' width='940' height='12' rx='6' fill='\" + accent + \"'/></svg>\";\n\n  const nameSizesUsed = [];\n  const matchScenes = matches.map((m, i) => {\n    const isLastMatch = i === matches.length - 1;\n    const dur = round2(sceneBase + tSec); // outro always follows, so every match scene is padded\n    const home = clean(m.home).toUpperCase();\n    const away = clean(m.away).toUpperCase();\n    const hs = Number(m.homeScore);\n    const as = Number(m.awayScore);\n    const winner = hs > as ? 'home' : hs < as ? 'away' : 'draw';\n    // Uppercase Archivo 900 runs ~0.78 em per character (measured on the\n    // rendered frames), and CSS only wraps at spaces — so the size must also be\n    // capped by the LONGEST WORD or a name like BOURNEMOUTH overflows its\n    // 420 px column.\n    const L = Math.max(home.length, away.length);\n    const longestWord = Math.max(...(home + ' ' + away).split(' ').map((w) => w.length), 1);\n    const tierSize = L <= 8 ? 56 : L <= 12 ? 50 : L <= 17 ? 44 : L <= 24 ? 38 : 32;\n    const wordCap = Math.floor(420 / (longestWord * 0.8));\n    const nameSize = Math.max(26, Math.min(tierSize, wordCap));\n    nameSizesUsed.push(nameSize);\n    const maxScore = Math.max(hs, as);\n    const scoreSize = maxScore >= 100 ? 110 : maxScore >= 10 ? 150 : 170;\n    const line = clean(lines[i] || '');\n    const chipText = matches.length > 1 ? 'MATCH ' + (i + 1) + ' OF ' + matches.length : 'FULL TIME';\n\n    const col = (name, score, side) => {\n      const isWin = winner === side;\n      const isDraw = winner === 'draw';\n      const nameColor = isDraw || isWin ? '#FFFFFF' : '#98A29B';\n      const scoreColor = isWin ? accent : 'rgba(255,255,255,0.92)';\n      const bar = isWin ? \"<div style='margin:20px auto 0; width:130px; height:8px; border-radius:4px; background:\" + accent + \";'></div>\" : '';\n      return \"<div style='height:130px; display:flex; align-items:flex-end; justify-content:center;'><div style='text-align:center; color:\" + nameColor + '; font-size:' + nameSize + \"px; line-height:1.12; font-weight:900; letter-spacing:0px;'>\" + esc(name) + \"</div></div><div style='margin-top:24px; text-align:center; color:\" + scoreColor + '; font-size:' + scoreSize + \"px; line-height:1; font-weight:900;'>\" + (side === 'home' ? hs : as) + '</div>' + bar;\n    };\n\n    return {\n      id: 'm' + (i + 1),\n      duration: dur,\n      backgroundColor: bg,\n      transition: 'slideup',\n      transitionId: isLastMatch ? 'outro' : 'm' + (i + 2),\n      transitionDuration: tSec,\n      visuals: [\n        { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: dur, svg: cardSvg },\n        {\n          type: 'TEXT', x: 540, y: 470, anchor: 'center-center', track: 1, enterBegin: 0.1, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: dur,\n          style: { fontFamily: font, color: accent },\n          html: \"<span style='display:inline-block; background:\" + accent + '; color:' + bg + \"; padding:12px 34px; border-radius:10px; font-size:28px; font-weight:900; letter-spacing:6px;'>\" + esc(chipText) + '</span>',\n        },\n        {\n          type: 'TEXT', x: 305, y: 768, width: 420, anchor: 'top-center', track: 2, enterBegin: 0.3, enterEnd: 0.7, enterAnimation: 'smoothright', exitEnd: dur,\n          style: { fontFamily: font, color: '#FFFFFF' },\n          html: col(home, hs, 'home'),\n        },\n        {\n          type: 'TEXT', x: 775, y: 768, width: 420, anchor: 'top-center', track: 3, enterBegin: 0.45, enterEnd: 0.85, enterAnimation: 'smoothleft', exitEnd: dur,\n          style: { fontFamily: font, color: '#FFFFFF' },\n          html: col(away, as, 'away'),\n        },\n        {\n          type: 'TEXT', x: 540, y: 1360, width: 860, anchor: 'top-center', track: 4, enterBegin: 0.75, enterEnd: 1.15, enterAnimation: 'smoothup', exitEnd: dur,\n          style: { fontFamily: font, color: '#B9C6BD' },\n          html: \"<div style='text-align:center; color:#B9C6BD; font-size:34px; line-height:1.4; font-weight:600;'>\" + esc(line) + '</div>',\n        },\n        {\n          type: 'TEXT', x: 540, y: 1780, anchor: 'center-center', track: 5, enterBegin: 0, exitEnd: dur,\n          style: { fontFamily: font, color: 'rgba(255,255,255,0.55)' },\n          html: \"<div style='color:rgba(255,255,255,0.55); font-size:24px; font-weight:800; letter-spacing:5px;'>\" + esc((brandName + ' · ' + roundLabel).toUpperCase()) + '</div>',\n        },\n      ],\n    };\n  });\n\n  // ---- outro scene --------------------------------------------------------\n  const cLen = closing.length;\n  const closingSize = cLen <= 28 ? 76 : cLen <= 55 ? 64 : 54;\n  const closingLines = wrapLines(closing, closingSize, 900, 0.5);\n  const ctaY = Math.max(1150, Math.min(1560, Math.round(880 + closingLines * closingSize * 1.12 + 100)));\n  const handleY = ctaY + 145;\n  const outroSvg = \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='srEnd' cx='0.5' cy='0.38' r='0.9'><stop offset='0' stop-color='\" + lighten(bg, 16) + \"'/><stop offset='1' stop-color='\" + bg + \"'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#srEnd)'/><circle cx='540' cy='620' r='120' fill='none' stroke='\" + rgba(accent, 0.55) + \"' stroke-width='3'/><path d='M480 560 h120 v34 c0 40 -26 66 -60 70 c-34 -4 -60 -30 -60 -70 z' fill='\" + accent + \"'/><path d='M480 570 h-24 a30 30 0 0 0 28 42' stroke='\" + accent + \"' stroke-width='8' fill='none'/><path d='M600 570 h24 a30 30 0 0 1 -28 42' stroke='\" + accent + \"' stroke-width='8' fill='none'/><rect x='528' y='664' width='24' height='30' fill='\" + accent + \"'/><rect x='498' y='694' width='84' height='16' rx='8' fill='\" + accent + \"'/></svg>\";\n\n  const outroScene = {\n    id: 'outro',\n    duration: outroDur,\n    backgroundColor: bg,\n    visuals: [\n      { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: outroDur, svg: outroSvg },\n      {\n        type: 'TEXT', x: 540, y: 170, anchor: 'top-center', track: 1, enterBegin: 0.1, enterEnd: 0.45, enterAnimation: 'fade', exitEnd: outroDur,\n        style: { fontFamily: font, color: 'rgba(255,255,255,0.8)' },\n        html: \"<div style='text-align:center; color:rgba(255,255,255,0.8); font-size:26px; font-weight:900; letter-spacing:10px;'>\" + esc(brandName.toUpperCase()) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: 880, width: 900, anchor: 'top-center', track: 2, enterBegin: 0.25, enterEnd: 0.7, enterAnimation: 'smoothup', exitEnd: outroDur,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: \"<div style='text-align:center; color:#FFFFFF; font-size:\" + closingSize + \"px; line-height:1.1; font-weight:900; letter-spacing:-1px;'>\" + esc(closing) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: ctaY, anchor: 'top-center', track: 3, enterBegin: 0.7, enterEnd: 1.15, enterAnimation: 'circleopen', exitEnd: outroDur,\n        style: { fontFamily: font, color: accent },\n        html: \"<div style='display:inline-block; background:\" + accent + '; color:' + bg + \"; border-radius:999px; padding:24px 60px; font-size:34px; font-weight:900;'>\" + esc(ctaText) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: handleY, anchor: 'top-center', track: 4, enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: outroDur,\n        style: { fontFamily: font, color: 'rgba(255,255,255,0.65)' },\n        html: \"<div style='text-align:center; color:rgba(255,255,255,0.65); font-size:27px; font-weight:600; letter-spacing:4px;'>\" + esc(handle) + '</div>',\n      },\n    ],\n  };\n\n  const scenes = [titleScene].concat(matchScenes, [outroScene]);\n  const sumDur = scenes.reduce((a, s) => a + s.duration, 0);\n  const sumTrans = scenes.reduce((a, s) => a + (s.transitionDuration || 0), 0);\n  const totalSeconds = round2(sumDur - sumTrans);\n\n  // The render API only allows letters, digits, spaces, _ and - in `name`.\n  const safeName = ('sports-recap-' + league + '-' + roundLabel).toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);\n\n  const payload = {\n    name: safeName || 'sports-recap',\n    resolution: 'instagram-reel',\n    frameRate: 30,\n    backgroundColor: bg,\n    outputFormat: 'mp4',\n    scenes,\n  };\n  // NOTE: no `track` on audios — the render API rejects audios[].track.\n  if (musicOk) payload.audios = [{ src: musicUrl, volume: Number(cfg.musicVolume) > 0 ? Number(cfg.musicVolume) : 0.16 }];\n\n  return {\n    payload,\n    meta: {\n      matchCount: matches.length,\n      league,\n      roundLabel,\n      dateLine,\n      title,\n      closing,\n      usingDemoData: !!prep.usingDemoData,\n      musicIncluded: musicOk,\n      musicSkipped,\n      musicUrl,\n      musicBytes,\n      coverVideo,\n      totalSeconds,\n      titleSize,\n      closingSize,\n      nameSizes: nameSizesUsed,\n      scores: matches.map((m) => m.homeScore + '-' + m.awayScore),\n    },\n  };\n}\n\n// === n8n glue ===\nconst config = $('Config').first().json;\nconst prep = $('Prepare results').first().json;\nconst recap = $('Parse recap').first().json;\nconst probe = $input.first().json || {};\nconst built = buildProject(config, prep, recap, probe);\nreturn [{ json: built }];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2790,
-        240
-      ],
-      "id": "zvid-sr-0009",
-      "name": "Build project JSON"
-    },
-    {
-      "parameters": {
-        "resource": "render",
-        "operation": "validate",
-        "source": "json",
-        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}"
-      },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
-      "position": [
-        3050,
-        240
-      ],
-      "id": "zvid-sr-0010",
-      "name": "Validate project (free)"
-    },
-    {
-      "parameters": {
-        "jsCode": "// The free validate endpoint runs the exact pipeline a render submission runs,\n// so a failure here is a payload bug — surface the field list instead of a\n// generic HTTP error.\nconst res = $input.first().json;\nconst status = res.statusCode ?? (res.valid === true ? 200 : 400);\nconst body = res.body || { ...res, details: res.errors ?? res.details };\n\nif (status !== 200) {\n  const details = Array.isArray(body.details)\n    ? body.details.map((d) => '  - ' + d.field + ': ' + d.message).join('\\n')\n    : JSON.stringify(body).slice(0, 500);\n  throw new Error('Zvid rejected the project (HTTP ' + status + '): ' + (body.message || body.error) + '\\n' + details);\n}\n\nconst build = $('Build project JSON').first().json;\nreturn [{\n  json: {\n    ...build,\n    creditsRequired: body.creditsRequired,\n    warnings: body.warnings || [],\n    schemaVersion: body.schemaVersion,\n  },\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        3310,
-        240
-      ],
-      "id": "zvid-sr-0011",
-      "name": "Check validation"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "dry-run--cond",
-              "leftValue": "={{ $('Config').first().json.dryRun }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        50,
-        920
-      ],
-      "id": "zvid-sr-0012",
-      "name": "Dry run?"
-    },
-    {
-      "parameters": {
-        "resource": "project",
-        "operation": "create",
-        "projectName": "={{ ({ name: $json.payload.name, payload: $json.payload }).name }}",
-        "projectJson": "={{ JSON.stringify(({ name: $json.payload.name, payload: $json.payload }).payload) }}"
-      },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
-      "position": [
-        310,
-        920
-      ],
-      "id": "zvid-sr-0013",
-      "name": "Save draft to editor",
+      "name": "Fetch recent league events from TheSportsDB",
       "onError": "continueRegularOutput",
       "alwaysOutputData": true,
       "retryOnFail": true,
       "maxTries": 3,
-      "waitBetweenTries": 5000
+      "waitBetweenTries": 2000
     },
     {
-      "parameters": {
-        "jsCode": "// Dry run: everything except the paid render. Open editorLink to preview the\n// exact video, then set dryRun to false in Config to go live.\nconst cfg = $('Config').first().json;\nconst d = $('Check validation').first().json;\n\n// The draft save is best-effort (onError: continue) so a hiccup there never\n// hides the rest of the dry-run report.\nlet editorLink = null;\nlet draftId = null;\ntry {\n  const project = $('Save draft to editor').first().json.project;\n  if (project && project.id) {\n    draftId = project.id;\n    editorLink = String(cfg.editorUrl || 'https://editor.zvid.io').replace(/\\/+$/, '') + '/?project=' + project.id;\n  }\n} catch (e) { /* draft step skipped or failed */ }\n\nreturn [{\n  json: {\n    dryRun: true,\n    title: d.meta.title,\n    league: d.meta.league,\n    round: d.meta.roundLabel,\n    matches: d.meta.matchCount,\n    usingDemoData: d.meta.usingDemoData,\n    musicIncluded: d.meta.musicIncluded,\n    editorLink,\n    draftId,\n    creditsRequired: d.creditsRequired,\n    videoSeconds: d.meta.totalSeconds,\n    warnings: d.warnings,\n    nextStep: editorLink\n      ? 'Open editorLink to preview the draft, then set dryRun to false in Config to render for real.'\n      : 'Set dryRun to false in Config to render this for real.',\n    payload: d.payload,\n  },\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "id": "late-ledger",
+      "name": "Read Sports Recaps recovery log",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
       "position": [
-        570,
-        920
+        1100,
+        500
       ],
-      "id": "zvid-sr-0014",
-      "name": "Dry run summary"
-    },
-    {
       "parameters": {
-        "resource": "render",
-        "operation": "create",
-        "source": "json",
-        "projectJson": "={{ JSON.stringify(({ payload: $json.payload }).payload) }}",
-        "renderType": "video",
-        "waitForCompletion": false
-      },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
-      "position": [
-        1050,
-        920
-      ],
-      "id": "zvid-sr-0015",
-      "name": "Submit render",
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
-    },
-    {
-      "parameters": {
-        "amount": "={{ $('Config').first().json.pollSeconds }}",
-        "unit": "seconds"
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        1310,
-        920
-      ],
-      "id": "zvid-sr-0016",
-      "name": "Wait",
-      "webhookId": "c4d81f6a-93b7-4e20-a5c8-7f2e9d3b6a14"
-    },
-    {
-      "parameters": {
-        "resource": "render",
-        "operation": "get",
-        "jobId": "={{ $('Submit render').first().json.jobId }}",
-        "waitForCompletion": false
-      },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
-      "position": [
-        1570,
-        920
-      ],
-      "id": "zvid-sr-0017",
-      "name": "Get render status",
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "render-finished--cond",
-              "leftValue": "={{ $json.state === 'completed' }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
         },
-        "looseTypeValidation": true,
+        "sheetName": {
+          "__rl": true,
+          "value": "Sports Recaps",
+          "mode": "name"
+        },
         "options": {}
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        1830,
-        920
-      ],
-      "id": "zvid-sr-0018",
-      "name": "Render finished?"
+      "alwaysOutputData": true
     },
     {
-      "parameters": {
-        "jsCode": "// Fails fast on a failed render and stops the poll loop from running forever.\nconst cfg = $('Config').first().json;\nconst job = $input.first().json;\n\nif (job.state === 'failed') {\n  throw new Error('Render failed: ' + (job.failedReason || 'no reason given'));\n}\n\nconst maxPolls = Math.ceil((Number(cfg.timeoutMinutes || 20) * 60) / Number(cfg.pollSeconds || 10));\nif ($runIndex + 1 >= maxPolls) {\n  throw new Error('Render did not finish within ' + cfg.timeoutMinutes + ' minutes (job ' + job.id + ', state ' + job.state + ').');\n}\n\nreturn $input.all();"
-      },
+      "id": "late-plan",
+      "name": "Verify final scores and prioritize recap matches",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1830,
-        1160
+        1380,
+        500
       ],
-      "id": "zvid-sr-0019",
-      "name": "Still rendering?"
-    },
-    {
       "parameters": {
-        "jsCode": "// Final report for a live run. `usingDemoData` tells you whether this recap\n// came from TheSportsDB or from the bundled demo matchday (API down or\n// sportsDbKey empty).\nconst cfg = $('Config').first().json;\nconst build = $('Check validation').first().json;\nconst job = $('Get render status').first().json;\nconst url = typeof job.result === 'string' ? job.result : (job.result ? job.result.url : null);\n\nreturn [{\n  json: {\n    rendered: true,\n    videoUrl: url,\n    jobId: job.id,\n    title: build.meta.title,\n    league: build.meta.league,\n    round: build.meta.roundLabel,\n    matches: build.meta.matchCount,\n    usingDemoData: build.meta.usingDemoData,\n    musicIncluded: build.meta.musicIncluded,\n    videoSeconds: build.meta.totalSeconds,\n    creditsCharged: build.creditsRequired,\n    handle: cfg.handle,\n  },\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2310,
-        920
-      ],
-      "id": "zvid-sr-0020",
-      "name": "Run summary"
+        "jsCode": "function helpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (\n\t\t\tv === null ||\n\t\t\tv === undefined ||\n\t\t\tv === '' ||\n\t\t\ttypeof v === 'boolean' ||\n\t\t\t!Number.isFinite(Number(v))\n\t\t)\n\t\t\tthrow Error(label + ' must be a finite number');\n\t\treturn Number(v);\n\t};\n\tconst iso = (v, label = 'Date') => {\n\t\tconst s = text(v);\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(s) ||\n\t\t\t!Number.isFinite(Date.parse(s + 'T12:00:00Z')) ||\n\t\t\tnew Date(s + 'T12:00:00Z').toISOString().slice(0, 10) !== s\n\t\t)\n\t\t\tthrow Error(label + ' must be a real YYYY-MM-DD date');\n\t\treturn s;\n\t};\n\tconst day = (now, timezone = 'UTC') =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: timezone,\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tconst shift = (s, n) =>\n\t\tnew Date(Date.parse(s + 'T12:00:00Z') + n * 86400000).toISOString().slice(0, 10);\n\tconst truth = (v) => v === true || /^(true|yes|1)$/i.test(text(v));\n\tconst https = (v, label) => {\n\t\tconst s = text(v);\n\t\tif (!/^https:\\/\\/[^\\s/]+(?:\\/\\S*)?$/i.test(s)) throw Error(label + ' must be an HTTPS URL');\n\t\treturn s;\n\t};\n\tconst unique = (rows, key) => {\n\t\tconst seen = new Set();\n\t\tfor (const r of rows) {\n\t\t\tconst s = text(r[key]);\n\t\t\tif (!s || seen.has(s)) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(s);\n\t\t}\n\t};\n\tconst noWork = (reason, extra = {}) => ({\n\t\tready: false,\n\t\tstatus: 'nothing_to_render',\n\t\tcreditsSpent: 0,\n\t\treason,\n\t\t...extra,\n\t});\n\treturn { text, number, iso, day, shift, truth, https, unique, noWork };\n}\nfunction recoverPlan(cfg, key, rows) {\n\tconst matches = rows.filter((r) => String(r.RenderKey || '') === key);\n\tif (matches.length > 1) throw Error('Duplicate RenderKey in log: ' + key);\n\tconst row = matches[0];\n\tif (!row) return null;\n\t// An explicit capacity rejection accepted no paid job. It can be retried on\n\t// a later run; uncertain submissions and failed accepted jobs remain locked.\n\tif (row.Status === 'rate_limited' && !row.JobId && !row.VideoUrl) return null;\n\tif (row.Status === 'completed' || row.VideoUrl)\n\t\treturn {\n\t\t\tready: false,\n\t\t\tstatus: 'already_completed',\n\t\t\trenderKey: key,\n\t\t\tvideoUrl: row.VideoUrl || null,\n\t\t\tcreditsSpent: 0,\n\t\t};\n\tif (row.Status === 'rendering' && row.JobId && cfg.dryRun !== true) {\n\t\tlet plan;\n\t\ttry {\n\t\t\tplan = JSON.parse(row.PlanJson);\n\t\t} catch {\n\t\t\tthrow Error('Saved PlanJson is invalid for ' + key);\n\t\t}\n\t\tif (plan.renderKey !== key || plan.snapshotVersion !== 1)\n\t\t\tthrow Error('Saved snapshot does not match ' + key);\n\t\treturn { ...plan, ready: true, jobId: String(row.JobId), resumed: true };\n\t}\n\treturn {\n\t\tready: false,\n\t\tstatus: 'needs_review',\n\t\trenderKey: key,\n\t\treason:\n\t\t\tcfg.dryRun === true\n\t\t\t\t? 'Preview skips existing jobs.'\n\t\t\t\t: 'Inspect the saved ' + row.Status + ' job before resetting this key.',\n\t\tjobId: row.JobId || null,\n\t\tcreditsSpent: 0,\n\t};\n}\nfunction resumeOutstanding(cfg, logs, prefix) {\n\tif (cfg.dryRun === true) return null;\n\tconst saved = logs\n\t\t.filter(\n\t\t\t(r) => String(r.RenderKey || '').startsWith(prefix) && r.Status === 'rendering' && r.JobId,\n\t\t)\n\t\t.sort((a, b) => String(a.RenderKey).localeCompare(String(b.RenderKey)));\n\tif (!saved.length) return null;\n\t// Recover paid work even when its source changed or a date rolled over.\n\t// Delivery approval is intentionally re-reviewed after such a recovery.\n\tconst plan = recoverPlan(cfg, saved[0].RenderKey, logs);\n\treturn { ...plan, emailApproved: false, deferredSavedJobs: saved.length - 1 };\n}\nfunction planSports(cfg, response, logs, now) {\n\tconst outstanding = resumeOutstanding(cfg, logs, 'sports-');\n\tif (outstanding) return outstanding;\n\tconst h = helpers();\n\tif (Number(response.statusCode) !== 200)\n\t\tthrow Error('Sports source unavailable. No demo scores will be rendered.');\n\tlet end = cfg.periodEnd ? h.iso(cfg.periodEnd) : h.shift(h.day(now, cfg.timezone), -1),\n\t\tstart = cfg.periodStart ? h.iso(cfg.periodStart) : h.shift(end, -6);\n\tif (start > end || end >= h.day(now, cfg.timezone))\n\t\tthrow Error('Sports recap must cover a completed period');\n\tconst requestedPeriod = { start, end };\n\tconst b = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;\n\tif (!b || (!Array.isArray(b.events) && b.events !== null))\n\t\tthrow Error('Sports response must contain events[]');\n\tconst candidateDates = (b.events || [])\n\t\t.filter(\n\t\t\t(e) =>\n\t\t\t\tString(e.idLeague) === String(cfg.leagueId) &&\n\t\t\t\t['FT', 'AET', 'Match Finished'].includes(h.text(e.strStatus)) &&\n\t\t\t\t(!cfg.focusTeam ||\n\t\t\t\t\t[e.strHomeTeam, e.strAwayTeam].some(\n\t\t\t\t\t\t(t) => h.text(t).toLowerCase() === h.text(cfg.focusTeam).toLowerCase(),\n\t\t\t\t\t)),\n\t\t)\n\t\t.map((e) => h.iso(e.dateEvent, 'dateEvent'))\n\t\t.filter((d) => d <= requestedPeriod.end)\n\t\t.sort();\n\tconst latestAvailableDate = candidateDates.at(-1) || null;\n\tlet usedLatestAvailable = false;\n\tif (\n\t\tcfg.allowLatestAvailableResults === true &&\n\t\t!cfg.periodStart &&\n\t\t!cfg.periodEnd &&\n\t\tlatestAvailableDate &&\n\t\t!candidateDates.some((d) => d >= start && d <= end)\n\t) {\n\t\tconst ageDays =\n\t\t\t(Date.parse(h.day(now, cfg.timezone) + 'T12:00:00Z') -\n\t\t\t\tDate.parse(latestAvailableDate + 'T12:00:00Z')) /\n\t\t\t86400000;\n\t\tconst maxAge = h.number(cfg.maxFallbackAgeDays ?? 30, 'maxFallbackAgeDays');\n\t\tif (maxAge < 1 || maxAge > 90) throw Error('maxFallbackAgeDays must be between 1 and 90.');\n\t\tif (ageDays <= maxAge) {\n\t\t\tend = latestAvailableDate;\n\t\t\tstart = h.shift(end, -6);\n\t\t\tusedLatestAvailable = true;\n\t\t}\n\t}\n\tconst key =\n\t\t'sports-' +\n\t\tcfg.leagueId +\n\t\t'-' +\n\t\tstart +\n\t\t'-' +\n\t\tend +\n\t\t'-' +\n\t\th\n\t\t\t.text(cfg.focusTeam || 'league')\n\t\t\t.replace(/[^a-z0-9]/gi, '')\n\t\t\t.toLowerCase() +\n\t\t'-' +\n\t\th.text(cfg.recapRevision || 1);\n\tconst saved = recoverPlan(cfg, key, logs);\n\tif (saved) return saved;\n\tconst unique = new Map(),\n\t\tskipped = [];\n\tfor (const e of b.events || []) {\n\t\tlet reason = '';\n\t\tconst date = h.iso(e.dateEvent, 'dateEvent');\n\t\tif (String(e.idLeague) !== String(cfg.leagueId)) reason = 'other_league';\n\t\telse if (date < start || date > end) reason = 'outside_period';\n\t\telse if (!['FT', 'AET', 'Match Finished'].includes(h.text(e.strStatus)))\n\t\t\treason = 'not_verified_final';\n\t\telse if (\n\t\t\tcfg.focusTeam &&\n\t\t\t![e.strHomeTeam, e.strAwayTeam].some(\n\t\t\t\t(t) => h.text(t).toLowerCase() === h.text(cfg.focusTeam).toLowerCase(),\n\t\t\t)\n\t\t)\n\t\t\treason = 'outside_club';\n\t\tif (reason) {\n\t\t\tskipped.push({ id: e.idEvent, reason });\n\t\t\tcontinue;\n\t\t}\n\t\tconst homeScore = h.number(e.intHomeScore, 'home score'),\n\t\t\tawayScore = h.number(e.intAwayScore, 'away score');\n\t\tif (\n\t\t\t!Number.isInteger(homeScore) ||\n\t\t\t!Number.isInteger(awayScore) ||\n\t\t\thomeScore < 0 ||\n\t\t\tawayScore < 0 ||\n\t\t\t!h.text(e.idEvent) ||\n\t\t\t!h.text(e.strHomeTeam) ||\n\t\t\t!h.text(e.strAwayTeam)\n\t\t)\n\t\t\tthrow Error('Invalid final event');\n\t\tconst match = {\n\t\t\tid: h.text(e.idEvent),\n\t\t\thome: h.text(e.strHomeTeam),\n\t\t\taway: h.text(e.strAwayTeam),\n\t\t\thomeScore,\n\t\t\tawayScore,\n\t\t\tdateEvent: date,\n\t\t\tleague: h.text(e.strLeague),\n\t\t\tseason: h.text(e.strSeason),\n\t\t};\n\t\tif (unique.has(match.id) && JSON.stringify(unique.get(match.id)) !== JSON.stringify(match))\n\t\t\tthrow Error('Conflicting final scores for ' + match.id);\n\t\tunique.set(match.id, match);\n\t}\n\tconst all = [...unique.values()];\n\tif (!all.length)\n\t\treturn h.noWork(\n\t\t\t'No verified finals in ' +\n\t\t\t\tstart +\n\t\t\t\t' to ' +\n\t\t\t\tend +\n\t\t\t\t'. ' +\n\t\t\t\t(latestAvailableDate\n\t\t\t\t\t? 'Latest eligible feed date: ' +\n\t\t\t\t\t\tlatestAvailableDate +\n\t\t\t\t\t\t'. Enable allowLatestAvailableResults for a dated, age-bounded recap, or choose an explicit past period.'\n\t\t\t\t\t: 'The feed returned no eligible completed match for this league/club.'),\n\t\t\t{ start, end, requestedPeriod, latestAvailableDate, skipped },\n\t\t);\n\tall.sort(\n\t\t(a, b) =>\n\t\t\tMath.abs(b.homeScore - b.awayScore) - Math.abs(a.homeScore - a.awayScore) ||\n\t\t\tb.homeScore + b.awayScore - (a.homeScore + a.awayScore) ||\n\t\t\tb.dateEvent.localeCompare(a.dateEvent) ||\n\t\t\ta.id.localeCompare(b.id),\n\t);\n\tconst matches = all.slice(0, Math.max(1, Math.min(5, Number(cfg.maxMatches) || 5)));\n\tconst totals = {\n\t\tmatches: all.length,\n\t\tgoals: all.reduce((s, m) => s + m.homeScore + m.awayScore, 0),\n\t\tdraws: all.filter((m) => m.homeScore === m.awayScore).length,\n\t};\n\tlet club = null;\n\tif (cfg.focusTeam) {\n\t\tclub = { team: cfg.focusTeam, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0 };\n\t\tfor (const m of all) {\n\t\t\tconst home = m.home.toLowerCase() === cfg.focusTeam.toLowerCase(),\n\t\t\t\tgf = home ? m.homeScore : m.awayScore,\n\t\t\t\tga = home ? m.awayScore : m.homeScore;\n\t\t\tclub.goalsFor += gf;\n\t\t\tclub.goalsAgainst += ga;\n\t\t\tclub[gf > ga ? 'wins' : gf === ga ? 'draws' : 'losses']++;\n\t\t}\n\t}\n\treturn {\n\t\tready: true,\n\t\trenderKey: key,\n\t\tleague: all[0].league,\n\t\tseason: all[0].season,\n\t\troundLabel: usedLatestAvailable\n\t\t\t? 'Latest available results'\n\t\t\t: cfg.focusTeam\n\t\t\t\t? 'Club results'\n\t\t\t\t: 'Weekly final results',\n\t\tdateLine: start + ' to ' + end,\n\t\trequestedPeriod,\n\t\tlatestAvailableDate,\n\t\tusedLatestAvailable,\n\t\tusingDemoData: false,\n\t\tmatchCount: matches.length,\n\t\tmatches,\n\t\ttotals,\n\t\tclub,\n\t\tskipped,\n\t\tcaption:\n\t\t\t(usedLatestAvailable ? 'Latest available feed results; actual match period shown. ' : '') +\n\t\t\tall.length +\n\t\t\t' verified final matches returned by TheSportsDB for ' +\n\t\t\tstart +\n\t\t\t' to ' +\n\t\t\tend +\n\t\t\t'. ' +\n\t\t\ttotals.goals +\n\t\t\t' goals; ' +\n\t\t\ttotals.draws +\n\t\t\t' draws. Feed coverage may be partial.',\n\t\thandoff: all.map((m) => ({\n\t\t\tEventId: m.id,\n\t\t\tDate: m.dateEvent,\n\t\t\tHome: m.home,\n\t\t\tHomeScore: m.homeScore,\n\t\t\tAwayScore: m.awayScore,\n\t\t\tAway: m.away,\n\t\t\tSource: 'TheSportsDB',\n\t\t})),\n\t};\n}\nreturn [{json:planSports($('Set the league club and completed recap period').first().json,$('Fetch recent league events from TheSportsDB').first().json,$input.all().map(i=>i.json),new Date())}];"
+      }
     },
     {
-      "parameters": {
-        "url": "={{ $json.videoUrl }}",
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file",
-              "outputPropertyName": "data"
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        2830,
-        920
-      ],
-      "id": "zvid-sr-0021",
-      "name": "▶ Watch video",
-      "onError": "continueRegularOutput",
-      "alwaysOutputData": true,
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
-    },
-    {
-      "id": "zvid-watch-ready",
-      "name": "Video ready to watch?",
+      "id": "late-ready",
+      "name": "Eligible source content or saved render exists?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2570,
-        920
+        1660,
+        500
       ],
       "parameters": {
         "conditions": {
@@ -423,8 +158,876 @@
           },
           "conditions": [
             {
-              "id": "zvid-watch-ready-condition",
-              "leftValue": "={{ !$json.dryRun && /^https?:\\/\\//i.test(String(($json.videoUrl) || '')) }}",
+              "id": "ready-condition",
+              "leftValue": "={{ $json.ready === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-no-work",
+      "name": "Explain skipped content or recovery needs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1660,
+        850
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "id": "late-resume",
+      "name": "Resume the accepted render job?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2140,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "resume-condition",
+              "leftValue": "={{ Boolean($json.jobId) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-resume-context",
+      "name": "Restore the saved result and handoff context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        220
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// === buildProject — identical to the frame-reviewed standalone builder ===\n// Scores are GROUND TRUTH from TheSportsDB (via Prepare results). The LLM only\n// writes copy: title, one caption line per match, closing. It can never change\n// a score on screen.\nfunction buildProject(config, prep, recap, probe) {\n  const cfg = config || {};\n  const clean = (v) => String(v == null ? '' : v).replace(/\\s+/g, ' ').trim();\n  const esc = (s) => String(s).replace(/[&<>\"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' }[c]));\n  const round2 = (n) => Math.round(n * 100) / 100;\n\n  // ---- brand knobs --------------------------------------------------------\n  const accent = clean(cfg.brandAccent) || '#C6FF3A';\n  const bg = clean(cfg.brandBackground) || '#08110B';\n  const font = clean(cfg.font) || 'Archivo';\n  const brandName = clean(cfg.brandName) || 'FULL TIME';\n  const handle = clean(cfg.handle) || '@yourclub';\n  const ctaText = clean(cfg.ctaText) || 'Follow for every matchday';\n\n  const hexToRgb = (hex) => {\n    const m = /^#?([0-9a-f]{6})$/i.exec(clean(hex));\n    if (!m) return null;\n    const n = parseInt(m[1], 16);\n    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];\n  };\n  const rgba = (hex, a) => {\n    const c = hexToRgb(hex) || [198, 255, 58];\n    return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')';\n  };\n  const lighten = (hex, amt) => {\n    const c = hexToRgb(hex) || [8, 17, 11];\n    const h = (v) => ('0' + Math.min(255, v + amt).toString(16)).slice(-2);\n    return '#' + h(c[0]) + h(c[1]) + h(c[2]);\n  };\n\n  // ---- data ---------------------------------------------------------------\n  const matches = (Array.isArray(prep.matches) ? prep.matches : []).slice(0, 5);\n  if (!matches.length) throw new Error('Prepare results delivered no matches — even the demo fallback is empty.');\n  for (const m of matches) {\n    if (!clean(m.home) || !clean(m.away)) throw new Error('A match is missing a team name: ' + JSON.stringify(m));\n    if (!Number.isFinite(Number(m.homeScore)) || !Number.isFinite(Number(m.awayScore))) {\n      throw new Error('A match has a non-numeric score: ' + JSON.stringify(m));\n    }\n  }\n  const lines = Array.isArray(recap.lines) ? recap.lines : [];\n  const league = clean(prep.league) || 'League';\n  const roundLabel = clean(prep.roundLabel) || 'Latest results';\n  const dateLine = clean(prep.dateLine);\n  const title = clean(recap.title) || league + ' results';\n  const closing = clean(recap.closing) || 'That is full time for this round';\n\n  // ---- timing -------------------------------------------------------------\n  // Scene transitions overlap their two scenes, so every non-last scene is\n  // padded by its transition duration and the on-screen time stays as designed.\n  const sceneBase = Math.min(6, Math.max(2.5, Number(cfg.sceneSeconds) || 3.4));\n  const tSec = Math.min(0.8, Math.max(0.2, Number(cfg.transitionSeconds) || 0.45));\n  const titleBase = 3.2;\n  const titleT = 0.5;\n  const outroBase = 3.6;\n\n  // ---- cover video --------------------------------------------------------\n  // Pinned portrait clip of a packed floodlit stadium at night, probed at\n  // authoring time: 1440x2560 (same 9:16 aspect, no crop), 13.8 s, 19.5 MB.\n  // The title scene (3.7 s) never outruns it.\n  const COVER = 'https://videos.pexels.com/video-files/34930800/14796392_1080_1920_30fps.mp4';\n  const coverVideo = clean(cfg.coverVideoOverride) === 'https://videos.pexels.com/video-files/34930800/14796393_1440_2560_30fps.mp4' ? COVER : (clean(cfg.coverVideoOverride) || COVER);\n  const titleDur = round2(titleBase + titleT);\n  const outroDur = outroBase;\n\n  // ---- music guard --------------------------------------------------------\n  // `probe` is the full HEAD response for cfg.musicUrl. Unreachable or\n  // oversized music must never fail the render — it is simply dropped.\n  const musicUrl = clean(cfg.musicUrl);\n  const limit = Number(cfg.maxMusicBytes) > 0 ? Number(cfg.maxMusicBytes) : 5242880;\n  const headers = (probe && probe.headers) || {};\n  const musicBytes = Number(headers['content-length'] || headers['Content-Length'] || 0);\n  const musicOk = !!musicUrl && Number(probe && probe.statusCode) === 200 && (!musicBytes || musicBytes <= limit);\n  const musicSkipped = musicOk ? null : (!musicUrl ? 'musicUrl empty' : (Number(probe && probe.statusCode) !== 200 ? 'HEAD ' + (probe && probe.statusCode || 'failed') : musicBytes + ' bytes > ' + limit));\n\n  // ---- adaptive type ------------------------------------------------------\n  // Greedy word-wrap estimate. Archivo 900 uppercase runs ~0.68 em average,\n  // mixed-case 900 ~0.50 em (calibrated on the rendered design sources).\n  const wrapLines = (text, fontPx, boxPx, avgEm) => {\n    const perLine = Math.max(4, Math.floor(boxPx / (fontPx * avgEm)));\n    let n = 1;\n    let used = 0;\n    for (const w of String(text).split(' ')) {\n      const need = used === 0 ? w.length : used + 1 + w.length;\n      if (need <= perLine) { used = need; continue; }\n      n += 1;\n      used = Math.min(w.length, perLine);\n    }\n    return n;\n  };\n\n  const gradTop = lighten(bg, 12);\n  const gradMid = lighten(bg, 5);\n\n  // ---- title scene --------------------------------------------------------\n  const roundLine = (league + ' · ' + roundLabel + (dateLine ? ' · ' + dateLine : '')).toUpperCase();\n  const tLen = title.length;\n  const titleSize = tLen <= 26 ? 76 : tLen <= 42 ? 66 : 58;\n  const shadeSvg = \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='srShade' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='\" + bg + \"' stop-opacity='0.75'/><stop offset='0.4' stop-color='\" + bg + \"' stop-opacity='0.45'/><stop offset='0.72' stop-color='\" + bg + \"' stop-opacity='0.88'/><stop offset='1' stop-color='\" + bg + \"' stop-opacity='0.98'/></linearGradient></defs><rect width='1080' height='1920' fill='url(#srShade)'/><path d='M-40 1150 L1120 1070 L1120 1086 L-40 1166 Z' fill='\" + rgba(accent, 0.4) + \"'/><path d='M-40 1210 L1120 1130 L1120 1174 L-40 1254 Z' fill='\" + accent + \"'/></svg>\";\n\n  const titleScene = {\n    id: 'title',\n    duration: titleDur,\n    backgroundColor: bg,\n    transition: 'slideup',\n    transitionId: 'm1',\n    transitionDuration: titleT,\n    visuals: [\n      { type: 'VIDEO', src: coverVideo, width: 1080, height: 1920, position: 'center-center', resize: 'cover', volume: 0, track: 0, enterBegin: 0, exitEnd: titleDur },\n      { type: 'SVG', width: 1080, height: 1920, track: 1, enterBegin: 0, exitEnd: titleDur, svg: shadeSvg },\n      {\n        type: 'TEXT', x: 540, y: 170, anchor: 'top-center', track: 2, enterBegin: 0.15, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: titleDur,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: \"<div style='text-align:center; color:rgba(255,255,255,0.85); font-size:23px; font-weight:700; letter-spacing:7px; text-shadow:0 2px 14px rgba(0,0,0,0.7);'>\" + esc(handle.toUpperCase()) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: 1330, width: 940, anchor: 'top-center', track: 3, enterBegin: 0.2, enterEnd: 0.6, enterAnimation: 'circleopen', exitEnd: titleDur,\n        style: { fontFamily: font, color: accent },\n        html: \"<div style='text-align:center; color:\" + accent + \"; font-size:34px; font-weight:900; letter-spacing:12px;'>\" + esc(brandName.toUpperCase()) + \"</div><div style='margin-top:14px; text-align:center; color:rgba(255,255,255,0.8); font-size:27px; font-weight:700; letter-spacing:3px;'>\" + esc(roundLine) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: 1480, width: 940, anchor: 'top-center', track: 4, enterBegin: 0.55, enterEnd: 1.0, enterAnimation: 'smoothup', exitEnd: titleDur,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: \"<div style='text-align:center; color:#FFFFFF; font-size:\" + titleSize + \"px; line-height:1.05; font-weight:900; letter-spacing:-2px;'>\" + esc(title) + '</div>',\n      },\n    ],\n  };\n\n  // ---- match scenes -------------------------------------------------------\n  const cardSvg = \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='srBg' cx='0.5' cy='0.38' r='1'><stop offset='0' stop-color='\" + gradTop + \"'/><stop offset='0.55' stop-color='\" + gradMid + \"'/><stop offset='1' stop-color='\" + bg + \"'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#srBg)'/><rect x='70' y='640' width='940' height='640' rx='36' fill='rgba(255,255,255,0.03)' stroke='\" + rgba(accent, 0.4) + \"' stroke-width='1.5'/><rect x='534' y='716' width='12' height='488' rx='6' fill='\" + rgba(accent, 0.45) + \"'/><rect x='70' y='640' width='940' height='12' rx='6' fill='\" + accent + \"'/></svg>\";\n\n  const nameSizesUsed = [];\n  const matchScenes = matches.map((m, i) => {\n    const isLastMatch = i === matches.length - 1;\n    const dur = round2(sceneBase + tSec); // outro always follows, so every match scene is padded\n    const home = clean(m.home).toUpperCase();\n    const away = clean(m.away).toUpperCase();\n    const hs = Number(m.homeScore);\n    const as = Number(m.awayScore);\n    const winner = hs > as ? 'home' : hs < as ? 'away' : 'draw';\n    // Uppercase Archivo 900 runs ~0.78 em per character (measured on the\n    // rendered frames), and CSS only wraps at spaces — so the size must also be\n    // capped by the LONGEST WORD or a name like BOURNEMOUTH overflows its\n    // 420 px column.\n    const L = Math.max(home.length, away.length);\n    const longestWord = Math.max(...(home + ' ' + away).split(' ').map((w) => w.length), 1);\n    const tierSize = L <= 8 ? 56 : L <= 12 ? 50 : L <= 17 ? 44 : L <= 24 ? 38 : 32;\n    const wordCap = Math.floor(420 / (longestWord * 0.8));\n    const nameSize = Math.max(26, Math.min(tierSize, wordCap));\n    nameSizesUsed.push(nameSize);\n    const maxScore = Math.max(hs, as);\n    const scoreSize = maxScore >= 100 ? 110 : maxScore >= 10 ? 150 : 170;\n    const line = clean(lines[i] || '');\n    const chipText = matches.length > 1 ? 'MATCH ' + (i + 1) + ' OF ' + matches.length : 'FULL TIME';\n\n    const col = (name, score, side) => {\n      const isWin = winner === side;\n      const isDraw = winner === 'draw';\n      const nameColor = isDraw || isWin ? '#FFFFFF' : '#98A29B';\n      const scoreColor = isWin ? accent : 'rgba(255,255,255,0.92)';\n      const bar = isWin ? \"<div style='margin:20px auto 0; width:130px; height:8px; border-radius:4px; background:\" + accent + \";'></div>\" : '';\n      return \"<div style='height:130px; display:flex; align-items:flex-end; justify-content:center;'><div style='text-align:center; color:\" + nameColor + '; font-size:' + nameSize + \"px; line-height:1.12; font-weight:900; letter-spacing:0px;'>\" + esc(name) + \"</div></div><div style='margin-top:24px; text-align:center; color:\" + scoreColor + '; font-size:' + scoreSize + \"px; line-height:1; font-weight:900;'>\" + (side === 'home' ? hs : as) + '</div>' + bar;\n    };\n\n    return {\n      id: 'm' + (i + 1),\n      duration: dur,\n      backgroundColor: bg,\n      transition: 'slideup',\n      transitionId: isLastMatch ? 'outro' : 'm' + (i + 2),\n      transitionDuration: tSec,\n      visuals: [\n        { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: dur, svg: cardSvg },\n        {\n          type: 'TEXT', x: 540, y: 470, anchor: 'center-center', track: 1, enterBegin: 0.1, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: dur,\n          style: { fontFamily: font, color: accent },\n          html: \"<span style='display:inline-block; background:\" + accent + '; color:' + bg + \"; padding:12px 34px; border-radius:10px; font-size:28px; font-weight:900; letter-spacing:6px;'>\" + esc(chipText) + '</span>',\n        },\n        {\n          type: 'TEXT', x: 305, y: 768, width: 420, anchor: 'top-center', track: 2, enterBegin: 0.3, enterEnd: 0.7, enterAnimation: 'smoothright', exitEnd: dur,\n          style: { fontFamily: font, color: '#FFFFFF' },\n          html: col(home, hs, 'home'),\n        },\n        {\n          type: 'TEXT', x: 775, y: 768, width: 420, anchor: 'top-center', track: 3, enterBegin: 0.45, enterEnd: 0.85, enterAnimation: 'smoothleft', exitEnd: dur,\n          style: { fontFamily: font, color: '#FFFFFF' },\n          html: col(away, as, 'away'),\n        },\n        {\n          type: 'TEXT', x: 540, y: 1360, width: 860, anchor: 'top-center', track: 4, enterBegin: 0.75, enterEnd: 1.15, enterAnimation: 'smoothup', exitEnd: dur,\n          style: { fontFamily: font, color: '#B9C6BD' },\n          html: \"<div style='text-align:center; color:#B9C6BD; font-size:34px; line-height:1.4; font-weight:600;'>\" + esc(line) + '</div>',\n        },\n        {\n          type: 'TEXT', x: 540, y: 1780, anchor: 'center-center', track: 5, enterBegin: 0, exitEnd: dur,\n          style: { fontFamily: font, color: 'rgba(255,255,255,0.55)' },\n          html: \"<div style='color:rgba(255,255,255,0.55); font-size:24px; font-weight:800; letter-spacing:5px;'>\" + esc((brandName + ' · ' + roundLabel).toUpperCase()) + '</div>',\n        },\n      ],\n    };\n  });\n\n  // ---- outro scene --------------------------------------------------------\n  const cLen = closing.length;\n  const closingSize = cLen <= 28 ? 76 : cLen <= 55 ? 64 : 54;\n  const closingLines = wrapLines(closing, closingSize, 900, 0.5);\n  const ctaY = Math.max(1150, Math.min(1560, Math.round(880 + closingLines * closingSize * 1.12 + 100)));\n  const handleY = ctaY + 145;\n  const outroSvg = \"<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><defs><radialGradient id='srEnd' cx='0.5' cy='0.38' r='0.9'><stop offset='0' stop-color='\" + lighten(bg, 16) + \"'/><stop offset='1' stop-color='\" + bg + \"'/></radialGradient></defs><rect width='1080' height='1920' fill='url(#srEnd)'/><circle cx='540' cy='620' r='120' fill='none' stroke='\" + rgba(accent, 0.55) + \"' stroke-width='3'/><path d='M480 560 h120 v34 c0 40 -26 66 -60 70 c-34 -4 -60 -30 -60 -70 z' fill='\" + accent + \"'/><path d='M480 570 h-24 a30 30 0 0 0 28 42' stroke='\" + accent + \"' stroke-width='8' fill='none'/><path d='M600 570 h24 a30 30 0 0 1 -28 42' stroke='\" + accent + \"' stroke-width='8' fill='none'/><rect x='528' y='664' width='24' height='30' fill='\" + accent + \"'/><rect x='498' y='694' width='84' height='16' rx='8' fill='\" + accent + \"'/></svg>\";\n\n  const outroScene = {\n    id: 'outro',\n    duration: outroDur,\n    backgroundColor: bg,\n    visuals: [\n      { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: outroDur, svg: outroSvg },\n      {\n        type: 'TEXT', x: 540, y: 170, anchor: 'top-center', track: 1, enterBegin: 0.1, enterEnd: 0.45, enterAnimation: 'fade', exitEnd: outroDur,\n        style: { fontFamily: font, color: 'rgba(255,255,255,0.8)' },\n        html: \"<div style='text-align:center; color:rgba(255,255,255,0.8); font-size:26px; font-weight:900; letter-spacing:10px;'>\" + esc(brandName.toUpperCase()) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: 880, width: 900, anchor: 'top-center', track: 2, enterBegin: 0.25, enterEnd: 0.7, enterAnimation: 'smoothup', exitEnd: outroDur,\n        style: { fontFamily: font, color: '#FFFFFF' },\n        html: \"<div style='text-align:center; color:#FFFFFF; font-size:\" + closingSize + \"px; line-height:1.1; font-weight:900; letter-spacing:-1px;'>\" + esc(closing) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: ctaY, anchor: 'top-center', track: 3, enterBegin: 0.7, enterEnd: 1.15, enterAnimation: 'circleopen', exitEnd: outroDur,\n        style: { fontFamily: font, color: accent },\n        html: \"<div style='display:inline-block; background:\" + accent + '; color:' + bg + \"; border-radius:999px; padding:24px 60px; font-size:34px; font-weight:900;'>\" + esc(ctaText) + '</div>',\n      },\n      {\n        type: 'TEXT', x: 540, y: handleY, anchor: 'top-center', track: 4, enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: outroDur,\n        style: { fontFamily: font, color: 'rgba(255,255,255,0.65)' },\n        html: \"<div style='text-align:center; color:rgba(255,255,255,0.65); font-size:27px; font-weight:600; letter-spacing:4px;'>\" + esc(handle) + '</div>',\n      },\n    ],\n  };\n\n  const scenes = [titleScene].concat(matchScenes, [outroScene]);\n  const sumDur = scenes.reduce((a, s) => a + s.duration, 0);\n  const sumTrans = scenes.reduce((a, s) => a + (s.transitionDuration || 0), 0);\n  const totalSeconds = round2(sumDur - sumTrans);\n\n  // The render API only allows letters, digits, spaces, _ and - in `name`.\n  const safeName = ('sports-recap-' + league + '-' + roundLabel).toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);\n\n  const payload = {\n    name: safeName || 'sports-recap',\n    resolution: 'instagram-reel',\n    frameRate: 30,\n    backgroundColor: bg,\n    outputFormat: 'mp4',\n    scenes,\n  };\n  // NOTE: no `track` on audios — the render API rejects audios[].track.\n  if (musicOk) payload.audios = [{ src: musicUrl, volume: Number(cfg.musicVolume) > 0 ? Number(cfg.musicVolume) : 0.16 }];\n\n  return {\n    payload,\n    meta: {\n      matchCount: matches.length,\n      league,\n      roundLabel,\n      dateLine,\n      title,\n      closing,\n      usingDemoData: !!prep.usingDemoData,\n      musicIncluded: musicOk,\n      musicSkipped,\n      musicUrl,\n      musicBytes,\n      coverVideo,\n      totalSeconds,\n      titleSize,\n      closingSize,\n      nameSizes: nameSizesUsed,\n      scores: matches.map((m) => m.homeScore + '-' + m.awayScore),\n    },\n  };\n}\n// === late-series glue ===\nconst plan=$json;\nconst cfg=$('Set the league club and completed recap period').first().json;\nconst recap={title:plan.club?plan.club.team+' results':'The verified final scores',matchLines:plan.matches.map(m=>({home:m.home,away:m.away,line:m.homeScore===m.awayScore?'The match finished level.':(m.homeScore>m.awayScore?m.home:m.away)+' won '+Math.max(m.homeScore,m.awayScore)+' to '+Math.min(m.homeScore,m.awayScore)+'.'})),closing:plan.club?plan.club.wins+' wins, '+plan.club.draws+' draws, '+plan.club.losses+' losses.':plan.totals.goals+' goals across '+plan.totals.matches+' returned final matches.'};\nrecap.lines=recap.matchLines.map(m=>m.line);\nconst built=buildProject({...cfg,musicUrl:plan.musicOk?cfg.musicUrl:''},plan,recap,plan.musicProbe||{statusCode:0});\nreturn [{json:{...plan,...built}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4220,
+        500
+      ],
+      "id": "zvid-sr-0009",
+      "name": "Build the verified results and scoreline recap"
+    },
+    {
+      "id": "late-music",
+      "name": "A background music URL is configured?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2900,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "music-condition",
+              "leftValue": "={{ Boolean($('Set the league club and completed recap period').first().json.musicUrl) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-music-probe",
+      "name": "Check the optional music file size and availability",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3180,
+        500
+      ],
+      "parameters": {
+        "method": "HEAD",
+        "url": "={{ $('Set the league club and completed recap period').first().json.musicUrl }}",
+        "options": {
+          "timeout": 8000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "id": "late-music-restore",
+      "name": "Keep the source plan and usable music only",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3460,
+        500
+      ],
+      "parameters": {
+        "jsCode": "const plan=$('Verify final scores and prioritize recap matches').first().json,cfg=$('Set the league club and completed recap period').first().json,probe=$json;const bytes=Number(probe.headers?.['content-length']||0);const musicOk=Number(probe.statusCode)===200&&Number.isFinite(bytes)&&bytes>=0&&bytes<=Number(cfg.maxMusicBytes||5242880);return [{json:{...plan,musicOk,musicProbe:probe}}];"
+      }
+    },
+    {
+      "id": "late-design-context",
+      "name": "Prepare the selected source for design",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3740,
+        500
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "id": "late-validate",
+      "name": "Validate the video and request its credit quote",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        4500,
+        500
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "validate",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify($json.payload) }}"
+      }
+    },
+    {
+      "id": "late-quote",
+      "name": "Enforce the per-video credit ceiling",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4780,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function checkQuote(cfg, build, response) {\n  const body = response.body || response;\n  if (body.valid !== true) throw new Error('Zvid validation failed: '+JSON.stringify(body.errors || body.details || body).slice(0,1200));\n  const credits = Number(body.creditsRequired), ceiling = Number(cfg.maxCreditsPerVideo);\n  if (!Number.isFinite(credits) || credits < 0) throw new Error('Zvid did not return a valid credit quote.');\n  if (!Number.isFinite(ceiling) || ceiling <= 0) throw new Error('Set maxCreditsPerVideo to a positive number.');\n  if (credits > ceiling) throw new Error('Video needs '+credits+' credits; maxCreditsPerVideo is '+ceiling+'. No paid render submitted for this item.');\n  return {...build,creditsRequired:credits,warnings:body.warnings || []};\n}\nconst d=checkQuote($('Set the league club and completed recap period').first().json,$('Build the verified results and scoreline recap').first().json,$json);const {payload,forecast,weather,narrationData,musicProbe,...snapshot}=d;d.checkpoint={...snapshot,snapshotVersion:1};if(JSON.stringify(d.checkpoint).length>45000)throw Error('Recovery snapshot exceeds the sheet cell limit. No render submitted.');return [{json:d}];"
+      }
+    },
+    {
+      "id": "late-preview",
+      "name": "Return a validation-only preview?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        5060,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "preview-condition",
+              "leftValue": "={{ $('Set the league club and completed recap period').first().json.dryRun === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-preview-report",
+      "name": "Return the source plan design quote and handoff",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5060,
+        850
+      ],
+      "parameters": {
+        "jsCode": "return [{json:{...$json,status:'preview',dryRun:true,videoUrl:null,note:'No log writes, editor draft, render or delivery.'}}];"
+      }
+    },
+    {
+      "id": "late-claim",
+      "name": "Reserve this render key before spending credits",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        5540,
+        500
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sports Recaps",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RenderKey": "={{ $('Enforce the per-video credit ceiling').first().json.renderKey }}",
+            "Status": "submitting",
+            "JobId": "",
+            "VideoUrl": "",
+            "CreditsQuoted": "={{ $('Enforce the per-video credit ceiling').first().json.creditsRequired }}",
+            "PlanJson": "={{ JSON.stringify($('Enforce the per-video credit ceiling').first().json.checkpoint) }}",
+            "CompletedAt": ""
+          },
+          "matchingColumns": [
+            "RenderKey"
+          ],
+          "schema": [
+            {
+              "id": "RenderKey",
+              "displayName": "RenderKey",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "JobId",
+              "displayName": "JobId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "VideoUrl",
+              "displayName": "VideoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CreditsQuoted",
+              "displayName": "CreditsQuoted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PlanJson",
+              "displayName": "PlanJson",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CompletedAt",
+              "displayName": "CompletedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "late-attempt",
+      "name": "Prepare a bounded render submission attempt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5820,
+        500
+      ],
+      "parameters": {
+        "jsCode": "const prior=$json;const checkpoint=$('Enforce the per-video credit ceiling').first().json.checkpoint;return [{json:{...checkpoint,checkpoint,submitStartedAt:prior.submitStartedAt||Date.now(),submitAttempts:Number(prior.submitAttempts||0)+1}}];"
+      }
+    },
+    {
+      "id": "late-submit",
+      "name": "Submit this approved video to Zvid",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        6100,
+        500
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "create",
+        "source": "json",
+        "projectJson": "={{ JSON.stringify($('Enforce the per-video credit ceiling').first().json.payload) }}",
+        "renderType": "video",
+        "waitForCompletion": false
+      },
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "late-rejection",
+      "name": "Distinguish a capacity rejection from an uncertain submission",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6100,
+        850
+      ],
+      "parameters": {
+        "jsCode": "function classifySubmissionError(context, error, now, cfg) {\n\tconst status = Number(\n\t\terror.httpCode ||\n\t\t\terror.statusCode ||\n\t\t\terror.status ||\n\t\t\terror.response?.status ||\n\t\t\terror.cause?.statusCode ||\n\t\t\terror.cause?.response?.status,\n\t);\n\tconst rejected =\n\t\tstatus === 429 ||\n\t\t(!status &&\n\t\t\terror.name === 'NodeApiError' &&\n\t\t\terror.message === 'The service is receiving too many requests from you');\n\tlet body =\n\t\terror.response?.data ||\n\t\terror.context?.data ||\n\t\terror.cause?.response?.data ||\n\t\terror.cause?.error ||\n\t\t{};\n\tif (typeof body === 'string') {\n\t\ttry {\n\t\t\tbody = JSON.parse(body);\n\t\t} catch {\n\t\t\tbody = {};\n\t\t}\n\t}\n\tconst headers = error.response?.headers || error.cause?.response?.headers || {};\n\tconst raw = headers['retry-after'] ?? body.retryAfter;\n\tconst retrySeconds = Math.max(30, Number(raw) || Math.ceil((Date.parse(raw) - now) / 1000) || 30);\n\tconst deadline = context.submitStartedAt + Number(cfg.timeoutMinutes || 20) * 60000;\n\tconst retry = rejected && context.submitAttempts < 3 && now + retrySeconds * 1000 < deadline;\n\tconst reason = rejected\n\t\t? 'Zvid render capacity is full (HTTP 429); no job was accepted. ' +\n\t\t\t(retry\n\t\t\t\t? 'Retrying after ' + retrySeconds + ' seconds.'\n\t\t\t\t: 'Retry this workflow later; the rejected key is safe to reuse.')\n\t\t: 'Render submission outcome is uncertain. Inspect https://app.zvid.io before retrying: ' +\n\t\t\tString(error.description || error.message || error);\n\treturn {\n\t\t...context,\n\t\tstatus: rejected ? 'rate_limited' : 'needs_review',\n\t\treason,\n\t\tretry,\n\t\tretrySeconds,\n\t\tvideoUrl: null,\n\t\tcheckpoint: {\n\t\t\t...context.checkpoint,\n\t\t\tsubmission: {\n\t\t\t\tstatus: rejected ? 'rate_limited' : 'needs_review',\n\t\t\t\treason,\n\t\t\t\tattemptedAt: new Date(now).toISOString(),\n\t\t\t},\n\t\t},\n\t};\n}\nconst item=$input.first();return [{json:classifySubmissionError($('Prepare a bounded render submission attempt').first().json,item.error||item.json.error||{},Date.now(),$('Set the league club and completed recap period').first().json)}];"
+      }
+    },
+    {
+      "id": "late-save-rejection",
+      "name": "Record the rejected or uncertain submission",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        6380,
+        850
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sports Recaps",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RenderKey": "={{ $('Distinguish a capacity rejection from an uncertain submission').first().json.renderKey }}",
+            "Status": "={{ $('Distinguish a capacity rejection from an uncertain submission').first().json.status }}",
+            "JobId": "",
+            "VideoUrl": "",
+            "PlanJson": "={{ JSON.stringify($('Distinguish a capacity rejection from an uncertain submission').first().json.checkpoint) }}"
+          },
+          "matchingColumns": [
+            "RenderKey"
+          ],
+          "schema": [
+            {
+              "id": "RenderKey",
+              "displayName": "RenderKey",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "JobId",
+              "displayName": "JobId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "VideoUrl",
+              "displayName": "VideoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PlanJson",
+              "displayName": "PlanJson",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "late-rejection-context",
+      "name": "Restore the submission rejection and retry timing",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6660,
+        850
+      ],
+      "parameters": {
+        "jsCode": "return [{json:$('Distinguish a capacity rejection from an uncertain submission').first().json}];"
+      }
+    },
+    {
+      "id": "late-retry-capacity",
+      "name": "Retry this explicit capacity rejection?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        6940,
+        850
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "retry-capacity-condition",
+              "leftValue": "={{ $json.retry === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "late-capacity-wait",
+      "name": "Wait before retrying available render capacity",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5820,
+        1200
+      ],
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": "={{ $json.retrySeconds }}",
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "late-submission-stop",
+      "name": "Report why the render submission stopped",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7220,
+        850
+      ],
+      "parameters": {
+        "jsCode": "throw Error($json.reason);"
+      }
+    },
+    {
+      "id": "late-accepted",
+      "name": "Capture the accepted render job ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6380,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function trackJob(context, response, now) {\n  const jobId=String(response.jobId || response.id || context.jobId || '').trim();\n  if (!jobId) throw new Error('No render job ID returned. The sheet stays submitting; inspect https://app.zvid.io before resetting it.');\n  return {...context,jobId,pollStartedAt:now};\n}\nreturn [{json:trackJob($('Enforce the per-video credit ceiling').first().json.checkpoint,$json,Date.now())}];"
+      }
+    },
+    {
+      "id": "late-save-job",
+      "name": "Persist the accepted job for recovery",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        6660,
+        500
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sports Recaps",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RenderKey": "={{ $('Capture the accepted render job ID').first().json.renderKey }}",
+            "Status": "rendering",
+            "JobId": "={{ $('Capture the accepted render job ID').first().json.jobId }}"
+          },
+          "matchingColumns": [
+            "RenderKey"
+          ],
+          "schema": [
+            {
+              "id": "RenderKey",
+              "displayName": "RenderKey",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "JobId",
+              "displayName": "JobId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "late-restore-new",
+      "name": "Restore the accepted render context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6940,
+        500
+      ],
+      "parameters": {
+        "jsCode": "return [{json:$('Capture the accepted render job ID').first().json}];"
+      }
+    },
+    {
+      "id": "late-track",
+      "name": "Track the saved job and its source context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7700,
+        220
+      ],
+      "parameters": {
+        "jsCode": "function trackJob(context, response, now) {\n  const jobId=String(response.jobId || response.id || context.jobId || '').trim();\n  if (!jobId) throw new Error('No render job ID returned. The sheet stays submitting; inspect https://app.zvid.io before resetting it.');\n  return {...context,jobId,pollStartedAt:now};\n}\nreturn [{json:trackJob($json,{},Date.now())}];"
+      }
+    },
+    {
+      "id": "late-status",
+      "name": "Wait for this accepted Zvid render",
+      "type": "@zvid/n8n-nodes-zvid.zvid",
+      "typeVersion": 1,
+      "position": [
+        7980,
+        500
+      ],
+      "parameters": {
+        "resource": "render",
+        "operation": "get",
+        "jobId": "={{ $json.jobId }}",
+        "waitForCompletion": true,
+        "waitOptions": {
+          "pollInterval": "={{ Number($('Set the league club and completed recap period').first().json.pollSeconds) || 10 }}",
+          "maxWaitTime": "={{ (Number($('Set the league club and completed recap period').first().json.timeoutMinutes) || 20)*60 }}"
+        }
+      },
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "late-classify",
+      "name": "Classify completion failure or uncertain status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8260,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function classifyJob(context, response, now, timeoutMinutes) {\n  const result=response.result;\n  const url=typeof result==='string'?result:result?.url || result?.videoUrl || '';\n  const state=String(response.state || response.status || '').toLowerCase();\n  if (state==='completed') {\n    if (!/^https:\\/\\/\\S+$/i.test(url)) return {...context,status:'needs_review',reason:'Completed job has no HTTPS media URL. Inspect Zvid; do not resubmit.',videoUrl:null};\n    return {...context,status:'completed',videoUrl:url,renderedAt:new Date(now).toISOString()};\n  }\n  if (['failed','cancelled','canceled'].includes(state)) return {...context,status:'failed',reason:String(response.failedReason || response.error || state),videoUrl:null};\n  if (now-context.pollStartedAt >= Number(timeoutMinutes || 20)*60000) return {...context,status:'timed_out',reason:'Polling deadline reached. Keep the job ID and check Zvid before resuming.',videoUrl:null};\n  if (!['waiting','queued','active','processing','rendering','pending'].includes(state)) return {...context,status:'needs_review',reason:'Unrecognized render state: '+state,videoUrl:null};\n  return {...context,status:'rendering',videoUrl:null};\n}\nconst context=$('Track the saved job and its source context').first().json;let response=$json;if(response.error){const error=typeof response.error==='string'?response.error:JSON.stringify(response.error);response={state:/did not finish within|timed? ?out/i.test(error)?'timed_out':/failed/i.test(error)?'failed':'needs_review',failedReason:error};}const result=classifyJob(context,response,Date.now(),$('Set the league club and completed recap period').first().json.timeoutMinutes);if(response.state==='timed_out')result.status='timed_out';const {payload,outcomeCheckpoint,...snapshot}=result;result.outcomeCheckpoint={...snapshot,renderOutcome:{status:result.status,reason:result.reason||null}};return [{json:result}];"
+      }
+    },
+    {
+      "id": "late-finish",
+      "name": "Record the render outcome and completed URL",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        8540,
+        500
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sports Recaps",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RenderKey": "={{ $('Classify completion failure or uncertain status').first().json.renderKey }}",
+            "Status": "={{ $('Classify completion failure or uncertain status').first().json.status }}",
+            "JobId": "={{ $('Classify completion failure or uncertain status').first().json.jobId }}",
+            "VideoUrl": "={{ $('Classify completion failure or uncertain status').first().json.videoUrl || '' }}",
+            "CompletedAt": "={{ $('Classify completion failure or uncertain status').first().json.renderedAt || '' }}",
+            "PlanJson": "={{ JSON.stringify($('Classify completion failure or uncertain status').first().json.outcomeCheckpoint) }}"
+          },
+          "matchingColumns": [
+            "RenderKey"
+          ],
+          "schema": [
+            {
+              "id": "RenderKey",
+              "displayName": "RenderKey",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "JobId",
+              "displayName": "JobId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "VideoUrl",
+              "displayName": "VideoUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CompletedAt",
+              "displayName": "CompletedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PlanJson",
+              "displayName": "PlanJson",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "late-report",
+      "name": "Prepare the completed result and review pack",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9020,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function completedResult(result) {\n\tif (result.status !== 'completed' || !/^https:\\/\\/\\S+$/i.test(String(result.videoUrl || '')))\n\t\tthrow Error(\n\t\t\t'Video is not ready (' +\n\t\t\t\tresult.status +\n\t\t\t\t'): ' +\n\t\t\t\t(result.reason || 'Inspect the saved job in Zvid.') +\n\t\t\t\t' Job: ' +\n\t\t\t\t(result.jobId || 'unknown') +\n\t\t\t\t'. The tracking row was saved; no replacement render was submitted.',\n\t\t);\n\treturn { ...result, nextStep: 'Review the video and source handoff before sharing.' };\n}\nreturn [{json:completedResult($('Classify completion failure or uncertain status').first().json)}];"
+      }
+    },
+    {
+      "id": "late-handoff",
+      "name": "Download the source-specific review pack",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9300,
+        850
+      ],
+      "parameters": {
+        "jsCode": "function csvFile(rows, fileName) {\n\tconst columns = Object.keys(rows[0] || {}),\n\t\tcell = (v) => {\n\t\t\tlet s = String(v ?? '');\n\t\t\tif (/^[=+@\\-\\t\\r]/.test(s)) s = \"'\" + s;\n\t\t\treturn '\"' + s.replace(/\"/g, '\"\"') + '\"';\n\t\t};\n\tconst csv = [\n\t\tcolumns.map(cell).join(','),\n\t\t...rows.map((r) => columns.map((k) => cell(r[k])).join(',')),\n\t].join('\\r\\n');\n\treturn { data: Buffer.from(csv, 'utf8').toString('base64'), mimeType: 'text/csv', fileName };\n}\nconst d=$json;return [{json:{renderKey:d.renderKey,status:d.status,videoUrl:d.videoUrl||null,rowCount:(d.handoff||[]).length},binary:{data:csvFile(d.handoff||[],'sports-recap-video-review.csv')}}];"
+      }
+    },
+    {
+      "id": "zvid-watch-ready",
+      "name": "Completed video is ready to watch?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        9300,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "watch-ready-condition",
+              "leftValue": "={{ $json.status === 'completed' && !$json.dryRun && /^https:\\/\\//i.test(String($json.videoUrl || '')) }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -448,7 +1051,7 @@
         0
       ],
       "parameters": {
-        "content": "## Create a weekly sports recap\n\n### How it works\nFetch recent final scores from TheSportsDB and generate short on-screen commentary. Zvid renders a vertical scoreboard recap with music. Match data supplies the score; generated text should be reviewed before publishing.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node.\n3. Connect OpenRouter to Write recap. Set leagueId, brandName, handle and ctaText in Config.\n4. Check the configured data endpoint and league before scheduling. The finished video is returned for review; social publishing is a separate step.\n5. **dryRun=false** renders and spends Zvid credits. Set it to **true** for an editor draft and quote. AI or transcription charges may still apply.\n6. Test manually and review the output before activating automatic runs.\n\n### Customization\nAdjust branding, media and timing in the configuration node. [Detailed setup guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/sports-recap-video.md).",
+        "content": "## Build verified league or club recaps with a final-score fact sheet\n\n### How it works\nRead recent events from TheSportsDB. Keep verified final matches in the requested league and completed date window, reject conflicting scores, and optionally focus on one club. Rank scorelines, calculate returned-match totals and club form, and create a deterministic recap with a fact sheet. A separate recovery log skips completed keys and resumes accepted jobs. Review the video and CSV before sharing.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`; select it on all Zvid nodes.\n3. Connect Google Sheets and select the **Sports Recaps** log tab. Create RenderKey, Status, JobId, CreditsQuoted, PlanJson, VideoUrl and CompletedAt headers; optional delivery also needs DeliveryStatus.\n4. Configure sportsDbKey, leagueId, optional focusTeam and completed periodStart/periodEnd. See the [source contract and migration guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/sports-recap-video.md).\n5. **dryRun=false spends credits.** true returns JSON and a quote only. Set maxCreditsPerVideo, then test manually before enabling the schedule.\n6. Avoid overlapping executions. Inspect submitting, failed or uncertain jobs before resetting any log row.\n\n### Customization\nAdjust branding and the domain rules in **Set the league club and completed recap period**. Watch downloads time out after 30 seconds; the saved URL remains available.",
         "color": 1,
         "width": 720,
         "height": 1160
@@ -456,7 +1059,7 @@
     },
     {
       "id": "publication-section-sports-recap-video-configure",
-      "name": "1. Choose settings and an entry point",
+      "name": "1. Choose source rules and schedule",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -464,335 +1067,538 @@
         0
       ],
       "parameters": {
-        "content": "## 1. Choose settings and an entry point\n\nComplete the overview setup first. Use the manual trigger for a test, then check the trigger settings and workflow timezone before activation.",
+        "content": "## 1. Choose source rules and schedule\n\nComplete the overview setup and source contract. Run one execution at a time. Use the manual trigger before enabling the schedule.",
         "color": 7,
-        "width": 880,
-        "height": 520
+        "width": 660,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-sports-recap-video-results",
-      "name": "2. Read the final match results",
+      "id": "publication-section-sports-recap-video-source",
+      "name": "2. Check the real source and plan the output",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1000,
+        760,
         0
       ],
       "parameters": {
-        "content": "## 2. Read the final match results\n\nSelect the intended league in Config. Use the returned final scores as the source of truth for every scoreboard.",
+        "content": "## 2. Check the real source and plan the output\n\nFilter league, club, dates and verified final statuses. Optional latest-available mode can use older returned finals within maxFallbackAgeDays; the video shows their actual period. Explicit date ranges stay strict.",
         "color": 7,
-        "width": 620,
-        "height": 520
+        "width": 1220,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-sports-recap-video-script",
-      "name": "3. Write and check the script",
+      "id": "publication-section-sports-recap-video-routing",
+      "name": "3. Recover accepted work before a new render",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1740,
+        2080,
         0
       ],
       "parameters": {
-        "content": "## 3. Write and check the script\n\nGenerate concise copy from the supplied source. Review names, claims and attribution before sharing the finished video.",
+        "content": "## 3. Recover accepted work before a new render\n\nSaved jobs follow the upper route using their original review context. New work continues through optional media and the domain design.",
         "color": 7,
-        "width": 620,
-        "height": 520
+        "width": 660,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-sports-recap-video-validate",
-      "name": "4. Build and validate the design",
+      "id": "publication-section-sports-recap-video-music",
+      "name": "4. Check optional background music",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2480,
+        2840,
         0
       ],
       "parameters": {
-        "content": "## 4. Build and validate the design\n\nPrepare the media and video design, then validate the payload and credit quote. Resolve validation errors before submitting a render.",
+        "content": "## 4. Check optional background music\n\nA failed or oversized music file is skipped. Empty musicUrl continues without an external request. This check preserves the selected source plan.",
         "color": 7,
-        "width": 1140,
-        "height": 520
+        "width": 1220,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-sports-recap-video-preview",
-      "name": "5. Choose an optional editor preview",
+      "id": "publication-section-sports-recap-video-quote",
+      "name": "5. Build and validate the design and credit ceiling",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        0,
-        680
+        4160,
+        0
       ],
       "parameters": {
-        "content": "## 5. Choose an optional editor preview\n\ndryRun=true returns an editor draft and credit quote. The default false branch renders and spends Zvid credits; upstream AI services may charge separately.",
+        "content": "## 5. Build and validate the design and credit ceiling\n\ndryRun=true returns the source plan, design JSON and quote. It performs no log writes, editor draft creation, render, or delivery.",
         "color": 7,
-        "width": 880,
-        "height": 520
+        "width": 1220,
+        "height": 1160
       }
     },
     {
-      "id": "publication-section-sports-recap-video-render",
-      "name": "6. Render and wait for completion",
+      "id": "publication-section-sports-recap-video-reserve",
+      "name": "6. Reserve the key and preserve the accepted job",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1000,
-        680
+        5480,
+        0
       ],
       "parameters": {
-        "content": "## 6. Render and wait for completion\n\nSubmit the render, then check its status until completion or timeout. Keep each result paired with its source item. Check Zvid before retrying a timed-out job.",
+        "content": "## 6. Reserve the key and preserve the accepted job\n\nSave the key and accepted job ID. Retry explicit capacity rejections up to three attempts, respecting the server delay and a 30-second minimum. Uncertain submissions require inspection. Sheets is not an atomic lock.",
         "color": 7,
-        "width": 1140,
-        "height": 760
+        "width": 2060,
+        "height": 1490
+      }
+    },
+    {
+      "id": "publication-section-sports-recap-video-finish",
+      "name": "7. Wait for the accepted render and record its result",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        7640,
+        0
+      ],
+      "parameters": {
+        "content": "## 7. Wait for the accepted render and record its result\n\nPoll the saved job within the deadline. Keep failed, timed-out and uncertain job IDs for inspection. Completed keys are skipped on later runs.",
+        "color": 7,
+        "width": 1220,
+        "height": 1160
       }
     },
     {
       "id": "zvid-watch-instructions",
-      "name": "7. Review the finished media",
+      "name": "8. Review the video and source-specific handoff",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2260,
-        680
+        8960,
+        0
       ],
       "parameters": {
-        "content": "## 7. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.",
+        "content": "## 8. Review the video and source-specific handoff\n\nCompleted renders reach Watch video → Binary → data → View. A failed render stops with its actual reason after saving the tracking row. Download the review CSV and check source facts before sharing.",
         "color": 7,
-        "width": 880,
-        "height": 520
+        "width": 940,
+        "height": 1160
       }
     }
   ],
   "pinData": {},
   "connections": {
-    "Every Monday 8am": {
+    "A background music URL is configured?": {
       "main": [
         [
           {
-            "node": "Config",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Test manually": {
-      "main": [
-        [
-          {
-            "node": "Config",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Config": {
-      "main": [
-        [
-          {
-            "node": "Fetch results",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Fetch results": {
-      "main": [
-        [
-          {
-            "node": "Prepare results",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prepare results": {
-      "main": [
-        [
-          {
-            "node": "Write recap",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Write recap": {
-      "main": [
-        [
-          {
-            "node": "Parse recap",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Parse recap": {
-      "main": [
-        [
-          {
-            "node": "Check music bed",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check music bed": {
-      "main": [
-        [
-          {
-            "node": "Build project JSON",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Build project JSON": {
-      "main": [
-        [
-          {
-            "node": "Validate project (free)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validate project (free)": {
-      "main": [
-        [
-          {
-            "node": "Check validation",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check validation": {
-      "main": [
-        [
-          {
-            "node": "Dry run?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Dry run?": {
-      "main": [
-        [
-          {
-            "node": "Save draft to editor",
+            "node": "Check the optional music file size and availability",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Submit render",
+            "node": "Prepare the selected source for design",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Save draft to editor": {
+    "Check the optional music file size and availability": {
       "main": [
         [
           {
-            "node": "Dry run summary",
+            "node": "Keep the source plan and usable music only",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Submit render": {
+    "Keep the source plan and usable music only": {
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "Prepare the selected source for design",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Wait": {
+    "Prepare the selected source for design": {
       "main": [
         [
           {
-            "node": "Get render status",
+            "node": "Build the verified results and scoreline recap",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get render status": {
+    "Test the sports recap video workflow": {
       "main": [
         [
           {
-            "node": "Render finished?",
+            "node": "Set the league club and completed recap period",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Render finished?": {
+    "Start the scheduled sports recap video": {
       "main": [
         [
           {
-            "node": "Run summary",
+            "node": "Set the league club and completed recap period",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set the league club and completed recap period": {
+      "main": [
+        [
+          {
+            "node": "Fetch recent league events from TheSportsDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch recent league events from TheSportsDB": {
+      "main": [
+        [
+          {
+            "node": "Read Sports Recaps recovery log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Sports Recaps recovery log": {
+      "main": [
+        [
+          {
+            "node": "Verify final scores and prioritize recap matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify final scores and prioritize recap matches": {
+      "main": [
+        [
+          {
+            "node": "Eligible source content or saved render exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eligible source content or saved render exists?": {
+      "main": [
+        [
+          {
+            "node": "Resume the accepted render job?",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Still rendering?",
+            "node": "Explain skipped content or recovery needs",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Still rendering?": {
+    "Resume the accepted render job?": {
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "Restore the saved result and handoff context",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "A background music URL is configured?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Run summary": {
+    "Restore the saved result and handoff context": {
       "main": [
         [
           {
-            "node": "Video ready to watch?",
+            "node": "Track the saved job and its source context",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Video ready to watch?": {
+    "Build the verified results and scoreline recap": {
+      "main": [
+        [
+          {
+            "node": "Validate the video and request its credit quote",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate the video and request its credit quote": {
+      "main": [
+        [
+          {
+            "node": "Enforce the per-video credit ceiling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enforce the per-video credit ceiling": {
+      "main": [
+        [
+          {
+            "node": "Return a validation-only preview?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return a validation-only preview?": {
+      "main": [
+        [
+          {
+            "node": "Return the source plan design quote and handoff",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reserve this render key before spending credits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reserve this render key before spending credits": {
+      "main": [
+        [
+          {
+            "node": "Prepare a bounded render submission attempt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare a bounded render submission attempt": {
+      "main": [
+        [
+          {
+            "node": "Submit this approved video to Zvid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit this approved video to Zvid": {
+      "main": [
+        [
+          {
+            "node": "Capture the accepted render job ID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Distinguish a capacity rejection from an uncertain submission",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Distinguish a capacity rejection from an uncertain submission": {
+      "main": [
+        [
+          {
+            "node": "Record the rejected or uncertain submission",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record the rejected or uncertain submission": {
+      "main": [
+        [
+          {
+            "node": "Restore the submission rejection and retry timing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restore the submission rejection and retry timing": {
+      "main": [
+        [
+          {
+            "node": "Retry this explicit capacity rejection?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry this explicit capacity rejection?": {
+      "main": [
+        [
+          {
+            "node": "Wait before retrying available render capacity",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Report why the render submission stopped",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait before retrying available render capacity": {
+      "main": [
+        [
+          {
+            "node": "Prepare a bounded render submission attempt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capture the accepted render job ID": {
+      "main": [
+        [
+          {
+            "node": "Persist the accepted job for recovery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persist the accepted job for recovery": {
+      "main": [
+        [
+          {
+            "node": "Restore the accepted render context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restore the accepted render context": {
+      "main": [
+        [
+          {
+            "node": "Track the saved job and its source context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track the saved job and its source context": {
+      "main": [
+        [
+          {
+            "node": "Wait for this accepted Zvid render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for this accepted Zvid render": {
+      "main": [
+        [
+          {
+            "node": "Classify completion failure or uncertain status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify completion failure or uncertain status": {
+      "main": [
+        [
+          {
+            "node": "Record the render outcome and completed URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record the render outcome and completed URL": {
+      "main": [
+        [
+          {
+            "node": "Prepare the completed result and review pack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare the completed result and review pack": {
+      "main": [
+        [
+          {
+            "node": "Completed video is ready to watch?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download the source-specific review pack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completed video is ready to watch?": {
       "main": [
         [
           {
@@ -811,7 +1617,8 @@
   },
   "versionId": "d7e2a9b4-3f61-4c58-8b07-5a9c1e4d2f83",
   "meta": {
-    "templateCredsSetupCompleted": false
+    "templateCredsSetupCompleted": false,
+    "lateSeriesReview": 1
   },
   "id": "ZvidSportsRecapVideo",
   "tags": []

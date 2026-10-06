@@ -339,7 +339,8 @@
               "responseFormat": "file",
               "outputPropertyName": "data"
             }
-          }
+          },
+          "timeout": 30000
         }
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -480,7 +481,7 @@
         680
       ],
       "parameters": {
-        "content": "## 5. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.",
+        "content": "## 5. Review the finished media\n\nOpen Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download. Each request times out after 30 seconds; completed links remain available.",
         "color": 7,
         "width": 620,
         "height": 520

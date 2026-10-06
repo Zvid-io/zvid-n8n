@@ -32,13 +32,14 @@ for (const entry of entries) {
     // Evaluate the actual n8n expressions for single videos, batches and agent replies.
     const ready = new Function('$json', '$', 'return (' + expressionBody(gate.parameters.conditions.conditions[0].leftValue) + ');');
     for (const videoUrl of ['', null, undefined, 'not a URL']) {
-      const item = { videoUrl, VideoUrl: videoUrl };
+      const item = { videoUrl, VideoUrl: videoUrl, status: 'completed' };
       assert.equal(ready(item, () => ({ first: () => ({ json: item }) })), false);
     }
     for (const videoUrl of ['https://cdn.zvid.io/videos/example/one.mp4', 'https://cdn.zvid.io/videos/example/two.mp4']) {
-      const item = { videoUrl, VideoUrl: videoUrl };
+      const item = { videoUrl, VideoUrl: videoUrl, status: 'completed' };
       assert.equal(ready(item, () => ({ first: () => ({ json: item }) })), true);
       assert.equal(ready({ ...item, dryRun: true }, () => ({ first: () => ({ json: item }) })), false);
+      if (result.meta?.lateSeriesReview) assert.equal(ready({ ...item, status: 'failed' }), false);
     }
     for (const node of original.nodes.filter(n => n.type !== STICKY && !/watch video/i.test(n.name))) {
       assert.deepEqual(result.nodes.find(n => n.id === node.id), node, 'Other functional nodes must be preserved');
