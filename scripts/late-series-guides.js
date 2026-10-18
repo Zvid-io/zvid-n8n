@@ -72,6 +72,8 @@ Optional: \`DoNotContact,Email,EmailApproval,ShowAge,Message,LastSentYear\`.
 
 Each occasion needs its own permanent unique CelebrationKey. Type is birthday or anniversary. Date is a real YYYY-MM-DD date. Approval must equal approved, GreetingConsent must be true/yes/1, and DoNotContact must not be true. Birthday age is omitted unless ShowAge is explicitly true. Anniversaries count completed years from Date and skip year zero. Message is optional reviewed copy, at most 250 characters; Name is at most 70.
 
+For an older sheet with Name, Type, Date, Years, Email, LastSentYear and Message, append CelebrationKey, Approval and GreetingConsent. Assign each existing occasion a permanent unique ID once, such as celebration-8cf890f0. Never use row numbers or a formula that changes after sorting. Keep LastSentYear and Celebration Runs intact. Leave approval and consent blank until confirmed; migration never grants either. Missing or duplicate keys identify the affected sheet rows. Not-due rows report their due date instead of silently disappearing.
+
 leapDayPolicy is feb28 (default), march1 or skip for a February 29 date in a non-leap year. Selection uses timezone. Independent annual keys include occasion and year, so one contact's birthday cannot consume their anniversary. Legacy LastSentYear still protects previously completed rows.
 
 One greeting is rendered per execution, with the deferred count in the report. The default schedule checks hourly from 08:00 through 18:00; align the n8n workflow timezone with timezone. Size the schedule for your volume and inspect deferred work. Original source rows are read-only; completion belongs to Celebration Runs. Resume saved jobs before selecting new paid work, even after a date rolls over.
@@ -79,9 +81,15 @@ One greeting is rendered per execution, with the deferred count in the report. T
 Optional email requires sendEmail=true, a valid SMTP credential, emailFrom, Email and EmailApproval=approved. The node sends only the completed private greeting URL. Rendering is recorded separately from delivery. Sending and acknowledgement are logged; ambiguous sends require manual inspection and are not retried. Resumed jobs require manual email review because their source consent may have changed. No test run sends real email.
 
 ## Migration
-Keep existing names, dates and LastSentYear. Add unique occasion keys and consent/approval columns after review. Do not infer consent or populate it automatically. Add a separate Celebration Runs log tab. The new workflow no longer marks a greeting as sent merely because rendering completed.`,
+Keep existing names, dates and LastSentYear. Add unique occasion keys and consent/approval columns after review. Do not infer consent or populate it automatically. Add a separate Celebration Runs log tab. The new workflow no longer marks a greeting as sent merely because rendering completed.
+
+For a new-video demo, set manualDemo=true and leave replayRenderKey empty. Each manual execution creates a fresh fictional DEMO Ava greeting with a distinct execution-based key. It reads the existing sheet connection but does not change real contact records or their completion history. Demo recipients have no email and cannot enter delivery. An unfinished demo job resumes before starting more paid work. Scheduled executions skip demo mode; set manualDemo=false for the real due-contact queue. dryRun=true validates and quotes this new design; dryRun=false submits a new paid render and waits for its own result. Obtain approval for agent-run test spending; a user clicking Execute should expect the quoted credits to be charged.
+
+For playback ONLY when explicitly requested, set replayRenderKey to a completed RenderKey with dryRun=false. This separate mode reads the old job without rendering, changing its log or sending email, even on a later date. Never configure playback as a substitute for testing new-video creation. Clear replayRenderKey for creation. The recovery log runs once per execution regardless of the number of source rows; separate duplicate rows remain an error.`,
 };
 function guide(kind) {
+	if (require('./weather-sports-revisions').kinds.includes(kind))
+		return require('./weather-sports-revisions').guide(kind);
 	const s = specs[kind];
 	return `# ${s.title}
 

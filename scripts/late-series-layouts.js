@@ -22,7 +22,7 @@ function lateLayout(w, kind) {
 	add(
 		'configure',
 		'Choose source rules and schedule',
-		'Complete the overview setup and source contract. Run one execution at a time. Use the manual trigger before enabling the schedule.',
+		kind === 'birthday-greetings' ? 'manualDemo=true creates a fresh fictional greeting on each manual execution and spends credits when dryRun=false. Email stays unavailable for demos. Disable manualDemo for the real contact queue. Run one execution at a time.' : 'Complete the overview setup and source contract. Run one execution at a time. Use the manual trigger before enabling the schedule.',
 		[
 			[trigger.name, 0, 260],
 			[manual.name, 0, 660],
@@ -30,46 +30,118 @@ function lateLayout(w, kind) {
 		],
 		660,
 	);
-	const sources =
-		kind === 'daily-weather-video'
-			? [
-					['Find the configured city candidates', 0, 500],
-					['Require one matching city and region', 280, 500],
-					[s.source, 560, 500],
-				]
-			: kind === 'kpi-report-video'
+	if (w.meta.domainRevision === 2) {
+		add(
+			'source-recovery',
+			'Recover accepted work before source checks',
+			'Resume saved paid jobs even if the upstream source is unavailable. A preview never resumes a paid job.',
+			[
+				[name('late-ledger'), 0, 500],
+				[name('revision-recover'), 280, 500],
+				[name('revision-recovered'), 560, 500],
+			],
+			940,
+		);
+		add(
+			'domain-input',
+			kind === 'daily-weather-video' ? 'Read the booking desk' : 'Choose one editorial case',
+			kind === 'daily-weather-video'
+				? 'Read approved requests and confirmed reservations for planningDate. Require offset-bearing times, duration, priority and stable BookingId. Keep confirmed bookings unchanged.'
+				: 'Process the least recently checked Enabled=yes EventId. Approval is tied to the complete fact snapshot and edition. The workflow never grants approval.',
+			[
+				[name('revision-queue'), 0, 500],
+				[name('revision-choose'), 280, 500],
+				[name('revision-has-input'), 560, 500],
+			],
+			940,
+		);
+		add(
+			'source',
+			kind === 'daily-weather-video'
+				? 'Propose slots around forecast constraints'
+				: 'Check final results against the rendered history',
+			kind === 'daily-weather-video'
+				? 'Allocate slots by priority without overlapping confirmed bookings or each other. Keep, reschedule or defer each request. Use daylight, temperature, rain and wind constraints.'
+				: 'Fetch the exact requested event. Compare its final facts with the previous completed edition. Changed facts require a new approval snapshot; uncertain render history blocks a replacement.',
+			[
+				...(kind === 'daily-weather-video'
+					? [
+							[name('zvid-wx-0004'), 0, 500],
+							[name('late-place'), 280, 500],
+							[s.source, 560, 500],
+							[s.plan, 840, 500],
+						]
+					: [
+							[s.source, 0, 500],
+							[s.plan, 280, 500],
+						]),
+			],
+			kind === 'daily-weather-video' ? 1220 : 660,
+		);
+		if (kind === 'sports-recap-video')
+			add(
+				'editorial-review',
+				'Save review facts and protect human approval',
+				'Update CurrentSnapshot and review status only. Review the facts, then set Approval=approved and copy CurrentSnapshot into ApprovedSnapshot. Dry runs skip these writes. Corrections retain the previous video.',
+				[
+					[name('revision-review-preview'), 0, 500],
+					[name('revision-review-save'), 280, 750],
+					[name('revision-review-context'), 560, 500],
+				],
+				940,
+			);
+		add(
+			'eligible',
+			'Continue only when the plan is eligible',
+			'Empty input, completed work, missing approval and blocked history return an explicit report. They spend no render credits.',
+			[
+				[name('late-ready'), 0, 500],
+				[name('late-no-work'), 280, 850],
+			],
+			660,
+		);
+	} else {
+		const sources =
+			kind === 'daily-weather-video'
 				? [
-						[name('late-metrics-mode'), 0, 500],
-						[name('late-sample-metrics'), 280, 260],
-						[name('late-require-metrics'), 280, 700],
-						[s.source, 560, 700],
-						[name('late-metrics-input'), 840, 500],
+						['Find the configured city candidates', 0, 500],
+						['Require one matching city and region', 280, 500],
+						[s.source, 560, 500],
 					]
-				: [[s.source, 0, 500]];
-	const start = kind === 'kpi-report-video' ? 1120 : sources.length * 280;
-	add(
-		'source',
-		kind === 'kpi-report-video'
-			? 'Choose live or labeled sample metrics'
-			: 'Check the real source and plan the output',
-		kind === 'quiz-shorts'
-			? 'Require approved questions with sources. Balance difficulty, rotate topics, and exclude previously used keys or question text.'
-			: kind === 'kpi-report-video'
-				? 'Live mode requires metricsUrl and a fresh completed-period snapshot. Explicit sample mode bypasses HTTP, labels its video and CSV, and blocks Slack delivery. Derive changes from current and previous values; rank target misses and adverse movements.'
-				: kind === 'daily-weather-video'
-					? 'Require one city and fresh forecast data. Evaluate future daytime hours and rank contiguous three-hour windows by rain probability and wind.'
-					: kind === 'sports-recap-video'
-						? 'Filter league, club, dates and verified final statuses. Optional latest-available mode can use older returned finals within maxFallbackAgeDays; the video shows their actual period. Explicit date ranges stay strict.'
-						: 'Require approval and greeting consent. Respect DoNotContact, an explicit leap-day rule, and birthday age opt-in. Process one due celebration per run.',
-		[
-			...sources,
-			[name('late-ledger'), start, 500],
-			[s.plan, start + 280, 500],
-			[name('late-ready'), start + 560, 500],
-			[name('late-no-work'), start + 560, 850],
-		],
-		start + 940,
-	);
+				: kind === 'kpi-report-video'
+					? [
+							[name('late-metrics-mode'), 0, 500],
+							[name('late-sample-metrics'), 280, 260],
+							[name('late-require-metrics'), 280, 700],
+							[s.source, 560, 700],
+							[name('late-metrics-input'), 840, 500],
+						]
+					: [[s.source, 0, 500]];
+		const start = kind === 'kpi-report-video' ? 1120 : sources.length * 280;
+		add(
+			'source',
+			kind === 'kpi-report-video'
+				? 'Choose live or labeled sample metrics'
+				: 'Check the real source and plan the output',
+			kind === 'quiz-shorts'
+				? 'Require approved questions with sources. Balance difficulty, rotate topics, and exclude previously used keys or question text.'
+				: kind === 'kpi-report-video'
+					? 'Live mode requires metricsUrl and a fresh completed-period snapshot. Explicit sample mode bypasses HTTP, labels its video and CSV, and blocks Slack delivery. Derive changes from current and previous values; rank target misses and adverse movements.'
+					: kind === 'daily-weather-video'
+						? 'Require one city and fresh forecast data. Evaluate future daytime hours and rank contiguous three-hour windows by rain probability and wind.'
+						: kind === 'sports-recap-video'
+							? 'Filter league, club, dates and verified final statuses. Optional latest-available mode can use older returned finals within maxFallbackAgeDays; the video shows their actual period. Explicit date ranges stay strict.'
+							: 'Give each occasion a permanent CelebrationKey. Older sheets need Approval and GreetingConsent columns; never infer either. Preserve LastSentYear and Celebration Runs. Respect DoNotContact, leap-day rules and birthday age opt-in. Process one due celebration per run; inspect skipped reasons otherwise.',
+			[
+				...sources,
+				[name('late-ledger'), start, 500],
+				[s.plan, start + 280, 500],
+				[name('late-ready'), start + 560, 500],
+				[name('late-no-work'), start + 560, 850],
+			],
+			start + 940,
+		);
+	}
 	add(
 		'routing',
 		'Recover accepted work before a new render',
@@ -113,7 +185,7 @@ function lateLayout(w, kind) {
 			[name('late-window'), 0, 500],
 			[name('late-window-found'), 280, 380],
 			[name('late-window-none'), 280, 780],
-			['Map forecast conditions into the video design', 560, 500],
+			[name('zvid-wx-0007'), 560, 500],
 		];
 	if (kind === 'birthday-greetings')
 		branches = [
@@ -126,10 +198,10 @@ function lateLayout(w, kind) {
 		add(
 			'design',
 			kind === 'daily-weather-video'
-				? 'Compose the forecast and planning advice'
+				? 'Compose the booking decisions and confirmation steps'
 				: 'Compose the approved celebration',
 			kind === 'daily-weather-video'
-				? 'Choose a qualifying daytime planning window or explain why none meets the thresholds. Add the checked current conditions and forecast to the video.'
+				? 'Branch on whether tentative slots exist. Build a booking-specific call sheet or a deferral briefing. The calendar file contains proposals only and never sends invitations.'
 				: 'Branch between birthdays and anniversaries. Use only the approved occasion facts, respect age opt-in, and add the personal message to the greeting.',
 			[...branches, [s.builder, buildX, 500]],
 			buildX + 380,
@@ -176,14 +248,14 @@ function lateLayout(w, kind) {
 	add(
 		'finish',
 		'Wait for the accepted render and record its result',
-		'Poll the saved job within the deadline. Keep failed, timed-out and uncertain job IDs for inspection. Completed keys are skipped on later runs.',
+		kind === 'birthday-greetings' ? 'Read the recovery log once per execution. Set replayRenderKey to a completed key for playback without new renders, sheet writes or email. Clear it for the normal queue. Keep failed or uncertain jobs for inspection.' : 'Poll the saved job within the deadline. Keep failed, timed-out and uncertain job IDs for inspection. Completed keys are skipped on later runs.',
 		[
 			[name('late-track'), 0, 220],
 			[name('late-status'), 280, 500],
 			[name('late-classify'), 560, 500],
-			[name('late-finish'), 840, 500],
+			...(node('late-replay-readonly') ? [[name('late-replay-readonly'), 840, 500], [name('late-finish'), 1120, 750]] : [[name('late-finish'), 840, 500]]),
 		],
-		1220,
+		node('late-replay-readonly') ? 1500 : 1220,
 	);
 	add(
 		'watch',
@@ -197,8 +269,10 @@ function lateLayout(w, kind) {
 			[name('zvid-watch-ready'), 280, 500],
 			['▶ Watch video', 560, 500],
 			[name('late-handoff'), 280, 850],
+			...(node('revision-calendar') ? [[name('revision-calendar'), 560, 1150]] : []),
 		],
 		940,
+		node('revision-calendar') ? 1470 : 1160,
 	);
 	if (node('late-deliver'))
 		add(
@@ -219,6 +293,10 @@ function lateLayout(w, kind) {
 			1500,
 		);
 	const overview = `## ${s.title}\n\n### How it works\n${s.purpose} A separate recovery log skips completed keys and resumes accepted jobs. Review the video and CSV before sharing.${kind === 'kpi-report-video' ? ' Optional Slack delivery is off by default.' : kind === 'birthday-greetings' ? ' Optional approved email delivery is off by default.' : ''}\n\n### Setup\n1. Install **\`@zvid/n8n-nodes-zvid\`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your key](https://app.zvid.io/api-keys) and Base URL \`https://api.zvid.io\`; select it on all Zvid nodes.\n3. Connect Google Sheets and select the **${s.log}** log tab. Create RenderKey, Status, JobId, CreditsQuoted, PlanJson, VideoUrl and CompletedAt headers; optional delivery also needs DeliveryStatus.\n4. Configure ${s.inputs}. See the [source contract and migration guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/${kind}.md).\n5. **dryRun=false spends credits.** true returns JSON and a quote only.${kind === 'kpi-report-video' ? ' Optional narration can charge in previews; see section 5 for voice credentials and the HTTP upload exception.' : ''} Set maxCreditsPerVideo, then test manually before enabling the schedule.\n6. Avoid overlapping executions. Inspect submitting, failed or uncertain jobs before resetting any log row.\n\n### Customization\nAdjust branding and the domain rules in **${s.config}**. Watch downloads time out after 30 seconds; the saved URL remains available.`;
-	return { overview, groups };
+	return {
+		overview:
+			w.meta.domainRevision === 2 ? require('./weather-sports-revisions').overview(kind) : overview,
+		groups,
+	};
 }
 module.exports = { lateLayout };

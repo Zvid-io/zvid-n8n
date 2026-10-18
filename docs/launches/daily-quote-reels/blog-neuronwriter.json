@@ -1,0 +1,43 @@
+{
+  "keyword": "daily quote video automation",
+  "queryId": "4381c9fc7df3c2a9",
+  "queryUrl": "https://app.neuronwriter.com/analysis/view/4381c9fc7df3c2a9",
+  "target": 80,
+  "attemptLimit": 5,
+  "attempts": [
+    {
+      "attempt": 1,
+      "score": 83,
+      "evaluatedAt": "2026-10-14T11:45:52.459180+00:00",
+      "articleHtmlSha256": "ac4fdc0411e073b9d7aff609a79bd38a38ff2c6760f937ce89d7d35a48699a5d"
+    },
+    {
+      "attempt": 2,
+      "score": 83,
+      "evaluatedAt": "2026-10-14T11:50:20.491753+00:00",
+      "articleHtmlSha256": "5588a4d68b4020ac46b8fb0cb6d805207cef5039ea6e4997f211039e60790f34"
+    },
+    {
+      "attempt": 3,
+      "score": 78,
+      "evaluatedAt": "2026-10-14T12:30:31.303641+00:00",
+      "articleHtmlSha256": "144330fd42dcf666aee766702c7e877e7374effb5760fa5aa24a7726ebee9d49"
+    },
+    {
+      "attempt": 4,
+      "score": 82,
+      "evaluatedAt": "2026-10-14T12:31:18.000462+00:00",
+      "articleHtmlSha256": "338a7c62fbcc83f6c3624202581ebee0b5250d7f79b68d14d3d31e082961f6b9"
+    },
+    {
+      "attempt": 5,
+      "score": 82,
+      "evaluatedAt": "2026-10-14T12:52:16.190694+00:00",
+      "articleHtmlSha256": "8a97e6c0ec1fbc429e8de191728493bcf02f02484b2c43555011812074e5b1d7"
+    }
+  ],
+  "selectedAttempt": 5,
+  "selectedScore": 82,
+  "reason": "The final version adds the owner-requested readable example table and matching downloadable CSV. It retains 82/100 and meets all current content requirements. Five evaluations used; no further scoring calls were made.",
+  "scope": "Public article HTML, with title and meta description in separate API fields. Excludes outline, media manifest, JSON-LD, internal checklist and reports. The CMS supplies the scored H1, so it is omitted from the submitted Markdown body to avoid a duplicate title."
+}

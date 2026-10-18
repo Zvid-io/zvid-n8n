@@ -757,7 +757,27 @@ function planSports(cfg, response, logs, now) {
 	};
 }
 
-function planCelebration(cfg, rows, logs, now) {
+function planCelebration(cfg, rows, logs, now, execution = {}) {
+	// Explicit playback is read-only, independent of today's date, and never
+	// falls through into new work when the saved key is missing or unfinished.
+	if (String(cfg.replayRenderKey || '').trim()) {
+		const key = String(cfg.replayRenderKey).trim();
+		const matches = logs.filter(r => String(r.RenderKey || '') === key);
+		if (cfg.dryRun === true) return helpers().noWork('Clear replayRenderKey to validate new content; dryRun never resumes saved jobs.');
+		if (matches.length !== 1) return helpers().noWork('Replay needs exactly one saved row for ' + key + '. Check Celebration Runs.', { status: 'needs_review' });
+		const row = matches[0];
+		if (row.Status !== 'completed' || !row.JobId) return helpers().noWork('This saved key is not a completed render with a JobId. No new render was started.', { status: 'needs_review' });
+		let plan;
+		try { plan = JSON.parse(row.PlanJson); } catch { return helpers().noWork('The saved replay context is invalid. Check PlanJson; no render was started.', { status: 'needs_review' }); }
+		if (plan.renderKey !== key || plan.snapshotVersion !== 1) return helpers().noWork('The saved replay context does not match this key.', { status: 'needs_review' });
+		return { ...plan, ready: true, dryRun: false, renderKey: key, jobId: String(row.JobId), replayed: true, emailApproved: false, creditsSpent: 0 };
+	}
+	if (cfg.manualDemo === true) {
+		if (!['test', 'manual', 'cli'].includes(execution.mode) || !String(execution.id || '')) return helpers().noWork('manualDemo runs only from the manual trigger. Disable it before scheduling real contacts.');
+		const today = helpers().day(now, cfg.timezone);
+		rows = [{ CelebrationKey: 'demo-manual-' + String(execution.id), Name: 'DEMO Ava', Type: 'birthday', Date: '2000-' + today.slice(5), Approval: 'approved', GreetingConsent: true, Email: '', EmailApproval: '', Message: 'Freshly rendered demo greeting. Wishing you a wonderful year ahead.' }];
+		logs = logs.filter(r => String(r.RenderKey || '').startsWith('celebration-demo-manual-'));
+	}
 	const outstanding = resumeOutstanding(cfg, logs, 'celebration-');
 	if (outstanding) return outstanding;
 	const h = helpers(),
@@ -765,7 +785,15 @@ function planCelebration(cfg, rows, logs, now) {
 		year = Number(today.slice(0, 4)),
 		mmdd = today.slice(5);
 	rows = rows.filter((r) => h.text(r.Name));
-	h.unique(rows, 'CelebrationKey');
+	// Permanent source IDs survive row sorting and annual runs. Never derive an
+	// ID from a mutable row number, or silently grant consent during migration.
+	const seen = new Map();
+	for (const [index, row] of rows.entries()) {
+		const key = h.text(row.CelebrationKey), position = row.row_number || index + 2;
+		if (!key) throw Error('Missing CelebrationKey at sheet row ' + position + '. Add a CelebrationKey column and a permanent unique ID for each occasion. Keep LastSentYear and Celebration Runs unchanged; fill Approval and GreetingConsent only after review.');
+		if (seen.has(key)) throw Error('Duplicate CelebrationKey at sheet rows ' + seen.get(key) + ' and ' + position + '. Each occasion needs its own permanent ID; do not change IDs of previously rendered occasions.');
+		seen.set(key, position);
+	}
 	const pending = [],
 		skipped = [];
 	for (const r of rows) {
@@ -780,7 +808,10 @@ function planCelebration(cfg, rows, logs, now) {
 			if (cfg.leapDayPolicy === 'skip') continue;
 			due = cfg.leapDayPolicy === 'march1' ? '03-01' : '02-28';
 		}
-		if (due !== mmdd) continue;
+		if (due !== mmdd) {
+			skipped.push({ key: k, reason: 'not_due_today', dueDate: year + '-' + due });
+			continue;
+		}
 		const key = 'celebration-' + k + '-' + type + '-' + year;
 		const saved = recoverPlan(cfg, key, logs);
 		if (saved?.ready) {

@@ -1,0 +1,13 @@
+flowchart LR
+  subgraph A["Path A: scheduled n8n workflow"]
+    S["Google Sheets: pending quotes"] --> N["n8n: daily trigger + build project"]
+    N --> ZA["Zvid API: validate / render / job status"]
+    ZA --> U["n8n writes done + URL to Google Sheets"]
+  end
+  subgraph B["Path B: Node.js script"]
+    C["Local CSV: pending quotes"] --> J["Node.js CLI: build project"]
+    J --> ZB["Zvid API: validate / render / job status"]
+    ZB --> O["Local result + updated CSV + optional MP4"]
+  end
+  Builder["Shared project builder in bundled n8n JSON"] -. "Used by" .-> N
+  Builder -. "Loaded by" .-> J

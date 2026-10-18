@@ -4,7 +4,7 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"brandName\": \"Northwind\",\n  \"signoffText\": \"\",\n  \"accent\": \"#FF6F91\",\n  \"accent2\": \"#FFB86B\",\n  \"backgroundColor\": \"#1A0C11\",\n  \"textPrimary\": \"#FBEDE9\",\n  \"textMuted\": \"#C29A97\",\n  \"headingFont\": \"Playfair Display\",\n  \"bodyFont\": \"Space Grotesk\",\n  \"birthdayMessage\": \"Wishing you a fantastic year ahead — from all of us at {brand}.\",\n  \"anniversaryMessage\": \"Thank you for {years} wonderful years together. Here's to the next chapter — from all of us at {brand}.\",\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.18,\n  \"scene1Seconds\": 5.2,\n  \"scene2Seconds\": 5.6,\n  \"transitionSeconds\": 0.55,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"sendEmail\": false,\n  \"emailFrom\": \"greetings@yourcompany.com\",\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"timezone\": \"UTC\",\n  \"leapDayPolicy\": \"feb28\",\n  \"maxCreditsPerVideo\": 15\n}",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"brandName\": \"Northwind\",\n  \"signoffText\": \"\",\n  \"accent\": \"#FF6F91\",\n  \"accent2\": \"#FFB86B\",\n  \"backgroundColor\": \"#1A0C11\",\n  \"textPrimary\": \"#FBEDE9\",\n  \"textMuted\": \"#C29A97\",\n  \"headingFont\": \"Playfair Display\",\n  \"bodyFont\": \"Space Grotesk\",\n  \"birthdayMessage\": \"Wishing you a fantastic year ahead — from all of us at {brand}.\",\n  \"anniversaryMessage\": \"Thank you for {years} wonderful years together. Here's to the next chapter — from all of us at {brand}.\",\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.18,\n  \"scene1Seconds\": 5.2,\n  \"scene2Seconds\": 5.6,\n  \"transitionSeconds\": 0.55,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"sendEmail\": false,\n  \"emailFrom\": \"greetings@yourcompany.com\",\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"timezone\": \"UTC\",\n  \"leapDayPolicy\": \"feb28\",\n  \"maxCreditsPerVideo\": 15,\n  \"replayRenderKey\": \"\",\n  \"manualDemo\": false\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -59,7 +59,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 2,
       "position": [
-        10340,
+        10620,
         500
       ],
       "id": "zvid-bg-0030",
@@ -120,7 +120,8 @@
         },
         "options": {}
       },
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "executeOnce": true
     },
     {
       "id": "late-plan",
@@ -132,7 +133,7 @@
         500
       ],
       "parameters": {
-        "jsCode": "function helpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (\n\t\t\tv === null ||\n\t\t\tv === undefined ||\n\t\t\tv === '' ||\n\t\t\ttypeof v === 'boolean' ||\n\t\t\t!Number.isFinite(Number(v))\n\t\t)\n\t\t\tthrow Error(label + ' must be a finite number');\n\t\treturn Number(v);\n\t};\n\tconst iso = (v, label = 'Date') => {\n\t\tconst s = text(v);\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(s) ||\n\t\t\t!Number.isFinite(Date.parse(s + 'T12:00:00Z')) ||\n\t\t\tnew Date(s + 'T12:00:00Z').toISOString().slice(0, 10) !== s\n\t\t)\n\t\t\tthrow Error(label + ' must be a real YYYY-MM-DD date');\n\t\treturn s;\n\t};\n\tconst day = (now, timezone = 'UTC') =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: timezone,\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tconst shift = (s, n) =>\n\t\tnew Date(Date.parse(s + 'T12:00:00Z') + n * 86400000).toISOString().slice(0, 10);\n\tconst truth = (v) => v === true || /^(true|yes|1)$/i.test(text(v));\n\tconst https = (v, label) => {\n\t\tconst s = text(v);\n\t\tif (!/^https:\\/\\/[^\\s/]+(?:\\/\\S*)?$/i.test(s)) throw Error(label + ' must be an HTTPS URL');\n\t\treturn s;\n\t};\n\tconst unique = (rows, key) => {\n\t\tconst seen = new Set();\n\t\tfor (const r of rows) {\n\t\t\tconst s = text(r[key]);\n\t\t\tif (!s || seen.has(s)) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(s);\n\t\t}\n\t};\n\tconst noWork = (reason, extra = {}) => ({\n\t\tready: false,\n\t\tstatus: 'nothing_to_render',\n\t\tcreditsSpent: 0,\n\t\treason,\n\t\t...extra,\n\t});\n\treturn { text, number, iso, day, shift, truth, https, unique, noWork };\n}\nfunction recoverPlan(cfg, key, rows) {\n\tconst matches = rows.filter((r) => String(r.RenderKey || '') === key);\n\tif (matches.length > 1) throw Error('Duplicate RenderKey in log: ' + key);\n\tconst row = matches[0];\n\tif (!row) return null;\n\t// An explicit capacity rejection accepted no paid job. It can be retried on\n\t// a later run; uncertain submissions and failed accepted jobs remain locked.\n\tif (row.Status === 'rate_limited' && !row.JobId && !row.VideoUrl) return null;\n\tif (row.Status === 'completed' || row.VideoUrl)\n\t\treturn {\n\t\t\tready: false,\n\t\t\tstatus: 'already_completed',\n\t\t\trenderKey: key,\n\t\t\tvideoUrl: row.VideoUrl || null,\n\t\t\tcreditsSpent: 0,\n\t\t};\n\tif (row.Status === 'rendering' && row.JobId && cfg.dryRun !== true) {\n\t\tlet plan;\n\t\ttry {\n\t\t\tplan = JSON.parse(row.PlanJson);\n\t\t} catch {\n\t\t\tthrow Error('Saved PlanJson is invalid for ' + key);\n\t\t}\n\t\tif (plan.renderKey !== key || plan.snapshotVersion !== 1)\n\t\t\tthrow Error('Saved snapshot does not match ' + key);\n\t\treturn { ...plan, ready: true, jobId: String(row.JobId), resumed: true };\n\t}\n\treturn {\n\t\tready: false,\n\t\tstatus: 'needs_review',\n\t\trenderKey: key,\n\t\treason:\n\t\t\tcfg.dryRun === true\n\t\t\t\t? 'Preview skips existing jobs.'\n\t\t\t\t: 'Inspect the saved ' + row.Status + ' job before resetting this key.',\n\t\tjobId: row.JobId || null,\n\t\tcreditsSpent: 0,\n\t};\n}\nfunction resumeOutstanding(cfg, logs, prefix) {\n\tif (cfg.dryRun === true) return null;\n\tconst saved = logs\n\t\t.filter(\n\t\t\t(r) => String(r.RenderKey || '').startsWith(prefix) && r.Status === 'rendering' && r.JobId,\n\t\t)\n\t\t.sort((a, b) => String(a.RenderKey).localeCompare(String(b.RenderKey)));\n\tif (!saved.length) return null;\n\t// Recover paid work even when its source changed or a date rolled over.\n\t// Delivery approval is intentionally re-reviewed after such a recovery.\n\tconst plan = recoverPlan(cfg, saved[0].RenderKey, logs);\n\treturn { ...plan, emailApproved: false, deferredSavedJobs: saved.length - 1 };\n}\nfunction planCelebration(cfg, rows, logs, now) {\n\tconst outstanding = resumeOutstanding(cfg, logs, 'celebration-');\n\tif (outstanding) return outstanding;\n\tconst h = helpers(),\n\t\ttoday = h.day(now, cfg.timezone),\n\t\tyear = Number(today.slice(0, 4)),\n\t\tmmdd = today.slice(5);\n\trows = rows.filter((r) => h.text(r.Name));\n\th.unique(rows, 'CelebrationKey');\n\tconst pending = [],\n\t\tskipped = [];\n\tfor (const r of rows) {\n\t\tconst k = h.text(r.CelebrationKey),\n\t\t\ttype = h.text(r.Type).toLowerCase(),\n\t\t\tdate = h.iso(r.Date, 'Date for ' + k);\n\t\tif (!['birthday', 'anniversary'].includes(type))\n\t\t\tthrow Error('Type must be birthday or anniversary: ' + k);\n\t\tconst leap = new Date(Date.UTC(year, 1, 29)).getUTCMonth() === 1;\n\t\tlet due = date.slice(5);\n\t\tif (due === '02-29' && !leap) {\n\t\t\tif (cfg.leapDayPolicy === 'skip') continue;\n\t\t\tdue = cfg.leapDayPolicy === 'march1' ? '03-01' : '02-28';\n\t\t}\n\t\tif (due !== mmdd) continue;\n\t\tconst key = 'celebration-' + k + '-' + type + '-' + year;\n\t\tconst saved = recoverPlan(cfg, key, logs);\n\t\tif (saved?.ready) {\n\t\t\tpending.push(saved);\n\t\t\tcontinue;\n\t\t}\n\t\tif (saved) {\n\t\t\tskipped.push({ key: k, reason: saved.status });\n\t\t\tcontinue;\n\t\t}\n\t\tif (\n\t\t\th.text(r.Approval).toLowerCase() !== 'approved' ||\n\t\t\t!h.truth(r.GreetingConsent) ||\n\t\t\th.truth(r.DoNotContact)\n\t\t) {\n\t\t\tskipped.push({ key: k, reason: 'consent_or_approval_missing' });\n\t\t\tcontinue;\n\t\t}\n\t\tif (Number(r.LastSentYear) === year) {\n\t\t\tskipped.push({ key: k, reason: 'legacy_already_sent' });\n\t\t\tcontinue;\n\t\t}\n\t\tif (date > today) throw Error('Celebration date is in the future: ' + k);\n\t\tconst years =\n\t\t\ttype === 'anniversary'\n\t\t\t\t? year - Number(date.slice(0, 4))\n\t\t\t\t: h.truth(r.ShowAge)\n\t\t\t\t\t? year - Number(date.slice(0, 4))\n\t\t\t\t\t: null;\n\t\tif (type === 'anniversary' && years < 1) {\n\t\t\tskipped.push({ key: k, reason: 'anniversary_not_yet_one_year' });\n\t\t\tcontinue;\n\t\t}\n\t\tconst name = h.text(r.Name),\n\t\t\tmessage = h.text(r.Message);\n\t\tif (name.length > 70 || message.length > 250)\n\t\t\tthrow Error('Greeting name/message too long: ' + k);\n\t\tconst email = h.text(r.Email);\n\t\tif (email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) throw Error('Invalid Email: ' + k);\n\t\tpending.push({\n\t\t\tready: true,\n\t\t\trenderKey: key,\n\t\t\tname,\n\t\t\ttype,\n\t\t\tyears,\n\t\t\tmessage,\n\t\t\temail,\n\t\t\temailApproved: h.text(r.EmailApproval).toLowerCase() === 'approved',\n\t\t\tcaption:\n\t\t\t\ttype === 'anniversary'\n\t\t\t\t\t? 'Celebrating ' + years + ' years with ' + name\n\t\t\t\t\t: 'Happy birthday, ' + name,\n\t\t\tprivacyNote: 'Private greeting. Review recipient and consent before delivery.',\n\t\t\thandoff: [\n\t\t\t\t{\n\t\t\t\t\tCelebrationKey: k,\n\t\t\t\t\tName: name,\n\t\t\t\t\tOccasion: type,\n\t\t\t\t\tEmail: email,\n\t\t\t\t\tDelivery: 'manual_review',\n\t\t\t\t\tDate: today,\n\t\t\t\t},\n\t\t\t],\n\t\t});\n\t}\n\tpending.sort(\n\t\t(a, b) => Number(!!b.jobId) - Number(!!a.jobId) || a.renderKey.localeCompare(b.renderKey),\n\t);\n\treturn pending.length\n\t\t? { ...pending[0], deferred: pending.length - 1, skipped }\n\t\t: h.noWork('No approved, consented, unfinished celebrations due today.', { skipped });\n}\nreturn [{json:planCelebration($('Set celebration consent and delivery rules').first().json,$('Read consented celebration dates').all().map(i=>i.json).filter(r=>Object.keys(r).length),$input.all().map(i=>i.json),new Date())}];"
+        "jsCode": "function helpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (\n\t\t\tv === null ||\n\t\t\tv === undefined ||\n\t\t\tv === '' ||\n\t\t\ttypeof v === 'boolean' ||\n\t\t\t!Number.isFinite(Number(v))\n\t\t)\n\t\t\tthrow Error(label + ' must be a finite number');\n\t\treturn Number(v);\n\t};\n\tconst iso = (v, label = 'Date') => {\n\t\tconst s = text(v);\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(s) ||\n\t\t\t!Number.isFinite(Date.parse(s + 'T12:00:00Z')) ||\n\t\t\tnew Date(s + 'T12:00:00Z').toISOString().slice(0, 10) !== s\n\t\t)\n\t\t\tthrow Error(label + ' must be a real YYYY-MM-DD date');\n\t\treturn s;\n\t};\n\tconst day = (now, timezone = 'UTC') =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: timezone,\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tconst shift = (s, n) =>\n\t\tnew Date(Date.parse(s + 'T12:00:00Z') + n * 86400000).toISOString().slice(0, 10);\n\tconst truth = (v) => v === true || /^(true|yes|1)$/i.test(text(v));\n\tconst https = (v, label) => {\n\t\tconst s = text(v);\n\t\tif (!/^https:\\/\\/[^\\s/]+(?:\\/\\S*)?$/i.test(s)) throw Error(label + ' must be an HTTPS URL');\n\t\treturn s;\n\t};\n\tconst unique = (rows, key) => {\n\t\tconst seen = new Set();\n\t\tfor (const r of rows) {\n\t\t\tconst s = text(r[key]);\n\t\t\tif (!s || seen.has(s)) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(s);\n\t\t}\n\t};\n\tconst noWork = (reason, extra = {}) => ({\n\t\tready: false,\n\t\tstatus: 'nothing_to_render',\n\t\tcreditsSpent: 0,\n\t\treason,\n\t\t...extra,\n\t});\n\treturn { text, number, iso, day, shift, truth, https, unique, noWork };\n}\nfunction recoverPlan(cfg, key, rows) {\n\tconst matches = rows.filter((r) => String(r.RenderKey || '') === key);\n\tif (matches.length > 1) throw Error('Duplicate RenderKey in log: ' + key);\n\tconst row = matches[0];\n\tif (!row) return null;\n\t// An explicit capacity rejection accepted no paid job. It can be retried on\n\t// a later run; uncertain submissions and failed accepted jobs remain locked.\n\tif (row.Status === 'rate_limited' && !row.JobId && !row.VideoUrl) return null;\n\tif (row.Status === 'completed' || row.VideoUrl)\n\t\treturn {\n\t\t\tready: false,\n\t\t\tstatus: 'already_completed',\n\t\t\trenderKey: key,\n\t\t\tvideoUrl: row.VideoUrl || null,\n\t\t\tcreditsSpent: 0,\n\t\t};\n\tif (row.Status === 'rendering' && row.JobId && cfg.dryRun !== true) {\n\t\tlet plan;\n\t\ttry {\n\t\t\tplan = JSON.parse(row.PlanJson);\n\t\t} catch {\n\t\t\tthrow Error('Saved PlanJson is invalid for ' + key);\n\t\t}\n\t\tif (plan.renderKey !== key || plan.snapshotVersion !== 1)\n\t\t\tthrow Error('Saved snapshot does not match ' + key);\n\t\treturn { ...plan, ready: true, jobId: String(row.JobId), resumed: true };\n\t}\n\treturn {\n\t\tready: false,\n\t\tstatus: 'needs_review',\n\t\trenderKey: key,\n\t\treason:\n\t\t\tcfg.dryRun === true\n\t\t\t\t? 'Preview skips existing jobs.'\n\t\t\t\t: 'Inspect the saved ' + row.Status + ' job before resetting this key.',\n\t\tjobId: row.JobId || null,\n\t\tcreditsSpent: 0,\n\t};\n}\nfunction resumeOutstanding(cfg, logs, prefix) {\n\tif (cfg.dryRun === true) return null;\n\tconst saved = logs\n\t\t.filter(\n\t\t\t(r) => String(r.RenderKey || '').startsWith(prefix) && r.Status === 'rendering' && r.JobId,\n\t\t)\n\t\t.sort((a, b) => String(a.RenderKey).localeCompare(String(b.RenderKey)));\n\tif (!saved.length) return null;\n\t// Recover paid work even when its source changed or a date rolled over.\n\t// Delivery approval is intentionally re-reviewed after such a recovery.\n\tconst plan = recoverPlan(cfg, saved[0].RenderKey, logs);\n\treturn { ...plan, emailApproved: false, deferredSavedJobs: saved.length - 1 };\n}\nfunction planCelebration(cfg, rows, logs, now, execution = {}) {\n\t// Explicit playback is read-only, independent of today's date, and never\n\t// falls through into new work when the saved key is missing or unfinished.\n\tif (String(cfg.replayRenderKey || '').trim()) {\n\t\tconst key = String(cfg.replayRenderKey).trim();\n\t\tconst matches = logs.filter(r => String(r.RenderKey || '') === key);\n\t\tif (cfg.dryRun === true) return helpers().noWork('Clear replayRenderKey to validate new content; dryRun never resumes saved jobs.');\n\t\tif (matches.length !== 1) return helpers().noWork('Replay needs exactly one saved row for ' + key + '. Check Celebration Runs.', { status: 'needs_review' });\n\t\tconst row = matches[0];\n\t\tif (row.Status !== 'completed' || !row.JobId) return helpers().noWork('This saved key is not a completed render with a JobId. No new render was started.', { status: 'needs_review' });\n\t\tlet plan;\n\t\ttry { plan = JSON.parse(row.PlanJson); } catch { return helpers().noWork('The saved replay context is invalid. Check PlanJson; no render was started.', { status: 'needs_review' }); }\n\t\tif (plan.renderKey !== key || plan.snapshotVersion !== 1) return helpers().noWork('The saved replay context does not match this key.', { status: 'needs_review' });\n\t\treturn { ...plan, ready: true, dryRun: false, renderKey: key, jobId: String(row.JobId), replayed: true, emailApproved: false, creditsSpent: 0 };\n\t}\n\tif (cfg.manualDemo === true) {\n\t\tif (!['test', 'manual', 'cli'].includes(execution.mode) || !String(execution.id || '')) return helpers().noWork('manualDemo runs only from the manual trigger. Disable it before scheduling real contacts.');\n\t\tconst today = helpers().day(now, cfg.timezone);\n\t\trows = [{ CelebrationKey: 'demo-manual-' + String(execution.id), Name: 'DEMO Ava', Type: 'birthday', Date: '2000-' + today.slice(5), Approval: 'approved', GreetingConsent: true, Email: '', EmailApproval: '', Message: 'Freshly rendered demo greeting. Wishing you a wonderful year ahead.' }];\n\t\tlogs = logs.filter(r => String(r.RenderKey || '').startsWith('celebration-demo-manual-'));\n\t}\n\tconst outstanding = resumeOutstanding(cfg, logs, 'celebration-');\n\tif (outstanding) return outstanding;\n\tconst h = helpers(),\n\t\ttoday = h.day(now, cfg.timezone),\n\t\tyear = Number(today.slice(0, 4)),\n\t\tmmdd = today.slice(5);\n\trows = rows.filter((r) => h.text(r.Name));\n\t// Permanent source IDs survive row sorting and annual runs. Never derive an\n\t// ID from a mutable row number, or silently grant consent during migration.\n\tconst seen = new Map();\n\tfor (const [index, row] of rows.entries()) {\n\t\tconst key = h.text(row.CelebrationKey), position = row.row_number || index + 2;\n\t\tif (!key) throw Error('Missing CelebrationKey at sheet row ' + position + '. Add a CelebrationKey column and a permanent unique ID for each occasion. Keep LastSentYear and Celebration Runs unchanged; fill Approval and GreetingConsent only after review.');\n\t\tif (seen.has(key)) throw Error('Duplicate CelebrationKey at sheet rows ' + seen.get(key) + ' and ' + position + '. Each occasion needs its own permanent ID; do not change IDs of previously rendered occasions.');\n\t\tseen.set(key, position);\n\t}\n\tconst pending = [],\n\t\tskipped = [];\n\tfor (const r of rows) {\n\t\tconst k = h.text(r.CelebrationKey),\n\t\t\ttype = h.text(r.Type).toLowerCase(),\n\t\t\tdate = h.iso(r.Date, 'Date for ' + k);\n\t\tif (!['birthday', 'anniversary'].includes(type))\n\t\t\tthrow Error('Type must be birthday or anniversary: ' + k);\n\t\tconst leap = new Date(Date.UTC(year, 1, 29)).getUTCMonth() === 1;\n\t\tlet due = date.slice(5);\n\t\tif (due === '02-29' && !leap) {\n\t\t\tif (cfg.leapDayPolicy === 'skip') continue;\n\t\t\tdue = cfg.leapDayPolicy === 'march1' ? '03-01' : '02-28';\n\t\t}\n\t\tif (due !== mmdd) {\n\t\t\tskipped.push({ key: k, reason: 'not_due_today', dueDate: year + '-' + due });\n\t\t\tcontinue;\n\t\t}\n\t\tconst key = 'celebration-' + k + '-' + type + '-' + year;\n\t\tconst saved = recoverPlan(cfg, key, logs);\n\t\tif (saved?.ready) {\n\t\t\tpending.push(saved);\n\t\t\tcontinue;\n\t\t}\n\t\tif (saved) {\n\t\t\tskipped.push({ key: k, reason: saved.status });\n\t\t\tcontinue;\n\t\t}\n\t\tif (\n\t\t\th.text(r.Approval).toLowerCase() !== 'approved' ||\n\t\t\t!h.truth(r.GreetingConsent) ||\n\t\t\th.truth(r.DoNotContact)\n\t\t) {\n\t\t\tskipped.push({ key: k, reason: 'consent_or_approval_missing' });\n\t\t\tcontinue;\n\t\t}\n\t\tif (Number(r.LastSentYear) === year) {\n\t\t\tskipped.push({ key: k, reason: 'legacy_already_sent' });\n\t\t\tcontinue;\n\t\t}\n\t\tif (date > today) throw Error('Celebration date is in the future: ' + k);\n\t\tconst years =\n\t\t\ttype === 'anniversary'\n\t\t\t\t? year - Number(date.slice(0, 4))\n\t\t\t\t: h.truth(r.ShowAge)\n\t\t\t\t\t? year - Number(date.slice(0, 4))\n\t\t\t\t\t: null;\n\t\tif (type === 'anniversary' && years < 1) {\n\t\t\tskipped.push({ key: k, reason: 'anniversary_not_yet_one_year' });\n\t\t\tcontinue;\n\t\t}\n\t\tconst name = h.text(r.Name),\n\t\t\tmessage = h.text(r.Message);\n\t\tif (name.length > 70 || message.length > 250)\n\t\t\tthrow Error('Greeting name/message too long: ' + k);\n\t\tconst email = h.text(r.Email);\n\t\tif (email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) throw Error('Invalid Email: ' + k);\n\t\tpending.push({\n\t\t\tready: true,\n\t\t\trenderKey: key,\n\t\t\tname,\n\t\t\ttype,\n\t\t\tyears,\n\t\t\tmessage,\n\t\t\temail,\n\t\t\temailApproved: h.text(r.EmailApproval).toLowerCase() === 'approved',\n\t\t\tcaption:\n\t\t\t\ttype === 'anniversary'\n\t\t\t\t\t? 'Celebrating ' + years + ' years with ' + name\n\t\t\t\t\t: 'Happy birthday, ' + name,\n\t\t\tprivacyNote: 'Private greeting. Review recipient and consent before delivery.',\n\t\t\thandoff: [\n\t\t\t\t{\n\t\t\t\t\tCelebrationKey: k,\n\t\t\t\t\tName: name,\n\t\t\t\t\tOccasion: type,\n\t\t\t\t\tEmail: email,\n\t\t\t\t\tDelivery: 'manual_review',\n\t\t\t\t\tDate: today,\n\t\t\t\t},\n\t\t\t],\n\t\t});\n\t}\n\tpending.sort(\n\t\t(a, b) => Number(!!b.jobId) - Number(!!a.jobId) || a.renderKey.localeCompare(b.renderKey),\n\t);\n\treturn pending.length\n\t\t? { ...pending[0], deferred: pending.length - 1, skipped }\n\t\t: h.noWork('No approved, consented, unfinished celebrations due today.', { skipped });\n}\nreturn [{json:planCelebration($('Set celebration consent and delivery rules').first().json,$('Read consented celebration dates').all().map(i=>i.json).filter(r=>Object.keys(r).length),$input.all().map(i=>i.json),new Date(),typeof $execution === 'undefined' ? {} : {id:$execution.id || 'local-'+Date.now(),mode:typeof $mode === 'undefined' ? $execution.mode : $mode})}];"
       }
     },
     {
@@ -940,8 +941,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        9300,
-        500
+        9580,
+        750
       ],
       "parameters": {
         "resource": "sheet",
@@ -1043,7 +1044,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        9780,
+        10060,
         500
       ],
       "parameters": {
@@ -1056,7 +1057,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        10060,
+        10340,
         850
       ],
       "parameters": {
@@ -1069,7 +1070,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        10060,
+        10340,
         500
       ],
       "parameters": {
@@ -1098,12 +1099,46 @@
       }
     },
     {
+      "id": "late-replay-readonly",
+      "name": "Keep this replay read-only?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        9300,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "replay-readonly-condition",
+              "leftValue": "={{ $json.replayed === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
       "id": "late-deliver",
       "name": "Optional delivery is enabled and approved?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        10820,
+        11100,
         500
       ],
       "parameters": {
@@ -1117,7 +1152,7 @@
           "conditions": [
             {
               "id": "deliver-condition",
-              "leftValue": "={{ $json.status === 'completed' && $('Set celebration consent and delivery rules').first().json.sendEmail === true && $json.emailApproved === true && Boolean($json.email) }}",
+              "leftValue": "={{ $json.status === 'completed' && $json.replayed !== true && $('Set celebration consent and delivery rules').first().json.sendEmail === true && $json.emailApproved === true && Boolean($json.email) }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -1137,7 +1172,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        11100,
+        11380,
         500
       ],
       "parameters": {
@@ -1193,7 +1228,7 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        11380,
+        11660,
         500
       ],
       "parameters": {
@@ -1213,7 +1248,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        11660,
+        11940,
         500
       ],
       "parameters": {
@@ -1226,7 +1261,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        11940,
+        12220,
         500
       ],
       "parameters": {
@@ -1302,7 +1337,7 @@
         0
       ],
       "parameters": {
-        "content": "## 1. Choose source rules and schedule\n\nComplete the overview setup and source contract. Run one execution at a time. Use the manual trigger before enabling the schedule.",
+        "content": "## 1. Choose source rules and schedule\n\nmanualDemo=true creates a fresh fictional greeting on each manual execution and spends credits when dryRun=false. Email stays unavailable for demos. Disable manualDemo for the real contact queue. Run one execution at a time.",
         "color": 7,
         "width": 660,
         "height": 1160
@@ -1318,7 +1353,7 @@
         0
       ],
       "parameters": {
-        "content": "## 2. Check the real source and plan the output\n\nRequire approval and greeting consent. Respect DoNotContact, an explicit leap-day rule, and birthday age opt-in. Process one due celebration per run.",
+        "content": "## 2. Check the real source and plan the output\n\nGive each occasion a permanent CelebrationKey. Older sheets need Approval and GreetingConsent columns; never infer either. Preserve LastSentYear and Celebration Runs. Respect DoNotContact, leap-day rules and birthday age opt-in. Process one due celebration per run; inspect skipped reasons otherwise.",
         "color": 7,
         "width": 1220,
         "height": 1160
@@ -1414,9 +1449,9 @@
         0
       ],
       "parameters": {
-        "content": "## 8. Wait for the accepted render and record its result\n\nPoll the saved job within the deadline. Keep failed, timed-out and uncertain job IDs for inspection. Completed keys are skipped on later runs.",
+        "content": "## 8. Wait for the accepted render and record its result\n\nRead the recovery log once per execution. Set replayRenderKey to a completed key for playback without new renders, sheet writes or email. Clear it for the normal queue. Keep failed or uncertain jobs for inspection.",
         "color": 7,
-        "width": 1220,
+        "width": 1500,
         "height": 1160
       }
     },
@@ -1426,7 +1461,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        9720,
+        10000,
         0
       ],
       "parameters": {
@@ -1442,7 +1477,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        10760,
+        11040,
         0
       ],
       "parameters": {
@@ -1869,6 +1904,24 @@
     },
     "Classify completion failure or uncertain status": {
       "main": [
+        [
+          {
+            "node": "Keep this replay read-only?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep this replay read-only?": {
+      "main": [
+        [
+          {
+            "node": "Prepare the completed result and review pack",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Record the render outcome and completed URL",

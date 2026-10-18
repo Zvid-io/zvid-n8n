@@ -1,0 +1,36 @@
+{
+  "workflowSlug": "daily-quote-reels",
+  "verifiedDate": "2026-10-14",
+  "n8n": "https://n8n.io/workflows/19632-create-daily-quote-videos-from-google-sheets-with-zvid/",
+  "youtube": "https://youtu.be/Ra6mPdmDDYs",
+  "github": "https://github.com/Zvid-io/workflow-examples/tree/main/workflows/daily-quote-reels",
+  "websiteWorkflow": "https://zvid.io/n8n/workflows/google-sheets-daily-quote-videos",
+  "blog": null,
+  "plannedBlogUrl": "https://zvid.io/blog/developer-tutorials/automate-daily-quote-videos-n8n-google-sheets",
+  "devto": null,
+  "linkedin": null,
+  "reddit": null,
+  "n8nCommunity": null,
+  "shopifyCommunity": null,
+  "shopifyApplicable": false,
+  "proposedBlogSlug": "automate-daily-quote-videos-n8n-google-sheets",
+  "dependencies": [
+    "LinkedIn and Reddit drafts include the planned public blog URL. Publish the blog and verify that URL before sharing these posts; it returned HTTP 404 on 2026-10-14.",
+    "Correct the existing website workflow setup and check its downloadable JSON.",
+    "Publish the original Zvid article, then add its actual URL to the DEV.to adaptation.",
+    "User manually publishes each reviewed draft and records its final URL."
+  ],
+  "repository": "https://github.com/Zvid-io/workflow-examples",
+  "codeCommit": "28184f7fd4850b2e53b4e690ba7ae84b0725700c",
+  "blogDraft": {
+    "id": 77,
+    "editor": "https://app.zvid.io/blogs/77/edit",
+    "preview": "https://zvid.io/preview/blog/77",
+    "status": "draft",
+    "publishedAt": null,
+    "neuronWriterScore": 82,
+    "evaluations": 5
+  },
+  "blogWorkflowDownload": "https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/a2e72e40e5f1b8fa-workflow.json",
+  "exampleSheet": "https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/7433d9c3feeec3ae-daily-quote-example.csv"
+}

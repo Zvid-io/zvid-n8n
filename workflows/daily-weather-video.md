@@ -1,48 +1,46 @@
-# Create a local forecast with a ranked daytime planning window
+# Plan outdoor bookings around weather and generate a call-sheet video
 
-[Import the workflow](zvid-daily-weather-video.json).
+For small production teams coordinating outdoor sessions. Read approved booking requests and confirmed reservations, then assign non-overlapping daytime slots around rain, wind and temperature limits. Higher priorities go first; each request keeps its preferred time, moves, or is deferred. Produce a call-sheet video, decision CSV and tentative calendar file. Proposals do not book a calendar or invite attendees.
 
-Resolve one city, validate fresh current and hourly data, and rank remaining three-hour daytime windows by rain probability and wind. Branch to a qualifying window or a no-window notice, then add that planning card to the local forecast and three-day outlook.
+## Prerequisites
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring credentials. A workspace owner/admin may need to install it. Select a Zvid API credential on every native Zvid node, using https://app.zvid.io/api-keys and Base URL https://api.zvid.io. Connect Google Sheets OAuth2 and select the input and log tabs in all Sheets nodes. No supported Zvid operation uses HTTP Request. Watch downloads completed media only.
 
-## Install and connect
-1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring credentials. A workspace owner/admin may need to install it.
-2. Create a **Zvid API** credential with a key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`. Select it on every Zvid node.
-3. Connect Google Sheets credentials to the log nodes. Select the same document and **Weather Briefings** tab on all log reads/writes. Source rows, where used, belong to their separate existing source tab.
-4. Create exact log headers: `RenderKey,Status,JobId,CreditsQuoted,PlanJson,VideoUrl,CompletedAt`.
-5. Edit **Set the city and outdoor planning thresholds**, configure the source below, and test manually before enabling a schedule. This template has no publishing step.
+## Booking desk
+Use one location and timezone per workflow. Set cityName, countryCode, admin1, timezone and planningDate (blank means today in that timezone). The resolved city's timezone must match. Requests must be within the forecast horizon supported by Open-Meteo.
 
-## Location and planning rules
-Set cityName, countryCode and admin1 so exactly one of the geocoder's returned candidates matches. The workflow refuses an ambiguous match. Default location is Lisbon, Portugal. All forecast and planning labels use the selected location's timezone.
+Create **Outdoor Bookings** with headers:
 
-The Open-Meteo request retrieves current conditions, four daily forecasts and hourly precipitation probability, wind speed and weather code. Current data must be within three hours and belong to the expected local day; missing numeric readings stop before rendering.
+`BookingId,Date,Title,Status,Approval,EarliestStart,LatestEnd,PreferredStart,DurationMinutes,Priority,Start,End`
 
-Only future daytime hours from 06:00 through 20:00 are considered. A candidate window contains three contiguous hourly entries. All three must meet maxRainProbability (default 30%) and maxWindKmh (default 25), with freezing precipitation, snow and thunderstorm codes excluded. Wind units are converted to km/h before comparison. Rank qualifying windows by maximum rain probability, then wind, then earliest start. If no window qualifies, show a clear no-window card instead of inventing a recommendation. If no daytime forecast remains, return a no-work report.
+- BookingId must be unique and stable. Date is YYYY-MM-DD. Title is 1–80 characters.
+- Requested rows use Status=requested and Approval=approved. Approval is coordinator-authored, never generated automatically.
+- EarliestStart, LatestEnd and optional PreferredStart use ISO timestamps with UTC offsets, for example 2026-10-09T09:00:00+01:00. Both window endpoints must stay within Date in the configured timezone. DurationMinutes is 30–240 in half-hour increments. Priority is 1–10; higher goes first.
+- Confirmed reservations use Status=confirmed with Start and End timestamps. They block scheduling regardless of Approval. Include every conflicting reservation for the planning date. The workflow does not read an external calendar: this sheet is the booking desk.
+- Maximum five approved requests per date. Times use half-hour candidate starts. The planner chooses the qualifying slot nearest the preferred start, then lowest rain/wind and earliest time. Earlier high-priority proposals block later ones. This deterministic greedy strategy is not a global optimum.
+- Every occupied hour must have forecast coverage, daylight, acceptable temperature, rain and wind, and no excluded severe weather code. Missing numeric data fails; no matching slot returns defer with reasons. It is planning guidance, not an official warning.
 
-The video includes current conditions, the three-day outlook and a planning card. The CSV contains the evaluated hours and thresholds. These are configurable planning criteria, not official weather alerts or a guarantee of safe conditions. Check local advisories when planning activities.
+## Outputs and confirmation
+The call-sheet video distinguishes keep, reschedule and defer for each booking. The CSV contains exact UTC start/end times, forecast values and blocking reasons. The ICS download contains only proposed slots with STATUS:TENTATIVE, transparent availability, no attendees and no invitation sends. Import only after coordinator review. Mark confirmed reservations in the booking desk yourself; a completed render is not a confirmed booking.
 
-Forecast source and attribution: [Open-Meteo](https://open-meteo.com/en/docs). Verify the provider's terms for your usage. Set forecastRevision deliberately when replacing the day's briefing.
+Render keys use calendarLabel, planning date and forecastRevision. Changing requests or thresholds after a completed run requires deliberately increasing forecastRevision; keep the original log. Preview returns the calendar and CSV without rendering.
 
-## Migration
-Keep location, branding and temperature/wind units. Add countryCode/admin1 and a Weather Briefings log tab. The new daily key prevents repeated completed videos.
+Source: [Open-Meteo forecast documentation](https://open-meteo.com/en/docs). Unix timestamps avoid ambiguous repeated local hours during daylight-saving changes.
 
-## Costs, previews and recovery
-**dryRun=false is the default and spends Zvid credits.** Free Zvid validation quotes the actual design before the log claim or render request. maxCreditsPerVideo is 25 by default. Quotes are not actual charged credits. There is one new render per execution; set a suitable schedule and credit ceiling.
+## Costs and recovery
+**dryRun=false is the default**; eligible new work spends Zvid credits after free validation and maxCreditsPerVideo enforcement. Weather caps at 35 credits; sports at 35. **dryRun=true** performs reads, planning and validation only; it writes no source or tracking cells, starts no render and resumes no paid job. Sports must have exact approval to reach validation even in preview mode. No editor project is created.
 
-**dryRun=true** returns the source plan, design JSON, review rows and quote. It writes no log rows, creates no editor draft, sends no messages, and skips existing paid jobs. The published Zvid package checked for this revision is 0.1.8; only its supported render validate/create/get operations are used.
+Use the separate **Weather Briefings** tab with headers:
 
-Before submission, save submitting and a compact original review snapshot. Save the accepted job ID immediately afterward, then poll that job through the native Zvid node. Completed keys are skipped. Saved rendering jobs resume without a second paid request, preserving the original review context. The snapshot excludes the render payload and large raw forecasts because Sheets cells have a size limit; recovery polls the existing job and does not rebuild or resubmit it.
+`RenderKey,Status,JobId,CreditsQuoted,PlanJson,VideoUrl,CompletedAt`
 
-Explicit HTTP 429 capacity rejections are recorded as rate_limited and retried up to three submission attempts, with at least 30 seconds between attempts and respect for a longer server Retry-After delay. An exhausted rejected key can be retried on a later run because no job was accepted. Voice generation and design are not repeated within this retry loop.
+Before a paid call, reserve submitting and a compact snapshot. Persist the accepted JobId; recovery polls it before source checks. Explicit 429 rejections are retried up to three attempts with a 30-second minimum and server Retry-After. Uncertain submissions are never retried automatically. Failed, timed-out and uncertain records need inspection; do not delete rows as a general retry strategy. Sports blocks replacement editions while the preceding edition needs inspection.
 
-Keep submitting, failed, timed_out and needs_review records for inspection at https://app.zvid.io. An uncertain paid request is never automatically retried. A failure after acceptance but before saving its ID needs manual reconciliation. Do not clear log rows as a general retry strategy. Only reset a specific inspected record for an intentional new render. A failed accepted render now stops with its actual error after saving the outcome; it does not misleadingly finish successfully at the Watch gate.
+Open **Watch video → Binary → data → View** on completion. The download has a 30-second timeout and three attempts; its failure does not erase the saved video URL. CSV formula-like values are escaped. Optional music is checked before use and skipped if unavailable.
 
-Run one execution at a time. A Sheets log is not an atomic lock; concurrent runs can both observe an unused key. Preserve log history during upgrades. Source and HTTP errors stop or report no work; no invented content is used to keep a schedule running.
+## Migration from the previous day 27 template
+Revise the existing creator entry, not a second submission. Retain the same local workflow, credentials and full recovery history. Add the new input tab; do not turn old results into approved source records. Keep schedules disabled until the new inputs are configured. Old accepted jobs still resume from their saved context. The old generic forecast and outlook have been replaced by the booking call sheet.
 
-Optional musicUrl is checked before use; an unavailable or oversized track is omitted.
-
-Open **Watch video → Binary → data → View** for a completed MP4. Downloads use a 30-second timeout and at most three attempts, five seconds apart. A failed download leaves the saved URL available. **Download the source-specific review pack → Binary → data** contains a CSV with formula-like cells escaped. Check its facts before sharing.
-
-## Verification
-The automated checks exercise the actual exported graph with external service boundaries replaced by fixtures: normal rendering, preview, duplicate runs, accepted-job recovery, credit limits and failed/timed-out jobs. Local n8n execution and free validation evidence are recorded separately in the revision report; fixture success does not prove live credentials or source permissions.
+## What changed for review
+This is a booking allocation workflow with conflicting reservations, priorities, preferred-slot movement, per-request deferrals and an importable tentative calendar. The forecast changes scheduling decisions and the actual deliverables. The source code and layout are generated by scripts/weather-sports-revisions.js and scripts/weather-sports-revision-runtime.js. Acceptance remains n8n’s decision.
 
 Support: https://zvid.io/contact

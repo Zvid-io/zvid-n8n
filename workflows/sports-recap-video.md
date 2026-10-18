@@ -1,50 +1,42 @@
-# Build verified league or club recaps with a final-score fact sheet
+# Review match results and manage corrected sports videos with TheSportsDB
 
-[Import the workflow](zvid-sports-recap-video.json).
+For sports editors managing a result from first review through corrections. Fetch a queued event directly from TheSportsDB and require approval of its exact fact snapshot. Recheck facts on each run; changed facts invalidate old approval. Compare with the latest completed video, produce an approved original or correction edition, and retain the prior result and video in a correction pack. No LLM or automatic social posting is used.
 
-Read recent events from TheSportsDB. Keep verified final matches in the requested league and completed date window, reject conflicting scores, and optionally focus on one club. Rank scorelines, calculate returned-match totals and club form, and create a deterministic recap with a fact sheet.
+## Prerequisites
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring credentials. A workspace owner/admin may need to install it. Select a Zvid API credential on every native Zvid node, using https://app.zvid.io/api-keys and Base URL https://api.zvid.io. Connect Google Sheets OAuth2 and select the input and log tabs in all Sheets nodes. No supported Zvid operation uses HTTP Request. Watch downloads completed media only.
 
-## Install and connect
-1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring credentials. A workspace owner/admin may need to install it.
-2. Create a **Zvid API** credential with a key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`. Select it on every Zvid node.
-3. Connect Google Sheets credentials to the log nodes. Select the same document and **Sports Recaps** tab on all log reads/writes. Source rows, where used, belong to their separate existing source tab.
-4. Create exact log headers: `RenderKey,Status,JobId,CreditsQuoted,PlanJson,VideoUrl,CompletedAt`.
-5. Edit **Set the league club and completed recap period**, configure the source below, and test manually before enabling a schedule. This template has no publishing step.
+## Match editorial queue
+Create **Match Editorial Queue** with headers:
 
-## Verified source selection
-Set sportsDbKey and leagueId. Optional focusTeam must match a source team name, case-insensitively. By default the recap covers the seven completed days ending yesterday in timezone. Optional periodStart and periodEnd must be real YYYY-MM-DD dates in the past.
+`EventId,Enabled,Approval,ApprovedSnapshot,CurrentSnapshot,ReviewStatus,LastCheckedAt,PriorVideoUrl,ChangeSummary`
 
-TheSportsDB's recent-league endpoint is a bounded feed, not an exhaustive season query. Your key and subscription affect available coverage. The workflow describes the returned verified matches and never claims that the feed contains every league result. Source: [TheSportsDB documentation](https://www.thesportsdb.com/docs_api_guide).
+1. Enter a real numeric TheSportsDB EventId, set Enabled=yes, and leave approval fields blank. Set sportsDbKey and leagueId in configuration; leagueId may be blank to accept queued events from any league. This key is provider configuration, not a Zvid credential.
+2. Run once. The least recently checked enabled event is fetched directly with lookupevent.php. Require a final status, real date, both teams and integer scores. Missing/nonfinal/conflicting results fail before changing review cells. Disable invalid queue rows while correcting their IDs so they do not block later cases.
+3. Inspect ChangeSummary and CurrentSnapshot against the source. A human sets Approval=approved and copies the exact CurrentSnapshot string into ApprovedSnapshot. The workflow writes neither approval field.
+4. Run again. If facts still match the approved edition, render one original or correction report. Source changes invalidate the approval, including a rollback to previously used facts: the approval snapshot includes the edition number.
+5. Leave the event enabled to monitor corrections. LastCheckedAt rotates checks across enabled rows. New final facts are compared with the latest completed video; a correction includes the previous score and prior video URL in its CSV and clearly labels the video CORRECTED MATCH REPORT. Review and approve each new edition.
 
-Only matching league events with FT, AET or Match Finished status and non-negative integer scores are eligible. Live, postponed and unverified statuses are skipped. Duplicate event IDs are collapsed only when their details agree; conflicting scores stop for review. No old demo matchday is rendered when the feed is unavailable or empty.
+CurrentSnapshot is an exact JSON string, not a cryptographic signature. Restrict edit access to trusted editors; anyone with write access to the approval columns can approve. Sheets is not an atomic lock: avoid overlapping executions. TheSportsDB coverage is not guaranteed; source errors do not substitute demo matches. Date and score corrections are versioned, but this workflow does not assert independent fact verification beyond provider status and editorial review. No OpenAI or other language model is used.
 
-Rank matches by goal margin, then total goals, date and stable event ID. The first maxMatches (1–5) appear in the video; every eligible match appears in the fact CSV. Totals cover all eligible returned matches. Club mode adds wins/draws/losses and goals for/against. Copy is deterministic and cannot invent players, incidents, goal times or league standings. Shootout-specific results are excluded unless represented with a supported final status and unambiguous final scores.
+The CSV is available for pending review as well as completed runs. It contains current and previous results, edition, source URL, approval snapshot and a caption draft. The workflow neither publishes nor retracts social posts. Editors must replace or correct already shared content themselves.
 
-When no final fits the default week, allowLatestAvailableResults=true may use a seven-day window ending at the latest returned final, only within maxFallbackAgeDays (default 30, allowed 1–90). The video says Latest available results and shows that actual period. This mode never overrides explicit periodStart/periodEnd, includes future matches, or fabricates scores. The returned report retains requestedPeriod and latestAvailableDate. The free recent-league feed is limited to one event, so use a suitable subscription for wider coverage.
+Source: [TheSportsDB API](https://www.thesportsdb.com/api.php).
 
-Set recapRevision to a new value only for an intentional replacement. Use an authenticated source subscription suitable for your coverage requirements.
+## Costs and recovery
+**dryRun=false is the default**; eligible new work spends Zvid credits after free validation and maxCreditsPerVideo enforcement. Weather caps at 35 credits; sports at 35. **dryRun=true** performs reads, planning and validation only; it writes no source or tracking cells, starts no render and resumes no paid job. Sports must have exact approval to reach validation even in preview mode. No editor project is created.
 
-## Migration
-Keep league ID and branding, add a Sports Recaps log tab, and choose the completed date window. The OpenRouter copy-writing node has been removed; its credential is no longer required.
+Use the separate **Sports Recaps** tab with headers:
 
-## Costs, previews and recovery
-**dryRun=false is the default and spends Zvid credits.** Free Zvid validation quotes the actual design before the log claim or render request. maxCreditsPerVideo is 35 by default. Quotes are not actual charged credits. There is one new render per execution; set a suitable schedule and credit ceiling.
+`RenderKey,Status,JobId,CreditsQuoted,PlanJson,VideoUrl,CompletedAt`
 
-**dryRun=true** returns the source plan, design JSON, review rows and quote. It writes no log rows, creates no editor draft, sends no messages, and skips existing paid jobs. The published Zvid package checked for this revision is 0.1.8; only its supported render validate/create/get operations are used.
+Before a paid call, reserve submitting and a compact snapshot. Persist the accepted JobId; recovery polls it before source checks. Explicit 429 rejections are retried up to three attempts with a 30-second minimum and server Retry-After. Uncertain submissions are never retried automatically. Failed, timed-out and uncertain records need inspection; do not delete rows as a general retry strategy. Sports blocks replacement editions while the preceding edition needs inspection.
 
-Before submission, save submitting and a compact original review snapshot. Save the accepted job ID immediately afterward, then poll that job through the native Zvid node. Completed keys are skipped. Saved rendering jobs resume without a second paid request, preserving the original review context. The snapshot excludes the render payload and large raw forecasts because Sheets cells have a size limit; recovery polls the existing job and does not rebuild or resubmit it.
+Open **Watch video → Binary → data → View** on completion. The download has a 30-second timeout and three attempts; its failure does not erase the saved video URL. CSV formula-like values are escaped. Optional music is checked before use and skipped if unavailable.
 
-Explicit HTTP 429 capacity rejections are recorded as rate_limited and retried up to three submission attempts, with at least 30 seconds between attempts and respect for a longer server Retry-After delay. An exhausted rejected key can be retried on a later run because no job was accepted. Voice generation and design are not repeated within this retry loop.
+## Migration from the previous day 28 template
+Revise the existing creator entry, not a second submission. Retain the same local workflow, credentials and full recovery history. Add the new input tab; do not turn old results into approved source records. Keep schedules disabled until the new inputs are configured. Old accepted jobs still resume from their saved context. Old periodic recaps remain in history; new editorial editions use a separate sports-editorial key prefix. If an older recap was published, document any needed correction manually because its batch snapshot is not an editorial event baseline.
 
-Keep submitting, failed, timed_out and needs_review records for inspection at https://app.zvid.io. An uncertain paid request is never automatically retried. A failure after acceptance but before saving its ID needs manual reconciliation. Do not clear log rows as a general retry strategy. Only reset a specific inspected record for an intentional new render. A failed accepted render now stops with its actual error after saving the outcome; it does not misleadingly finish successfully at the Watch gate.
-
-Run one execution at a time. A Sheets log is not an atomic lock; concurrent runs can both observe an unused key. Preserve log history during upgrades. Source and HTTP errors stop or report no work; no invented content is used to keep a schedule running.
-
-Optional musicUrl is checked before use; an unavailable or oversized track is omitted.
-
-Open **Watch video → Binary → data → View** for a completed MP4. Downloads use a 30-second timeout and at most three attempts, five seconds apart. A failed download leaves the saved URL available. **Download the source-specific review pack → Binary → data** contains a CSV with formula-like cells escaped. Check its facts before sharing.
-
-## Verification
-The automated checks exercise the actual exported graph with external service boundaries replaced by fixtures: normal rendering, preview, duplicate runs, accepted-job recovery, credit limits and failed/timed-out jobs. Local n8n execution and free validation evidence are recorded separately in the revision report; fixture success does not prove live credentials or source permissions.
+## What changed for review
+This is an editorial approval and correction lifecycle. One exact event is checked against versioned human approval and previous rendered facts; stale approvals cannot trigger replacement videos, and correction outputs preserve prior evidence. The source code and layout are generated by scripts/weather-sports-revisions.js and scripts/weather-sports-revision-runtime.js. Acceptance remains n8n’s decision.
 
 Support: https://zvid.io/contact

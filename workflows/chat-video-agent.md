@@ -1,15 +1,46 @@
 # Telegram chat to a finished video, with an AI agent
 
-The 2026-10-04 review retained this template's conversational design: it is
-distinct from the scheduled source-to-video workflows. The existing finished
-media guard and downloader version are preserved; Watch video now has a
-30-second request timeout, at most three attempts, and keeps the result URL
-available after a download failure. Regression checks cover unauthorized and
-empty requests, separate chat memory keys, provider failures, off-host/example
-media URLs, HTML escaping and long replies. No Telegram messages or paid agent
-renders were sent during this review.
+Watch video reads completed Zvid results from the agent's tool observations,
+so an omitted or Markdown-formatted link in the final reply cannot lose the
+video. Suggestions, drafts, quotes and running jobs correctly leave Watch
+false. Read **Chat reply → watchReason** for the next action. The downloader
+uses HTTP Request v2 to avoid the n8n 2.29.10 manual-run stream serialization
+failure, with a 30-second timeout and at most three attempts.
+
+The agent chooses routine footage, backgrounds and styling itself. A sufficiently
+clear brief should reach a saved draft and quote without a shortlist question.
+The example shortcut can hit a reusable-template quota while resolving variables.
+The agent can instead adapt the actual example into a fully resolved payload,
+validate it, then use **create_media** to save an editor project and obtain a
+signed quote. Project limits still apply; existing account assets are never
+deleted to make room. Validation alone is not a saved draft or signed quote.
+Set **Config.preferDirectDraft=true** to use this route immediately. The local
+repair uses `openai/gpt-4.1` with room for complete project output; the earlier
+mini-model test produced malformed payload data. Model calls incur provider costs.
+
+After approval and **render_media**, **Wait for the newly accepted chat video**
+uses the native Zvid node to wait for that exact job (up to ten minutes). It never
+submits a replacement. **Attach the actual chat video result** passes the result
+to the existing completed-media and URL checks, then Watch downloads the new MP4.
+Draft/quote turns correctly do not produce a video. The agent itself never polls
+MCP in a waiting loop. Keep Config.manualPreviewJobId empty for new videos.
 
 ## Zvid integration
+
+For repeatable playback without a new draft or model call, set
+**Config → manualPreviewJobId** to an existing completed job ID, then click
+**Test manually**. This dedicated branch reads that job with the Zvid node and
+downloads the checked MP4. It spends no new render credits, sends no Telegram
+message, and works even when the account cannot create another draft. It is a
+replay of existing media, not a new video for the text in Test brief. Clear
+manualPreviewJobId to return to the creative agent. Telegram always uses the
+normal screened conversation regardless of this manual setting.
+
+Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before
+credentials; a workspace owner/admin may need to install it. Attach a **Zvid
+API** credential from https://app.zvid.io/api-keys with Base URL
+https://api.zvid.io to **Read saved render for preview** and **Wait for the newly accepted chat video**. An unfinished, missing,
+failed or disallowed result leaves Watch off and explains why in Chat reply.
 
 AI-agent exception: this workflow uses n8n’s built-in **MCP Client Tool** against **https://mcp.zvid.io/mcp**. Zvid’s conversational creation and approval tools are exposed through MCP, not equivalent operations in the published Zvid node. Keep the existing MCP authentication and approval settings.
 
@@ -19,8 +50,8 @@ Message your own Telegram bot — *"12-second vertical teaser for FocusFlow, dar
 premium look, tagline Focus without friction"* — and an n8n AI Agent does the
 rest: it plans the video, adapts the closest design from Zvid's published
 library, saves it as a draft and replies with the **exact credit quote plus an
-editor link**. Reply yes and it renders, then posts the finished MP4 back into
-the chat as a clip you can play. Every other template in this series renders a
+editor link**. Reply yes and it starts rendering, waits for completion and
+returns the MP4 as a playable clip. Every other template in this series renders a
 shape you designed in advance; this one decides what to build.
 
 ```
@@ -53,11 +84,10 @@ system message explicitly forbids flattening an example into plain text on a
 background — the quickest way for a model to throw away everything the library
 was giving it.
 
-**Nine tools, not the whole catalogue.** *Zvid MCP tools* is set to
-**Selected** with exactly nine tool names. The full Zvid tool schema is roughly
-74 KB of prompt on *every* turn, which slows small models down and makes them
-wander. Nine keeps the agent on the example-first path — and none of the nine
-can start a render without a quote.
+**A selected tool set.** *Zvid MCP tools* exposes planning, example adaptation,
+validation, draft creation/revision, quote-approved rendering, status and balance.
+It includes `create_media` and `revise_media` for complete static payloads.
+Rendering requires a signed quote.
 
 **The bot is private by default, and only posts a finished render.**
 `allowedChatIds` ships empty and an empty list answers *no* Telegram chat: bot
@@ -69,8 +99,8 @@ and the path half is the interesting one: every library example the agent looks
 at also has an MP4 preview on `cdn.zvid.io`, so a host-only check would let
 "here is what the design looks like" post another project's demo clip as your
 finished video, before anything had rendered. Telegram and n8n both *fetch* that
-URL, and the text it is lifted from was written by a model that just read a chat
-message.
+URL. Only a completed render in an actual MCP tool observation can enable
+delivery; a link in assistant prose alone is insufficient.
 
 **It runs with no Telegram credential at all.** *Test manually* feeds a fixed
 brief into the same path, so you can exercise the agent — and compare models —
@@ -81,7 +111,7 @@ there is nothing in it for the agent to render against.
 
 | | |
 | --- | --- |
-| n8n with the built-in AI nodes | *AI Agent*, *OpenRouter Chat Model*, *Simple Memory* and *MCP Client Tool* ship with n8n Cloud and with any current self-hosted install. No community package. Built and version-checked against **n8n 2.29.10**. |
+| n8n with the built-in AI nodes | *AI Agent*, *OpenRouter Chat Model*, *Simple Memory* and *MCP Client Tool*, plus `@zvid/n8n-nodes-zvid` for direct saved-job playback. Built and version-checked against **n8n 2.29.10**. |
 | Telegram bot | `/newbot` in [@BotFather](https://t.me/BotFather), about two minutes, gives you a token. The trigger is a **webhook**, so n8n has to be reachable from the internet — Cloud is; a local instance needs a tunnel or `N8N_WEBHOOK_URL` pointing at a public address. |
 | OpenRouter API key | One key, any model. Choose any OpenRouter model id in *Config* and keep *Chat model (OpenRouter)* connected to the agent. |
 | Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to try it. |
@@ -94,7 +124,8 @@ composes from Zvid's library through the MCP endpoint.
 1. **Import** `zvid-chat-video-agent.json`.
 2. **OpenRouter credential** — create an **OpenRouter API** credential and
    attach it to *Chat model (OpenRouter)*.
-3. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
+3. **Zvid credential** — create a **Header Auth** credential with header name
+   `x-api-key` and your Zvid API key; attach it to **Zvid MCP tools**.
 4. **Try it before Telegram exists.** Click **Test manually**. The fixed brief
    in *Test brief* runs the whole agent loop and **carries no approval**, so the
    agent's instructions are to stop at the quote — read its words in the
@@ -111,8 +142,12 @@ composes from Zvid's library through the MCP endpoint.
    bot is private… This chat is 774112900."* Paste that number into
    `allowedChatIds`, save, and message again.
 7. **Send a brief** — *"12-second vertical teaser for FocusFlow, dark premium
-   look, tagline Focus without friction"*. Expect two turns: a quote plus an
-   editor link, then the video after you reply yes.
+   look, tagline Focus without friction"*. The agent should prepare the draft
+   and quote in that turn without asking permission merely to inspect a design.
+   Approve the quote to start rendering; the native Zvid node waits for that job.
+   For manual tests, edit **Test brief** for each turn; it uses the
+   `manual-test` memory session. A status request with the accepted job ID does
+   not require a new paid render.
 8. **Decide your ceiling.** `maxRenderCredits` ships at 25 — enough for a short
    vertical clip, and the one number that bounds what a misunderstanding can
    cost. See [Cost](#cost) for the honest worst case.
@@ -123,10 +158,10 @@ composes from Zvid's library through the MCP endpoint.
 | --- | --- | --- |
 | 1. Plan the video | `plan_creative_video`, `find_matching_examples` | No |
 | 2. Read the best example's variables | `start_from_example` | No |
-| 3. Swap copy, media, colours; save a draft | `create_media_from_example` | **No** — returns a draft + a signed quote |
+| 3. Swap copy, media, colours; save a draft | `create_media_from_example`, or validated `create_media` | **No** — returns a draft + a signed quote |
 | 4. Report the quote and the editor link (`https://editor.zvid.io/?project=prj_…`), and ask | — | No |
 | 5. Render, after your explicit yes | `render_media` (exact `draftId` + `quoteToken`) | **Yes, the quoted amount** |
-| 6. Poll until finished, return the URL | `get_media` | No |
+| 6. Wait for the accepted job and download its completed MP4 | Native Zvid Get Render, then Watch video | No |
 
 **Enforced by Zvid's server — a confused model cannot talk past these:**
 
@@ -142,7 +177,7 @@ composes from Zvid's library through the MCP endpoint.
   `profile=creator`, and that profile never registers the direct-render,
   render-from-example or bulk-render tools — there is nothing for a model to
   find, whatever it is asked. (Separately, on the n8n side, *Zvid MCP tools* is
-  set to **Selected**, so the model is bound to the nine listed tools.)
+  set to **Selected**, so the model is bound to the configured tool set.)
 
 **Asked for in the system message — model behaviour, not a lock:**
 
@@ -170,8 +205,10 @@ Everything lives in the `Config` node. Credentials never do.
 
 | Key | Default | Notes |
 | --- | --- | --- |
-| `model` | `openai/gpt-4.1-mini` | Any OpenRouter model id. Cheap, and enough to drive the flow. **A stronger model plans noticeably better videos** — it picks better examples, writes better copy, and holds a multi-step rule more reliably — so reach for a current frontier model (a Claude Sonnet or GPT-5 class id; check OpenRouter's model list for the exact string) if results feel generic or the agent fumbles the quote-then-ask sequence. No model's behaviour was measured while building this. |
-| `maxIterations` | `30` | Tool-call budget per message. A full build is roughly five calls plus polling; below ~20 the agent runs out mid-render. It is **not** a spend limit — several build-and-render cycles fit inside 30. |
+| `model` | `openai/gpt-4.1` | OpenRouter model ID. This model saved the tested FocusFlow draft; the previous mini model produced malformed project data. Model calls incur provider charges. |
+| `preferDirectDraft` | `false` | Set true when reusable-template slots are full. Adapt a complete static payload and save an editor project, without creating a temporary template. Project limits still apply. |
+| `manualPreviewJobId` | empty | Optional explicit replay only. Keep empty to create videos from new briefs. |
+| `maxIterations` | `30` | Tool-call budget per message, not a spend limit. Planning may need several calls; status requests use one check and never loop waiting for a render. |
 | `memoryWindow` | `10` | Turns kept per chat. This is what lets "yes, render it" refer to the quote in the previous message. |
 | `maxRenderCredits` | `25` | **The one server-enforced spend limit.** Sent to the MCP endpoint; any render quoted above it is refused. A 12–15 s vertical clip is 13–15 credits. Raise it deliberately, not casually. |
 | `allowedChatIds` | `[]` | Chat IDs allowed to use the bot, e.g. `["774112900"]`. **Empty refuses every Telegram chat** — the template fails closed. Does not affect *Test manually*. |
@@ -232,13 +269,13 @@ not dollars — but a long argument with a frontier model is not free.
 | **Zvid AI Agent** | The tools agent. System message pins the example-first flow, the quote-then-confirm rule (with `allowSameMessageApproval` interpolated into it), one render per message, chat-length replies, and "print the MP4 URL on its own line". Its **error output** is wired, so a provider failure produces `replyOnError` instead of silence. It deliberately has **no** `retryOnFail`: a retry re-runs the entire turn from the top, so a render that had already gone through would be quoted and paid for a second time. |
 | **Chat model (OpenRouter)** | Reads `model` from Config. Swap this node for another model provider without touching anything else. |
 | **Chat memory** | Window buffer keyed on `tg-<chatId>`, `memoryWindow` turns deep. |
-| **Zvid MCP tools** | n8n's stock **MCP Client Tool** against `https://mcp.zvid.io/mcp?profile=creator&maxRenderCredits=<Config>`, Header Auth (`x-api-key`), streamable HTTP, `include: selected` with the nine tools listed above. |
-| **Chat reply** | The single exit for all three paths — the agent's answer, the agent's error output, a screened-out message. Takes the **last** `.mp4` URL that starts with a `videoUrlPrefixes` entry (so none of an older link, an off-host one, or an on-host *preview* can hijack the fetch), HTML-escapes the text, and trims to Telegram's 4096-character limit without ever dropping the video URL. `replyPlain` holds the un-escaped text for reading a run. |
+| **Zvid MCP tools** | n8n's stock **MCP Client Tool** against `https://mcp.zvid.io/mcp?profile=creator&maxRenderCredits=<Config>`, Header Auth (`x-api-key`), streamable HTTP, `include: selected` for the planning, draft, render and status tools. |
+| **Chat reply** | Reads the latest relevant MCP observation. A completed render with an allowed MP4 enables playback even if the model omits the URL. A later running or failed result supersedes an older completed result. Returns `mediaStatus`, `jobId` and `watchReason`; preserves the MP4 through HTML escaping and Telegram's 4096-character limit. |
 | **Reply in Telegram?** | Real chat → the Telegram nodes. Manual run → *Video ready to watch?*, so a test run needs no Telegram credential. |
 | **Send reply** | `sendMessage` with `parse_mode: HTML`. That is not cosmetic: the Telegram node **forces legacy Markdown when no parse mode is set**, and one unbalanced `_` — which any `prj_…` id or job id supplies — either fails the send with `400 can't parse entities` or silently italicises and eats part of the editor link. *Chat reply* escapes `& < >` to match. Attribution footer off, retries 3×, and set to continue on error so a text failure can never stop the clip going out. |
 | **Video ready?** | True only when *Chat reply* found an allowed MP4 URL. |
 | **Send video** | `sendVideo` with the render's own CDN URL, so Telegram fetches the file and plays it inline. It deliberately ships **no** additional fields: n8n's attribution footer is a `sendMessage`-only option, so on `sendVideo` there is nothing to switch off — and a flag set here would be copied straight into the Bot API request as an unrecognised parameter. Continues on error: if Telegram cannot fetch it (size or format), the run still ends green and the text reply already carried the link. |
-| **Video ready to watch?** | Continues only when the reply contains an allowed finished-video URL. Quote-only replies and missing links skip the download. The existing URL allow-list remains in effect. |
+| **Video ready to watch?** | Continues when Chat reply has verified completed media. Suggestions, quotes, running jobs and failed jobs skip the download; read `watchReason` for the reason. |
 | **▶ Watch video** | Downloads the MP4 as binary so you can play the result inside n8n: open **Binary → data → View**. Retries a few times (the CDN can 404 briefly after a render) and continues on download errors. |
 
 ## Extending it
@@ -274,15 +311,15 @@ not dollars — but a long argument with a frontier model is not free.
 | It rendered without me approving | Check `allowSameMessageApproval` first — at `true`, one message naming a credit ceiling is treated as its own approval. At `false` the agent was told not to, and it did anyway: asking is prompt-enforced, not locked (see [the safety flow](#the-safety-flow-quoted-first-rendered-second)). Lower `maxRenderCredits` — that ceiling *is* enforced — and consider a cheaper-to-be-wrong model. |
 | "Draft payload changed after quoting" / "Render cost changed after quoting" | The quote is signed against the exact draft and price and lasts about fifteen minutes. The agent should call `get_media` for a fresh quote and ask again. |
 | "above the MCP per-render limit" | The video costs more than `maxRenderCredits` in **Config** (or your dashboard's MCP limit, whichever is lower). Ask for a shorter cut, or raise the limit deliberately. |
-| The reply says *"Not posted as a clip: that link is not a finished Zvid render."* | The URL in the agent's answer did not start with a `videoUrlPrefixes` entry, so nothing fetched it. The common case is **not** a hostile link: it is the model pasting a library example's `cdn.zvid.io/library/examples/previews/…` preview at quote time — that is another project's demo clip, and posting it as your video would be worse than the notice. Off-host links land here too. If your account genuinely serves renders from another host or path, add that prefix (with its trailing slash) to `videoUrlPrefixes`. |
+| Watch returns false | Read Chat reply → watchReason. The first brief prepares a saved draft and signed quote; approve it to render. The native Zvid node waits for the accepted job. A completed job must return an allowed MP4 URL. Assistant text or library previews cannot enable Watch. |
 | The link arrived but no clip played | Telegram could not fetch the file — usually size (it fetches a URL up to roughly 20 MB, which a short clip is nowhere near, but a long one can exceed) or format. *Send video* continues on error precisely so the run still ends green; the text reply already contains the URL, and **▶ Watch video** has the file. |
 | A stranger is talking to my bot | Bot usernames are public and anyone can message one. Only ids in `allowedChatIds` get an answer, and everyone else is turned away in *Screen request* before any tool call — so if this is happening, that list is not what you think it is. |
 | Replies get cut off | Telegram's hard limit is 4096 characters. *Chat reply* trims and marks it, keeping the video URL. If the agent is writing essays, that is a model-verbosity problem — the system message asks for a few short lines. |
 | `429` / `hourly_limit_exceeded` on a render | Your plan's hourly render limit is spent — the message says how many minutes remain. This is a **Free-plan** limit (20 jobs per hour); paid plans have no hourly job limit, so you will not see this row there. A person chatting will not hit it; a rapid test loop can. Nothing is charged for a rejected submit. |
 | Two people get each other's context | They should not: memory is keyed `tg-<chatId>`. If it happens, check that *Chat memory* still reads `sessionId` from *Screen request* and that `sessionIdType` is *Define below*. |
-| `403 Template limit reached` — *"Your Free plan allows up to 5 templates"* | **Hit this in a real run.** The example-first path saves your draft as a **template** on the account, so a Free plan that already holds 5 cannot create another one — the agent never gets as far as a quote, and it will tell you so rather than pretend. Archive a template you no longer need at [app.zvid.io](https://app.zvid.io) (or upgrade), then send the brief again. Nothing is charged when this happens. Worth knowing before you demo the workflow to somebody. |
+| `403 Template limit reached` | The example shortcut uses a temporary template to resolve variables. Set `preferDirectDraft=true` and retry preparation: the static-payload route saves an editor project instead. It was verified against the same full template quota. No account assets need deleting; project limits still apply. |
 
-## Verified
+## Earlier verification record
 
 **The agent core was executed inside n8n; the Telegram leg was not.** Everything
 below is what was actually checked. See **Live n8n execution** at the end for the

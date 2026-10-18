@@ -1,10 +1,10 @@
 {
-  "name": "Create a local forecast with a ranked daytime planning window",
+  "name": "Plan outdoor bookings around weather and generate a call-sheet video",
   "nodes": [
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"cityName\": \"Lisbon\",\n  \"locale\": \"en-US\",\n  \"units\": \"celsius\",\n  \"windUnit\": \"kmh\",\n  \"brandName\": \"SUNRISE WEATHER\",\n  \"handle\": \"@sunriseweather\",\n  \"heroSeconds\": 6.4,\n  \"outlookSeconds\": 5.8,\n  \"transitionSeconds\": 0.5,\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.14,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"countryCode\": \"PT\",\n  \"admin1\": \"Lisbon District\",\n  \"forecastRevision\": 1,\n  \"maxRainProbability\": 30,\n  \"maxWindKmh\": 25,\n  \"maxCreditsPerVideo\": 25\n}",
+        "jsonOutput": "{\n  \"cityName\": \"Lisbon\",\n  \"musicUrl\": \"\",\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"countryCode\": \"PT\",\n  \"admin1\": \"Lisbon District\",\n  \"forecastRevision\": 1,\n  \"maxRainProbability\": 30,\n  \"maxWindKmh\": 25,\n  \"maxCreditsPerVideo\": 35,\n  \"timezone\": \"Europe/Lisbon\",\n  \"planningDate\": \"\",\n  \"calendarLabel\": \"Outdoor call sheet\",\n  \"minTemperatureC\": 8,\n  \"maxTemperatureC\": 32\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -14,7 +14,7 @@
         500
       ],
       "id": "zvid-wx-0003",
-      "name": "Set the city and outdoor planning thresholds"
+      "name": "Set the location date and booking thresholds"
     },
     {
       "parameters": {},
@@ -59,7 +59,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 2,
       "position": [
-        11180,
+        13460,
         500
       ],
       "id": "zvid-wx-0026",
@@ -78,7 +78,7 @@
           "parameters": [
             {
               "name": "name",
-              "value": "={{ $json.cityName }}"
+              "value": "={{ $('Set the location date and booking thresholds').first().json.cityName }}"
             },
             {
               "name": "count",
@@ -86,7 +86,7 @@
             },
             {
               "name": "language",
-              "value": "={{ ($json.locale || 'en').split('-')[0] }}"
+              "value": "en"
             },
             {
               "name": "format",
@@ -101,7 +101,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        820,
+        2900,
         500
       ],
       "id": "zvid-wx-0004",
@@ -116,11 +116,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1100,
+        3180,
         500
       ],
       "parameters": {
-        "jsCode": "function helpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (\n\t\t\tv === null ||\n\t\t\tv === undefined ||\n\t\t\tv === '' ||\n\t\t\ttypeof v === 'boolean' ||\n\t\t\t!Number.isFinite(Number(v))\n\t\t)\n\t\t\tthrow Error(label + ' must be a finite number');\n\t\treturn Number(v);\n\t};\n\tconst iso = (v, label = 'Date') => {\n\t\tconst s = text(v);\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(s) ||\n\t\t\t!Number.isFinite(Date.parse(s + 'T12:00:00Z')) ||\n\t\t\tnew Date(s + 'T12:00:00Z').toISOString().slice(0, 10) !== s\n\t\t)\n\t\t\tthrow Error(label + ' must be a real YYYY-MM-DD date');\n\t\treturn s;\n\t};\n\tconst day = (now, timezone = 'UTC') =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: timezone,\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tconst shift = (s, n) =>\n\t\tnew Date(Date.parse(s + 'T12:00:00Z') + n * 86400000).toISOString().slice(0, 10);\n\tconst truth = (v) => v === true || /^(true|yes|1)$/i.test(text(v));\n\tconst https = (v, label) => {\n\t\tconst s = text(v);\n\t\tif (!/^https:\\/\\/[^\\s/]+(?:\\/\\S*)?$/i.test(s)) throw Error(label + ' must be an HTTPS URL');\n\t\treturn s;\n\t};\n\tconst unique = (rows, key) => {\n\t\tconst seen = new Set();\n\t\tfor (const r of rows) {\n\t\t\tconst s = text(r[key]);\n\t\t\tif (!s || seen.has(s)) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(s);\n\t\t}\n\t};\n\tconst noWork = (reason, extra = {}) => ({\n\t\tready: false,\n\t\tstatus: 'nothing_to_render',\n\t\tcreditsSpent: 0,\n\t\treason,\n\t\t...extra,\n\t});\n\treturn { text, number, iso, day, shift, truth, https, unique, noWork };\n}\nfunction selectPlace(cfg, response) {\n\tconst h = helpers(),\n\t\thits = (response.results || []).filter(\n\t\t\t(p) =>\n\t\t\t\t(!cfg.countryCode ||\n\t\t\t\t\th.text(p.country_code).toUpperCase() === h.text(cfg.countryCode).toUpperCase()) &&\n\t\t\t\t(!cfg.admin1 || h.text(p.admin1).toLowerCase() === h.text(cfg.admin1).toLowerCase()),\n\t\t);\n\tif (hits.length !== 1)\n\t\tthrow Error(\n\t\t\t'City selection is ' +\n\t\t\t\t(hits.length ? 'ambiguous' : 'empty') +\n\t\t\t\t'. Set countryCode and admin1; never silently choose the first city.',\n\t\t);\n\tconst p = hits[0];\n\th.number(p.latitude, 'latitude');\n\th.number(p.longitude, 'longitude');\n\treturn { place: { ...p, country: p.country || p.country_code, timezone: p.timezone || 'UTC' } };\n}\nreturn [{json:selectPlace($('Set the city and outdoor planning thresholds').first().json,$json)}];"
+        "jsCode": "function helpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (\n\t\t\tv === null ||\n\t\t\tv === undefined ||\n\t\t\tv === '' ||\n\t\t\ttypeof v === 'boolean' ||\n\t\t\t!Number.isFinite(Number(v))\n\t\t)\n\t\t\tthrow Error(label + ' must be a finite number');\n\t\treturn Number(v);\n\t};\n\tconst iso = (v, label = 'Date') => {\n\t\tconst s = text(v);\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(s) ||\n\t\t\t!Number.isFinite(Date.parse(s + 'T12:00:00Z')) ||\n\t\t\tnew Date(s + 'T12:00:00Z').toISOString().slice(0, 10) !== s\n\t\t)\n\t\t\tthrow Error(label + ' must be a real YYYY-MM-DD date');\n\t\treturn s;\n\t};\n\tconst day = (now, timezone = 'UTC') =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: timezone,\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tconst shift = (s, n) =>\n\t\tnew Date(Date.parse(s + 'T12:00:00Z') + n * 86400000).toISOString().slice(0, 10);\n\tconst truth = (v) => v === true || /^(true|yes|1)$/i.test(text(v));\n\tconst https = (v, label) => {\n\t\tconst s = text(v);\n\t\tif (!/^https:\\/\\/[^\\s/]+(?:\\/\\S*)?$/i.test(s)) throw Error(label + ' must be an HTTPS URL');\n\t\treturn s;\n\t};\n\tconst unique = (rows, key) => {\n\t\tconst seen = new Set();\n\t\tfor (const r of rows) {\n\t\t\tconst s = text(r[key]);\n\t\t\tif (!s || seen.has(s)) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(s);\n\t\t}\n\t};\n\tconst noWork = (reason, extra = {}) => ({\n\t\tready: false,\n\t\tstatus: 'nothing_to_render',\n\t\tcreditsSpent: 0,\n\t\treason,\n\t\t...extra,\n\t});\n\treturn { text, number, iso, day, shift, truth, https, unique, noWork };\n}\nfunction selectPlace(cfg, response) {\n\tconst h = helpers(),\n\t\thits = (response.results || []).filter(\n\t\t\t(p) =>\n\t\t\t\t(!cfg.countryCode ||\n\t\t\t\t\th.text(p.country_code).toUpperCase() === h.text(cfg.countryCode).toUpperCase()) &&\n\t\t\t\t(!cfg.admin1 || h.text(p.admin1).toLowerCase() === h.text(cfg.admin1).toLowerCase()),\n\t\t);\n\tif (hits.length !== 1)\n\t\tthrow Error(\n\t\t\t'City selection is ' +\n\t\t\t\t(hits.length ? 'ambiguous' : 'empty') +\n\t\t\t\t'. Set countryCode and admin1; never silently choose the first city.',\n\t\t);\n\tconst p = hits[0];\n\th.number(p.latitude, 'latitude');\n\th.number(p.longitude, 'longitude');\n\treturn { place: { ...p, country: p.country || p.country_code, timezone: p.timezone || 'UTC' } };\n}\nreturn [{json:selectPlace($('Set the location date and booking thresholds').first().json,$json)}];"
       }
     },
     {
@@ -138,32 +138,32 @@
               "value": "={{ $json.place.longitude }}"
             },
             {
-              "name": "current",
-              "value": "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m"
-            },
-            {
-              "name": "daily",
-              "value": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
-            },
-            {
-              "name": "forecast_days",
-              "value": "4"
-            },
-            {
               "name": "timezone",
-              "value": "auto"
-            },
-            {
-              "name": "temperature_unit",
-              "value": "={{ $('Set the city and outdoor planning thresholds').first().json.units }}"
-            },
-            {
-              "name": "wind_speed_unit",
-              "value": "={{ $('Set the city and outdoor planning thresholds').first().json.windUnit }}"
+              "value": "={{ $json.place.timezone }}"
             },
             {
               "name": "hourly",
-              "value": "precipitation_probability,wind_speed_10m,weather_code"
+              "value": "temperature_2m,precipitation_probability,wind_speed_10m,weather_code,is_day"
+            },
+            {
+              "name": "timeformat",
+              "value": "unixtime"
+            },
+            {
+              "name": "wind_speed_unit",
+              "value": "kmh"
+            },
+            {
+              "name": "temperature_unit",
+              "value": "celsius"
+            },
+            {
+              "name": "start_date",
+              "value": "={{ $('Validate the dated booking brief').first().json.date }}"
+            },
+            {
+              "name": "end_date",
+              "value": "={{ $('Validate the dated booking brief').first().json.date }}"
             }
           ]
         },
@@ -174,11 +174,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1380,
+        3460,
         500
       ],
       "id": "zvid-wx-0006",
-      "name": "Fetch local current daily and hourly weather",
+      "name": "Fetch hourly weather for the booking date",
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 2000,
@@ -190,7 +190,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1660,
+        820,
         500
       ],
       "parameters": {
@@ -212,15 +212,15 @@
     },
     {
       "id": "late-plan",
-      "name": "Rank remaining three-hour weather windows",
+      "name": "Schedule requests around weather and confirmed bookings",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1940,
+        3740,
         500
       ],
       "parameters": {
-        "jsCode": "function helpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (\n\t\t\tv === null ||\n\t\t\tv === undefined ||\n\t\t\tv === '' ||\n\t\t\ttypeof v === 'boolean' ||\n\t\t\t!Number.isFinite(Number(v))\n\t\t)\n\t\t\tthrow Error(label + ' must be a finite number');\n\t\treturn Number(v);\n\t};\n\tconst iso = (v, label = 'Date') => {\n\t\tconst s = text(v);\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(s) ||\n\t\t\t!Number.isFinite(Date.parse(s + 'T12:00:00Z')) ||\n\t\t\tnew Date(s + 'T12:00:00Z').toISOString().slice(0, 10) !== s\n\t\t)\n\t\t\tthrow Error(label + ' must be a real YYYY-MM-DD date');\n\t\treturn s;\n\t};\n\tconst day = (now, timezone = 'UTC') =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: timezone,\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tconst shift = (s, n) =>\n\t\tnew Date(Date.parse(s + 'T12:00:00Z') + n * 86400000).toISOString().slice(0, 10);\n\tconst truth = (v) => v === true || /^(true|yes|1)$/i.test(text(v));\n\tconst https = (v, label) => {\n\t\tconst s = text(v);\n\t\tif (!/^https:\\/\\/[^\\s/]+(?:\\/\\S*)?$/i.test(s)) throw Error(label + ' must be an HTTPS URL');\n\t\treturn s;\n\t};\n\tconst unique = (rows, key) => {\n\t\tconst seen = new Set();\n\t\tfor (const r of rows) {\n\t\t\tconst s = text(r[key]);\n\t\t\tif (!s || seen.has(s)) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(s);\n\t\t}\n\t};\n\tconst noWork = (reason, extra = {}) => ({\n\t\tready: false,\n\t\tstatus: 'nothing_to_render',\n\t\tcreditsSpent: 0,\n\t\treason,\n\t\t...extra,\n\t});\n\treturn { text, number, iso, day, shift, truth, https, unique, noWork };\n}\nfunction recoverPlan(cfg, key, rows) {\n\tconst matches = rows.filter((r) => String(r.RenderKey || '') === key);\n\tif (matches.length > 1) throw Error('Duplicate RenderKey in log: ' + key);\n\tconst row = matches[0];\n\tif (!row) return null;\n\t// An explicit capacity rejection accepted no paid job. It can be retried on\n\t// a later run; uncertain submissions and failed accepted jobs remain locked.\n\tif (row.Status === 'rate_limited' && !row.JobId && !row.VideoUrl) return null;\n\tif (row.Status === 'completed' || row.VideoUrl)\n\t\treturn {\n\t\t\tready: false,\n\t\t\tstatus: 'already_completed',\n\t\t\trenderKey: key,\n\t\t\tvideoUrl: row.VideoUrl || null,\n\t\t\tcreditsSpent: 0,\n\t\t};\n\tif (row.Status === 'rendering' && row.JobId && cfg.dryRun !== true) {\n\t\tlet plan;\n\t\ttry {\n\t\t\tplan = JSON.parse(row.PlanJson);\n\t\t} catch {\n\t\t\tthrow Error('Saved PlanJson is invalid for ' + key);\n\t\t}\n\t\tif (plan.renderKey !== key || plan.snapshotVersion !== 1)\n\t\t\tthrow Error('Saved snapshot does not match ' + key);\n\t\treturn { ...plan, ready: true, jobId: String(row.JobId), resumed: true };\n\t}\n\treturn {\n\t\tready: false,\n\t\tstatus: 'needs_review',\n\t\trenderKey: key,\n\t\treason:\n\t\t\tcfg.dryRun === true\n\t\t\t\t? 'Preview skips existing jobs.'\n\t\t\t\t: 'Inspect the saved ' + row.Status + ' job before resetting this key.',\n\t\tjobId: row.JobId || null,\n\t\tcreditsSpent: 0,\n\t};\n}\nfunction resumeOutstanding(cfg, logs, prefix) {\n\tif (cfg.dryRun === true) return null;\n\tconst saved = logs\n\t\t.filter(\n\t\t\t(r) => String(r.RenderKey || '').startsWith(prefix) && r.Status === 'rendering' && r.JobId,\n\t\t)\n\t\t.sort((a, b) => String(a.RenderKey).localeCompare(String(b.RenderKey)));\n\tif (!saved.length) return null;\n\t// Recover paid work even when its source changed or a date rolled over.\n\t// Delivery approval is intentionally re-reviewed after such a recovery.\n\tconst plan = recoverPlan(cfg, saved[0].RenderKey, logs);\n\treturn { ...plan, emailApproved: false, deferredSavedJobs: saved.length - 1 };\n}\nfunction planWeather(cfg, forecast, place, logs, now) {\n\tconst outstanding = resumeOutstanding(cfg, logs, 'weather-');\n\tif (outstanding) return outstanding;\n\tconst h = helpers(),\n\t\ttoday = h.day(now, place.timezone),\n\t\tkey =\n\t\t\t'weather-' +\n\t\t\tplace.latitude +\n\t\t\t'-' +\n\t\t\tplace.longitude +\n\t\t\t'-' +\n\t\t\ttoday +\n\t\t\t'-' +\n\t\t\th.text(cfg.forecastRevision || 1);\n\tconst saved = recoverPlan(cfg, key, logs);\n\tif (saved) return saved;\n\tif (!forecast.current || !forecast.daily || !forecast.hourly)\n\t\tthrow Error('Forecast lacks current, daily or hourly data');\n\tconst offset = h.number(forecast.utc_offset_seconds, 'utc_offset_seconds');\n\tconst time = Date.parse(forecast.current.time + 'Z') - offset * 1000,\n\t\tage = (now.getTime() - time) / 3600000;\n\tif (!Number.isFinite(age) || age < -0.25 || age > 3 || forecast.daily.time?.[0] !== today)\n\t\tthrow Error('Forecast is stale or belongs to a different local day');\n\tfor (const k of [\n\t\t'temperature_2m',\n\t\t'apparent_temperature',\n\t\t'relative_humidity_2m',\n\t\t'wind_speed_10m',\n\t\t'weather_code',\n\t])\n\t\th.number(forecast.current[k], 'current ' + k);\n\tfor (const k of [\n\t\t'weather_code',\n\t\t'temperature_2m_max',\n\t\t'temperature_2m_min',\n\t\t'precipitation_probability_max',\n\t]) {\n\t\tif (forecast.daily[k]?.length < 4) throw Error('Four daily forecast values are required: ' + k);\n\t\tforecast.daily[k].slice(0, 4).forEach((v) => h.number(v, k));\n\t}\n\tconst hourly = forecast.hourly,\n\t\tunit = forecast.hourly_units?.wind_speed_10m;\n\tconst multiplier = { 'km/h': 1, 'm/s': 3.6, 'mp/h': 1.609344, mph: 1.609344, kn: 1.852 }[unit];\n\tif (!multiplier) throw Error('Unrecognized hourly wind unit');\n\tconst hours = [];\n\tfor (let i = 0; i < (hourly.time || []).length; i++) {\n\t\tconst t = String(hourly.time[i]),\n\t\t\thr = Number(t.slice(11, 13));\n\t\tif (\n\t\t\t!t.startsWith(today) ||\n\t\t\thr < 6 ||\n\t\t\thr > 20 ||\n\t\t\tDate.parse(t + 'Z') - offset * 1000 < now.getTime()\n\t\t)\n\t\t\tcontinue;\n\t\tconst rain = h.number(hourly.precipitation_probability?.[i], 'hourly rain'),\n\t\t\twind = h.number(hourly.wind_speed_10m?.[i], 'hourly wind') * multiplier,\n\t\t\tcode = h.number(hourly.weather_code?.[i], 'hourly code');\n\t\tif (rain < 0 || rain > 100 || wind < 0) throw Error('Forecast values outside their ranges');\n\t\thours.push({\n\t\t\ttime: t,\n\t\t\train,\n\t\t\twind,\n\t\t\tcode,\n\t\t\tqualifies:\n\t\t\t\train <= Number(cfg.maxRainProbability ?? 30) &&\n\t\t\t\twind <= Number(cfg.maxWindKmh ?? 25) &&\n\t\t\t\t![56, 57, 66, 67, 71, 73, 75, 77, 85, 86, 95, 96, 99].includes(code),\n\t\t});\n\t}\n\tif (!hours.length) return h.noWork('No future daytime hourly data remains for today.');\n\tconst windows = [];\n\tfor (let i = 0; i <= hours.length - 3; i++) {\n\t\tconst run = hours.slice(i, i + 3);\n\t\tif (\n\t\t\trun.every((x) => x.qualifies) &&\n\t\t\tDate.parse(run[2].time + 'Z') - Date.parse(run[0].time + 'Z') === 7200000\n\t\t)\n\t\t\twindows.push({\n\t\t\t\tstart: run[0].time.slice(11, 16),\n\t\t\t\tend: String(Number(run[2].time.slice(11, 13)) + 1).padStart(2, '0') + ':00',\n\t\t\t\train: Math.max(...run.map((x) => x.rain)),\n\t\t\t\twind: Math.round(Math.max(...run.map((x) => x.wind))),\n\t\t\t});\n\t}\n\twindows.sort((a, b) => a.rain - b.rain || a.wind - b.wind || a.start.localeCompare(b.start));\n\tconst window = windows[0] || null;\n\treturn {\n\t\tready: true,\n\t\trenderKey: key,\n\t\tforecast,\n\t\tplace,\n\t\tdate: today,\n\t\twindow,\n\t\tattention: !window,\n\t\tcaption: window\n\t\t\t? 'Lowest-rain qualifying three-hour window: ' +\n\t\t\t\twindow.start +\n\t\t\t\t'–' +\n\t\t\t\twindow.end +\n\t\t\t\t' ' +\n\t\t\t\tplace.timezone +\n\t\t\t\t'.'\n\t\t\t: 'No three-hour window meets the configured rain/wind conditions today.',\n\t\thandoff: hours.map((x) => ({\n\t\t\tLocalTime: x.time,\n\t\t\tTimezone: place.timezone,\n\t\t\tRainProbability: x.rain,\n\t\t\tWindKmh: Math.round(x.wind),\n\t\t\tWeatherCode: x.code,\n\t\t\tMeetsPlanningThresholds: x.qualifies,\n\t\t})),\n\t\tsource: 'Open-Meteo',\n\t\tnote: 'Planning guidance from a forecast, not an official weather warning. Check local advisories.',\n\t};\n}\nreturn [{json:planWeather($('Set the city and outdoor planning thresholds').first().json,$('Fetch local current daily and hourly weather').first().json,$('Require one matching city and region').first().json.place,$input.all().map(i=>i.json),new Date())}];"
+        "jsCode": "function revisionHelpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (v === '' || v == null || typeof v === 'boolean' || !Number.isFinite(Number(v)))\n\t\t\tthrow Error(label + ' must be a number');\n\t\treturn Number(v);\n\t};\n\tconst instant = (v, label) => {\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(?::\\d{2})?(?:Z|[+-]\\d{2}:\\d{2})$/.test(text(v)) ||\n\t\t\t!Number.isFinite(Date.parse(v))\n\t\t)\n\t\t\tthrow Error(label + ' needs an ISO timestamp with UTC offset');\n\t\treturn Date.parse(v);\n\t};\n\tconst rows = (input, key) => {\n\t\tconst out = input.filter((r) => Object.keys(r).some((k) => k !== 'row_number' && text(r[k]))),\n\t\t\tseen = new Set();\n\t\tfor (const r of out) {\n\t\t\tif (!text(r[key]) || seen.has(text(r[key]))) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(text(r[key]));\n\t\t}\n\t\treturn out;\n\t};\n\treturn { text, number, instant, rows };\n}\nfunction recoverPlan(cfg, key, rows) {\n\tconst matches = rows.filter((r) => String(r.RenderKey || '') === key);\n\tif (matches.length > 1) throw Error('Duplicate RenderKey in log: ' + key);\n\tconst row = matches[0];\n\tif (!row) return null;\n\t// An explicit capacity rejection accepted no paid job. It can be retried on\n\t// a later run; uncertain submissions and failed accepted jobs remain locked.\n\tif (row.Status === 'rate_limited' && !row.JobId && !row.VideoUrl) return null;\n\tif (row.Status === 'completed' || row.VideoUrl)\n\t\treturn {\n\t\t\tready: false,\n\t\t\tstatus: 'already_completed',\n\t\t\trenderKey: key,\n\t\t\tvideoUrl: row.VideoUrl || null,\n\t\t\tcreditsSpent: 0,\n\t\t};\n\tif (row.Status === 'rendering' && row.JobId && cfg.dryRun !== true) {\n\t\tlet plan;\n\t\ttry {\n\t\t\tplan = JSON.parse(row.PlanJson);\n\t\t} catch {\n\t\t\tthrow Error('Saved PlanJson is invalid for ' + key);\n\t\t}\n\t\tif (plan.renderKey !== key || plan.snapshotVersion !== 1)\n\t\t\tthrow Error('Saved snapshot does not match ' + key);\n\t\treturn { ...plan, ready: true, jobId: String(row.JobId), resumed: true };\n\t}\n\treturn {\n\t\tready: false,\n\t\tstatus: 'needs_review',\n\t\trenderKey: key,\n\t\treason:\n\t\t\tcfg.dryRun === true\n\t\t\t\t? 'Preview skips existing jobs.'\n\t\t\t\t: 'Inspect the saved ' + row.Status + ' job before resetting this key.',\n\t\tjobId: row.JobId || null,\n\t\tcreditsSpent: 0,\n\t};\n}\nfunction scheduleBookings(cfg, brief, response, place, logs, now) {\n\tconst h = revisionHelpers(),\n\t\tf = response.body || response;\n\tif (cfg.timezone !== place.timezone)\n\t\tthrow Error('Config timezone must match the resolved location timezone');\n\tif (\n\t\t!f.hourly ||\n\t\tf.hourly_units?.time !== 'unixtime' ||\n\t\tf.hourly_units?.wind_speed_10m !== 'km/h' ||\n\t\tf.hourly_units?.temperature_2m !== '°C'\n\t)\n\t\tthrow Error('Forecast requires Unix hourly times, km/h and Celsius');\n\tconst rainLimit = h.number(cfg.maxRainProbability, 'maxRainProbability'),\n\t\twindLimit = h.number(cfg.maxWindKmh, 'maxWindKmh');\n\tconst minTemp = h.number(cfg.minTemperatureC, 'minTemperatureC'),\n\t\tmaxTemp = h.number(cfg.maxTemperatureC, 'maxTemperatureC');\n\tif (rainLimit < 0 || rainLimit > 100 || windLimit < 0 || minTemp >= maxTemp)\n\t\tthrow Error('Invalid planning thresholds');\n\tconst times = f.hourly.time,\n\t\thourly = f.hourly;\n\tif (!Array.isArray(times) || !times.length) throw Error('Hourly forecast is empty');\n\tconst samples = times.map((t, i) => {\n\t\tconst start = h.number(t, 'hourly time') * 1000,\n\t\t\train = h.number(hourly.precipitation_probability?.[i], 'rain'),\n\t\t\twind = h.number(hourly.wind_speed_10m?.[i], 'wind'),\n\t\t\ttemperature = h.number(hourly.temperature_2m?.[i], 'temperature'),\n\t\t\tdaylight = h.number(hourly.is_day?.[i], 'daylight'),\n\t\t\tcode = h.number(hourly.weather_code?.[i], 'weather code');\n\t\tif (\n\t\t\t(i && start !== Number(times[i - 1]) * 1000 + 3600000) ||\n\t\t\train < 0 ||\n\t\t\train > 100 ||\n\t\t\twind < 0 ||\n\t\t\t![0, 1].includes(daylight)\n\t\t)\n\t\t\tthrow Error('Invalid or non-contiguous hourly forecast');\n\t\treturn { start, end: start + 3600000, rain, wind, temperature, daylight, code };\n\t});\n\tconst occupied = brief.busy.map((x) => ({ ...x })),\n\t\tdecisions = [];\n\tconst overlaps = (a, b) => a.start < b.end && b.start < a.end;\n\tfor (const r of brief.requests) {\n\t\tconst candidates = [],\n\t\t\treasons = { calendar: 0, weather: 0, coverage: 0, past: 0 };\n\t\tfor (\n\t\t\tlet start = Math.ceil(r.start / 1800000) * 1800000;\n\t\t\tstart + r.duration * 60000 <= r.end;\n\t\t\tstart += 1800000\n\t\t) {\n\t\t\tconst slot = { start, end: start + r.duration * 60000 };\n\t\t\tif (start < now.getTime()) {\n\t\t\t\treasons.past++;\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tif (occupied.some((b) => overlaps(slot, b))) {\n\t\t\t\treasons.calendar++;\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tconst used = samples.filter((x) => overlaps(slot, x));\n\t\t\tif (!used.length || used[0].start > start || used.at(-1).end < slot.end) {\n\t\t\t\treasons.coverage++;\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tif (\n\t\t\t\tused.some(\n\t\t\t\t\t(x) =>\n\t\t\t\t\t\t!x.daylight ||\n\t\t\t\t\t\tx.rain > rainLimit ||\n\t\t\t\t\t\tx.wind > windLimit ||\n\t\t\t\t\t\tx.temperature < minTemp ||\n\t\t\t\t\t\tx.temperature > maxTemp ||\n\t\t\t\t\t\t[56, 57, 66, 67, 71, 73, 75, 77, 85, 86, 95, 96, 99].includes(x.code),\n\t\t\t\t)\n\t\t\t) {\n\t\t\t\treasons.weather++;\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tcandidates.push({\n\t\t\t\t...slot,\n\t\t\t\train: Math.max(...used.map((x) => x.rain)),\n\t\t\t\twind: Math.max(...used.map((x) => x.wind)),\n\t\t\t});\n\t\t}\n\t\tcandidates.sort(\n\t\t\t(a, b) =>\n\t\t\t\tMath.abs(a.start - r.preferred) - Math.abs(b.start - r.preferred) ||\n\t\t\t\ta.rain - b.rain ||\n\t\t\t\ta.wind - b.wind ||\n\t\t\t\ta.start - b.start,\n\t\t);\n\t\tconst chosen = candidates[0];\n\t\tif (chosen) occupied.push(chosen);\n\t\tdecisions.push({\n\t\t\tBookingId: r.id,\n\t\t\tTitle: r.title,\n\t\t\tPriority: r.priority,\n\t\t\tDecision: chosen ? (chosen.start === r.preferred ? 'keep' : 'reschedule') : 'defer',\n\t\t\tPreferredStart: new Date(r.preferred).toISOString(),\n\t\t\tStart: chosen ? new Date(chosen.start).toISOString() : '',\n\t\t\tEnd: chosen ? new Date(chosen.end).toISOString() : '',\n\t\t\tRainProbability: chosen?.rain ?? '',\n\t\t\tWindKmh: chosen?.wind ?? '',\n\t\t\tReason: chosen\n\t\t\t\t? 'Tentative proposal; coordinator must confirm.'\n\t\t\t\t: Object.entries(reasons)\n\t\t\t\t\t\t.filter(([, n]) => n)\n\t\t\t\t\t\t.map(([k, n]) => k + ': ' + n + ' blocked slots')\n\t\t\t\t\t\t.join('; '),\n\t\t});\n\t}\n\tconst key =\n\t\t'weather-bookings-' +\n\t\tencodeURIComponent(cfg.calendarLabel || 'outdoor') +\n\t\t'-' +\n\t\tbrief.date +\n\t\t'-' +\n\t\tString(cfg.forecastRevision || 1);\n\tconst saved = recoverPlan(cfg, key, logs);\n\tif (saved) return saved;\n\tconst proposed = decisions.filter((x) => x.Start);\n\treturn {\n\t\tready: true,\n\t\trenderKey: key,\n\t\tdate: brief.date,\n\t\ttimezone: place.timezone,\n\t\tplace,\n\t\tdecisions,\n\t\thandoff: decisions,\n\t\twindow: proposed.length ? { start: proposed[0].Start } : null,\n\t\tattention: decisions.some((x) => x.Decision !== 'keep'),\n\t\tcaption:\n\t\t\tproposed.length + ' of ' + decisions.length + ' outdoor bookings have a tentative slot.',\n\t\tnote: 'Priority-first scheduling; not a global optimum. Forecast guidance is not an official weather warning. Confirm proposals before inviting attendees.',\n\t\tsource: 'Open-Meteo',\n\t\tcalendarLabel: cfg.calendarLabel || 'Outdoor sessions',\n\t\tgeneratedAt: now.toISOString(),\n\t};\n}\nreturn [{json:scheduleBookings($('Set the location date and booking thresholds').first().json,$('Validate the dated booking brief').first().json,$json,$('Require one matching city and region').first().json.place,$('Read Weather Briefings recovery log').all().map(i=>i.json),new Date())}];"
       }
     },
     {
@@ -229,7 +229,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2220,
+        4220,
         500
       ],
       "parameters": {
@@ -263,7 +263,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2220,
+        4500,
         850
       ],
       "parameters": {
@@ -276,7 +276,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2700,
+        4980,
         500
       ],
       "parameters": {
@@ -310,7 +310,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2980,
+        5260,
         220
       ],
       "parameters": {
@@ -319,37 +319,37 @@
     },
     {
       "parameters": {
-        "jsCode": "// Maps the raw Open-Meteo responses to everything the video needs: WMO\n// weather code -> condition label + icon glyph + palette, localized strings,\n// weekday names. The palette drives the whole design, so a rainy day\n// genuinely looks different from a sunny one.\n\n// One palette per sky. The whole video recolors from this: background gradient,\n// glow, chips, card strokes, icons. A rainy day genuinely looks different from\n// a sunny one.\nconst LOOKS = {\n  sunny: {\n    key: 'sunny',\n    bg1: '#2B1B05', bg2: '#140D03',\n    glow: '#FFB640',\n    accent: '#FFB640',\n    soft: '#EAD9B8', muted: '#A98F63',\n    panel: 'rgba(255,182,64,0.08)', panelStroke: 'rgba(255,182,64,0.38)',\n  },\n  cloudy: {\n    key: 'cloudy',\n    bg1: '#1C242E', bg2: '#0D1218',\n    glow: '#A8C3DE',\n    accent: '#A8C3DE',\n    soft: '#D4DEE9', muted: '#8697A9',\n    panel: 'rgba(168,195,222,0.08)', panelStroke: 'rgba(168,195,222,0.34)',\n  },\n  rain: {\n    key: 'rain',\n    bg1: '#0D2138', bg2: '#070F1A',\n    glow: '#4EA8FF',\n    accent: '#4EA8FF',\n    soft: '#C9DCF2', muted: '#7C93B0',\n    panel: 'rgba(78,168,255,0.09)', panelStroke: 'rgba(78,168,255,0.36)',\n  },\n  snow: {\n    key: 'snow',\n    bg1: '#182734', bg2: '#0C141C',\n    glow: '#BEE3FF',\n    accent: '#BEE3FF',\n    soft: '#E1EEF9', muted: '#8FA6BA',\n    panel: 'rgba(190,227,255,0.08)', panelStroke: 'rgba(190,227,255,0.34)',\n  },\n  storm: {\n    key: 'storm',\n    bg1: '#1E1338', bg2: '#0D081C',\n    glow: '#A98BFF',\n    accent: '#A98BFF',\n    soft: '#DCD2F2', muted: '#8D7FB5',\n    panel: 'rgba(169,139,255,0.09)', panelStroke: 'rgba(169,139,255,0.36)',\n  },\n};\n\n// WMO weather code -> icon glyph, palette, label. Labels ship in English and\n// Spanish; add a language by adding a key to each label object (and to\n// UI_STRINGS below).\nconst WMO = {\n  0:  { icon: 'sun',    look: 'sunny',  label: { en: 'Clear sky',            es: 'Cielo despejado' } },\n  1:  { icon: 'sun',    look: 'sunny',  label: { en: 'Mostly clear',         es: 'Mayormente despejado' } },\n  2:  { icon: 'partly', look: 'cloudy', label: { en: 'Partly cloudy',        es: 'Parcialmente nublado' } },\n  3:  { icon: 'cloud',  look: 'cloudy', label: { en: 'Overcast',             es: 'Nublado' } },\n  45: { icon: 'fog',    look: 'cloudy', label: { en: 'Fog',                  es: 'Niebla' } },\n  48: { icon: 'fog',    look: 'cloudy', label: { en: 'Icy fog',              es: 'Niebla helada' } },\n  51: { icon: 'rain',   look: 'rain',   label: { en: 'Light drizzle',        es: 'Llovizna ligera' } },\n  53: { icon: 'rain',   look: 'rain',   label: { en: 'Drizzle',              es: 'Llovizna' } },\n  55: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy drizzle',        es: 'Llovizna intensa' } },\n  56: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing drizzle',     es: 'Llovizna helada' } },\n  57: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing drizzle',     es: 'Llovizna helada' } },\n  61: { icon: 'rain',   look: 'rain',   label: { en: 'Light rain',           es: 'Lluvia ligera' } },\n  63: { icon: 'rain',   look: 'rain',   label: { en: 'Rain',                 es: 'Lluvia' } },\n  65: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy rain',           es: 'Lluvia intensa' } },\n  66: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing rain',        es: 'Lluvia helada' } },\n  67: { icon: 'rain',   look: 'rain',   label: { en: 'Freezing rain',        es: 'Lluvia helada' } },\n  71: { icon: 'snow',   look: 'snow',   label: { en: 'Light snow',           es: 'Nieve ligera' } },\n  73: { icon: 'snow',   look: 'snow',   label: { en: 'Snow',                 es: 'Nieve' } },\n  75: { icon: 'snow',   look: 'snow',   label: { en: 'Heavy snow',           es: 'Nieve intensa' } },\n  77: { icon: 'snow',   look: 'snow',   label: { en: 'Snow grains',          es: 'Granos de nieve' } },\n  80: { icon: 'rain',   look: 'rain',   label: { en: 'Light showers',        es: 'Chubascos ligeros' } },\n  81: { icon: 'rain',   look: 'rain',   label: { en: 'Rain showers',         es: 'Chubascos' } },\n  82: { icon: 'rain',   look: 'rain',   label: { en: 'Heavy showers',        es: 'Chubascos intensos' } },\n  85: { icon: 'snow',   look: 'snow',   label: { en: 'Snow showers',         es: 'Chubascos de nieve' } },\n  86: { icon: 'snow',   look: 'snow',   label: { en: 'Snow showers',         es: 'Chubascos de nieve' } },\n  95: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm',         es: 'Tormenta eléctrica' } },\n  96: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm w/ hail', es: 'Tormenta con granizo' } },\n  99: { icon: 'storm',  look: 'storm',  label: { en: 'Thunderstorm w/ hail', es: 'Tormenta con granizo' } },\n};\nconst WMO_FALLBACK = { icon: 'cloud', look: 'cloudy', label: { en: 'Mixed skies', es: 'Cielo variable' } };\n\n// Small UI strings, keyed by the language part of `locale`.\nconst UI_STRINGS = {\n  en: { high: 'H', low: 'L', rain: 'RAIN', wind: 'WIND', feelsLike: 'FEELS LIKE', nextDays: 'NEXT 3 DAYS', updated: 'UPDATED', today: 'today' },\n  es: { high: 'MÁX', low: 'MÍN', rain: 'LLUVIA', wind: 'VIENTO', feelsLike: 'SENSACIÓN', nextDays: 'PRÓXIMOS 3 DÍAS', updated: 'ACTUALIZADO', today: 'hoy' },\n};\n\nconst r2 = (n) => Math.round(n * 100) / 100;\nconst r4 = (n) => Math.round(n * 10000) / 10000;\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst cap = (s, locale) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);\nconst deg = (n) => (Number.isFinite(n) ? `${Math.round(n)}°` : '—');\nconst pct = (n) => (Number.isFinite(n) ? `${Math.round(n)}%` : '—');\n\n// Turns the two Open-Meteo responses into everything the video needs:\n// labels, icon keys, palette, localized strings, rounded numbers.\n\nfunction buildWeather(config, place, forecast) {\n  if (!forecast || !forecast.current || !forecast.daily) {\n    throw new Error('Open-Meteo returned no forecast. Response: ' + JSON.stringify(forecast || {}).slice(0, 300));\n  }\n  const locale = String(config.locale || 'en-US');\n  const langKey = locale.split('-')[0].toLowerCase();\n  const strings = UI_STRINGS[langKey] || UI_STRINGS.en;\n  const lang = UI_STRINGS[langKey] ? langKey : 'en';\n\n  const cur = forecast.current;\n  const daily = forecast.daily;\n  const times = daily.time || [];\n  if (times.length < 4) {\n    throw new Error(`Expected 4 daily entries (today + 3), got ${times.length}. Keep forecast_days=4 on the Get forecast node.`);\n  }\n\n  const wmo = (code) => WMO[code] || WMO_FALLBACK;\n  const label = (code) => wmo(code).label[lang] || wmo(code).label.en;\n\n  // Parse ISO dates as plain Y-M-D so the weekday never shifts across timezones.\n  const dayName = (iso) => {\n    const [y, m, d] = String(iso).split('-').map(Number);\n    return cap(new Date(y, m - 1, d).toLocaleDateString(locale, { weekday: 'long' }), locale);\n  };\n  const dateLine = (() => {\n    const [y, m, d] = String(times[0]).split('-').map(Number);\n    return cap(new Date(y, m - 1, d).toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' }), locale);\n  })();\n\n  const currentMeta = wmo(cur.weather_code);\n  const days = [1, 2, 3].map((i) => {\n    const meta = wmo(daily.weather_code[i]);\n    return {\n      date: times[i],\n      dayLabel: dayName(times[i]),\n      hi: daily.temperature_2m_max[i],\n      lo: daily.temperature_2m_min[i],\n      precip: daily.precipitation_probability_max[i],\n      code: daily.weather_code[i],\n      label: label(daily.weather_code[i]),\n      icon: meta.icon,\n      accent: LOOKS[meta.look].accent,\n    };\n  });\n\n  return {\n    place: {\n      name: place.name,\n      country: place.country || '',\n      label: place.country ? `${place.name} · ${place.country}` : place.name,\n    },\n    dateLine,\n    updatedTime: String(cur.time || '').slice(11, 16),\n    units: {\n      temp: (forecast.current_units && forecast.current_units.temperature_2m) || '°C',\n      wind: ((forecast.current_units && forecast.current_units.wind_speed_10m) || 'km/h').toUpperCase(),\n    },\n    current: {\n      temp: cur.temperature_2m,\n      feelsLike: cur.apparent_temperature,\n      humidity: cur.relative_humidity_2m,\n      wind: cur.wind_speed_10m,\n      hi: daily.temperature_2m_max[0],\n      lo: daily.temperature_2m_min[0],\n      precip: daily.precipitation_probability_max[0],\n      code: cur.weather_code,\n      label: label(cur.weather_code),\n      icon: currentMeta.icon,\n    },\n    days,\n    look: LOOKS[currentMeta.look],\n    strings,\n    lang,\n  };\n}\n// === late-series glue ===\nconst plan=$json;return [{json:{...plan,weather:buildWeather($('Set the city and outdoor planning thresholds').first().json,plan.place,plan.forecast)}}];"
+        "jsCode": "// === late-series glue ===\nreturn [{json:{...$json,note:$json.note+' '+$json.proposalStatus}}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5340,
+        7620,
         500
       ],
       "id": "zvid-wx-0007",
-      "name": "Map forecast conditions into the video design"
+      "name": "Add the coordinator confirmation requirement"
     },
     {
       "parameters": {
-        "jsCode": "// Assembles the Zvid project: a hero scene (city, date, big current temp,\n// condition, hi/lo + rain + wind chips) and a 3-day outlook scene (cards\n// with icon, weekday, precip, hi/lo). All colours come from the palette\n// chosen by `Weather look`. Design language: news-local-update /\n// dataviz-project-status from the Zvid template library.\n\nconst r2 = (n) => Math.round(n * 100) / 100;\nconst r4 = (n) => Math.round(n * 10000) / 10000;\nconst esc = (s) => String(s).replace(/[&<>\"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst cap = (s, locale) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);\nconst deg = (n) => (Number.isFinite(n) ? `${Math.round(n)}°` : '—');\nconst pct = (n) => (Number.isFinite(n) ? `${Math.round(n)}%` : '—');\n\n// Line-style weather icons drawn in a 24-unit box, scaled into place.\n// Stroke-only (no <text> — SVG text gets no fonts in the renderer).\nconst ICONS = {\n  sun: [\n    \"<circle cx='12' cy='12' r='4.6'/>\",\n    \"<path d='M12 1.6v2.6'/>\", \"<path d='M12 19.8v2.6'/>\",\n    \"<path d='M4.65 4.65l1.85 1.85'/>\", \"<path d='M17.5 17.5l1.85 1.85'/>\",\n    \"<path d='M1.6 12h2.6'/>\", \"<path d='M19.8 12h2.6'/>\",\n    \"<path d='M4.65 19.35l1.85-1.85'/>\", \"<path d='M17.5 6.5l1.85-1.85'/>\",\n  ],\n  cloud: [\n    \"<path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/>\",\n  ],\n  partly: [\n    \"<circle cx='7.4' cy='7.2' r='2.7'/>\",\n    \"<path d='M7.4 2.2v1.6'/>\", \"<path d='M2.4 7.2h1.6'/>\",\n    \"<path d='M3.9 3.7l1.15 1.15'/>\", \"<path d='M10.9 3.7l-1.15 1.15'/>\",\n    \"<path d='M2.9 10.7l1.15-1.15'/>\",\n    \"<g transform='translate(4.9 5.9) scale(0.76)'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z' fill='OCCLUDE'/></g>\",\n  ],\n  fog: [\n    \"<g transform='translate(0 -2.6)'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/></g>\",\n    \"<path d='M5.5 19.6h13'/>\", \"<path d='M8 22.6h8'/>\",\n  ],\n  rain: [\n    \"<path d='M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25'/>\",\n    \"<path d='M8 14.8v4.4'/>\", \"<path d='M12 16.8v4.4'/>\", \"<path d='M16 14.8v4.4'/>\",\n  ],\n  snow: [\n    \"<path d='M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25'/>\",\n    \"<circle cx='8' cy='16' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='8' cy='20' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='12' cy='18' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='12' cy='22' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='16' cy='16' r='1.15' fill='DOT' stroke='none'/>\",\n    \"<circle cx='16' cy='20' r='1.15' fill='DOT' stroke='none'/>\",\n  ],\n  storm: [\n    \"<path d='M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9'/>\",\n    \"<polyline points='13 11 9 17 15 17 11 23'/>\",\n  ],\n};\n\nfunction iconSvg(kind, cx, cy, size, color, opts) {\n  const o = opts || {};\n  const scale = r4(size / 24);\n  const tx = r2(cx - size / 2);\n  const ty = r2(cy - size / 2);\n  const inner = (ICONS[kind] || ICONS.cloud)\n    .join('')\n    .replace(/OCCLUDE/g, o.occlude || 'none')\n    .replace(/DOT/g, color);\n  return `<g transform='translate(${tx} ${ty}) scale(${scale})' opacity='${o.opacity != null ? o.opacity : 1}' fill='none' stroke='${color}' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'>${inner}</g>`;\n}\n\n// Per-look ambient decoration for the hero, kept in the side bands so it never\n// sits under text.\nfunction heroDecor(look) {\n  const a = look.accent;\n  if (look.key === 'sunny' || look.key === 'storm') {\n    return `<circle cx='540' cy='800' r='310' fill='none' stroke='${a}' stroke-opacity='0.10' stroke-width='1.5'/>` +\n      `<circle cx='540' cy='800' r='400' fill='none' stroke='${a}' stroke-opacity='0.06' stroke-width='1.5'/>` +\n      `<circle cx='540' cy='800' r='490' fill='none' stroke='${a}' stroke-opacity='0.035' stroke-width='1.5'/>`;\n  }\n  if (look.key === 'rain') {\n    const drop = (x, y) => `<path d='M${x} ${y}l-14 42' stroke='${a}' stroke-opacity='0.16' stroke-width='3' stroke-linecap='round'/>`;\n    return drop(140, 560) + drop(215, 750) + drop(120, 980) + drop(195, 1210) +\n      drop(905, 520) + drop(960, 730) + drop(880, 950) + drop(945, 1180);\n  }\n  if (look.key === 'snow') {\n    const dot = (x, y, r) => `<circle cx='${x}' cy='${y}' r='${r}' fill='${a}' fill-opacity='0.18'/>`;\n    return dot(150, 560, 6) + dot(220, 780, 4) + dot(130, 1010, 5) + dot(205, 1230, 4) +\n      dot(910, 540, 5) + dot(950, 760, 6) + dot(880, 990, 4) + dot(935, 1200, 5);\n  }\n  // cloudy / fog: ghost cloud bands\n  return `<rect x='640' y='420' width='330' height='34' rx='17' fill='rgba(255,255,255,0.035)'/>` +\n    `<rect x='110' y='500' width='240' height='30' rx='15' fill='rgba(255,255,255,0.03)'/>` +\n    `<rect x='700' y='1180' width='260' height='30' rx='15' fill='rgba(255,255,255,0.03)'/>`;\n}\n\nfunction buildProject(config, weather) {\n  const W = weather;\n  const look = W.look;\n  const S = W.strings;\n  const heroSec = r2(Number(config.heroSeconds ?? 6.4));\n  const outSec = r2(Number(config.outlookSeconds ?? 5.8));\n  const tSec = r2(Number(config.transitionSeconds ?? 0.5));\n  const font = 'Sora';\n  const subFont = 'Outfit';\n\n  // ---- hero scene backdrop ----\n  const heroSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs>` +\n    `<linearGradient id='wxBg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${look.bg1}'/><stop offset='1' stop-color='${look.bg2}'/></linearGradient>` +\n    `<radialGradient id='wxGlow' cx='0.5' cy='0.5' r='0.5'><stop offset='0' stop-color='${look.glow}' stop-opacity='0.30'/><stop offset='0.55' stop-color='${look.glow}' stop-opacity='0.12'/><stop offset='1' stop-color='${look.glow}' stop-opacity='0'/></radialGradient>` +\n    `</defs>` +\n    `<rect width='1080' height='1920' fill='url(#wxBg)'/>` +\n    `<circle cx='540' cy='800' r='460' fill='url(#wxGlow)'/>` +\n    heroDecor(look) +\n    iconSvg(W.current.icon, 540, 780, 270, look.accent, { occlude: look.bg1 }) +\n    `</svg>`;\n\n  // ---- outlook scene backdrop (cards + per-day icons) ----\n  const cardY = [560, 920, 1280];\n  const cardH = 320;\n  let outlookSvg =\n    `<svg width='1080' height='1920' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'>` +\n    `<defs>` +\n    `<linearGradient id='wxBg2' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${look.bg1}'/><stop offset='1' stop-color='${look.bg2}'/></linearGradient>` +\n    `<radialGradient id='wxGlow2' cx='0.5' cy='0.5' r='0.5'><stop offset='0' stop-color='${look.glow}' stop-opacity='0.22'/><stop offset='1' stop-color='${look.glow}' stop-opacity='0'/></radialGradient>` +\n    `</defs>` +\n    `<rect width='1080' height='1920' fill='url(#wxBg2)'/>` +\n    `<circle cx='540' cy='230' r='420' fill='url(#wxGlow2)'/>`;\n  W.days.forEach((d, i) => {\n    const y = cardY[i];\n    const cy = y + cardH / 2;\n    outlookSvg +=\n      `<rect x='90' y='${y}' width='900' height='${cardH}' rx='40' fill='rgba(255,255,255,0.035)' stroke='${look.panelStroke}' stroke-width='1.5'/>` +\n      `<circle cx='225' cy='${cy}' r='92' fill='rgba(255,255,255,0.045)'/>` +\n      iconSvg(d.icon, 225, cy, 148, d.accent, { occlude: look.bg1 });\n  });\n  outlookSvg += `</svg>`;\n\n  // ---- hero text stack ----\n  const chip = (content) =>\n    `<span style='display:inline-block; background:${look.panel}; border:1.5px solid ${look.panelStroke}; border-radius:999px; padding:16px 28px; margin:0 9px 14px; font-size:28px; font-weight:700; letter-spacing:2px; color:${look.soft}; white-space:nowrap;'>${content}</span>`;\n\n  const heroVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: heroSec, svg: heroSvg },\n    {\n      type: 'TEXT', x: 540, y: 150, anchor: 'top-center', track: 1,\n      enterBegin: 0.1, enterEnd: 0.5, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.accent },\n      html: `<div style='text-align:center; color:${look.accent}; font-size:30px; font-weight:800; letter-spacing:8px;'>${esc(config.brandName || 'DAILY WEATHER')}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 268, width: 980, anchor: 'top-center', track: 2,\n      enterBegin: 0.2, enterEnd: 0.7, enterAnimation: 'smoothup', exitEnd: heroSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='text-align:center; color:#FFFFFF; font-size:96px; line-height:1.04; font-weight:800; letter-spacing:-2px;'>${esc(W.place.name)}</div>` +\n        `<div style='margin-top:18px; text-align:center; color:${look.muted}; font-size:30px; font-weight:600; letter-spacing:5px;'>${esc(W.dateLine.toUpperCase())}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 940, width: 1000, anchor: 'top-center', track: 3,\n      enterBegin: 0.45, enterEnd: 0.95, enterAnimation: 'smoothup', exitEnd: heroSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='text-align:center; color:#FFFFFF; font-size:290px; line-height:1; font-weight:800; letter-spacing:-8px;'>${deg(W.current.temp)}</div>` +\n        `<div style='margin-top:20px; text-align:center; color:${look.accent}; font-size:46px; font-weight:700; letter-spacing:1px;'>${esc(W.current.label)}</div>` +\n        `<div style='margin-top:18px; text-align:center; color:${look.muted}; font-size:27px; font-weight:600; letter-spacing:3px;'>${esc(S.feelsLike)} ${deg(W.current.feelsLike)}</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 1490, width: 1020, anchor: 'top-center', track: 4,\n      enterBegin: 0.75, enterEnd: 1.2, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.soft },\n      html: `<div style='text-align:center;'>` +\n        chip(`${esc(S.high)} ${deg(W.current.hi)} / ${esc(S.low)} ${deg(W.current.lo)}`) +\n        chip(`${esc(S.rain)} ${pct(W.current.precip)}`) +\n        chip(`${esc(S.wind)} ${Math.round(W.current.wind)} ${esc(W.units.wind)}`) +\n        `</div>`,\n    },\n    {\n      type: 'TEXT', x: 540, y: 1795, anchor: 'center-center', track: 5,\n      enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: heroSec,\n      style: { fontFamily: subFont, color: look.muted },\n      html: `<div style='color:${look.muted}; font-size:24px; font-weight:700; letter-spacing:4px;'>${esc(config.handle || config.brandName || '')} · ${esc(S.updated)} ${esc(W.updatedTime)}</div>`,\n    },\n  ];\n\n  // ---- outlook text stack ----\n  const outlookVisuals = [\n    { type: 'SVG', width: 1080, height: 1920, track: 0, enterBegin: 0, exitEnd: outSec, svg: outlookSvg },\n    {\n      type: 'TEXT', x: 100, y: 290, width: 880, anchor: 'top-left', track: 1,\n      enterBegin: 0.12, enterEnd: 0.55, enterAnimation: 'smoothright', exitEnd: outSec,\n      style: { fontFamily: font, color: look.accent },\n      html: `<div style='color:${look.accent}; font-size:32px; font-weight:800; letter-spacing:7px;'>${esc(S.nextDays)}</div>` +\n        `<div style='margin-top:14px; color:${look.muted}; font-size:27px; font-weight:600; letter-spacing:2px;'>${esc(W.place.label)}</div>`,\n    },\n  ];\n  W.days.forEach((d, i) => {\n    outlookVisuals.push({\n      type: 'TEXT', x: 360, y: cardY[i] + cardH / 2, width: 550, anchor: 'center-left', track: 2 + i,\n      enterBegin: r2(0.3 + i * 0.2), enterEnd: r2(0.75 + i * 0.2), enterAnimation: 'smoothleft', exitEnd: outSec,\n      style: { fontFamily: font, color: '#FFFFFF' },\n      html: `<div style='display:flex; align-items:center; justify-content:space-between; width:550px;'>` +\n        `<div>` +\n        `<div style='color:#FFFFFF; font-size:52px; font-weight:700; line-height:1.05;'>${esc(d.dayLabel)}</div>` +\n        `<div style='margin-top:12px; color:${d.accent}; font-size:26px; font-weight:700; letter-spacing:3px;'>${esc(S.rain)} ${pct(d.precip)}</div>` +\n        `</div>` +\n        `<div style='color:#FFFFFF; font-size:60px; font-weight:800; white-space:nowrap;'>${deg(d.hi)}<span style='color:${look.muted}; font-size:42px; font-weight:600;'> / ${deg(d.lo)}</span></div>` +\n        `</div>`,\n    });\n  });\n  outlookVisuals.push({\n    type: 'TEXT', x: 540, y: 1780, anchor: 'center-center', track: 5,\n    enterBegin: 1.0, enterEnd: 1.4, enterAnimation: 'fade', exitEnd: outSec,\n    style: { fontFamily: subFont, color: look.muted },\n    html: `<div style='color:${look.muted}; font-size:24px; font-weight:700; letter-spacing:4px;'>${esc(config.brandName || '')} · ${esc(W.dateLine.toUpperCase())}</div>`,\n  });\n\n  const safeName = `daily-weather-${W.place.name}`.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'daily-weather';\n\n  const payload = {\n    name: safeName,\n    resolution: config.resolution || 'instagram-reel',\n    frameRate: Number(config.frameRate ?? 30),\n    backgroundColor: look.bg2,\n    outputFormat: 'mp4',\n    scenes: [\n      {\n        id: 'hero',\n        duration: heroSec,\n        backgroundColor: look.bg2,\n        transition: 'smoothup',\n        transitionId: 'outlook',\n        transitionDuration: tSec,\n        visuals: heroVisuals,\n      },\n      {\n        id: 'outlook',\n        duration: outSec,\n        backgroundColor: look.bg2,\n        visuals: outlookVisuals,\n      },\n    ],\n  };\n\n  if (config.musicUrl) {\n    // NOTE: no track field on audios — the production API rejects audios[].track.\n    payload.audios = [{ src: config.musicUrl, volume: Number(config.musicVolume ?? 0.14) }];\n  }\n\n  const caption =\n    `${W.place.name} ${S.today}: ${W.current.label} · ${deg(W.current.temp)}${W.units.temp.replace('°', '')} · ` +\n    `${S.high} ${deg(W.current.hi)} / ${S.low} ${deg(W.current.lo)} · ${S.rain} ${pct(W.current.precip)}` +\n    ` #${W.place.name.replace(/\\s+/g, '')} #weather`;\n\n  return {\n    payload,\n    meta: {\n      city: W.place.name,\n      country: W.place.country,\n      dateLine: W.dateLine,\n      condition: W.current.label,\n      lookKey: look.key,\n      tempNow: deg(W.current.temp),\n      hiLo: `${deg(W.current.hi)} / ${deg(W.current.lo)}`,\n      precip: pct(W.current.precip),\n      totalSeconds: r2(heroSec + outSec - tSec),\n      sceneCount: payload.scenes.length,\n      caption,\n    },\n  };\n}\n// === late-series glue ===\nconst plan=$json;\nconst cfg=$('Set the city and outdoor planning thresholds').first().json;const built=buildProject({...cfg,musicUrl:plan.musicOk?cfg.musicUrl:''},plan.weather);\nconst text=plan.caption+' '+plan.note;built.payload.scenes.push({id:'planning',duration:7,backgroundColor:'#102032',visuals:[{type:'TEXT',text:plan.window?'TODAY’S PLANNING WINDOW':'NO QUALIFYING WINDOW',x:80,y:330,width:920,anchor:'top-left',style:{fontFamily:'Arial',fontSize:'52px',fontWeight:'700',color:'#FFFFFF'}},{type:'TEXT',text,x:80,y:600,width:920,anchor:'top-left',style:{fontFamily:'Arial',fontSize:'44px',color:'#DDEEFF'}},{type:'TEXT',text:'Forecast: Open-Meteo · '+plan.place.timezone,x:80,y:1500,width:920,anchor:'top-left',style:{fontFamily:'Arial',fontSize:'28px',color:'#AABBCC'}}]});\nreturn [{json:{...plan,...built}}];"
+        "jsCode": "// === late-series glue ===\nfunction revisionProject(cfg, plan, kind) {\n\tconst text = (value, y, size = 46, color = '#FFFFFF') => ({\n\t\ttype: 'TEXT',\n\t\ttext: String(value),\n\t\tx: 80,\n\t\ty,\n\t\twidth: 920,\n\t\tanchor: 'top-left',\n\t\tstyle: { fontFamily: 'Arial', fontSize: size + 'px', fontWeight: '600', color },\n\t});\n\tconst scene = (id, title, body, footer, duration = 6) => ({\n\t\tid,\n\t\tduration,\n\t\tbackgroundColor: kind === 'weather' ? '#102B36' : '#13213D',\n\t\tvisuals: [text(title, 240, 58), text(body, 520), text(footer, 1530, 27, '#BCD6E4')],\n\t});\n\tlet scenes;\n\tif (kind === 'weather')\n\t\tscenes = [\n\t\t\tscene(\n\t\t\t\t'call-sheet',\n\t\t\t\tplan.calendarLabel + ' · ' + plan.date,\n\t\t\t\tplan.caption + '\\nAll slots are proposals; confirm before booking.',\n\t\t\t\t'Open-Meteo · ' + plan.timezone,\n\t\t\t\t5,\n\t\t\t),\n\t\t\t...plan.decisions.map((d, i) =>\n\t\t\t\tscene(\n\t\t\t\t\t'booking-' + i,\n\t\t\t\t\td.Decision.toUpperCase() + ' · ' + d.Title,\n\t\t\t\t\td.Start\n\t\t\t\t\t\t? new Intl.DateTimeFormat('en-GB', {\n\t\t\t\t\t\t\t\ttimeZone: plan.timezone,\n\t\t\t\t\t\t\t\thour: '2-digit',\n\t\t\t\t\t\t\t\tminute: '2-digit',\n\t\t\t\t\t\t\t}).format(new Date(d.Start)) +\n\t\t\t\t\t\t\t\t'–' +\n\t\t\t\t\t\t\t\tnew Intl.DateTimeFormat('en-GB', {\n\t\t\t\t\t\t\t\t\ttimeZone: plan.timezone,\n\t\t\t\t\t\t\t\t\thour: '2-digit',\n\t\t\t\t\t\t\t\t\tminute: '2-digit',\n\t\t\t\t\t\t\t\t}).format(new Date(d.End)) +\n\t\t\t\t\t\t\t\t'\\nRain ' +\n\t\t\t\t\t\t\t\td.RainProbability +\n\t\t\t\t\t\t\t\t'% · Wind ' +\n\t\t\t\t\t\t\t\tMath.round(d.WindKmh) +\n\t\t\t\t\t\t\t\t' km/h'\n\t\t\t\t\t\t: d.Reason,\n\t\t\t\t\t'Booking ' + d.BookingId + ' · priority ' + d.Priority + ' · ' + plan.timezone,\n\t\t\t\t\t6,\n\t\t\t\t),\n\t\t\t),\n\t\t];\n\telse {\n\t\tconst f = plan.fact;\n\t\tscenes = [\n\t\t\tscene(\n\t\t\t\t'edition',\n\t\t\t\tplan.correction ? 'CORRECTED MATCH REPORT' : 'APPROVED MATCH REPORT',\n\t\t\t\tf.home + '\\n' + f.homeScore + ' – ' + f.awayScore + '\\n' + f.away,\n\t\t\t\tf.date + ' · TheSportsDB · edition ' + plan.edition,\n\t\t\t\t7,\n\t\t\t),\n\t\t];\n\t\tif (plan.correction)\n\t\t\tscenes.push(\n\t\t\t\tscene(\n\t\t\t\t\t'correction',\n\t\t\t\t\t'WHAT CHANGED',\n\t\t\t\t\tplan.prior.home +\n\t\t\t\t\t\t' ' +\n\t\t\t\t\t\tplan.prior.homeScore +\n\t\t\t\t\t\t'–' +\n\t\t\t\t\t\tplan.prior.awayScore +\n\t\t\t\t\t\t' ' +\n\t\t\t\t\t\tplan.prior.away +\n\t\t\t\t\t\t'\\nReplaced by\\n' +\n\t\t\t\t\t\tf.home +\n\t\t\t\t\t\t' ' +\n\t\t\t\t\t\tf.homeScore +\n\t\t\t\t\t\t'–' +\n\t\t\t\t\t\tf.awayScore +\n\t\t\t\t\t\t' ' +\n\t\t\t\t\t\tf.away,\n\t\t\t\t\t'Prior video retained in the correction pack',\n\t\t\t\t\t7,\n\t\t\t\t),\n\t\t\t);\n\t\tscenes.push(\n\t\t\tscene(\n\t\t\t\t'handoff',\n\t\t\t\t'EDITORIAL HANDOFF',\n\t\t\t\t'Checked final status: ' +\n\t\t\t\t\tf.status +\n\t\t\t\t\t'\\nMatch date: ' +\n\t\t\t\t\tf.date +\n\t\t\t\t\t'\\nReview the source and caption before publication.',\n\t\t\t\t'Event ' + f.eventId + ' · No automatic social publication',\n\t\t\t\t5,\n\t\t\t),\n\t\t);\n\t}\n\treturn {\n\t\t...plan,\n\t\tpayload: {\n\t\t\tname: kind + '-brief-' + plan.date + '-' + (plan.edition || 1),\n\t\t\twidth: 1080,\n\t\t\theight: 1920,\n\t\t\tfps: 30,\n\t\t\tscenes,\n\t\t\taudios: plan.musicOk && cfg.musicUrl ? [{ src: cfg.musicUrl, volume: 0.12 }] : [],\n\t\t},\n\t};\n}\nreturn [{json:revisionProject($('Set the location date and booking thresholds').first().json,$json,'weather')}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5620,
+        7900,
         500
       ],
       "id": "zvid-wx-0008",
-      "name": "Build the forecast and planning-window video"
+      "name": "Build the outdoor booking call-sheet video"
     },
     {
       "id": "late-window",
-      "name": "A three-hour window meets the planning thresholds?",
+      "name": "At least one booking has a proposed slot?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        4780,
+        7060,
         500
       ],
       "parameters": {
@@ -379,28 +379,28 @@
     },
     {
       "id": "late-window-found",
-      "name": "Prepare the qualifying outdoor window",
+      "name": "Label available slots as tentative proposals",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5060,
+        7340,
         380
       ],
       "parameters": {
-        "jsCode": "return $input.all();"
+        "jsCode": "return [{json:{...$json,proposalStatus:'Tentative slots available; review the calendar proposal.'}}];"
       }
     },
     {
       "id": "late-window-none",
-      "name": "Prepare the no-window planning notice",
+      "name": "Label the call sheet as fully deferred",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5060,
+        7340,
         780
       ],
       "parameters": {
-        "jsCode": "return $input.all();"
+        "jsCode": "return [{json:{...$json,proposalStatus:'All bookings deferred; do not create calendar reservations.'}}];"
       }
     },
     {
@@ -409,7 +409,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3460,
+        5740,
         500
       ],
       "parameters": {
@@ -423,7 +423,7 @@
           "conditions": [
             {
               "id": "music-condition",
-              "leftValue": "={{ Boolean($('Set the city and outdoor planning thresholds').first().json.musicUrl) }}",
+              "leftValue": "={{ Boolean($('Set the location date and booking thresholds').first().json.musicUrl) }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -443,12 +443,12 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3740,
+        6020,
         500
       ],
       "parameters": {
         "method": "HEAD",
-        "url": "={{ $('Set the city and outdoor planning thresholds').first().json.musicUrl }}",
+        "url": "={{ $('Set the location date and booking thresholds').first().json.musicUrl }}",
         "options": {
           "timeout": 8000,
           "response": {
@@ -468,11 +468,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4020,
+        6300,
         500
       ],
       "parameters": {
-        "jsCode": "const plan=$('Rank remaining three-hour weather windows').first().json,cfg=$('Set the city and outdoor planning thresholds').first().json,probe=$json;const bytes=Number(probe.headers?.['content-length']||0);const musicOk=Number(probe.statusCode)===200&&Number.isFinite(bytes)&&bytes>=0&&bytes<=Number(cfg.maxMusicBytes||5242880);return [{json:{...plan,musicOk,musicProbe:probe}}];"
+        "jsCode": "const plan=$('Schedule requests around weather and confirmed bookings').first().json,cfg=$('Set the location date and booking thresholds').first().json,probe=$json;const bytes=Number(probe.headers?.['content-length']||0);const musicOk=Number(probe.statusCode)===200&&Number.isFinite(bytes)&&bytes>=0&&bytes<=Number(cfg.maxMusicBytes||5242880);return [{json:{...plan,musicOk,musicProbe:probe}}];"
       }
     },
     {
@@ -481,7 +481,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4300,
+        6580,
         500
       ],
       "parameters": {
@@ -494,7 +494,7 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        6100,
+        8380,
         500
       ],
       "parameters": {
@@ -510,11 +510,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6380,
+        8660,
         500
       ],
       "parameters": {
-        "jsCode": "function checkQuote(cfg, build, response) {\n  const body = response.body || response;\n  if (body.valid !== true) throw new Error('Zvid validation failed: '+JSON.stringify(body.errors || body.details || body).slice(0,1200));\n  const credits = Number(body.creditsRequired), ceiling = Number(cfg.maxCreditsPerVideo);\n  if (!Number.isFinite(credits) || credits < 0) throw new Error('Zvid did not return a valid credit quote.');\n  if (!Number.isFinite(ceiling) || ceiling <= 0) throw new Error('Set maxCreditsPerVideo to a positive number.');\n  if (credits > ceiling) throw new Error('Video needs '+credits+' credits; maxCreditsPerVideo is '+ceiling+'. No paid render submitted for this item.');\n  return {...build,creditsRequired:credits,warnings:body.warnings || []};\n}\nconst d=checkQuote($('Set the city and outdoor planning thresholds').first().json,$('Build the forecast and planning-window video').first().json,$json);const {payload,forecast,weather,narrationData,musicProbe,...snapshot}=d;d.checkpoint={...snapshot,snapshotVersion:1};if(JSON.stringify(d.checkpoint).length>45000)throw Error('Recovery snapshot exceeds the sheet cell limit. No render submitted.');return [{json:d}];"
+        "jsCode": "function checkQuote(cfg, build, response) {\n  const body = response.body || response;\n  if (body.valid !== true) throw new Error('Zvid validation failed: '+JSON.stringify(body.errors || body.details || body).slice(0,1200));\n  const credits = Number(body.creditsRequired), ceiling = Number(cfg.maxCreditsPerVideo);\n  if (!Number.isFinite(credits) || credits < 0) throw new Error('Zvid did not return a valid credit quote.');\n  if (!Number.isFinite(ceiling) || ceiling <= 0) throw new Error('Set maxCreditsPerVideo to a positive number.');\n  if (credits > ceiling) throw new Error('Video needs '+credits+' credits; maxCreditsPerVideo is '+ceiling+'. No paid render submitted for this item.');\n  return {...build,creditsRequired:credits,warnings:body.warnings || []};\n}\nconst d=checkQuote($('Set the location date and booking thresholds').first().json,$('Build the outdoor booking call-sheet video').first().json,$json);const {payload,forecast,weather,narrationData,musicProbe,...snapshot}=d;d.checkpoint={...snapshot,snapshotVersion:1};if(JSON.stringify(d.checkpoint).length>45000)throw Error('Recovery snapshot exceeds the sheet cell limit. No render submitted.');return [{json:d}];"
       }
     },
     {
@@ -523,7 +523,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6660,
+        8940,
         500
       ],
       "parameters": {
@@ -537,7 +537,7 @@
           "conditions": [
             {
               "id": "preview-condition",
-              "leftValue": "={{ $('Set the city and outdoor planning thresholds').first().json.dryRun === true }}",
+              "leftValue": "={{ $('Set the location date and booking thresholds').first().json.dryRun === true }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -557,7 +557,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6660,
+        8940,
         850
       ],
       "parameters": {
@@ -570,7 +570,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        7140,
+        9420,
         500
       ],
       "parameters": {
@@ -684,7 +684,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7420,
+        9700,
         500
       ],
       "parameters": {
@@ -697,7 +697,7 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        7700,
+        9980,
         500
       ],
       "parameters": {
@@ -717,11 +717,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7700,
+        9980,
         850
       ],
       "parameters": {
-        "jsCode": "function classifySubmissionError(context, error, now, cfg) {\n\tconst status = Number(\n\t\terror.httpCode ||\n\t\t\terror.statusCode ||\n\t\t\terror.status ||\n\t\t\terror.response?.status ||\n\t\t\terror.cause?.statusCode ||\n\t\t\terror.cause?.response?.status,\n\t);\n\tconst rejected =\n\t\tstatus === 429 ||\n\t\t(!status &&\n\t\t\terror.name === 'NodeApiError' &&\n\t\t\terror.message === 'The service is receiving too many requests from you');\n\tlet body =\n\t\terror.response?.data ||\n\t\terror.context?.data ||\n\t\terror.cause?.response?.data ||\n\t\terror.cause?.error ||\n\t\t{};\n\tif (typeof body === 'string') {\n\t\ttry {\n\t\t\tbody = JSON.parse(body);\n\t\t} catch {\n\t\t\tbody = {};\n\t\t}\n\t}\n\tconst headers = error.response?.headers || error.cause?.response?.headers || {};\n\tconst raw = headers['retry-after'] ?? body.retryAfter;\n\tconst retrySeconds = Math.max(30, Number(raw) || Math.ceil((Date.parse(raw) - now) / 1000) || 30);\n\tconst deadline = context.submitStartedAt + Number(cfg.timeoutMinutes || 20) * 60000;\n\tconst retry = rejected && context.submitAttempts < 3 && now + retrySeconds * 1000 < deadline;\n\tconst reason = rejected\n\t\t? 'Zvid render capacity is full (HTTP 429); no job was accepted. ' +\n\t\t\t(retry\n\t\t\t\t? 'Retrying after ' + retrySeconds + ' seconds.'\n\t\t\t\t: 'Retry this workflow later; the rejected key is safe to reuse.')\n\t\t: 'Render submission outcome is uncertain. Inspect https://app.zvid.io before retrying: ' +\n\t\t\tString(error.description || error.message || error);\n\treturn {\n\t\t...context,\n\t\tstatus: rejected ? 'rate_limited' : 'needs_review',\n\t\treason,\n\t\tretry,\n\t\tretrySeconds,\n\t\tvideoUrl: null,\n\t\tcheckpoint: {\n\t\t\t...context.checkpoint,\n\t\t\tsubmission: {\n\t\t\t\tstatus: rejected ? 'rate_limited' : 'needs_review',\n\t\t\t\treason,\n\t\t\t\tattemptedAt: new Date(now).toISOString(),\n\t\t\t},\n\t\t},\n\t};\n}\nconst item=$input.first();return [{json:classifySubmissionError($('Prepare a bounded render submission attempt').first().json,item.error||item.json.error||{},Date.now(),$('Set the city and outdoor planning thresholds').first().json)}];"
+        "jsCode": "function classifySubmissionError(context, error, now, cfg) {\n\tconst status = Number(\n\t\terror.httpCode ||\n\t\t\terror.statusCode ||\n\t\t\terror.status ||\n\t\t\terror.response?.status ||\n\t\t\terror.cause?.statusCode ||\n\t\t\terror.cause?.response?.status,\n\t);\n\tconst rejected =\n\t\tstatus === 429 ||\n\t\t(!status &&\n\t\t\terror.name === 'NodeApiError' &&\n\t\t\terror.message === 'The service is receiving too many requests from you');\n\tlet body =\n\t\terror.response?.data ||\n\t\terror.context?.data ||\n\t\terror.cause?.response?.data ||\n\t\terror.cause?.error ||\n\t\t{};\n\tif (typeof body === 'string') {\n\t\ttry {\n\t\t\tbody = JSON.parse(body);\n\t\t} catch {\n\t\t\tbody = {};\n\t\t}\n\t}\n\tconst headers = error.response?.headers || error.cause?.response?.headers || {};\n\tconst raw = headers['retry-after'] ?? body.retryAfter;\n\tconst retrySeconds = Math.max(30, Number(raw) || Math.ceil((Date.parse(raw) - now) / 1000) || 30);\n\tconst deadline = context.submitStartedAt + Number(cfg.timeoutMinutes || 20) * 60000;\n\tconst retry = rejected && context.submitAttempts < 3 && now + retrySeconds * 1000 < deadline;\n\tconst reason = rejected\n\t\t? 'Zvid render capacity is full (HTTP 429); no job was accepted. ' +\n\t\t\t(retry\n\t\t\t\t? 'Retrying after ' + retrySeconds + ' seconds.'\n\t\t\t\t: 'Retry this workflow later; the rejected key is safe to reuse.')\n\t\t: 'Render submission outcome is uncertain. Inspect https://app.zvid.io before retrying: ' +\n\t\t\tString(error.description || error.message || error);\n\treturn {\n\t\t...context,\n\t\tstatus: rejected ? 'rate_limited' : 'needs_review',\n\t\treason,\n\t\tretry,\n\t\tretrySeconds,\n\t\tvideoUrl: null,\n\t\tcheckpoint: {\n\t\t\t...context.checkpoint,\n\t\t\tsubmission: {\n\t\t\t\tstatus: rejected ? 'rate_limited' : 'needs_review',\n\t\t\t\treason,\n\t\t\t\tattemptedAt: new Date(now).toISOString(),\n\t\t\t},\n\t\t},\n\t};\n}\nconst item=$input.first();return [{json:classifySubmissionError($('Prepare a bounded render submission attempt').first().json,item.error||item.json.error||{},Date.now(),$('Set the location date and booking thresholds').first().json)}];"
       }
     },
     {
@@ -730,7 +730,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        7980,
+        10260,
         850
       ],
       "parameters": {
@@ -822,7 +822,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8260,
+        10540,
         850
       ],
       "parameters": {
@@ -835,7 +835,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        8540,
+        10820,
         850
       ],
       "parameters": {
@@ -869,7 +869,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        7420,
+        9700,
         1200
       ],
       "parameters": {
@@ -884,7 +884,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8820,
+        11100,
         850
       ],
       "parameters": {
@@ -897,7 +897,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7980,
+        10260,
         500
       ],
       "parameters": {
@@ -910,7 +910,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        8260,
+        10540,
         500
       ],
       "parameters": {
@@ -980,7 +980,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8540,
+        10820,
         500
       ],
       "parameters": {
@@ -993,7 +993,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        9300,
+        11580,
         220
       ],
       "parameters": {
@@ -1006,7 +1006,7 @@
       "type": "@zvid/n8n-nodes-zvid.zvid",
       "typeVersion": 1,
       "position": [
-        9580,
+        11860,
         500
       ],
       "parameters": {
@@ -1015,8 +1015,8 @@
         "jobId": "={{ $json.jobId }}",
         "waitForCompletion": true,
         "waitOptions": {
-          "pollInterval": "={{ Number($('Set the city and outdoor planning thresholds').first().json.pollSeconds) || 10 }}",
-          "maxWaitTime": "={{ (Number($('Set the city and outdoor planning thresholds').first().json.timeoutMinutes) || 20)*60 }}"
+          "pollInterval": "={{ Number($('Set the location date and booking thresholds').first().json.pollSeconds) || 10 }}",
+          "maxWaitTime": "={{ (Number($('Set the location date and booking thresholds').first().json.timeoutMinutes) || 20)*60 }}"
         }
       },
       "retryOnFail": false,
@@ -1028,11 +1028,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        9860,
+        12140,
         500
       ],
       "parameters": {
-        "jsCode": "function classifyJob(context, response, now, timeoutMinutes) {\n  const result=response.result;\n  const url=typeof result==='string'?result:result?.url || result?.videoUrl || '';\n  const state=String(response.state || response.status || '').toLowerCase();\n  if (state==='completed') {\n    if (!/^https:\\/\\/\\S+$/i.test(url)) return {...context,status:'needs_review',reason:'Completed job has no HTTPS media URL. Inspect Zvid; do not resubmit.',videoUrl:null};\n    return {...context,status:'completed',videoUrl:url,renderedAt:new Date(now).toISOString()};\n  }\n  if (['failed','cancelled','canceled'].includes(state)) return {...context,status:'failed',reason:String(response.failedReason || response.error || state),videoUrl:null};\n  if (now-context.pollStartedAt >= Number(timeoutMinutes || 20)*60000) return {...context,status:'timed_out',reason:'Polling deadline reached. Keep the job ID and check Zvid before resuming.',videoUrl:null};\n  if (!['waiting','queued','active','processing','rendering','pending'].includes(state)) return {...context,status:'needs_review',reason:'Unrecognized render state: '+state,videoUrl:null};\n  return {...context,status:'rendering',videoUrl:null};\n}\nconst context=$('Track the saved job and its source context').first().json;let response=$json;if(response.error){const error=typeof response.error==='string'?response.error:JSON.stringify(response.error);response={state:/did not finish within|timed? ?out/i.test(error)?'timed_out':/failed/i.test(error)?'failed':'needs_review',failedReason:error};}const result=classifyJob(context,response,Date.now(),$('Set the city and outdoor planning thresholds').first().json.timeoutMinutes);if(response.state==='timed_out')result.status='timed_out';const {payload,outcomeCheckpoint,...snapshot}=result;result.outcomeCheckpoint={...snapshot,renderOutcome:{status:result.status,reason:result.reason||null}};return [{json:result}];"
+        "jsCode": "function classifyJob(context, response, now, timeoutMinutes) {\n  const result=response.result;\n  const url=typeof result==='string'?result:result?.url || result?.videoUrl || '';\n  const state=String(response.state || response.status || '').toLowerCase();\n  if (state==='completed') {\n    if (!/^https:\\/\\/\\S+$/i.test(url)) return {...context,status:'needs_review',reason:'Completed job has no HTTPS media URL. Inspect Zvid; do not resubmit.',videoUrl:null};\n    return {...context,status:'completed',videoUrl:url,renderedAt:new Date(now).toISOString()};\n  }\n  if (['failed','cancelled','canceled'].includes(state)) return {...context,status:'failed',reason:String(response.failedReason || response.error || state),videoUrl:null};\n  if (now-context.pollStartedAt >= Number(timeoutMinutes || 20)*60000) return {...context,status:'timed_out',reason:'Polling deadline reached. Keep the job ID and check Zvid before resuming.',videoUrl:null};\n  if (!['waiting','queued','active','processing','rendering','pending'].includes(state)) return {...context,status:'needs_review',reason:'Unrecognized render state: '+state,videoUrl:null};\n  return {...context,status:'rendering',videoUrl:null};\n}\nconst context=$('Track the saved job and its source context').first().json;let response=$json;if(response.error){const error=typeof response.error==='string'?response.error:JSON.stringify(response.error);response={state:/did not finish within|timed? ?out/i.test(error)?'timed_out':/failed/i.test(error)?'failed':'needs_review',failedReason:error};}const result=classifyJob(context,response,Date.now(),$('Set the location date and booking thresholds').first().json.timeoutMinutes);if(response.state==='timed_out')result.status='timed_out';const {payload,outcomeCheckpoint,...snapshot}=result;result.outcomeCheckpoint={...snapshot,renderOutcome:{status:result.status,reason:result.reason||null}};return [{json:result}];"
       }
     },
     {
@@ -1041,7 +1041,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        10140,
+        12420,
         500
       ],
       "parameters": {
@@ -1144,7 +1144,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        10620,
+        12900,
         500
       ],
       "parameters": {
@@ -1157,7 +1157,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        10900,
+        13180,
         850
       ],
       "parameters": {
@@ -1170,7 +1170,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        10900,
+        13180,
         500
       ],
       "parameters": {
@@ -1199,6 +1199,139 @@
       }
     },
     {
+      "id": "revision-recover",
+      "name": "Recover accepted work before reading new sources",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function recoverPlan(cfg, key, rows) {\n\tconst matches = rows.filter((r) => String(r.RenderKey || '') === key);\n\tif (matches.length > 1) throw Error('Duplicate RenderKey in log: ' + key);\n\tconst row = matches[0];\n\tif (!row) return null;\n\t// An explicit capacity rejection accepted no paid job. It can be retried on\n\t// a later run; uncertain submissions and failed accepted jobs remain locked.\n\tif (row.Status === 'rate_limited' && !row.JobId && !row.VideoUrl) return null;\n\tif (row.Status === 'completed' || row.VideoUrl)\n\t\treturn {\n\t\t\tready: false,\n\t\t\tstatus: 'already_completed',\n\t\t\trenderKey: key,\n\t\t\tvideoUrl: row.VideoUrl || null,\n\t\t\tcreditsSpent: 0,\n\t\t};\n\tif (row.Status === 'rendering' && row.JobId && cfg.dryRun !== true) {\n\t\tlet plan;\n\t\ttry {\n\t\t\tplan = JSON.parse(row.PlanJson);\n\t\t} catch {\n\t\t\tthrow Error('Saved PlanJson is invalid for ' + key);\n\t\t}\n\t\tif (plan.renderKey !== key || plan.snapshotVersion !== 1)\n\t\t\tthrow Error('Saved snapshot does not match ' + key);\n\t\treturn { ...plan, ready: true, jobId: String(row.JobId), resumed: true };\n\t}\n\treturn {\n\t\tready: false,\n\t\tstatus: 'needs_review',\n\t\trenderKey: key,\n\t\treason:\n\t\t\tcfg.dryRun === true\n\t\t\t\t? 'Preview skips existing jobs.'\n\t\t\t\t: 'Inspect the saved ' + row.Status + ' job before resetting this key.',\n\t\tjobId: row.JobId || null,\n\t\tcreditsSpent: 0,\n\t};\n}\nfunction resumeOutstanding(cfg, logs, prefix) {\n\tif (cfg.dryRun === true) return null;\n\tconst saved = logs\n\t\t.filter(\n\t\t\t(r) => String(r.RenderKey || '').startsWith(prefix) && r.Status === 'rendering' && r.JobId,\n\t\t)\n\t\t.sort((a, b) => String(a.RenderKey).localeCompare(String(b.RenderKey)));\n\tif (!saved.length) return null;\n\t// Recover paid work even when its source changed or a date rolled over.\n\t// Delivery approval is intentionally re-reviewed after such a recovery.\n\tconst plan = recoverPlan(cfg, saved[0].RenderKey, logs);\n\treturn { ...plan, emailApproved: false, deferredSavedJobs: saved.length - 1 };\n}\nreturn [{json:resumeOutstanding($('Set the location date and booking thresholds').first().json,$input.all().map(i=>i.json),'weather-') || {checkNewSource:true}}];"
+      }
+    },
+    {
+      "id": "revision-recovered",
+      "name": "A saved render needs recovery?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1380,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ready-condition",
+              "leftValue": "={{ $json.checkNewSource !== true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "revision-queue",
+      "name": "Read requested sessions and confirmed bookings",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1860,
+        500
+      ],
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Outdoor Bookings",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "revision-choose",
+      "name": "Validate the dated booking brief",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2140,
+        500
+      ],
+      "parameters": {
+        "jsCode": "function revisionHelpers() {\n\tconst text = (v) => String(v ?? '').trim();\n\tconst number = (v, label) => {\n\t\tif (v === '' || v == null || typeof v === 'boolean' || !Number.isFinite(Number(v)))\n\t\t\tthrow Error(label + ' must be a number');\n\t\treturn Number(v);\n\t};\n\tconst instant = (v, label) => {\n\t\tif (\n\t\t\t!/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(?::\\d{2})?(?:Z|[+-]\\d{2}:\\d{2})$/.test(text(v)) ||\n\t\t\t!Number.isFinite(Date.parse(v))\n\t\t)\n\t\t\tthrow Error(label + ' needs an ISO timestamp with UTC offset');\n\t\treturn Date.parse(v);\n\t};\n\tconst rows = (input, key) => {\n\t\tconst out = input.filter((r) => Object.keys(r).some((k) => k !== 'row_number' && text(r[k]))),\n\t\t\tseen = new Set();\n\t\tfor (const r of out) {\n\t\t\tif (!text(r[key]) || seen.has(text(r[key]))) throw Error('Every row needs a unique ' + key);\n\t\t\tseen.add(text(r[key]));\n\t\t}\n\t\treturn out;\n\t};\n\treturn { text, number, instant, rows };\n}\nfunction prepareBookings(cfg, rows, now) {\n\tconst h = revisionHelpers(),\n\t\tall = h.rows(rows, 'BookingId');\n\tconst date =\n\t\tcfg.planningDate ||\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: cfg.timezone || 'Europe/Lisbon',\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(now);\n\tif (\n\t\t!/^\\d{4}-\\d{2}-\\d{2}$/.test(date) ||\n\t\tnew Date(date + 'T12:00Z').toISOString().slice(0, 10) !== date\n\t)\n\t\tthrow Error('planningDate must be YYYY-MM-DD');\n\tconst requests = [],\n\t\tbusy = [];\n\tconst today = new Intl.DateTimeFormat('en-CA', {\n\t\ttimeZone: cfg.timezone || 'Europe/Lisbon',\n\t\tyear: 'numeric',\n\t\tmonth: '2-digit',\n\t\tday: '2-digit',\n\t}).format(now);\n\tif (date < today)\n\t\tthrow Error('planningDate is in the past; choose a current or future booking date');\n\tfor (const r of all) {\n\t\tif (h.text(r.Status).toLowerCase() === 'confirmed') {\n\t\t\tconst start = h.instant(r.Start, 'Confirmed Start'),\n\t\t\t\tend = h.instant(r.End, 'Confirmed End');\n\t\t\tif (end <= start) throw Error('Confirmed booking must end after it starts');\n\t\t\tbusy.push({ start, end, id: h.text(r.BookingId) });\n\t\t\tcontinue;\n\t\t}\n\t\tif (h.text(r.Date) !== date) continue;\n\t\tif (\n\t\t\th.text(r.Approval).toLowerCase() !== 'approved' ||\n\t\t\t!['requested', ''].includes(h.text(r.Status).toLowerCase())\n\t\t)\n\t\t\tcontinue;\n\t\tconst start = h.instant(r.EarliestStart, 'EarliestStart'),\n\t\t\tend = h.instant(r.LatestEnd, 'LatestEnd');\n\t\tconst duration = h.number(r.DurationMinutes, 'DurationMinutes'),\n\t\t\tpriority = h.number(r.Priority || 1, 'Priority');\n\t\tif (\n\t\t\tend <= start ||\n\t\t\tduration < 30 ||\n\t\t\tduration > 240 ||\n\t\t\tduration % 30 ||\n\t\t\tpriority < 1 ||\n\t\t\tpriority > 10\n\t\t)\n\t\t\tthrow Error('Use 30–240 minutes in half-hour increments and priority 1–10');\n\t\tif (!h.text(r.Title) || h.text(r.Title).length > 80)\n\t\t\tthrow Error('Booking Title needs 1–80 characters');\n\t\tconst preferred = r.PreferredStart ? h.instant(r.PreferredStart, 'PreferredStart') : start;\n\t\tif (preferred < start || preferred + duration * 60000 > end)\n\t\t\tthrow Error('PreferredStart must fit inside its requested window');\n\t\trequests.push({\n\t\t\tid: h.text(r.BookingId),\n\t\t\ttitle: h.text(r.Title),\n\t\t\tstart,\n\t\t\tend,\n\t\t\tpreferred,\n\t\t\tduration,\n\t\t\tpriority,\n\t\t});\n\t}\n\tif (requests.length > 5)\n\t\tthrow Error('At most five approved requests per planning date; split the call sheet first');\n\tconst local = (t) =>\n\t\tnew Intl.DateTimeFormat('en-CA', {\n\t\t\ttimeZone: cfg.timezone || 'Europe/Lisbon',\n\t\t\tyear: 'numeric',\n\t\t\tmonth: '2-digit',\n\t\t\tday: '2-digit',\n\t\t}).format(new Date(t));\n\tif (requests.some((r) => local(r.start) !== date || local(r.end - 1) !== date))\n\t\tthrow Error('Booking windows must stay on Date in the configured timezone');\n\treturn {\n\t\tready: requests.length > 0,\n\t\tdate,\n\t\trequests: requests.sort((a, b) => b.priority - a.priority || a.id.localeCompare(b.id)),\n\t\tbusy,\n\t\treason: requests.length ? '' : 'No approved requested bookings for ' + date,\n\t\tstatus: requests.length ? 'planning' : 'nothing_to_render',\n\t};\n}\nreturn [{json:prepareBookings($('Set the location date and booking thresholds').first().json,$input.all().map(i=>i.json),new Date())}];"
+      }
+    },
+    {
+      "id": "revision-has-input",
+      "name": "Approved booking requests exist?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2420,
+        500
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ready-condition",
+              "leftValue": "={{ $json.ready === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "revision-calendar",
+      "name": "Download tentative booking calendar proposals",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        13460,
+        1150
+      ],
+      "parameters": {
+        "jsCode": "function calendarProposal(plan) {\n\tconst escape = (s) =>\n\t\tString(s)\n\t\t\t.replace(/\\\\/g, '\\\\\\\\')\n\t\t\t.replace(/\\r?\\n/g, '\\\\n')\n\t\t\t.replace(/;/g, '\\\\;')\n\t\t\t.replace(/,/g, '\\\\,');\n\tconst stamp = (s) =>\n\t\tnew Date(s)\n\t\t\t.toISOString()\n\t\t\t.replace(/[-:]/g, '')\n\t\t\t.replace(/\\.\\d{3}Z$/, 'Z');\n\tconst lines = [\n\t\t'BEGIN:VCALENDAR',\n\t\t'VERSION:2.0',\n\t\t'PRODID:-//Zvid//Outdoor Booking Proposals//EN',\n\t\t'CALSCALE:GREGORIAN',\n\t\t'METHOD:PUBLISH',\n\t];\n\tfor (const d of plan.decisions || [])\n\t\tif (d.Start)\n\t\t\tlines.push(\n\t\t\t\t'BEGIN:VEVENT',\n\t\t\t\t'UID:' + encodeURIComponent(plan.renderKey + '-' + d.BookingId) + '@zvid.io',\n\t\t\t\t'DTSTAMP:' + stamp(plan.generatedAt),\n\t\t\t\t'DTSTART:' + stamp(d.Start),\n\t\t\t\t'DTEND:' + stamp(d.End),\n\t\t\t\t'SUMMARY:' + escape('PROPOSED: ' + d.Title),\n\t\t\t\t'DESCRIPTION:' + escape(d.Reason + ' ' + plan.note),\n\t\t\t\t'STATUS:TENTATIVE',\n\t\t\t\t'TRANSP:TRANSPARENT',\n\t\t\t\t'END:VEVENT',\n\t\t\t);\n\tlines.push('END:VCALENDAR');\n\t// Fold by UTF-8 bytes, not code units, so non-ASCII titles remain valid.\n\tconst folded =\n\t\tlines\n\t\t\t.flatMap((line) => {\n\t\t\t\tconst out = [];\n\t\t\t\tlet part = '';\n\t\t\t\tfor (const c of line) {\n\t\t\t\t\tif (Buffer.byteLength(part + c) > 73) {\n\t\t\t\t\t\tout.push(part);\n\t\t\t\t\t\tpart = ' ' + c;\n\t\t\t\t\t} else part += c;\n\t\t\t\t}\n\t\t\t\tout.push(part);\n\t\t\t\treturn out;\n\t\t\t})\n\t\t\t.join('\\r\\n') + '\\r\\n';\n\treturn {\n\t\tdata: Buffer.from(folded).toString('base64'),\n\t\tmimeType: 'text/calendar',\n\t\tfileName: 'tentative-outdoor-bookings.ics',\n\t};\n}\nreturn [{json:{renderKey:$json.renderKey,proposalCount:($json.decisions||[]).filter(x=>x.Start).length},binary:{data:calendarProposal($json)}}];"
+      }
+    },
+    {
       "id": "publication-overview-daily-weather-video",
       "name": "Workflow overview and setup",
       "type": "n8n-nodes-base.stickyNote",
@@ -1208,7 +1341,7 @@
         0
       ],
       "parameters": {
-        "content": "## Create a local forecast with a ranked daytime planning window\n\n### How it works\nResolve one city, validate fresh current and hourly data, and rank remaining three-hour daytime windows by rain probability and wind. Branch to a qualifying window or a no-window notice, then add that planning card to the local forecast and three-day outlook. A separate recovery log skips completed keys and resumes accepted jobs. Review the video and CSV before sharing.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`; select it on all Zvid nodes.\n3. Connect Google Sheets and select the **Weather Briefings** log tab. Create RenderKey, Status, JobId, CreditsQuoted, PlanJson, VideoUrl and CompletedAt headers; optional delivery also needs DeliveryStatus.\n4. Configure cityName, countryCode and admin1 for an unambiguous location; rain and wind thresholds. See the [source contract and migration guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/daily-weather-video.md).\n5. **dryRun=false spends credits.** true returns JSON and a quote only. Set maxCreditsPerVideo, then test manually before enabling the schedule.\n6. Avoid overlapping executions. Inspect submitting, failed or uncertain jobs before resetting any log row.\n\n### Customization\nAdjust branding and the domain rules in **Set the city and outdoor planning thresholds**. Watch downloads time out after 30 seconds; the saved URL remains available.",
+        "content": "## Plan outdoor bookings around weather and generate a call-sheet video\n\n### How it works\nFor small production teams coordinating outdoor sessions. Read approved booking requests and confirmed reservations, then assign non-overlapping daytime slots around rain, wind and temperature limits. Higher priorities go first; each request keeps its preferred time, moves, or is deferred. Produce a call-sheet video, decision CSV and tentative calendar file. Proposals do not book a calendar or invite attendees. Accepted jobs resume before new source requests; completed keys are not rendered again.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Configure **Zvid API** using [your key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`; select it on every Zvid node.\n3. Connect Google Sheets. Select **Outdoor Bookings** for the input nodes and **Weather Briefings** for recovery. Log headers: RenderKey, Status, JobId, CreditsQuoted, PlanJson, VideoUrl, CompletedAt.\n4. Input headers: BookingId, Date, Title, Status, Approval, EarliestStart, LatestEnd, PreferredStart, DurationMinutes, Priority, Start, End. Approve requested rows; confirmed rows block Start–End. Set city, region, timezone and planningDate.\n5. **dryRun=false spends credits** after eligibility. true returns JSON, quote and review files without writes or rendering. Set maxCreditsPerVideo.\n6. Run one execution at a time. Review **Watch video → Binary → data → View** before sharing. Read the [companion guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/daily-weather-video.md) for field rules and migration.\n\n### Customization\nAdjust planning thresholds and priorities; increment forecastRevision for a deliberately revised call sheet.",
         "color": 1,
         "width": 720,
         "height": 1160
@@ -1231,8 +1364,8 @@
       }
     },
     {
-      "id": "publication-section-daily-weather-video-source",
-      "name": "2. Check the real source and plan the output",
+      "id": "publication-section-daily-weather-video-source-recovery",
+      "name": "2. Recover accepted work before source checks",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -1240,23 +1373,71 @@
         0
       ],
       "parameters": {
-        "content": "## 2. Check the real source and plan the output\n\nRequire one city and fresh forecast data. Evaluate future daytime hours and rank contiguous three-hour windows by rain probability and wind.",
+        "content": "## 2. Recover accepted work before source checks\n\nResume saved paid jobs even if the upstream source is unavailable. A preview never resumes a paid job.",
         "color": 7,
-        "width": 1780,
+        "width": 940,
+        "height": 1160
+      }
+    },
+    {
+      "id": "publication-section-daily-weather-video-domain-input",
+      "name": "3. Read the booking desk",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        0
+      ],
+      "parameters": {
+        "content": "## 3. Read the booking desk\n\nRead approved requests and confirmed reservations for planningDate. Require offset-bearing times, duration, priority and stable BookingId. Keep confirmed bookings unchanged.",
+        "color": 7,
+        "width": 940,
+        "height": 1160
+      }
+    },
+    {
+      "id": "publication-section-daily-weather-video-source",
+      "name": "4. Propose slots around forecast constraints",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2840,
+        0
+      ],
+      "parameters": {
+        "content": "## 4. Propose slots around forecast constraints\n\nAllocate slots by priority without overlapping confirmed bookings or each other. Keep, reschedule or defer each request. Use daylight, temperature, rain and wind constraints.",
+        "color": 7,
+        "width": 1220,
+        "height": 1160
+      }
+    },
+    {
+      "id": "publication-section-daily-weather-video-eligible",
+      "name": "5. Continue only when the plan is eligible",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4160,
+        0
+      ],
+      "parameters": {
+        "content": "## 5. Continue only when the plan is eligible\n\nEmpty input, completed work, missing approval and blocked history return an explicit report. They spend no render credits.",
+        "color": 7,
+        "width": 660,
         "height": 1160
       }
     },
     {
       "id": "publication-section-daily-weather-video-routing",
-      "name": "3. Recover accepted work before a new render",
+      "name": "6. Recover accepted work before a new render",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2640,
+        4920,
         0
       ],
       "parameters": {
-        "content": "## 3. Recover accepted work before a new render\n\nSaved jobs follow the upper route using their original review context. New work continues through optional media and the domain design.",
+        "content": "## 6. Recover accepted work before a new render\n\nSaved jobs follow the upper route using their original review context. New work continues through optional media and the domain design.",
         "color": 7,
         "width": 660,
         "height": 1160
@@ -1264,15 +1445,15 @@
     },
     {
       "id": "publication-section-daily-weather-video-music",
-      "name": "4. Check optional background music",
+      "name": "7. Check optional background music",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        3400,
+        5680,
         0
       ],
       "parameters": {
-        "content": "## 4. Check optional background music\n\nA failed or oversized music file is skipped. Empty musicUrl continues without an external request. This check preserves the selected source plan.",
+        "content": "## 7. Check optional background music\n\nA failed or oversized music file is skipped. Empty musicUrl continues without an external request. This check preserves the selected source plan.",
         "color": 7,
         "width": 1220,
         "height": 1160
@@ -1280,15 +1461,15 @@
     },
     {
       "id": "publication-section-daily-weather-video-design",
-      "name": "5. Compose the forecast and planning advice",
+      "name": "8. Compose the booking decisions and confirmation steps",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        4720,
+        7000,
         0
       ],
       "parameters": {
-        "content": "## 5. Compose the forecast and planning advice\n\nChoose a qualifying daytime planning window or explain why none meets the thresholds. Add the checked current conditions and forecast to the video.",
+        "content": "## 8. Compose the booking decisions and confirmation steps\n\nBranch on whether tentative slots exist. Build a booking-specific call sheet or a deferral briefing. The calendar file contains proposals only and never sends invitations.",
         "color": 7,
         "width": 1220,
         "height": 1160
@@ -1296,15 +1477,15 @@
     },
     {
       "id": "publication-section-daily-weather-video-quote",
-      "name": "6. Build and validate the design and credit ceiling",
+      "name": "9. Build and validate the design and credit ceiling",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        6040,
+        8320,
         0
       ],
       "parameters": {
-        "content": "## 6. Build and validate the design and credit ceiling\n\ndryRun=true returns the source plan, design JSON and quote. It performs no log writes, editor draft creation, render, or delivery.",
+        "content": "## 9. Build and validate the design and credit ceiling\n\ndryRun=true returns the source plan, design JSON and quote. It performs no log writes, editor draft creation, render, or delivery.",
         "color": 7,
         "width": 940,
         "height": 1160
@@ -1312,15 +1493,15 @@
     },
     {
       "id": "publication-section-daily-weather-video-reserve",
-      "name": "7. Reserve the key and preserve the accepted job",
+      "name": "10. Reserve the key and preserve the accepted job",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        7080,
+        9360,
         0
       ],
       "parameters": {
-        "content": "## 7. Reserve the key and preserve the accepted job\n\nSave the key and accepted job ID. Retry explicit capacity rejections up to three attempts, respecting the server delay and a 30-second minimum. Uncertain submissions require inspection. Sheets is not an atomic lock.",
+        "content": "## 10. Reserve the key and preserve the accepted job\n\nSave the key and accepted job ID. Retry explicit capacity rejections up to three attempts, respecting the server delay and a 30-second minimum. Uncertain submissions require inspection. Sheets is not an atomic lock.",
         "color": 7,
         "width": 2060,
         "height": 1490
@@ -1328,15 +1509,15 @@
     },
     {
       "id": "publication-section-daily-weather-video-finish",
-      "name": "8. Wait for the accepted render and record its result",
+      "name": "11. Wait for the accepted render and record its result",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        9240,
+        11520,
         0
       ],
       "parameters": {
-        "content": "## 8. Wait for the accepted render and record its result\n\nPoll the saved job within the deadline. Keep failed, timed-out and uncertain job IDs for inspection. Completed keys are skipped on later runs.",
+        "content": "## 11. Wait for the accepted render and record its result\n\nPoll the saved job within the deadline. Keep failed, timed-out and uncertain job IDs for inspection. Completed keys are skipped on later runs.",
         "color": 7,
         "width": 1220,
         "height": 1160
@@ -1344,28 +1525,28 @@
     },
     {
       "id": "zvid-watch-instructions",
-      "name": "9. Review the video and source-specific handoff",
+      "name": "12. Review the video and source-specific handoff",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        10560,
+        12840,
         0
       ],
       "parameters": {
-        "content": "## 9. Review the video and source-specific handoff\n\nCompleted renders reach Watch video → Binary → data → View. A failed render stops with its actual reason after saving the tracking row. Download the review CSV and check source facts before sharing.",
+        "content": "## 12. Review the video and source-specific handoff\n\nCompleted renders reach Watch video → Binary → data → View. A failed render stops with its actual reason after saving the tracking row. Download the review CSV and check source facts before sharing.",
         "color": 7,
         "width": 940,
-        "height": 1160
+        "height": 1470
       }
     }
   ],
   "pinData": {},
   "connections": {
-    "Set the city and outdoor planning thresholds": {
+    "Set the location date and booking thresholds": {
       "main": [
         [
           {
-            "node": "Find the configured city candidates",
+            "node": "Read Weather Briefings recovery log",
             "type": "main",
             "index": 0
           }
@@ -1387,58 +1568,58 @@
       "main": [
         [
           {
-            "node": "Fetch local current daily and hourly weather",
+            "node": "Fetch hourly weather for the booking date",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "A three-hour window meets the planning thresholds?": {
+    "At least one booking has a proposed slot?": {
       "main": [
         [
           {
-            "node": "Prepare the qualifying outdoor window",
+            "node": "Label available slots as tentative proposals",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Prepare the no-window planning notice",
+            "node": "Label the call sheet as fully deferred",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Prepare the qualifying outdoor window": {
+    "Label available slots as tentative proposals": {
       "main": [
         [
           {
-            "node": "Map forecast conditions into the video design",
+            "node": "Add the coordinator confirmation requirement",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Prepare the no-window planning notice": {
+    "Label the call sheet as fully deferred": {
       "main": [
         [
           {
-            "node": "Map forecast conditions into the video design",
+            "node": "Add the coordinator confirmation requirement",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Map forecast conditions into the video design": {
+    "Add the coordinator confirmation requirement": {
       "main": [
         [
           {
-            "node": "Build the forecast and planning-window video",
+            "node": "Build the outdoor booking call-sheet video",
             "type": "main",
             "index": 0
           }
@@ -1489,7 +1670,7 @@
       "main": [
         [
           {
-            "node": "A three-hour window meets the planning thresholds?",
+            "node": "At least one booking has a proposed slot?",
             "type": "main",
             "index": 0
           }
@@ -1500,7 +1681,7 @@
       "main": [
         [
           {
-            "node": "Set the city and outdoor planning thresholds",
+            "node": "Set the location date and booking thresholds",
             "type": "main",
             "index": 0
           }
@@ -1511,18 +1692,18 @@
       "main": [
         [
           {
-            "node": "Set the city and outdoor planning thresholds",
+            "node": "Set the location date and booking thresholds",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Fetch local current daily and hourly weather": {
+    "Fetch hourly weather for the booking date": {
       "main": [
         [
           {
-            "node": "Read Weather Briefings recovery log",
+            "node": "Schedule requests around weather and confirmed bookings",
             "type": "main",
             "index": 0
           }
@@ -1533,14 +1714,14 @@
       "main": [
         [
           {
-            "node": "Rank remaining three-hour weather windows",
+            "node": "Recover accepted work before reading new sources",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Rank remaining three-hour weather windows": {
+    "Schedule requests around weather and confirmed bookings": {
       "main": [
         [
           {
@@ -1598,7 +1779,7 @@
         ]
       ]
     },
-    "Build the forecast and planning-window video": {
+    "Build the outdoor booking call-sheet video": {
       "main": [
         [
           {
@@ -1840,6 +2021,11 @@
             "node": "Download the source-specific review pack",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Download tentative booking calendar proposals",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -1855,6 +2041,91 @@
         ],
         []
       ]
+    },
+    "Recover accepted work before reading new sources": {
+      "main": [
+        [
+          {
+            "node": "A saved render needs recovery?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "A saved render needs recovery?": {
+      "main": [
+        [
+          {
+            "node": "Eligible source content or saved render exists?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Read requested sessions and confirmed bookings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read requested sessions and confirmed bookings": {
+      "main": [
+        [
+          {
+            "node": "Validate the dated booking brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate the dated booking brief": {
+      "main": [
+        [
+          {
+            "node": "Approved booking requests exist?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approved booking requests exist?": {
+      "main": [
+        [
+          {
+            "node": "Find the configured city candidates",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Explain skipped content or recovery needs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return the source plan design quote and handoff": {
+      "main": [
+        [
+          {
+            "node": "Download tentative booking calendar proposals",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download the source-specific review pack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -1864,7 +2135,8 @@
   "versionId": "f3a8b1c6-9d24-47e5-b06a-8c1d5f2e7b93",
   "meta": {
     "templateCredsSetupCompleted": false,
-    "lateSeriesReview": 1
+    "lateSeriesReview": 1,
+    "domainRevision": 2
   },
   "id": "ZvidDailyWeather",
   "tags": []

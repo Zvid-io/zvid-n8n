@@ -4,6 +4,7 @@ const { test } = require('node:test'),
 const domain = require('../scripts/late-series-runtime'),
 	{ specs, buildLateSeries } = require('../scripts/build-late-series');
 const { organizeWorkflow } = require('../scripts/organize-workflow-series');
+const revision = require('../scripts/weather-sports-revision-runtime');
 const now = new Date('2026-10-04T08:00:00Z');
 const question = (difficulty, extra = {}) => ({
 	QuestionKey: difficulty,
@@ -116,7 +117,16 @@ const celebration = (extra = {}) => ({
 const inputs = {
 	'quiz-shorts': questions(),
 	'kpi-report-video': metricResponse(),
-	'daily-weather-video': forecast(),
+	'daily-weather-video': {
+		...forecast(),
+		hourly_units: { time: 'unixtime', wind_speed_10m: 'km/h', temperature_2m: '°C' },
+		hourly: {
+			...forecast().hourly,
+			time: forecast().hourly.time.map((t) => Date.parse(t + 'Z') / 1000),
+			temperature_2m: Array(15).fill(20),
+			is_day: Array(15).fill(1),
+		},
+	},
 	'sports-recap-video': {
 		statusCode: 200,
 		body: { events: [event('1'), event('2', { intHomeScore: '1', intAwayScore: '1' })] },
@@ -125,7 +135,30 @@ const inputs = {
 };
 const configs = {
 	'kpi-report-video': { metricsUrl: 'https://example.com/metrics' },
-	'daily-weather-video': { countryCode: 'PT', admin1: 'Lisbon District' },
+	'daily-weather-video': {
+		countryCode: 'PT',
+		admin1: 'Lisbon District',
+		timezone: 'UTC',
+		planningDate: '2026-10-04',
+	},
+};
+const booking = (extra = {}) => ({
+	BookingId: 'shoot-1',
+	Date: '2026-10-04',
+	Title: 'Product shoot',
+	Status: 'requested',
+	Approval: 'approved',
+	EarliestStart: '2026-10-04T08:00Z',
+	LatestEnd: '2026-10-04T18:00Z',
+	PreferredStart: '2026-10-04T09:00Z',
+	DurationMinutes: 60,
+	Priority: 5,
+	...extra,
+});
+const approvedEvent = () => {
+	const r = { EventId: '1', Enabled: 'yes' };
+	const p = revision.reviewMatch({ leagueId: '4328' }, r, inputs['sports-recap-video'], [], now);
+	return { ...r, Approval: 'approved', ApprovedSnapshot: p.reviewSnapshot };
 };
 
 function runGraph(kind, input = inputs[kind], logs = [], overrides = {}, response = {}) {
@@ -136,6 +169,15 @@ function runGraph(kind, input = inputs[kind], logs = [], overrides = {}, respons
 		submissions = [],
 		updates = [];
 	const cfg = w.nodes.find((n) => n.name === specs[kind].config);
+	const queueRows = structuredClone(
+			response.queue ||
+				(kind === 'daily-weather-video'
+					? [booking()]
+					: kind === 'sports-recap-video'
+						? [approvedEvent()]
+						: []),
+		),
+		reviewUpdates = [];
 	cfg.parameters.jsonOutput = JSON.stringify({
 		...JSON.parse(cfg.parameters.jsonOutput),
 		...configs[kind],
@@ -175,12 +217,13 @@ function runGraph(kind, input = inputs[kind], logs = [], overrides = {}, respons
 			outputs = [[{ json: JSON.parse(n.parameters.jsonOutput) }]];
 		else if (n.type === 'n8n-nodes-base.code')
 			outputs = [
-				new Function('$json', '$input', '$', 'Date', 'Buffer', n.parameters.jsCode)(
+				new Function('$json', '$input', '$', 'Date', 'Buffer', '$execution', n.parameters.jsCode)(
 					d,
 					{ first: () => items[0], all: () => items },
 					access,
 					FixedDate,
 					Buffer,
+					{ id: response.executionId || 'test-execution', mode: 'manual' },
 				),
 			];
 		else if (n.type === 'n8n-nodes-base.if')
@@ -191,20 +234,25 @@ function runGraph(kind, input = inputs[kind], logs = [], overrides = {}, respons
 			elapsed += Number(value(n.parameters.amount, d)) * 1000;
 		else if (n.type === 'n8n-nodes-base.googleSheets') {
 			if (!n.parameters.operation || n.parameters.operation === 'read') {
-				const rows = n.id === 'late-ledger' ? ledger : input;
+				const rows =
+					n.id === 'late-ledger' ? ledger : n.id === 'revision-queue' ? queueRows : input;
 				outputs = [rows.length ? rows.map((json) => ({ json })) : [{ json: {} }]];
+				if (response.repeatReadPerItem && !n.executeOnce) outputs = [items.flatMap(() => outputs[0])];
 			} else {
 				const fields = Object.fromEntries(
 					Object.entries(n.parameters.columns.value).map(([k, v]) => [k, value(v, d)]),
 				);
-				let row = ledger.find((r) => r.RenderKey === fields.RenderKey);
+				let row =
+					n.id === 'revision-review-save'
+						? queueRows.find((r) => r.EventId === fields.EventId)
+						: ledger.find((r) => r.RenderKey === fields.RenderKey);
 				if (!row && n.parameters.operation === 'appendOrUpdate') {
 					row = {};
 					ledger.push(row);
 				}
 				assert.ok(row, 'Missing ledger row');
 				Object.assign(row, fields);
-				updates.push(fields);
+				(n.id === 'revision-review-save' ? reviewUpdates : updates).push(fields);
 				outputs = [[{ json: fields }]];
 			}
 		} else if (n.type === '@zvid/n8n-nodes-zvid.zvid') {
@@ -281,7 +329,17 @@ function runGraph(kind, input = inputs[kind], logs = [], overrides = {}, respons
 		if (!response.captureFailure) throw e;
 		error = e;
 	}
-	return { ledger, submissions, updates, history, error, submissionAttempts, elapsed };
+	return {
+		ledger,
+		submissions,
+		updates,
+		history,
+		error,
+		submissionAttempts,
+		elapsed,
+		queueRows,
+		reviewUpdates,
+	};
 }
 
 test('Quiz balances difficulty, remaps correct answers and refuses reused or invalid content', () => {
@@ -521,6 +579,11 @@ for (const kind of Object.keys(specs))
 		() => {
 			const r = runGraph(kind);
 			assert.equal(r.submissions.length, 1);
+			assert.match(
+				r.submissions[0].name,
+				/^[a-zA-Z0-9_\- ]+$/,
+				'Project name matches the published render schema',
+			);
 			assert.equal(r.updates.length, 3);
 			assert.equal(r.ledger[0].Status, 'completed');
 			assert.ok(r.history.get('Download the source-specific review pack')[0].binary.data.data);
@@ -626,16 +689,143 @@ test('Capacity rejections wait and retry without duplicating accepted jobs or lo
 	);
 });
 
-test('Sports uses the bounded bundled clip and preserves custom cover choices', () => {
-	const kind = 'sports-recap-video';
-	const safe = 'https://videos.pexels.com/video-files/34930800/14796392_1080_1920_30fps.mp4';
-	const old = 'https://videos.pexels.com/video-files/34930800/14796393_1440_2560_30fps.mp4';
-	for (const coverVideoOverride of ['', old, 'https://example.test/custom.mp4']) {
-		const result = runGraph(kind, inputs[kind], [], { coverVideoOverride });
-		assert.equal(
-			result.submissions[0].scenes[0].visuals[0].src,
-			coverVideoOverride && coverVideoOverride !== old ? coverVideoOverride : safe,
-		);
+test('Sports editorial design contains approved facts and no unrelated stock or LLM', () => {
+	const result = runGraph('sports-recap-video');
+	assert.ok(result.submissions[0].scenes.every((s) => s.visuals.every((v) => v.type === 'TEXT')));
+	assert.match(JSON.stringify(result.submissions[0]), /APPROVED MATCH REPORT/);
+	assert.match(JSON.stringify(result.submissions[0]), /Home 1/);
+});
+
+test('Outdoor scheduling honors confirmed reservations, priority and preferred times', () => {
+	const rows = [
+		booking(),
+		booking({ BookingId: 'priority', Priority: 10 }),
+		booking({
+			BookingId: 'locked',
+			Status: 'confirmed',
+			Start: '2026-10-04T09:00Z',
+			End: '2026-10-04T10:00Z',
+		}),
+	];
+	const r = runGraph('daily-weather-video', undefined, [], {}, { queue: rows });
+	const p = r.history.get(specs['daily-weather-video'].plan)[0].json;
+	assert.equal(p.decisions[0].BookingId, 'priority');
+	assert.equal(p.decisions[0].Decision, 'reschedule');
+	assert.equal(p.decisions[0].Start, '2026-10-04T08:00:00.000Z');
+	assert.equal(p.decisions[1].Start, '2026-10-04T10:00:00.000Z');
+	assert.equal(r.reviewUpdates.length, 0, 'Booking requests must not be mutated');
+	const ics = Buffer.from(
+		r.history.get('Download tentative booking calendar proposals')[0].binary.data.data,
+		'base64',
+	).toString();
+	assert.equal((ics.match(/BEGIN:VEVENT/g) || []).length, 2);
+	assert.match(ics, /STATUS:TENTATIVE/);
+	assert.match(ics, /TRANSP:TRANSPARENT/);
+	assert.doesNotMatch(ics, /ATTENDEE|ORGANIZER|METHOD:REQUEST/);
+});
+test('Outdoor scheduling defers blocked weather and rejects gaps, nulls and timezone ambiguity', () => {
+	const blocked = structuredClone(inputs['daily-weather-video']);
+	blocked.hourly.precipitation_probability.fill(90);
+	const r = runGraph('daily-weather-video', blocked);
+	assert.equal(
+		r.history.get(specs['daily-weather-video'].plan)[0].json.decisions[0].Decision,
+		'defer',
+	);
+	assert.match(JSON.stringify(r.submissions[0]), /DEFER/);
+	const broken = structuredClone(inputs['daily-weather-video']);
+	broken.hourly.time[2] += 3600;
+	assert.throws(() => runGraph('daily-weather-video', broken), /non-contiguous/);
+	broken.hourly.time[2] -= 3600;
+	broken.hourly.temperature_2m[0] = null;
+	assert.throws(() => runGraph('daily-weather-video', broken), /temperature must/);
+	assert.throws(
+		() =>
+			revision.prepareBookings(
+				{ timezone: 'UTC' },
+				[booking({ EarliestStart: '2026-10-04T08:00' })],
+				now,
+			),
+		/UTC offset/,
+	);
+	assert.throws(
+		() => runGraph('daily-weather-video', undefined, [], { timezone: 'Europe/Lisbon' }),
+		/timezone must match/,
+	);
+	assert.equal(
+		runGraph('daily-weather-video', undefined, [], {}, { queue: [booking({ Approval: 'draft' })] })
+			.submissions.length,
+		0,
+	);
+});
+test('Calendar proposals escape user text and preserve UTC offsets and Unicode line folding', () => {
+	const p = {
+		renderKey: 'x',
+		generatedAt: now.toISOString(),
+		note: 'Test',
+		decisions: [
+			{
+				BookingId: 'a',
+				Title: 'é'.repeat(80) + '\nATTENDEE:evil@example.com',
+				Start: '2026-10-04T09:00:00+02:00',
+				End: '2026-10-04T10:00:00+02:00',
+				Reason: 'review',
+			},
+		],
+	};
+	const ics = Buffer.from(revision.calendarProposal(p).data, 'base64').toString();
+	assert.match(ics, /DTSTART:20261004T070000Z/);
+	assert.doesNotMatch(ics, /\r\nATTENDEE:/);
+	assert.ok(ics.split('\r\n').every((l) => Buffer.byteLength(l) <= 75));
+});
+test('Sports unapproved facts stop before quotes, preserve approval columns and expose a review pack', () => {
+	const q = [{ EventId: '1', Enabled: 'yes', Approval: 'rejected', ApprovedSnapshot: 'old' }];
+	const r = runGraph('sports-recap-video', undefined, [], {}, { queue: q });
+	assert.equal(r.submissions.length, 0);
+	assert.equal(r.history.has('Validate the video and request its credit quote'), false);
+	assert.equal(r.queueRows[0].Approval, 'rejected');
+	assert.equal(r.queueRows[0].ApprovedSnapshot, 'old');
+	assert.equal(r.queueRows[0].ReviewStatus, 'awaiting_approval');
+	assert.ok(r.history.get('Download the source-specific review pack')[0].binary.data.data);
+	const preview = runGraph('sports-recap-video', undefined, [], { dryRun: true }, { queue: q });
+	assert.equal(preview.reviewUpdates.length, 0);
+});
+test('Sports corrections require exact new-edition approval and preserve previous result evidence', () => {
+	const first = runGraph('sports-recap-video');
+	const changed = structuredClone(inputs['sports-recap-video']);
+	changed.body.events[0].intHomeScore = '3';
+	const pending = runGraph('sports-recap-video', changed, first.ledger);
+	assert.equal(pending.submissions.length, 0);
+	assert.equal(pending.queueRows[0].ReviewStatus, 'correction_review');
+	const q = { ...approvedEvent(), ApprovedSnapshot: pending.queueRows[0].CurrentSnapshot };
+	const rendered = runGraph('sports-recap-video', changed, first.ledger, {}, { queue: [q] });
+	assert.equal(rendered.submissions.length, 1);
+	assert.equal(rendered.ledger.length, 2);
+	assert.match(JSON.stringify(rendered.submissions[0]), /CORRECTED MATCH REPORT/);
+	const p = rendered.history.get(specs['sports-recap-video'].plan)[0].json;
+	assert.equal(p.edition, 2);
+	assert.equal(p.prior.homeScore, 2);
+	assert.equal(p.fact.homeScore, 3);
+	assert.ok(p.previousVideoUrl);
+	const rollback = runGraph('sports-recap-video', undefined, rendered.ledger);
+	assert.equal(rollback.submissions.length, 0);
+	assert.equal(rollback.queueRows[0].ReviewStatus, 'correction_review');
+	assert.equal(JSON.parse(rollback.queueRows[0].CurrentSnapshot).edition, 3);
+});
+test('Sports cannot bypass uncertain history with a changed score and recovers before source access', () => {
+	const first = runGraph('sports-recap-video'),
+		saved = { ...first.ledger[0], Status: 'submitting', VideoUrl: '', JobId: '' };
+	const changed = structuredClone(inputs['sports-recap-video']);
+	changed.body.events[0].intHomeScore = '4';
+	const blocked = runGraph('sports-recap-video', changed, [saved]);
+	assert.equal(blocked.submissions.length, 0);
+	assert.equal(blocked.queueRows[0].ReviewStatus, 'needs_review');
+	for (const kind of ['daily-weather-video', 'sports-recap-video']) {
+		const done = runGraph(kind),
+			log = { ...done.ledger[0], Status: 'rendering', JobId: 'accepted', VideoUrl: '' };
+		const resumed = runGraph(kind, { error: 'source is down' }, [log], {}, { queue: [] });
+		assert.equal(resumed.submissions.length, 0);
+		assert.equal(resumed.history.has(specs[kind].source), false);
+		assert.ok(resumed.history.has('▶ Watch video'));
 	}
 });
 
@@ -741,13 +931,125 @@ test('Day 30 is a distinct conversational flow with allow-list, isolated memory,
 	])
 		assert.equal(reply({ output: url }).hasVideo, false);
 	const url = 'https://cdn.zvid.io/videos/test/result.mp4';
-	const result = reply({ output: '<& '.repeat(3000) + url });
+	assert.equal(reply({ output: url }).hasVideo, false, 'Assistant text alone is not completion evidence');
+	const step = (state, value = url) => ({ action: { tool: 'get_media' }, observation: JSON.stringify({ kind: 'render', render: { id: 'job-1', state, result: { url: value } } }) });
+	const result = reply({ output: '<& '.repeat(3000), intermediateSteps: [step('completed')] });
 	assert.equal(result.videoUrl, url);
+	assert.equal(result.mediaStatus, 'completed');
+	assert.match(result.watchReason, /ready to watch/);
+	assert.equal(reply({ output: 'Done', intermediateSteps: [step('completed'), step('active')] }).hasVideo, false);
+	assert.equal(reply({ output: 'Still running', intermediateSteps: [step('active')] }).mediaStatus, 'active');
+	assert.equal(reply({ output: 'Failed', intermediateSteps: [step('failed')] }).hasVideo, false);
+	assert.equal(reply({ output: 'Preview', intermediateSteps: [{ action: { tool: 'start_from_example' }, observation: step('completed').observation }] }).hasVideo, false);
+	for (const bad of ['https://evil.example/out.mp4', 'https://cdn.zvid.io/library/examples/previews/demo.mp4'])
+		assert.equal(reply({ output: 'Done', intermediateSteps: [step('completed', bad)] }).hasVideo, false);
+	const wrapped = { action: { tool: 'get_media' }, observation: [{ type: 'text', text: step('completed').observation }] };
+	assert.equal(reply({ output: 'Ready', intermediateSteps: [wrapped] }).videoUrl, url);
+	const native = { action: { tool: 'Zvid_MCP_tools_get_media' }, observation: JSON.stringify([{ response: [{ type: 'text', text: JSON.stringify({ kind: 'render', render: { id: 'job-1', state: 'completed', result: url } }) }] }]) };
+	assert.equal(reply({ output: 'Ready', intermediateSteps: [native] }).videoUrl, url, 'Native n8n MCP namespaced tool and nested response envelope');
+	assert.equal(reply({ output: 'Template limit reached', intermediateSteps: [{ action: { tool: 'Zvid_MCP_tools_create_media_from_example' }, observation: JSON.stringify([{ error: 'Template limit reached' }]) }] }).mediaStatus, 'tool_error');
+	const limited = reply({ output: 'Would you prefer another example?', intermediateSteps: [{ action: { tool: 'Zvid_MCP_tools_create_media_from_example' }, observation: JSON.stringify([{ error: JSON.stringify({status:403,error:'Template limit reached'}) }]) }] });
+	assert.equal(limited.status, 'blocked');
+	assert.match(limited.replyPlain, /preferDirectDraft=true/);
+	assert.equal(limited.hasVideo, false);
+	const incomplete = reply({ output: 'Quote, please approve', intermediateSteps: [{ action: { tool: 'create_media_from_example' }, observation: { kind: 'draft', draftId: 'prj_example' } }] });
+	assert.equal(incomplete.mediaStatus, 'incomplete_draft');
+	assert.match(incomplete.replyPlain, /No render approval/);
+	assert.match(reply({ output: 'Found a template. Shall I adapt it?' }).watchReason, /No completed render/);
 	assert.ok(result.replyText.length <= 4096);
 	assert.match(result.replyText, /&lt;/);
 	assert.equal(node('Zvid AI Agent').retryOnFail, undefined);
 	assert.match(JSON.stringify(node('Zvid MCP tools').parameters), /maxRenderCredits/);
+	assert.equal(node('Zvid AI Agent').parameters.options.returnIntermediateSteps, true);
+	assert.equal(node('▶ Watch video').typeVersion, 2);
 });
+test('Celebration migration identifies missing and duplicated keys and preserves annual protections', () => {
+	assert.throws(() => domain.planCelebration({}, [celebration({ CelebrationKey: '', row_number: 7 })], [], now), /Missing CelebrationKey at sheet row 7/);
+	assert.throws(() => domain.planCelebration({}, [celebration({ row_number: 2 }), celebration({ row_number: 6 })], [], now), /sheet rows 2 and 6/);
+	const old = celebration({ LastSentYear: 2026 });
+	assert.equal(domain.planCelebration({}, [old], [], now).skipped[0].reason, 'legacy_already_sent');
+	assert.equal(domain.planCelebration({}, [celebration({ Approval: '', GreetingConsent: '' })], [], now).ready, false);
+	const future = domain.planCelebration({}, [celebration({ Date: '1990-11-01' })], [], now);
+	assert.equal(future.skipped[0].reason, 'not_due_today');
+	assert.equal(future.skipped[0].dueDate, '2026-11-01');
+});
+
+test('Celebration history is read once for multiple source rows and playback never rewrites it', () => {
+	const rows = Array.from({ length: 4 }, (_, i) => celebration({ CelebrationKey: 'person-' + i, LastSentYear: i ? 2026 : '' }));
+	const first = runGraph('birthday-greetings', rows);
+	const log = first.ledger, key = log[0].RenderKey;
+	const repeated = runGraph('birthday-greetings', rows, log, {}, { repeatReadPerItem: true });
+	assert.equal(repeated.submissions.length, 0);
+	assert.equal(repeated.updates.length, 0);
+	assert.throws(() => runGraph('birthday-greetings', rows, [...log, ...log]), /Duplicate RenderKey/, 'Real duplicate rows still stop the queue');
+	const replay = runGraph('birthday-greetings', rows, log, { replayRenderKey: key, sendEmail: true }, { repeatReadPerItem: true });
+	assert.equal(replay.submissionAttempts, 0);
+	assert.equal(replay.updates.length, 0);
+	assert.deepEqual(replay.ledger, log);
+	assert.ok(replay.history.has('▶ Watch video'));
+	assert.equal(replay.history.has('Send the approved private greeting email'), false);
+	assert.equal(replay.history.get('Prepare the completed result and review pack')[0].json.replayed, true);
+	assert.equal(domain.planCelebration({ replayRenderKey: key }, [], log, new Date('2027-01-01')).ready, true);
+	for (const changes of [{ replayRenderKey: 'missing' }, { replayRenderKey: key, dryRun: true }]) {
+		const r = runGraph('birthday-greetings', rows, log, changes);
+		assert.equal(r.submissionAttempts, 0); assert.equal(r.updates.length, 0);
+		assert.equal(r.history.has('▶ Watch video'), false);
+	}
+});
+
+test('Chat saved playback uses native completed state, protects Telegram and bypasses the agent', () => {
+	const w = require('../workflows/zvid-chat-video-agent.json'), node = name => w.nodes.find(n => n.name === name);
+	const cfg = { ...JSON.parse(node('Config').parameters.jsonOutput), manualPreviewJobId: 'saved-job' };
+	const gate = new Function('$json', '$', 'return (' + node('Preview a saved render?').parameters.conditions.conditions[0].leftValue.slice(3, -2) + ')');
+	assert.equal(gate({ isTelegram: false }, () => ({ first: () => ({ json: cfg }) })), true);
+	assert.equal(gate({ isTelegram: true }, () => ({ first: () => ({ json: cfg }) })), false);
+	assert.equal(gate({ isTelegram: false }, () => ({ first: () => ({ json: { ...cfg, manualPreviewJobId: '' } }) })), false);
+	const req = { ok: true, isTelegram: false, input: 'Replay only' }, url = 'https://cdn.zvid.io/videos/test/result.mp4';
+	const reply = raw => {
+		const input = new Function('$json', node('Explain the saved render preview').parameters.jsCode)(raw)[0];
+		return new Function('$input', '$', node('Chat reply').parameters.jsCode)({ first: () => input }, name => ({ first: () => ({ json: name === 'Config' ? cfg : req }) }))[0].json;
+	};
+	assert.equal(reply({ id: 'saved-job', state: 'completed', result: url }).videoUrl, url);
+	for (const raw of [{ state: 'active', result: url }, { error: 'Not found' }, { state: 'completed', result: 'https://evil.example/test.mp4' }]) assert.equal(reply(raw).hasVideo, false);
+	const route = w.connections['Preview a saved render?'].main[0][0].node;
+	assert.equal(route, 'Read saved render for preview');
+	assert.equal(node(route).type, '@zvid/n8n-nodes-zvid.zvid');
+	assert.equal(node(route).parameters.operation, 'get');
+});
+
+test('Manual greeting demo creates fresh paid work and never uses real contact consent or email', () => {
+	const existing = runGraph('birthday-greetings');
+	const a = runGraph('birthday-greetings', inputs['birthday-greetings'], existing.ledger, { manualDemo: true, sendEmail: true }, { executionId: 'demo-one' });
+	const b = runGraph('birthday-greetings', inputs['birthday-greetings'], a.ledger, { manualDemo: true, sendEmail: true }, { executionId: 'demo-two' });
+	assert.equal(a.submissions.length, 1); assert.equal(b.submissions.length, 1);
+	assert.equal(a.history.has('Send the approved private greeting email'), false);
+	assert.equal(b.history.has('Send the approved private greeting email'), false);
+	assert.equal(a.history.get(specs['birthday-greetings'].plan)[0].json.name, 'DEMO Ava');
+	assert.notEqual(a.ledger.at(-1).RenderKey, b.ledger.at(-1).RenderKey);
+	assert.deepEqual(b.ledger[0], existing.ledger[0]);
+	assert.equal(domain.planCelebration({ manualDemo: true }, [], [], now, { id: 'automatic', mode: 'trigger' }).ready, false);
+});
+
+test('Chat waits on its accepted job and recognizes a direct draft after an example quota error', () => {
+	const w = require('../workflows/zvid-chat-video-agent.json'), node = name => w.nodes.find(n => n.name === name);
+	const cfg = JSON.parse(node('Config').parameters.jsonOutput), req = { ok: true, isTelegram: false };
+	const accepted = { output: 'Submitted', intermediateSteps: [{ action: { tool: 'Zvid_MCP_tools_render_media' }, observation: JSON.stringify({ kind: 'render', jobId: 'actual-new-job', render: { jobId: 'actual-new-job' } }) }] };
+	const handoff = new Function('$input', '$', node('Read the agent render handoff').parameters.jsCode)({ first: () => ({ json: accepted }) }, () => ({ first: () => ({ json: cfg }) }))[0].json;
+	assert.equal(handoff.agentRender.jobId, 'actual-new-job');
+	const gate = new Function('$json', 'return (' + node('Wait for an accepted video render?').parameters.conditions.conditions[0].leftValue.slice(3, -2) + ')');
+	assert.equal(gate(handoff), true); assert.equal(gate({ agentRender: { mediaStatus: 'awaiting_approval' } }), false);
+	assert.equal(node('Wait for the newly accepted chat video').parameters.operation, 'get');
+	const raw = { id: 'actual-new-job', state: 'completed', result: 'https://cdn.zvid.io/videos/test/focusflow.mp4' };
+	const attached = new Function('$json', '$', node('Attach the actual chat video result').parameters.jsCode)(raw, () => ({ first: () => ({ json: handoff }) }))[0];
+	const reply = input => new Function('$input', '$', node('Chat reply').parameters.jsCode)({ first: () => input }, name => ({ first: () => ({ json: name === 'Config' ? cfg : req }) }))[0].json;
+	assert.equal(reply(attached).videoUrl, raw.result);
+	const direct = reply({ json: { output: 'New draft ready', intermediateSteps: [ { action: { tool: 'create_media_from_example' }, observation: { error: 'Template limit reached' } }, { action: { tool: 'create_media' }, observation: { kind: 'draft', draftId: 'prj_direct', editorUrl: 'https://editor.zvid.io/?project=prj_direct', estimatedCredits: 12, quoteToken: 'test-only-signed-quote' } } ] } });
+	assert.equal(direct.mediaStatus, 'awaiting_approval'); assert.equal(direct.status, 'answered');
+	assert.match(direct.replyPlain, /12 Zvid credits/);
+	assert.equal(direct.draftId, 'prj_direct');
+	assert.equal(JSON.stringify(direct).includes('test-only-signed-quote'), false);
+});
+
 module.exports = {
 	inputs,
 	configs,

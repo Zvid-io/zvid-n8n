@@ -73,6 +73,15 @@ it so missing media URLs, draft-only outputs and dry runs skip the download.
 The step downloads the completed file into binary `data`; it must not start
 another render. Preserve any URL allow-list used by an agent.
 
+For chat agents, enable intermediate tool results and read the actual completed
+Zvid response, not only the model's final prose. n8n may namespace tool names
+as `Zvid_MCP_tools_get_media` and wrap observations in JSON arrays containing
+`response` text blocks; a render `result` may be a URL string. Test this native
+shape, omitted final links, drafts, failed/running jobs and disallowed URLs.
+Return a readable `watchReason` when no completed media exists. A draft/quote
+is not a video: preserve render approval, and follow the MCP tool's background
+render contract by checking once when asked instead of polling inside the agent.
+
 Bound preview downloads with a 30,000 ms request timeout and at most three
 attempts, five seconds apart. Keep `onError: continueRegularOutput`, so a
 download failure does not invalidate a completed render; the preceding result
@@ -90,6 +99,22 @@ timeout is not a connectivity fix. Diagnose resolver-dependent routes without
 pinning CDN IPs or disabling TLS/SSRF protection, then verify repeated downloads
 and a manual editor run with inline playback. Reuse completed media to avoid
 unnecessary paid renders during preview testing.
+
+Test repeat execution against the actual populated history, not only an empty
+log. A Sheets log reader downstream of multiple source rows must execute once
+when it reads the entire log; otherwise each source item repeats every history
+row and falsely triggers duplicate-key errors. Retain genuine duplicate-key
+checks. Provide an explicit saved-job playback mode for demo reruns, skipping
+paid submission, history writes and delivery. Label it as replay, preserve the
+completed-state and URL checks, and document how to return to new-content mode.
+
+A playback test is not proof of new-video creation. Never configure an unrelated
+completed asset as the default when the user requests rendering or a usable
+creation demo. Verify draft creation, the actual signed quote, paid submission
+when authorized, and playback of that submitted job. A chat agent must not claim
+it saved a draft based only on validation; require the actual creation response.
+Keep optional saved-job replay fields empty on new-content paths. Clearly label
+fictional demo inputs and explain that each new manual render spends credits.
 
 Distinguish a preview download problem from a render failure. Preserve the
 failed job and actual reason in the tracking log, then surface an execution
@@ -190,10 +215,24 @@ with the standard organizer. These are revisions of the existing canonical
 templates, not new near-duplicate submissions.
 
 The distinct outcomes are a balanced three-round quiz and answer/source pack,
-a verified KPI exception briefing and owner action register, a weather video
-with ranked future planning windows, a verified final-score recap with optional
-club form, and a consent-aware annual celebration queue. Domain facts must
+a verified KPI exception briefing and owner action register, an outdoor booking
+call sheet with tentative calendar proposals, an editorial match approval and
+correction lifecycle, and a consent-aware annual celebration queue. Domain facts must
 affect selection and the actual output; extra guard nodes alone are insufficient.
+
+After the duplicate-content feedback on days 27–28, use
+`weather-sports-revisions.js` and `weather-sports-revision-runtime.js` through
+the existing late-series generator. Weather uses dated requests, confirmed
+reservations, priorities and forecast constraints to propose keep/reschedule/defer
+decisions. Its ICS files are tentative and send no invitations. Sports checks a
+specific queued event against exact human approval of its facts and edition,
+invalidates stale approvals, and retains previous results and video links in
+correction editions. Do not infer approval while adding example inputs. Keep
+old render logs and recover accepted jobs before fetching new source data.
+Do not increase a configured local credit ceiling during migration. Test live
+provider reads and native free validation separately from fixture assertions;
+report expired credentials and untested paid paths precisely. Revise existing
+creator entries instead of creating new near-duplicate submissions.
 
 Never substitute invented demo metrics or historical demo sports results after
 a production source failure. Use explicit fixture data in isolated tests. Derive

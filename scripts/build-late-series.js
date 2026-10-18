@@ -57,10 +57,10 @@ const specs = {
 	'daily-weather-video': {
 		day: 27,
 		prefix: 'wx',
-		config: 'Set the city and outdoor planning thresholds',
-		source: 'Fetch local current daily and hourly weather',
-		plan: 'Rank remaining three-hour weather windows',
-		builder: 'Build the forecast and planning-window video',
+		config: 'Set the location date and booking thresholds',
+		source: 'Fetch hourly weather for the booking date',
+		plan: 'Schedule requests around weather and confirmed bookings',
+		builder: 'Build the outdoor booking call-sheet video',
 		title: 'Create a local forecast with a ranked daytime planning window',
 		log: 'Weather Briefings',
 		defaults: {
@@ -80,10 +80,10 @@ const specs = {
 	'sports-recap-video': {
 		day: 28,
 		prefix: 'sr',
-		config: 'Set the league club and completed recap period',
-		source: 'Fetch recent league events from TheSportsDB',
-		plan: 'Verify final scores and prioritize recap matches',
-		builder: 'Build the verified results and scoreline recap',
+		config: 'Set the league and editorial render limits',
+		source: 'Fetch the queued event directly from TheSportsDB',
+		plan: 'Compare final facts approval and previous video editions',
+		builder: 'Build the approved original or corrected match report',
 		title: 'Build verified league or club recaps with a final-score fact sheet',
 		log: 'Sports Recaps',
 		defaults: {
@@ -113,6 +113,8 @@ const specs = {
 		defaults: {
 			timezone: 'UTC',
 			leapDayPolicy: 'feb28',
+			replayRenderKey: '',
+			manualDemo: false,
 			sendEmail: false,
 			maxCreditsPerVideo: 15,
 			musicUrl: '',
@@ -134,6 +136,7 @@ function buildLateSeries(original, kind) {
 		manual = structuredClone(original.nodes.find((n) => n.type === BASE + 'manualTrigger')),
 		schedule = structuredClone(original.nodes.find((n) => n.type === BASE + 'scheduleTrigger'));
 	const initial = JSON.parse(cfg.parameters.jsonOutput);
+	const priorConfigName = cfg.name;
 	if (
 		kind === 'daily-weather-video' &&
 		initial.cityName === 'Lisbon' &&
@@ -289,7 +292,9 @@ function buildLateSeries(original, kind) {
 	// Rewrite all old Config references on retained source nodes.
 	for (const n of w.nodes)
 		n.parameters = JSON.parse(
-			JSON.stringify(n.parameters).replaceAll("$('Config')", `$('${s.config}')`),
+			JSON.stringify(n.parameters)
+				.replaceAll("$('Config')", `$('${s.config}')`)
+				.replaceAll(`$('${priorConfigName}')`, `$('${s.config}')`),
 		);
 	const document =
 		source.type === BASE + 'googleSheets'
@@ -306,7 +311,7 @@ function buildLateSeries(original, kind) {
 			sheetName: { __rl: true, value: s.log, mode: 'name' },
 			options: {},
 		},
-		{ typeVersion: 4.7, alwaysOutputData: true },
+		{ typeVersion: 4.7, alwaysOutputData: true, ...(kind === 'birthday-greetings' ? { executeOnce: true } : {}) },
 	);
 	const oldLedger = old('late-ledger');
 	if (oldLedger) {
@@ -336,7 +341,7 @@ function buildLateSeries(original, kind) {
 		[runtime.helpers, runtime.recoverPlan, runtime.resumeOutstanding, runtime[planner]]
 			.map((f) => f.toString())
 			.join('\n') +
-			`\nreturn [{json:${planner}($('${cfg.name}').first().json,${args}$input.all().map(i=>i.json),new Date())}];`,
+			`\nreturn [{json:${planner}($('${cfg.name}').first().json,${args}$input.all().map(i=>i.json),new Date()${kind === 'birthday-greetings' ? ",typeof $execution === 'undefined' ? {} : {id:$execution.id || 'local-'+Date.now(),mode:typeof $mode === 'undefined' ? $execution.mode : $mode}" : ''})}];`,
 	);
 	iff('ready', 'Eligible source content or saved render exists?', '$json.ready === true');
 	code('no-work', 'Explain skipped content or recovery needs', 'return $input.all();');
@@ -815,6 +820,11 @@ function buildLateSeries(original, kind) {
 	link('Classify completion failure or uncertain status', [
 		'Record the render outcome and completed URL',
 	]);
+	if (kind === 'birthday-greetings') {
+		iff('replay-readonly', 'Keep this replay read-only?', '$json.replayed === true');
+		link('Classify completion failure or uncertain status', ['Keep this replay read-only?']);
+		link('Keep this replay read-only?', ['Prepare the completed result and review pack'], ['Record the render outcome and completed URL']);
+	}
 	link('Record the render outcome and completed URL', [
 		'Prepare the completed result and review pack',
 	]);
@@ -827,7 +837,7 @@ function buildLateSeries(original, kind) {
 	if (kind === 'kpi-report-video' || kind === 'birthday-greetings') {
 		const email = kind === 'birthday-greetings';
 		const condition = email
-			? `$json.status === 'completed' && $('${cfg.name}').first().json.sendEmail === true && $json.emailApproved === true && Boolean($json.email)`
+			? `$json.status === 'completed' && $json.replayed !== true && $('${cfg.name}').first().json.sendEmail === true && $json.emailApproved === true && Boolean($json.email)`
 			: `$json.status === 'completed' && $json.usingDemoData !== true && $('${cfg.name}').first().json.sendSlack === true && Boolean($('${cfg.name}').first().json.slackWebhookUrl)`;
 		iff('deliver', 'Optional delivery is enabled and approved?', condition);
 		const pending = write(
@@ -914,7 +924,7 @@ function buildLateSeries(original, kind) {
 	// Keep the recognized overview marker through organization.
 	const marker = original.nodes.find((n) => n.id === 'publication-overview-' + kind);
 	if (marker) w.nodes.push(structuredClone(marker));
-	return w;
+	return require('./weather-sports-revisions').reviseWeatherSports(w, kind);
 }
 module.exports = { specs, buildLateSeries };
 if (require.main === module) {

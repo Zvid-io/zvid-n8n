@@ -107,7 +107,7 @@ function seriesLayout(workflow, kind) {
   add('record','Save the completed result','Write the completed URL back to its source row. Review the result before adding any further distribution steps.',recording);
   const watchNames = ['Run summary','Recovery run summary','Published summary','Video ready to watch?','▶ Watch video','▶ View banner',...recording];
   const boundedPreview = ['flash-sale-alert','abandoned-cart-video','review-testimonial-video','cold-outreach-videos','podcast-audiogram-clips','video-to-shorts','blog-content-kit','testimonial-compilation','chat-video-agent'].includes(kind);
-  add('watch','Review the finished media','Open Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.' + (boundedPreview ? ' Each request times out after 30 seconds; completed links remain available.' : ''),watchNames);
+  add('watch','Review the finished media',kind === 'chat-video-agent' ? 'Approve the saved draft quote to render. The native Zvid node waits for that accepted job; only its completed video reaches Watch. Open Binary → data → View. For skipped playback, read Chat reply → watchReason. Downloads time out after 30 seconds.' : 'Open Watch video → Binary → data → View. Select each output item for batches; image outputs open as images. Empty links and preview results skip the download.' + (boundedPreview ? ' Each request times out after 30 seconds; completed links remain available.' : ''),watchNames);
   assert.deepEqual(functional.filter(n => !assigned.has(n.name)).map(n=>n.name), [], 'Every node needs a documented section: ' + kind);
 
   const agent = kind === 'chat-video-agent';

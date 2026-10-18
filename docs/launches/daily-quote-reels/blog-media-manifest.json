@@ -1,0 +1,126 @@
+{
+  "postSlug": "automate-daily-quote-videos-n8n-google-sheets",
+  "generatedAt": "2026-10-14T12:31:14.629Z",
+  "status": "production-draft-updated",
+  "publishStatus": "not-published",
+  "allFinalMediaRenderedByZvid": false,
+  "artworkRenderedByZvid": true,
+  "deliveryNote": "Reviewed Zvid render bytes preserved without alteration in the existing blog CDN storage. Render outputs expire after seven days; the source guide predates that retention behavior. No direct bucket URLs appear in publication content.",
+  "assets": [
+    {
+      "role": "cover",
+      "type": "image",
+      "exampleSlug": "img-og-blog",
+      "jobId": "6fdb724f-03eb-4cfc-9831-2b464e08d727",
+      "sourceRenderUrl": "https://cdn.zvid.io/images/1/daily-quote-blog-cover-teal-gold-1791980851870-01bfa3da-2da6-4129-a775-e2f270b17816.png",
+      "outputUrl": "https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/c6857460be31eebe-cover-v2.png",
+      "localReviewPath": "cover-v2.png",
+      "sha256": "c6857460be31eebed30b93c1daffc53447254ffe7107ac902e26e582910f45df",
+      "palette": "Deep teal, emerald and warm gold",
+      "dimensions": "1200x630",
+      "alt": "Daily quote videos from a spreadsheet: n8n, Google Sheets and Zvid",
+      "caption": "Create a consistent quote series from approved spreadsheet rows.",
+      "qaStatus": "passed",
+      "qaEvidence": [
+        "Original-resolution visual inspection: complete headline, category, footer, spacing and contrast.",
+        "Remote validation passed with zero warnings."
+      ]
+    },
+    {
+      "role": "inline",
+      "type": "image",
+      "sourceExample": "custom workflow diagram; library matching found no fitting diagram; palette adapted from img-og-blog and return-arrow direction informed by callout-pointer-bent",
+      "jobId": "bd3df7be-e1ea-42ff-9fc3-0da701bb211b",
+      "sourceRenderUrl": "https://cdn.zvid.io/images/1/daily-quote-blog-workflow-1791978183840-a9fdfd65-8fd6-4939-bd2b-6ed4401c7b5c.png",
+      "outputUrl": "https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/e738ebf5b7dccf56-inline.png",
+      "localReviewPath": "inline.png",
+      "sha256": "e738ebf5b7dccf568857482d5cdfa59e88206b4cd31955ba22d2ba1aa0ef8b95",
+      "dimensions": "1200x630",
+      "alt": "Daily quote workflow: Google Sheets to n8n to Zvid, then a completed MP4 and row update",
+      "caption": "The spreadsheet tracks what has rendered. Publication remains a separate task after review.",
+      "qaStatus": "passed",
+      "qaEvidence": [
+        "Original-resolution visual inspection: all four stages, arrows, return path and preview note are readable.",
+        "Remote validation passed with zero warnings."
+      ]
+    },
+    {
+      "role": "video",
+      "type": "video",
+      "sourceExample": "zvid-daily-quote-reels.json shared project builder",
+      "jobId": "921f6751-e54f-44e7-baf7-e36d5cec82f9",
+      "sourceRenderUrl": "https://cdn.zvid.io/videos/1/daily-quote-ralph-waldo-emerson-1791970287257.mp4",
+      "outputUrl": "https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/89123ba2a01de440-demo.mp4",
+      "localReviewPath": "demo.mp4",
+      "sha256": "89123ba2a01de4408cd803df2887d90884ef6543a3dca05efde734dcfd27bd81",
+      "dimensions": "1080x1920",
+      "durationSeconds": 10.8,
+      "frameRate": 30,
+      "accessibleLabel": "Daily motivational quote video with Emerson quotation and author card",
+      "caption": "Example output: a quotation over rain footage, then an author and call-to-action card. Music is included; narration is not.",
+      "qaStatus": "passed",
+      "qaEvidence": [
+        "Existing original-size quote and author frames inspected in the launch verification.",
+        "Additional frames reviewed at 0.5, 3, 6, 6.9, 7.5, 9 and 10.2 seconds: entrance, stable text, transition and pre-exit.",
+        "H.264/AAC, 1080x1920, 30 fps and 10.8 seconds verified; exactly one existing live render reused."
+      ]
+    },
+    {
+      "role": "workflow-canvas",
+      "type": "image",
+      "source": "Screenshot of the actual published n8n workflow canvas, also included in the public example repository",
+      "outputUrl": "https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/b025443c12910e35-workflow.png",
+      "sha256": "b025443c12910e35e7e79cd141fd72fe05195764eae48fba957daebbcf26bd41",
+      "dimensions": "700x515",
+      "qaStatus": "passed",
+      "qaEvidence": [
+        "Complete canvas retained; overview diagram supplies a readable architecture summary; import JSON for node-level zoom."
+      ]
+    }
+  ],
+  "workflowDownload": {
+    "filename": "workflow.json",
+    "sha256": "a2e72e40e5f1b8faaf514568ac2beb99bc0c533d646f1ef9ed49d9527387abea",
+    "objectKey": "assets/blogs/automate-daily-quote-videos-n8n-google-sheets/a2e72e40e5f1b8fa-workflow.json",
+    "cdnUrl": "https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/a2e72e40e5f1b8fa-workflow.json",
+    "bytes": 37213,
+    "contentDisposition": "attachment; filename=\"zvid-daily-quote-reels.json\"",
+    "canonicalPath": "zvid-integrations/n8n/workflows/zvid-daily-quote-reels.json"
+  },
+  "youtube": {
+    "url": "https://youtu.be/Ra6mPdmDDYs",
+    "placement": "Immediately after introduction",
+    "embedded": true,
+    "playbackVerified": false,
+    "state": "private",
+    "embedError153Fixed": true
+  },
+  "backendDraft": {
+    "id": 77,
+    "status": "draft",
+    "publishedAt": null,
+    "editorUrl": "https://app.zvid.io/blogs/77/edit",
+    "previewUrl": "https://zvid.io/preview/blog/77"
+  },
+  "exampleSheet": {
+    "filename": "daily-quote-example.csv",
+    "sha256": "7433d9c3feeec3ae9238ed05e7678efe343649cd7499ae2a0c0b59678cf19dbc",
+    "objectKey": "assets/blogs/automate-daily-quote-videos-n8n-google-sheets/7433d9c3feeec3ae-daily-quote-example.csv",
+    "cdnUrl": "https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/7433d9c3feeec3ae-daily-quote-example.csv",
+    "bytes": 141,
+    "contentType": "text/csv; charset=utf-8",
+    "contentDisposition": "attachment; filename=\"daily-quote-example.csv\"",
+    "headers": [
+      "Quote",
+      "Author",
+      "AuthorNote",
+      "Status",
+      "VideoUrl"
+    ],
+    "dataRows": 1,
+    "blankFields": [
+      "Status",
+      "VideoUrl"
+    ]
+  }
+}

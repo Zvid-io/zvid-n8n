@@ -171,6 +171,7 @@ return items;`}});
 }
 
 function repairWorkflowRuntime(workflow) {
+  require('./chat-agent-runtime').repairChatAgent(workflow);
   const names = new Set(workflow.nodes.map(n => n.name));
   const affected = names.has('Poll price drops') || names.has('Poll checkouts') || names.has('Fetch Judge.me reviews') || names.has('Read leads sheet')
     || names.has('Pick latest episode') || names.has('Pick highlights') || names.has('Prepare kit prompt') || names.has('Prepare compilation')
@@ -183,9 +184,6 @@ function repairWorkflowRuntime(workflow) {
   if (!affected) return workflow;
   for (const node of workflow.nodes) if (/^▶ (?:Watch video|View banner)(?: — .+)?$/.test(node.name)) {
     node.parameters.options = {...node.parameters.options, timeout:PREVIEW_TIMEOUT_MS};
-    // Keep the agent's existing downloader version until a manual playback
-    // check supports changing it; bounding a request does not require that swap.
-    if (names.has('Screen request') && names.has('Chat reply')) continue;
     if (node.typeVersion !== 2) {
       // HTTP Request v4 stores the live response stream in manual-run context.
       // n8n 2.29.10 then fails to serialize its TLS socket when saving the run,
