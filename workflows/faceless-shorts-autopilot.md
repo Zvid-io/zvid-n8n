@@ -81,8 +81,9 @@ authentication of its own.
 5. **Open `Channel Config`** and set `niche`, `audience`, `channelHandle`, `voiceId`
    and your brand colours. Everything else has a working default.
 6. **Run once with `dryRun: false`** (the default). This renders a video and spends
-   Zvid credits. Open **▶ Watch video** to view it. For an optional free editor draft
-   and credit quote, set `dryRun: true` before running.
+   Zvid credits. Open **▶ Watch video** to view it. Set `dryRun: true` for an editor
+   draft and credit quote without a Zvid render charge. **OpenRouter script
+   generation and ElevenLabs narration still run and may incur charges.**
 7. Set `uploadToYouTube: true` once the rendered output looks right.
 
 The workflow has both a **Test manually** trigger and a daily schedule, so you can try
@@ -114,7 +115,7 @@ Everything lives in the `Channel Config` node — no expressions to hunt through
 | `outroSeconds` / `outroText` | `2.5` / `Follow for more` | Set `outroSeconds` to `0` to drop the outro. |
 | `musicVolume` | `0.12` | Music sits under the narration. |
 | `maxMusicSeconds` / `maxMusicBytes` | `200` / `5242880` | Guards against a music track that would blow the plan's audio size cap and fail the render. |
-| `dryRun` | `false` | Render a video and spend credits. Set `true` for an optional free validation, quote, and editor draft. |
+| `dryRun` | `false` | Render a video and spend Zvid credits. Set `true` to skip the Zvid render and return validation, a quote and an editor draft. OpenRouter and ElevenLabs still run and may charge. |
 | `uploadToYouTube` / `youTubePrivacy` | `false` / `private` | |
 | `pollSeconds` / `timeoutMinutes` | `10` / `20` | Render poll loop. |
 
@@ -188,7 +189,7 @@ uses ~400 ElevenLabs characters, so the free tier covers roughly 25 videos a mon
 | **Upload voiceover** | Uploads the mp3 to Zvid and gets back a CDN URL for the project's audio track. |
 | **Build project JSON** | Assembles scenes, Ken Burns zoom, transitions, word-timed captions, music bed, watermark and outro. |
 | **Validate project (free)** | Runs the exact pipeline a render submission runs — template resolution, plan limits, full project schema — without spending credits. Failures surface as a field list, not a generic HTTP error. |
-| **Save draft to editor** | Dry-run branch only. Saves the project as a draft (free) and returns `editorLink`, so you can watch the video back at [editor.zvid.io](https://editor.zvid.io) and hand-tweak it before spending credits. |
+| **Save draft to editor** | Dry-run branch only. Saves a Zvid editor draft without a render charge and returns `editorLink`, so you can preview at [editor.zvid.io](https://editor.zvid.io). The earlier OpenRouter and ElevenLabs calls may already have incurred charges. |
 | **Still rendering?** | Fails fast on a failed render and stops the poll loop at `timeoutMinutes`. |
 
 ## Swapping pieces
