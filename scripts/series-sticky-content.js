@@ -11,6 +11,40 @@ const specs = {
   },
   'blog-to-video': {
     match: 'Prepare prompt', title: 'Turn a blog post into a video',
+    overviewHeight: 1740,
+    overview: `## Turn a blog post into a video
+
+### How it works
+For bloggers and content teams. Read an RSS feed, select its newest unused post, and turn the article into a narrated, captioned vertical video. OpenRouter writes the script, ElevenLabs provides speech timings, and Zvid combines stock media with your branding. Review the MP4 in **Watch video → Binary → data → View**. Social uploading is not included.
+
+### Setup
+1. Install **\`@zvid/n8n-nodes-zvid\`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.
+2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL \`https://api.zvid.io\`. Select it on every Zvid node, **Upload voiceover**, and **Save draft to editor**.
+3. Connect OpenRouter to **Write script** and ElevenLabs Header Auth (\`xi-api-key\`) to **Generate voiceover**. Choose a voice your plan supports.
+4. Set \`feedUrl\`, \`brandName\`, colors, \`ctaText\`, and \`voiceId\` in **Config**.
+5. **dryRun=false** renders and spends Zvid credits. **true** returns a quote and attempts an editor draft; account limits can prevent saving. OpenRouter and ElevenLabs may charge in either mode.
+6. Test manually, review facts and attribution, then check the schedule and timezone before activation. Only completed production renders mark the newest post as used.
+
+### Customization
+Adjust timing and branding in Config. Uploads and editor drafts use HTTP Request because published Zvid node 0.1.8 lacks these operations.
+
+### Video walkthrough
+@[youtube](xqjp_Af-Hf8)
+
+[Blog guide](https://zvid.io/blog/tutorials/blog-post-to-video-summary) · [Watch on YouTube](https://youtu.be/xqjp_Af-Hf8) · [Node.js script](https://github.com/Zvid-io/workflow-examples/tree/main/workflows/blog-to-video)`,
+    sectionBodies: {
+      configure: 'Set feedUrl to your RSS or Atom feed, then branding, voice and target duration in Config. Test manually before enabling the daily schedule; verify its timezone.',
+      feed: 'Select the newest entry and skip its GUID only after a completed production render. Manual tests do not persist this history. Empty or inaccessible feeds stop with a clear error.',
+      article: 'Fetch the article page and remove markup. Use the feed text when fetching fails or the page adds little information. Keep the prompt grounded in the available source.',
+      script: 'OpenRouter returns a hook, three to five points and a closing invitation. Validate the JSON and narration length before generating speech. Review factual claims before publishing.',
+      footage: 'Search Zvid’s stock library for each point. A missing usable clip becomes a branded text scene, so the video can still render.',
+      music: 'Search optional background tracks, then check file availability and size. Continue without music if no usable track remains.',
+      voice: 'Generate one ElevenLabs voiceover with alignment data for captions and scene cuts. Upload the audio using HTTP Request because the published Zvid node lacks multipart uploads.',
+      validate: 'Build the video with your branding, source attribution and timed captions. Validate the payload and return its credit quote before a paid render.',
+      preview: 'dryRun=true returns a quote and attempts an editor draft. Zvid node 0.1.8 lacks Project Create, so this uses HTTP POST /api/projects with the same Zvid API credential. Account limits may prevent an editor link.',
+      render: 'dryRun=false submits a paid render and polls its status until completion or timeout. Inspect your Zvid jobs before retrying a timed-out request.',
+      watch: 'A successful production run remembers the article GUID. Review the completed MP4 in Watch video → Binary → data → View. Missing URLs and draft outputs skip the download; the summary retains the video link.',
+    },
     how: 'Read your RSS feed, find a new post, and fetch the article text. Generate narration and stock footage, then render a captioned vertical summary. The feed excerpt is a fallback when the article cannot be fetched.',
     setup: ['Set feedUrl, brandName, colors and ctaText in Config.', 'Connect OpenRouter to Write script and ElevenLabs Header Auth (xi-api-key) to Generate voiceover.'],
     groups: [['feed','Find a new article','Read the configured RSS feed and skip posts already completed in production. An empty or inaccessible feed needs attention.','Read blog feed|Pick newest post|New post?|Nothing new today'],['article','Read the article','Fetch the full page when available. The prompt falls back to feed text and should not invent missing facts.','Fetch post page|Prepare prompt']],

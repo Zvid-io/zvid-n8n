@@ -34,7 +34,7 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"gymName\": \"IRONHAUS ATHLETIC\",\n  \"handle\": \"@ironhaus.athletic\",\n  \"accent\": \"#C6FF3D\",\n  \"background\": \"#07080A\",\n  \"font\": \"Archivo\",\n  \"heroVideo\": \"https://videos.pexels.com/video-files/6454274/6454274-hd_1080_1920_24fps.mp4\",\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/03/19/audio_56ae1dae5f.mp3\",\n  \"musicVolume\": 0.18,\n  \"timezone\": \"UTC\",\n  \"dateLocale\": \"en-US\",\n  \"fallbackToLatest\": false,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"maxCreditsPerVideo\": 20\n}",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"gymName\": \"IRONHAUS ATHLETIC\",\n  \"handle\": \"@ironhaus.athletic\",\n  \"accent\": \"#C6FF3D\",\n  \"background\": \"#07080A\",\n  \"font\": \"Archivo\",\n  \"heroVideo\": \"https://cdn.zvid.io/blog/workout-of-the-day/2e856faee4f3/workout-hero.mp4\",\n  \"musicUrl\": \"https://cdn.zvid.io/blog/workout-of-the-day/6497ff1dfad9/workout-music.mp3\",\n  \"musicVolume\": 0.18,\n  \"timezone\": \"UTC\",\n  \"dateLocale\": \"en-US\",\n  \"fallbackToLatest\": false,\n  \"resolution\": \"instagram-reel\",\n  \"frameRate\": 30,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20,\n  \"maxCreditsPerVideo\": 20\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",

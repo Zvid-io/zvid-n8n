@@ -1,8 +1,10 @@
 {
   "verifiedAt": "2026-10-01",
   "method": "Downloaded source MP4 inspected with ffprobe",
-  "src": "https://videos.pexels.com/video-files/6454274/6454274-hd_1080_1920_24fps.mp4",
+  "src": "https://cdn.zvid.io/blog/workout-of-the-day/2e856faee4f3/workout-hero.mp4",
   "width": 1080,
   "height": 1920,
-  "bytes": 6026419
+  "bytes": 6026419,
+  "cdnVerifiedAt": "2026-10-29",
+  "sha256": "2e856faee4f3485d398920802d117ab3a89cf78e2821f7423e532ed0776ee1d6"
 }

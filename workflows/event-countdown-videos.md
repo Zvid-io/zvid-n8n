@@ -4,14 +4,28 @@
 
 Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
 
+**Editor draft exception (published package 0.1.8).** This version has no Project
+Create action. *Save draft to editor* therefore uses HTTP Request to
+`POST /api/projects`, sending `{ name, payload }`. In that node select
+**Authentication → Predefined Credential Type → Zvid API**, then choose the same
+Zvid API credential used for validation and rendering. No separate Header Auth
+credential is needed. Supported validation, render and job-status operations use
+the native Zvid node.
+
+Draft saving is best-effort and has automatic retries disabled. An account project
+limit or request failure can leave `editorLink` empty; the dry-run report still
+contains the quote and `payload`. Save that payload as JSON and use
+**Import → Open .json file** at https://editor.zvid.io to preview it locally.
+Check the dashboard for an accepted draft before retrying an uncertain save.
+
 [`zvid-event-countdown-videos.json`](zvid-event-countdown-videos.json)
 
 One row per event. Every morning this workflow works out how many days away each
 event is and renders the video that is due today: an **announcement** when it
 first sees the event, a **countdown** reminder a week out, and a **final call**
 the day before. Every video is a 1080×1920 reel in one design family, and the
-finished URL goes back into the event row so nothing is ever made twice. Paste
-your season into a sheet once; the promotion sequence runs itself.
+finished URL goes back into the event row to record which videos completed. Add
+your season to the sheet, then keep the daily workflow active for each milestone.
 
 (The most urgent due video always wins, so an event added *on* one of its
 milestone days gets that milestone's video instead of the announcement — add
@@ -28,11 +42,12 @@ Schedule (daily 8am) ─▶ Config ─▶ Music guard ─▶ Read events sheet
 
 **The schedule *is* the countdown engine.** There is no stored counter and no
 second workflow to schedule reminders. One daily run reads the dates, computes
-`daysUntil`, and decides what to render — so the number on screen is recomputed
-every morning and can never be stale. Idempotency lives in the sheet: the
-`PromoUrl` / `Video7d` / `Video1d` cells are the record of what has already been
-made, so re-running the workflow ten times in a morning still produces one video
-per event at most. Clear a cell and that one video is re-made on the next run.
+`daysUntil`, and decides what to render. Each new video's countdown is calculated
+for that run; an existing MP4 does not update later. The sheet records completion:
+`Status` suppresses another announcement, while `Video7d` and `Video1d` suppress
+their corresponding reminders. Avoid overlapping runs, and inspect accepted jobs
+after a timeout or write-back failure before retrying, since the template cannot
+guarantee that a duplicate render will not be submitted.
 
 **Three videos, one campaign.** The announcement, the 7-day countdown and the
 final call share the same detail scene and the same closing scene, so a follower
@@ -82,18 +97,20 @@ thing: which calendar day counts as "today" when computing `daysUntil`.
 
 | | |
 | --- | --- |
-| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to test. |
+| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Validation is free; rendering requires sufficient account credits and capacity. |
 | Google account | For the two Google Sheets nodes (read the events, write the URLs back). |
-| Eventbrite token | **Optional.** Only if you set `source: "eventbrite"` instead of using a sheet. It goes in an n8n **Bearer Auth** credential attached to *Fetch Eventbrite events* — see Setup step 6. |
+| Eventbrite token | **Optional.** Only if you set `source: "eventbrite"` instead of using a sheet. It goes in an n8n **Bearer Auth** credential attached to *Fetch Eventbrite events*; see Setup step 8. |
 | Event photos | **Optional**, and yours to clear. Anything you put in `ImageUrl` is rendered full-bleed under your own event name, date and ticket link — see the note in Setup step 4. |
 
-No LLM, no voice service, no stock-media account. The music bed and the fallback
-background image are pinned, pre-verified URLs in `Config`.
+No LLM, no voice service, no stock-media account. Videos are silent by default
+(`musicUrl: ""`). The fallback venue image is hosted on `cdn.zvid.io`; optional
+music must be a public audio URL you are licensed to use.
 
 ## Setup
 
 1. **Import** `zvid-event-countdown-videos.json`.
-2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
+2. **Zvid credential**: select your **Zvid API** credential on every Zvid node and
+   on the HTTP Request node *Save draft to editor*, as described above.
 3. **Google Sheets credential** — attach it to *Read events sheet* and *Update
    event row*, then pick your spreadsheet and tab in both nodes.
 4. **Create the sheet** with this exact header row:
@@ -108,7 +125,7 @@ background image are pinned, pre-verified URLs in `Config`.
      `fallbackImageUrl`, and no fallback falls back to a designed gradient.
      `ImageUrl` must be a public direct link to a JPG or PNG.
    - **Status / PromoUrl / Video7d / Video1d** start EMPTY. The workflow fills
-     them, and those cells are what stop a video being made twice.
+     them after completed renders. Keep them intact between scheduled runs.
 
    **About the photos.** Whatever `ImageUrl` (or `fallbackImageUrl`) points at
    is rendered full-bleed with *your* event name, date, price-free CTA and
@@ -117,21 +134,25 @@ background image are pinned, pre-verified URLs in `Config`.
    no recognisable face** — a stranger's face or a brand's logo under your
    headline reads as their endorsement of your event, which is a claim you are
    not entitled to make. Wide venue, skyline, interior and texture shots are the
-   safe picks. Leave `ImageUrl` empty if you are unsure; the designed gradient is
-   always safe.
+   suitable choices. Leave both `ImageUrl` and `fallbackImageUrl` empty to use the
+   designed gradient.
 5. **Open `Config`** — set `brandName`, `handle`, `ctaText` and your brand
    colours. Set `timezoneOffsetHours` to your calendar's UTC offset (`0` = UTC).
+   This numeric offset does not adjust for daylight saving. Separately set the
+   workflow timezone to control when the 8am Schedule trigger fires.
 6. **Run it.** The workflow renders for real out of the box, so **the first run
    spends credits — about 14 per video**, and a first run over a fresh sheet
-   renders one announcement per event (up to `maxRendersPerRun`, default 3).
+   selects one due video per event (up to `maxRendersPerRun`, default 3). Set that
+   cap to `1` for a first test; a fresh event on a milestone gets that reminder
+   instead of an announcement.
    When it finishes, click **`▶ Watch video`** to play the reels inside n8n.
 
    Prefer a free preview? Set `dryRun: true` in `Config` first: you get the exact
-   credit quote plus an **`editorLink`** per video that opens the project in the
-   Zvid editor, with nothing spent and **nothing written to the sheet** — so the
-   same videos are still due on the next real run. Set it back to `false` to
-   render.
-7. **Activate.** From then on it checks every event every morning at 8am.
+   credit quote and `payload` per video, plus an **`editorLink`** if the draft save
+   succeeds. No render credits are spent and **nothing is written to the sheet**.
+   Set it back to `false` to render.
+7. **Activate.** It checks every event every morning at 8am in the workflow
+   timezone (or instance timezone if none is set).
 
    To rehearse the 7-day and 1-day videos without waiting for the calendar, set
    `todayOverride` to a date (`2026-08-15`) — everything is computed against that
@@ -158,15 +179,15 @@ Everything lives in the `Config` node.
 | `timezoneOffsetHours` | `0` | Your calendar's UTC offset, used only to decide which day is "today". An events team in UTC+10 sets `10`. |
 | `todayOverride` | `""` | `YYYY-MM-DD` pins "today" so you can test the countdown videos. Empty = the real date. |
 | `firstReminderDays` | `7` | How many days before the event the countdown video goes out. Minimum 2. |
-| `maxRendersPerRun` | `3` | Cap on videos per morning; soonest events win. The rest wait for tomorrow. |
+| `maxRendersPerRun` | `3` | Cap on videos per run; soonest events win. Deferred announcements can run later, but reminders require their exact milestone date and can be missed. Start with `1`. |
 | `brandName` | `Northline Events` | Watermark on every scene. |
 | `handle` | `@northline.events` | Appended to the watermark, and used as the CTA line when a row has no `TicketUrl`. |
 | `ctaText` | `Get tickets` | Label inside the closing pill. Long labels step down and ellipsise rather than clip. |
 | `kickerText` | `YOU'RE INVITED` | Pill on the announcement video, and its closing stamp. The countdown videos compute their own kicker. |
-| `promoTease` | `Seats are limited — grab yours while they last.` | Supporting line on the announcement. `{days}`, `{event}` and `{brand}` are substituted. |
+| `promoTease` | `Seats are limited. Grab yours while they last.` | Supporting line on the announcement. `{days}`, `{event}` and `{brand}` are substituted. |
 | `countdownTease` | `Only {days} days left to claim a spot.` | Supporting line on the countdown video. |
-| `finalTease` | `Last call — doors open before you know it.` | Supporting line on the final-call video. |
-| `fallbackImageUrl` | a pinned landscape event photo | Used when a row has no `ImageUrl`. Set it to `""` to always use the designed gradient — worth knowing that the gradient reels are noticeably more static than the photo ones (the photo carries a slow push; the gradient does not), so leave a fallback set unless you want a deliberately still, typographic look. |
+| `finalTease` | `Last call. Doors open before you know it.` | Supporting line on the final-call video. |
+| `fallbackImageUrl` | [CDN venue image](https://cdn.zvid.io/tutorials/n8n-days-20-22-2026-10-21/event-hall.23a8e8d7a342.png) | Used when a row has no `ImageUrl`. Clear both values for the designed gradient. Photo backgrounds have a slow push; gradients are still. |
 | `baseColor` | `#0A0A18` | Page colour; every scrim and gradient is mixed from it. |
 | `accentColor` | `#FFC64D` | Brand accent on the announcement and countdown videos. |
 | `urgentColor` | `#FF5A5F` | Accent for the final-call video only — the alert band, rules and CTA. |
@@ -174,11 +195,11 @@ Everything lives in the `Config` node.
 | `textMuted` | `#9A93B0` | Secondary lines and the watermark. |
 | `displayFont` | `Space Grotesk` | Event name, countdown number and closing headline. |
 | `uiFont` | `Sora` | Labels, detail cards, pills, watermark. One font per text element. |
-| `musicUrl` | a pinned instrumental bed | HEAD-checked before every run. Set `""` for silence. |
+| `musicUrl` | `""` | Silent by default. An optional licensed public audio URL is HEAD-checked before use. |
 | `musicVolume` | `0.18` | `0`–`1`. The bed sits low by design. |
 | `maxMusicBytes` | `5242880` | Plan cap for an audio asset. A larger file is dropped and the run continues without music. |
 | `statusValue` | `promoted` | What gets written to `Status` after the first successful render for an event. |
-| `dryRun` | `false` | `false` (default) renders for real. `true` validates, quotes credits and saves a draft per video — no credits, no sheet write. |
+| `dryRun` | `false` | `false` renders for real. `true` validates and quotes without rendering or sheet writes, and attempts to save editor drafts. Draft links depend on a successful save. |
 | `pollSeconds` | `10` | Render poll interval. |
 | `timeoutMinutes` | `20` | Poll loop gives up after this. |
 
@@ -195,7 +216,8 @@ A run renders 0–`maxRendersPerRun` videos, so a morning costs **0, 14, 28 or 4
 credits**. A single event promoted from more than a week out costs **42 credits
 in total** across its three videos. *Validate project (free)* runs before every
 submission and returns the exact quote per video, reported as `creditsCharged` in
-the run summary. Set `dryRun: true` to get the number without the render.
+the run summary. Despite its name, `creditsCharged` contains that quote, not a
+billing-ledger receipt. Set `dryRun: true` to get the number without the render.
 
 ## How it works
 
@@ -215,13 +237,13 @@ the run summary. Set `dryRun: true` to get the number without the render.
 | **Validate project (free)** | Runs the exact pipeline a render submission runs — schema, plan limits, cost — without spending credits. |
 | **Check validation** | Turns a rejection into a readable field list naming the event and the video kind. |
 | **Dry run?** | Routes on `Config.dryRun`. `false` by default, so the normal path goes straight to *Submit render*. |
-| **Save draft to editor** | **Only when `dryRun: true`.** Saves a free draft per video and returns `editorLink`. Best-effort: a hiccup here never hides the dry-run report. |
-| **Dry run summary** | **Only when `dryRun: true`.** Reports quoted credits, `editorLink` and warnings per video, and leaves the sheet untouched. |
+| **Save draft to editor** | **Only when `dryRun: true`.** HTTP `POST /api/projects` using the same predefined Zvid API credential, because published 0.1.8 has no Project Create action. Best-effort, with no automatic save retry; quota limits or errors can leave the draft link empty. |
+| **Dry run summary** | **Only when `dryRun: true`.** Reports quoted credits, `payload`, optional `editorLink` and warnings per video, and leaves the sheet untouched. |
 | **Submit render** | One paid render per due video. |
 | **Attach job to event** | Glues each returned `jobId` back onto its event and drops the payload, so the poll loop stays small. |
 | **Wait / Get render status / Merge job status** | The poll loop, one status call per video per lap, re-paired with the event by index. |
 | **Render finished?** | Splits finished videos forward; the rest go back round. |
-| **Still rendering?** | Fails fast when a job reports `failed` (with its `failedReason`) and stops the loop at `timeoutMinutes`. Nothing has been written back yet, so a failed run simply retries the same event tomorrow. |
+| **Still rendering?** | Fails when a job reports `failed` (with its `failedReason`) or polling reaches `timeoutMinutes`. A timed-out accepted job may still finish. Inspect its job ID before retrying; completion fields may not have been written yet. |
 | **Prepare write-back** | Builds the exact row the sheet needs. The three URL columns are carried over from the row that was read and only *this* run's column is replaced, so a final-call video never wipes the announcement URL sitting next to it. |
 | **Sheet mode?** | Skips the sheet write in Eventbrite mode, where there is no row. |
 | **Update event row** | Updates exactly the matched row (on `row_number`): `Status`, plus `PromoUrl` / `Video7d` / `Video1d` by kind. |
@@ -229,8 +251,9 @@ the run summary. Set `dryRun: true` to get the number without the render.
 | **▶ Watch video** | Downloads each finished MP4 as binary so n8n plays it inline — one player per video made this morning. Never fails the run: it retries a few times (the CDN can 404 for a moment right after a render) and then continues, since the sheet is already written. |
 
 **Eventbrite mode has no sheet to write to**, so it remembers what it has already
-sent in the workflow's own static data instead. That memory is written only after
-a render succeeds, and deleting the workflow resets it.
+sent in the workflow's own static data instead, keyed by Eventbrite event ID.
+n8n persists this state after successful active workflow executions; manual runs
+do not provide the same persistence. Deleting the workflow resets the ledger.
 
 ## Publishing (optional tail)
 
@@ -246,32 +269,31 @@ The required path ends with the URLs in your sheet. To auto-publish, extend afte
 - **Email the ticket-holder list** — an Email node with `videoUrl` and the ticket
   link works well for the day-before video.
 
-These stay out of the required path so the import runs with a Zvid key and a
-Google account, nothing else. On self-hosted n8n you can also install
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid) and
-replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
-(render webhook), which removes the poll loop.
+These delivery integrations are optional. The required path already uses native
+Zvid nodes for rendering and job polling, with the documented HTTP exception for
+editor draft creation.
 
 ## Troubleshooting
 
 | Symptom | Cause |
 | --- | --- |
-| Run says `No event needs a video today` | Correct behaviour, not an error: every event either has its videos already or is not at a milestone. Add an event, clear one of its URL cells, or set `todayOverride` to a milestone date to rehearse. |
+| Run says `No event needs a video today` | Every eligible event has its announcement recorded or is not due for an unrecorded milestone. Rehearse with a copied row and `dryRun: true`: clear `Status` for an announcement, or clear the matching reminder URL and set `todayOverride` to its exact milestone. |
 | `DateISO "..." is not YYYY-MM-DD` in `skipped` | That row's date could not be read at all. Sheets sometimes reformats a typed date — set the column format to *Plain text* and retype it. (If the date parses but the *time* is impossible — `2026-08-22T99:99` — the run fails loudly on that event with `has an impossible start time` rather than printing "Doors 3:99 PM" on a paid render.) |
 | An event never got its announcement | It was first seen *on* one of its milestone days, so the more urgent countdown or final-call video won and `Status` was filled by that render. Clear `Status` (and leave `PromoUrl` empty) to get the announcement on the next run. |
-| The countdown says the wrong number of days | `timezoneOffsetHours` is the only knob that moves "today". n8n runs on UTC by default; an events team in UTC+10 sets `10`. The printed date and start time are never converted. |
+| The countdown says the wrong number of days | Check `todayOverride` and `timezoneOffsetHours`, which determine "today" for the selector. An events team in UTC+10 sets `10`. The trigger has a separate workflow timezone. The printed date and start time are never converted. |
 | A 7-day video never appeared | The run has to happen *on* the day `daysUntil == firstReminderDays`. If the workflow was inactive that morning, that milestone is simply missed — the day-before video still goes out. Add events more than a week ahead to get all three. |
-| Same video made twice | Its column was cleared, or the row was re-added with different text. `EventName` + `DateISO` identifies an event in Eventbrite mode; in sheet mode the URL cells are the record. |
+| Same video made twice | Check for overlapping runs, a failed write-back, or cleared completion fields. Sheet announcements use `Status`; reminders use `Video7d` / `Video1d`. Eventbrite uses the event ID in persisted workflow static data, which manual runs do not reliably retain. |
 | Wrong row updated | Do not sort or delete rows while a run is in flight; the update matches on the `row_number` captured at read time. |
-| Only some events rendered | `maxRendersPerRun` capped the run — the summary reports `deferred`. The soonest events go first; the rest render tomorrow. |
-| The video has no music | Deliberate. `musicNote` in the summary says whether the URL was unreachable, refused, or over `maxMusicBytes` (5 MB plan cap). |
+| Only some events rendered | `maxRendersPerRun` capped the run and the summary reports `deferred`. Soonest events go first. Announcements can remain pending, but a deferred reminder can miss its exact milestone date. |
+| The video has no music | The default `musicUrl` is empty. If you supplied a URL, `musicNote` reports whether it was unreachable, refused or over `maxMusicBytes`. |
+| Dry run has no `editorLink` | Inspect *Save draft to editor*. Select the same predefined Zvid API credential as the native nodes. A project quota or failed request can prevent a save; import the returned `payload` JSON into the editor instead. |
 | The photo is missing and the video shows a gradient | The row had no `ImageUrl` and `fallbackImageUrl` is empty, or the URL is not a public direct link to an image. Google Drive *share* links are not direct links. |
 | `Zvid rejected the ... video` | The message lists the offending fields. If you edited the builder, note the API only allows letters, digits, spaces, `_` and `-` in `name`, rejects `audios[].track`, and rejects `fitToBox`. |
-| Render failed and the sheet stayed empty | Intentional — the row is only written after a successful render, so tomorrow's run retries it. The error carries the job's `failedReason`. |
-| `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can, especially since a run can submit up to `maxRendersPerRun` renders at once. Nothing is charged for a rejected submit. |
+| Render failed and the sheet stayed empty | Only completed renders reach write-back. Inspect the job's `failedReason` and any accepted job IDs before retrying. A reminder missed on its exact milestone is not automatically caught up the next day. |
+| `429` / `hourly_limit_exceeded` on submit | The account has reached a rate or concurrency limit; other workflows share that capacity. Read the returned delay and inspect any already accepted jobs before retrying. Reduce `maxRendersPerRun` for the next run. |
 | Eventbrite answered `HTTP 401` / `404` | The Bearer credential is missing or the token is wrong (401) — see Setup step 8 — or `eventbriteOrgId` is not one of your organisations (404). The id is the number in your organiser URL. |
 | Eventbrite mode misses some events | The node fetches the first **50** live events ordered by start date, with no pagination loop. Anything past 50 is invisible to the run. If your catalogue is larger, use sheet mode or add your own pagination after *Fetch Eventbrite events*. |
-| The photo behind an event shows a logo, a shopfront sign or someone's face | Change that row's `ImageUrl`. Your event name, CTA and ticket link are composited over that picture, so a recognisable brand or person underneath reads as an endorsement of your event that you have not been given. Wide venue, skyline, interior and texture shots are safe; empty `ImageUrl` falls back to the designed gradient, which is always safe. |
+| The photo behind an event shows a logo, a shopfront sign or someone's face | Replace the image with one suitable for your event promotion. Empty `ImageUrl` uses `fallbackImageUrl`; clear both to use the designed gradient. |
 | A gradient (no-photo) reel feels like a slideshow | Expected. The photo backdrops carry a slow push and the designed gradient does not, so a no-photo reel is roughly two-thirds still frames. Set `fallbackImageUrl` (or fill `ImageUrl`) if you want the motion. |
 
 ## Verified

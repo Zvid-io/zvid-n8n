@@ -34,7 +34,7 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"feedUrl\": \"https://blog.google/rss/\",\n  \"brandName\": \"Fieldnotes\",\n  \"domainOverride\": \"\",\n  \"kickerText\": \"NEW POST\",\n  \"pointsLabel\": \"What is inside\",\n  \"subheadText\": \"{n} takeaways inside\",\n  \"ctaText\": \"Read the full post\",\n  \"brandInk\": \"#0B0F1A\",\n  \"brandAccent\": \"#FFB454\",\n  \"textColor\": \"#F2F5FB\",\n  \"mutedColor\": \"#8D99B4\",\n  \"headlineFont\": \"Instrument Serif\",\n  \"uiFont\": \"Space Grotesk\",\n  \"llmModel\": \"openai/gpt-4.1-mini\",\n  \"maxPromptChars\": 4000,\n  \"makeLinkedInVideo\": true,\n  \"makeXTeaser\": true,\n  \"makeOgImage\": true,\n  \"linkedInSeconds\": 20,\n  \"teaserSeconds\": 8,\n  \"ogImageFormat\": \"png\",\n  \"ogImageQuality\": 92,\n  \"sceneTransition\": \"fade\",\n  \"transitionSeconds\": 0.5,\n  \"frameRate\": 30,\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/04/21/audio_ed6f0ed574.mp3\",\n  \"musicVolume\": 0.16,\n  \"maxMusicBytes\": 5242880,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"feedUrl\": \"https://blog.google/rss/\",\n  \"brandName\": \"Fieldnotes\",\n  \"domainOverride\": \"\",\n  \"kickerText\": \"NEW POST\",\n  \"pointsLabel\": \"What is inside\",\n  \"subheadText\": \"{n} takeaways inside\",\n  \"ctaText\": \"Read the full post\",\n  \"brandInk\": \"#0B0F1A\",\n  \"brandAccent\": \"#FFB454\",\n  \"textColor\": \"#F2F5FB\",\n  \"mutedColor\": \"#8D99B4\",\n  \"headlineFont\": \"Instrument Serif\",\n  \"uiFont\": \"Space Grotesk\",\n  \"llmModel\": \"openai/gpt-4.1-mini\",\n  \"maxPromptChars\": 4000,\n  \"makeLinkedInVideo\": true,\n  \"makeXTeaser\": true,\n  \"makeOgImage\": true,\n  \"linkedInSeconds\": 20,\n  \"teaserSeconds\": 8,\n  \"ogImageFormat\": \"png\",\n  \"ogImageQuality\": 92,\n  \"sceneTransition\": \"fade\",\n  \"transitionSeconds\": 0.5,\n  \"frameRate\": 30,\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.16,\n  \"maxMusicBytes\": 5242880,\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -316,13 +316,19 @@
     },
     {
       "parameters": {
-        "resource": "project",
-        "operation": "create",
-        "projectName": "={{ ({ name: $json.payload.name, payload: $json.payload }).name }}",
-        "projectJson": "={{ JSON.stringify(({ name: $json.payload.name, payload: $json.payload }).payload) }}"
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "zvidApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: $json.payload.name, payload: $json.payload }) }}",
+        "options": {
+          "timeout": 30000
+        }
       },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         2050,
         920
@@ -331,9 +337,11 @@
       "name": "Save draft to editor",
       "onError": "continueRegularOutput",
       "alwaysOutputData": true,
-      "retryOnFail": true,
+      "retryOnFail": false,
       "maxTries": 3,
-      "waitBetweenTries": 5000
+      "waitBetweenTries": 5000,
+      "notes": "Editor draft exception: published @zvid/n8n-nodes-zvid 0.1.8 has no Project Create action. This step uses POST /api/projects with the same Zvid API credential. Rendering and validation use native Zvid nodes.",
+      "notesInFlow": true
     },
     {
       "parameters": {
@@ -616,7 +624,7 @@
         0
       ],
       "parameters": {
-        "content": "## Create a video and image kit from a blog post\n\n### How it works\nRead a new blog article, generate social copy, and render three coordinated assets: a square LinkedIn video, a landscape teaser and an Open Graph image. Completed files are returned for review and distribution.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node.\n3. Set feedUrl, brandName, domainOverride and brand colors in Config.\n4. Connect OpenRouter to Write kit copy. Confirm the article is publicly accessible and review generated claims against the source.\n5. **dryRun=false** renders and spends Zvid credits. Set it to **true** for an editor draft and quote. AI or transcription charges may still apply.\n6. Test manually and review the output before activating automatic runs.\n\n### Customization\nAdjust branding, media and timing in the configuration node. [Detailed setup guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/blog-content-kit.md).",
+        "content": "## Create a video and image kit from a blog post\n\n### How it works\nRead a new blog article, generate social copy, and render three coordinated assets: a square LinkedIn video, a landscape teaser and an Open Graph image. Completed files are returned for review and distribution.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node and Save draft to editor (Predefined Credential Type → Zvid API).\n3. Set feedUrl, brandName, domainOverride and brand colors in Config.\n4. Connect OpenRouter to Write kit copy. Confirm the article is publicly accessible and review generated claims against the source.\n5. **dryRun=false** renders and spends Zvid credits. Set it to **true** for an editor draft and quote. AI or transcription charges may still apply.\n6. Test manually and review the output before activating automatic runs.\n\n### Customization\nAdjust branding, media and timing in the configuration node. [Detailed setup guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/blog-content-kit.md).",
         "color": 1,
         "width": 720,
         "height": 1160
@@ -712,7 +720,7 @@
         680
       ],
       "parameters": {
-        "content": "## 6. Choose an optional editor preview\n\ndryRun=true returns an editor draft and credit quote. The default false branch renders and spends Zvid credits; upstream AI services may charge separately.",
+        "content": "## 6. Choose an optional editor preview\n\ndryRun=true returns a credit quote and attempts an editor draft. Published Zvid node 0.1.8 lacks Project Create, so Save draft uses HTTP POST /api/projects with the same Zvid API credential. Draft limits can prevent an editor link.",
         "color": 7,
         "width": 880,
         "height": 520

@@ -6,6 +6,10 @@ Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before 
 
 File upload exception: the published Zvid node does not expose multipart uploads. The upload step uses HTTP Request → `POST /api/uploads`, authenticated with the same **Zvid API** credential. All supported Zvid operations use the Zvid node.
 
+Editor draft exception: published `@zvid/n8n-nodes-zvid` 0.1.8 has no Project Create action. **Save draft to editor** uses HTTP Request → `POST /api/projects` with the same **Zvid API** credential. Select Predefined Credential Type → Zvid API on both HTTP steps. Account project limits can prevent an editor link; the dry-run summary still returns the payload and quote. OpenRouter and ElevenLabs can charge during a dry run.
+
+[Video walkthrough](https://youtu.be/xqjp_Af-Hf8) · [Blog guide](https://zvid.io/blog/tutorials/blog-post-to-video-summary) · [Node.js companion](https://github.com/Zvid-io/workflow-examples/tree/main/workflows/blog-to-video)
+
 [`zvid-blog-to-video.json`](zvid-blog-to-video.json)
 
 Every day this workflow checks your blog's RSS feed. When a new post appears it
@@ -96,10 +100,12 @@ authentication of its own.
    at `targetSeconds: 60` (up to ~60 if your model fills the target). When it
    finishes, click **`▶ Watch video`** to play the result inside n8n.
 
-   Prefer a free preview first? Set `dryRun: true` in `Config` before that first
-   run: you get the exact credit quote plus an **`editorLink`** that opens the
-   draft at [editor.zvid.io](https://editor.zvid.io), with nothing spent — and
-   the post is *not* marked as rendered, so the next real run still picks it up.
+   Prefer to inspect the quote before rendering? Set `dryRun: true` in `Config`
+   before that first run. The summary returns the credit quote and attempts to
+   save an editor draft. If saving succeeds, **`editorLink`** opens it at
+   [editor.zvid.io](https://editor.zvid.io); account limits may prevent saving.
+   Zvid rendering is skipped, but OpenRouter and ElevenLabs may still charge.
+   The post is *not* marked as rendered, so the next real run still picks it up.
 7. **Activate.** Every new post becomes a video, at most one per day.
 
 The workflow ships both a **Test manually** trigger and a daily schedule, so you

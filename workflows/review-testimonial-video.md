@@ -170,7 +170,7 @@ Everything lives in the `Config` node.
 | `accentColor` | `#C2553D` | CTA pill, accent rule, monogram, kicker and the soft background blooms. |
 | `starColor` | `#D9892B` | Filled stars. Empty stars are drawn as outlines in the opposite ink. |
 | `mutedOnInk` / `mutedOnPaper` | `#CFBAAE` / `#70594D` | Secondary type on the dark and light scenes. These are *starting points*: the builder measures each one against the brightest (or darkest) pixel its scene's gradient can reach and lifts it in 4% steps until it clears WCAG AA 4.5:1. The resolved tones and their ratios are reported in the run's `meta.contrast`. |
-| `musicUrl` | pinned Zvid stock-library track | HEAD-checked before every render. |
+| `musicUrl` | Empty | Silent by default. Optional licensed public audio is HEAD-checked before rendering. |
 | `musicVolume` | `0.14` | The bed sits low by design. |
 | `maxMusicBytes` | `5242880` | Plan audio cap. Anything larger renders **without** music instead of failing. |
 | `statusDoneValue` | `done` | What gets written to `Status` after a successful render. |

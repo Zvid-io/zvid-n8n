@@ -33,7 +33,9 @@ The job catalog is read-only. Old per-role VideoUrl or RenderStatus columns are 
 
 Every explicitly requested role must be eligible. Missing, unapproved, closed or out-of-scope requested roles return a brief-revision report; no partial campaign is silently rendered. Roundups sort by earliest closing date, then priority, then key. Deferred and skipped roles remain visible in the result.
 
-Spotlight features the role and optional benefits. Roundup opens with the campaign, presents each role, and ends with an application call to action. Role scenes last seven seconds; roundup introduction and application end card last three seconds each.
+Spotlight features the role and optional benefits. Roundup opens with the campaign, presents each role, and ends with an application call to action. Role and benefits scenes last six seconds each, the roundup introduction lasts three seconds, and the application end card lasts five seconds.
+
+The design uses cream panels, bold Manrope typography, stepped artwork, and numbered benefit cards. Set `backgroundColor` for the dark ink and benefit-scene background, `accentColor` for the highlight panels, and `font` for the typeface. The defaults are deep green (`#163D35`) and lime (`#D7F875`); review contrast after changing them. Keep supplied role facts and benefits concise, then review the finished video before sharing.
 
 ## Campaign log
 Create **Hiring Campaigns** with these exact headers:

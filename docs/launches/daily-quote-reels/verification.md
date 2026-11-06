@@ -58,3 +58,15 @@ The reorganized example passed the local structure check, workflow check and all
 The actual 2026-10-14 sample MP4 and source project were copied byte-for-byte from the previously verified render; no new paid render was submitted. Its poster, output metadata and SHA-256 hashes are included under `assets/`. Each future workflow uses the same documented layout. The original attached ZIP is retained only as historical evidence of the earlier standalone layout.
 
 Six Flowlu descriptions were refreshed and read back exactly: Story 346 and Tasks 1272, 359, 360, 354 and 352. Task 354 is now Done. Story ZWL-64 remains In Progress with 5 Done, 6 Review, 1 Backlog, 0 Blocked (7 remaining). The six distribution drafts remain unpublished.
+
+## n8n community rewrite: 2026-11-02
+
+Rewrote `n8n-community.md` at the owner's request for n8n builders, focusing on the Sheet queue, render flow, editable video design and possible downstream integrations. Checked the described behavior against the canonical workflow, companion setup guide and live official n8n template. Telegram approval, Drive storage and publishing are explicitly suggested extensions. Retained affiliation disclosure, installation prerequisite, credit/default behavior and the existing public walkthrough link. No new render or community publication was performed.
+
+Saved the complete converted HTML draft to Flowlu issue 351 (ZWL-69), under Story 346 (ZWL-64), and moved it from In Progress to Review. Readback matched the submitted description after Flowlu normalized Windows line endings; the parent and assignee were preserved. The current seven active children show six Done and one Review, with zero Blocked. Community publication is the remaining launch item; these current counts supersede historical counts above.
+
+### Screenshot and reusable format follow-up
+
+Added the reviewed actual template screenshot immediately after the hook, preserving the template, walkthrough and published blog links. The public CDN PNG returned HTTP 200 with 164,163 bytes and SHA-256 `b025443c12910e35e7e79cd141fd72fe05195764eae48fba957daebbcf26bd41`, matching the local reviewed `assets/workflow.png`. Flowlu issue 351 retained the inline image and exact submitted HTML on readback and is back in Review, with parent and assignee unchanged. Suggested category and tags are recorded outside the post body.
+
+Updated the installed Flowlu workflow launch skill to use a builder-oriented n8n Community format, with the actual screenshot after the hook, compact workflow/customization detail, template/video/blog links and category/tag metadata. LinkedIn retains its business-audience guidance. Updated the bundled Markdown converter to preserve HTTPS raster images; its checks cover attribute escaping, unsafe image sources and literal code. Skill validation and converter checks passed. No public community post was submitted.

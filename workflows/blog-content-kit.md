@@ -4,6 +4,20 @@
 
 Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
 
+**Editor draft exception (published package 0.1.8).** This version has no Project
+Create action. *Save draft to editor* therefore uses HTTP Request to
+`POST /api/projects`, sending `{ name, payload }`. In that node select
+**Authentication → Predefined Credential Type → Zvid API**, then choose the same
+Zvid API credential used for validation and rendering. No separate Header Auth
+credential is needed. Supported validation, render and job-status operations use
+the native Zvid node.
+
+Draft saving is best-effort and has automatic retries disabled. An account project
+limit or request failure can leave `editorLink` empty; the dry-run report still
+contains the quote and `payload`. Save that payload as JSON and use
+**Import → Open .json file** at https://editor.zvid.io to preview it locally.
+Check the dashboard for an accepted draft before retrying an uncertain save.
+
 [`zvid-blog-content-kit.json`](zvid-blog-content-kit.json)
 
 Every morning: read your blog's RSS feed, and when there is a new post, make **one**
@@ -44,27 +58,28 @@ falls back to the feed text when the page blocks it. Tags, scripts and entities 
 stripped before the text ever reaches the prompt, and the prompt forbids inventing
 numbers, names or claims that are not in the article.
 
-**The feed position only advances when the whole kit lands.** The three renders finish
-at different times — the image is nearly instant, the teaser is quick, the LinkedIn
-video takes longest. *Run summary* counts finished pieces and writes the post's `guid`
-into workflow static data only once **all** of them have come through, so a run that
-half-fails is retried in full rather than silently skipped.
+**The feed position advances when the whole kit completes.** The render loop waits
+for one piece to finish before submitting the next. *Run summary* writes the post's
+`guid` into workflow static data after **all** enabled pieces complete. If a partial
+kit fails, inspect its accepted jobs before a new run: the template can render the
+whole kit again and incur duplicate charges.
 
 ## Requirements
 
 | | |
 | --- | --- |
-| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to test. |
+| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Validation is free; rendering requires sufficient account credits and capacity. |
 | OpenRouter API key | One JSON-capable model call per run. `openai/gpt-4.1-mini` is the default because it is cheap and obeys word budgets. |
 | A blog with an RSS or Atom feed | Any feed URL. The default is Google's blog feed so the template runs before you change anything. |
 
-No stock-media account, no voice service, no Google account. Music is one optional
-pinned URL you can clear.
+No stock-media account, no voice service, no Google account. Videos are silent by
+default (`musicUrl: ""`). Optionally add a public audio URL you are licensed to use.
 
 ## Setup
 
 1. **Import** `zvid-blog-content-kit.json`.
-2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
+2. **Zvid credential**: select your **Zvid API** credential on every Zvid node and
+   on the HTTP Request node *Save draft to editor*, as described above.
 3. **OpenRouter credential** — add an **OpenRouter** credential and attach it to
    *Write kit copy*.
 4. **Open `Config`** — set `feedUrl` to your blog's feed, then `brandName`,
@@ -75,11 +90,14 @@ pinned URL you can clear.
    for the image). When it finishes, click **`▶ Watch video`**: n8n plays both MP4s
    inline and shows the PNG as a picture, one output item per piece.
 
-   Prefer a free preview first? Set `dryRun: true` in `Config` before that first run:
-   you get the exact credit quote per piece plus `kitCreditsTotal`, and an
-   **`editorLink`** for each that opens the draft in the Zvid editor — nothing spent,
-   nothing published.
-6. **Activate.** It builds one kit per published post, checking once a day at 9am.
+   To avoid render charges first, set `dryRun: true` in `Config`: you get the exact
+   credit quote per piece plus `kitCreditsTotal`, each `payload`, and an
+   **`editorLink`** when the draft save succeeds. No Zvid render credits are spent,
+   but the OpenRouter copy-writing call still runs and may cost money. The feed
+   marker stays unchanged.
+6. **Activate.** It checks for the newest post once a day at 9am in the workflow
+   timezone (or instance timezone if none is set). It does not process a backlog:
+   if several posts arrive between checks, only the newest is selected.
 
 ## Configuration
 
@@ -114,16 +132,18 @@ Everything lives in the `Config` node.
 | `sceneTransition` | `fade` | Any Zvid scene transition, or `""` for hard cuts. Each non-last scene is padded by `transitionSeconds` so the run still lands on the target length. |
 | `transitionSeconds` | `0.5` | Transition length, clamped 0.1–1.2 s. |
 | `frameRate` | `30` | 1–60. Both videos. |
-| `musicUrl` | a pinned instrumental bed | Music under the two videos. Clear it (`""`) to render them silent; the image never has audio. |
+| `musicUrl` | `""` | Silent by default. Add a licensed, public audio URL for the two videos; the image never has audio. |
 | `musicVolume` | `0.16` | The bed sits low by design. 0–1. |
 | `maxMusicBytes` | `5242880` | *Check music* HEADs `musicUrl` first; anything unreachable or larger than this is dropped and the videos render without music rather than failing. |
-| `dryRun` | `false` | `false` (default) renders all three pieces for real. `true` gives a free pass: validate, quote credits per piece plus `kitCreditsTotal`, and save each as a draft with an `editorLink`. |
+| `dryRun` | `false` | `false` renders all enabled pieces for real. `true` validates and quotes without Zvid rendering, and attempts to save editor drafts. Draft links depend on a successful save; OpenRouter may still charge for copy generation. |
 | `pollSeconds` / `timeoutMinutes` | `10` / `20` | Poll interval and per-piece timeout. Pieces render one at a time; capacity retries have their own deadline. |
 
 ## Cost per video
 
 Three outputs mean **three separate quotes**, and *Run summary* reports both the
-per-piece `creditsCharged` and the whole run's `kitCreditsTotal`.
+per-piece `creditsCharged` and the whole run's `kitCreditsTotal`. Despite its name,
+`creditsCharged` contains the validation quote, not a billing-ledger receipt.
+OpenRouter usage is charged separately and is not included in these totals.
 
 | Piece | Size | Quoted |
 | --- | --- | --- |
@@ -155,8 +175,8 @@ its cost. Set `dryRun: true` to see the quote *without* the render.
 | **Validate project (free)** | Runs the exact pipeline a render submission runs — schema, plan limits, cost — once per piece, without spending credits. |
 | **Check validation** | Fails with the offending piece's name and a field list when a payload is rejected, and carries `creditsRequired` forward per piece. |
 | **Dry run?** | Routes on `Config.dryRun`. It is `false` by default, so the normal path goes straight to *Submit render*. |
-| **Save draft to editor** | **Only when `dryRun: true`.** Saves each piece as a free draft and returns its `editorLink`. Best-effort — a hiccup here never hides the dry-run report. |
-| **Dry run summary** | **Only when `dryRun: true`.** One item per piece with its quote, dimensions, `editorLink` and `kitCreditsTotal`. Nothing is spent and the feed position is not advanced. |
+| **Save draft to editor** | **Only when `dryRun: true`.** HTTP `POST /api/projects` using the same predefined Zvid API credential, because published 0.1.8 has no Project Create action. Best-effort, with no automatic save retry; quota limits or errors can leave the draft link empty. |
+| **Dry run summary** | **Only when `dryRun: true`.** One item per piece with its quote, dimensions, `payload`, optional `editorLink` and `kitCreditsTotal`. No Zvid rendering occurs and the feed marker stays unchanged; the earlier OpenRouter call may still incur a charge. |
 | **Render one asset at a time / Prepare render attempt / Submit render** | Render one piece at a time, waiting for completion before submitting the next. The OG image uses the image operation. Accepted jobs are never automatically resubmitted. |
 | **Check submission rejection / Wait for render capacity** | Retry only explicit HTTP 429 rejections after at least 30 seconds (honoring a longer server retry delay), bounded by `timeoutMinutes`. Other submission failures stop for inspection because the request may already have created a job. |
 | **Attach job to piece** | The render response replaces the item, so this glues each `jobId` back onto the piece it belongs to. |
@@ -188,11 +208,9 @@ destination:
 
   1200×630 is the size LinkedIn, X, Slack and Facebook all crop from cleanly.
 
-These stay out of the required path so the import runs with a Zvid key and an
-OpenRouter key, nothing else. On self-hosted n8n you can also install
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid) and
-replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
-(render webhook), which removes the poll loop.
+These delivery integrations are optional. The required path already uses native
+Zvid nodes for rendering and job polling, with the documented HTTP exception for
+editor draft creation.
 
 ## Troubleshooting
 
@@ -206,11 +224,11 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | `The model returned no liHeadline` / `teaserHook` / `ogTitle` | Same cause. The node names exactly which string is missing. |
 | Copy ends in `…` | The builder's clamp cut it: the model exceeded its word or character budget. Harmless by design. If it happens on every run, the model is ignoring the prompt — switch `llmModel`. |
 | Headline reads as generic filler | `Fetch post page` was blocked or the page is JavaScript-rendered, so the model only had the feed snippet. Check `articleSource` on *Prepare kit prompt*: `feed` means the fallback ran. Publishing full content in your feed fixes it permanently. |
-| Videos rendered without music | *Music guard* dropped the bed — read `musicNote` in the summary. Either the URL did not return `200`, or it is larger than `maxMusicBytes` (5 MB is the plan cap for an audio asset). |
+| Videos rendered without music | The default `musicUrl` is empty. If you supplied a URL, read `musicNote`: the guard drops unreachable audio or a file over `maxMusicBytes`. |
+| Dry run has no `editorLink` | Inspect *Save draft to editor*. Select the same predefined Zvid API credential as the native nodes. A project quota or failed request can prevent a save; import the returned `payload` JSON into the editor instead. |
 | `Zvid rejected the Open Graph share image` | The message lists the offending fields. If you edited the builder: `quality` is illegal with `png` output, image payloads must not carry scenes, audio or enter/exit timings, the `name` field allows only letters, digits, spaces, `_` and `-`, and `audios[].track` is rejected. |
 | `Every output is switched off in Config` | All three of `makeLinkedInVideo`, `makeXTeaser` and `makeOgImage` are `false`. Turn at least one back on. |
-| One piece rendered, the run then failed | Deliberate. The `guid` marker is only advanced once every piece has landed, so the next run rebuilds the whole kit instead of leaving you with a partial set. Nothing else is written anywhere. |
-| *Run summary* appeared twice in one execution | Also deliberate — the three renders finish at different times and each completed batch flows through. Both batches carry the same `kitCreditsTotal`. |
+| One piece rendered, the run then failed | The `guid` marker advances only after every enabled piece completes. A fresh run can render and charge for the whole kit again. Check accepted job IDs and existing outputs before retrying; the n8n template does not persist partial-kit recovery state. |
 
 ## Verified
 

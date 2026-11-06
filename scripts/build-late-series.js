@@ -48,6 +48,7 @@ const specs = {
 			sendSlack: false,
 			maxCreditsPerVideo: 65,
 			musicUrl: '',
+			titleVideoUrl: '',
 		},
 		inputs:
 			'metricsUrl returning generatedAt, periodStart, periodEnd, company and metrics[] with id, label, value, previous and lowerIsBetter; optional target, owner and action',

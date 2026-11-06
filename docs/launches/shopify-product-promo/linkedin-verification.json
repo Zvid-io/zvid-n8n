@@ -1,0 +1,41 @@
+{
+  "preparedAt": "2026-10-26",
+  "day": 6,
+  "workflowSlug": "shopify-product-promo",
+  "parent": {
+    "id": 1342,
+    "label": "ZWL-1046",
+    "stage": "In Progress"
+  },
+  "linkedin": {
+    "id": 1373,
+    "label": "ZWL-1077",
+    "stage": "Review",
+    "draft": "linkedin.md",
+    "flowluDescription": "linkedin-flowlu.html",
+    "readbackMatches": true,
+    "publishedUrl": null
+  },
+  "youtubeUrl": null,
+  "workflowGuideUrl": "https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/shopify-product-promo.md",
+  "workflowGuideLiveReachability": "Not confirmed in this session; verify before publication",
+  "video": "video-production/n8n-days-05-07-live-tutorials-2026-10-13/exports/day6/zvid-n8n-product-promo-walkthrough-final.mp4",
+  "thumbnail": "video-production/n8n-days-05-07-live-tutorials-2026-10-13/exports/day6/youtube/thumbnail-1920x1080.jpg",
+  "checklist": {
+    "total": 12,
+    "done": 1,
+    "review": 2,
+    "backlog": 9,
+    "blocked": 0,
+    "remaining": 11
+  },
+  "scope": "Missing parent and all applicable contract children created using flowlu-workflow-launch; LinkedIn drafts populated. No posts, articles or YouTube videos published.",
+  "checks": [
+    "Exact workflow slug discovery before registration",
+    "LinkedIn source copy checked against local workflow and tutorial facts",
+    "Semantic HTML and placeholder validation",
+    "Saved LinkedIn descriptions read back and matched",
+    "Required child titles and stages read back"
+  ]
+}
+

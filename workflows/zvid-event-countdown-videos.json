@@ -34,7 +34,7 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"source\": \"sheet\",\n  \"eventbriteOrgId\": \"\",\n  \"timezoneOffsetHours\": 0,\n  \"todayOverride\": \"\",\n  \"firstReminderDays\": 7,\n  \"maxRendersPerRun\": 3,\n  \"brandName\": \"Northline Events\",\n  \"handle\": \"@northline.events\",\n  \"ctaText\": \"Get tickets\",\n  \"kickerText\": \"YOU'RE INVITED\",\n  \"promoTease\": \"Seats are limited — grab yours while they last.\",\n  \"countdownTease\": \"Only {days} days left to claim a spot.\",\n  \"finalTease\": \"Last call — doors open before you know it.\",\n  \"fallbackImageUrl\": \"https://images.pexels.com/photos/1717079/pexels-photo-1717079.jpeg?auto=compress&cs=tinysrgb&w=1620\",\n  \"baseColor\": \"#0A0A18\",\n  \"accentColor\": \"#FFC64D\",\n  \"urgentColor\": \"#FF5A5F\",\n  \"textPrimary\": \"#FFFFFF\",\n  \"textMuted\": \"#9A93B0\",\n  \"displayFont\": \"Space Grotesk\",\n  \"uiFont\": \"Sora\",\n  \"musicUrl\": \"https://cdn.pixabay.com/audio/2025/03/19/audio_56ae1dae5f.mp3\",\n  \"musicVolume\": 0.18,\n  \"maxMusicBytes\": 5242880,\n  \"statusValue\": \"promoted\",\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
+        "jsonOutput": "{\n  \"apiUrl\": \"https://api.zvid.io\",\n  \"editorUrl\": \"https://editor.zvid.io\",\n  \"source\": \"sheet\",\n  \"eventbriteOrgId\": \"\",\n  \"timezoneOffsetHours\": 0,\n  \"todayOverride\": \"\",\n  \"firstReminderDays\": 7,\n  \"maxRendersPerRun\": 3,\n  \"brandName\": \"Northline Events\",\n  \"handle\": \"@northline.events\",\n  \"ctaText\": \"Get tickets\",\n  \"kickerText\": \"YOU'RE INVITED\",\n  \"promoTease\": \"Seats are limited. Grab yours while they last.\",\n  \"countdownTease\": \"Only {days} days left to claim a spot.\",\n  \"finalTease\": \"Last call. Doors open before you know it.\",\n  \"fallbackImageUrl\": \"https://cdn.zvid.io/tutorials/n8n-days-20-22-2026-10-21/event-hall.23a8e8d7a342.png\",\n  \"baseColor\": \"#0A0A18\",\n  \"accentColor\": \"#FFC64D\",\n  \"urgentColor\": \"#FF5A5F\",\n  \"textPrimary\": \"#FFFFFF\",\n  \"textMuted\": \"#9A93B0\",\n  \"displayFont\": \"Space Grotesk\",\n  \"uiFont\": \"Sora\",\n  \"musicUrl\": \"\",\n  \"musicVolume\": 0.18,\n  \"maxMusicBytes\": 5242880,\n  \"statusValue\": \"promoted\",\n  \"dryRun\": false,\n  \"pollSeconds\": 10,\n  \"timeoutMinutes\": 20\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -320,13 +320,19 @@
     },
     {
       "parameters": {
-        "resource": "project",
-        "operation": "create",
-        "projectName": "={{ ({ name: $json.payload.name, payload: $json.payload }).name }}",
-        "projectJson": "={{ JSON.stringify(({ name: $json.payload.name, payload: $json.payload }).payload) }}"
+        "method": "POST",
+        "url": "={{ $('Config').first().json.apiUrl }}/api/projects",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "zvidApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: $json.payload.name, payload: $json.payload }) }}",
+        "options": {
+          "timeout": 30000
+        }
       },
-      "type": "@zvid/n8n-nodes-zvid.zvid",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         1310,
         920
@@ -335,9 +341,9 @@
       "name": "Save draft to editor",
       "onError": "continueRegularOutput",
       "alwaysOutputData": true,
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
+      "notes": "Editor draft exception: published @zvid/n8n-nodes-zvid 0.1.8 has no Project Create action. This step uses POST /api/projects with the same Zvid API credential. Rendering and validation use native Zvid nodes.",
+      "notesInFlow": true,
+      "retryOnFail": false
     },
     {
       "parameters": {
@@ -706,7 +712,7 @@
         0
       ],
       "parameters": {
-        "content": "## Create event announcements and countdowns\n\n### How it works\nRead events and determine which announcement, seven-day reminder or final-call video is due. Zvid renders each vertical promo. Sheet columns or workflow memory record which assets have already been completed.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node.\n3. Connect both Google Sheets nodes to the same spreadsheet and tab. Set branding and timezoneOffsetHours in Config.\n4. For source=eventbrite, set eventbriteOrgId and attach a Bearer Auth token. This path reads the first 50 live events.\n5. **dryRun=false** renders and spends Zvid credits. Set it to **true** for an editor draft and quote.\n6. Test manually and review the output before activating automatic runs.\n\n### Customization\nAdjust branding, media and timing in the configuration node. [Detailed setup guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/event-countdown-videos.md).",
+        "content": "## Create event announcements and countdowns\n\n### How it works\nRead events and determine which announcement, seven-day reminder or final-call video is due. Zvid renders each vertical promo. Sheet columns or workflow memory record which assets have already been completed.\n\n### Setup\n1. Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.\n2. Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node and Save draft to editor (Predefined Credential Type → Zvid API).\n3. Connect both Google Sheets nodes to the same spreadsheet and tab. Set branding and timezoneOffsetHours in Config.\n4. For source=eventbrite, set eventbriteOrgId and attach a Bearer Auth token. This path reads the first 50 live events.\n5. **dryRun=false** renders and spends Zvid credits. Set it to **true** for an editor draft and quote.\n6. Test manually and review the output before activating automatic runs.\n\n### Customization\nAdjust branding, media and timing in the configuration node. [Detailed setup guide](https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/event-countdown-videos.md).",
         "color": 1,
         "width": 720,
         "height": 1160
@@ -802,7 +808,7 @@
         680
       ],
       "parameters": {
-        "content": "## 6. Choose an optional editor preview\n\ndryRun=true returns an editor draft and credit quote. The default false branch renders and spends Zvid credits; upstream AI services may charge separately.",
+        "content": "## 6. Choose an optional editor preview\n\ndryRun=true returns a credit quote and attempts an editor draft. Published Zvid node 0.1.8 lacks Project Create, so Save draft uses HTTP POST /api/projects with the same Zvid API credential. Draft limits can prevent an editor link.",
         "color": 7,
         "width": 880,
         "height": 520

@@ -324,6 +324,36 @@ must explicitly say it returns JSON and a quote, not an editor draft.
    separate launch-tracking instructions when creating or adopting a new
    canonical workflow; publishing remains a distinct action.
 
+## Creator Portal upload failures
+
+An upload returning `POST https://api.n8n.io/api/workflows: Failed to fetch`
+does not establish a workflow review rejection. Check the dashboard for a new
+record before retrying, and distinguish upload acceptance, AI feedback, human
+review, and publication in the status report.
+
+The September 2026 support-guided fixes for video highlights and the blog
+content kit succeeded with equivalent Code-node syntax changes. Blog-to-video
+also passed its previously failing upload on 1 November using this approach:
+construct whole-tag cleaning patterns with a `wholeTag(name, flags)` helper,
+and use string `.match()` in place of non-global regex `.exec()` calls.
+Preserve matching flags, capture groups, coercion and fallback behavior. The
+earlier retry-handler fix replaced optional property access with explicit
+null/undefined checks. Do not rewrite unrelated working templates speculatively.
+
+Compare original and revised behavior on malformed HTML, feed fallbacks, model
+responses and error paths before uploading. Preserve all other parameters,
+credentials, connections and settings. Keep the accepted file and exact diff;
+valid JSON alone does not prove that an upload will pass. These observed fixes
+do not identify n8n's unpublished request-filter rules. Do not disable security
+checks or remove executable workflow logic to make a submission pass.
+
+Use `reports/n8n-creator-support-fix-2026-09-29/README.md` at the workspace root
+for the earlier evidence. The 1 November blog-to-video comparison and final
+submission are under
+`workspace/blog-rewrites/reports/current/five-workflow-links-2026-11-01/`.
+Recheck the published package separately: local development support does not
+prove that an operation is available to npm users.
+
 ## References
 
 - [n8n sticky-note guidelines](https://n8n.notion.site/Sticky-note-guidelines-for-templates-2aa5b6e0c94f8058b0aefddd02655887)

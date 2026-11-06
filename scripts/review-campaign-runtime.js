@@ -131,23 +131,58 @@ function planRestaurant(cfg, rows, ledger, now) {
 
 function buildHiringCampaign(cfg, plan) {
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const accent = /^#[\da-f]{6}$/i.test(cfg.accentColor) ? cfg.accentColor : '#FF6B57';
-  const bg = /^#[\da-f]{6}$/i.test(cfg.backgroundColor) ? cfg.backgroundColor : '#0E0F14';
-  const text = (id,html,y,size=48) => ({type:'TEXT',x:90,y,width:900,anchor:'top-left',track:id,enterBegin:0.2,exitEnd:7,style:{fontFamily:cfg.font || 'Poppins',color:'#FFFFFF'},html:`<div style="font-size:${size}px;line-height:1.25;font-weight:600;overflow-wrap:break-word;">${html}</div>`});
-  const scene = (id,kicker,title,body,footer,duration=7) => ({id,duration,backgroundColor:bg,visuals:[
-    {type:'SVG',width:1080,height:1920,track:0,svg:`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920"><rect width="1080" height="1920" fill="${bg}"/><rect x="60" y="80" width="8" height="1760" fill="${accent}"/><circle cx="1020" cy="180" r="220" fill="${accent}" fill-opacity="0.08"/></svg>`},
-    text(1,`<span style="color:${accent};letter-spacing:3px;">${esc(kicker).slice(0,220)}</span>`,180,28),
-    text(2,esc(title),400,title.length>55?58:76),text(3,body,820,36),text(4,esc(footer),1690,26)
-  ].map(v=>({...v,...(v.exitEnd?{exitEnd:duration}:{})}))});
-  const scenes = [];
-  if (plan.mode === 'roundup') scenes.push(scene('campaign','JOIN '+cfg.companyName,plan.roles.length+' open roles',esc('Explore opportunities'+(plan.roles[0].team?' with our teams.':'.')),'Application links in the caption',3));
-  for (const r of plan.roles) {
-    const facts = [r.team,r.location,r.salary,r.closesOn ? 'Apply by '+r.closesOn : ''].filter(Boolean);
-    scenes.push(scene('role-'+(scenes.length+1),'WE ARE HIRING',r.role,facts.map(esc).join('<br/><br/>'),cfg.companyName));
-    if (plan.mode === 'spotlight' && r.perks.length) scenes.push(scene('benefits','THE ROLE', 'What you can expect',r.perks.map(p=>'• '+esc(p)).join('<br/><br/>'),'See the role page for full details'));
+  const ink = /^#[\da-f]{6}$/i.test(cfg.backgroundColor) ? cfg.backgroundColor : '#163D35';
+  const lime = /^#[\da-f]{6}$/i.test(cfg.accentColor) ? cfg.accentColor : '#D7F875';
+  const paper = '#F4F2E9', muted = '#BECBC2', font = cfg.font || 'Manrope';
+  let track = 0;
+  const text = (html,x,y,w,h,size,color,delay=0.15,weight=600) => ({type:'TEXT',x,y,width:w,height:h,anchor:'top-left',track:++track,enterBegin:delay,enterEnd:delay+0.45,enterAnimation:'smoothup',style:{fontFamily:font,color},html:`<div style="font-size:${size}px;line-height:1.08;font-weight:${weight};letter-spacing:${size<=32?0:-1}px;overflow-wrap:break-word;">${html}</div>`});
+  const svg = (body,w=1080,h=1920,x=0,y=0,delay=0) => ({type:'SVG',x,y,width:w,height:h,anchor:'top-left',track:++track,enterBegin:delay,enterEnd:delay+0.5,enterAnimation:'fade',svg:`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${body}</svg>`});
+  const arrow = color => `<path d="M30 250L250 30M30 30H250V250" fill="none" stroke="${color}" stroke-width="30" stroke-linecap="square"/>`;
+  const header = (color,chapter) => [text(esc(cfg.companyName),72,88,720,54,32,color,0,750),text(chapter,866,90,140,44,25,color,0,600),svg(`<path d="M72 180H1008" stroke="${color}" stroke-opacity=".28"/>`)];
+  const footer = color => text('CAREERS / '+esc(cfg.companyName),72,1756,936,55,25,color,0.2,600);
+  const scene = (id,duration,bg,visuals) => {
+    const backgrounds=visuals.filter(v=>v.type==='SVG'&&v.width===1080&&v.height===1920);
+    const backdrop={type:'SVG',width:1080,height:1920,track:0,enterBegin:0,exitEnd:duration,svg:`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920"><rect width="1080" height="1920" fill="${bg}"/>${backgrounds.map(v=>v.svg.replace(/^<svg[^>]*>|<\/svg>$/g,'')).join('')}</svg>`};
+    return {id,duration,backgroundColor:bg,visuals:[backdrop,...visuals.filter(v=>!backgrounds.includes(v)).map(v=>({...v,exitEnd:duration}))]};
+  };
+  const scenes=[];
+  if (plan.mode==='roundup') {
+    track=0;
+    scenes.push(scene('campaign',3,paper,[...header(ink,'01 / JOIN'),text('MAKE YOUR<br/>NEXT MOVE.',72,320,930,360,112,ink,0.15,800),svg(arrow(ink),300,300,706,960,.35),text(String(plan.roles.length).padStart(2,'0'),72,950,600,410,340,ink,.25,800),text('OPEN ROLES',72,1420,880,90,52,ink,.45,750),footer(ink)]));
   }
-  scenes.push(scene('apply','TAKE THE NEXT STEP','Find your next role',esc(plan.mode==='spotlight'?'Apply using the role link in the caption.':'Explore each opening using the application links in the caption.'),cfg.companyName,3));
-  return {...plan,payload:{name:('hiring-'+plan.campaignKey).slice(0,60),resolution:'instagram-reel',frameRate:30,outputFormat:'mp4',backgroundColor:bg,scenes},meta:{mode:plan.mode,roleCount:plan.roles.length,sceneCount:scenes.length}};
+  for(const r of plan.roles) {
+    track=0;
+    const demo=/\s*\(Demo\)$/i.test(r.role), roleTitle=demo?r.role.replace(/\s*\(Demo\)$/i,''):r.role;
+    const titleSize=roleTitle.length>48?72:roleTitle.length>30?88:120;
+    const facts=[['TEAM',r.team],['WORKPLACE',r.location]].filter(f=>f[1]);
+    const columns = `<path d="M72 1058L340 900L608 1058L340 1216Z" fill="${lime}"/><path d="M72 1058V1190L340 1348V1216Z" fill="${ink}" opacity=".92"/><path d="M340 1216L608 1058V1190L340 1348Z" fill="${ink}" opacity=".74"/><path d="M340 900L608 742L876 900L608 1058Z" fill="${lime}"/><path d="M340 900V1032L608 1190V1058Z" fill="${ink}" opacity=".92"/><path d="M608 1058L876 900V1032L608 1190Z" fill="${ink}" opacity=".74"/><path d="M608 742L876 584L1008 662L1008 820L876 900Z" fill="${lime}"/><path d="M608 742V874L876 1032V900Z" fill="${ink}" opacity=".92"/><path d="M876 900L1008 820V952L876 1032Z" fill="${ink}" opacity=".74"/>`;
+    const visuals=[...header(ink,'THE ROLE'),text('WE’RE HIRING'+(demo?' / FICTIONAL DEMO':''),72,232,900,60,28,ink,.1,750),text(esc(roleTitle),72,326,936,330,titleSize,ink,.2,800),svg(columns),text('A NEW CHAPTER<br/>STARTS WITH YOU.',72,706,510,160,42,ink,.45,700)];
+    visuals.push(svg(`<rect x="72" y="1390" width="936" height="280" rx="24" fill="${ink}"/>`));
+    facts.forEach((f,i)=>visuals.push(text(`<span style="font-size:22px;letter-spacing:2px;color:${muted};">${f[0]}</span><br/><span style="display:inline-block;margin-top:12px;">${esc(f[1])}</span>`,104+i*454,1420,420,134,f[1].length>30?24:35,paper,.65+i*.12,650)));
+    if(r.salary)visuals.push(text(esc(r.salary),104,1572,872,76,32,lime,.95,600));
+    visuals.push(footer(ink));
+    scenes.push(scene('role-'+(scenes.length+1),6,paper,visuals));
+    if(plan.mode==='spotlight' && r.perks.length) {
+      track=0;
+      const v=[...header(paper,'THE PERKS'),text('Room to<br/>do your best.',72,280,930,290,102,paper,.18,800),text('WHAT YOU CAN EXPECT',72,624,936,60,27,lime,.3,750)];
+      r.perks.forEach((p,i)=>{
+        const y=748+i*258;
+        v.push(svg(`<rect x="72" y="${y}" width="936" height="218" rx="24" fill="${i===0?lime:paper}"/><path d="M880 ${y+116}H950M922 ${y+88}L950 ${y+116}L922 ${y+144}" stroke="${ink}" stroke-width="4" fill="none"/>`,1080,1920,0,0,.45+i*.2));
+        v.push(text(String(i+1).padStart(2,'0'),104,y+38,100,64,30,ink,.55+i*.2,750));
+        const perkSize=p.length>100?26:p.length>60?30:p.length>38?34:44;
+        v.push(text(esc(p),232,y+57,610,130,perkSize,ink,.6+i*.2,750));
+      });
+      v.push(text('See the role page for full details.',72,1600,936,70,30,muted,1.25,500),footer(paper));
+      scenes.push(scene('benefits',6,ink,v));
+    }
+  }
+  track=0;
+  const r=plan.roles[0],single=plan.mode==='spotlight';
+  const cta=[...header(ink,'YOUR MOVE'),svg(`<rect x="72" y="284" width="936" height="1118" rx="32" fill="${lime}"/>`),svg(arrow(ink),300,300,636,356,.2),text('Your next<br/>chapter<br/>starts here.',112,756,840,432,102,ink,.2,800),text(single?'EXPLORE THE ROLE':'EXPLORE THE OPENINGS',112,1278,836,72,28,ink,.45,750),text(single?'Apply using the role<br/>link in the caption.':'Application links<br/>are in the caption.',72,1476,936,142,48,ink,.5,700)];
+  if(single && r.closesOn)cta.push(text('APPLY BY '+esc(r.closesOn),72,1660,936,60,25,ink,.65,650));
+  cta.push(footer(ink));
+  scenes.push(scene('apply',5,paper,cta));
+  return {...plan,payload:{name:('hiring-'+plan.campaignKey).slice(0,60),resolution:'instagram-reel',frameRate:30,outputFormat:'mp4',backgroundColor:paper,scenes},meta:{mode:plan.mode,roleCount:plan.roles.length,sceneCount:scenes.length}};
 }
 
 module.exports = {campaignState,trackedLink,planHiring,planRestaurant,buildHiringCampaign};

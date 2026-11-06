@@ -32,7 +32,7 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "{\n  \"videoUrl\": \"https://media.w3.org/2010/05/sintel/trailer.mp4\",\n  \"title\": \"Sintel - open movie trailer\"\n}",
+        "jsonOutput": "{\n  \"videoUrl\": \"https://cdn.zvid.io/blog/video-to-shorts/b670602fa009/sintel-trailer.mp4\",\n  \"title\": \"Sintel - open movie trailer\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",

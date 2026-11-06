@@ -14,7 +14,7 @@ This is the first campaign pilot. The n8n template is public. The supplied YouTu
 | DEV.to | Real output first, step-by-step setup, working code and customization | [devto.md](devto.md) |
 | LinkedIn | Repetitive production work and editorial control | [linkedin.md](linkedin.md) |
 | Reddit | Discussion about individual versus batch review, with affiliation disclosed | [reddit.md](reddit.md) |
-| n8n Community | Recurring-content use case, output, costs and boundaries | [n8n-community.md](n8n-community.md) |
+| n8n Community | Sheet-to-video workflow, editable design and extension points for n8n builders | [n8n-community.md](n8n-community.md) |
 | Existing Zvid workflow page | Correct outdated setup and connect the tutorial | [website-workflow-update.md](website-workflow-update.md) |
 
 The Zvid blog is the source article. The other drafts adapt its verified facts for their audiences; each draft serves a different audience. Shopify Community is not applicable.

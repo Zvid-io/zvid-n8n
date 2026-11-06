@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1020" viewBox="0 0 1600 1020" role="img" aria-labelledby="title desc">
+  <title id="title">Two execution paths for daily quote videos</title>
+  <desc id="desc">Path A: Google Sheets feeds the scheduled n8n workflow, which calls Zvid and writes the completed URL back to Google Sheets. Path B: a local CSV feeds the Node.js CLI, which calls the same Zvid API and saves a result file, updated CSV and optional MP4. Both use the same project builder. These are alternatives, not sequential steps.</desc>
+  <defs>
+    <marker id="arrowA" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#157c73"/></marker>
+    <marker id="arrowB" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#4e5ab7"/></marker>
+    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#142b38}.title{font-size:46px;font-weight:700}.sub{font-size:24px;fill:#4e6370}.label{font-size:21px;font-weight:700;letter-spacing:1px}.box-title{font-size:29px;font-weight:700}.body{font-size:22px;fill:#3a5260}.note{font-size:23px;fill:#375361}</style>
+  </defs>
+  <rect width="1600" height="1020" fill="#f7f9fa"/>
+  <text x="72" y="86" class="title">Two paths. One video design.</text>
+  <text x="72" y="132" class="sub">Choose the scheduled n8n workflow or the local Node.js script.</text>
+  <rect x="52" y="183" width="1496" height="288" rx="24" fill="#eaf5f1"/>
+  <text x="78" y="228" class="label" style="fill:#12685f">PATH A · GOOGLE SHEETS + n8n</text>
+  <rect x="78" y="266" width="300" height="154" rx="15" fill="#fff" stroke="#9dcabc" stroke-width="2"/>
+  <text x="102" y="312" class="box-title">Google Sheets</text><text x="102" y="352" class="body">Approved quote queue</text><text x="102" y="385" class="body">Blank status = pending</text>
+  <rect x="456" y="266" width="300" height="154" rx="15" fill="#fff" stroke="#9dcabc" stroke-width="2"/>
+  <text x="480" y="312" class="box-title">n8n</text><text x="480" y="352" class="body">Daily trigger</text><text x="480" y="385" class="body">Build video project</text>
+  <rect x="834" y="266" width="300" height="154" rx="15" fill="#fff" stroke="#9dcabc" stroke-width="2"/>
+  <text x="858" y="312" class="box-title">Zvid API</text><text x="858" y="352" class="body">Validate · render</text><text x="858" y="385" class="body">Return job status + URL</text>
+  <rect x="1212" y="266" width="310" height="154" rx="15" fill="#fff" stroke="#9dcabc" stroke-width="2"/>
+  <text x="1236" y="312" class="box-title">Google Sheets</text><text x="1236" y="352" class="body">n8n writes back</text><text x="1236" y="385" class="body">Done + video URL</text>
+  <g fill="none" stroke="#157c73" stroke-width="3" marker-end="url(#arrowA)"><path d="M383 343 H443"/><path d="M761 343 H821"/><path d="M1139 343 H1199"/></g>
+  <rect x="52" y="500" width="1496" height="288" rx="24" fill="#eef0fb"/>
+  <text x="78" y="545" class="label" style="fill:#4651a3">PATH B · CSV + NODE.JS</text>
+  <rect x="78" y="583" width="300" height="154" rx="15" fill="#fff" stroke="#b0b7de" stroke-width="2"/>
+  <text x="102" y="629" class="box-title">Local CSV</text><text x="102" y="669" class="body">Approved quote queue</text><text x="102" y="702" class="body">Blank status = pending</text>
+  <rect x="456" y="583" width="300" height="154" rx="15" fill="#fff" stroke="#b0b7de" stroke-width="2"/>
+  <text x="480" y="629" class="box-title">Node.js CLI</text><text x="480" y="669" class="body">Run when invoked</text><text x="480" y="702" class="body">Same project builder</text>
+  <rect x="834" y="583" width="300" height="154" rx="15" fill="#fff" stroke="#b0b7de" stroke-width="2"/>
+  <text x="858" y="629" class="box-title">Zvid API</text><text x="858" y="669" class="body">Validate · render</text><text x="858" y="702" class="body">Return job status + URL</text>
+  <rect x="1212" y="583" width="310" height="154" rx="15" fill="#fff" stroke="#b0b7de" stroke-width="2"/>
+  <text x="1236" y="629" class="box-title">Local output</text><text x="1236" y="669" class="body">Result + updated CSV</text><text x="1236" y="702" class="body">Optional MP4 download</text>
+  <g fill="none" stroke="#4e5ab7" stroke-width="3" marker-end="url(#arrowB)"><path d="M383 660 H443"/><path d="M761 660 H821"/><path d="M1139 660 H1199"/></g>
+  <text x="78" y="846" class="note">Shared design: Node.js loads the builder from the bundled n8n workflow.</text>
+  <text x="78" y="889" class="note">Preview mode: validate and attempt an editor draft; no render or queue advancement.</text>
+  <text x="78" y="932" class="note">Review and social publishing remain manual in both paths.</text>
+  <text x="1522" y="985" text-anchor="end" class="sub">Zvid · daily quote workflow</text>
+</svg>

@@ -79,6 +79,7 @@ function seriesLayout(workflow, kind) {
   const copy = specs[kind];
   assert.ok(copy, 'Unknown series template: ' + kind);
   const functional = workflow.nodes.filter(n => n.type !== STICKY);
+  const httpDraft = functional.some(n => require('./zvid-native-workflows').isPublishedProjectDraftException(n));
   const byName = new Map(functional.map(n => [canonicalName(n.name), n]));
   assert.equal(byName.size, functional.length, 'Ambiguous node name suffixes');
   const assigned = new Set();
@@ -98,7 +99,7 @@ function seriesLayout(workflow, kind) {
   add('music','Check the background music','Check the configured track or stock candidates before use. Follow the guard’s result when music is unavailable.','Music queries|Find background music|Shortlist music|Check music asset|Pick music|Check music|Music guard|Check music track|Check music bed');
   add('voice','Create narration and timings','Generate voice audio and caption timings. Multipart audio upload uses HTTP Request because the published Zvid node does not expose uploads.','Generate voiceover|Voice + timings|Upload voiceover');
   add('validate','Build and validate the design','Prepare the media and video design, then validate the payload and credit quote. Resolve validation errors before submitting a render.','Check lead logos|Check music|Check music track|Check music bed|Build project JSON|Build personalized recovery video|Validate project (free)|Validate render (free)|Check validation');
-  add('preview','Choose an optional editor preview','dryRun=true returns an editor draft and credit quote. The default false branch renders and spends Zvid credits; upstream AI services may charge separately.','Dry run?|Save draft to editor|Dry run summary|Dry-run row report');
+  add('preview','Choose an optional editor preview',httpDraft ? 'dryRun=true returns a credit quote and attempts an editor draft. Published Zvid node 0.1.8 lacks Project Create, so Save draft uses HTTP POST /api/projects with the same Zvid API credential. Draft limits can prevent an editor link.' : 'dryRun=true returns an editor draft and credit quote. The default false branch renders and spends Zvid credits; upstream AI services may charge separately.','Dry run?|Save draft to editor|Dry run summary|Dry-run row report');
   if (['flash-sale-alert','podcast-audiogram-clips','video-to-shorts','blog-content-kit'].includes(kind)) add('capacity','Submit one asset safely','Render one asset at a time. Retry only explicit HTTP 429 rejections after at least 30 seconds, up to timeoutMinutes. Other submission errors stop for inspection; an accepted job is never automatically resubmitted.','Render one asset at a time|Prepare render attempt|Submit render|Check submission rejection|Wait for render capacity');
   add('render','Render and wait for completion','Submit the render, then check its status until completion or timeout. Keep each result paired with its source item. Check Zvid before retrying a timed-out job.','Submit render|Submit bulk render|Attach job to item|Attach job to clip|Attach job to piece|Attach job to event|Attach job to contact|Check batch accepted|Wait|Wait for render|Get render status|Get batch status|Merge job status|Render finished?|Batch finished?|All finished?|Still rendering?');
   for (const group of copy.groups || []) if (post.has(group[0])) add(...group);
@@ -115,7 +116,7 @@ function seriesLayout(workflow, kind) {
   const upstream = functional.some(n => /OpenRouter|Generate voiceover|Transcribe|Write script|Write kit copy|Write recap|Curate top five/.test(n.name));
   const steps = agent ? [...copy.setup] : [
     'Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before credentials. A workspace owner/admin may need to install it.',
-    'Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node' + (upload ? ' and upload step.' : '.'),
+    'Create a **Zvid API** credential with [your API key](https://app.zvid.io/api-keys) and Base URL `https://api.zvid.io`. Select it on every Zvid node' + (httpDraft ? ' and Save draft to editor (Predefined Credential Type → Zvid API).' : upload ? ' and upload step.' : '.'),
     ...copy.setup,
     '**dryRun=false** renders and spends Zvid credits. Set it to **true** for an editor draft and quote.' + (upstream ? ' AI or transcription charges may still apply.' : ''),
     'Test manually and review the output before activating automatic runs.',
@@ -124,7 +125,7 @@ function seriesLayout(workflow, kind) {
   const customization = agent
     ? 'Adjust the model and creative brief in Config. Approval is a prompt instruction, not a hard lock; keep a conservative credit ceiling.'
     : 'Adjust branding, media and timing in the configuration node.' + (upload ? ' Multipart upload uses HTTP Request because the published Zvid node lacks that operation.' : '');
-  const overview = `## ${copy.title}\n\n### How it works\n${copy.how}\n\n### Setup\n${steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}\n\n### Customization\n${customization} [Detailed setup guide](${guide}).`;
+  const overview = copy.overview || `## ${copy.title}\n\n### How it works\n${copy.how}\n\n### Setup\n${steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}\n\n### Customization\n${customization} [Detailed setup guide](${guide}).`;
   const wordCount = overview.trim().split(/\s+/).length;
   assert.ok(wordCount >= 100 && wordCount <= 300, `${kind} overview contains ${wordCount} words`);
 
@@ -142,9 +143,9 @@ function seriesLayout(workflow, kind) {
       return [node.name,x+50+column*260,y+240+row*240];
     });
     x+=width+120; rowHeight=Math.max(rowHeight,height);
-    return [key,`${index+1}. ${title}`,body,rect,positions];
+    return [key,`${index+1}. ${title}`,copy.sectionBodies?.[key] || body,rect,positions];
   });
-  return { overview, groups };
+  return { overview, groups, overviewHeight: copy.overviewHeight };
 }
 
 function applyPublicationNotes(original, kind) {
@@ -154,7 +155,7 @@ function applyPublicationNotes(original, kind) {
   const functional = workflow.nodes.filter(n => n.type !== STICKY);
   const byName = new Map(functional.map(n => [n.name, n]));
   const assigned = new Set();
-  const notes = [{ id: OVERVIEW_PREFIX + kind, name: 'Workflow overview and setup', type: STICKY, typeVersion: 1, position: [-800,0], parameters: { content: spec.overview, color: 1, width: 720, height: 1160 } }];
+  const notes = [{ id: OVERVIEW_PREFIX + kind, name: 'Workflow overview and setup', type: STICKY, typeVersion: 1, position: [-800,0], parameters: { content: spec.overview, color: 1, width: 720, height: spec.overviewHeight || 1160 } }];
   for (const [key, title, body, [x,y,width,height], positions] of spec.groups) {
     assert.ok(positions.length >= 2);
     const content = `## ${title}\n\n${body}`;

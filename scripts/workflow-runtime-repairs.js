@@ -208,7 +208,7 @@ function repairWorkflowRuntime(workflow) {
     const cfg = JSON.parse(config.parameters.jsonOutput);
     // Upgrade only the old bundled asset, leaving custom gym footage intact.
     if (cfg.heroVideo === 'https://videos.pexels.com/video-files/6454274/6454274-uhd_1440_2560_24fps.mp4') {
-      cfg.heroVideo = 'https://videos.pexels.com/video-files/6454274/6454274-hd_1080_1920_24fps.mp4';
+      cfg.heroVideo = 'https://cdn.zvid.io/blog/workout-of-the-day/2e856faee4f3/workout-hero.mp4';
       config.parameters.jsonOutput = JSON.stringify(cfg, null, 2);
     }
   }

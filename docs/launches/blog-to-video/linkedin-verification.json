@@ -1,0 +1,41 @@
+{
+  "preparedAt": "2026-10-26",
+  "day": 4,
+  "workflowSlug": "blog-to-video",
+  "parent": {
+    "id": 1340,
+    "label": "ZWL-1044",
+    "stage": "In Progress"
+  },
+  "linkedin": {
+    "id": 1350,
+    "label": "ZWL-1054",
+    "stage": "Review",
+    "draft": "linkedin.md",
+    "flowluDescription": "linkedin-flowlu.html",
+    "readbackMatches": true,
+    "publishedUrl": null
+  },
+  "youtubeUrl": null,
+  "workflowGuideUrl": "https://github.com/Zvid-io/zvid-n8n/blob/master/workflows/blog-to-video.md",
+  "workflowGuideLiveReachability": "Not confirmed in this session; verify before publication",
+  "video": "video-production/n8n-days-02-04-walkthroughs-2026-10-12/exports/day4/zvid-n8n-blog-summary-walkthrough-final.mp4",
+  "thumbnail": "video-production/n8n-days-02-04-walkthroughs-2026-10-12/exports/day4/youtube/thumbnail-1920x1080.jpg",
+  "checklist": {
+    "total": 11,
+    "done": 1,
+    "review": 2,
+    "backlog": 8,
+    "blocked": 0,
+    "remaining": 10
+  },
+  "scope": "Missing parent and all applicable contract children created using flowlu-workflow-launch; LinkedIn drafts populated. No posts, articles or YouTube videos published.",
+  "checks": [
+    "Exact workflow slug discovery before registration",
+    "LinkedIn source copy checked against local workflow and tutorial facts",
+    "Semantic HTML and placeholder validation",
+    "Saved LinkedIn descriptions read back and matched",
+    "Required child titles and stages read back"
+  ]
+}
+

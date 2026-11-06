@@ -31,6 +31,16 @@ function bodyExpression(node) {
   try { return JSON.stringify(JSON.parse(raw)); } catch { throw new Error(`Unsupported body in ${node.name}`); }
 }
 
+// The registry release 0.1.8 does not expose project creation. Keep the
+// explicitly documented draft-only HTTP exception until a released node does.
+function isPublishedProjectDraftException(node) {
+  return zvidRoute(node) === '/api/projects'
+    && node.parameters.method === 'POST'
+    && node.parameters.authentication === 'predefinedCredentialType'
+    && node.parameters.nodeCredentialType === 'zvidApi'
+    && /Editor draft exception: published @zvid\/n8n-nodes-zvid 0\.1\.8 has no Project Create action\./.test(node.notes || '');
+}
+
 function field(body, name, json = false) {
   const expression = `(${body}).${name}`;
   return `={{ ${json ? `JSON.stringify(${expression})` : expression} }}`;
@@ -128,6 +138,7 @@ function migrateWorkflow(original, options = {}) {
   if ('nodeGroups' in workflow) workflow.nodeGroups = normalizeNodeGroups(workflow.nodeGroups);
   const converted = [], uploads = [];
   for (const node of workflow.nodes) {
+    if (isPublishedProjectDraftException(node)) continue;
     const params = nativeParameters(node);
     if (!params) continue;
     const credential = options.credentialFor?.(node, workflow);
@@ -177,4 +188,4 @@ function migrateWorkflow(original, options = {}) {
   return { workflow, converted, uploads, mcp: hasMcp };
 }
 
-module.exports = { ZVID_TYPE, INSTALL, UPLOAD, MCP, planEntries, zvidRoute, nativeParameters, bodyExpression, migrateWorkflow, normalizeNodeGroups, fixValidation, cleanCopy };
+module.exports = { ZVID_TYPE, INSTALL, UPLOAD, MCP, planEntries, zvidRoute, nativeParameters, bodyExpression, migrateWorkflow, normalizeNodeGroups, fixValidation, cleanCopy, isPublishedProjectDraftException };

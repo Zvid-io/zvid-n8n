@@ -1,23 +1,37 @@
-# A Google Sheets queue for daily quote videos, with preview and review before publishing
+# Turn Google Sheets rows into daily quote videos with n8n
 
-We built this Zvid workflow for people running a recurring quote or reflection series who want a consistent video format without rebuilding each asset manually.
+What if adding a quote to a spreadsheet was all you needed to queue tomorrow's video?
 
-Keep your quotes in Google Sheets, choose your branding, and let the workflow produce the next pending quote as a vertical video. It saves the finished video link beside the quote so you can see what has been produced and what is still waiting.
+![Complete n8n template for daily quote videos, showing the Google Sheets queue, preview branch, rendering and Sheet update](https://cdn.zvid.io/assets/blogs/automate-daily-quote-videos-n8n-google-sheets/b025443c12910e35-workflow.png)
 
-Each video includes a quote scene with moving footage and music, followed by an author card and your call to action. The template includes a daily schedule and a preview path to review the project and its expected credit cost before rendering.
+We built an n8n workflow that picks the next quote from Google Sheets, turns it into a vertical MP4 with animated text, background footage and music, then saves the video link back to the same row. We're the team behind Zvid, which handles the rendering.
 
-A few practical boundaries:
+The quotes come from your Sheet, so there's no LLM or quote-generation step to configure.
 
-- Select preview mode for your first test; the supplied template renders by default.
-- Rendering uses Zvid credits. The verified short sample quoted 11 credits; check your own project's estimate.
-- Review quote attribution and longer text before publishing.
-- Keep the Sheet stable while a run is active and avoid overlapping runs.
-- The workflow produces the MP4. Publishing to your social accounts remains a separate step.
+## How the workflow fits together
 
-We are sharing this as the team behind Zvid. The template is free, with setup instructions included on its canvas.
+**Daily trigger → Read Sheet → Pick next quote → Build and render video → Update Sheet**
 
-[Get the official n8n template](https://n8n.io/workflows/19632-create-daily-quote-videos-from-google-sheets-with-zvid/)
+1. Run it manually or on the included daily schedule.
+2. Pick the first row with an empty `Status`. If there are no pending rows, finish without rendering.
+3. Build the video from `Quote`, `Author` and an optional `AuthorNote`, using a background and music rotation.
+4. Validate the project, submit the render through the Zvid node, and wait for the result.
+5. After a successful render, write `done` and `VideoUrl` to the original row. You can watch the MP4 inside n8n.
+
+## What you can change
+
+Your channel name, call to action, fonts, colors, background footage and music are configurable. The video layout lives in the **Build project JSON** Code node if you want to change the design further.
+
+The finished `videoUrl` is also a useful starting point for your own next step: send it to Telegram for approval, archive it in Drive, or connect your publishing workflow. Those extensions aren't included in this template.
+
+To try it, install `@zvid/n8n-nodes-zvid` from **Settings → Community nodes** before configuring the Zvid credential; a workspace owner/admin may need to install it. Connect Google Sheets and follow the setup notes on the canvas. The template is free; rendering uses Zvid credits. Set `dryRun: true` for an editor preview and credit estimate first; the supplied default is `false`.
+
+One queue limitation: run one execution at a time and keep the row order stable until it finishes.
+
+[Import the n8n template](https://n8n.io/workflows/19632-create-daily-quote-videos-from-google-sheets-with-zvid/)
 
 [Watch the walkthrough](https://youtu.be/Ra6mPdmDDYs)
 
-For a recurring content series, would a week's prepared quotes be enough to keep production moving, or would you want a separate approval stage for every finished video?
+[Read the full setup guide](https://zvid.io/blog/developer-tutorials/automate-daily-quote-videos-n8n-google-sheets)
+
+What would you connect after the render: a Telegram approval step, a publishing tool, or something else?

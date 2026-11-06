@@ -3,7 +3,7 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { ZVID_TYPE, zvidRoute, migrateWorkflow } = require('../scripts/zvid-native-workflows');
+const { ZVID_TYPE, zvidRoute, migrateWorkflow, isPublishedProjectDraftException } = require('../scripts/zvid-native-workflows');
 const entries = require('../scripts/workflow-series.json');
 const { Zvid } = require('../dist/nodes/Zvid/Zvid.node');
 const description = new Zvid().description;
@@ -160,8 +160,13 @@ for (const entry of entries) {
       if (n.type.includes('n8n-nodes-zvid')) assert.ok([ZVID_TYPE, '@zvid/n8n-nodes-zvid.zvidTrigger'].includes(n.type));
       const route = zvidRoute(n);
       if (route) {
-        assert.equal(route, '/api/uploads', `Supported route still uses HTTP: ${n.name}`);
-        assert.match(n.notes, /published Zvid node does not expose multipart uploads/);
+        if (route === '/api/projects') {
+          assert.ok(isPublishedProjectDraftException(n), `Undocumented draft exception: ${n.name}`);
+          assert.equal(n.retryOnFail, false, 'Do not retry an ambiguous project creation');
+        } else {
+          assert.equal(route, '/api/uploads', `Supported route still uses HTTP: ${n.name}`);
+          assert.match(n.notes, /published Zvid node does not expose multipart uploads/);
+        }
         assert.equal(n.parameters.nodeCredentialType, 'zvidApi');
         assert.equal(n.parameters.genericAuthType, undefined);
       }

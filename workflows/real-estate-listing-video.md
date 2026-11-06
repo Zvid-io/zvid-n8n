@@ -4,6 +4,20 @@
 
 Install **`@zvid/n8n-nodes-zvid`** from **Settings → Community nodes** before configuring Zvid credentials. A workspace owner/admin may need to install it. Create a **Zvid API** credential with your key from https://app.zvid.io/api-keys and Base URL `https://api.zvid.io`, then select it on every Zvid node.
 
+**Editor draft exception (published package 0.1.8).** This version has no Project
+Create action. *Save draft to editor* therefore uses HTTP Request to
+`POST /api/projects`, sending `{ name, payload }`. In that node select
+**Authentication → Predefined Credential Type → Zvid API**, then choose the same
+Zvid API credential used for validation and rendering. No separate Header Auth
+credential is needed. Supported validation, render and job-status operations use
+the native Zvid node.
+
+Draft saving is best-effort and has automatic retries disabled. An account project
+limit or request failure can leave `editorLink` empty; the dry-run report still
+contains the quote and `payload`. Save that payload as JSON and use
+**Import → Open .json file** at https://editor.zvid.io to preview it locally.
+Check the dashboard for an accepted draft before retrying an uncertain save.
+
 [`zvid-real-estate-listing-video.json`](zvid-real-estate-listing-video.json)
 
 Every morning: take the first listing in your sheet that has no `Status` yet, turn
@@ -67,17 +81,19 @@ portrait — not a grey avatar placeholder.
 
 | | |
 | --- | --- |
-| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Free accounts include enough credits to test. |
+| Zvid API key | [app.zvid.io/api-keys](https://app.zvid.io/api-keys). Validation is free; rendering requires sufficient account credits and capacity. |
 | Google account | For the two Google Sheets nodes (read the queue, write back the result). |
 | Listing photos | Public `https` image URLs, at least two per listing. |
 
-No LLM, no voice service, no stock-media account. The music bed is one pinned,
-size-checked URL in `Config`, and the whole design lives in one code node.
+No LLM, no voice service, no stock-media account. Videos are silent by default
+(`musicUrl: ""`). Optionally add a public audio URL you are licensed to use; the
+music guard checks its availability and size. The design lives in one code node.
 
 ## Setup
 
 1. **Import** `zvid-real-estate-listing-video.json`.
-2. **Zvid credential** — create a **Zvid API** credential and select it on every Zvid node.
+2. **Zvid credential**: select your **Zvid API** credential on every Zvid node and
+   on the HTTP Request node *Save draft to editor*, as described above.
 3. **Google Sheets credential** — attach it to *Read listings sheet* and *Mark
    listing done*, and pick your spreadsheet + tab in both nodes.
 4. **Create the sheet** with this exact header row:
@@ -109,9 +125,12 @@ size-checked URL in `Config`, and the whole design lives in one code node.
    **`▶ Watch video`** to play the reel inside n8n.
 
    Prefer to preview for free first? Set `dryRun: true` in `Config` before that
-   first run: you get the exact credit cost and an **`editorLink`** that opens the
-   draft in the Zvid editor, with nothing spent and nothing written to the sheet.
-7. **Activate.** One listing goes out per day at 9am.
+   first run: you get the exact credit quote and `payload`, plus an **`editorLink`**
+   if the draft save succeeds. No render credits are spent and nothing is written
+   to the sheet.
+7. **Activate.** One listing is processed per day at 9am in the workflow timezone
+   (or instance timezone if none is set). Delivery to a social account is optional
+   and requires an additional node.
 
 ## Configuration
 
@@ -133,11 +152,11 @@ Everything lives in the `Config` node.
 | `inkColor` / `creamColor` | `#14110E` / `#F6F1E8` | Near-black ground and warm off-white type. |
 | `brandColor` / `accentColor` | `#1F3D34` / `#C6A15B` | Estate green for the price banner and CTA pill; gold for the accents, spotlight numerals and rings. |
 | `kenBurnsDepth` | `1.14` | The cinematic push, clamped to `1`–`1.6`. `1` is a static frame; `1.14` is a slow 14% push over the scene. A softer step (half the travel) and a stronger one (1.4×, also capped at `1.6`) are derived from it and cycled across the scenes. |
-| `musicUrl` | a pinned calm piano bed | Empty renders without music. |
+| `musicUrl` | `""` | Silent by default. Optionally supply a licensed public audio URL. |
 | `musicVolume` | `0.12` | The bed sits low by design. |
 | `maxMusicBytes` | `5242880` | Music over this (or unreachable) is dropped, and the video renders anyway. |
 | `statusDoneValue` | `done` | What gets written to `Status` after a successful render. |
-| `dryRun` | `false` | `false` (default) renders for real. `true` gives a free pass that validates the payload, quotes the credits and saves a draft you can watch in the editor — no credits, no sheet write. |
+| `dryRun` | `false` | `false` renders for real. `true` validates and quotes without rendering or sheet writes, and attempts to save an editor draft. The draft link depends on a successful save. |
 | `pollSeconds` / `timeoutMinutes` | `10` / `20` | Render poll loop. |
 
 ## Cost per video
@@ -148,8 +167,9 @@ The live validator quoted **20 credits** for the default four-photo listing
 two-photo listing runs 12.5 s (**13 credits**, quoted) and a five-photo one runs
 22.4 s (**23 credits**, quoted). *Validate project
 (free)* runs before every render and returns the exact quote for your listing —
-reported as `creditsCharged` in the run summary — but the render then proceeds
-automatically. Set `dryRun: true` if you want the number *without* the render.
+reported as `creditsCharged` in the run summary. That field contains the quote,
+not a billing-ledger receipt. Rendering then proceeds automatically. Set
+`dryRun: true` if you want the number *without* the render.
 
 ## How it works
 
@@ -164,8 +184,8 @@ automatically. Set `dryRun: true` if you want the number *without* the render.
 | **Build project JSON** | The whole design lives here: scene timing and transition padding, the four-step motion cycle (depth / wipe / type side), the fact rotation and its rail, the staggered top rail, the adaptive type ramps, the content-driven agent-card seam, scrim calibration, HTML-escaping of every sheet value, and the API's `name` character rules. |
 | **Validate project (free)** | Runs the exact pipeline a render submission runs — schema, plan limits, cost — without spending credits. Failures surface as a field list. |
 | **Dry run?** | Routes on `Config.dryRun`. It is `false` by default, so the normal path is straight to *Submit render*. |
-| **Save draft to editor** | **Only when `dryRun: true`.** Saves a free draft and returns `editorLink` (`https://editor.zvid.io/?project=…`). Best-effort: a hiccup here never hides the dry-run report. |
-| **Dry run summary** | **Only when `dryRun: true`.** Reports the quoted credits, `editorLink` and warnings, and leaves the sheet untouched so the next real run picks the same listing. |
+| **Save draft to editor** | **Only when `dryRun: true`.** HTTP `POST /api/projects` using the same predefined Zvid API credential, because published 0.1.8 has no Project Create action. Best-effort, with no automatic save retry; quota limits or errors can leave the draft link empty. |
+| **Dry run summary** | **Only when `dryRun: true`.** Reports the quoted credits, `payload`, optional `editorLink` and warnings, and leaves the sheet untouched so the next real run picks the same listing. |
 | **Submit render / Wait / Get render status** | Paid render plus a poll loop. |
 | **Still rendering?** | Fails fast when the job reports `failed` and stops the loop at `timeoutMinutes`. |
 | **Sheet mode? / Mark listing done** | Updates exactly the picked row (matched on `row_number`): `Status` = `done`, `VideoUrl` = the finished MP4. Airtable runs skip this node. A failed render never reaches it, so the row stays pending and tomorrow's run retries it. |
@@ -202,6 +222,10 @@ read-only: rendered record ids are remembered in workflow static data, but nothi
 is written back — add an HTTP Request `PATCH` node after *Run summary* if you want
 the video URL stored.
 
+n8n persists workflow static data after successful active workflow executions.
+Manual tests do not provide the same persistence, so check existing outputs before
+re-running an Airtable listing.
+
 For real MLS data, point *Fetch Airtable listings* at any JSON feed returning
 records with these fields — a SimplyRETS sandbox, your IDX provider, or your own
 API — and adjust *Pick Airtable listing* to match its response shape.
@@ -219,11 +243,9 @@ The required path ends with the URL in your sheet. To auto-publish, extend after
 - **The agent** — Slack/Email node sending `videoUrl` to whoever posts it, or
   straight to the seller.
 
-These stay out of the required path so the import runs with a Zvid key and a Google
-account, nothing else. On self-hosted n8n you can also install
-[`@zvid/n8n-nodes-zvid`](https://www.npmjs.com/package/@zvid/n8n-nodes-zvid) and
-replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
-(render webhook), which removes the poll loop.
+These delivery integrations are optional. The required path already uses native
+Zvid nodes for rendering and job polling, with the documented HTTP exception for
+editor draft creation.
 
 ## Troubleshooting
 
@@ -237,7 +259,8 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | A photo is missing from the reel | Only `Photo1`–`Photo5` are read, and only cells starting with `http://` or `https://`. A Google Drive *sharing* link is a web page, not an image — use a direct image URL. |
 | Photos look cropped | Every photo is center-cropped to 9:16 with `cover`. Put the subject near the centre, or use portrait crops for the scenes you care most about. |
 | `Zvid rejected the project` | The message lists the offending fields. If you edited the builder, note the API only allows letters, digits, spaces, `_` and `-` in `name`, and rejects `audios[].track`. |
-| Video rendered without music | Intentional. The music URL was unreachable, returned an error, or was over `maxMusicBytes` — `Run summary.music` says which. A missing soundtrack beats a missing video. |
+| Video rendered without music | The default `musicUrl` is empty. If you supplied a URL, `Run summary.music` reports whether it was unreachable, returned an error or exceeded `maxMusicBytes`. |
+| Dry run has no `editorLink` | Inspect *Save draft to editor*. Select the same predefined Zvid API credential as the native nodes. A project quota or failed request can prevent a save; import the returned `payload` JSON into the editor instead. |
 | Every scene looks the same | `kenBurnsDepth` is `1` (static), which collapses all three derived depths onto each other. Set it back to `1.14`, or higher for a stronger push (max `1.6`). The wipe direction and type side still alternate. |
 | The photos zoom *in* every time | That is the renderer: `zoom` takes a depth and nothing else, so there is no pan and no zoom-out to alternate with. The variety comes from the three push depths, the four wipe directions and the two type sides. |
 | Price shows as typed, not formatted | The builder only formats values that are purely digits, dots, commas and spaces. `749000` becomes `$749,000`; `749k`, `$749,000` and `700-800k` are printed verbatim. |
@@ -245,7 +268,7 @@ replace the render HTTP nodes with the native **Zvid** node + **Zvid Trigger**
 | Long address is cut with `…` on the top rail | The one-line rail truncates at a word boundary past ~44 characters. The full address still appears in full on the hero scene. |
 | Render failed and the row stayed pending | Intentional — the row is only marked `done` after a successful render, so the next run retries it. The error message carries the job's `failedReason`. |
 | Wrong row updated | Do not sort or delete rows while a run is in flight; the update matches on the `row_number` captured at read time. |
-| `429` / `hourly_limit_exceeded` on submit | Your plan's hourly render limit is spent — the message says how many minutes remain. One scheduled run a day never hits it; back-to-back manual test runs can. Nothing is charged for a rejected submit. |
+| `429` / `hourly_limit_exceeded` on submit | The account has reached a rate or concurrency limit; other workflows share that capacity. Read the returned delay. After any uncertain submission or timeout, inspect the dashboard for an accepted job before starting a new render. |
 
 ## Verified
 
